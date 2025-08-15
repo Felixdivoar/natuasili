@@ -9,6 +9,14 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+// Import blog images
+import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
+import partnerSpotlightBlog from "@/assets/blog/partner-spotlight-blog.jpg";
+import whyPartnerBlog from "@/assets/blog/why-partner-blog.jpg";
+import communityImpactBlog from "@/assets/blog/community-impact-blog.jpg";
+import sustainableTourismBlog from "@/assets/blog/sustainable-tourism-blog.jpg";
+import conservationTechBlog from "@/assets/blog/conservation-tech-blog.jpg";
+
 const blogPosts = [
   {
     id: 1,
@@ -18,7 +26,7 @@ const blogPosts = [
     author: "Dr. Sarah Kimani",
     date: "2024-01-15",
     readTime: "5 min read",
-    image: "/src/assets/blog/impact-metrics-blog.jpg",
+    image: impactMetricsBlog,
     slug: "real-impact-conservation-tourism-kenya",
     featured: true
   },
@@ -30,7 +38,7 @@ const blogPosts = [
     author: "James Mwangi",
     date: "2024-01-12",
     readTime: "4 min read", 
-    image: "/src/assets/blog/partner-spotlight-blog.jpg",
+    image: partnerSpotlightBlog,
     slug: "partner-spotlight-maasai-mara-conservancy",
     featured: true
   },
@@ -42,7 +50,7 @@ const blogPosts = [
     author: "Alice Nyong'o",
     date: "2024-01-10",
     readTime: "6 min read",
-    image: "/src/assets/blog/why-partner-blog.jpg", 
+    image: whyPartnerBlog, 
     slug: "why-partner-natuasili-guide",
     featured: false
   },
@@ -54,7 +62,7 @@ const blogPosts = [
     author: "Peter Njoroge",
     date: "2024-01-08",
     readTime: "7 min read",
-    image: "/src/assets/blog/community-impact-blog.jpg",
+    image: communityImpactBlog,
     slug: "sustainable-livelihoods-conservation",
     featured: false
   },
@@ -66,7 +74,7 @@ const blogPosts = [
     author: "Dr. Grace Wanjiru", 
     date: "2024-01-05",
     readTime: "8 min read",
-    image: "/src/assets/blog/sustainable-tourism-blog.jpg",
+    image: sustainableTourismBlog,
     slug: "habitat-restoration-success-stories",
     featured: false
   },
@@ -78,7 +86,7 @@ const blogPosts = [
     author: "Michael Kipchoge",
     date: "2024-01-03", 
     readTime: "5 min read",
-    image: "/src/assets/blog/conservation-tech-blog.jpg",
+    image: conservationTechBlog,
     slug: "future-wildlife-protection-technology",
     featured: false
   },
@@ -90,7 +98,7 @@ const blogPosts = [
     author: "Mary Chepkemoi",
     date: "2024-01-01",
     readTime: "6 min read",
-    image: "/src/assets/blog/community-impact-blog.jpg",
+    image: communityImpactBlog,
     slug: "community-led-conservation-guardians",
     featured: false
   },
@@ -102,7 +110,7 @@ const blogPosts = [
     author: "Dr. John Muriuki",
     date: "2023-12-28",
     readTime: "4 min read",
-    image: "/src/assets/blog/impact-metrics-blog.jpg",
+    image: impactMetricsBlog,
     slug: "measuring-conservation-success-framework",
     featured: false
   }

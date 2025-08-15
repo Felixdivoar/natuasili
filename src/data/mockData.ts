@@ -13,6 +13,15 @@ import nairobiParkCleanup from '@/assets/nairobi-park-cleanup.jpg';
 import karuraForestPlanting from '@/assets/karura-forest-planting.jpg';
 import maraElephantTracking from '@/assets/mara-elephant-tracking.jpg';
 import olPejeteRhino from '@/assets/ol-pejeta-rhino.jpg';
+import retetiElephantOrphanage from '@/assets/reteti-elephant-orphanage.jpg';
+import colobusConservation from '@/assets/colobus-conservation.jpg';
+import localOceanConservation from '@/assets/local-ocean-conservation.jpg';
+import giraffeCentre from '@/assets/giraffe-centre.jpg';
+import northernWhiteRhinos from '@/assets/northern-white-rhinos.jpg';
+import nightGameDrive from '@/assets/night-game-drive.jpg';
+import chimpanzeeSanctuary from '@/assets/chimpanzee-sanctuary.jpg';
+import k9HandlerTraining from '@/assets/k9-handler-training.jpg';
+import lionTracking from '@/assets/lion-tracking.jpg';
 
 export const mockProjects: Project[] = [
   {

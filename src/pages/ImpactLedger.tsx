@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera } from "lucide-react";
+import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera, Download, TrendingUp, PieChart, BarChart3 } from "lucide-react";
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Link } from "react-router-dom";
@@ -366,31 +366,103 @@ const ImpactLedger = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Monthly Impact Report</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <Download className="h-5 w-5" />
+                      Monthly Impact Report
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Comprehensive monthly breakdown of conservation impact across all partners.</p>
-                    <Button size="sm">Download PDF</Button>
+                    <div className="space-y-2">
+                      <Button size="sm" className="w-full" onClick={() => {
+                        // Simulate download
+                        const link = document.createElement('a');
+                        link.href = 'data:application/pdf;base64,JVBERi0xLjQKJcfsj6IKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKPD4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQovQ29udGVudHMgNCAwIFIKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0xlbmd0aCA0NAo+PgpzdHJlYW0KQlQKL0YxIDEyIFRmCjEwMCA3MDAgVGQKKE1vbnRobHkgSW1wYWN0IFJlcG9ydCkgVGoKRVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvSGVsdmV0aWNhCj4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYKMDAwMDAwMDAwOSAwMDAwMCBuCjAwMDAwMDAwNTggMDAwMDAgbgowMDAwMDAwMTE1IDAwMDAwIG4KMDAwMDAwMDE5OSAwMDAwMCBuCjAwMDAwMDAyOTMgMDAwMDAgbgp0cmFpbGVyCjw8Ci9TaXplIDYKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjM0MgolJUVPRgo=';
+                        link.download = 'monthly-impact-report.pdf';
+                        link.click();
+                      }}>
+                        <Download className="h-4 w-4 mr-2" />
+                        Download PDF
+                      </Button>
+                      <div className="text-xs text-muted-foreground">
+                        Last updated: {new Date().toLocaleDateString()}
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
                 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Partner Performance</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5" />
+                      Partner Performance
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Detailed analysis of each partner's conservation outcomes and efficiency.</p>
-                    <Button size="sm">View Report</Button>
+                    <div className="space-y-2">
+                      <Button size="sm" className="w-full" onClick={() => {
+                        // Simulate download
+                        const link = document.createElement('a');
+                        link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(
+                          'Partner,Total Impact,Projects,Efficiency Score\n' +
+                          'Maasai Mara Wildlife Conservancy,$125000,5,94%\n' +
+                          'Samburu Education Initiative,$78000,3,88%\n' +
+                          'Coastal Forest Restoration,$95000,4,91%'
+                        );
+                        link.download = 'partner-performance-report.csv';
+                        link.click();
+                      }}>
+                        <Download className="h-4 w-4 mr-2" />
+                        Download CSV
+                      </Button>
+                      <div className="text-xs text-muted-foreground">
+                        Quarterly assessment data
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
                 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Impact Forecasting</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5" />
+                      Impact Forecasting
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Predictive analysis of conservation impact based on current trends.</p>
-                    <Button size="sm">View Forecast</Button>
+                    <div className="space-y-2">
+                      <Button size="sm" variant="outline" className="w-full">
+                        <Eye className="h-4 w-4 mr-2" />
+                        View Forecast
+                      </Button>
+                      <div className="text-xs text-muted-foreground">
+                        Next 12 months projection
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="md:col-span-2 lg:col-span-3">
+                  <CardHeader>
+                    <CardTitle>Recent Report Highlights</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="text-center p-4 bg-primary/5 rounded-lg">
+                        <div className="text-2xl font-bold text-primary">342</div>
+                        <div className="text-sm text-muted-foreground">Wildlife Protected This Month</div>
+                      </div>
+                      <div className="text-center p-4 bg-conservation/5 rounded-lg">
+                        <div className="text-2xl font-bold text-conservation">87</div>
+                        <div className="text-sm text-muted-foreground">Community Members Trained</div>
+                      </div>
+                      <div className="text-center p-4 bg-accent/5 rounded-lg">
+                        <div className="text-2xl font-bold text-accent">156 ha</div>
+                        <div className="text-sm text-muted-foreground">Habitat Restored</div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
