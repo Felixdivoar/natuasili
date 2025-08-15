@@ -17,55 +17,107 @@ const ImpactLedger = () => {
   const mockLedgerEntries = [
     {
       id: "1",
-      booking_date: "2024-01-15",
-      experience_title: "Elephant Tracking Experience",
-      project_name: "Amboseli Conservation Trust",
+      booking_date: "2024-01-20",
+      experience_title: "Big Five Wildlife Tracking Experience",
+      project_name: "Maasai Mara Wildlife Conservancy",
       theme: "Wildlife",
-      allocation_amount: 820,
+      allocation_amount: 263,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Successfully tracked 12 elephants and collected vital migration data for conservation research.",
-      verified_date: "2024-01-18"
+      proof_description: "Successfully tracked 3 lion prides and 2 elephant herds. Collected GPS data for 15 individual animals contributing to migration pattern research. Installed 2 new camera traps in strategic locations.",
+      verified_date: "2024-01-23"
     },
     {
       id: "2",
-      booking_date: "2024-01-12",
-      experience_title: "Community Beekeeping Workshop",
-      project_name: "Maasai Livelihood Initiative",
-      theme: "Livelihoods",
-      allocation_amount: 650,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg"],
-      proof_description: "Installed 5 new beehives with community members, training 8 local beekeepers in sustainable practices.",
-      verified_date: "2024-01-15"
-    },
-    {
-      id: "3",
-      booking_date: "2024-01-10",
-      experience_title: "Wildlife Photography Workshop",
-      project_name: "Tsavo Wildlife Foundation",
-      theme: "Education",
-      allocation_amount: 450,
+      booking_date: "2024-01-18",
+      experience_title: "Traditional Beadwork Workshop",
+      project_name: "Samburu Education Initiative",
+      theme: "Education", 
+      allocation_amount: 96,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Conducted wildlife photography training for 15 local students, promoting conservation awareness.",
-      verified_date: "2024-01-13"
+      proof_description: "Conducted 2-hour workshop with 8 local women artisans. Created 15 traditional beadwork pieces. All workshop materials purchased from local suppliers, supporting 3 additional families.",
+      verified_date: "2024-01-21"
+    },
+    {
+      id: "3",
+      booking_date: "2024-01-16",
+      experience_title: "Mangrove Restoration Volunteer Day",
+      project_name: "Coastal Forest Restoration",
+      theme: "Habitat",
+      allocation_amount: 60,
+      currency: "USD", 
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Planted 45 mangrove seedlings in degraded coastal area. Removed 2.3 tons of marine debris. Trained 6 community members in mangrove cultivation techniques.",
+      verified_date: "2024-01-19"
     },
     {
       id: "4",
-      booking_date: "2024-01-08",
-      experience_title: "Tree Planting Initiative",
-      project_name: "Samburu Forest Restoration",
+      booking_date: "2024-01-14",
+      experience_title: "Community Solar Water Pump Installation",
+      project_name: "Samburu Education Initiative",
+      theme: "Livelihoods",
+      allocation_amount: 184,
+      currency: "USD",
+      status: "verified", 
+      proof_images: ["/placeholder.svg"],
+      proof_description: "Installed solar-powered water pump serving 150 community members. Reduced daily water collection time from 4 hours to 30 minutes for local families. Trained 4 technicians for maintenance.",
+      verified_date: "2024-01-17"
+    },
+    {
+      id: "5",
+      booking_date: "2024-01-12",
+      experience_title: "Anti-Poaching Patrol Training",
+      project_name: "Maasai Mara Wildlife Conservancy", 
+      theme: "Wildlife",
+      allocation_amount: 290,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Trained 12 local rangers in advanced tracking and surveillance techniques. Equipped patrol team with GPS devices and camera traps. Covered 85km² area in joint patrol exercise.",
+      verified_date: "2024-01-15"
+    },
+    {
+      id: "6", 
+      booking_date: "2024-01-10",
+      experience_title: "Coral Reef Monitoring Dive",
+      project_name: "Coastal Forest Restoration",
       theme: "Habitat",
-      allocation_amount: 380,
+      allocation_amount: 142,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Conducted underwater survey of 500m² coral reef area. Documented 23 species of coral and 47 fish species. Identified and removed 15 pieces of marine debris harmful to reef ecosystem.",
+      verified_date: "2024-01-13"
+    },
+    {
+      id: "7",
+      booking_date: "2024-01-08", 
+      experience_title: "School Environmental Club Setup",
+      project_name: "Samburu Education Initiative",
+      theme: "Education",
+      allocation_amount: 78,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg"],
-      proof_description: "Planted 100 indigenous trees in degraded forest area with volunteer support.",
+      proof_description: "Established environmental club at local primary school with 25 student members. Planted school garden with 30 indigenous plants. Conducted first conservation awareness session.",
       verified_date: "2024-01-11"
+    },
+    {
+      id: "8",
+      booking_date: "2024-01-06",
+      experience_title: "Beehive Installation & Training", 
+      project_name: "Maasai Mara Wildlife Conservancy",
+      theme: "Livelihoods",
+      allocation_amount: 195,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Installed 8 modern beehives for community cooperative. Trained 12 beekeepers in sustainable harvesting methods. Expected to generate $2,400 annual income for participating families.",
+      verified_date: "2024-01-09"
     }
   ];
 
@@ -116,8 +168,12 @@ const ImpactLedger = () => {
                 <div className="text-sm text-muted-foreground">Verified Entries</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary">4</div>
+                <div className="text-3xl font-bold text-primary">3</div>
                 <div className="text-sm text-muted-foreground">Active Partners</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-primary">95%</div>
+                <div className="text-sm text-muted-foreground">Allocation Transparency</div>
               </div>
             </div>
           </div>
