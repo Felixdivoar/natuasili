@@ -8,11 +8,16 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin, Users, Clock, Star, Heart, Share, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import ReviewSection from "@/components/ReviewSection";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const { formatPrice } = useCurrency();
 
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
@@ -50,6 +55,7 @@ const ExperienceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
@@ -154,7 +160,7 @@ const ExperienceDetail = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold text-foreground">${experience.base_price}</div>
+                    <div className="text-3xl font-bold text-foreground">{formatPrice(experience.base_price)}</div>
                     <div className="text-sm text-muted-foreground">per person</div>
                   </div>
                 </div>
@@ -283,6 +289,9 @@ const ExperienceDetail = () => {
                   </Card>
                 </TabsContent>
               </Tabs>
+
+              {/* Reviews Section */}
+              <ReviewSection experienceId={experience.id} />
             </div>
           </div>
 
@@ -320,12 +329,12 @@ const ExperienceDetail = () => {
 
                   <div className="border-t pt-4">
                     <div className="flex justify-between text-sm mb-2">
-                      <span>${experience.base_price} × {quantity} person{quantity > 1 ? 's' : ''}</span>
-                      <span>${experience.base_price * quantity}</span>
+                      <span>{formatPrice(experience.base_price)} × {quantity} person{quantity > 1 ? 's' : ''}</span>
+                      <span>{formatPrice(experience.base_price * quantity)}</span>
                     </div>
                     <div className="flex justify-between font-bold text-lg">
                       <span>Total</span>
-                      <span>${experience.base_price * quantity}</span>
+                      <span>{formatPrice(experience.base_price * quantity)}</span>
                     </div>
                   </div>
 
@@ -344,6 +353,7 @@ const ExperienceDetail = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

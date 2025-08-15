@@ -1,5 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import visaLogo from "@/assets/visa-logo.png";
+import mastercardLogo from "@/assets/mastercard-logo.png";
+import mpesaLogo from "@/assets/mpesa-logo.png";
 
 const Footer = () => {
   return (
@@ -79,8 +82,16 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/20 mt-8 pt-8 text-center">
-          <p className="text-sm text-white/60">
+        <div className="border-t border-white/20 mt-8 pt-8">
+          <div className="text-center mb-6">
+            <h4 className="font-semibold mb-4">We Accept</h4>
+            <div className="flex items-center justify-center gap-6">
+              <img src={visaLogo} alt="Visa" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+              <img src={mastercardLogo} alt="Mastercard" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+              <img src={mpesaLogo} alt="M-Pesa" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+            </div>
+          </div>
+          <p className="text-sm text-white/60 text-center">
             © 2024 NatuAsili. All rights reserved. Built for conservation impact.
           </p>
         </div>

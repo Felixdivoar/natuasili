@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, Search, User, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import CurrencySelector from "@/components/CurrencySelector";
 
 const Header = () => {
   return (
@@ -39,6 +40,7 @@ const Header = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
+            <CurrencySelector />
             <Button variant="ghost" size="sm" className="hidden sm:flex">
               <Search className="w-4 h-4 mr-2" />
               Search
@@ -51,9 +53,11 @@ const Header = () => {
               <User className="w-4 h-4 mr-2" />
               Sign In
             </Button>
-            <Button size="sm" className="bg-primary hover:bg-primary-hover">
-              Partner With Us
-            </Button>
+            <Link to="/partner-dashboard">
+              <Button size="sm" className="bg-primary hover:bg-primary-hover">
+                Partner With Us
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
