@@ -70,12 +70,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
         
-        <Link to="/browse" className="w-full">
+        <Link to={`/projects/${project.id}`} className="w-full">
           <Button 
             className="w-full bg-primary hover:bg-primary-hover" 
             size="sm"
           >
-            View Experiences
+            View Partner
           </Button>
         </Link>
       </CardContent>

@@ -26,6 +26,9 @@ const Header = () => {
             <Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors">
               Impact Ledger
             </Link>
+            <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
+              My Dashboard
+            </Link>
             <a href="#projects" className="text-foreground hover:text-primary transition-colors">
               Partners
             </a>

@@ -10,6 +10,8 @@ import Checkout from "./pages/Checkout";
 import BookingSuccess from "./pages/BookingSuccess";
 import ImpactLedger from "./pages/ImpactLedger";
 import NotFound from "./pages/NotFound";
+import TravelerDashboard from "./pages/TravelerDashboard";
+import ProjectDetail from "./pages/ProjectDetail";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/booking-success" element={<BookingSuccess />} />
           <Route path="/impact-ledger" element={<ImpactLedger />} />
+          <Route path="/dashboard" element={<TravelerDashboard />} />
+          <Route path="/projects/:projectId" element={<ProjectDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
