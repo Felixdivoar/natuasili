@@ -29,14 +29,21 @@ const ExperienceCarousel = () => {
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Featured Conservation Experiences
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover authentic experiences that create lasting impact for wildlife, 
-            communities, and habitats across Kenya.
-          </p>
+        <div className="flex justify-between items-center mb-12">
+          <div className="text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Featured Conservation Experiences
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Discover authentic experiences that create lasting impact for wildlife, 
+              communities, and habitats across Kenya.
+            </p>
+          </div>
+          <Link to="/marketplace">
+            <Button variant="outline" className="hidden md:block">
+              View All Experiences
+            </Button>
+          </Link>
         </div>
 
         <Carousel

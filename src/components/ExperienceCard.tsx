@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, Users, DollarSign } from "lucide-react";
+import { MapPin, Clock, Users, DollarSign, Share2 } from "lucide-react";
 import { Experience } from "@/types";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import SocialShare from "@/components/SocialShare";
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -90,6 +91,12 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
               View Details
             </Button>
           </Link>
+          <SocialShare
+            title={experience.title}
+            description={experience.description}
+            url={`${window.location.origin}/experience/${experience.slug}`}
+            className="hidden sm:block"
+          />
           <Button 
             variant="outline" 
             size="sm"

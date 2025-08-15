@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -7,6 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import nairobiImage from "@/assets/destinations/nairobi-destination.jpg";
 import samburuImage from "@/assets/destinations/samburu-destination.jpg";
@@ -61,13 +63,20 @@ const DestinationCarousel = () => {
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Conservation Destinations
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover Kenya's most important conservation sites where your experiences make a real difference.
-          </p>
+        <div className="flex justify-between items-center mb-12">
+          <div className="text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Conservation Destinations
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Discover Kenya's most important conservation sites where your experiences make a real difference.
+            </p>
+          </div>
+          <Link to="/destinations">
+            <Button variant="outline" className="hidden md:block">
+              View All Destinations
+            </Button>
+          </Link>
         </div>
 
         <Carousel
@@ -80,27 +89,29 @@ const DestinationCarousel = () => {
           <CarouselContent className="-ml-2 md:-ml-4">
             {destinations.map((destination) => (
               <CarouselItem key={destination.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
-                  <div className="relative aspect-[4/3]">
-                    <img
-                      src={destination.image}
-                      alt={destination.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 text-white">
-                      <h3 className="text-xl font-bold mb-1">{destination.name}</h3>
-                      <p className="text-sm text-white/90 mb-2">{destination.description}</p>
-                      <div className="flex items-center gap-1 text-xs text-white/80 mb-2">
-                        <MapPin className="h-3 w-3" />
-                        {destination.location}
-                      </div>
-                      <div className="text-xs text-white/70">
-                        {destination.partners.length} Partner{destination.partners.length > 1 ? 's' : ''}
+                <Link to={`/destinations#${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                  <Card className="overflow-hidden group hover:shadow-lg transition-shadow cursor-pointer">
+                    <div className="relative aspect-[4/3]">
+                      <img
+                        src={destination.image}
+                        alt={destination.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-4 left-4 text-white">
+                        <h3 className="text-xl font-bold mb-1">{destination.name}</h3>
+                        <p className="text-sm text-white/90 mb-2">{destination.description}</p>
+                        <div className="flex items-center gap-1 text-xs text-white/80 mb-2">
+                          <MapPin className="h-3 w-3" />
+                          {destination.location}
+                        </div>
+                        <div className="text-xs text-white/70">
+                          {destination.partners.length} Partner{destination.partners.length > 1 ? 's' : ''}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>

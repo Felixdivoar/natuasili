@@ -18,7 +18,7 @@ const blogPosts = [
     author: "Dr. Sarah Kimani",
     date: "2024-01-15",
     readTime: "5 min read",
-    image: "/src/assets/maasai-mara-project.jpg",
+    image: "/src/assets/blog/impact-metrics-blog.jpg",
     slug: "real-impact-conservation-tourism-kenya",
     featured: true
   },
@@ -30,7 +30,7 @@ const blogPosts = [
     author: "James Mwangi",
     date: "2024-01-12",
     readTime: "4 min read", 
-    image: "/src/assets/big-five-tracking.jpg",
+    image: "/src/assets/blog/partner-spotlight-blog.jpg",
     slug: "partner-spotlight-maasai-mara-conservancy",
     featured: true
   },
@@ -42,7 +42,7 @@ const blogPosts = [
     author: "Alice Nyong'o",
     date: "2024-01-10",
     readTime: "6 min read",
-    image: "/src/assets/samburu-education.jpg", 
+    image: "/src/assets/blog/why-partner-blog.jpg", 
     slug: "why-partner-natuasili-guide",
     featured: false
   },
@@ -54,7 +54,7 @@ const blogPosts = [
     author: "Peter Njoroge",
     date: "2024-01-08",
     readTime: "7 min read",
-    image: "/src/assets/beadwork-workshop.jpg",
+    image: "/src/assets/blog/community-impact-blog.jpg",
     slug: "sustainable-livelihoods-conservation",
     featured: false
   },
@@ -66,7 +66,7 @@ const blogPosts = [
     author: "Dr. Grace Wanjiru", 
     date: "2024-01-05",
     readTime: "8 min read",
-    image: "/src/assets/mangrove-restoration.jpg",
+    image: "/src/assets/blog/sustainable-tourism-blog.jpg",
     slug: "habitat-restoration-success-stories",
     featured: false
   },
@@ -78,7 +78,7 @@ const blogPosts = [
     author: "Michael Kipchoge",
     date: "2024-01-03", 
     readTime: "5 min read",
-    image: "/src/assets/mara-elephant-tracking.jpg",
+    image: "/src/assets/blog/conservation-tech-blog.jpg",
     slug: "future-wildlife-protection-technology",
     featured: false
   },
@@ -90,7 +90,7 @@ const blogPosts = [
     author: "Mary Chepkemoi",
     date: "2024-01-01",
     readTime: "6 min read",
-    image: "/src/assets/karura-forest-planting.jpg",
+    image: "/src/assets/blog/community-impact-blog.jpg",
     slug: "community-led-conservation-guardians",
     featured: false
   },
@@ -102,7 +102,7 @@ const blogPosts = [
     author: "Dr. John Muriuki",
     date: "2023-12-28",
     readTime: "4 min read",
-    image: "/src/assets/nairobi-park-cleanup.jpg",
+    image: "/src/assets/blog/impact-metrics-blog.jpg",
     slug: "measuring-conservation-success-framework",
     featured: false
   }
