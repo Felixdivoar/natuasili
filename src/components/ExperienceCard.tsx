@@ -72,7 +72,10 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           </div>
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-1" />
-            Full day
+            {experience.duration_hours % 1 === 0 
+              ? `${experience.duration_hours} hour${experience.duration_hours > 1 ? 's' : ''}`
+              : `${experience.duration_hours} hours`
+            }
           </div>
         </div>
         

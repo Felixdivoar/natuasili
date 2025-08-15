@@ -50,6 +50,7 @@ export interface Experience {
   location_text: string;
   theme: ProjectCategory;
   activity_type: ActivityType;
+  duration_hours: number;
   base_price: number;
   currency: string;
   allocation_pct_project: number;
