@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarContent, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { CalendarDays, MapPin, DollarSign, TreePine, Users, Droplets, GraduationCap, Eye, ExternalLink, User, Edit, Save } from "lucide-react";
 import { mockBookings, mockProjects, mockExperiences } from "@/data/mockData";
 import { Link } from "react-router-dom";
