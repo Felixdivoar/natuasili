@@ -7,9 +7,11 @@ import { Link, useSearchParams } from "react-router-dom";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const BookingSuccess = () => {
   const [searchParams] = useSearchParams();
+  const { formatPrice } = useCurrency();
   const experienceSlug = searchParams.get('experience');
   const quantity = parseInt(searchParams.get('qty') || '1');
   const travelerName = searchParams.get('traveler_name') || 'Guest';
@@ -33,8 +35,8 @@ const BookingSuccess = () => {
   }
 
   const totalAmount = experience.base_price * quantity;
-  const projectShare = Math.round(totalAmount * (experience.allocation_pct_project / 100));
-  const platformShare = Math.round(totalAmount * (experience.allocation_pct_platform / 100));
+  const projectShare = Math.round(totalAmount * 0.9); // 90% to project
+  const platformShare = Math.round(totalAmount * 0.1); // 10% to platform
 
   return (
     <div className="min-h-screen bg-background">
@@ -87,7 +89,7 @@ const BookingSuccess = () => {
                   <span className="text-muted-foreground">Total Amount:</span>
                   <div className="flex items-center mt-1">
                     <DollarSign className="w-4 h-4 mr-1" />
-                    ${totalAmount}
+                    {formatPrice(totalAmount)}
                   </div>
                 </div>
               </div>
@@ -103,11 +105,11 @@ const BookingSuccess = () => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">To {project.name}:</span>
-                  <span className="font-semibold text-foreground">${projectShare}</span>
+                  <span className="font-semibold text-foreground">{formatPrice(projectShare)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Platform Fee:</span>
-                  <span className="font-semibold text-foreground">${platformShare}</span>
+                  <span className="text-muted-foreground">Platform & Operations:</span>
+                  <span className="font-semibold text-foreground">{formatPrice(platformShare)}</span>
                 </div>
                 <Separator />
                 <div className="text-sm text-muted-foreground">

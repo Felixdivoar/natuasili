@@ -6,21 +6,29 @@ import { Progress } from "@/components/ui/progress";
 import { MapPin, Users, DollarSign, Calendar, Phone, Mail, ExternalLink, TreePine, Eye, Camera } from "lucide-react";
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import ExperienceCard from "@/components/ExperienceCard";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const ProjectDetail = () => {
   const { projectId } = useParams();
+  const { formatPrice } = useCurrency();
   const project = mockProjects.find(p => p.id === projectId);
   const projectExperiences = mockExperiences.filter(e => e.project_id === projectId);
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Project Not Found</h1>
-          <Button asChild>
-            <Link to="/browse">Browse Projects</Link>
-          </Button>
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-4">Project Not Found</h1>
+            <Button asChild>
+              <Link to="/browse">Browse Projects</Link>
+            </Button>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -121,6 +129,7 @@ const ProjectDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Hero Section */}
       <section className="relative h-96 overflow-hidden">
         <img
@@ -202,11 +211,11 @@ const ProjectDetail = () => {
                     <CardContent className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="text-center p-4 bg-muted/30 rounded-lg">
-                          <div className="text-2xl font-bold text-primary">${impactData.totalFunds.toLocaleString()}</div>
+                          <div className="text-2xl font-bold text-primary">{formatPrice(impactData.totalFunds)}</div>
                           <div className="text-sm text-muted-foreground">Total Funds Received</div>
                         </div>
                         <div className="text-center p-4 bg-muted/30 rounded-lg">
-                          <div className="text-2xl font-bold text-primary">${impactData.verifiedImpact.toLocaleString()}</div>
+                          <div className="text-2xl font-bold text-primary">{formatPrice(impactData.verifiedImpact)}</div>
                           <div className="text-sm text-muted-foreground">Verified Impact</div>
                         </div>
                         <div className="text-center p-4 bg-muted/30 rounded-lg">
@@ -229,7 +238,7 @@ const ProjectDetail = () => {
                           <div key={index} className="border-l-2 border-primary/20 pl-4">
                             <div className="flex justify-between items-start mb-1">
                               <div className="font-medium text-sm">{entry.activity}</div>
-                              <div className="text-primary font-semibold">${entry.amount}</div>
+                              <div className="text-primary font-semibold">{formatPrice(entry.amount)}</div>
                             </div>
                             <div className="text-xs text-muted-foreground mb-1">
                               {new Date(entry.date).toLocaleDateString()}
@@ -289,7 +298,7 @@ const ProjectDetail = () => {
                         <DollarSign className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm">Funds Raised</span>
                       </div>
-                      <span className="font-semibold">${project.metrics_funds_total.toLocaleString()}</span>
+                      <span className="font-semibold">{formatPrice(project.metrics_funds_total)}</span>
                     </div>
 
                     {impactData && (
@@ -343,6 +352,7 @@ const ProjectDetail = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

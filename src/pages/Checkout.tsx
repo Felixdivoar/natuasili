@@ -10,11 +10,15 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Shield, CreditCard, MapPin, Users, Calendar } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { formatPrice } = useCurrency();
   const experienceId = searchParams.get("experience");
   const quantity = parseInt(searchParams.get("quantity") || "1");
 
@@ -31,13 +35,17 @@ const Checkout = () => {
 
   if (!experience || !project) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Invalid Booking</h1>
-          <Link to="/browse">
-            <Button>Browse Experiences</Button>
-          </Link>
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-4">Invalid Booking</h1>
+            <Link to="/browse">
+              <Button>Browse Experiences</Button>
+            </Link>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -77,6 +85,7 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -165,7 +174,7 @@ const Checkout = () => {
                   </div>
 
                   <Button type="submit" className="w-full" size="lg">
-                    Confirm Booking - ${total}
+                    Confirm Booking - {formatPrice(total)}
                   </Button>
                 </form>
               </CardContent>
@@ -245,13 +254,13 @@ const Checkout = () => {
                 {/* Price Breakdown */}
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span>${experience.base_price} × {quantity} person{quantity > 1 ? 's' : ''}</span>
-                    <span>${total}</span>
+                    <span>{formatPrice(experience.base_price)} × {quantity} person{quantity > 1 ? 's' : ''}</span>
+                    <span>{formatPrice(total)}</span>
                   </div>
                   
                   <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
-                    <span>${total}</span>
+                    <span>{formatPrice(total)}</span>
                   </div>
                 </div>
 
@@ -268,8 +277,8 @@ const Checkout = () => {
                         <div className="text-xs text-muted-foreground">Direct conservation funding</div>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-primary">${partnerAmount}</div>
-                        <div className="text-xs text-muted-foreground">{experience.allocation_pct_project}%</div>
+                        <div className="font-bold text-primary">{formatPrice(partnerAmount)}</div>
+                        <div className="text-xs text-muted-foreground">90%</div>
                       </div>
                     </div>
 
@@ -279,8 +288,8 @@ const Checkout = () => {
                         <div className="text-xs text-muted-foreground">Technology & support</div>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold">${platformAmount}</div>
-                        <div className="text-xs text-muted-foreground">{experience.allocation_pct_platform}%</div>
+                        <div className="font-bold">{formatPrice(platformAmount)}</div>
+                        <div className="text-xs text-muted-foreground">10%</div>
                       </div>
                     </div>
                   </div>
@@ -294,6 +303,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
