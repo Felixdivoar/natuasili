@@ -16,6 +16,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import About from "./pages/About";
 import Partners from "./pages/Partners";
+import Blog from "./pages/Blog";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,8 @@ const App = () => (
             <Route path="/partner-dashboard" element={<PartnerDashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<Blog />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

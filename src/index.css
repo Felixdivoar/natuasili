@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Black and white theme for conservation platform */
+    /* Black and white theme with green conservation accents */
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
 
@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    /* Black primary */
+    /* Black primary with green conservation accent */
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 0 0% 20%;
@@ -28,9 +28,13 @@
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
 
-    /* Gray accent */
-    --accent: 0 0% 85%;
-    --accent-foreground: 0 0% 0%;
+    /* Conservation green accent */
+    --accent: 142 71% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Conservation green theme color */
+    --conservation: 142 71% 45%;
+    --conservation-light: 142 71% 90%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;

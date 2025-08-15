@@ -12,6 +12,7 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
+import MapComponent from "@/components/MapComponent";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -289,6 +290,21 @@ const ExperienceDetail = () => {
                   </Card>
                 </TabsContent>
               </Tabs>
+
+              {/* Map Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Experience Location</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <MapComponent 
+                    longitude={36.8219}
+                    latitude={-1.2921}
+                    location={experience.location_text}
+                    className="w-full h-64 rounded-lg"
+                  />
+                </CardContent>
+              </Card>
 
               {/* Reviews Section */}
               <ReviewSection experienceId={experience.id} />

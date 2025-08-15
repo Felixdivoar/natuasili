@@ -22,7 +22,7 @@ const Header = () => {
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <Link to="/browse" className="text-foreground hover:text-primary transition-colors">
-              Browse
+              Marketplace
             </Link>
             <Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors">
               Impact Ledger
@@ -35,6 +35,9 @@ const Header = () => {
             </Link>
             <Link to="/about" className="text-foreground hover:text-primary transition-colors">
               About
+            </Link>
+            <Link to="/blog" className="text-foreground hover:text-primary transition-colors">
+              Blog
             </Link>
           </nav>
 

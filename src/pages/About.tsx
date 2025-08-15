@@ -1,9 +1,58 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Shield, Target, Users, Leaf, Heart, Globe } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Shield, Target, Users, Leaf, Heart, Globe, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const teamMembers = [
+  {
+    id: 1,
+    name: "FM Kariuki",
+    role: "Founder & COO",
+    bio: "Passionate conservationist with 15 years of experience in wildlife protection and community engagement across East Africa.",
+    image: "/placeholder.svg",
+    linkedin: "#",
+    email: "fm@natuasili.org"
+  },
+  {
+    id: 2,
+    name: "MN Wanjiku",
+    role: "Head of Human Resources",
+    bio: "Expert in building diverse, mission-driven teams with a focus on sustainable organizational growth and culture.",
+    image: "/placeholder.svg", 
+    linkedin: "#",
+    email: "mn@natuasili.org"
+  },
+  {
+    id: 3,
+    name: "AY Kimani",
+    role: "Sustainability Director",
+    bio: "Environmental scientist specializing in impact measurement and sustainable tourism development in Kenya.",
+    image: "/placeholder.svg",
+    linkedin: "#", 
+    email: "ay@natuasili.org"
+  },
+  {
+    id: 4,
+    name: "SO Mwangi",
+    role: "Chief Financial Officer",
+    bio: "Financial strategist with expertise in conservation funding models and transparent impact allocation systems.",
+    image: "/placeholder.svg",
+    linkedin: "#",
+    email: "so@natuasili.org"
+  },
+  {
+    id: 5,
+    name: "DO Njoroge", 
+    role: "Chief Technology Officer",
+    bio: "Technology leader focused on building platforms that connect conservation impact with global audiences.",
+    image: "/placeholder.svg",
+    linkedin: "#",
+    email: "do@natuasili.org"
+  }
+];
 
 const About = () => {
   return (
@@ -220,6 +269,84 @@ const About = () => {
               <Button variant="outline" size="lg" asChild>
                 <Link to="/impact-ledger">
                   View Impact Ledger
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Meet Our Team
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+                The passionate individuals driving conservation impact across Kenya through innovative partnerships.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {teamMembers.map((member) => (
+                <Card key={member.id} className="group hover:shadow-lg transition-shadow text-center">
+                  <CardHeader className="pb-4">
+                    <div className="w-24 h-24 bg-conservation/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+                      <Users className="h-12 w-12 text-conservation" />
+                    </div>
+                    <CardTitle className="text-xl">{member.name}</CardTitle>
+                    <Badge variant="outline" className="mx-auto bg-conservation/5 text-conservation border-conservation/20">
+                      {member.role}
+                    </Badge>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                      {member.bio}
+                    </p>
+                    <div className="flex justify-center gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={member.linkedin}>
+                          <Linkedin className="h-4 w-4 mr-1" />
+                          LinkedIn
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`mailto:${member.email}`}>
+                          <Mail className="h-4 w-4 mr-1" />
+                          Email
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-conservation/5">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+              Ready to Join Our Conservation Movement?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Whether you're a traveler seeking meaningful experiences or a conservation organization 
+              looking for sustainable funding, we're here to help you make a real impact.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button size="lg" className="bg-conservation hover:bg-conservation/90 text-white" asChild>
+                <Link to="/browse">
+                  Explore Experiences
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link to="/partners">
+                  Partner With Us
                 </Link>
               </Button>
             </div>
