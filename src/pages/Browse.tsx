@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -12,10 +13,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const Browse = () => {
+  const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTheme, setSelectedTheme] = useState("all");
   const [selectedLocation, setSelectedLocation] = useState("all");
   const { formatPrice } = useCurrency();
+
+  useEffect(() => {
+    const themeParam = searchParams.get('theme');
+    if (themeParam) {
+      setSelectedTheme(themeParam);
+    }
+  }, [searchParams]);
 
   const filteredExperiences = mockExperiences.filter(experience => {
     const matchesSearch = experience.title.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -145,7 +145,7 @@ const BlogSection = () => {
                 </div>
                 
                 <Link to={`/blog/${post.slug}`}>
-                  <Button variant="outline" size="sm" className="group/btn">
+                  <Button variant="outline" size="sm" className="group/btn w-full">
                     Read More
                     <ArrowRight className="h-3 w-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
