@@ -24,6 +24,8 @@ import CoastDestination from "./pages/destination/Coast";
 import NairobiDestination from "./pages/destination/Nairobi";
 import LaikipiaDestination from "./pages/destination/Laikipia";
 import Destinations from "./pages/Destinations";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +51,13 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/destinations" element={<Destinations />} />
+            <Route path="/destinations/samburu" element={<SamburuDestination />} />
+            <Route path="/destinations/masai-mara" element={<MasaiMaraDestination />} />
+            <Route path="/destinations/coast" element={<CoastDestination />} />
+            <Route path="/destinations/nairobi" element={<NairobiDestination />} />
+            <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
+            <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

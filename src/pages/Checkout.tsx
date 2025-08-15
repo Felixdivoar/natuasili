@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Shield, CreditCard, MapPin, Users, Calendar } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
@@ -103,82 +104,140 @@ const Checkout = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Booking Form */}
           <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="h-5 w-5" />
-                  Traveler Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input
-                      id="name"
-                      value={formData.travelerName}
-                      onChange={(e) => setFormData(prev => ({ ...prev, travelerName: e.target.value }))}
-                      required
-                    />
-                  </div>
+            <Tabs defaultValue="traveler" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="traveler">Traveler Info</TabsTrigger>
+                <TabsTrigger value="preferences">Preferences</TabsTrigger>
+                <TabsTrigger value="payment">Payment</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="traveler" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5" />
+                      Traveler Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input
+                          id="name"
+                          value={formData.travelerName}
+                          onChange={(e) => setFormData(prev => ({ ...prev, travelerName: e.target.value }))}
+                          required
+                        />
+                      </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.travelerEmail}
-                      onChange={(e) => setFormData(prev => ({ ...prev, travelerEmail: e.target.value }))}
-                      required
-                    />
-                  </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email Address *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.travelerEmail}
+                          onChange={(e) => setFormData(prev => ({ ...prev, travelerEmail: e.target.value }))}
+                          required
+                        />
+                      </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={formData.travelerPhone}
-                      onChange={(e) => setFormData(prev => ({ ...prev, travelerPhone: e.target.value }))}
-                    />
-                  </div>
-
-                  <Separator />
-
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="terms"
-                        checked={formData.agreeTerms}
-                        onCheckedChange={(checked) => 
-                          setFormData(prev => ({ ...prev, agreeTerms: checked as boolean }))
-                        }
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={formData.travelerPhone}
+                          onChange={(e) => setFormData(prev => ({ ...prev, travelerPhone: e.target.value }))}
+                        />
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="preferences" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Experience Preferences</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>Dietary Requirements</Label>
+                      <select className="w-full px-3 py-2 border border-input rounded-md">
+                        <option value="">None</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="halal">Halal</option>
+                        <option value="gluten-free">Gluten-free</option>
+                      </select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label>Mobility Assistance</Label>
+                      <select className="w-full px-3 py-2 border border-input rounded-md">
+                        <option value="">Not required</option>
+                        <option value="wheelchair">Wheelchair accessible</option>
+                        <option value="assistance">Assistance required</option>
+                      </select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="requests">Special Requests</Label>
+                      <textarea 
+                        id="requests"
+                        className="w-full px-3 py-2 border border-input rounded-md min-h-[80px]"
+                        placeholder="Any special requests or requirements..."
                       />
-                      <Label htmlFor="terms" className="text-sm leading-relaxed">
-                        I agree to the <Link to="/terms" className="text-primary hover:underline">Terms and Conditions</Link> and <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link> *
-                      </Label>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="payment" className="mt-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CreditCard className="h-5 w-5" />
+                      Payment & Terms
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-4">
+                      <div className="flex items-start space-x-2">
+                        <Checkbox
+                          id="terms"
+                          checked={formData.agreeTerms}
+                          onCheckedChange={(checked) => 
+                            setFormData(prev => ({ ...prev, agreeTerms: checked as boolean }))
+                          }
+                        />
+                        <Label htmlFor="terms" className="text-sm leading-relaxed">
+                          I agree to the <Link to="/terms" className="text-primary hover:underline">Terms and Conditions</Link> and <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link> *
+                        </Label>
+                      </div>
+
+                      <div className="flex items-start space-x-2">
+                        <Checkbox
+                          id="marketing"
+                          checked={formData.agreeMarketing}
+                          onCheckedChange={(checked) => 
+                            setFormData(prev => ({ ...prev, agreeMarketing: checked as boolean }))
+                          }
+                        />
+                        <Label htmlFor="marketing" className="text-sm leading-relaxed">
+                          I'd like to receive updates about conservation impact and new experiences
+                        </Label>
+                      </div>
                     </div>
 
-                    <div className="flex items-start space-x-2">
-                      <Checkbox
-                        id="marketing"
-                        checked={formData.agreeMarketing}
-                        onCheckedChange={(checked) => 
-                          setFormData(prev => ({ ...prev, agreeMarketing: checked as boolean }))
-                        }
-                      />
-                      <Label htmlFor="marketing" className="text-sm leading-relaxed">
-                        I'd like to receive updates about conservation impact and new experiences
-                      </Label>
-                    </div>
-                  </div>
-
-                  <Button type="submit" className="w-full" size="lg">
-                    Confirm Booking - {formatPrice(total)}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                    <Button type="submit" className="w-full" size="lg" onClick={handleSubmit}>
+                      Confirm Booking - {formatPrice(total)}
+                    </Button>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
 
             {/* Security Notice */}
             <Card className="border-primary/20 bg-primary/5">

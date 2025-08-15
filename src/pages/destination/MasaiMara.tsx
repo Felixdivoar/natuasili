@@ -12,7 +12,7 @@ import masaiMaraDestination from "@/assets/destinations/masai-mara-destination.j
 const MasaiMaraDestination = () => {
   // Get Maasai Mara-related partners and experiences
   const maraPartners = mockProjects.filter(project => 
-    project.region.toLowerCase().includes('mara') || 
+    project.location_text.toLowerCase().includes('mara') || 
     project.name.toLowerCase().includes('mara') ||
     project.name.toLowerCase().includes('maasai')
   );
@@ -130,7 +130,7 @@ const MasaiMaraDestination = () => {
               <Card key={partner.id} className="hover:shadow-lg transition-shadow">
                 <div className="aspect-[16/10] relative">
                   <img
-                    src={partner.image_url}
+                    src={partner.hero_image}
                     alt={partner.name}
                     className="w-full h-full object-cover rounded-t-lg"
                   />
@@ -144,12 +144,12 @@ const MasaiMaraDestination = () => {
                   <CardTitle className="text-lg">{partner.name}</CardTitle>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {partner.region}
+                    {partner.location_text}
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {partner.mission}
+                    {partner.bio}
                   </p>
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
