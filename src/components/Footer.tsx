@@ -45,21 +45,22 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Explore</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#experiences" className="text-white/80 hover:text-accent transition-colors">Experiences</a></li>
-              <li><a href="#projects" className="text-white/80 hover:text-accent transition-colors">Conservation Projects</a></li>
-              <li><a href="#impact" className="text-white/80 hover:text-accent transition-colors">Impact Stories</a></li>
-              <li><a href="#about" className="text-white/80 hover:text-accent transition-colors">About Us</a></li>
+              <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">Experiences</Link></li>
+              <li><Link to="/partners" className="text-white/80 hover:text-accent transition-colors">Conservation Partners</Link></li>
+              <li><Link to="/destinations" className="text-white/80 hover:text-accent transition-colors">Destinations</Link></li>
+              <li><Link to="/impact-ledger" className="text-white/80 hover:text-accent transition-colors">Impact Ledger</Link></li>
+              <li><Link to="/about" className="text-white/80 hover:text-accent transition-colors">About Us</Link></li>
             </ul>
           </div>
 
-          {/* Partners */}
+          {/* Resources */}
           <div>
-            <h4 className="font-semibold mb-4">For Partners</h4>
+            <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Become a Partner</a></li>
-              <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Partner Resources</a></li>
-              <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Impact Reporting</a></li>
-              <li><Link to="/blog" className="text-white/80 hover:text-accent transition-colors">Blog</Link></li>
+              <li><Link to="/blog" className="text-white/80 hover:text-accent transition-colors">Blog & Insights</Link></li>
+              <li><Link to="/dashboard" className="text-white/80 hover:text-accent transition-colors">Traveler Dashboard</Link></li>
+              <li><Link to="/partner-dashboard" className="text-white/80 hover:text-accent transition-colors">Partner Portal</Link></li>
+              <li><a href="mailto:support@natuasili.com" className="text-white/80 hover:text-accent transition-colors">Support Center</a></li>
             </ul>
           </div>
 

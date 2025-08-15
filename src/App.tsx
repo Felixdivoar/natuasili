@@ -18,6 +18,11 @@ import About from "./pages/About";
 import Partners from "./pages/Partners";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import SamburuDestination from "./pages/destination/Samburu";
+import MasaiMaraDestination from "./pages/destination/MasaiMara";
+import CoastDestination from "./pages/destination/Coast";
+import NairobiDestination from "./pages/destination/Nairobi";
+import LaikipiaDestination from "./pages/destination/Laikipia";
 import Destinations from "./pages/Destinations";
 
 const queryClient = new QueryClient();

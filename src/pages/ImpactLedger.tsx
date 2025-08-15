@@ -235,18 +235,28 @@ const ImpactLedger = () => {
         </div>
       </section>
 
-      {/* Ledger Entries */}
+      {/* Tabs for different views */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold text-foreground">
-              Verified Impact Entries
-            </h2>
-            <Button variant="outline" className="gap-2">
-              <ExternalLink className="h-4 w-4" />
-              Export Data
-            </Button>
-          </div>
+          <Tabs defaultValue="entries" className="w-full">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-2xl font-bold text-foreground">
+                Impact Dashboard
+              </h2>
+              <Button variant="outline" className="gap-2">
+                <ExternalLink className="h-4 w-4" />
+                Export Data
+              </Button>
+            </div>
+            
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="entries">Impact Entries</TabsTrigger>
+              <TabsTrigger value="reports">Reports</TabsTrigger>
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
+              <TabsTrigger value="predictions">Forecasts</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="entries" className="mt-8">
 
           <div className="space-y-6">
             {filteredEntries.map((entry) => (
@@ -350,6 +360,124 @@ const ImpactLedger = () => {
               </Button>
             </div>
           )}
+            </TabsContent>
+
+            <TabsContent value="reports" className="mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Monthly Impact Report</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">Comprehensive monthly breakdown of conservation impact across all partners.</p>
+                    <Button size="sm">Download PDF</Button>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Partner Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">Detailed analysis of each partner's conservation outcomes and efficiency.</p>
+                    <Button size="sm">View Report</Button>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Impact Forecasting</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">Predictive analysis of conservation impact based on current trends.</p>
+                    <Button size="sm">View Forecast</Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="analytics" className="mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Impact by Theme</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span>Wildlife Protection</span>
+                        <span className="font-bold">{formatPrice(650)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Community Livelihoods</span>
+                        <span className="font-bold">{formatPrice(420)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Habitat Restoration</span>
+                        <span className="font-bold">{formatPrice(380)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Education</span>
+                        <span className="font-bold">{formatPrice(285)}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Geographic Distribution</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span>Maasai Mara</span>
+                        <span className="font-bold">35%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Samburu</span>
+                        <span className="font-bold">28%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Coastal Areas</span>
+                        <span className="font-bold">22%</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>Laikipia</span>
+                        <span className="font-bold">15%</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="predictions" className="mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>6-Month Impact Forecast</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">Based on current booking trends and seasonal patterns.</p>
+                    <div className="text-2xl font-bold text-primary mb-2">{formatPrice(2400)}</div>
+                    <p className="text-sm text-muted-foreground">Projected impact allocation</p>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Growth Trajectory</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">Conservation impact growth compared to previous periods.</p>
+                    <div className="text-2xl font-bold text-primary mb-2">+24%</div>
+                    <p className="text-sm text-muted-foreground">Quarterly growth rate</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 

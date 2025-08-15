@@ -80,11 +80,16 @@ const ConservationPartnersCarousel = () => {
                       </div>
                     </div>
 
-                    <div className="pt-4 border-t">
+                    <div className="pt-4 border-t space-y-2">
                       <Link to={`/projects/${project.id}`}>
                         <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
                           <ExternalLink className="h-4 w-4 mr-2" />
                           View Partner
+                        </Button>
+                      </Link>
+                      <Link to={`/marketplace?partner=${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                        <Button variant="outline" className="w-full">
+                          View Experiences
                         </Button>
                       </Link>
                     </div>

@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 const teamMembers = [
   {
     id: 1,
-    name: "FM Kariuki",
+    name: "FM",
     role: "Founder & COO",
     bio: "Passionate conservationist with 15 years of experience in wildlife protection and community engagement across East Africa.",
     image: "/placeholder.svg",
@@ -18,7 +18,7 @@ const teamMembers = [
   },
   {
     id: 2,
-    name: "MN Wanjiku",
+    name: "MN",
     role: "Head of Human Resources",
     bio: "Expert in building diverse, mission-driven teams with a focus on sustainable organizational growth and culture.",
     image: "/placeholder.svg", 
@@ -27,7 +27,7 @@ const teamMembers = [
   },
   {
     id: 3,
-    name: "AY Kimani",
+    name: "AY",
     role: "Sustainability Director",
     bio: "Environmental scientist specializing in impact measurement and sustainable tourism development in Kenya.",
     image: "/placeholder.svg",
@@ -36,7 +36,7 @@ const teamMembers = [
   },
   {
     id: 4,
-    name: "SO Mwangi",
+    name: "SO",
     role: "Chief Financial Officer",
     bio: "Financial strategist with expertise in conservation funding models and transparent impact allocation systems.",
     image: "/placeholder.svg",
@@ -45,7 +45,7 @@ const teamMembers = [
   },
   {
     id: 5,
-    name: "DO Njoroge", 
+    name: "DO", 
     role: "Chief Technology Officer",
     bio: "Technology leader focused on building platforms that connect conservation impact with global audiences.",
     image: "/placeholder.svg",

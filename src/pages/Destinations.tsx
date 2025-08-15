@@ -174,14 +174,14 @@ const Destinations = () => {
                   </div>
                   
                   <div className="flex gap-3 pt-4">
-                    <Link to={`/marketplace?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
+                    <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`} className="flex-1">
                       <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                        View Experiences
+                        Explore Destination
                       </Button>
                     </Link>
-                    <Link to="/partners" className="flex-1">
+                    <Link to={`/marketplace?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
                       <Button variant="outline" className="w-full">
-                        View Partners
+                        View Experiences
                       </Button>
                     </Link>
                   </div>
