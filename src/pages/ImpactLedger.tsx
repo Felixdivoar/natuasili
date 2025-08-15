@@ -7,11 +7,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera } from "lucide-react";
 import { mockProjects, mockExperiences } from "@/data/mockData";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const ImpactLedger = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
   const [selectedTheme, setSelectedTheme] = useState("all");
+  const { formatPrice } = useCurrency();
 
   // Mock ledger data - in real app this would come from API
   const mockLedgerEntries = [
@@ -116,7 +118,7 @@ const ImpactLedger = () => {
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Installed 8 modern beehives for community cooperative. Trained 12 beekeepers in sustainable harvesting methods. Expected to generate $2,400 annual income for participating families.",
+      proof_description: "Installed 8 modern beehives for community cooperative. Trained 12 beekeepers in sustainable harvesting methods. Expected to generate annual income for participating families.",
       verified_date: "2024-01-09"
     }
   ];
@@ -160,7 +162,7 @@ const ImpactLedger = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-8 text-center">
               <div>
-                <div className="text-3xl font-bold text-primary">${totalImpact.toLocaleString()}</div>
+                <div className="text-3xl font-bold text-primary">{formatPrice(totalImpact)}</div>
                 <div className="text-sm text-muted-foreground">Total Verified Impact</div>
               </div>
               <div>
@@ -286,7 +288,7 @@ const ImpactLedger = () => {
                     <div className="flex flex-col justify-center">
                       <div className="text-center p-4 bg-primary/5 rounded-lg">
                         <div className="text-2xl font-bold text-primary">
-                          ${entry.allocation_amount}
+                          {formatPrice(entry.allocation_amount)}
                         </div>
                         <div className="text-sm text-muted-foreground">
                           Impact Allocation

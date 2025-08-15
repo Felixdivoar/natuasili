@@ -13,8 +13,10 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const PartnerDashboard = () => {
+  const { formatPrice } = useCurrency();
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
@@ -60,7 +62,7 @@ const PartnerDashboard = () => {
                     <span className="text-sm font-medium text-muted-foreground">Revenue</span>
                   </div>
                   <div className="mt-2">
-                    <div className="text-2xl font-bold">$4,890</div>
+                    <div className="text-2xl font-bold">{formatPrice(4890)}</div>
                     <p className="text-sm text-muted-foreground">+12% from last month</p>
                   </div>
                 </CardContent>
@@ -173,7 +175,7 @@ const PartnerDashboard = () => {
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="font-bold">$120/person</span>
+                      <span className="font-bold">{formatPrice(120)}/person</span>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm">
                           <Eye className="h-4 w-4" />
@@ -286,7 +288,7 @@ const PartnerDashboard = () => {
                           </td>
                           <td className="p-4">Elephant Tracking</td>
                           <td className="p-4">March 15, 2024</td>
-                          <td className="p-4 font-medium">$240</td>
+                          <td className="p-4 font-medium">{formatPrice(240)}</td>
                           <td className="p-4">
                             <Badge variant="outline">Confirmed</Badge>
                           </td>
@@ -312,7 +314,7 @@ const PartnerDashboard = () => {
                     <TrendingUp className="h-5 w-5 text-primary" />
                     <span className="text-sm font-medium text-muted-foreground">Total Earnings</span>
                   </div>
-                  <div className="text-3xl font-bold">$12,450</div>
+                  <div className="text-3xl font-bold">{formatPrice(12450)}</div>
                   <p className="text-sm text-muted-foreground">+18% from last month</p>
                 </CardContent>
               </Card>
@@ -323,7 +325,7 @@ const PartnerDashboard = () => {
                     <Calendar className="h-5 w-5 text-primary" />
                     <span className="text-sm font-medium text-muted-foreground">This Month</span>
                   </div>
-                  <div className="text-3xl font-bold">$4,890</div>
+                  <div className="text-3xl font-bold">{formatPrice(4890)}</div>
                   <p className="text-sm text-muted-foreground">From 24 bookings</p>
                 </CardContent>
               </Card>
@@ -334,7 +336,7 @@ const PartnerDashboard = () => {
                     <DollarSign className="h-5 w-5 text-primary" />
                     <span className="text-sm font-medium text-muted-foreground">Pending</span>
                   </div>
-                  <div className="text-3xl font-bold">$1,240</div>
+                  <div className="text-3xl font-bold">{formatPrice(1240)}</div>
                   <p className="text-sm text-muted-foreground">Available in 3 days</p>
                 </CardContent>
               </Card>

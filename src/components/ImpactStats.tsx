@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { TreePine, Users, GraduationCap, Heart, DollarSign, Globe } from "lucide-react";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const ImpactStats = () => {
+  const { formatPrice } = useCurrency();
   const stats = [
     {
       icon: TreePine,
@@ -33,7 +35,7 @@ const ImpactStats = () => {
     },
     {
       icon: DollarSign,
-      value: "$2.1M",
+      value: formatPrice(2100000),
       label: "Funds Distributed",
       color: "bg-accent",
       description: "Direct funding to conservation projects"

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Users, DollarSign } from "lucide-react";
 import { Experience } from "@/types";
 import { Link } from "react-router-dom";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -20,6 +21,7 @@ const getThemeColor = (theme: string) => {
 };
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
+  const { formatPrice } = useCurrency();
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
       <div className="aspect-[4/3] bg-muted relative overflow-hidden">
@@ -41,7 +43,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         <div className="absolute bottom-3 right-3">
           <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
             <div className="text-lg font-bold text-foreground">
-              ${experience.base_price}
+              {formatPrice(experience.base_price)}
             </div>
             <div className="text-xs text-muted-foreground">
               per person

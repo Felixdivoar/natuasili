@@ -7,11 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Filter, MapPin, Users, DollarSign } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { Link } from "react-router-dom";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const Browse = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTheme, setSelectedTheme] = useState("all");
   const [selectedLocation, setSelectedLocation] = useState("all");
+  const { formatPrice } = useCurrency();
 
   const filteredExperiences = mockExperiences.filter(experience => {
     const matchesSearch = experience.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -132,7 +134,7 @@ const Browse = () => {
                         {experience.theme}
                       </Badge>
                       <Badge variant="secondary" className="bg-background/90 text-foreground">
-                        ${experience.base_price}
+                        {formatPrice(experience.base_price)}
                       </Badge>
                     </div>
                   </div>

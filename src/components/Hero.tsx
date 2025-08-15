@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Users, TreePine, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-conservation.jpg";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const Hero = () => {
+  const { formatPrice } = useCurrency();
   return (
     <section className="relative min-h-[80vh] flex items-center">
       {/* Background Image */}
@@ -66,7 +68,7 @@ const Hero = () => {
                 <Award className="w-5 h-5 text-white" />
               </div>
               <div>
-                <div className="text-2xl font-bold">$580K</div>
+                <div className="text-2xl font-bold">{formatPrice(580000)}</div>
                 <div className="text-sm text-white/80">Impact Generated</div>
               </div>
             </div>

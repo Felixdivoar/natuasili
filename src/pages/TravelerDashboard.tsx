@@ -13,10 +13,12 @@ import { mockBookings, mockProjects, mockExperiences } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const TravelerDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const { formatPrice } = useCurrency();
   
   // Mock user bookings with impact allocation data
   const userBookings = [
@@ -107,7 +109,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <DollarSign className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">${totalSpent}</div>
+                  <div className="text-2xl font-bold text-foreground">{formatPrice(totalSpent)}</div>
                   <div className="text-sm text-muted-foreground">Total Spent</div>
                 </CardContent>
               </Card>
@@ -115,7 +117,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <TreePine className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">${totalProjectAllocation}</div>
+                  <div className="text-2xl font-bold text-foreground">{formatPrice(totalProjectAllocation)}</div>
                   <div className="text-sm text-muted-foreground">To Conservation</div>
                 </CardContent>
               </Card>
@@ -123,7 +125,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <Eye className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">${totalImpactVerified}</div>
+                  <div className="text-2xl font-bold text-foreground">{formatPrice(totalImpactVerified)}</div>
                   <div className="text-sm text-muted-foreground">Impact Verified</div>
                 </CardContent>
               </Card>
@@ -206,14 +208,14 @@ const TravelerDashboard = () => {
                           <div className="space-y-4">
                             <div>
                               <div className="text-lg font-semibold text-foreground mb-2">
-                                ${booking.total_amount} Total
+                                {formatPrice(booking.total_amount)} Total
                               </div>
                               
                               <div className="space-y-3">
                                 <div>
                                   <div className="flex justify-between text-sm mb-1">
                                     <span className="text-muted-foreground">To Conservation</span>
-                                    <span className="font-medium">${booking.project_allocation}</span>
+                                    <span className="font-medium">{formatPrice(booking.project_allocation)}</span>
                                   </div>
                                   <Progress 
                                     value={(booking.project_allocation / booking.total_amount) * 100} 
@@ -224,7 +226,7 @@ const TravelerDashboard = () => {
                                 <div>
                                   <div className="flex justify-between text-sm mb-1">
                                     <span className="text-muted-foreground">Platform Fee</span>
-                                    <span className="font-medium">${booking.platform_allocation}</span>
+                                    <span className="font-medium">{formatPrice(booking.platform_allocation)}</span>
                                   </div>
                                   <Progress 
                                     value={(booking.platform_allocation / booking.total_amount) * 100} 
@@ -274,12 +276,12 @@ const TravelerDashboard = () => {
                         <CardContent>
                           <div className="space-y-4">
                             <div>
-                              <div className="text-2xl font-bold text-primary">${partnerTotal}</div>
+                              <div className="text-2xl font-bold text-primary">{formatPrice(partnerTotal)}</div>
                               <div className="text-sm text-muted-foreground">Allocated to Partner</div>
                             </div>
                             
                             <div>
-                              <div className="text-lg font-semibold text-foreground">${partnerImpact}</div>
+                              <div className="text-lg font-semibold text-foreground">{formatPrice(partnerImpact)}</div>
                               <div className="text-sm text-muted-foreground">Verified Impact</div>
                             </div>
                             
@@ -318,11 +320,11 @@ const TravelerDashboard = () => {
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Total Allocated to Conservation</span>
-                        <span className="font-semibold">${totalProjectAllocation}</span>
+                        <span className="font-semibold">{formatPrice(totalProjectAllocation)}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Verified Impact Created</span>
-                        <span className="font-semibold text-primary">${totalImpactVerified}</span>
+                        <span className="font-semibold text-primary">{formatPrice(totalImpactVerified)}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Impact Verification Rate</span>
