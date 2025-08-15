@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, Search, User, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -7,7 +8,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
               <Leaf className="w-6 h-6 text-primary-foreground" />
             </div>
@@ -15,18 +16,18 @@ const Header = () => {
               <h1 className="text-xl font-bold text-foreground">NatuAsili</h1>
               <p className="text-xs text-muted-foreground">Conservation Impact Hub</p>
             </div>
-          </div>
+          </Link>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#experiences" className="text-foreground hover:text-primary transition-colors">
-              Experiences
-            </a>
+            <Link to="/browse" className="text-foreground hover:text-primary transition-colors">
+              Browse
+            </Link>
+            <Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors">
+              Impact Ledger
+            </Link>
             <a href="#projects" className="text-foreground hover:text-primary transition-colors">
-              Projects
-            </a>
-            <a href="#impact" className="text-foreground hover:text-primary transition-colors">
-              Impact
+              Partners
             </a>
             <a href="#about" className="text-foreground hover:text-primary transition-colors">
               About
