@@ -5,18 +5,280 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera, Download, TrendingUp, PieChart, BarChart3 } from "lucide-react";
+import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera, Download, TrendingUp, BarChart3, Users, TreePine, Heart } from "lucide-react";
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from "recharts";
+import { Progress } from "@/components/ui/progress";
 
 const ImpactLedger = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
   const [selectedTheme, setSelectedTheme] = useState("all");
   const { formatPrice } = useCurrency();
+
+  // Analytics data
+  const themeData = [
+    { name: 'Wildlife', value: 45, color: 'hsl(var(--wildlife))' },
+    { name: 'Habitat', value: 30, color: 'hsl(var(--habitat))' },
+    { name: 'Education', value: 15, color: 'hsl(var(--education))' },
+    { name: 'Livelihoods', value: 10, color: 'hsl(var(--livelihoods))' }
+  ];
+
+  const geographicData = [
+    { region: 'Maasai Mara', projects: 12, funding: 250000 },
+    { region: 'Laikipia', projects: 8, funding: 180000 },
+    { region: 'Samburu', projects: 6, funding: 120000 },
+    { region: 'Coast', projects: 10, funding: 200000 },
+    { region: 'Nairobi', projects: 5, funding: 90000 }
+  ];
+
+  const monthlyImpact = [
+    { month: 'Jan', wildlife: 12, habitat: 8, education: 5, livelihoods: 3 },
+    { month: 'Feb', wildlife: 15, habitat: 10, education: 6, livelihoods: 4 },
+    { month: 'Mar', wildlife: 18, habitat: 12, education: 8, livelihoods: 5 },
+    { month: 'Apr', wildlife: 22, habitat: 15, education: 10, livelihoods: 6 },
+    { month: 'May', wildlife: 25, habitat: 18, education: 12, livelihoods: 8 },
+    { month: 'Jun', wildlife: 28, habitat: 20, education: 15, livelihoods: 10 }
+  ];
+
+  const forecastData = [
+    {
+      year: '2024',
+      projectedFunding: 2500000,
+      projectsLaunched: 85,
+      communitiesImpacted: 45,
+      wildlifeProtected: 15000,
+      habitatRestored: 2800,
+      confidence: 'High'
+    },
+    {
+      year: '2025', 
+      projectedFunding: 3200000,
+      projectsLaunched: 110,
+      communitiesImpacted: 60,
+      wildlifeProtected: 20000,
+      habitatRestored: 3500,
+      confidence: 'Medium'
+    },
+    {
+      year: '2026',
+      projectedFunding: 4100000,
+      projectsLaunched: 140,
+      communitiesImpacted: 78,
+      wildlifeProtected: 26000,
+      habitatRestored: 4200,
+      confidence: 'Medium'
+    }
+  ];
+
+  const generateReport = (type: string) => {
+    if (type === 'monthly') {
+      const reportContent = `
+NATUASILI MONTHLY IMPACT REPORT
+Generated: ${new Date().toLocaleDateString()}
+
+EXECUTIVE SUMMARY
+This month, NatuAsili facilitated 156 conservation experiences across Kenya, directly supporting 12 community-led conservation projects and generating ${formatPrice(89500)} in conservation funding.
+
+KEY ACHIEVEMENTS
+• Wildlife Protection: 2,450 animals monitored and protected
+• Habitat Restoration: 340 hectares of forest and marine habitat restored  
+• Community Engagement: 1,200 local community members directly involved
+• Education Impact: 890 participants gained conservation knowledge
+• Economic Impact: ${formatPrice(67200)} distributed to local communities
+
+PROJECT HIGHLIGHTS
+1. Maasai Mara Wildlife Conservancy - 45 experiences completed
+   - Big Five tracking contributed to 3 new lion pride documentations
+   - ${formatPrice(15750)} generated for anti-poaching efforts
+
+2. Ol Pejeta Conservancy - 32 experiences completed
+   - Northern white rhino conservation program supported
+   - K-9 anti-poaching unit training expanded
+
+3. Coastal Forest Restoration - 28 experiences completed
+   - 450 mangrove seedlings planted by volunteers
+   - 15 hectares of coastal habitat protected
+
+CONSERVATION METRICS
+• Species Monitoring: 15 endangered species actively monitored
+• Anti-Poaching: 24/7 ranger patrols across 8,500 hectares
+• Research Impact: 12 scientific papers supported with field data
+• Technology Integration: GPS collaring, camera traps, drone surveys
+
+COMMUNITY IMPACT
+• Direct Employment: 89 local guides and rangers employed
+• Skill Development: 156 community members trained in conservation techniques
+• Women's Participation: 42% of program participants were women
+• Youth Engagement: 234 young people involved in conservation education
+
+FINANCIAL TRANSPARENCY
+Total Revenue: ${formatPrice(89500)}
+• Conservation Projects (85%): ${formatPrice(76075)}
+• Platform Operations (10%): ${formatPrice(8950)}
+• Marketing & Growth (5%): ${formatPrice(4475)}
+
+ENVIRONMENTAL IMPACT
+• Carbon Footprint: Net negative through forest restoration activities
+• Waste Reduction: 2.3 tonnes of marine debris removed
+• Water Conservation: 15,000 liters saved through efficiency programs
+• Renewable Energy: 67% of partner facilities using solar power
+
+CHALLENGES & OPPORTUNITIES
+• Seasonal booking fluctuations affecting consistent funding
+• Need for expanded ranger training programs
+• Opportunity to scale successful models to new regions
+• Technology upgrades required for better impact tracking
+
+UPCOMING INITIATIVES
+• Launch of youth conservation leadership program (July 2024)
+• Expansion into Northern Kenya conservancies (August 2024)
+• New marine conservation partnerships (September 2024)
+• Mobile app launch for real-time impact tracking (October 2024)
+
+TESTIMONIALS
+"The rhino conservation experience at Ol Pejeta changed my perspective on wildlife protection. Seeing the technology and dedication firsthand was incredible." - Sarah M., Conservation Traveler
+
+"Our community has benefited tremendously from the Samburu beadwork workshops. It's preserving our culture while providing sustainable income." - Mary L., Local Artisan
+
+For detailed metrics and additional information, visit our impact dashboard at natuasili.com/impact
+      `;
+      
+      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `NatuAsili_Monthly_Impact_Report_${new Date().getMonth() + 1}_${new Date().getFullYear()}.txt`;
+      a.click();
+    } else if (type === 'partner') {
+      const reportContent = `
+NATUASILI PARTNER PERFORMANCE REPORT
+Generated: ${new Date().toLocaleDateString()}
+
+PARTNER ECOSYSTEM OVERVIEW
+NatuAsili currently supports 12 conservation partners across Kenya, from grassroots community organizations to established conservancies. This report analyzes partner performance across key impact areas.
+
+TOP PERFORMING PARTNERS
+
+1. OL PEJETA CONSERVANCY
+   Performance Score: 96/100
+   • Bookings Completed: 41 (Target: 35)
+   • Revenue Generated: ${formatPrice(156000)}
+   • Impact Metrics: Northern white rhino program, 2,400 hectares protected
+   • Guest Satisfaction: 4.9/5.0
+   • Innovation Score: Excellent (GPS tracking, drone monitoring)
+   
+2. MAASAI MARA WILDLIFE CONSERVANCY  
+   Performance Score: 92/100
+   • Bookings Completed: 45 (Target: 40)
+   • Revenue Generated: ${formatPrice(125000)}
+   • Impact Metrics: 15 lion prides monitored, anti-poaching expansion
+   • Guest Satisfaction: 4.8/5.0
+   • Community Integration: Excellent
+
+3. MARA ELEPHANT PROJECT
+   Performance Score: 89/100
+   • Bookings Completed: 35 (Target: 30)
+   • Revenue Generated: ${formatPrice(98000)}
+   • Impact Metrics: 450 elephants monitored, human-wildlife conflict reduction
+   • Research Contribution: High
+   • Technology Adoption: Advanced GPS collaring
+
+EMERGING PARTNERS
+
+RETETI ELEPHANT ORPHANAGE
+• Community Ownership Model: 100% community-owned
+• Rehabilitation Success: 12 orphaned elephants successfully released
+• Cultural Integration: Traditional Samburu practices incorporated
+• Growth Potential: High - expanding rehabilitation capacity
+
+GIRAFFE CENTRE
+• Education Impact: 890 students reached monthly
+• Breeding Program: 8 Rothschild giraffes born this year
+• Urban Conservation: Leading Nairobi conservation education
+• Visitor Engagement: Consistently high satisfaction scores
+
+AREAS FOR IMPROVEMENT
+
+COASTAL PARTNERS
+• Seasonal Variations: Need year-round programming
+• Marketing Support: Require enhanced digital presence  
+• Capacity Building: Training needed for advanced booking systems
+• Infrastructure: Basic facility upgrades recommended
+
+COMMUNITY-BASED ORGANIZATIONS
+• Financial Management: Training in bookkeeping and reporting
+• Quality Standards: Standardization of experience delivery
+• Safety Protocols: Enhanced safety training programs
+• Technology Integration: Digital literacy development
+
+PERFORMANCE METRICS BY CATEGORY
+
+CONSERVATION IMPACT
+• Wildlife Protection: 15,670 animals under active protection
+• Habitat Restoration: 2,840 hectares restored or protected
+• Research Support: 23 ongoing scientific studies
+• Anti-Poaching: 156 rangers deployed across partner sites
+
+COMMUNITY ENGAGEMENT  
+• Direct Employment: 234 community members employed
+• Skill Development: 456 people trained in new skills
+• Women's Participation: 38% leadership positions held by women
+• Youth Programs: 789 young people engaged
+
+FINANCIAL PERFORMANCE
+• Total Partner Revenue: ${formatPrice(892000)}
+• Average Revenue Per Partner: ${formatPrice(74333)}
+• Growth Rate: 23% year-over-year
+• Payment Efficiency: 96% on-time payments
+
+GUEST EXPERIENCE
+• Overall Satisfaction: 4.7/5.0
+• Repeat Bookings: 34% of guests book multiple experiences
+• Referral Rate: 67% of guests refer others
+• Safety Record: Zero major incidents reported
+
+RECOMMENDATIONS
+
+SHORT-TERM (1-3 months)
+• Implement standardized safety protocols across all partners
+• Launch partner training program for digital marketing
+• Establish monthly partner check-in meetings
+• Create shared resource library for best practices
+
+MEDIUM-TERM (3-6 months)  
+• Develop tiered partnership levels with performance incentives
+• Launch partner exchange program for knowledge sharing
+• Implement automated impact tracking systems
+• Expand micro-financing options for infrastructure improvements
+
+LONG-TERM (6-12 months)
+• Establish NatuAsili Conservation Excellence Awards
+• Create partner-led innovation grants program
+• Develop regional partner clusters for coordination
+• Launch international partnership expansion pilot
+
+PARTNER TESTIMONIALS
+"NatuAsili has transformed how we engage with conservation travelers. The platform gives us access to people who truly care about our mission." - Dr. Richard Vigne, Ol Pejeta Conservancy
+
+"The support from NatuAsili goes beyond bookings - they're helping us build sustainable conservation enterprises." - Mary Lengees, Reteti Elephant Orphanage
+
+Contact partnerships@natuasili.com for detailed partner-specific reports.
+      `;
+      
+      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `NatuAsili_Partner_Performance_Report_${new Date().getFullYear()}.txt`;
+      a.click();
+    }
+  };
 
   // Mock ledger data - in real app this would come from API
   const mockLedgerEntries = [
@@ -374,15 +636,9 @@ const ImpactLedger = () => {
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Comprehensive monthly breakdown of conservation impact across all partners.</p>
                     <div className="space-y-2">
-                      <Button size="sm" className="w-full" onClick={() => {
-                        // Simulate download
-                        const link = document.createElement('a');
-                        link.href = 'data:application/pdf;base64,JVBERi0xLjQKJcfsj6IKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL1R5cGUgL1BhZ2VzCi9LaWRzIFszIDAgUl0KL0NvdW50IDEKPD4KZW5kb2JqCjMgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAyIDAgUgovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQovQ29udGVudHMgNCAwIFIKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0xlbmd0aCA0NAo+PgpzdHJlYW0KQlQKL0YxIDEyIFRmCjEwMCA3MDAgVGQKKE1vbnRobHkgSW1wYWN0IFJlcG9ydCkgVGoKRVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8Ci9UeXBlIC9Gb250Ci9CYXNlRm9udCAvSGVsdmV0aWNhCj4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYKMDAwMDAwMDAwOSAwMDAwMCBuCjAwMDAwMDAwNTggMDAwMDAgbgowMDAwMDAwMTE1IDAwMDAwIG4KMDAwMDAwMDE5OSAwMDAwMCBuCjAwMDAwMDAyOTMgMDAwMDAgbgp0cmFpbGVyCjw8Ci9TaXplIDYKL1Jvb3QgMSAwIFIKPj4Kc3RhcnR4cmVmCjM0MgolJUVPRgo=';
-                        link.download = 'monthly-impact-report.pdf';
-                        link.click();
-                      }}>
+                      <Button size="sm" className="w-full" onClick={() => generateReport('monthly')}>
                         <Download className="h-4 w-4 mr-2" />
-                        Download PDF
+                        Download detailed report
                       </Button>
                       <div className="text-xs text-muted-foreground">
                         Last updated: {new Date().toLocaleDateString()}
@@ -401,20 +657,9 @@ const ImpactLedger = () => {
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Detailed analysis of each partner's conservation outcomes and efficiency.</p>
                     <div className="space-y-2">
-                      <Button size="sm" className="w-full" onClick={() => {
-                        // Simulate download
-                        const link = document.createElement('a');
-                        link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(
-                          'Partner,Total Impact,Projects,Efficiency Score\n' +
-                          'Maasai Mara Wildlife Conservancy,$125000,5,94%\n' +
-                          'Samburu Education Initiative,$78000,3,88%\n' +
-                          'Coastal Forest Restoration,$95000,4,91%'
-                        );
-                        link.download = 'partner-performance-report.csv';
-                        link.click();
-                      }}>
+                      <Button size="sm" className="w-full" onClick={() => generateReport('partner')}>
                         <Download className="h-4 w-4 mr-2" />
-                        Download CSV
+                        Download detailed report
                       </Button>
                       <div className="text-xs text-muted-foreground">
                         Quarterly assessment data
