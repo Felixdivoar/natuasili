@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const experienceId = searchParams.get("experience");
   const quantity = parseInt(searchParams.get("quantity") || "1");
@@ -63,7 +64,9 @@ const Checkout = () => {
       description: "You'll receive a confirmation email shortly.",
     });
 
-    // In real app, would redirect to payment processor or success page
+    // Redirect to success page
+    navigate(`/booking-success?experience=${experience.slug}&qty=${quantity}&traveler_name=${encodeURIComponent(formData.travelerName)}`);
+    
     console.log("Booking data:", {
       experience: experience.id,
       quantity,

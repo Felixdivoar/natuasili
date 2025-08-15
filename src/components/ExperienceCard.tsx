@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Users, DollarSign } from "lucide-react";
 import { Experience } from "@/types";
+import { Link } from "react-router-dom";
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -76,12 +77,14 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         </div>
         
         <div className="flex gap-2">
-          <Button 
-            className="flex-1 bg-primary hover:bg-primary-hover" 
-            size="sm"
-          >
-            Book Now
-          </Button>
+          <Link to={`/experience/${experience.slug}`} className="flex-1">
+            <Button 
+              className="w-full bg-primary hover:bg-primary-hover" 
+              size="sm"
+            >
+              View Details
+            </Button>
+          </Link>
           <Button 
             variant="outline" 
             size="sm"

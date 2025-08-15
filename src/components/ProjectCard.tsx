@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, DollarSign } from "lucide-react";
 import { Project } from "@/types";
+import { Link } from "react-router-dom";
 
 interface ProjectCardProps {
   project: Project;
@@ -69,12 +70,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
         
-        <Button 
-          className="w-full bg-primary hover:bg-primary-hover" 
-          size="sm"
-        >
-          View Experiences
-        </Button>
+        <Link to="/browse" className="w-full">
+          <Button 
+            className="w-full bg-primary hover:bg-primary-hover" 
+            size="sm"
+          >
+            View Experiences
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   );

@@ -1,6 +1,14 @@
 // Mock data for NatuAsili platform
 import { Project, Experience, User, Booking, ImpactProof } from '@/types';
 
+// Import real images
+import bigFiveTracking from '@/assets/big-five-tracking.jpg';
+import beadworkWorkshop from '@/assets/beadwork-workshop.jpg';
+import mangroveRestoration from '@/assets/mangrove-restoration.jpg';
+import maasaiMaraProject from '@/assets/maasai-mara-project.jpg';
+import samburuEducation from '@/assets/samburu-education.jpg';
+import coastalForest from '@/assets/coastal-forest.jpg';
+
 export const mockProjects: Project[] = [
   {
     id: '1',
@@ -11,7 +19,7 @@ export const mockProjects: Project[] = [
     contact_email: 'contact@maasaimara.org',
     phone: '+254-701-234567',
     location_text: 'Maasai Mara, Narok County, Kenya',
-    hero_image: '/api/placeholder/800/400',
+    hero_image: maasaiMaraProject,
     bio: 'Protecting the iconic Maasai Mara ecosystem and supporting local Maasai communities through sustainable conservation practices and wildlife protection initiatives.',
     metrics_bookings_count: 45,
     metrics_funds_total: 125000,
@@ -26,7 +34,7 @@ export const mockProjects: Project[] = [
     contact_email: 'learn@samburu.edu',
     phone: '+254-702-345678',
     location_text: 'Samburu County, Kenya',
-    hero_image: '/api/placeholder/800/400',
+    hero_image: samburuEducation,
     bio: 'Empowering Samburu children through quality education while preserving traditional knowledge and culture.',
     metrics_bookings_count: 28,
     metrics_funds_total: 78000,
@@ -41,7 +49,7 @@ export const mockProjects: Project[] = [
     contact_email: 'restore@coastal.org',
     phone: '+254-703-456789',
     location_text: 'Kilifi County, Kenya',
-    hero_image: '/api/placeholder/800/400',
+    hero_image: coastalForest,
     bio: 'Restoring degraded coastal forests and mangrove ecosystems while supporting local fishing communities.',
     metrics_bookings_count: 32,
     metrics_funds_total: 95000,
@@ -56,7 +64,7 @@ export const mockExperiences: Experience[] = [
     title: 'Big Five Wildlife Tracking Experience',
     slug: 'big-five-tracking',
     description: 'Join our expert guides for an unforgettable wildlife tracking experience in the heart of Maasai Mara. Learn traditional tracking techniques while contributing to wildlife conservation research.',
-    images: ['/api/placeholder/600/400', '/api/placeholder/600/400'],
+    images: [bigFiveTracking, maasaiMaraProject],
     location_text: 'Maasai Mara National Reserve',
     theme: 'Wildlife',
     activity_type: 'Tracking',
@@ -75,7 +83,7 @@ export const mockExperiences: Experience[] = [
     title: 'Traditional Beadwork Workshop',
     slug: 'beadwork-workshop',
     description: 'Learn the ancient art of Samburu beadwork from master craftswomen while supporting local artisan communities and preserving cultural heritage.',
-    images: ['/api/placeholder/600/400'],
+    images: [beadworkWorkshop, samburuEducation],
     location_text: 'Samburu Cultural Center',
     theme: 'Education',
     activity_type: 'Workshop',
@@ -94,7 +102,7 @@ export const mockExperiences: Experience[] = [
     title: 'Mangrove Restoration Volunteer Day',
     slug: 'mangrove-restoration',
     description: 'Get your hands dirty planting mangrove seedlings and learning about coastal ecosystem restoration from marine biologists.',
-    images: ['/api/placeholder/600/400'],
+    images: [mangroveRestoration, coastalForest],
     location_text: 'Kilifi Creek, Kenya Coast',
     theme: 'Habitat',
     activity_type: 'Community',
@@ -161,7 +169,7 @@ export const mockImpactProofs: ImpactProof[] = [
     project_id: '1',
     due_date: '2023-08-01',
     submitted_at: '2023-07-28T14:30:00Z',
-    media: ['/api/placeholder/400/300'],
+    media: [bigFiveTracking],
     short_text: 'Successfully tracked and documented 3 lion prides, contributing valuable data to our conservation research.',
     status: 'approved',
     created_at: '2023-06-01T10:00:00Z'

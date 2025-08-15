@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import Checkout from "./pages/Checkout";
+import BookingSuccess from "./pages/BookingSuccess";
 import ImpactLedger from "./pages/ImpactLedger";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/browse" element={<Browse />} />
           <Route path="/experience/:slug" element={<ExperienceDetail />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/booking-success" element={<BookingSuccess />} />
           <Route path="/impact-ledger" element={<ImpactLedger />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
