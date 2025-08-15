@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { CalendarDays, MapPin, DollarSign, TreePine, Users, Droplets, GraduationCap, Eye, ExternalLink, User, Edit, Save } from "lucide-react";
+import { CalendarDays, MapPin, DollarSign, TreePine, Users, Droplets, GraduationCap, Eye, ExternalLink, User, Edit, Save, Heart } from "lucide-react";
 import { mockBookings, mockProjects, mockExperiences } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -148,8 +148,9 @@ const TravelerDashboard = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Tabs defaultValue="bookings" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="bookings">My Bookings</TabsTrigger>
+                <TabsTrigger value="saved">Saved Experiences</TabsTrigger>
                 <TabsTrigger value="impact">Impact Breakdown</TabsTrigger>
               </TabsList>
 
@@ -250,6 +251,48 @@ const TravelerDashboard = () => {
                               </Button>
                             </div>
                           </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="saved" className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-foreground">Saved Experiences</h2>
+                  <Button asChild>
+                    <Link to="/browse">Browse More</Link>
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {mockExperiences.slice(0, 4).map((experience) => (
+                    <Card key={experience.id}>
+                      <div className="aspect-[4/3] relative">
+                        <img
+                          src={experience.images[0]}
+                          alt={experience.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="absolute top-4 right-4 bg-white/80 hover:bg-white text-red-500"
+                        >
+                          <Heart className="h-4 w-4 fill-current" />
+                        </Button>
+                      </div>
+                      <CardContent className="p-4">
+                        <h3 className="font-semibold text-foreground mb-2">{experience.title}</h3>
+                        <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                          {experience.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-foreground">{formatPrice(experience.base_price)}</span>
+                          <Link to={`/experience/${experience.slug}`}>
+                            <Button size="sm">View Details</Button>
+                          </Link>
                         </div>
                       </CardContent>
                     </Card>

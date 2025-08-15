@@ -4,6 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
+import partnerSpotlightBlog from "@/assets/blog/partner-spotlight-blog.jpg";
+import whyPartnerBlog from "@/assets/blog/why-partner-blog.jpg";
+import sustainableTourismBlog from "@/assets/blog/sustainable-tourism-blog.jpg";
+import communityImpactBlog from "@/assets/blog/community-impact-blog.jpg";
+import conservationTechBlog from "@/assets/blog/conservation-tech-blog.jpg";
+
 const blogPosts = [
   {
     id: 1,
@@ -13,7 +20,7 @@ const blogPosts = [
     author: "Dr. Sarah Kimani",
     date: "2024-01-15",
     readTime: "5 min read",
-    image: "/src/assets/maasai-mara-project.jpg",
+    image: impactMetricsBlog,
     slug: "real-impact-conservation-tourism-kenya"
   },
   {
@@ -24,7 +31,7 @@ const blogPosts = [
     author: "James Mwangi",
     date: "2024-01-12",
     readTime: "4 min read", 
-    image: "/src/assets/big-five-tracking.jpg",
+    image: partnerSpotlightBlog,
     slug: "partner-spotlight-maasai-mara-conservancy"
   },
   {
@@ -35,7 +42,7 @@ const blogPosts = [
     author: "Alice Nyong'o",
     date: "2024-01-10",
     readTime: "6 min read",
-    image: "/src/assets/samburu-education.jpg", 
+    image: whyPartnerBlog, 
     slug: "why-partner-natuasili-guide"
   },
   {
@@ -46,7 +53,7 @@ const blogPosts = [
     author: "Peter Njoroge",
     date: "2024-01-08",
     readTime: "7 min read",
-    image: "/src/assets/beadwork-workshop.jpg",
+    image: communityImpactBlog,
     slug: "sustainable-livelihoods-conservation"
   },
   {
@@ -57,7 +64,7 @@ const blogPosts = [
     author: "Dr. Grace Wanjiru", 
     date: "2024-01-05",
     readTime: "8 min read",
-    image: "/src/assets/mangrove-restoration.jpg",
+    image: sustainableTourismBlog,
     slug: "habitat-restoration-success-stories"
   },
   {
@@ -68,7 +75,7 @@ const blogPosts = [
     author: "Michael Kipchoge",
     date: "2024-01-03", 
     readTime: "5 min read",
-    image: "/src/assets/mara-elephant-tracking.jpg",
+    image: conservationTechBlog,
     slug: "future-wildlife-protection-technology"
   }
 ];

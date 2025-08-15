@@ -8,48 +8,52 @@ import {
 } from "@/components/ui/carousel";
 import { MapPin } from "lucide-react";
 
+import nairobiImage from "@/assets/destinations/nairobi-destination.jpg";
+import samburuImage from "@/assets/destinations/samburu-destination.jpg";
+import masaiMaraImage from "@/assets/destinations/masai-mara-destination.jpg";
+import coastImage from "@/assets/destinations/coast-destination.jpg";
+import laikipiaImage from "@/assets/destinations/laikipia-destination.jpg";
+
 const destinations = [
   {
     id: 1,
     name: "Maasai Mara",
-    description: "World-renowned wildlife conservancy",
-    image: "/src/assets/maasai-mara-project.jpg",
-    location: "Narok County"
+    description: "World-renowned wildlife conservancy and Great Migration destination",
+    image: masaiMaraImage,
+    location: "Narok County",
+    partners: ["Maasai Mara Wildlife Conservancy", "Mara Elephant Project"]
   },
   {
     id: 2,
-    name: "Samburu National Reserve",
-    description: "Unique wildlife and cultural experiences", 
-    image: "/src/assets/samburu-education.jpg",
-    location: "Samburu County"
+    name: "Samburu",
+    description: "Unique wildlife and cultural experiences in Kenya's northern frontier", 
+    image: samburuImage,
+    location: "Samburu County",
+    partners: ["Samburu Education Initiative"]
   },
   {
     id: 3,
-    name: "Coastal Forests",
-    description: "Mangrove restoration and marine conservation",
-    image: "/src/assets/coastal-forest.jpg", 
-    location: "Coastal Kenya"
+    name: "Coastal Kenya",
+    description: "Mangrove restoration and marine conservation along the Indian Ocean",
+    image: coastImage, 
+    location: "Coastal Kenya",
+    partners: ["Coastal Forest Restoration"]
   },
   {
     id: 4,
-    name: "Nairobi National Park",
-    description: "Urban wildlife sanctuary",
-    image: "/src/assets/nairobi-park-cleanup.jpg",
-    location: "Nairobi"
+    name: "Nairobi",
+    description: "Urban wildlife sanctuary and forest conservation",
+    image: nairobiImage,
+    location: "Nairobi County",
+    partners: ["Friends of Nairobi National Park", "Friends of Karura Forest"]
   },
   {
     id: 5,
-    name: "Karura Forest",
-    description: "Urban forest conservation",
-    image: "/src/assets/karura-forest-planting.jpg",
-    location: "Nairobi"
-  },
-  {
-    id: 6,
-    name: "Ol Pejeta Conservancy", 
-    description: "Rhino sanctuary and wildlife protection",
-    image: "/src/assets/ol-pejeta-rhino.jpg",
-    location: "Laikipia County"
+    name: "Laikipia",
+    description: "Rhino sanctuary and community-based conservation",
+    image: laikipiaImage,
+    location: "Laikipia County",
+    partners: ["Ol Pejeta Conservancy"]
   }
 ];
 
@@ -87,9 +91,12 @@ const DestinationCarousel = () => {
                     <div className="absolute bottom-4 left-4 text-white">
                       <h3 className="text-xl font-bold mb-1">{destination.name}</h3>
                       <p className="text-sm text-white/90 mb-2">{destination.description}</p>
-                      <div className="flex items-center gap-1 text-xs text-white/80">
+                      <div className="flex items-center gap-1 text-xs text-white/80 mb-2">
                         <MapPin className="h-3 w-3" />
                         {destination.location}
+                      </div>
+                      <div className="text-xs text-white/70">
+                        {destination.partners.length} Partner{destination.partners.length > 1 ? 's' : ''}
                       </div>
                     </div>
                   </div>
@@ -97,8 +104,8 @@ const DestinationCarousel = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
+          <CarouselPrevious className="hidden md:flex -left-4" />
+          <CarouselNext className="hidden md:flex -right-4" />
         </Carousel>
       </div>
     </section>

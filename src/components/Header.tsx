@@ -36,22 +36,11 @@ const Header = () => {
             <Link to="/about" className="text-foreground hover:text-primary transition-colors">
               About
             </Link>
-            <Link to="/blog" className="text-foreground hover:text-primary transition-colors">
-              Blog
-            </Link>
           </nav>
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
             <CurrencySelector />
-            <Button variant="ghost" size="sm" className="hidden sm:flex">
-              <Search className="w-4 h-4 mr-2" />
-              Search
-            </Button>
-            <Button variant="ghost" size="sm" className="hidden sm:flex">
-              <Heart className="w-4 h-4 mr-2" />
-              Saved
-            </Button>
             <Button variant="outline" size="sm">
               <User className="w-4 h-4 mr-2" />
               Sign In

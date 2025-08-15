@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 import visaLogo from "@/assets/visa-logo.png";
 import mastercardLogo from "@/assets/mastercard-logo.png";
 import mpesaLogo from "@/assets/mpesa-logo.png";
@@ -58,7 +59,7 @@ const Footer = () => {
               <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Become a Partner</a></li>
               <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Partner Resources</a></li>
               <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Impact Reporting</a></li>
-              <li><a href="#" className="text-white/80 hover:text-accent transition-colors">Support</a></li>
+              <li><Link to="/blog" className="text-white/80 hover:text-accent transition-colors">Blog</Link></li>
             </ul>
           </div>
 
