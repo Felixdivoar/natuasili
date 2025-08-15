@@ -8,6 +8,8 @@ import { Search, Filter, MapPin, Users, DollarSign } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Browse = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +38,7 @@ const Browse = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Search and Filters */}
       <section className="bg-muted/30 py-12">
         <div className="container mx-auto px-4">
@@ -160,14 +163,29 @@ const Browse = () => {
                       {experience.description}
                     </p>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-4">
                       <div className="text-sm text-muted-foreground">
-                        By {project?.name}
+                        By <Link to={`/projects/${project?.id}`} className="hover:text-primary underline">
+                          {project?.name}
+                        </Link>
                       </div>
                       <div className="flex items-center gap-1 text-sm text-muted-foreground">
                         <Users className="h-4 w-4" />
                         {experience.capacity} max
                       </div>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Button size="sm" asChild className="flex-1">
+                        <Link to={`/experience/${experience.slug}`}>
+                          View Details
+                        </Link>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link to={`/projects/${project?.id}`}>
+                          Partner
+                        </Link>
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -193,6 +211,7 @@ const Browse = () => {
           )}
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

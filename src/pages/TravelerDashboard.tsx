@@ -93,6 +93,7 @@ const TravelerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Header */}
       <section className="bg-primary/5 py-12">
         <div className="container mx-auto px-4">
@@ -354,6 +355,7 @@ const TravelerDashboard = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

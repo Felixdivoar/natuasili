@@ -30,12 +30,12 @@ const Header = () => {
             <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
               My Dashboard
             </Link>
-            <a href="#projects" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/partners" className="text-foreground hover:text-primary transition-colors">
               Partners
-            </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors">
+            </Link>
+            <Link to="/about" className="text-foreground hover:text-primary transition-colors">
               About
-            </a>
+            </Link>
           </nav>
 
           {/* Actions */}

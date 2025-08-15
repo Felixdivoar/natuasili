@@ -8,6 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera } from "lucide-react";
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { Link } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const ImpactLedger = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -149,6 +152,7 @@ const ImpactLedger = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Hero Section */}
       <section className="bg-primary/5 py-16">
         <div className="container mx-auto px-4">
@@ -256,7 +260,11 @@ const ImpactLedger = () => {
                           <h3 className="text-lg font-semibold text-foreground mb-2">
                             {entry.experience_title}
                           </h3>
-                          <p className="text-muted-foreground">by {entry.project_name}</p>
+                           <p className="text-muted-foreground">
+                             by <Link to={`/projects/${entry.project_name === 'Maasai Mara Wildlife Conservancy' ? '1' : entry.project_name === 'Samburu Education Initiative' ? '2' : '3'}`} className="hover:text-primary underline">
+                               {entry.project_name}
+                             </Link>
+                           </p>
                         </div>
                         <div className="flex gap-2">
                           <Badge className={getThemeColor(entry.theme)}>
@@ -408,6 +416,7 @@ const ImpactLedger = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
