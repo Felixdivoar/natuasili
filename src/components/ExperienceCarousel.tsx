@@ -110,17 +110,24 @@ const ExperienceCarousel = () => {
                       </div>
 
                       <div className="flex items-center justify-between pt-4 border-t">
-                        <div className="text-right">
+                        <div className="text-left">
                           <div className="text-2xl font-bold text-foreground">
                             {formatPrice(experience.base_price)}
                           </div>
                           <div className="text-sm text-muted-foreground">per person</div>
                         </div>
-                        <Link to={`/experience/${experience.slug}`}>
-                          <Button className="bg-conservation hover:bg-conservation/90 text-white">
-                            View Details
-                          </Button>
-                        </Link>
+                        <div className="flex gap-2">
+                          <Link to={`/experience/${experience.slug}`}>
+                            <Button variant="outline" size="sm">
+                              View Details
+                            </Button>
+                          </Link>
+                          <Link to={`/checkout?experience=${experience.id}&quantity=1`}>
+                            <Button className="bg-conservation hover:bg-conservation/90 text-white" size="sm">
+                              Book Now
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>

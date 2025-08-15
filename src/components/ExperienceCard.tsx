@@ -82,28 +82,41 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           </div>
         </div>
         
-        <div className="flex gap-2">
-          <Link to={`/experience/${experience.slug}`} className="flex-1">
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-2">
+            <Link to={`/experience/${experience.slug}`} className="flex-1">
+              <Button 
+                variant="outline"
+                className="w-full" 
+                size="sm"
+              >
+                View Details
+              </Button>
+            </Link>
+            <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
+              <Button 
+                className="w-full bg-conservation hover:bg-conservation/90 text-white" 
+                size="sm"
+              >
+                Book Now
+              </Button>
+            </Link>
+          </div>
+          <div className="flex gap-2">
+            <SocialShare
+              title={experience.title}
+              description={experience.description}
+              url={`${window.location.origin}/experience/${experience.slug}`}
+              className="flex-1"
+            />
             <Button 
-              className="w-full bg-primary hover:bg-primary-hover" 
+              variant="outline" 
               size="sm"
+              className="px-3"
             >
-              View Details
+              ♡
             </Button>
-          </Link>
-          <SocialShare
-            title={experience.title}
-            description={experience.description}
-            url={`${window.location.origin}/experience/${experience.slug}`}
-            className="hidden sm:block"
-          />
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="px-3"
-          >
-            ♡
-          </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

@@ -24,6 +24,7 @@ import CoastDestination from "./pages/destination/Coast";
 import NairobiDestination from "./pages/destination/Nairobi";
 import LaikipiaDestination from "./pages/destination/Laikipia";
 import Destinations from "./pages/Destinations";
+import ExperienceHub from "./pages/ExperienceHub";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
@@ -56,6 +57,7 @@ const App = () => (
             <Route path="/destinations/coast" element={<CoastDestination />} />
             <Route path="/destinations/nairobi" element={<NairobiDestination />} />
             <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
+            <Route path="/experience-hub" element={<ExperienceHub />} />
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import ExperienceCard from "./ExperienceCard";
 import { mockExperiences } from "@/data/mockData";
 
@@ -15,13 +17,21 @@ const FeaturedExperiences = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockExperiences.map((experience) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {mockExperiences.slice(0, 6).map((experience) => (
             <ExperienceCard 
               key={experience.id} 
               experience={experience} 
             />
           ))}
+        </div>
+
+        <div className="text-center">
+          <Link to="/marketplace">
+            <Button size="lg" variant="outline">
+              View All Experiences
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

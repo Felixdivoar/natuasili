@@ -185,17 +185,22 @@ const Browse = () => {
                     </div>
                     
                     <div className="flex gap-2">
-                      <Button size="sm" asChild className="flex-1">
-                        <Link to={`/experience/${experience.slug}`}>
+                      <Link to={`/experience/${experience.slug}`} className="flex-1">
+                        <Button size="sm" variant="outline" className="w-full">
                           View Details
-                        </Link>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to={`/projects/${project?.id}`}>
-                          Partner
-                        </Link>
-                      </Button>
+                        </Button>
+                      </Link>
+                      <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
+                        <Button size="sm" className="w-full bg-conservation hover:bg-conservation/90 text-white">
+                          Book Now
+                        </Button>
+                      </Link>
                     </div>
+                    <Link to={`/projects/${project?.id}`} className="mt-2 block">
+                      <Button variant="ghost" size="sm" className="w-full text-xs">
+                        View Partner: {project?.name}
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               );

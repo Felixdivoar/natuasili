@@ -43,7 +43,7 @@ const Header = () => {
             <CurrencySelector />
             <Button variant="outline" size="sm">
               <User className="w-4 h-4 mr-2" />
-              Sign In
+              <Link to="/dashboard">Sign In</Link>
             </Button>
             <Link to="/partner-dashboard">
               <Button size="sm" className="bg-primary hover:bg-primary-hover">
