@@ -67,6 +67,19 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
           {experience.description}
         </p>
+
+        {/* Partner information */}
+        {experience.project && (
+          <div className="mb-4 p-2 bg-muted/50 rounded-lg">
+            <p className="text-xs text-muted-foreground mb-1">Conservation Partner</p>
+            <Link 
+              to={`/projects/${experience.project.id}`}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              {experience.project.name}
+            </Link>
+          </div>
+        )}
         
         <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
           <div className="flex items-center">

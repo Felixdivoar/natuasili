@@ -26,7 +26,7 @@
     --secondary-foreground: 0 0% 0%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 0%;
 
     /* Conservation green accent */
     --accent: 142 71% 45%;
@@ -113,11 +113,28 @@
 }
 
 @layer base {
-  * {
+* {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Scroll to top of page for route changes */
+  .router-outlet {
+    scroll-margin-top: 0;
+  }
+
+  /* Reduced font sizes by 40% */
+  .text-3xl { font-size: 1.125rem; line-height: 1.75rem; } /* was 1.875rem */
+  .text-4xl { font-size: 1.44rem; line-height: 2.2rem; } /* was 2.25rem */
+  .text-5xl { font-size: 1.8rem; line-height: 2.4rem; } /* was 3rem */
+  .text-6xl { font-size: 2.25rem; line-height: 2.5rem; } /* was 3.75rem */
+  .text-xl { font-size: 1.2rem; line-height: 1.75rem; } /* was 1.25rem */
+  .text-2xl { font-size: 1.35rem; line-height: 2rem; } /* was 1.5rem */
 }

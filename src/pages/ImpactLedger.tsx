@@ -720,24 +720,32 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                     <CardTitle>Impact by Theme</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span>Wildlife Protection</span>
-                        <span className="font-bold">{formatPrice(650)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>Community Livelihoods</span>
-                        <span className="font-bold">{formatPrice(420)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>Habitat Restoration</span>
-                        <span className="font-bold">{formatPrice(380)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>Education</span>
-                        <span className="font-bold">{formatPrice(285)}</span>
-                      </div>
-                    </div>
+                    <ChartContainer
+                      config={{
+                        wildlife: { label: "Wildlife Protection", color: "hsl(var(--wildlife))" },
+                        livelihoods: { label: "Community Livelihoods", color: "hsl(var(--livelihoods))" },
+                        habitat: { label: "Habitat Restoration", color: "hsl(var(--habitat))" },
+                        education: { label: "Education", color: "hsl(var(--education))" },
+                      }}
+                      className="h-[200px]"
+                    >
+                      <PieChart>
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Pie
+                          data={[
+                            { name: "Wildlife Protection", value: 650, fill: "hsl(var(--wildlife))" },
+                            { name: "Community Livelihoods", value: 420, fill: "hsl(var(--livelihoods))" },
+                            { name: "Habitat Restoration", value: 380, fill: "hsl(var(--habitat))" },
+                            { name: "Education", value: 285, fill: "hsl(var(--education))" },
+                          ]}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={80}
+                          dataKey="value"
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        />
+                      </PieChart>
+                    </ChartContainer>
                   </CardContent>
                 </Card>
                 
@@ -746,24 +754,32 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                     <CardTitle>Geographic Distribution</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <span>Maasai Mara</span>
-                        <span className="font-bold">35%</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>Samburu</span>
-                        <span className="font-bold">28%</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>Coastal Areas</span>
-                        <span className="font-bold">22%</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>Laikipia</span>
-                        <span className="font-bold">15%</span>
-                      </div>
-                    </div>
+                    <ChartContainer
+                      config={{
+                        mara: { label: "Maasai Mara", color: "hsl(142 71% 45%)" },
+                        samburu: { label: "Samburu", color: "hsl(142 71% 35%)" },
+                        coast: { label: "Coastal Areas", color: "hsl(142 71% 55%)" },
+                        laikipia: { label: "Laikipia", color: "hsl(142 71% 65%)" },
+                      }}
+                      className="h-[200px]"
+                    >
+                      <PieChart>
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Pie
+                          data={[
+                            { name: "Maasai Mara", value: 35, fill: "hsl(142 71% 45%)" },
+                            { name: "Samburu", value: 28, fill: "hsl(142 71% 35%)" },
+                            { name: "Coastal Areas", value: 22, fill: "hsl(142 71% 55%)" },
+                            { name: "Laikipia", value: 15, fill: "hsl(142 71% 65%)" },
+                          ]}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={80}
+                          dataKey="value"
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        />
+                      </PieChart>
+                    </ChartContainer>
                   </CardContent>
                 </Card>
               </div>

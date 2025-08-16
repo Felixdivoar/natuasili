@@ -30,15 +30,12 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Link to="/browse">
+            <Link to="/marketplace">
               <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
                 Explore Experiences
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="bg-white/10 border-white text-white hover:bg-white hover:text-foreground">
-              Become a Partner
-            </Button>
           </div>
 
           {/* Stats */}

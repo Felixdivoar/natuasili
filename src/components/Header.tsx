@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Leaf, Search, User, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import CurrencySelector from "@/components/CurrencySelector";
+import logoImage from "@/assets/natuasili-logo.png";
 
 const Header = () => {
   return (
@@ -9,14 +10,8 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <Leaf className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">NatuAsili</h1>
-              <p className="text-xs text-muted-foreground">Conservation Impact Hub</p>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img src={logoImage} alt="NatuAsili" className="h-12" />
           </Link>
 
           {/* Navigation */}
@@ -27,7 +22,7 @@ const Header = () => {
             <Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors">
               Impact Ledger
             </Link>
-            <Link to="/browse" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/marketplace" className="text-foreground hover:text-primary transition-colors">
               Marketplace
             </Link>
             <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors">
