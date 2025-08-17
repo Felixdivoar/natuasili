@@ -135,44 +135,47 @@
   color: hsl(var(--foreground)) !important;
 }
 
-/* Typography system - sentence case throughout */
-/* Reduced heading sizes and adjusted description font sizes */
-
-/* Page headings - reduced by 45% */
-.text-6xl {
-  font-size: 2.0625rem; /* was 3.75rem - 45% reduction */
-  line-height: 2.5rem;
 }
 
-.text-5xl {
-  font-size: 1.65rem; /* was 3rem - 45% reduction */  
-  line-height: 2.2rem;
-}
+@layer utilities {
+  /* Typography system - sentence case throughout */
+  /* Reduced heading sizes and adjusted description font sizes */
 
-/* Headers - reduced by 45% */
-.text-4xl {
-  font-size: 1.2375rem; /* was 2.25rem - 45% reduction */
-  line-height: 1.8rem;
-}
+  /* Page headings - reduced by 45% */
+  .text-6xl {
+    font-size: 2.0625rem !important; /* was 3.75rem - 45% reduction */
+    line-height: 2.5rem !important;
+  }
 
-.text-3xl {
-  font-size: 1.03125rem; /* was 1.875rem - 45% reduction */
-  line-height: 1.5rem;
-}
+  .text-5xl {
+    font-size: 1.65rem !important; /* was 3rem - 45% reduction */  
+    line-height: 2.2rem !important;
+  }
 
-.text-2xl {
-  font-size: 0.825rem; /* was 1.5rem - 45% reduction */
-  line-height: 1.25rem;
-}
+  /* Headers - reduced by 45% */
+  .text-4xl {
+    font-size: 1.2375rem !important; /* was 2.25rem - 45% reduction */
+    line-height: 1.8rem !important;
+  }
 
-/* Descriptions - reduced by 30% */
-.text-xl {
-  font-size: 1.2rem; /* was 1.25rem - 30% reduction */
-  line-height: 1.75rem;
-}
+  .text-3xl {
+    font-size: 1.03125rem !important; /* was 1.875rem - 45% reduction */
+    line-height: 1.5rem !important;
+  }
 
-.text-lg {
-  font-size: 0.8125rem; /* was 1.125rem - 30% reduction */
-  line-height: 1.25rem;
-}
+  .text-2xl {
+    font-size: 0.825rem !important; /* was 1.5rem - 45% reduction */
+    line-height: 1.25rem !important;
+  }
+
+  /* Descriptions - reduced by 30% */
+  .text-xl {
+    font-size: 1.2rem !important; /* was 1.25rem - 30% reduction */
+    line-height: 1.75rem !important;
+  }
+
+  .text-lg {
+    font-size: 0.8125rem !important; /* was 1.125rem - 30% reduction */
+    line-height: 1.25rem !important;
+  }
 }
