@@ -1,7 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, ArrowRight } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Calendar, User, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import maasaiMaraProject from "@/assets/maasai-mara-project.jpg";
@@ -128,66 +135,80 @@ const ImpactStories = () => {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {impactStories.map((story) => (
-            <Card key={story.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
-              <div className="relative aspect-[16/10]">
-                <img
-                  src={story.image}
-                  alt={story.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge className={getCategoryColor(story.category)}>
-                    {story.category}
-                  </Badge>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-              
-              <CardHeader>
-                <CardTitle className="text-xl group-hover:text-conservation transition-colors line-clamp-2">
-                  {story.title}
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent>
-                <p className="text-muted-foreground mb-6 line-clamp-3">
-                  {story.excerpt}
-                </p>
-                
-                {/* Impact Metrics */}
-                <div className="grid grid-cols-3 gap-2 mb-6 p-3 bg-muted/50 rounded-lg">
-                  {Object.entries(story.impact).map(([key, value]) => (
-                    <div key={key} className="text-center">
-                      <div className="text-lg font-bold text-conservation">{value}</div>
-                      <div className="text-xs text-muted-foreground capitalize">{key}</div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {impactStories.map((story) => (
+              <CarouselItem key={story.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden h-full">
+                  <div className="relative aspect-[16/10]">
+                    <img
+                      src={story.image}
+                      alt={story.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge className={getCategoryColor(story.category)}>
+                        {story.category}
+                      </Badge>
                     </div>
-                  ))}
-                </div>
-                
-                <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <User className="h-3 w-3" />
-                    {story.author}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {new Date(story.date).toLocaleDateString()}
-                  </div>
-                </div>
-                
-                <Button 
-                  variant="outline" 
-                  className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors"
-                >
-                  Read Full Story
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  
+                  <CardHeader>
+                    <CardTitle className="text-xl group-hover:text-conservation transition-colors line-clamp-2">
+                      {story.title}
+                    </CardTitle>
+                  </CardHeader>
+                  
+                  <CardContent>
+                    <p className="text-muted-foreground mb-6 line-clamp-3">
+                      {story.excerpt}
+                    </p>
+                    
+                    {/* Impact Metrics */}
+                    <div className="grid grid-cols-3 gap-2 mb-6 p-3 bg-muted/50 rounded-lg">
+                      {Object.entries(story.impact).map(([key, value]) => (
+                        <div key={key} className="text-center">
+                          <div className="text-lg font-bold text-conservation">{value}</div>
+                          <div className="text-xs text-muted-foreground capitalize">{key}</div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <User className="h-3 w-3" />
+                        {story.author}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(story.date).toLocaleDateString()}
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      variant="outline" 
+                      className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors"
+                    >
+                      Read Full Story
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="hidden md:block">
+            <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
+            <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
+          </div>
+        </Carousel>
         
         {/* Mobile View All Button */}
         <div className="text-center mt-8 md:hidden">

@@ -1,7 +1,14 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, ArrowRight } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Calendar, User, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
@@ -105,55 +112,69 @@ const BlogSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {blogPosts.map((post) => (
-            <Card key={post.id} className="group hover:shadow-lg transition-shadow overflow-hidden">
-              <div className="relative aspect-[16/10]">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-4 left-4">
-                  <Badge className={getCategoryColor(post.category)}>
-                    {post.category}
-                  </Badge>
-                </div>
-              </div>
-              
-              <CardHeader className="pb-2">
-                <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-              </CardHeader>
-              
-              <CardContent>
-                <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-                
-                <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <User className="h-3 w-3" />
-                    {post.author}
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full mb-8"
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
+            {blogPosts.map((post) => (
+              <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                <Card className="group hover:shadow-lg transition-shadow overflow-hidden h-full">
+                  <div className="relative aspect-[16/10]">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge className={getCategoryColor(post.category)}>
+                        {post.category}
+                      </Badge>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {new Date(post.date).toLocaleDateString()}
-                  </div>
-                  <span>{post.readTime}</span>
-                </div>
-                
-                <Link to={`/blog/${post.slug}`}>
-                  <Button variant="outline" size="sm" className="group/btn w-full">
-                    Read More
-                    <ArrowRight className="h-3 w-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  
+                  <CardHeader className="pb-2">
+                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                  </CardHeader>
+                  
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
+                      <div className="flex items-center gap-1">
+                        <User className="h-3 w-3" />
+                        {post.author}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(post.date).toLocaleDateString()}
+                      </div>
+                      <span>{post.readTime}</span>
+                    </div>
+                    
+                    <Link to={`/blog/${post.slug}`}>
+                      <Button variant="outline" size="sm" className="group/btn w-full">
+                        Read More
+                        <ArrowRight className="h-3 w-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="hidden md:block">
+            <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
+            <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
+          </div>
+        </Carousel>
 
         <div className="text-center">
           <Link to="/blog">
