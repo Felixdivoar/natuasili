@@ -242,12 +242,14 @@ const Checkout = () => {
 
                     <Button 
                       type="submit" 
-                      className="w-full" 
+                      className="w-full price-wrap whitespace-nowrap" 
                       size="lg" 
                       onClick={handleSubmit}
                       disabled={quantity > experience.capacity}
                     >
-                      {quantity > experience.capacity ? "Booking Limit Reached" : `Confirm Booking - ${formatPrice(total)}`}
+                      {quantity > experience.capacity ? "Booking Limit Reached" : (
+                        <span className="price whitespace-nowrap">Confirm Booking - {formatPrice(total)}</span>
+                      )}
                     </Button>
                   </CardContent>
                 </Card>

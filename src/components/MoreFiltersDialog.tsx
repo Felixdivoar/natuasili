@@ -8,8 +8,6 @@ import { Filter } from "lucide-react";
 import { mockProjects } from "@/data/mockData";
 
 export interface MoreFiltersState {
-  theme: string;
-  destination: string;
   duration: string;
   activityImpact: string;
   availability: string;
@@ -32,8 +30,6 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
 
   const handleReset = () => {
     const resetFilters: MoreFiltersState = {
-      theme: "all",
-      destination: "all", 
       duration: "all",
       activityImpact: "all",
       availability: "all",
@@ -62,40 +58,6 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
         </DialogHeader>
         
         <div className="space-y-6 py-4">
-          {/* Theme */}
-          <div className="space-y-2">
-            <Label>Theme</Label>
-            <Select value={localFilters.theme} onValueChange={(value) => updateFilter('theme', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="All themes" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All themes</SelectItem>
-                <SelectItem value="Wildlife Conservation">Wildlife conservation</SelectItem>
-                <SelectItem value="Cultural Exploration">Cultural exploration</SelectItem>
-                <SelectItem value="Conservation Education">Conservation education</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Destination */}
-          <div className="space-y-2">
-            <Label>Destination</Label>
-            <Select value={localFilters.destination} onValueChange={(value) => updateFilter('destination', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="All destinations" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All destinations</SelectItem>
-                <SelectItem value="nairobi">Nairobi</SelectItem>
-                <SelectItem value="coast">Coast</SelectItem>
-                <SelectItem value="laikipia">Laikipia</SelectItem>
-                <SelectItem value="masai-mara">Masai Mara</SelectItem>
-                <SelectItem value="samburu">Samburu</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* Duration */}
           <div className="space-y-2">
             <Label>Duration</Label>

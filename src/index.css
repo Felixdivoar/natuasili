@@ -203,6 +203,35 @@ button, .btn, .button, [role="button"],
     line-height: 1.44rem !important;
   }
 
+  /* ===== SITEWIDE: Single-line prices ===== */
+  .price, .price-wrap, .pricing, .experience-price,
+  .card .price, .booking-summary .price, .hero .price,
+  .checkout-price, .booking-price, .marketplace-price {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 0.35rem !important;
+  }
+
+  .price .currency, .price .amount,
+  .experience-price .currency, .experience-price .amount,
+  .checkout-price .currency, .checkout-price .amount,
+  .booking-price .currency, .booking-price .amount {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    vertical-align: baseline !important;
+  }
+
+  /* Ensure common containers don't force wrap */
+  .card-footer, .card-meta, .experience-meta {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
   /* Marketplace price utilities - reduced by 30% then increased by 10% = 0.77em */
   .marketplace-price {
     font-size: 0.77em !important; /* 30% reduction + 10% increase */
@@ -253,6 +282,101 @@ button, .btn, .button, [role="button"],
     justify-content: space-between;
     gap: 0.5rem;
     flex-wrap: nowrap;
+  }
+
+  /* ===== THEME CHIPS: Black background, white text, clickable ===== */
+  .theme-chip, .theme-tag, .experience-theme a {
+    background: hsl(var(--foreground)) !important;
+    color: hsl(var(--background)) !important;
+    border-radius: 9999px !important;
+    padding: 0.5rem 0.75rem !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+    line-height: 1 !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    text-transform: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+  
+  .theme-chip:hover, .theme-tag:hover, .experience-theme a:hover {
+    opacity: 0.9 !important;
+  }
+
+  /* Optional: ensure chips wrap nicely on small screens */
+  .theme-chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* ===== RESPONSIVE DESIGN HELPERS ===== */
+  img, video, svg, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .container, .section-inner, .content-wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  /* Grid responsive breakpoints */
+  .grid-responsive {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  /* Typical breakpoints */
+  @media (max-width: 1024px) {
+    .grid-4 { grid-template-columns: repeat(3, 1fr); }
+    .container { padding-inline: 0.75rem; }
+  }
+  
+  @media (max-width: 768px) {
+    .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .card-footer { 
+      flex-direction: column; 
+      align-items: flex-start; 
+      gap: 0.75rem;
+    }
+    .container { padding-inline: 0.5rem; }
+    
+    /* Stack hero content */
+    .hero-stats {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .theme-chip { 
+      font-size: 0.7rem !important; 
+      padding: 0.375rem 0.625rem !important; 
+    }
+    
+    /* Smaller spacing on mobile */
+    .container { padding-inline: 0.25rem; }
+    .section { padding-block: 2rem; }
+  }
+
+  /* Prevent layout shift (CLS) */
+  .aspect-ratio-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+  
+  .aspect-ratio-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+  
+  .aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
   }
   
   /* Marketplace price buttons - reduced by 30% */

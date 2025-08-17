@@ -60,7 +60,7 @@ const Hero = () => {
                 <Award className="w-5 h-5 text-white" />
               </div>
               <div>
-                <div className="text-2xl font-bold">{formatPrice(580000)}</div>
+                <div className="text-2xl font-bold whitespace-nowrap price">{formatPrice(580000)}</div>
                 <div className="text-sm text-white/80">Impact Generated</div>
               </div>
             </div>

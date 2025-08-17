@@ -103,9 +103,12 @@ const ExperienceDetail = () => {
                 )}
 
                 <div className="absolute top-4 left-4 flex gap-2">
-                  <Badge className={getThemeColor(experience.theme)}>
+                  <Link
+                    to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}
+                    className="theme-chip bg-black text-white px-3 py-1 rounded-full text-xs font-medium hover:opacity-90 transition-opacity"
+                  >
                     {experience.theme}
-                  </Badge>
+                  </Link>
                   <Badge variant="secondary" className="bg-background/90 text-foreground">
                     {experience.activity_type}
                   </Badge>
@@ -161,8 +164,8 @@ const ExperienceDetail = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="border border-border px-4 py-2 rounded-lg shadow-md">
-                      <div className="booking-price font-bold text-foreground">{formatPrice(experience.base_price)}</div>
+                    <div className="border border-border px-4 py-2 rounded-lg shadow-md price-wrap">
+                      <div className="booking-price font-bold text-foreground whitespace-nowrap">{formatPrice(experience.base_price)}</div>
                       <div className="text-sm text-muted-foreground">per person</div>
                     </div>
                   </div>

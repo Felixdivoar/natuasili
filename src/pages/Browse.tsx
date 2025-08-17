@@ -29,9 +29,11 @@ const Browse = () => {
     parseInt(searchParams.get('price_max') || maxPrice.toString())
   ]);
   
+  // Top-level filters for Browse page
+  const [theme, setTheme] = useState(searchParams.get('theme') || 'all');
+  const [destination, setDestination] = useState(searchParams.get('destination') || 'all');
+  
   const [moreFilters, setMoreFilters] = useState<MoreFiltersState>({
-    theme: searchParams.get('theme') || 'all',
-    destination: searchParams.get('destination') || 'all',
     duration: searchParams.get('duration') || 'all',
     activityImpact: searchParams.get('activity_impact') || 'all',
     availability: searchParams.get('availability') || 'all',
@@ -44,6 +46,8 @@ const Browse = () => {
     
     if (priceRange[0] !== minPrice) params.set('price_min', priceRange[0].toString());
     if (priceRange[1] !== maxPrice) params.set('price_max', priceRange[1].toString());
+    if (theme !== 'all') params.set('theme', theme);
+    if (destination !== 'all') params.set('destination', destination);
     
     Object.entries(moreFilters).forEach(([key, value]) => {
       if (value !== 'all' && value !== '') {
@@ -52,19 +56,19 @@ const Browse = () => {
     });
     
     setSearchParams(params, { replace: true });
-  }, [priceRange, moreFilters, minPrice, maxPrice, setSearchParams]);
+  }, [priceRange, theme, destination, moreFilters, minPrice, maxPrice, setSearchParams]);
 
   const filteredExperiences = mockExperiences.filter(experience => {
     // Price filter
     const matchesPrice = experience.base_price >= priceRange[0] && experience.base_price <= priceRange[1];
     
     // Theme filter
-    const matchesTheme = moreFilters.theme === "all" || experience.theme === moreFilters.theme;
+    const matchesTheme = theme === "all" || experience.theme === theme;
     
     // Destination filter - map to regions
-    const matchesDestination = moreFilters.destination === "all" || (() => {
+    const matchesDestination = destination === "all" || (() => {
       const location = experience.location_text.toLowerCase();
-      switch (moreFilters.destination) {
+      switch (destination) {
         case 'nairobi': return location.includes('nairobi');
         case 'coast': return location.includes('coast') || location.includes('mombasa') || location.includes('malindi');
         case 'laikipia': return location.includes('laikipia') || location.includes('ol pejeta');
@@ -105,9 +109,9 @@ const Browse = () => {
   
   const handleClearFilters = () => {
     setPriceRange([minPrice, maxPrice]);
+    setTheme("all");
+    setDestination("all");
     setMoreFilters({
-      theme: "all",
-      destination: "all",
       duration: "all", 
       activityImpact: "all",
       availability: "all",
@@ -142,7 +146,7 @@ const Browse = () => {
               />
               
               {/* Destination Filter */}
-              <Select value={moreFilters.destination} onValueChange={(value) => setMoreFilters(prev => ({ ...prev, destination: value }))}>
+              <Select value={destination} onValueChange={setDestination}>
                 <SelectTrigger>
                   <SelectValue placeholder="All destinations" />
                 </SelectTrigger>
@@ -157,7 +161,7 @@ const Browse = () => {
               </Select>
 
               {/* Theme Filter */}
-              <Select value={moreFilters.theme} onValueChange={(value) => setMoreFilters(prev => ({ ...prev, theme: value }))}>
+              <Select value={theme} onValueChange={setTheme}>
                 <SelectTrigger>
                   <SelectValue placeholder="All themes" />
                 </SelectTrigger>
@@ -220,9 +224,12 @@ const Browse = () => {
                       />
                     )}
                     <div className="absolute top-3 left-3 flex gap-2">
-                      <Badge className={getThemeColor(experience.theme)}>
+                      <Link
+                        to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}
+                        className="theme-chip bg-black text-white px-3 py-1 rounded-full text-xs font-medium hover:opacity-90 transition-opacity"
+                      >
                         {experience.theme}
-                      </Badge>
+                      </Link>
                     </div>
                     <div className="absolute bottom-3 right-3">
                       <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price-wrap">

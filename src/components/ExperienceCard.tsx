@@ -50,9 +50,12 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           />
         )}
         <div className="absolute top-3 left-3 flex gap-2">
-          <Badge className={getThemeColor(experience.theme)}>
+          <Link 
+            to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}
+            className="theme-chip bg-black text-white px-3 py-1 rounded-full text-xs font-medium hover:opacity-90 transition-opacity"
+          >
             {experience.theme}
-          </Badge>
+          </Link>
           <Badge variant="secondary" className="bg-white/90 text-foreground">
             {experience.activity_type}
           </Badge>
