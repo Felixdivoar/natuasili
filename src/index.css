@@ -138,31 +138,31 @@
 /* Typography system - sentence case throughout */
 /* Reduced heading sizes and adjusted description font sizes */
 
-/* Page headings - reduced by 40% */
+/* Page headings - reduced by 45% */
 .text-6xl {
-  font-size: 2.25rem; /* was 3.75rem - 40% reduction */
+  font-size: 2.0625rem; /* was 3.75rem - 45% reduction */
   line-height: 2.5rem;
 }
 
 .text-5xl {
-  font-size: 1.8rem; /* was 3rem - 40% reduction */  
-  line-height: 2.4rem;
-}
-
-/* Headers - reduced by 30% */
-.text-4xl {
-  font-size: 1.44rem; /* was 2.25rem - 30% reduction */
+  font-size: 1.65rem; /* was 3rem - 45% reduction */  
   line-height: 2.2rem;
 }
 
+/* Headers - reduced by 45% */
+.text-4xl {
+  font-size: 1.2375rem; /* was 2.25rem - 45% reduction */
+  line-height: 1.8rem;
+}
+
 .text-3xl {
-  font-size: 1.125rem; /* was 1.875rem - 30% reduction */
-  line-height: 1.75rem;
+  font-size: 1.03125rem; /* was 1.875rem - 45% reduction */
+  line-height: 1.5rem;
 }
 
 .text-2xl {
-  font-size: 1.35rem; /* was 1.5rem - 30% reduction */
-  line-height: 2rem;
+  font-size: 0.825rem; /* was 1.5rem - 45% reduction */
+  line-height: 1.25rem;
 }
 
 /* Descriptions - reduced by 30% */

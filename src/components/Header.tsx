@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Leaf, Search, User, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import CurrencySelector from "@/components/CurrencySelector";
-import logoImage from "@/assets/natuasili-logo.png";
+const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
 const Header = () => {
   return (
