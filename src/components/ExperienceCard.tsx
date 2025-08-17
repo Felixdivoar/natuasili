@@ -42,7 +42,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           </Badge>
         </div>
         <div className="absolute bottom-3 right-3">
-          <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 shadow-lg">
+          <div className="bg-primary text-primary-foreground rounded-lg px-3 py-1.5 shadow-lg">
             <div className="marketplace-price font-bold">
               {formatPrice(experience.base_price)}
             </div>
