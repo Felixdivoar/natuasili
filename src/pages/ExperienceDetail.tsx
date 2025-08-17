@@ -363,6 +363,9 @@ const ExperienceDetail = () => {
                           value={quantity}
                           onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                         />
+                        {quantity >= experience.capacity && (
+                          <p className="text-sm text-destructive">Booking limit reached</p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
@@ -402,8 +405,12 @@ const ExperienceDetail = () => {
                       </div>
 
                       <Link to={`/checkout?experience=${experience.id}&quantity=${quantity}`}>
-                        <Button className="w-full" size="lg">
-                          Proceed to Checkout
+                        <Button 
+                          className="w-full" 
+                          size="lg"
+                          disabled={quantity >= experience.capacity}
+                        >
+                          {quantity >= experience.capacity ? "Booking Limit Reached" : "Proceed to Checkout"}
                         </Button>
                       </Link>
 

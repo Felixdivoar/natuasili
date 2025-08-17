@@ -135,6 +135,11 @@
   color: hsl(var(--foreground)) !important;
 }
 
+/* Global typography - transform all fonts to normal */
+* {
+  font-weight: normal !important;
+}
+
 }
 
 @layer utilities {
@@ -179,10 +184,10 @@
     line-height: 1.44rem !important;
   }
 
-  /* Marketplace price utilities - reduced by 45% total then another 15% */
+  /* Marketplace price utilities - reduced by 45% total then another 30% */
   .marketplace-price {
-    font-size: 0.506rem !important; /* 0.595rem reduced by 15% more */
-    line-height: 0.72rem !important;
+    font-size: 0.35rem !important; /* 0.506rem reduced by 30% more */
+    line-height: 0.5rem !important;
   }
 
   /* Booking page price utilities - reduced by 5% then another 15% */

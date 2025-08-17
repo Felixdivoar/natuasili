@@ -58,6 +58,15 @@ const Checkout = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (quantity > experience.capacity) {
+      toast({
+        title: "Booking Limit Reached",
+        description: `Maximum ${experience.capacity} people allowed for this experience.`,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     if (!formData.agreeTerms) {
       toast({
         title: "Terms Required",
@@ -231,8 +240,14 @@ const Checkout = () => {
                       </div>
                     </div>
 
-                    <Button type="submit" className="w-full" size="lg" onClick={handleSubmit}>
-                      Confirm Booking - {formatPrice(total)}
+                    <Button 
+                      type="submit" 
+                      className="w-full" 
+                      size="lg" 
+                      onClick={handleSubmit}
+                      disabled={quantity > experience.capacity}
+                    >
+                      {quantity > experience.capacity ? "Booking Limit Reached" : `Confirm Booking - ${formatPrice(total)}`}
                     </Button>
                   </CardContent>
                 </Card>
