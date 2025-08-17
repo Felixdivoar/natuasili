@@ -168,14 +168,25 @@
     line-height: 1.5rem !important;
   }
 
-  /* Descriptions - reduced by 30% */
+  /* Descriptions - increased by 10% from reduced size */
   .text-xl {
-    font-size: 1.2rem !important; /* was 1.25rem - 30% reduction */
-    line-height: 1.75rem !important;
+    font-size: 1.32rem !important; /* 1.2rem + 10% */
+    line-height: 1.925rem !important;
   }
 
   .text-lg {
-    font-size: 0.8125rem !important; /* was 1.125rem - 30% reduction */
-    line-height: 1.25rem !important;
+    font-size: 0.894rem !important; /* 0.8125rem + 10% */
+    line-height: 1.375rem !important;
+  }
+
+  /* Marketplace price utilities - reduced by 30% */
+  .marketplace-price {
+    font-size: 0.7rem !important; /* text-xs reduced by 30% */
+    line-height: 1rem !important;
+  }
+
+  /* Booking page price utilities - reduced by 5% */
+  .booking-price {
+    font-size: 1.425rem !important; /* text-3xl reduced by 5% */
   }
 }

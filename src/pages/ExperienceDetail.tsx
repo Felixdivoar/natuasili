@@ -161,9 +161,9 @@ const ExperienceDetail = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="bg-conservation text-white px-4 py-2 rounded-lg shadow-md">
-                      <div className="text-3xl font-bold">{formatPrice(experience.base_price)}</div>
-                      <div className="text-sm opacity-90">per person</div>
+                    <div className="border border-border px-4 py-2 rounded-lg shadow-md">
+                      <div className="booking-price font-bold text-foreground">{formatPrice(experience.base_price)}</div>
+                      <div className="text-sm text-muted-foreground">per person</div>
                     </div>
                   </div>
                 </div>
