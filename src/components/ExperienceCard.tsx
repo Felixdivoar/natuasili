@@ -42,11 +42,11 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           </Badge>
         </div>
         <div className="absolute bottom-3 right-3">
-          <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1">
-            <div className="text-lg font-bold text-foreground">
+          <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 shadow-lg">
+            <div className="text-xl font-bold">
               {formatPrice(experience.base_price)}
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs opacity-90">
               per person
             </div>
           </div>
@@ -72,12 +72,12 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         {experience.project && (
           <div className="mb-4 p-2 bg-muted/50 rounded-lg">
             <p className="text-xs text-muted-foreground mb-1">Conservation Partner</p>
-            <Link 
-              to={`/projects/${experience.project.id}`}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              {experience.project.name}
-            </Link>
+              <Link 
+                to={`/projects/${experience.project?.id}`}
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              >
+                {experience.project?.name}
+              </Link>
           </div>
         )}
         

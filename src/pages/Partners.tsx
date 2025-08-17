@@ -207,7 +207,7 @@ const Partners = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Link to="/project/maasai-mara-wildlife-conservancy">
+              <Link to="/projects/1">
                 <Card className="hover:shadow-lg transition-shadow cursor-pointer">
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-4">
@@ -217,19 +217,19 @@ const Partners = () => {
                     <CardTitle>Maasai Mara Wildlife Conservancy</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-4">
+                    <p className="text-foreground mb-4">
                       "NatuAsili has enabled us to fund critical wildlife protection programs 
                       through meaningful tourism experiences. We've seen a 40% increase in conservation funding."
                     </p>
                     <div className="flex justify-between text-sm">
                       <span className="text-primary font-semibold">$125,000 raised</span>
-                      <span className="text-muted-foreground">45 experiences hosted</span>
+                      <span className="text-foreground">45 experiences hosted</span>
                     </div>
                   </CardContent>
                 </Card>
               </Link>
 
-              <Link to="/project/samburu-education-initiative">
+              <Link to="/projects/2">
                 <Card className="hover:shadow-lg transition-shadow cursor-pointer">
                   <CardHeader>
                     <div className="flex items-center gap-3 mb-4">
@@ -239,13 +239,13 @@ const Partners = () => {
                     <CardTitle>Samburu Education Initiative</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-4">
+                    <p className="text-foreground mb-4">
                       "The platform has connected us with travelers who truly care about our mission. 
                       The transparent funding model has helped us expand our education programs."
                     </p>
                     <div className="flex justify-between text-sm">
                       <span className="text-primary font-semibold">$78,000 raised</span>
-                      <span className="text-muted-foreground">28 experiences hosted</span>
+                      <span className="text-foreground">28 experiences hosted</span>
                     </div>
                   </CardContent>
                 </Card>

@@ -145,9 +145,14 @@ const Browse = () => {
                       <Badge className={getThemeColor(experience.theme)}>
                         {experience.theme}
                       </Badge>
-                      <Badge variant="secondary" className="bg-background/90 text-foreground">
-                        {formatPrice(experience.base_price)}
-                      </Badge>
+                    </div>
+                    <div className="absolute bottom-3 right-3">
+                      <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 shadow-lg">
+                        <div className="text-xl font-bold">
+                          {formatPrice(experience.base_price)}
+                        </div>
+                        <div className="text-xs opacity-90">per person</div>
+                      </div>
                     </div>
                   </div>
                   
@@ -170,8 +175,8 @@ const Browse = () => {
                     </p>
 
                     <div className="flex items-center justify-between mb-4">
-                      <div className="text-sm text-muted-foreground">
-                        By <Link to={`/project/${project?.slug}`} className="hover:text-primary underline">
+                      <div className="text-sm text-foreground">
+                        By <Link to={`/projects/${project?.id}`} className="hover:text-primary underline">
                           {project?.name}
                         </Link>
                       </div>

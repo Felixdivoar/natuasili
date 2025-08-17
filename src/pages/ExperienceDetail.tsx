@@ -424,7 +424,7 @@ const ExperienceDetail = () => {
                       </Link>
                     </Button>
                     <Button variant="outline" className="w-full justify-start" asChild>
-                      <Link to={`/project/${project.slug}`}>
+                      <Link to={`/projects/${project.id}`}>
                         <Calendar className="h-4 w-4 mr-2" />
                         See impact report
                       </Link>

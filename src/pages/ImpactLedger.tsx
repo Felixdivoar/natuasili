@@ -680,9 +680,10 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                     <p className="text-muted-foreground mb-4">Predictive analysis of conservation impact based on current trends.</p>
                     <div className="space-y-2">
                     <Button 
-                      variant="outline" 
+                      variant="default" 
                       size="sm"
                       onClick={() => setActiveTab("forecasts")}
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
                       View forecast
                     </Button>
