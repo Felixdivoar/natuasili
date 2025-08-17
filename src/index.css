@@ -179,14 +179,25 @@
     line-height: 1.44rem !important;
   }
 
-  /* Marketplace price utilities - reduced by 45% total */
+  /* Marketplace price utilities - reduced by 45% total then another 15% */
   .marketplace-price {
-    font-size: 0.595rem !important; /* 0.7rem reduced by 15% more */
-    line-height: 0.85rem !important;
+    font-size: 0.506rem !important; /* 0.595rem reduced by 15% more */
+    line-height: 0.72rem !important;
   }
 
-  /* Booking page price utilities - reduced by 5% */
+  /* Booking page price utilities - reduced by 5% then another 15% */
   .booking-price {
-    font-size: 1.425rem !important; /* text-3xl reduced by 5% */
+    font-size: 1.211rem !important; /* 1.425rem reduced by 15% more */
+  }
+
+  /* Checkout price utilities for smaller pricing displays */
+  .checkout-price {
+    font-size: 0.85rem !important;
+    line-height: 1.2rem !important;
+  }
+
+  .checkout-total-price {
+    font-size: 1.1rem !important;
+    line-height: 1.4rem !important;
   }
 }

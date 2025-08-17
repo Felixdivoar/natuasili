@@ -387,15 +387,15 @@ const ExperienceDetail = () => {
                     
                     <TabsContent value="checkout" className="space-y-4 mt-4">
                       <div className="border-t pt-4">
-                        <div className="flex justify-between text-sm mb-2">
+                        <div className="flex justify-between checkout-price mb-2">
                           <span>{formatPrice(experience.base_price)} × {quantity} person{quantity > 1 ? 's' : ''}</span>
                           <span>{formatPrice(experience.base_price * quantity)}</span>
                         </div>
-                        <div className="flex justify-between text-sm mb-2 text-muted-foreground">
+                        <div className="flex justify-between checkout-price mb-2 text-muted-foreground">
                           <span>Service fee</span>
                           <span>{formatPrice(experience.base_price * quantity * 0.05)}</span>
                         </div>
-                        <div className="flex justify-between font-bold text-lg border-t pt-2">
+                        <div className="flex justify-between font-bold checkout-total-price border-t pt-2">
                           <span>Total</span>
                           <span>{formatPrice(experience.base_price * quantity * 1.05)}</span>
                         </div>
