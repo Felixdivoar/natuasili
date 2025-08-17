@@ -1,59 +1,142 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Input } from "@/components/ui/input";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter, MapPin, Users, DollarSign } from "lucide-react";
+import { MapPin, Users } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PriceRangeFilter from "@/components/PriceRangeFilter";
+import MoreFiltersDialog, { MoreFiltersState } from "@/components/MoreFiltersDialog";
 
 const Browse = () => {
-  const [searchParams] = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTheme, setSelectedTheme] = useState("all");
-  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { formatPrice } = useCurrency();
+  
+  // Get price bounds from data
+  const prices = mockExperiences.map(exp => exp.base_price);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  
+  // Initialize filters from URL
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    parseInt(searchParams.get('price_min') || minPrice.toString()),
+    parseInt(searchParams.get('price_max') || maxPrice.toString())
+  ]);
+  
+  const [moreFilters, setMoreFilters] = useState<MoreFiltersState>({
+    theme: searchParams.get('theme') || 'all',
+    destination: searchParams.get('destination') || 'all',
+    duration: searchParams.get('duration') || 'all',
+    activityType: searchParams.get('activity_type') || 'all',
+    partner: searchParams.get('partner') || 'all',
+    availability: searchParams.get('availability') || 'all',
+    accessibility: searchParams.get('accessibility')?.split(',').filter(Boolean) || [],
+    ageSuitability: searchParams.get('age_suitability') || 'all',
+    impactType: searchParams.get('impact_type')?.split(',').filter(Boolean) || []
+  });
 
+  // Update URL when filters change
   useEffect(() => {
-    const themeParam = searchParams.get('theme');
-    if (themeParam) {
-      setSelectedTheme(themeParam);
-    }
-  }, [searchParams]);
+    const params = new URLSearchParams();
+    
+    if (priceRange[0] !== minPrice) params.set('price_min', priceRange[0].toString());
+    if (priceRange[1] !== maxPrice) params.set('price_max', priceRange[1].toString());
+    
+    Object.entries(moreFilters).forEach(([key, value]) => {
+      if (value !== 'all' && value !== '' && (Array.isArray(value) ? value.length > 0 : true)) {
+        if (Array.isArray(value)) {
+          if (value.length > 0) params.set(key, value.join(','));
+        } else {
+          params.set(key, value);
+        }
+      }
+    });
+    
+    setSearchParams(params, { replace: true });
+  }, [priceRange, moreFilters, minPrice, maxPrice, setSearchParams]);
 
   const filteredExperiences = mockExperiences.filter(experience => {
-    const matchesSearch = experience.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         experience.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesTheme = selectedTheme === "all" || experience.theme === selectedTheme;
-    const matchesLocation = selectedLocation === "all" || experience.location_text.toLowerCase().includes(selectedLocation.toLowerCase());
+    // Price filter
+    const matchesPrice = experience.base_price >= priceRange[0] && experience.base_price <= priceRange[1];
     
-    return matchesSearch && matchesTheme && matchesLocation;
+    // Theme filter
+    const matchesTheme = moreFilters.theme === "all" || experience.theme === moreFilters.theme;
+    
+    // Destination filter - map to regions
+    const matchesDestination = moreFilters.destination === "all" || (() => {
+      const location = experience.location_text.toLowerCase();
+      switch (moreFilters.destination) {
+        case 'nairobi': return location.includes('nairobi');
+        case 'coast': return location.includes('coast') || location.includes('mombasa') || location.includes('malindi');
+        case 'laikipia': return location.includes('laikipia') || location.includes('ol pejeta');
+        case 'masai-mara': return location.includes('mara') || location.includes('masai');
+        case 'samburu': return location.includes('samburu');
+        default: return true;
+      }
+    })();
+    
+    // Duration filter
+    const matchesDuration = moreFilters.duration === "all" || (() => {
+      const hours = experience.duration_hours;
+      switch (moreFilters.duration) {
+        case '≤2h': return hours <= 2;
+        case 'half-day': return hours >= 3 && hours <= 5;
+        case 'full-day': return hours >= 6 && hours <= 8;
+        case 'multi-day': return hours > 8;
+        default: return true;
+      }
+    })();
+    
+    // Activity type filter
+    const matchesActivityType = moreFilters.activityType === "all" || 
+      experience.activity_type.toLowerCase().includes(moreFilters.activityType.toLowerCase());
+    
+    // Partner filter
+    const matchesPartner = moreFilters.partner === "all" || experience.project_id === moreFilters.partner;
+    
+    return matchesPrice && matchesTheme && matchesDestination && matchesDuration && 
+           matchesActivityType && matchesPartner;
   });
 
   const getThemeColor = (theme: string) => {
     switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Wildlife Conservation': return 'bg-conservation text-white';
+      case 'Cultural Exploration': return 'bg-accent text-white';
+      case 'Conservation Education': return 'bg-primary text-white';
+      default: return 'bg-primary text-primary-foreground';
     }
+  };
+  
+  const handleClearFilters = () => {
+    setPriceRange([minPrice, maxPrice]);
+    setMoreFilters({
+      theme: "all",
+      destination: "all",
+      duration: "all", 
+      activityType: "all",
+      partner: "all",
+      availability: "all",
+      accessibility: [],
+      ageSuitability: "all",
+      impactType: []
+    });
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background marketplace-page" data-page="marketplace">
       <Header />
-      {/* Search and Filters */}
+      {/* Filters */}
       <section className="bg-muted/30 py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Discover Conservation Experiences
+              Discover conservation experiences
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Book authentic experiences that create lasting impact for wildlife, communities, and habitats across Kenya.
@@ -61,47 +144,36 @@ const Browse = () => {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search experiences..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              {/* Price Range Filter */}
+              <div className="md:col-span-1">
+                <PriceRangeFilter
+                  min={minPrice}
+                  max={maxPrice}
+                  value={priceRange}
+                  onChange={setPriceRange}
+                  className="price-range"
                 />
               </div>
               
-              <Select value={selectedTheme} onValueChange={setSelectedTheme}>
+              {/* Sort */}
+              <Select defaultValue="relevance">
                 <SelectTrigger>
-                  <SelectValue placeholder="All Themes" />
+                  <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Themes</SelectItem>
-                  <SelectItem value="Wildlife">Wildlife</SelectItem>
-                  <SelectItem value="Livelihoods">Livelihoods</SelectItem>
-                  <SelectItem value="Education">Education</SelectItem>
-                  <SelectItem value="Habitat">Habitat</SelectItem>
+                  <SelectItem value="relevance">Most relevant</SelectItem>
+                  <SelectItem value="price-low">Price: low to high</SelectItem>
+                  <SelectItem value="price-high">Price: high to low</SelectItem>
+                  <SelectItem value="newest">Newest first</SelectItem>
                 </SelectContent>
               </Select>
 
-              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All Locations" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Locations</SelectItem>
-                  <SelectItem value="maasai">Maasai Mara</SelectItem>
-                  <SelectItem value="amboseli">Amboseli</SelectItem>
-                  <SelectItem value="samburu">Samburu</SelectItem>
-                  <SelectItem value="tsavo">Tsavo</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Button variant="outline" className="gap-2">
-                <Filter className="h-4 w-4" />
-                More Filters
-              </Button>
+              {/* More Filters */}
+              <MoreFiltersDialog 
+                filters={moreFilters}
+                onFiltersChange={setMoreFilters}
+              />
             </div>
           </div>
         </div>
@@ -114,17 +186,6 @@ const Browse = () => {
             <p className="text-muted-foreground">
               Showing {filteredExperiences.length} experiences
             </p>
-            <Select defaultValue="relevance">
-              <SelectTrigger className="w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="relevance">Most Relevant</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="newest">Newest First</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -147,8 +208,8 @@ const Browse = () => {
                       </Badge>
                     </div>
                     <div className="absolute bottom-3 right-3">
-                      <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 shadow-lg">
-                        <div className="text-xl font-bold">
+                      <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price">
+                        <div className="marketplace-price amount">
                           {formatPrice(experience.base_price)}
                         </div>
                         <div className="text-xs opacity-90">per person</div>
@@ -189,12 +250,12 @@ const Browse = () => {
                     <div className="flex gap-2">
                       <Link to={`/experience/${experience.slug}`} className="flex-1">
                         <Button size="sm" variant="outline" className="w-full">
-                          View Details
+                          View details
                         </Button>
                       </Link>
                       <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
-                        <Button size="sm" className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                          Book Now
+                        <Button size="sm" className="w-full bg-conservation hover:bg-conservation/90 text-white btn-price price-button">
+                          Book now
                         </Button>
                       </Link>
                     </div>
@@ -209,14 +270,10 @@ const Browse = () => {
               <p className="text-muted-foreground text-lg">No experiences found matching your criteria.</p>
               <Button 
                 variant="outline" 
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedTheme("all");
-                  setSelectedLocation("all");
-                }}
+                onClick={handleClearFilters}
                 className="mt-4"
               >
-                Clear Filters
+                Clear filters
               </Button>
             </div>
           )}

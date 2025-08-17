@@ -141,11 +141,13 @@
 }
 
 /* Global sentence case transformation - overrides all styling */
-h1, h2, h3, h4, h5, h6, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg {
-  text-transform: none !important;
-}
-
-button, .btn, [role="button"] {
+h1, h2, h3, h4, h5, h6, 
+.text-6xl, .text-5xl, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg,
+button, .btn, .button, [role="button"],
+.nav a, .menu a, .card-title, .section-title,
+.hero-title, .cta, .badge, .experience-card .title,
+.dialog-title, .dropdown-menu-item, .select-item,
+.label, .tab, .accordion-trigger {
   text-transform: none !important;
 }
 
@@ -193,10 +195,20 @@ button, .btn, [role="button"] {
     line-height: 1.44rem !important;
   }
 
-  /* Marketplace price utilities - reduced by 45% total then another 30% more */
+  /* Marketplace price utilities - reduced by 30% from base size */
   .marketplace-price {
-    font-size: 0.245rem !important; /* 0.35rem reduced by 30% more */
-    line-height: 0.35rem !important;
+    font-size: 0.7rem !important; /* 30% smaller than base */
+    line-height: 1rem !important;
+  }
+  
+  /* Marketplace price buttons - reduced by 30% */
+  .marketplace-page .experience-card .price-button,
+  .marketplace-page .experience-card .btn-price,
+  .page-marketplace .experience-card .price-button,
+  [data-page="marketplace"] .experience-card .btn-price {
+    font-size: 0.7em !important;
+    padding: calc(0.7 * 0.5rem) calc(0.7 * 1rem) !important;
+    border-radius: calc(0.7 * 0.375rem) !important;
   }
 
   /* Booking page price utilities - reduced by 5% then another 15% */
