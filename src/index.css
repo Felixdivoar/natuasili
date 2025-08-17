@@ -140,15 +140,23 @@
   font-weight: normal !important;
 }
 
+/* Stronger global enforcement of sentence/normal case */
+:root, body {
+  text-transform: none !important;
+  font-variant: normal !important;
+}
+
 /* Global sentence case transformation - overrides all styling */
 h1, h2, h3, h4, h5, h6, 
 .text-6xl, .text-5xl, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg,
 button, .btn, .button, [role="button"],
-.nav a, .menu a, .card-title, .section-title,
-.hero-title, .cta, .badge, .experience-card .title,
+.nav a, .menu a, .breadcrumb a, .card-title, .section-title,
+.hero-title, .cta, .badge, .experience-card .title, .tab-title, .pill,
 .dialog-title, .dropdown-menu-item, .select-item,
 .label, .tab, .accordion-trigger {
   text-transform: none !important;
+  font-variant: normal !important;
+  letter-spacing: normal !important;
 }
 
 }
@@ -195,10 +203,56 @@ button, .btn, .button, [role="button"],
     line-height: 1.44rem !important;
   }
 
-  /* Marketplace price utilities - reduced by 30% from base size */
+  /* Marketplace price utilities - reduced by 30% then increased by 10% = 0.77em */
   .marketplace-price {
-    font-size: 0.7rem !important; /* 30% smaller than base */
-    line-height: 1rem !important;
+    font-size: 0.77em !important; /* 30% reduction + 10% increase */
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Marketplace price inline layout */
+  .marketplace-page .experience-card .price,
+  .page-marketplace .experience-card .price,
+  [data-page="marketplace"] .experience-card .price {
+    font-size: 0.77em !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+  }
+
+  .marketplace-page .experience-card .price .amount,
+  .page-marketplace .experience-card .price .amount {
+    font-size: 1em !important; /* inherit the 0.77em above */
+    white-space: nowrap !important;
+  }
+
+  /* Keep currency + amount on one line */
+  .marketplace-page .experience-card .price .currency,
+  .marketplace-page .experience-card .price .amount,
+  .page-marketplace .experience-card .price .currency,
+  .page-marketplace .experience-card .price .amount {
+    display: inline-block !important;
+    vertical-align: baseline !important;
+  }
+
+  /* Price container in a single row, no wrapping */
+  .marketplace-page .experience-card .price-wrap,
+  .page-marketplace .experience-card .price-wrap,
+  [data-page="marketplace"] .experience-card .price-wrap {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 0.35rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Ensure card footer doesn't wrap price */
+  .marketplace-page .experience-card .card-footer,
+  .page-marketplace .experience-card .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
   }
   
   /* Marketplace price buttons - reduced by 30% */

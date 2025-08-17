@@ -22,8 +22,25 @@ const getThemeColor = (theme: string) => {
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
   const { formatPrice } = useCurrency();
+  
+  // Determine destination for data attribute
+  const getDestination = () => {
+    const location = experience.location_text.toLowerCase();
+    if (location.includes('nairobi')) return 'nairobi';
+    if (location.includes('coast') || location.includes('mombasa') || location.includes('malindi')) return 'coast';
+    if (location.includes('laikipia') || location.includes('ol pejeta')) return 'laikipia';
+    if (location.includes('mara') || location.includes('masai')) return 'masai-mara';
+    if (location.includes('samburu')) return 'samburu';
+    return 'other';
+  };
+  
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
+    <Card 
+      className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group experience-card"
+      data-destination={getDestination()}
+      data-theme={experience.theme.toLowerCase().replace(' ', '-')}
+      data-activity-impact={experience.activity_type.toLowerCase().replace(' ', '-')}
+    >
       <div className="aspect-[4/3] bg-muted relative overflow-hidden">
         {experience.images[0] && (
           <img 
@@ -41,7 +58,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           </Badge>
         </div>
         <div className="absolute bottom-3 right-3">
-          <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg">
+          <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price-wrap">
             <div className="marketplace-price">
               {formatPrice(experience.base_price)}
             </div>

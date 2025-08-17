@@ -11,12 +11,9 @@ export interface MoreFiltersState {
   theme: string;
   destination: string;
   duration: string;
-  activityType: string;
-  partner: string;
+  activityImpact: string;
   availability: string;
-  accessibility: string[];
   ageSuitability: string;
-  impactType: string[];
 }
 
 interface MoreFiltersDialogProps {
@@ -38,12 +35,9 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
       theme: "all",
       destination: "all", 
       duration: "all",
-      activityType: "all",
-      partner: "all",
+      activityImpact: "all",
       availability: "all",
-      accessibility: [],
-      ageSuitability: "all",
-      impactType: []
+      ageSuitability: "all"
     };
     setLocalFilters(resetFilters);
     onFiltersChange(resetFilters);
@@ -53,15 +47,6 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
     setLocalFilters(prev => ({ ...prev, [key]: value }));
   };
 
-  const toggleArrayFilter = (key: 'accessibility' | 'impactType', value: string) => {
-    setLocalFilters(prev => {
-      const currentArray = prev[key] as string[];
-      const newArray = currentArray.includes(value)
-        ? currentArray.filter(item => item !== value)
-        : [...currentArray, value];
-      return { ...prev, [key]: newArray };
-    });
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -128,10 +113,10 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
             </Select>
           </div>
 
-          {/* Activity Type */}
+          {/* Activity/Impact Type */}
           <div className="space-y-2">
-            <Label>Activity type</Label>
-            <Select value={localFilters.activityType} onValueChange={(value) => updateFilter('activityType', value)}>
+            <Label>Activity/Impact type</Label>
+            <Select value={localFilters.activityImpact} onValueChange={(value) => updateFilter('activityImpact', value)}>
               <SelectTrigger>
                 <SelectValue placeholder="All activities" />
               </SelectTrigger>
@@ -143,24 +128,10 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
                 <SelectItem value="research">Research participation</SelectItem>
                 <SelectItem value="education">Educational program</SelectItem>
                 <SelectItem value="conservation">Conservation work</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Partner */}
-          <div className="space-y-2">
-            <Label>Conservation partner</Label>
-            <Select value={localFilters.partner} onValueChange={(value) => updateFilter('partner', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="All partners" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All partners</SelectItem>
-                {mockProjects.map(project => (
-                  <SelectItem key={project.id} value={project.id}>
-                    {project.name}
-                  </SelectItem>
-                ))}
+                <SelectItem value="anti-poaching">Anti-poaching</SelectItem>
+                <SelectItem value="marine">Marine conservation</SelectItem>
+                <SelectItem value="habitat">Habitat restoration</SelectItem>
+                <SelectItem value="community">Community development</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -198,55 +169,6 @@ const MoreFiltersDialog = ({ filters, onFiltersChange }: MoreFiltersDialogProps)
             </Select>
           </div>
 
-          {/* Accessibility */}
-          <div className="space-y-3">
-            <Label>Accessibility</Label>
-            <div className="space-y-2">
-              {[
-                { id: 'wheelchair', label: 'Wheelchair accessible' },
-                { id: 'low-mobility', label: 'Low mobility friendly' },
-                { id: 'visual-impaired', label: 'Visual impairment friendly' },
-                { id: 'hearing-impaired', label: 'Hearing impairment friendly' }
-              ].map(option => (
-                <div key={option.id} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={option.id}
-                    checked={localFilters.accessibility.includes(option.id)}
-                    onCheckedChange={() => toggleArrayFilter('accessibility', option.id)}
-                  />
-                  <Label htmlFor={option.id} className="text-sm font-normal">
-                    {option.label}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Impact Type */}
-          <div className="space-y-3">
-            <Label>Impact type</Label>
-            <div className="space-y-2">
-              {[
-                { id: 'education', label: 'Education' },
-                { id: 'research', label: 'Research' },
-                { id: 'anti-poaching', label: 'Anti-poaching' },
-                { id: 'marine', label: 'Marine conservation' },
-                { id: 'habitat', label: 'Habitat restoration' },
-                { id: 'community', label: 'Community development' }
-              ].map(option => (
-                <div key={option.id} className="flex items-center space-x-2">
-                  <Checkbox 
-                    id={option.id}
-                    checked={localFilters.impactType.includes(option.id)}
-                    onCheckedChange={() => toggleArrayFilter('impactType', option.id)}
-                  />
-                  <Label htmlFor={option.id} className="text-sm font-normal">
-                    {option.label}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="flex gap-3 pt-4 border-t">

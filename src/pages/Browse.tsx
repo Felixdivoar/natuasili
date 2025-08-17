@@ -33,12 +33,9 @@ const Browse = () => {
     theme: searchParams.get('theme') || 'all',
     destination: searchParams.get('destination') || 'all',
     duration: searchParams.get('duration') || 'all',
-    activityType: searchParams.get('activity_type') || 'all',
-    partner: searchParams.get('partner') || 'all',
+    activityImpact: searchParams.get('activity_impact') || 'all',
     availability: searchParams.get('availability') || 'all',
-    accessibility: searchParams.get('accessibility')?.split(',').filter(Boolean) || [],
-    ageSuitability: searchParams.get('age_suitability') || 'all',
-    impactType: searchParams.get('impact_type')?.split(',').filter(Boolean) || []
+    ageSuitability: searchParams.get('age_suitability') || 'all'
   });
 
   // Update URL when filters change
@@ -49,12 +46,8 @@ const Browse = () => {
     if (priceRange[1] !== maxPrice) params.set('price_max', priceRange[1].toString());
     
     Object.entries(moreFilters).forEach(([key, value]) => {
-      if (value !== 'all' && value !== '' && (Array.isArray(value) ? value.length > 0 : true)) {
-        if (Array.isArray(value)) {
-          if (value.length > 0) params.set(key, value.join(','));
-        } else {
-          params.set(key, value);
-        }
+      if (value !== 'all' && value !== '') {
+        params.set(key === 'activityImpact' ? 'activity_impact' : key, value);
       }
     });
     
@@ -93,15 +86,12 @@ const Browse = () => {
       }
     })();
     
-    // Activity type filter
-    const matchesActivityType = moreFilters.activityType === "all" || 
-      experience.activity_type.toLowerCase().includes(moreFilters.activityType.toLowerCase());
-    
-    // Partner filter
-    const matchesPartner = moreFilters.partner === "all" || experience.project_id === moreFilters.partner;
+    // Activity/Impact type filter
+    const matchesActivityImpact = moreFilters.activityImpact === "all" || 
+      experience.activity_type.toLowerCase().includes(moreFilters.activityImpact.toLowerCase());
     
     return matchesPrice && matchesTheme && matchesDestination && matchesDuration && 
-           matchesActivityType && matchesPartner;
+           matchesActivityImpact;
   });
 
   const getThemeColor = (theme: string) => {
@@ -119,12 +109,9 @@ const Browse = () => {
       theme: "all",
       destination: "all",
       duration: "all", 
-      activityType: "all",
-      partner: "all",
+      activityImpact: "all",
       availability: "all",
-      accessibility: [],
-      ageSuitability: "all",
-      impactType: []
+      ageSuitability: "all"
     });
   };
 
@@ -144,28 +131,41 @@ const Browse = () => {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               {/* Price Range Filter */}
-              <div className="md:col-span-1">
-                <PriceRangeFilter
-                  min={minPrice}
-                  max={maxPrice}
-                  value={priceRange}
-                  onChange={setPriceRange}
-                  className="price-range"
-                />
-              </div>
+              <PriceRangeFilter
+                min={minPrice}
+                max={maxPrice}
+                value={priceRange}
+                onChange={setPriceRange}
+                className="price-range"
+              />
               
-              {/* Sort */}
-              <Select defaultValue="relevance">
+              {/* Destination Filter */}
+              <Select value={moreFilters.destination} onValueChange={(value) => setMoreFilters(prev => ({ ...prev, destination: value }))}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Sort by" />
+                  <SelectValue placeholder="All destinations" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="relevance">Most relevant</SelectItem>
-                  <SelectItem value="price-low">Price: low to high</SelectItem>
-                  <SelectItem value="price-high">Price: high to low</SelectItem>
-                  <SelectItem value="newest">Newest first</SelectItem>
+                  <SelectItem value="all">All destinations</SelectItem>
+                  <SelectItem value="nairobi">Nairobi</SelectItem>
+                  <SelectItem value="coast">Coast</SelectItem>
+                  <SelectItem value="laikipia">Laikipia</SelectItem>
+                  <SelectItem value="masai-mara">Masai Mara</SelectItem>
+                  <SelectItem value="samburu">Samburu</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Theme Filter */}
+              <Select value={moreFilters.theme} onValueChange={(value) => setMoreFilters(prev => ({ ...prev, theme: value }))}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All themes" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All themes</SelectItem>
+                  <SelectItem value="Wildlife Conservation">Wildlife conservation</SelectItem>
+                  <SelectItem value="Cultural Exploration">Cultural exploration</SelectItem>
+                  <SelectItem value="Conservation Education">Conservation education</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -192,8 +192,25 @@ const Browse = () => {
             {filteredExperiences.map((experience) => {
               const project = mockProjects.find(p => p.id === experience.project_id);
               
+              // Determine destination for data attribute
+              const getDestination = () => {
+                const location = experience.location_text.toLowerCase();
+                if (location.includes('nairobi')) return 'nairobi';
+                if (location.includes('coast') || location.includes('mombasa') || location.includes('malindi')) return 'coast';
+                if (location.includes('laikipia') || location.includes('ol pejeta')) return 'laikipia';
+                if (location.includes('mara') || location.includes('masai')) return 'masai-mara';
+                if (location.includes('samburu')) return 'samburu';
+                return 'other';
+              };
+              
               return (
-                <Card key={experience.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card 
+                  key={experience.id} 
+                  className="overflow-hidden hover:shadow-lg transition-shadow experience-card"
+                  data-destination={getDestination()}
+                  data-theme={experience.theme.toLowerCase().replace(' ', '-')}
+                  data-activity-impact={experience.activity_type.toLowerCase().replace(' ', '-')}
+                >
                   <div className="aspect-[3/2] relative bg-muted">
                     {experience.images[0] && (
                       <img
@@ -208,8 +225,8 @@ const Browse = () => {
                       </Badge>
                     </div>
                     <div className="absolute bottom-3 right-3">
-                      <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price">
-                        <div className="marketplace-price amount">
+                      <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price-wrap">
+                        <div className="marketplace-price">
                           {formatPrice(experience.base_price)}
                         </div>
                         <div className="text-xs opacity-90">per person</div>
