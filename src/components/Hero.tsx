@@ -29,13 +29,8 @@ const Hero = () => {
             empower communities, and create lasting impact.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Link to="/marketplace">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                Explore Experiences
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
+          <div className="mb-12">
+            {/* Removed Explore Experiences button */}
           </div>
 
           {/* Stats */}
