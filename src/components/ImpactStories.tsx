@@ -232,7 +232,9 @@ const ImpactStories = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselControls />
+          <div className="md:hidden">
+            <CarouselControls />
+          </div>
         </Carousel>
         
         {/* Mobile View All Button */}

@@ -147,7 +147,9 @@ const DestinationCarousel = () => {
             <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
             <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
           </div>
-          <CarouselControls />
+          <div className="md:hidden">
+            <CarouselControls />
+          </div>
         </Carousel>
       </div>
     </section>

@@ -198,7 +198,9 @@ const BlogSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselControls />
+          <div className="md:hidden">
+            <CarouselControls />
+          </div>
         </Carousel>
 
         <div className="text-center">
