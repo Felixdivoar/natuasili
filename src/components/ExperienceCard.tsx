@@ -43,7 +43,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         </div>
         <div className="absolute bottom-3 right-3">
           <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 shadow-lg">
-            <div className="text-sm font-bold">
+            <div className="text-xs font-bold">
               {formatPrice(experience.base_price)}
             </div>
             <div className="text-xs opacity-90">

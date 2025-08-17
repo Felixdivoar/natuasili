@@ -141,31 +141,31 @@
   /* Typography system - sentence case throughout */
   /* Reduced heading sizes and adjusted description font sizes */
 
-  /* Page headings - reduced by 45% */
+  /* Page headings - increased by 20% from reduced size */
   .text-6xl {
-    font-size: 2.0625rem !important; /* was 3.75rem - 45% reduction */
-    line-height: 2.5rem !important;
+    font-size: 2.475rem !important; /* 2.0625rem + 20% */
+    line-height: 3rem !important;
   }
 
   .text-5xl {
-    font-size: 1.65rem !important; /* was 3rem - 45% reduction */  
-    line-height: 2.2rem !important;
+    font-size: 1.98rem !important; /* 1.65rem + 20% */  
+    line-height: 2.64rem !important;
   }
 
-  /* Headers - reduced by 45% */
+  /* Headers - increased by 20% from reduced size */
   .text-4xl {
-    font-size: 1.2375rem !important; /* was 2.25rem - 45% reduction */
-    line-height: 1.8rem !important;
+    font-size: 1.485rem !important; /* 1.2375rem + 20% */
+    line-height: 2.16rem !important;
   }
 
   .text-3xl {
-    font-size: 1.03125rem !important; /* was 1.875rem - 45% reduction */
-    line-height: 1.5rem !important;
+    font-size: 1.2375rem !important; /* 1.03125rem + 20% */
+    line-height: 1.8rem !important;
   }
 
   .text-2xl {
-    font-size: 0.825rem !important; /* was 1.5rem - 45% reduction */
-    line-height: 1.25rem !important;
+    font-size: 0.99rem !important; /* 0.825rem + 20% */
+    line-height: 1.5rem !important;
   }
 
   /* Descriptions - reduced by 30% */
