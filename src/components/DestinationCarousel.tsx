@@ -6,8 +6,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  useCarousel,
 } from "@/components/ui/carousel";
-import { MapPin } from "lucide-react";
+import { MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import nairobiImage from "@/assets/destinations/nairobi-destination.jpg";
@@ -58,6 +59,33 @@ const destinations = [
     partners: ["Ol Pejeta Conservancy"]
   }
 ];
+
+const CarouselControls = () => {
+  const { scrollPrev, scrollNext, canScrollPrev, canScrollNext } = useCarousel();
+  
+  return (
+    <div className="flex justify-center gap-2 mt-8">
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
+        onClick={scrollPrev}
+        disabled={!canScrollPrev}
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
+        onClick={scrollNext}
+        disabled={!canScrollNext}
+      >
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+};
 
 const DestinationCarousel = () => {
   return (
@@ -119,6 +147,7 @@ const DestinationCarousel = () => {
             <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
             <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
           </div>
+          <CarouselControls />
         </Carousel>
       </div>
     </section>

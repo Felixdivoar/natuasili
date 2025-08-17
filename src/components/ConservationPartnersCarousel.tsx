@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -7,10 +7,38 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  useCarousel,
 } from "@/components/ui/carousel";
-import { MapPin, ExternalLink } from "lucide-react";
+import { MapPin, Users, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockProjects } from "@/data/mockData";
+
+const CarouselControls = () => {
+  const { scrollPrev, scrollNext, canScrollPrev, canScrollNext } = useCarousel();
+  
+  return (
+    <div className="flex justify-center gap-2 mt-8">
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
+        onClick={scrollPrev}
+        disabled={!canScrollPrev}
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
+        onClick={scrollNext}
+        disabled={!canScrollNext}
+      >
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+};
 
 const ConservationPartnersCarousel = () => {
   const displayProjects = mockProjects.slice(0, 6);
@@ -53,37 +81,36 @@ const ConservationPartnersCarousel = () => {
                     </div>
                   </div>
                   
-                  <CardContent className="p-6 flex flex-col flex-grow">
-                    <div className="flex-grow">
-                      <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-conservation transition-colors">
-                        {project.name}
-                      </h3>
-                      
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
-                        <MapPin className="h-4 w-4" />
-                        {project.location_text}
+                  <CardHeader>
+                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                      {project.name}
+                    </CardTitle>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4" />
+                      {project.location_text}
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                      {project.bio}
+                    </p>
+                    
+                    <div className="grid grid-cols-2 gap-4 mb-6 p-3 bg-muted/50 rounded-lg">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-conservation">{project.metrics_bookings_count}</div>
+                        <div className="text-xs text-muted-foreground">Bookings</div>
                       </div>
-
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                        {project.bio}
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-4 mb-4 text-xs">
-                        <div>
-                          <div className="font-semibold text-foreground">500+</div>
-                          <div className="text-muted-foreground">Wildlife Protected</div>
-                        </div>
-                        <div>
-                          <div className="font-semibold text-foreground">2,000+</div>
-                          <div className="text-muted-foreground">Community Members</div>
-                        </div>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-conservation">${project.metrics_funds_total.toLocaleString()}</div>
+                        <div className="text-xs text-muted-foreground">Funds Raised</div>
                       </div>
                     </div>
-
-                    <div className="pt-4 border-t space-y-2">
-                      <Link to={`/projects/${project.id}`}>
+                    
+                    <div className="space-y-2">
+                      <Link to={`/partner/${project.slug}`}>
                         <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                          <ExternalLink className="h-4 w-4 mr-2" />
+                          <Heart className="w-4 h-4 mr-2" />
                           View Partner
                         </Button>
                       </Link>
@@ -102,6 +129,7 @@ const ConservationPartnersCarousel = () => {
             <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
             <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
           </div>
+          <CarouselControls />
         </Carousel>
 
         <div className="text-center mt-8">

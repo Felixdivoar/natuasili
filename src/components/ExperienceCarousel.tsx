@@ -7,11 +7,39 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  useCarousel,
 } from "@/components/ui/carousel";
-import { MapPin, Users, Star } from "lucide-react";
+import { MapPin, Users, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
+
+const CarouselControls = () => {
+  const { scrollPrev, scrollNext, canScrollPrev, canScrollNext } = useCarousel();
+  
+  return (
+    <div className="flex justify-center gap-2 mt-8">
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
+        onClick={scrollPrev}
+        disabled={!canScrollPrev}
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
+        onClick={scrollNext}
+        disabled={!canScrollNext}
+      >
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+};
 
 const ExperienceCarousel = () => {
   const { formatPrice } = useCurrency();
@@ -139,6 +167,7 @@ const ExperienceCarousel = () => {
             <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
             <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
           </div>
+          <CarouselControls />
         </Carousel>
       </div>
     </section>
