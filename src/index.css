@@ -130,11 +130,49 @@
     scroll-margin-top: 0;
   }
 
-  /* Reduced font sizes by 40% */
-  .text-3xl { font-size: 1.125rem; line-height: 1.75rem; } /* was 1.875rem */
-  .text-4xl { font-size: 1.44rem; line-height: 2.2rem; } /* was 2.25rem */
-  .text-5xl { font-size: 1.8rem; line-height: 2.4rem; } /* was 3rem */
-  .text-6xl { font-size: 2.25rem; line-height: 2.5rem; } /* was 3.75rem */
-  .text-xl { font-size: 1.2rem; line-height: 1.75rem; } /* was 1.25rem */
-  .text-2xl { font-size: 1.35rem; line-height: 2rem; } /* was 1.5rem */
+/* Force black color for descriptions instead of grey */
+.text-muted-foreground {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Typography system - sentence case throughout */
+/* Reduced heading sizes and adjusted description font sizes */
+
+/* Page headings - reduced by 40% */
+.text-6xl {
+  font-size: 2.25rem; /* was 3.75rem - 40% reduction */
+  line-height: 2.5rem;
+}
+
+.text-5xl {
+  font-size: 1.8rem; /* was 3rem - 40% reduction */  
+  line-height: 2.4rem;
+}
+
+/* Headers - reduced by 30% */
+.text-4xl {
+  font-size: 1.44rem; /* was 2.25rem - 30% reduction */
+  line-height: 2.2rem;
+}
+
+.text-3xl {
+  font-size: 1.125rem; /* was 1.875rem - 30% reduction */
+  line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.35rem; /* was 1.5rem - 30% reduction */
+  line-height: 2rem;
+}
+
+/* Descriptions - reduced by 30% */
+.text-xl {
+  font-size: 1.2rem; /* was 1.25rem - 30% reduction */
+  line-height: 1.75rem;
+}
+
+.text-lg {
+  font-size: 0.8125rem; /* was 1.125rem - 30% reduction */
+  line-height: 1.25rem;
+}
 }

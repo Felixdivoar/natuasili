@@ -176,12 +176,12 @@ const Destinations = () => {
                   <div className="flex gap-3 pt-4">
                     <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`} className="flex-1">
                       <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                        Explore Destination
+                        Explore destination
                       </Button>
                     </Link>
-                    <Link to={`/marketplace?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
+                    <Link to={`/browse?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
                       <Button variant="outline" className="w-full">
-                        View Experiences
+                        View experiences
                       </Button>
                     </Link>
                   </div>

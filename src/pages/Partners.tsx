@@ -207,45 +207,49 @@ const Partners = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-4">
-                    <Badge variant="outline" className="bg-primary/5 text-primary">Wildlife</Badge>
-                    <Badge variant="outline">Verified Impact</Badge>
-                  </div>
-                  <CardTitle>Maasai Mara Wildlife Conservancy</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    "NatuAsili has enabled us to fund critical wildlife protection programs 
-                    through meaningful tourism experiences. We've seen a 40% increase in conservation funding."
-                  </p>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-primary font-semibold">$125,000 raised</span>
-                    <span className="text-muted-foreground">45 experiences hosted</span>
-                  </div>
-                </CardContent>
-              </Card>
+              <Link to="/project/maasai-mara-wildlife-conservancy">
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-4">
+                      <Badge variant="outline" className="bg-primary/5 text-primary">Wildlife</Badge>
+                      <Badge variant="outline">Verified impact</Badge>
+                    </div>
+                    <CardTitle>Maasai Mara Wildlife Conservancy</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      "NatuAsili has enabled us to fund critical wildlife protection programs 
+                      through meaningful tourism experiences. We've seen a 40% increase in conservation funding."
+                    </p>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-primary font-semibold">$125,000 raised</span>
+                      <span className="text-muted-foreground">45 experiences hosted</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
 
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center gap-3 mb-4">
-                    <Badge variant="outline" className="bg-primary/5 text-primary">Education</Badge>
-                    <Badge variant="outline">Verified Impact</Badge>
-                  </div>
-                  <CardTitle>Samburu Education Initiative</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    "The platform has connected us with travelers who truly care about our mission. 
-                    The transparent funding model has helped us expand our education programs."
-                  </p>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-primary font-semibold">$78,000 raised</span>
-                    <span className="text-muted-foreground">28 experiences hosted</span>
-                  </div>
-                </CardContent>
-              </Card>
+              <Link to="/project/samburu-education-initiative">
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-4">
+                      <Badge variant="outline" className="bg-primary/5 text-primary">Education</Badge>
+                      <Badge variant="outline">Verified impact</Badge>
+                    </div>
+                    <CardTitle>Samburu Education Initiative</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      "The platform has connected us with travelers who truly care about our mission. 
+                      The transparent funding model has helped us expand our education programs."
+                    </p>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-primary font-semibold">$78,000 raised</span>
+                      <span className="text-muted-foreground">28 experiences hosted</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             </div>
           </div>
         </div>

@@ -158,9 +158,6 @@ const Browse = () => {
                           {experience.title}
                         </Link>
                       </h3>
-                      <div className="text-sm text-muted-foreground">
-                        {experience.allocation_pct_project}% to partner
-                      </div>
                     </div>
                     
                     <div className="flex items-center text-sm text-muted-foreground mb-3">
@@ -174,7 +171,7 @@ const Browse = () => {
 
                     <div className="flex items-center justify-between mb-4">
                       <div className="text-sm text-muted-foreground">
-                        By <Link to={`/projects/${project?.id}`} className="hover:text-primary underline">
+                        By <Link to={`/project/${project?.slug}`} className="hover:text-primary underline">
                           {project?.name}
                         </Link>
                       </div>
@@ -196,11 +193,6 @@ const Browse = () => {
                         </Button>
                       </Link>
                     </div>
-                    <Link to={`/projects/${project?.id}`} className="mt-2 block">
-                      <Button variant="ghost" size="sm" className="w-full text-xs">
-                        View Partner: {project?.name}
-                      </Button>
-                    </Link>
                   </CardContent>
                 </Card>
               );

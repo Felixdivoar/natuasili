@@ -19,6 +19,7 @@ const ImpactLedger = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
   const [selectedTheme, setSelectedTheme] = useState("all");
+  const [activeTab, setActiveTab] = useState("entries");
   const { formatPrice } = useCurrency();
 
   // Analytics data
@@ -500,7 +501,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
       {/* Tabs for different views */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="entries" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-2xl font-bold text-foreground">
                 Impact Dashboard
@@ -512,10 +513,10 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
             </div>
             
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="entries">Impact Entries</TabsTrigger>
+              <TabsTrigger value="entries">Impact entries</TabsTrigger>
               <TabsTrigger value="reports">Reports</TabsTrigger>
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
-              <TabsTrigger value="predictions">Forecasts</TabsTrigger>
+              <TabsTrigger value="forecasts">Forecasts</TabsTrigger>
             </TabsList>
 
             <TabsContent value="entries" className="mt-8">
@@ -678,10 +679,13 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Predictive analysis of conservation impact based on current trends.</p>
                     <div className="space-y-2">
-                      <Button size="sm" variant="outline" className="w-full">
-                        <Eye className="h-4 w-4 mr-2" />
-                        View Forecast
-                      </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => setActiveTab("forecasts")}
+                    >
+                      View forecast
+                    </Button>
                       <div className="text-xs text-muted-foreground">
                         Next 12 months projection
                       </div>
@@ -785,7 +789,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
               </div>
             </TabsContent>
 
-            <TabsContent value="predictions" className="mt-8">
+            <TabsContent value="forecasts" className="mt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card>
                   <CardHeader>

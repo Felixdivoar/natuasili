@@ -44,12 +44,12 @@ const MasaiMaraDestination = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-conservation hover:bg-conservation/90">
-                <Link to="/marketplace?destination=masai-mara">
-                  Explore Experiences
+                <Link to="/browse?destination=masai-mara">
+                  Explore experiences
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
-                View Conservation Impact
+                View conservation impact
               </Button>
             </div>
           </div>
@@ -224,8 +224,8 @@ const MasaiMaraDestination = () => {
 
           <div className="text-center mt-8">
             <Button size="lg" variant="outline" asChild>
-              <Link to="/marketplace?destination=masai-mara">
-                View All Maasai Mara Experiences
+              <Link to="/browse?destination=masai-mara">
+                View all Maasai Mara experiences
               </Link>
             </Button>
           </div>

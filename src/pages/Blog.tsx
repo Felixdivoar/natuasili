@@ -228,7 +228,7 @@ const Blog = () => {
                     
                     <Link to={`/blog/${post.slug}`}>
                       <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                        Read Full Story
+                        Read more
                       </Button>
                     </Link>
                   </CardContent>
@@ -323,7 +323,7 @@ const Blog = () => {
                     
                     <Link to={`/blog/${post.slug}`}>
                       <Button variant="outline" className="w-full">
-                        Read More
+                        Read more
                       </Button>
                     </Link>
                   </CardContent>

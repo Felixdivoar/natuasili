@@ -424,9 +424,9 @@ const ExperienceDetail = () => {
                       </Link>
                     </Button>
                     <Button variant="outline" className="w-full justify-start" asChild>
-                      <Link to="/impact-ledger">
+                      <Link to={`/project/${project.slug}`}>
                         <Calendar className="h-4 w-4 mr-2" />
-                        See Impact Reports
+                        See impact report
                       </Link>
                     </Button>
                   </div>
