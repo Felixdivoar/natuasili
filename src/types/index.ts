@@ -2,7 +2,7 @@
 
 export type UserRole = 'traveler' | 'partner' | 'admin';
 export type ProjectStatus = 'pending' | 'active' | 'suspended';
-export type ProjectCategory = 'Wildlife' | 'Livelihoods' | 'Education' | 'Habitat';
+export type ProjectCategory = 'Wildlife Conservation' | 'Cultural Exploration' | 'Conservation Education' | 'Habitat';
 export type ActivityType = 'Tracking' | 'Community' | 'Workshop' | 'Education';
 export type BookingStatus = 'pending' | 'paid' | 'cancelled' | 'refunded';
 export type PaymentStatus = 'pending' | 'succeeded' | 'failed' | 'refunded';

@@ -13,10 +13,9 @@ interface ExperienceCardProps {
 
 const getThemeColor = (theme: string) => {
   switch (theme) {
-    case 'Wildlife': return 'bg-wildlife text-white';
-    case 'Livelihoods': return 'bg-livelihoods text-white';
-    case 'Education': return 'bg-education text-white';
-    case 'Habitat': return 'bg-habitat text-white';
+    case 'Wildlife Conservation': return 'bg-conservation text-white';
+    case 'Cultural Exploration': return 'bg-accent text-white';
+    case 'Conservation Education': return 'bg-primary text-white';
     default: return 'bg-primary text-primary-foreground';
   }
 };

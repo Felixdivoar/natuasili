@@ -135,9 +135,18 @@
   color: hsl(var(--foreground)) !important;
 }
 
-/* Global typography - transform all fonts to normal */
+/* Global typography - transform all fonts to normal and sentence case */
 * {
   font-weight: normal !important;
+}
+
+/* Global sentence case transformation - overrides all styling */
+h1, h2, h3, h4, h5, h6, .text-4xl, .text-3xl, .text-2xl, .text-xl, .text-lg {
+  text-transform: none !important;
+}
+
+button, .btn, [role="button"] {
+  text-transform: none !important;
 }
 
 }
@@ -184,10 +193,10 @@
     line-height: 1.44rem !important;
   }
 
-  /* Marketplace price utilities - reduced by 45% total then another 30% */
+  /* Marketplace price utilities - reduced by 45% total then another 30% more */
   .marketplace-price {
-    font-size: 0.35rem !important; /* 0.506rem reduced by 30% more */
-    line-height: 0.5rem !important;
+    font-size: 0.245rem !important; /* 0.35rem reduced by 30% more */
+    line-height: 0.35rem !important;
   }
 
   /* Booking page price utilities - reduced by 5% then another 15% */

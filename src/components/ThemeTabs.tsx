@@ -4,39 +4,21 @@ import { TreePine, Users, GraduationCap, Leaf, Heart, Shield } from "lucide-reac
 const themes = [
   {
     id: 1,
-    name: "Wildlife",
+    name: "Wildlife Conservation",
     description: "Protect endangered species and their habitats",
     icon: TreePine,
   },
   {
     id: 2,
-    name: "Community", 
-    description: "Empower local communities through sustainable practices",
-    icon: Users,
-  },
-  {
-    id: 3,
-    name: "Education",
-    description: "Build awareness and knowledge for conservation",
-    icon: GraduationCap,
-  },
-  {
-    id: 4,
-    name: "Habitat",
-    description: "Restore degraded ecosystems and protect biodiversity",
-    icon: Leaf,
-  },
-  {
-    id: 5,
-    name: "Heritage",
-    description: "Preserve indigenous knowledge and traditions",
+    name: "Cultural Exploration", 
+    description: "Discover and preserve indigenous knowledge and traditions",
     icon: Heart,
   },
   {
-    id: 6,
-    name: "Protection",
-    description: "Combat illegal wildlife trade and protect species",
-    icon: Shield,
+    id: 3,
+    name: "Conservation Education",
+    description: "Build awareness and knowledge for conservation",
+    icon: GraduationCap,
   }
 ];
 
@@ -53,7 +35,7 @@ const ThemeTabs = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="Wildlife" className="w-full">
+        <Tabs defaultValue="Wildlife Conservation" className="w-full">
           <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-8">
             {themes.map((theme) => (
               <TabsTrigger 
