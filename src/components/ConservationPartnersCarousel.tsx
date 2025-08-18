@@ -114,11 +114,6 @@ const ConservationPartnersCarousel = () => {
                           View Partner
                         </Button>
                       </Link>
-                      <Link to={`/marketplace?partner=${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        <Button variant="outline" className="w-full">
-                          View Experiences
-                        </Button>
-                      </Link>
                     </div>
                   </CardContent>
                 </Card>

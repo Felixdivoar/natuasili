@@ -149,20 +149,20 @@ const ExperienceDetail = () => {
             {/* Experience Info */}
             <div className="space-y-6">
               <div>
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h1 className="text-3xl font-bold text-foreground mb-2">{experience.title}</h1>
-                    <div className="flex items-center gap-4 text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        {experience.location_text}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        Up to {experience.capacity} people
-                      </div>
+                <div className="experience-header mb-4">
+                  <h1 className="title text-3xl font-bold text-foreground mb-2">{experience.title}</h1>
+                  <div className="meta text-muted-foreground">
+                    <div className="location flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      {experience.location_text}
+                    </div>
+                    <div className="capacity flex items-center gap-1">
+                      <Users className="h-4 w-4" />
+                      Up to {experience.capacity} people
                     </div>
                   </div>
+                </div>
+                <div className="flex items-start justify-between">
                   <div className="text-right">
                     <div className="border border-border px-4 py-2 rounded-lg shadow-md price-wrap">
                       <div className="booking-price font-bold text-foreground whitespace-nowrap">{formatPrice(experience.base_price)}</div>
@@ -424,6 +424,19 @@ const ExperienceDetail = () => {
                   </Tabs>
                 </CardContent>
               </Card>
+
+              {/* Mobile Sticky CTA */}
+              <div className="cta-sticky md:hidden">
+                <Link to={`/checkout?experience=${experience.id}&quantity=${quantity}`}>
+                  <Button 
+                    className="btn-book-now bg-primary text-primary-foreground hover:bg-primary/90" 
+                    size="lg"
+                    disabled={quantity >= experience.capacity}
+                  >
+                    {quantity >= experience.capacity ? "Booking Limit Reached" : "Book Now"}
+                  </Button>
+                </Link>
+              </div>
               
               {/* Quick Actions */}
               <Card className="mt-4">
