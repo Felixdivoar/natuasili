@@ -6,6 +6,7 @@ import { Experience } from "@/types";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import SocialShare from "@/components/SocialShare";
+import { initializeThemeChips } from "@/utils/themeUtils";
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -18,6 +19,15 @@ const getThemeColor = (theme: string) => {
     case 'Conservation Education': return 'bg-primary text-white';
     default: return 'bg-primary text-primary-foreground';
   }
+};
+
+const getThemeSlug = (theme: string) => {
+  const themeMap: Record<string, string> = {
+    'Wildlife Conservation': 'wildlife-conservation',
+    'Cultural Exploration': 'cultural-exploration',
+    'Conservation Education': 'conservation-education'
+  };
+  return themeMap[theme] || theme.toLowerCase().replace(/\s+/g, '-');
 };
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
@@ -49,10 +59,10 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         )}
-        <div className="absolute top-3 left-3 flex gap-2">
+        <div className="absolute top-3 left-3 flex gap-2 experience-theme">
           <Link 
-            to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}
-            className="theme-chip bg-black text-white px-3 py-1 rounded-full text-xs font-medium hover:opacity-90 transition-opacity"
+            to={`/marketplace?theme=${encodeURIComponent(getThemeSlug(experience.theme))}`}
+            className="theme-chip"
           >
             {experience.theme}
           </Link>
@@ -62,7 +72,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         </div>
         <div className="absolute bottom-3 right-3">
           <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price-wrap">
-            <div className="marketplace-price">
+            <div className="marketplace-price price">
               {formatPrice(experience.base_price)}
             </div>
             <div className="text-xs opacity-90">

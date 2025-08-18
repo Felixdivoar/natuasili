@@ -7,7 +7,7 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 const Hero = () => {
   const { formatPrice } = useCurrency();
   return (
-    <section className="relative min-h-[80vh] flex items-center">
+    <section className="hero-section relative min-h-[80vh] flex items-center">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"

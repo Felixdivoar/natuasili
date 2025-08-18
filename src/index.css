@@ -232,6 +232,50 @@ button, .btn, .button, [role="button"],
     min-width: 0;
   }
 
+  /* ===== Landing page: price badge style ===== */
+  .landing-experiences .experience-card .price,
+  .home-experiences .experience-card .price,
+  .featured-experiences .experience-card .price {
+    white-space: nowrap !important;
+  }
+
+  .landing-experiences .price-badge,
+  .home-experiences .price-badge,
+  .featured-experiences .price-badge {
+    background: hsl(var(--foreground)) !important;
+    color: hsl(var(--background)) !important;
+    border-radius: 9999px !important;
+    padding: 0.45rem 0.9rem !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 0.35rem !important;
+    white-space: nowrap !important;
+    font-size: 1em !important;
+  }
+
+  /* Experience booking page: price badge with -5% font size */
+  .experience-booking .price-badge,
+  .page-experience .booking .price-badge,
+  .checkout-page .price-badge {
+    background: hsl(var(--foreground)) !important;
+    color: hsl(var(--background)) !important;
+    border-radius: 9999px !important;
+    padding: 0.45rem 0.9rem !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    gap: 0.35rem !important;
+    white-space: nowrap !important;
+    font-size: 0.95em !important; /* 5% smaller */
+  }
+
+  /* Ensure currency + amount never split to two lines */
+  .price-badge .currency,
+  .price-badge .amount {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    vertical-align: baseline !important;
+  }
+
   /* Marketplace price utilities - reduced by 30% then increased by 10% = 0.77em */
   .marketplace-price {
     font-size: 0.77em !important; /* 30% reduction + 10% increase */
@@ -289,7 +333,7 @@ button, .btn, .button, [role="button"],
     background: hsl(var(--foreground)) !important;
     color: hsl(var(--background)) !important;
     border-radius: 9999px !important;
-    padding: 0.5rem 0.75rem !important;
+    padding: 0.35rem 0.75rem !important;
     text-decoration: none !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -299,6 +343,7 @@ button, .btn, .button, [role="button"],
     font-weight: 500 !important;
     text-transform: none !important;
     transition: opacity 0.2s ease !important;
+    cursor: pointer !important;
   }
   
   .theme-chip:hover, .theme-tag:hover, .experience-theme a:hover {
@@ -310,6 +355,34 @@ button, .btn, .button, [role="button"],
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  /* ===== Hero/Landing page responsive images ===== */
+  .landing-hero img,
+  .hero-section img,
+  .first-section img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block !important;
+  }
+
+  /* Force full image visibility on mobile/tablet */
+  @media (max-width: 768px) {
+    .landing-hero,
+    .hero-section,
+    .first-section {
+      height: auto !important;
+      min-height: unset !important;
+    }
+    
+    .landing-hero img,
+    .hero-section img,
+    .first-section img {
+      max-height: none !important;
+      aspect-ratio: 16 / 9 !important;
+    }
   }
 
   /* ===== RESPONSIVE DESIGN HELPERS ===== */
