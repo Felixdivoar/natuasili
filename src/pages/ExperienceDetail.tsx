@@ -176,9 +176,9 @@ const ExperienceDetail = () => {
                 </div>
 
                 <div className="flex items-center gap-2 mb-4">
-                  <Link to={`/partner/${project.slug}`}>
+                  <Link to={`/partners/${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
                     <Badge variant="outline" className="hover:bg-muted">
-                      By <span className="partner-name">{project.name}</span>
+                      By <span className="partner-name" data-partner-slug={project.name.toLowerCase().replace(/\s+/g, '-')}>{project.name}</span>
                     </Badge>
                   </Link>
                   <div className="flex items-center gap-1">
@@ -359,58 +359,78 @@ const ExperienceDetail = () => {
                       </div>
                     </TabsContent>
                     
-                    <TabsContent value="booking" className="space-y-4 mt-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="people">Number of People</Label>
-                        <div className="people-input" data-max={experience.capacity}>
-                          <button type="button" className="btn-step" data-step="-1" aria-label="Decrease">−</button>
-                          <input 
-                            id="people" 
-                            name="people" 
-                            type="number" 
-                            min="1" 
-                            value={quantity}
-                            onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                            inputMode="numeric" 
-                          />
-                          <button type="button" className="btn-step" data-step="1" aria-label="Increase">+</button>
-                        </div>
-                        {quantity > experience.capacity && (
-                          <p className="people-error" role="alert" aria-live="polite">Booking limit reached.</p>
-                        )}
-                      </div>
+                     <TabsContent value="booking" className="space-y-4 mt-4">
+                       <form 
+                         id="booking-form"
+                         className="space-y-4"
+                         data-unit-price={experience.base_price}
+                         data-currency="KES"
+                         data-max-people={experience.capacity}
+                         data-experience-slug={experience.slug}
+                         data-partner-slug={project.name.toLowerCase().replace(/\s+/g, '-')}
+                       >
+                         <h2 className="experience-title sr-only">{experience.title}</h2>
+                         <div className="experience-location sr-only">{experience.location_text}</div>
 
-                      {/* Booking Summary */}
-                      <div className="booking-summary">
-                        <div className="summary-title">Booking Details</div>
-                        <div className="experience-title" style={{ display: 'none' }}>{experience.title}</div>
-                        <div className="experience-location" style={{ display: 'none' }}>{experience.location_text}</div>
-                        <div><strong>{experience.title}</strong></div>
-                        <div>{experience.location_text}</div>
-                        <div>People: {quantity}</div>
-                        <div>Partner: <span className="partner-name">{project.name}</span></div>
-                        <div>Price: {formatPrice(experience.base_price * quantity)}</div>
-                      </div>
+                         <div className="space-y-2">
+                           <Label htmlFor="people">Number of People</Label>
+                           <div className="people-input">
+                             <button type="button" className="btn-step" data-step="-1" aria-label="Decrease">−</button>
+                             <input 
+                               id="people" 
+                               name="people" 
+                               type="number" 
+                               min="1" 
+                               defaultValue="1"
+                               inputMode="numeric"
+                               required
+                             />
+                             <button type="button" className="btn-step" data-step="1" aria-label="Increase">+</button>
+                           </div>
+                           <p className="people-error" role="alert" aria-live="polite" hidden>
+                             Booking limit reached.
+                           </p>
+                         </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="date">Preferred Date</Label>
-                        <Input
-                          id="date"
-                          type="date"
-                          min={new Date().toISOString().split('T')[0]}
-                        />
-                      </div>
+                         <div className="booking-summary">
+                           {/* Populated by JavaScript */}
+                         </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="time">Preferred Time</Label>
-                        <select className="w-full px-3 py-2 border border-input rounded-md">
-                          <option value="">Select time</option>
-                          <option value="morning">Morning (8:00 AM)</option>
-                          <option value="afternoon">Afternoon (2:00 PM)</option>
-                          <option value="evening">Evening (5:00 PM)</option>
-                        </select>
-                      </div>
-                    </TabsContent>
+                         <div className="space-y-2">
+                           <Label htmlFor="date">Preferred Date</Label>
+                           <Input
+                             id="date"
+                             name="date"
+                             type="date"
+                             min={new Date().toISOString().split('T')[0]}
+                             required
+                           />
+                         </div>
+
+                         <div className="space-y-2">
+                           <Label htmlFor="time">Preferred Time</Label>
+                           <select className="w-full px-3 py-2 border border-input rounded-md">
+                             <option value="">Select time</option>
+                             <option value="morning">Morning (8:00 AM)</option>
+                             <option value="afternoon">Afternoon (2:00 PM)</option>
+                             <option value="evening">Evening (5:00 PM)</option>
+                           </select>
+                         </div>
+
+                         {/* Hidden fields for checkout */}
+                         <input type="hidden" name="unit_price" id="unit_price" />
+                         <input type="hidden" name="currency" id="currency" />
+                         <input type="hidden" name="total_price" id="total_price" />
+                         <input type="hidden" name="partner_slug" id="partner_slug" />
+                         <input type="hidden" name="experience_slug" id="experience_slug" />
+
+                         <div className="cta-sticky">
+                           <Button type="submit" className="w-full btn-book-now">
+                             Book Now
+                           </Button>
+                         </div>
+                       </form>
+                     </TabsContent>
                     
                     <TabsContent value="checkout" className="space-y-4 mt-4">
                       <div className="border-t pt-4">
