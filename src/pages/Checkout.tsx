@@ -292,7 +292,7 @@ const Checkout = () => {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-foreground">{experience.title}</h3>
-                    <p className="text-sm text-muted-foreground">by {project.name}</p>
+                    <p className="text-sm text-muted-foreground">by <span className="partner-name">{project.name}</span></p>
                   </div>
                 </div>
 
@@ -349,7 +349,7 @@ const Checkout = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between items-center p-3 bg-primary/5 rounded-lg">
                       <div>
-                        <div className="font-medium text-sm">To {project.name}</div>
+                        <div className="font-medium text-sm">To <span className="partner-name">{project.name}</span></div>
                         <div className="text-xs text-muted-foreground">Direct conservation funding</div>
                       </div>
                       <div className="text-right">

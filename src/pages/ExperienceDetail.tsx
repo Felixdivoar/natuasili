@@ -13,12 +13,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import MapComponent from "@/components/MapComponent";
+import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { formatPrice } = useCurrency();
+  
+  // Initialize interactive booking form functionality
+  useInteractiveBookingForm();
 
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
@@ -174,7 +178,7 @@ const ExperienceDetail = () => {
                 <div className="flex items-center gap-2 mb-4">
                   <Link to={`/partner/${project.slug}`}>
                     <Badge variant="outline" className="hover:bg-muted">
-                      By {project.name}
+                      By <span className="partner-name">{project.name}</span>
                     </Badge>
                   </Link>
                   <div className="flex items-center gap-1">
@@ -357,18 +361,35 @@ const ExperienceDetail = () => {
                     
                     <TabsContent value="booking" className="space-y-4 mt-4">
                       <div className="space-y-2">
-                        <Label htmlFor="quantity">Number of People</Label>
-                        <Input
-                          id="quantity"
-                          type="number"
-                          min="1"
-                          max={experience.capacity}
-                          value={quantity}
-                          onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                        />
-                        {quantity >= experience.capacity && (
-                          <p className="text-sm text-destructive">Booking limit reached</p>
+                        <Label htmlFor="people">Number of People</Label>
+                        <div className="people-input" data-max={experience.capacity}>
+                          <button type="button" className="btn-step" data-step="-1" aria-label="Decrease">−</button>
+                          <input 
+                            id="people" 
+                            name="people" 
+                            type="number" 
+                            min="1" 
+                            value={quantity}
+                            onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                            inputMode="numeric" 
+                          />
+                          <button type="button" className="btn-step" data-step="1" aria-label="Increase">+</button>
+                        </div>
+                        {quantity > experience.capacity && (
+                          <p className="people-error" role="alert" aria-live="polite">Booking limit reached.</p>
                         )}
+                      </div>
+
+                      {/* Booking Summary */}
+                      <div className="booking-summary">
+                        <div className="summary-title">Booking Details</div>
+                        <div className="experience-title" style={{ display: 'none' }}>{experience.title}</div>
+                        <div className="experience-location" style={{ display: 'none' }}>{experience.location_text}</div>
+                        <div><strong>{experience.title}</strong></div>
+                        <div>{experience.location_text}</div>
+                        <div>People: {quantity}</div>
+                        <div>Partner: <span className="partner-name">{project.name}</span></div>
+                        <div>Price: {formatPrice(experience.base_price * quantity)}</div>
                       </div>
 
                       <div className="space-y-2">
