@@ -439,36 +439,6 @@ button, .btn, .button, [role="button"],
     .section { padding-block: 2rem; }
   }
 
-  /* ===== 1) Booking Form: Book Now CTA ===== */
-  .booking-form .btn-book-now,
-  .experience-booking .btn-book-now {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    padding: 0.9rem 1.25rem;
-    font-weight: 600;
-    border-radius: 9999px;
-  }
-
-  @media (max-width: 768px) {
-    .booking-form .cta-sticky,
-    .experience-booking .cta-sticky {
-      position: sticky !important;
-      bottom: 0; left: 0; right: 0;
-      z-index: 50;
-      background: hsl(var(--background));
-      padding: 0.75rem 1rem;
-      border-top: 1px solid hsl(var(--border));
-      display: flex;
-      justify-content: center;
-      box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
-    }
-    .booking-form .cta-sticky .btn-book-now,
-    .experience-booking .cta-sticky .btn-book-now {
-      width: 100%;
-      max-width: 520px;
-    }
-  }
 
   /* ===== 2) Experience header alignment ===== */
   .experience-header {
@@ -594,7 +564,7 @@ button, .btn, .button, [role="button"],
   .experience-header .meta .capacity { order: 2; }
 }
 
-/* ===== Partner names appear clickable sitewide ===== */
+/* ===== Partner names appear clickable sitewide (except on detail pages) ===== */
 .partner-name { 
   cursor: pointer; 
   text-decoration: underline; 
@@ -604,43 +574,11 @@ button, .btn, .button, [role="button"],
   opacity: 0.8;
 }
 
-/* ===== Bold red error message for people input ===== */
-.people-error { 
-  color: #B00020 !important;
-  font-weight: 700 !important;
-  font-size: 0.875rem; 
-  margin-top: 0.35rem;
-}
-
-/* ===== Booking summary styling ===== */
-.booking-summary {
-  padding: 1rem;
-  background: hsl(var(--muted) / 0.5);
-  border-radius: 0.5rem;
-  margin-top: 1rem;
-}
-.booking-summary .summary-title {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-/* ===== Mobile sticky booking CTA ===== */
-@media (max-width: 768px) {
-  .cta-sticky {
-    position: sticky !important;
-    bottom: 0; 
-    left: 0; 
-    right: 0;
-    z-index: 50;
-    background: hsl(var(--background));
-    padding: 0.75rem 1rem;
-    border-top: 1px solid hsl(var(--border));
-    display: flex;
-    justify-content: center;
-  }
-  .cta-sticky .btn-book-now {
-    width: 100%;
-    max-width: 520px;
-  }
+/* Make partner names plain text on experience detail pages */
+.experience-detail .partner-name,
+.page-experience .partner-name {
+  cursor: default !important;
+  text-decoration: none !important;
+  color: inherit !important;
 }
 }
