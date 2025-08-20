@@ -3,16 +3,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MapPin, Users, Clock, Star, Heart, Share, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import MapComponent from "@/components/MapComponent";
+import BookingStepper from "@/components/BookingStepper";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
 
 const ExperienceDetail = () => {
@@ -328,125 +327,8 @@ const ExperienceDetail = () => {
                     <Badge variant="outline">Available</Badge>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <Tabs defaultValue="details" className="w-full">
-                    <TabsList className="grid w-full grid-cols-3">
-                      <TabsTrigger value="details">Details</TabsTrigger>
-                      <TabsTrigger value="booking">Booking</TabsTrigger>
-                      <TabsTrigger value="checkout">Checkout</TabsTrigger>
-                    </TabsList>
-                    
-                    <TabsContent value="details" className="space-y-4 mt-4">
-                      <div className="space-y-3">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Duration</span>
-                          <span className="text-sm font-medium">2-3 hours</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Group Size</span>
-                          <span className="text-sm font-medium">Up to {experience.capacity} people</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Language</span>
-                          <span className="text-sm font-medium">English, Swahili</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Difficulty</span>
-                          <span className="text-sm font-medium">Easy</span>
-                        </div>
-                      </div>
-                    </TabsContent>
-                    
-                     <TabsContent value="booking" className="space-y-4 mt-4">
-                       <div className="space-y-2">
-                         <Label htmlFor="people">Number of People</Label>
-                         <Input
-                           id="people"
-                           type="number"
-                           min="1"
-                           max={experience.capacity}
-                           value={quantity}
-                           onChange={(e) => setQuantity(Number(e.target.value))}
-                           className="w-full"
-                         />
-                         <p className="text-xs text-muted-foreground">
-                           Maximum {experience.capacity} people
-                         </p>
-                       </div>
-
-                       <div className="space-y-2">
-                         <Label htmlFor="date">Preferred Date</Label>
-                         <Input
-                           id="date"
-                           type="date"
-                           min={new Date().toISOString().split('T')[0]}
-                           className="w-full"
-                         />
-                       </div>
-
-                       <div className="space-y-2">
-                         <Label htmlFor="time">Preferred Time</Label>
-                         <select className="w-full px-3 py-2 border border-input rounded-md">
-                           <option value="">Select time</option>
-                           <option value="morning">Morning (8:00 AM)</option>
-                           <option value="afternoon">Afternoon (2:00 PM)</option>
-                           <option value="evening">Evening (5:00 PM)</option>
-                         </select>
-                       </div>
-                     </TabsContent>
-                    
-                    <TabsContent value="checkout" className="space-y-4 mt-4">
-                      <div className="border-t pt-4">
-                        <div className="flex justify-between checkout-price mb-2">
-                          <span>{formatPrice(experience.base_price)} × {quantity} person{quantity > 1 ? 's' : ''}</span>
-                          <span>{formatPrice(experience.base_price * quantity)}</span>
-                        </div>
-                        <div className="flex justify-between checkout-price mb-2 text-muted-foreground">
-                          <span>Service fee</span>
-                          <span>{formatPrice(experience.base_price * quantity * 0.05)}</span>
-                        </div>
-                        <div className="flex justify-between font-bold checkout-total-price border-t pt-2">
-                          <span>Total</span>
-                          <span>{formatPrice(experience.base_price * quantity * 1.05)}</span>
-                        </div>
-                      </div>
-
-                      <Link to={`/checkout?experience=${experience.id}&quantity=${quantity}`}>
-                        <Button 
-                          className="w-full" 
-                          size="lg"
-                          disabled={quantity >= experience.capacity}
-                        >
-                          {quantity >= experience.capacity ? "Booking Limit Reached" : "Proceed to Checkout"}
-                        </Button>
-                      </Link>
-
-                      <p className="text-xs text-muted-foreground text-center">
-                        You won't be charged yet. Complete booking on next page.
-                      </p>
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-
-              
-              {/* Quick Actions */}
-              <Card className="mt-4">
-                <CardContent className="pt-6">
-                  <div className="space-y-3">
-                    <Button variant="outline" className="w-full justify-start" asChild>
-                      <Link to={`/projects/${project.id}`}>
-                        <Users className="h-4 w-4 mr-2" />
-                        View Partner Details
-                      </Link>
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start" asChild>
-                      <Link to={`/projects/${project.id}`}>
-                        <Calendar className="h-4 w-4 mr-2" />
-                        See impact report
-                      </Link>
-                    </Button>
-                  </div>
+                <CardContent>
+                  <BookingStepper experience={experience} project={project} />
                 </CardContent>
               </Card>
             </div>

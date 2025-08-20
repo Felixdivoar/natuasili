@@ -581,4 +581,43 @@ button, .btn, .button, [role="button"],
   text-decoration: none !important;
   color: inherit !important;
 }
+
+/* People limit message – same as checkout red */
+.people-error {
+  color: #B00020 !important;
+  font-weight: 700 !important;
+  margin-top: .35rem;
+}
+
+/* Booking stepper styling */
+.booking-stepper {
+  counter-reset: step;
+}
+
+.booking-stepper .step h2::before {
+  counter-increment: step;
+  content: "Step " counter(step) ": ";
+  font-weight: 600;
+}
+
+/* Progress indicator */
+.booking-stepper .step-progress {
+  display: flex;
+  align-items: center;
+  justify-content: between;
+  margin-bottom: 1.5rem;
+}
+
+/* Accessibility helpers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
 }
