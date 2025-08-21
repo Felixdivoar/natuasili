@@ -489,14 +489,180 @@ button, .btn, .button, [role="button"],
     line-height: 1.65 !important;
   }
 
-  /* Prevent layout shift (CLS) */
-  .aspect-ratio-16-9 {
-    aspect-ratio: 16 / 9;
+/* ===== Global Page Layout ===== */
+
+/* Hero section full width */
+.page-hero,
+.hero-section {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* Standard content sections after hero */
+.page-content,
+.section,
+.main-content,
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px; /* safe spacing for mobile */
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-content,
+  .section,
+  .main-content,
+  .container {
+    padding: 0 15px;
   }
-  
-  .aspect-ratio-4-3 {
-    aspect-ratio: 4 / 3;
+}
+
+/* ===== Blog Improvements ===== */
+.blog-card .read-more,
+.post-excerpt .read-more { 
+  display: inline-block; 
+  text-decoration: underline; 
+  margin-top: 0.5rem;
+  color: hsl(var(--primary));
+}
+
+.blog-card .thumb img, 
+.post-hero img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+  object-fit: cover;
+}
+
+.post-content, 
+.post-body {
+  line-height: 1.5 !important;
+}
+
+/* ===== Sticky CTA ===== */
+@media (max-width: 1024px) {
+  .sticky-availability-bar {
+    position: fixed; 
+    bottom: 0; 
+    left: 0; 
+    right: 0; 
+    z-index: 50;
+    background: hsl(var(--background)); 
+    border-top: 1px solid hsl(var(--border));
+    padding: 0.75rem 1rem; 
+    display: flex; 
+    gap: 0.75rem;
+    box-shadow: 0 -2px 10px hsl(var(--foreground) / 0.1);
   }
+  .sticky-availability-bar .btn-check-availability {
+    flex: 1 1 auto; 
+    border-radius: 9999px; 
+    padding: 0.9rem 1.2rem; 
+    font-weight: 600;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+/* Desktop: floating CTA */
+@media (min-width: 1025px) {
+  .floating-availability {
+    position: fixed; 
+    right: 24px; 
+    bottom: 24px; 
+    z-index: 50;
+  }
+  .floating-availability .btn-check-availability {
+    border-radius: 9999px; 
+    padding: 0.9rem 1.2rem; 
+    font-weight: 600;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 4px 15px hsl(var(--foreground) / 0.2);
+  }
+}
+
+/* ===== Related Experiences Grid ===== */
+.related-experiences {
+  display: grid; 
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 1024px) { 
+  .related-experiences { 
+    grid-template-columns: repeat(3, 1fr); 
+  } 
+}
+@media (max-width: 768px) { 
+  .related-experiences { 
+    grid-template-columns: repeat(2, 1fr); 
+  } 
+}
+@media (max-width: 480px) { 
+  .related-experiences { 
+    grid-template-columns: 1fr; 
+  } 
+}
+
+/* ===== Modal Styles ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal[hidden] {
+  display: none !important;
+}
+
+.modal-content {
+  background: hsl(var(--background));
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 10px 40px hsl(var(--foreground) / 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+/* ===== Left-align sections after hero ===== */
+.page-after-hero .section-title,
+.page-after-hero .section-description {
+  text-align: left !important;
+}
+
+/* ===== Ensure scroll starts at top ===== */
+html, body { 
+  scroll-behavior: smooth; 
+}
+
+/* ===== People error styling ===== */
+.people-error {
+  color: #B00020 !important;
+  font-weight: 700 !important;
+  margin-top: 0.35rem;
+}
 
   /* ===== Global Page Layout ===== */
   /* Hero section full width */

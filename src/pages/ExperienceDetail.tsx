@@ -12,12 +12,15 @@ import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import MapComponent from "@/components/MapComponent";
 import BookingStepper from "@/components/BookingStepper";
+import RelatedExperiences from "@/components/RelatedExperiences";
+import AvailabilityModal from "@/components/AvailabilityModal";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
   const { formatPrice } = useCurrency();
   
   // Initialize interactive booking form functionality
@@ -55,6 +58,12 @@ const ExperienceDetail = () => {
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + experience.images.length) % experience.images.length);
+  };
+
+  const handleAvailabilitySubmit = (data: { date: string; people: number }) => {
+    // Navigate to booking form with prefilled data
+    const bookingUrl = `${window.location.pathname}#booking?date=${data.date}&people=${data.people}`;
+    window.location.href = bookingUrl;
   };
 
   return (
@@ -308,9 +317,21 @@ const ExperienceDetail = () => {
                     latitude={-1.2921}
                     location={experience.location_text}
                     className="w-full h-64 rounded-lg"
+                    partnerHQLat={-1.1000}
+                    partnerHQLng={36.7000}
+                    partnerName={project?.name}
+                    showDirectionsButton={true}
                   />
                 </CardContent>
               </Card>
+
+              {/* Related Experiences Section */}
+              <RelatedExperiences 
+                currentExperienceId={Number(experience.id)}
+                theme={experience.theme}
+                destination={experience.location_text}
+                maxResults={4}
+              />
 
               {/* Reviews Section */}
               <ReviewSection experienceId={experience.id} />
@@ -335,6 +356,34 @@ const ExperienceDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Sticky/Floating Availability CTA */}
+      <div className="sticky-availability-bar">
+        <Button 
+          className="btn-check-availability"
+          onClick={() => setIsAvailabilityModalOpen(true)}
+        >
+          Check Availability
+        </Button>
+      </div>
+      <div className="floating-availability">
+        <Button 
+          className="btn-check-availability"
+          onClick={() => setIsAvailabilityModalOpen(true)}
+        >
+          Check Availability
+        </Button>
+      </div>
+
+      {/* Availability Modal */}
+      <AvailabilityModal
+        isOpen={isAvailabilityModalOpen}
+        onClose={() => setIsAvailabilityModalOpen(false)}
+        onSubmit={handleAvailabilitySubmit}
+        maxCapacity={experience.capacity}
+        experienceTitle={experience.title}
+      />
+
       <Footer />
     </div>
   );
