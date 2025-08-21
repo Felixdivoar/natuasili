@@ -497,6 +497,83 @@ button, .btn, .button, [role="button"],
   .aspect-ratio-4-3 {
     aspect-ratio: 4 / 3;
   }
+
+  /* ===== Global Page Layout ===== */
+  /* Hero section full width */
+  .page-hero,
+  .hero-section {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Global container width override */
+  .container, .section-inner, .content-wrap, .page-wrap, .site-container {
+    max-width: 1200px !important;
+  }
+
+  /* Bold red booking limit message */
+  .people-error {
+    color: #B00020 !important;
+    font-weight: 700 !important;
+    margin-top: .35rem;
+  }
+
+  /* Disable buttons when invalid */
+  .btn[disabled] { opacity: .5; pointer-events: none; }
+
+  /* Hide steps via [hidden] for simple toggling */
+  .step[hidden] { display: none !important; }
+
+  /* Blog defaults */
+  .blog-card .read-more,
+  .post-excerpt .read-more { display: inline-block; text-decoration: underline; }
+
+  .blog-card .thumb img, .post-hero img {
+    width: 100%; height: auto; display: block; object-fit: cover;
+  }
+
+  .post-content, .post-body {
+    line-height: 1.5 !important;
+  }
+
+  /* Sticky bottom CTA (mobile+tablet) */
+  @media (max-width: 1024px) {
+    .sticky-availability-bar {
+      position: sticky; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: hsl(var(--background)); border-top: 1px solid hsl(var(--border));
+      padding: 0.75rem 1rem; display: flex; gap: .75rem;
+    }
+    .sticky-availability-bar .btn-check-availability {
+      flex: 1 1 auto; border-radius: 9999px; padding: .9rem 1.2rem; font-weight: 600;
+    }
+  }
+
+  /* Desktop: float CTA */
+  @media (min-width: 1025px) {
+    .floating-availability {
+      position: fixed; right: 24px; bottom: 24px; z-index: 50;
+    }
+    .floating-availability .btn-check-availability {
+      border-radius: 9999px; padding: .9rem 1.2rem; font-weight: 600;
+    }
+  }
+
+  /* "You might also like" grid */
+  .related-experiences {
+    display: grid; gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  @media (max-width: 1024px) { .related-experiences { grid-template-columns: repeat(3,1fr); } }
+  @media (max-width: 768px)  { .related-experiences { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 480px)  { .related-experiences { grid-template-columns: 1fr; } }
+
+  /* Left-align titles & descriptions after hero (sitewide section headers) */
+  .page-after-hero .section-title,
+  .page-after-hero .section-description {
+    text-align: left !important;
+  }
   
   .aspect-ratio-1-1 {
     aspect-ratio: 1 / 1;

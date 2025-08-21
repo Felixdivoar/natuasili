@@ -10,36 +10,6 @@ const Footer = () => {
     <footer className="bg-foreground text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Logo & Description */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                <Leaf className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold">NatuAsili</h3>
-                <p className="text-xs text-white/70">Conservation Impact Hub</p>
-              </div>
-            </div>
-            <p className="text-sm text-white/80 mb-4">
-              Connecting travelers with authentic conservation experiences 
-              across Kenya. Creating impact that matters.
-            </p>
-            <div className="flex space-x-3">
-              <Button variant="ghost" size="sm" className="p-2 text-white hover:text-accent">
-                <Facebook className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2 text-white hover:text-accent">
-                <Twitter className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2 text-white hover:text-accent">
-                <Instagram className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2 text-white hover:text-accent">
-                <Linkedin className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
 
           {/* Quick Links */}
           <div>
@@ -80,6 +50,18 @@ const Footer = () => {
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-accent" />
                 <span className="text-white/80">+254 700 123 456</span>
+              </div>
+              <div className="flex space-x-3 mt-4">
+                <Button variant="ghost" size="sm" className="p-2 text-white hover:text-accent" asChild>
+                  <a href="https://instagram.com/natuasili" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="w-4 h-4" />
+                  </a>
+                </Button>
+                <Button variant="ghost" size="sm" className="p-2 text-white hover:text-accent" asChild>
+                  <a href="https://linkedin.com/company/natuasili" target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="w-4 h-4" />
+                  </a>
+                </Button>
               </div>
             </div>
           </div>

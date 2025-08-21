@@ -37,7 +37,7 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
 
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
 
-  // Auto-advance logic
+  // Manual navigation validation
   const isStep1Valid = () => {
     const peopleValid = formData.people >= 1 && formData.people <= experience.capacity;
     const dateValid = !!formData.date;
@@ -78,35 +78,14 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
 
   const handleStep1Change = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    
-    // Auto-advance after validation on blur/change events
-    setTimeout(() => {
-      if (field === 'date' || field === 'people') {
-        if (isStep1Valid() && currentStep === 1) {
-          showStep(2);
-        }
-      }
-    }, 100);
   };
 
   const handleStep2Change = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    
-    // Auto-advance when all required fields are filled
-    setTimeout(() => {
-      if (isStep2Valid() && currentStep === 2) {
-        showStep(3);
-      }
-    }, 100);
   };
 
   const handleStep3Change = (checked: boolean) => {
     setFormData(prev => ({ ...prev, agreeTerms: checked }));
-    
-    // Auto-advance to payment when terms are agreed
-    if (checked && currentStep === 3) {
-      setTimeout(() => initPayment(), 200);
-    }
   };
 
   const initPayment = async () => {
