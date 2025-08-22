@@ -164,8 +164,8 @@ const BlogSection = () => {
                     </div>
                   </div>
                   
-                  <CardHeader className="pb-2">
-                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                   <CardHeader className="pb-2">
+                    <h3 className="blog-carousel-title text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                   </CardHeader>

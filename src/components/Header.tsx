@@ -38,22 +38,22 @@ const Header = () => {
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-            <Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 primary-menu">
+            <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm">
               About
-            </Link>
-            <Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm">
+            </Link></li>
+            <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm">
               Impact Ledger
-            </Link>
-            <Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm">
+            </Link></li>
+            <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm">
               Marketplace
-            </Link>
-            <Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm">
+            </Link></li>
+            <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm">
               My Dashboard
-            </Link>
-            <Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm">
+            </Link></li>
+            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm">
               Partners
-            </Link>
+            </Link></li>
           </nav>
 
           {/* Mobile Navigation Menu */}

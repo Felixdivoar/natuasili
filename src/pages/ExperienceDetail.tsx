@@ -344,7 +344,7 @@ const ExperienceDetail = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
-                    Book This Experience
+                    Availability & Booking
                     <Badge variant="outline">Available</Badge>
                   </CardTitle>
                 </CardHeader>

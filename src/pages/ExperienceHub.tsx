@@ -181,49 +181,49 @@ const ExperienceHub = () => {
                   const project = mockProjects.find(p => p.id === experience.project_id);
                   
                   return (
-                    <Card key={experience.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="w-20 h-20 bg-muted rounded-lg overflow-hidden flex-shrink-0">
-                            <img
-                              src={experience.images[0]}
-                              alt={experience.title}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between mb-2">
-                              <h3 className="font-semibold text-sm line-clamp-2">{experience.title}</h3>
-                              <Badge className={`${getThemeColor(experience.theme)} ml-2`}>
-                                {experience.theme}
-                              </Badge>
+                    <Link key={experience.id} to={`/experience/${experience.slug}`}>
+                      <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+                        <CardContent className="p-6">
+                          <div className="flex items-start gap-4">
+                            <div className="w-20 h-20 bg-muted rounded-lg overflow-hidden flex-shrink-0">
+                              <img
+                                src={experience.images[0]}
+                                alt={experience.title}
+                                className="w-full h-full object-cover"
+                              />
                             </div>
-                            
-                            <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                              <div className="flex items-center gap-1">
-                                <MapPin className="h-3 w-3" />
-                                {experience.location_text}
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between mb-2">
+                                <h3 className="font-semibold text-sm line-clamp-2">{experience.title}</h3>
+                                <Badge className={`${getThemeColor(experience.theme)} ml-2`}>
+                                  {experience.theme}
+                                </Badge>
                               </div>
-                              <div className="flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
-                                {experience.duration_hours}h
+                              
+                              <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
+                                <div className="flex items-center gap-1">
+                                  <MapPin className="h-3 w-3" />
+                                  {experience.location_text}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3" />
+                                  {experience.duration_hours}h
+                                </div>
                               </div>
-                            </div>
 
-                            <div className="flex items-center justify-between">
-                              <div className="text-lg font-bold text-conservation">
-                                {formatPrice(experience.base_price)}
-                              </div>
-                              <Link to={`/checkout?experience=${experience.id}&quantity=1`}>
+                              <div className="flex items-center justify-between">
+                                <div className="text-lg font-bold text-conservation">
+                                  {formatPrice(experience.base_price)}
+                                </div>
                                 <Button size="sm" className="bg-conservation hover:bg-conservation/90 text-white">
                                   Quick Book
                                 </Button>
-                              </Link>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>
@@ -285,40 +285,6 @@ const ExperienceHub = () => {
               </div>
             </TabsContent>
           </Tabs>
-        </div>
-      </section>
-
-      {/* Booking Help */}
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6">
-              How Booking Works
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-conservation rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                  1
-                </div>
-                <h3 className="font-semibold mb-2">Choose Experience</h3>
-                <p className="text-sm text-muted-foreground">Browse and select from verified conservation experiences</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-conservation rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                  2
-                </div>
-                <h3 className="font-semibold mb-2">Book Instantly</h3>
-                <p className="text-sm text-muted-foreground">Complete secure booking with instant confirmation</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-conservation rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4">
-                  3
-                </div>
-                <h3 className="font-semibold mb-2">Create Impact</h3>
-                <p className="text-sm text-muted-foreground">Experience conservation first-hand and see your impact</p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

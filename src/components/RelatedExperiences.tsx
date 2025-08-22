@@ -78,11 +78,12 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
       </h2>
       
       <div className="related-experiences">
-        {relatedExperiences.map((experience: any) => {
+        <div className="track flex gap-4 overflow-hidden scroll-smooth">
+        {relatedExperiences.slice(0, 5).map((experience: any) => {
           const project = mockProjects.find(p => p.id === experience.project_id);
           
-          return (
-            <Card key={experience.id} className="overflow-hidden hover:shadow-lg transition-shadow group">
+            return (
+            <Card key={experience.id} className="card flex-shrink-0 w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.5rem)] overflow-hidden hover:shadow-lg transition-shadow group">
               <div className="aspect-[4/3] relative">
                 <img
                   src={experience.images[0]}
@@ -132,7 +133,7 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
                 </div>
 
                 <Link to={`/experience/${experience.slug}`}>
-                  <Button size="sm" variant="outline" className="w-full">
+                  <Button size="sm" variant="outline" className="w-full view-experience">
                     View Experience
                   </Button>
                 </Link>
@@ -140,6 +141,34 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
             </Card>
           );
         })}
+        </div>
+        
+        <div className="nav absolute inset-y-0 flex items-center justify-between w-full pointer-events-none">
+          <button 
+            className="prev pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors"
+            onClick={() => {
+              const track = document.querySelector('.related-experiences .track') as HTMLElement;
+              if (track) {
+                const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
+                track.scrollBy({ left: -(cardWidth + 16), behavior: 'smooth' });
+              }
+            }}
+          >
+            ←
+          </button>
+          <button 
+            className="next pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors"
+            onClick={() => {
+              const track = document.querySelector('.related-experiences .track') as HTMLElement;
+              if (track) {
+                const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
+                track.scrollBy({ left: cardWidth + 16, behavior: 'smooth' });
+              }
+            }}
+          >
+            →
+          </button>
+        </div>
       </div>
     </section>
   );
