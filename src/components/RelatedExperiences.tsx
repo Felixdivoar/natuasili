@@ -77,14 +77,14 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         You might also like…
       </h2>
       
-      <div className="related-experiences relative">
+      <div className="related-experiences relative" id="related-experiences">
         <div className="carousel-container overflow-hidden">
-          <div className="track flex gap-4 transition-transform duration-300 ease-in-out">
+          <div className="track flex gap-4 transition-transform duration-300 ease-in-out overflow-x-auto">
             {relatedExperiences.slice(0, 5).map((experience: any, index: number) => {
               const project = mockProjects.find(p => p.id === experience.project_id);
               
               return (
-                <Card key={experience.id} className="card flex-shrink-0 w-full md:w-[calc(50%-0.5rem)] overflow-hidden hover:shadow-lg transition-shadow group">
+                <Card key={experience.id} className="card flex-shrink-0 w-full md:w-[calc(50%-0.5rem)] min-w-[280px] overflow-hidden hover:shadow-lg transition-shadow group">
                   <div className="aspect-[4/3] relative">
                     <img
                       src={experience.images[0]}
@@ -146,34 +146,18 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         </div>
         
         {relatedExperiences.length > 2 && (
-          <div className="nav flex justify-between items-center absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none px-4">
+          <div className="nav absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between items-center pointer-events-none px-2">
             <button 
-              className="prev-btn pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
-              onClick={() => {
-                const track = document.querySelector('.related-experiences .track') as HTMLElement;
-                if (track) {
-                  const isMobile = window.innerWidth < 768;
-                  const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
-                  const scrollAmount = isMobile ? cardWidth + 16 : (cardWidth + 16) * 2;
-                  track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                }
-              }}
+              className="prev pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
+              aria-label="Previous"
             >
-              ←
+              ‹
             </button>
             <button 
-              className="next-btn pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
-              onClick={() => {
-                const track = document.querySelector('.related-experiences .track') as HTMLElement;
-                if (track) {
-                  const isMobile = window.innerWidth < 768;
-                  const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
-                  const scrollAmount = isMobile ? cardWidth + 16 : (cardWidth + 16) * 2;
-                  track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                }
-              }}
+              className="next pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
+              aria-label="Next"
             >
-              →
+              ›
             </button>
           </div>
         )}

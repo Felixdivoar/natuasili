@@ -188,6 +188,88 @@ button, .btn, .button, [role="button"],
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+/* ===== Remove "Complete your booking" section everywhere ===== */
+.complete-your-booking,
+.section-complete-booking { display: none !important; }
+
+/* ===== Availability → Booking: hide/lock date+people once prefilled ===== */
+#booking-form.prefilled .booking-field--date,
+#booking-form.prefilled .booking-field--people {
+  display: none !important; /* hides the re-entry UI */
+}
+#booking-form input[readonly] { 
+  background: hsl(var(--muted)); 
+  cursor: not-allowed;
+}
+
+/* ===== Related carousel sizing & arrows ===== */
+.related-experiences { 
+  position: relative; 
+  min-height: 220px; /* prevent zero-height when empty */
+}
+.related-experiences .track {
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  padding: 4px;               /* avoid clipping shadows */
+}
+.related-experiences .card {
+  flex: 0 0 calc(50% - 8px);  /* 2-up desktop/laptop */
+  min-width: 280px;           /* prevent squish to zero */
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 12px;
+  overflow: hidden;
+}
+@media (max-width: 1024px) {
+  .related-experiences .card { 
+    flex: 0 0 calc(100% - 8px); /* 1-up tablet/mobile */
+  }
+}
+.related-experiences .card-media img {
+  display: block; 
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+  aspect-ratio: 16 / 9;
+}
+.related-experiences .card-body { 
+  padding: 12px; 
+}
+.related-experiences .card-title {
+  font-size: 1rem; 
+  line-height: 1.25; 
+  margin: 0 0 8px 0;
+}
+
+/* arrows */
+.related-experiences .nav {
+  position: absolute; 
+  inset: 0;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  pointer-events: none;
+}
+.related-experiences .nav button {
+  pointer-events: auto;
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%; 
+  border: 1px solid hsl(var(--border)); 
+  background: hsl(var(--background));
+  display: grid; 
+  place-items: center;
+  box-shadow: 0 1px 4px hsl(var(--muted-foreground) / 0.1);
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.related-experiences .nav button:hover {
+  background: hsl(var(--muted));
+}
+
 .modal-actions {
   display: flex;
   gap: 0.75rem;

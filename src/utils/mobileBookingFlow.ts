@@ -93,6 +93,26 @@ export function initializeMobileBookingFlow() {
     wirePeopleStepper();
   }
 
+  // Wire up related carousel controls
+  function wireRelatedCarousel() {
+    const root = qs('#related-experiences');
+    if (!root) return;
+    const track = root.querySelector('.track') as HTMLElement;
+    const prev = root.querySelector('.nav .prev') as HTMLButtonElement;
+    const next = root.querySelector('.nav .next') as HTMLButtonElement;
+    if (!track || !prev || !next) return;
+
+    function cardWidth() {
+      const card = track.querySelector('.card') as HTMLElement;
+      if (!card) return 320;
+      const rect = card.getBoundingClientRect();
+      return Math.ceil(rect.width + 16); // include gap
+    }
+
+    prev.addEventListener('click', () => track.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: cardWidth(), behavior: 'smooth' }));
+  }
+
   // Handle deep linking with URL parameters
   const params = new URLSearchParams(location.search || location.hash.split('?')[1] || '');
   const prePeople = params.get('people');
@@ -110,6 +130,9 @@ export function initializeMobileBookingFlow() {
       computeAndRenderReview(form);
     }
   }
+
+  // Initialize carousel controls
+  wireRelatedCarousel();
 }
 
 // Auto-initialize

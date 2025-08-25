@@ -373,21 +373,18 @@ const ExperienceDetail = () => {
       {/* Booking section (collapsed by default on mobile) */}
       <section id="booking-section" className="hidden md:block">
         <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Complete Your Booking</CardTitle>
-          </CardHeader>
           <CardContent>
             <form id="booking-form" className="space-y-4" data-unit-price={experience.base_price} data-currency="KES">
-              <div>
+              <div className="booking-field booking-field--date">
                 <label className="block text-sm font-medium mb-2">Date</label>
                 <input type="date" name="date" required className="w-full p-2 border border-input rounded-md" />
               </div>
 
-              <div>
+              <div className="booking-field booking-field--people">
                 <label htmlFor="bf-people" className="block text-sm font-medium mb-2">Number of people</label>
                 <div className="people-input" data-max={experience.capacity}>
                   <button type="button" className="btn-step" data-step="-1" aria-label="Decrease">−</button>
-                  <input 
+                  <input
                     id="bf-people" 
                     name="people" 
                     type="number" 

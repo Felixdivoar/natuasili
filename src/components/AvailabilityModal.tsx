@@ -38,7 +38,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     
     setError('');
     
-    // Hide availability CTA and show booking form
+    // Hide availability CTA and reveal/prefill booking form with locked fields
     const availabilityCta = document.getElementById('availability-cta');
     const bookingSection = document.getElementById('booking-section');
     
@@ -47,20 +47,33 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
       bookingSection.hidden = false;
       bookingSection.classList.remove('hidden');
       
-      // Prefill booking form
+      // Prefill booking form and lock fields
       const bookingForm = document.getElementById('booking-form') as HTMLFormElement;
       if (bookingForm) {
         const dateInput = bookingForm.querySelector('input[name="date"]') as HTMLInputElement;
         const peopleInput = bookingForm.querySelector('input[name="people"]') as HTMLInputElement;
         
-        if (dateInput) dateInput.value = date;
-        if (peopleInput) peopleInput.value = people.toString();
+        if (dateInput) {
+          dateInput.value = date;
+          dateInput.readOnly = true;
+        }
+        if (peopleInput) {
+          peopleInput.value = people.toString();
+          peopleInput.readOnly = true;
+        }
         
-        // Scroll to booking form and focus
+        // Add prefilled class to hide date/people fields on mobile
+        bookingForm.classList.add('prefilled');
+        
+        // Scroll to booking form and focus next field
         bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => {
-          (peopleInput || dateInput || bookingForm).focus();
-        }, 200);
+          // Focus next available field (name, email, or submit button)
+          const nextField = bookingForm.querySelector('input[name="name"], input[name="email"], button[type="submit"]') as HTMLElement;
+          if (nextField && nextField.focus) {
+            nextField.focus();
+          }
+        }, 300);
         
         // Trigger price calculation
         const event = new Event('input', { bubbles: true });
