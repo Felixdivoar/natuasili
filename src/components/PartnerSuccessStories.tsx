@@ -34,7 +34,7 @@ const PartnerSuccessStories: React.FC = () => {
       };
 
       if (prev && next) {
-        // Clear any existing listeners
+        // Clear any existing listeners to prevent duplicates
         const newPrev = prev.cloneNode(true) as HTMLButtonElement;
         const newNext = next.cloneNode(true) as HTMLButtonElement;
         
@@ -43,6 +43,7 @@ const PartnerSuccessStories: React.FC = () => {
         
         newPrev.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           const scrollAmount = step();
           track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
           setTimeout(update, 300);
@@ -50,6 +51,7 @@ const PartnerSuccessStories: React.FC = () => {
         
         newNext.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           const scrollAmount = step();
           track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
           setTimeout(update, 300);

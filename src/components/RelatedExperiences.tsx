@@ -133,8 +133,29 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         return slide ? Math.ceil(slide.getBoundingClientRect().width + 16) : track.clientWidth;
       };
 
-      prev.addEventListener('click', () => track.scrollBy({ left: -slideWidth(), behavior: 'smooth' }));
-      next.addEventListener('click', () => track.scrollBy({ left: slideWidth(), behavior: 'smooth' }));
+      // Clear any existing event listeners and add new ones
+      const newPrev = prev.cloneNode(true) as HTMLButtonElement;
+      const newNext = next.cloneNode(true) as HTMLButtonElement;
+      
+      prev.replaceWith(newPrev);
+      next.replaceWith(newNext);
+
+      newPrev.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollAmount = slideWidth();
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        setTimeout(updateButtons, 300);
+      });
+      
+      newNext.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollAmount = slideWidth();
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        setTimeout(updateButtons, 300);
+      });
+      
       track.addEventListener('scroll', updateButtons);
       window.addEventListener('resize', buildSlides, { passive: true });
 

@@ -27,6 +27,25 @@ const ExperienceDetail = () => {
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
   
+  // Return early if experience not found to prevent errors
+  if (!experience) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
+            <p className="text-muted-foreground mb-6">The experience you're looking for doesn't exist.</p>
+            <Link to="/browse">
+              <Button>Browse Experiences</Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+  
   // Initialize interactive booking form functionality after initial render
   useEffect(() => {
     initializeHybridBookingFlow();
@@ -63,19 +82,6 @@ const ExperienceDetail = () => {
       });
     }
   }, [experience?.slug]);
-
-  if (!experience || !project) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
-          <Link to="/browse">
-            <Button>Browse Experiences</Button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   const getThemeColor = (theme: string) => {
     switch (theme) {
