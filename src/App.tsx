@@ -63,7 +63,7 @@ const App = () => (
             <Route path="/marketplace" element={<Browse />} />
             <Route path="/browse" element={<Browse />} />
             <Route path="/experience/:slug" element={<ExperienceDetail />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/:slug" element={<Checkout />} />
             <Route path="/booking-success" element={<BookingSuccess />} />
             <Route path="/impact-ledger" element={<ImpactLedger />} />
             <Route path="/dashboard" element={<TravelerDashboard />} />

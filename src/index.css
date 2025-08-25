@@ -2238,6 +2238,65 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
   }
 }
 
+/* ===== AVAILABILITY & STICKY CTA ===== */
+/* Mobile sticky bar */
+@media (max-width:1023px){
+  .na-cta-bar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:9999;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(6px);
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    border-top: 1px solid hsl(var(--border));
+  }
+  .na-cta-bar .btn-book{
+    width:100%;
+    padding:14px 20px;
+    border-radius:8px;
+    background:hsl(var(--primary));
+    color:hsl(var(--primary-foreground));
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .na-cta-bar .btn-book:hover{
+    background:hsl(var(--primary) / 0.9);
+  }
+}
+
+/* Desktop floating button */
+@media (min-width:1024px){
+  .na-btn-book-fab{
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    z-index:9999;
+    padding:14px 20px;
+    border-radius:12px;
+    background:hsl(var(--primary));
+    color:hsl(var(--primary-foreground));
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,.12);
+    transition: all 0.2s ease;
+  }
+  .na-btn-book-fab:hover{
+    background:hsl(var(--primary) / 0.9);
+    transform: translateY(-1px);
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+  }
+}
+
+/* Scroll comfort when jumping to availability */
+#availability{scroll-margin-top:96px;}
+
 /* ===== FOOTER ===== */
 .site-footer {
   padding-top: 30px !important;

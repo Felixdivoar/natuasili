@@ -1,46 +1,46 @@
-import { useState } from "react";
-import { useSearchParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Shield, CreditCard, MapPin, Users, Calendar } from "lucide-react";
+import { ArrowLeft, Clock, MapPin, Users } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
-import { useToast } from "@/hooks/use-toast";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BookingStepper from "@/components/BookingStepper";
 
 const Checkout = () => {
+  const { slug } = useParams();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const { toast } = useToast();
   const { formatPrice } = useCurrency();
-  const experienceId = searchParams.get("experience");
-  const quantity = parseInt(searchParams.get("quantity") || "1");
-
-  const [formData, setFormData] = useState({
-    travelerName: "",
-    travelerEmail: "",
-    travelerPhone: "",
-    agreeTerms: false,
-    agreeMarketing: false,
-  });
-
-  const experience = mockExperiences.find(exp => exp.id === experienceId);
+  const [holdTimer, setHoldTimer] = useState(29 * 60 + 59); // 29:59
+  
+  const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
-
-  if (!experience || !project) {
-  return (
-    <div className="min-h-screen bg-background checkout-page">
-      <Header />
-        <div className="flex items-center justify-center py-20">
+  
+  // Hold timer countdown
+  useEffect(() => {
+    if (holdTimer > 0) {
+      const timer = setTimeout(() => setHoldTimer(holdTimer - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [holdTimer]);
+  
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+  
+  if (!experience) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-16">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-foreground mb-4">Invalid Booking</h1>
+            <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
+            <p className="text-muted-foreground mb-6">The experience you're trying to book doesn't exist.</p>
             <Link to="/browse">
               <Button>Browse Experiences</Button>
             </Link>
@@ -51,334 +51,129 @@ const Checkout = () => {
     );
   }
 
-  const total = experience.base_price * quantity;
-  const partnerAmount = Math.round(total * (experience.allocation_pct_project / 100));
-  const platformAmount = total - partnerAmount;
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (quantity > experience.capacity) {
-      toast({
-        title: "Booking Limit Reached",
-        description: `Maximum ${experience.capacity} people allowed for this experience.`,
-        variant: "destructive",
-      });
-      return;
+  const getThemeColor = (theme: string) => {
+    switch (theme) {
+      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      case 'Education': return 'bg-education/10 text-education border-education/20';
+      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
+      default: return 'bg-muted text-muted-foreground';
     }
-    
-    if (!formData.agreeTerms) {
-      toast({
-        title: "Terms Required",
-        description: "Please agree to the terms and conditions to continue.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Simulate booking creation
-    toast({
-      title: "Booking Confirmed!",
-      description: "You'll receive a confirmation email shortly.",
-    });
-
-    // Redirect to success page
-    navigate(`/booking-success?experience=${experience.slug}&qty=${quantity}&traveler_name=${encodeURIComponent(formData.travelerName)}`);
-    
-    console.log("Booking data:", {
-      experience: experience.id,
-      quantity,
-      total,
-      traveler: formData,
-    });
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Link to={`/experience/${experience.slug}`}>
-            <Button variant="outline" size="icon">
+      
+      {/* Header with timer */}
+      <div className="border-b bg-card">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link to={`/experience/${slug}`} className="flex items-center gap-2 text-muted-foreground hover:text-primary">
               <ArrowLeft className="h-4 w-4" />
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Checkout</h1>
-            <p className="text-muted-foreground">Complete your booking for {experience.title}</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Booking Form */}
-          <div className="space-y-6">
-            <Tabs defaultValue="traveler" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="traveler">Traveler Info</TabsTrigger>
-                <TabsTrigger value="preferences">Preferences</TabsTrigger>
-                <TabsTrigger value="payment">Payment</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="traveler" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Users className="h-5 w-5" />
-                      Traveler Information
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
-                        <Input
-                          id="name"
-                          value={formData.travelerName}
-                          onChange={(e) => setFormData(prev => ({ ...prev, travelerName: e.target.value }))}
-                          required
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address *</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={formData.travelerEmail}
-                          onChange={(e) => setFormData(prev => ({ ...prev, travelerEmail: e.target.value }))}
-                          required
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          value={formData.travelerPhone}
-                          onChange={(e) => setFormData(prev => ({ ...prev, travelerPhone: e.target.value }))}
-                        />
-                      </div>
-                    </form>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="preferences" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Experience Preferences</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Dietary Requirements</Label>
-                      <select className="w-full px-3 py-2 border border-input rounded-md">
-                        <option value="">None</option>
-                        <option value="vegetarian">Vegetarian</option>
-                        <option value="vegan">Vegan</option>
-                        <option value="halal">Halal</option>
-                        <option value="gluten-free">Gluten-free</option>
-                      </select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label>Mobility Assistance</Label>
-                      <select className="w-full px-3 py-2 border border-input rounded-md">
-                        <option value="">Not required</option>
-                        <option value="wheelchair">Wheelchair accessible</option>
-                        <option value="assistance">Assistance required</option>
-                      </select>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="requests">Special Requests</Label>
-                      <textarea 
-                        id="requests"
-                        className="w-full px-3 py-2 border border-input rounded-md min-h-[80px]"
-                        placeholder="Any special requests or requirements..."
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="payment" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <CreditCard className="h-5 w-5" />
-                      Payment & Terms
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-4">
-                      <div className="flex items-start space-x-2">
-                        <Checkbox
-                          id="terms"
-                          checked={formData.agreeTerms}
-                          onCheckedChange={(checked) => 
-                            setFormData(prev => ({ ...prev, agreeTerms: checked as boolean }))
-                          }
-                        />
-                        <Label htmlFor="terms" className="text-sm leading-relaxed">
-                          I agree to the <Link to="/terms" className="text-primary hover:underline">Terms and Conditions</Link> and <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link> *
-                        </Label>
-                      </div>
-
-                      <div className="flex items-start space-x-2">
-                        <Checkbox
-                          id="marketing"
-                          checked={formData.agreeMarketing}
-                          onCheckedChange={(checked) => 
-                            setFormData(prev => ({ ...prev, agreeMarketing: checked as boolean }))
-                          }
-                        />
-                        <Label htmlFor="marketing" className="text-sm leading-relaxed">
-                          I'd like to receive updates about conservation impact and new experiences
-                        </Label>
-                      </div>
-                    </div>
-
-                    <Button 
-                      type="submit" 
-                      className="w-full price-wrap whitespace-nowrap" 
-                      size="lg" 
-                      onClick={handleSubmit}
-                      disabled={quantity > experience.capacity}
-                    >
-                      {quantity > experience.capacity ? "Booking Limit Reached" : (
-                        <span className="price whitespace-nowrap">Confirm Booking - {formatPrice(total)}</span>
-                      )}
-                    </Button>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-
-            {/* Security Notice */}
-            <Card className="border-primary/20 bg-primary/5">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                  <Shield className="h-6 w-6 text-primary" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">Secure Booking</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Your information is encrypted and secure. Payments processed by trusted partners.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Right Column - Booking Summary */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Booking Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Experience Details */}
-                <div className="flex gap-4">
-                  <div className="w-20 h-16 bg-muted rounded-lg flex-shrink-0">
-                    {experience.images[0] && (
-                      <img
-                        src={experience.images[0]}
-                        alt={experience.title}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">{experience.title}</h3>
-                    <p className="text-sm text-muted-foreground">by <span className="partner-name">{project.name}</span></p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Booking Details */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-muted-foreground" />
-                      <span>Location</span>
-                    </div>
-                    <span className="text-foreground">{experience.location_text}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-muted-foreground" />
-                      <span>Travelers</span>
-                    </div>
-                    <span className="text-foreground">{quantity} person{quantity > 1 ? 's' : ''}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
-                      <span>Date</span>
-                    </div>
-                    <span className="text-foreground">To be arranged</span>
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Price Breakdown */}
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span>{formatPrice(experience.base_price)} × {quantity} person{quantity > 1 ? 's' : ''}</span>
-                    <span>{formatPrice(total)}</span>
-                  </div>
-                  
-                  <div className="flex justify-between font-bold text-lg">
-                    <span>Total</span>
-                    <span>{formatPrice(total)}</span>
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Impact Allocation */}
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-foreground">How Your Money Creates Impact</h4>
-                  
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center p-3 bg-primary/5 rounded-lg">
-                      <div>
-                        <div className="font-medium text-sm">To <span className="partner-name">{project.name}</span></div>
-                        <div className="text-xs text-muted-foreground">Direct conservation funding</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-bold text-primary">{formatPrice(partnerAmount)}</div>
-                        <div className="text-xs text-muted-foreground">90%</div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                      <div>
-                        <div className="font-medium text-sm">Platform & Operations</div>
-                        <div className="text-xs text-muted-foreground">Technology & support</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-bold">{formatPrice(platformAmount)}</div>
-                        <div className="text-xs text-muted-foreground">10%</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-muted-foreground">
-                    You'll receive impact updates showing exactly how your contribution is being used.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+              Back to experience
+            </Link>
+            {holdTimer > 0 && (
+              <div className="flex items-center gap-2 text-orange-600 font-medium">
+                <Clock className="h-4 w-4" />
+                <span>Hold expires in {formatTime(holdTimer)}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2">
+              <div className="mb-6">
+                <h1 className="text-2xl font-bold text-foreground mb-2">Complete your booking</h1>
+                <p className="text-muted-foreground">Secure your spot for this conservation experience</p>
+              </div>
+              
+              <BookingStepper experience={experience} project={project} />
+            </div>
+
+            {/* Order Summary Sidebar */}
+            <div className="lg:col-span-1">
+              <Card className="sticky top-24">
+                <CardHeader>
+                  <CardTitle>Order Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Experience preview */}
+                  <div className="flex gap-3">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                      <img 
+                        src={experience.images[0]} 
+                        alt={experience.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <Badge className={`mb-1 ${getThemeColor(experience.theme)}`}>
+                        {experience.theme}
+                      </Badge>
+                      <h3 className="font-medium text-sm leading-tight">{experience.title}</h3>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          <span>{experience.location_text}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          <span>{experience.duration_hours}h</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Selected options would go here */}
+                  <div className="text-sm text-muted-foreground">
+                    <p>Date: {searchParams.get('date') || 'Select date'}</p>
+                    <p>People: {searchParams.get('people') || '1'}</p>
+                  </div>
+
+                  {/* Price breakdown */}
+                  <div className="space-y-2 pt-4 border-t">
+                    <div className="flex justify-between text-sm">
+                      <span>Experience cost</span>
+                      <span>{formatPrice(experience.base_price)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>People × {searchParams.get('people') || '1'}</span>
+                      <span>{formatPrice(experience.base_price * parseInt(searchParams.get('people') || '1'))}</span>
+                    </div>
+                    <div className="flex justify-between font-semibold pt-2 border-t">
+                      <span>Total</span>
+                      <span>{formatPrice(experience.base_price * parseInt(searchParams.get('people') || '1'))}</span>
+                    </div>
+                  </div>
+
+                  {/* Security badges */}
+                  <div className="flex items-center gap-2 pt-4 border-t text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <div className="w-4 h-4 bg-green-100 rounded flex items-center justify-center">
+                        <span className="text-green-600 text-xs">✓</span>
+                      </div>
+                      <span>Secure payment</span>
+                    </div>
+                    <div className="flex items-center gap-1">  
+                      <div className="w-4 h-4 bg-blue-100 rounded flex items-center justify-center">
+                        <span className="text-blue-600 text-xs">i</span>
+                      </div>
+                      <span>Free cancellation</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Footer />
     </div>
   );
