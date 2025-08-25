@@ -120,263 +120,23 @@ const ExperienceDetail = () => {
           <span className="text-foreground">{experience.title}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Images and Details */}
-          <div className="lg:col-span-2">
-            {/* Image Gallery */}
-            <div className="relative mb-6">
-              <div className="aspect-[16/10] relative bg-muted rounded-lg overflow-hidden">
-                {experience.images[currentImageIndex] && (
-                  <img
-                    src={experience.images[currentImageIndex]}
-                    alt={`${experience.title} - Image ${currentImageIndex + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                )}
-                
-                {experience.images.length > 1 && (
-                  <>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
-                      onClick={prevImage}
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
-                      onClick={nextImage}
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
-                  </>
-                )}
-
-                <div className="absolute top-4 left-4 flex gap-2">
-                  <Link
-                    to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}
-                    className="theme-chip bg-black text-white px-3 py-1 rounded-full text-xs font-medium hover:opacity-90 transition-opacity"
-                  >
-                    {experience.theme}
-                  </Link>
-                  <Badge variant="secondary" className="bg-background/90 text-foreground">
-                    {experience.activity_type}
-                  </Badge>
-                </div>
-
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <Button variant="outline" size="icon" className="bg-background/80 hover:bg-background">
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                  <Button variant="outline" size="icon" className="bg-background/80 hover:bg-background">
-                    <Share className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Thumbnail Navigation */}
-              {experience.images.length > 1 && (
-                <div className="flex gap-2 mt-4 overflow-x-auto">
-                  {experience.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 ${
-                        index === currentImageIndex ? 'border-primary' : 'border-transparent'
-                      }`}
-                    >
-                      <img
-                        src={image}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Experience Info */}
-            <div className="space-y-6">
-              <div>
-                <div className="experience-header mb-4">
-                  <h1 className="title text-3xl font-bold text-foreground mb-2">{experience.title}</h1>
-                  <div className="meta text-muted-foreground">
-                    <div className="location flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      {experience.location_text}
-                    </div>
-                    <div className="capacity flex items-center gap-1">
-                      <Users className="h-4 w-4" />
-                      Up to {experience.capacity} people
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-start justify-between">
-                  <div className="text-right">
-                    <div className="border border-border px-4 py-2 rounded-lg shadow-md price-wrap">
-                      <div className="booking-price font-bold text-foreground whitespace-nowrap">{formatPrice(experience.base_price)}</div>
-                      <div className="text-sm text-muted-foreground">per person</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 mb-4">
-                  <Badge variant="outline">
-                    By <span className="partner-name">{project.name}</span>
-                  </Badge>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-primary text-primary" />
-                    <span className="text-sm font-medium">4.8 (24 reviews)</span>
-                  </div>
-                </div>
-
-                <p className="text-muted-foreground leading-relaxed">
-                  {experience.description}
-                </p>
-              </div>
-
-              {/* Allocation Breakdown */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">How Your Payment Makes Impact</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center p-3 bg-primary/5 rounded-lg">
-                      <span className="font-medium">Goes to {project.name}</span>
-                      <span className="font-bold text-primary">{experience.allocation_pct_project}%</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                      <span className="font-medium">Platform & Operations</span>
-                      <span className="font-bold">{experience.allocation_pct_platform}%</span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-4">
-                    This transparent allocation ensures your money directly supports conservation efforts and local communities.
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Tabs for Additional Info */}
-              <Tabs defaultValue="includes" className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="includes">What's Included</TabsTrigger>
-                  <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-                  <TabsTrigger value="impact">Recent Impact</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="includes" className="space-y-4">
-                  <Card>
-                    <CardContent className="pt-6">
-                      <ul className="space-y-2">
-                        <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full" />
-                          Professional guide and equipment
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full" />
-                          Transportation to/from meeting point
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full" />
-                          Conservation activity participation
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-primary rounded-full" />
-                          Impact report after completion
-                        </li>
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                
-                <TabsContent value="itinerary" className="space-y-4">
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="space-y-4">
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                            <Clock className="h-6 w-6 text-primary" />
-                          </div>
-                          <div>
-                            <h4 className="font-semibold">Day 1: Introduction & Setup</h4>
-                            <p className="text-muted-foreground text-sm">Meet the team, safety briefing, and begin conservation activities.</p>
-                          </div>
-                        </div>
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                            <Clock className="h-6 w-6 text-primary" />
-                          </div>
-                          <div>
-                            <h4 className="font-semibold">Day 2: Field Work</h4>
-                            <p className="text-muted-foreground text-sm">Hands-on conservation work with local community members.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                
-                <TabsContent value="impact" className="space-y-4">
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="space-y-4">
-                        <div className="flex gap-4">
-                          <div className="w-16 h-16 bg-muted rounded-lg flex-shrink-0"></div>
-                          <div>
-                            <p className="text-sm text-muted-foreground">2 days ago</p>
-                            <p className="font-medium">Planted 50 indigenous trees in degraded habitat area</p>
-                            <p className="text-sm text-muted-foreground">Funded by recent bookings</p>
-                          </div>
-                        </div>
-                        <div className="flex gap-4">
-                          <div className="w-16 h-16 bg-muted rounded-lg flex-shrink-0"></div>
-                          <div>
-                            <p className="text-sm text-muted-foreground">1 week ago</p>
-                            <p className="font-medium">Installed 3 water points for wildlife corridor</p>
-                            <p className="text-sm text-muted-foreground">Verified impact from traveler contributions</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-
-              {/* Map Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Experience Location</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <MapComponent 
-                    longitude={36.8219}
-                    latitude={-1.2921}
-                    location={experience.location_text}
-                    className="w-full h-64 rounded-lg"
-                    partnerHQLat={-1.1000}
-                    partnerHQLng={36.7000}
-                    partnerName={project?.name}
-                    showDirectionsButton={true}
-                  />
-                </CardContent>
-              </Card>
-
-
-              {/* Reviews Section */}
-              <ReviewSection experienceId={experience.id} />
-            </div>
+        {/* Single Column Layout - Only Booking Form */}
+        <div className="max-w-4xl mx-auto">
+          <div className="experience-booking-form">
+            <ResponsiveBookingForm experience={experience} project={project} />
           </div>
 
-          {/* Right Column - Booking Panel */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-4">
-              <ResponsiveBookingForm experience={experience} project={project} />
-            </div>
+          {/* Similar Experiences Section */}
+          <RelatedExperiences 
+            currentExperienceId={Number(experience.id)}
+            theme={experience.theme}
+            destination={experience.location_text}
+            maxResults={8}
+          />
+
+          {/* Reviews Section */}
+          <div className="experience-reviews">
+            <ReviewSection experienceId={experience.id} />
           </div>
         </div>
       </div>
@@ -442,12 +202,17 @@ const ExperienceDetail = () => {
         experienceTitle={experience.title}
       />
 
-      {/* Sticky Book Now (mobile/tablet) */}
-      <div className="fixed bottom-4 left-4 right-4 md:hidden z-50">
+      {/* Sticky Book Now Button */}
+      <div className="sticky-book-now">
         <button 
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-4 px-6 rounded-lg shadow-lg transition-colors" 
           id="sticky-book-now-btn" 
           aria-label="Book now"
+          onClick={() => {
+            document.querySelector('.experience-booking-form')?.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start' 
+            });
+          }}
         >
           Book now
         </button>

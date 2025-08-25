@@ -2134,6 +2134,84 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
   }
 }
 
+/* Responsive spacing for experience page */
+@media (min-width: 1024px) {
+  .experience-reviews {
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .experience-booking-form {
+    margin-bottom: 24px;
+  }
+}
+
+/* Sticky Book Now Button */
+.experience-booking .sticky-book-now {
+  position: fixed;
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
+/* Mobile sticky button */
+@media (max-width: 1023px) {
+  .experience-booking .sticky-book-now {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .experience-booking #sticky-book-now-btn {
+    width: 100%;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 8px 24px -6px hsl(var(--primary) / 0.3);
+    backdrop-filter: blur(8px);
+  }
+  
+  .experience-booking #sticky-book-now-btn:hover {
+    background: hsl(var(--primary) / 0.9);
+    transform: translateY(-1px);
+  }
+}
+
+/* Desktop floating button */
+@media (min-width: 1024px) {
+  .experience-booking .sticky-book-now {
+    right: 24px;
+    bottom: 24px;
+  }
+  
+  .experience-booking #sticky-book-now-btn {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px -6px hsl(var(--primary) / 0.4);
+    backdrop-filter: blur(8px);
+  }
+  
+  .experience-booking #sticky-book-now-btn:hover {
+    background: hsl(var(--primary) / 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -8px hsl(var(--primary) / 0.5);
+  }
+}
+
+/* Smooth scroll for booking form */
+.experience-booking-form {
+  scroll-margin-top: 120px;
+}
+
 /* ===== FOOTER ===== */
 .site-footer {
   padding-top: 30px !important;
