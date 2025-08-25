@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { useEffect } from "react";
 import CookieBanner from "@/components/CookieBanner";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
@@ -45,15 +46,16 @@ function ScrollToTop() {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <CurrencyProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <CookieBanner />
-          <ScrollToTop />
-          <Routes>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <CurrencyProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <CookieBanner />
+            <ScrollToTop />
+            <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/marketplace" element={<Browse />} />
             <Route path="/browse" element={<Browse />} />
@@ -84,6 +86,7 @@ const App = () => (
       </TooltipProvider>
     </CurrencyProvider>
   </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

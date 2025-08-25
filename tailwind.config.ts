@@ -69,7 +69,11 @@ export default {
 				wildlife: 'hsl(var(--wildlife))',
 				livelihoods: 'hsl(var(--livelihoods))',
 				education: 'hsl(var(--education))',
-				habitat: 'hsl(var(--habitat))'
+				habitat: 'hsl(var(--habitat))',
+				conservation: {
+					DEFAULT: 'hsl(var(--conservation))',
+					light: 'hsl(var(--conservation-light))'
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
