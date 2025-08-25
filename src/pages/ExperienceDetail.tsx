@@ -360,67 +360,78 @@ const ExperienceDetail = () => {
 
       {/* 1) Availability CTA (shown first) */}
       <div id="availability-cta" className="availability-cta">
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border z-50 md:hidden">
-          <Button 
-            className="btn-check-availability w-full btn-primary"
-            onClick={() => setIsAvailabilityModalOpen(true)}
-          >
-            Check Availability
-          </Button>
+        <button className="btn btn-primary btn-check-availability">Check availability</button>
+      </div>
+
+      {/* 2) Availability modal */}
+      <div id="availability-modal" className="modal" hidden data-max="8" aria-modal="true" role="dialog" aria-labelledby="avail-title">
+        <div className="modal-content">
+          <h3 id="avail-title">Check availability</h3>
+          <form id="availability-form" data-max="8" className="form-grid">
+            <label>Date
+              <input type="date" name="date" required />
+            </label>
+            <label>People
+              <input type="number" name="people" min="1" defaultValue="1" inputMode="numeric" required />
+            </label>
+            <p className="people-error" role="alert" aria-live="polite" hidden>Booking limit reached.</p>
+            <div className="actions">
+              <button type="button" data-close="availability" className="btn btn-secondary">Cancel</button>
+              <button type="submit" className="btn btn-primary">Continue</button>
+            </div>
+          </form>
         </div>
       </div>
 
-      {/* 3) Booking panel (collapsed initially) */}
-      <section id="booking-section" className="hidden md:block" hidden>
-        <Card className="mb-8">
-          <CardContent>
-            <form id="booking-form" className="space-y-4" data-unit-price={experience.base_price} data-currency="KES">
-              {/* Locked chips after availability */}
-              <div className="booking-locks">
-                <div className="lock-chip">
-                  <strong>Date:</strong> <span data-lock="date"></span>
-                </div>
-                <div className="lock-chip">
-                  <strong>People:</strong> <span data-lock="people"></span>
-                </div>
-                <button type="button" className="btn-link text-primary hover:text-primary/80" id="edit-availability">
-                  Change
-                </button>
-              </div>
+      {/* 3) Booking / Checkout panel */}
+      <section id="booking-section" className="booking-wrap" hidden>
+        <form id="booking-form" data-unit-price={experience.base_price} data-currency="KES" className="form-shell">
+          {/* Locked chips after availability */}
+          <div className="booking-locks">
+            <div className="lock-chip"><strong>Date:</strong> <span data-lock="date"></span></div>
+            <div className="lock-chip"><strong>People:</strong> <span data-lock="people"></span></div>
+            <button type="button" className="btn-link" id="edit-availability">Change</button>
+          </div>
 
-              {/* Traveler details (first editable step) */}
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="bf-name" className="block text-sm font-medium mb-2">Name *</label>
-                  <input id="bf-name" name="name" type="text" required className="w-full p-2 border border-input rounded-md" />
-                </div>
-                <div>
-                  <label htmlFor="bf-email" className="block text-sm font-medium mb-2">Email *</label>
-                  <input id="bf-email" name="email" type="email" required className="w-full p-2 border border-input rounded-md" />
-                </div>
-                <div>
-                  <label htmlFor="bf-phone" className="block text-sm font-medium mb-2">Phone *</label>
-                  <input id="bf-phone" name="phone" type="tel" required className="w-full p-2 border border-input rounded-md" />
-                </div>
-              </div>
+          {/* Form grid */}
+          <div className="form-grid">
+            <label>Name
+              <input name="name" required />
+            </label>
+            <label>Email
+              <input name="email" type="email" required />
+            </label>
+            <label>Phone
+              <input name="phone" required />
+            </label>
+          </div>
 
-              {/* Review: unit × people + 90/10 split */}
-              <div id="price-review" className="price-review"></div>
+          {/* Price review */}
+          <div id="price-review" className="price-review"></div>
 
-              {/* Proceed */}
-              <Button type="submit" className="w-full btn-primary">Continue to payment</Button>
+          {/* Desktop/laptop primary CTA */}
+          <div className="actions desktop-actions">
+            <button className="btn btn-primary" type="submit">Continue to payment</button>
+          </div>
 
-              {/* Hidden mirrors (optional for backend) */}
-              <input type="hidden" name="date" id="bf-date" />
-              <input type="hidden" name="people" id="bf-people" />
-              <input type="hidden" name="unit_price" id="bf-unit" />
-              <input type="hidden" name="currency" id="bf-curr" />
-              <input type="hidden" name="total_price" id="bf-total" />
-              <input type="hidden" name="partner_amount" id="bf-partner" />
-              <input type="hidden" name="platform_amount" id="bf-platform" />
-            </form>
-          </CardContent>
-        </Card>
+          {/* Mirrors for backend (optional) */}
+          <input type="hidden" name="date" id="bf-date" />
+          <input type="hidden" name="people" id="bf-people" />
+          <input type="hidden" name="unit_price" id="bf-unit" />
+          <input type="hidden" name="currency" id="bf-curr" />
+          <input type="hidden" name="total_price" id="bf-total" />
+          <input type="hidden" name="partner_amount" id="bf-partner" />
+          <input type="hidden" name="platform_amount" id="bf-platform" />
+        </form>
+
+        {/* Mobile/tablet sticky bar */}
+        <div className="sticky-cta">
+          <div className="sticky-total">
+            <span>Total</span>
+            <strong className="sticky-total-value">KES 0</strong>
+          </div>
+          <button className="btn btn-primary" id="sticky-continue">Continue to payment</button>
+        </div>
       </section>
 
       {/* Availability Modal */}
