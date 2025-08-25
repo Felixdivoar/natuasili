@@ -281,8 +281,9 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
     }
   };
 
-  // Mock ledger data - in real app this would come from API
+  // Mock ledger data - in real app this would come from API with all 12 partners
   const mockLedgerEntries = [
+    // Maasai Mara Wildlife Conservancy
     {
       id: "1",
       booking_date: "2024-01-20",
@@ -296,6 +297,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
       proof_description: "Successfully tracked 3 lion prides and 2 elephant herds. Collected GPS data for 15 individual animals contributing to migration pattern research. Installed 2 new camera traps in strategic locations.",
       verified_date: "2024-01-23"
     },
+    // Samburu Education Initiative  
     {
       id: "2",
       booking_date: "2024-01-18",
@@ -309,6 +311,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
       proof_description: "Conducted 2-hour workshop with 8 local women artisans. Created 15 traditional beadwork pieces. All workshop materials purchased from local suppliers, supporting 3 additional families.",
       verified_date: "2024-01-21"
     },
+    // Coastal Forest Restoration
     {
       id: "3",
       booking_date: "2024-01-16",
@@ -322,70 +325,131 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
       proof_description: "Planted 45 mangrove seedlings in degraded coastal area. Removed 2.3 tons of marine debris. Trained 6 community members in mangrove cultivation techniques.",
       verified_date: "2024-01-19"
     },
+    // Nature Kenya
     {
       id: "4",
       booking_date: "2024-01-14",
-      experience_title: "Community Solar Water Pump Installation",
-      project_name: "Samburu Education Initiative",
-      theme: "Livelihoods",
-      allocation_amount: 184,
+      experience_title: "Urban Bird Watching Safari",
+      project_name: "Nature Kenya",
+      theme: "Wildlife",
+      allocation_amount: 68,
       currency: "USD",
       status: "verified", 
       proof_images: ["/placeholder.svg"],
-      proof_description: "Installed solar-powered water pump serving 150 community members. Reduced daily water collection time from 4 hours to 30 minutes for local families. Trained 4 technicians for maintenance.",
+      proof_description: "Documented 47 bird species in Nairobi Arboretum. Trained 3 local guides in bird identification. Contributed data to Kenya Bird Atlas project.",
       verified_date: "2024-01-17"
     },
+    // Ol Pejeta Conservancy
     {
       id: "5",
       booking_date: "2024-01-12",
-      experience_title: "Anti-Poaching Patrol Training",
-      project_name: "Maasai Mara Wildlife Conservancy", 
+      experience_title: "Rhino Conservation & Technology Tour",
+      project_name: "Ol Pejeta Conservancy", 
       theme: "Wildlife",
       allocation_amount: 290,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Trained 12 local rangers in advanced tracking and surveillance techniques. Equipped patrol team with GPS devices and camera traps. Covered 85km² area in joint patrol exercise.",
+      proof_description: "Monitored northern white rhinos Najin and Fatu. Updated GPS tracking systems for 12 black rhinos. Demonstrated anti-poaching technology to visitors.",
       verified_date: "2024-01-15"
     },
+    // Reteti Elephant Orphanage
     {
       id: "6", 
       booking_date: "2024-01-10",
-      experience_title: "Coral Reef Monitoring Dive",
-      project_name: "Coastal Forest Restoration",
-      theme: "Habitat",
+      experience_title: "Meet Orphaned Elephants Experience",
+      project_name: "Reteti Elephant Orphanage",
+      theme: "Wildlife",
       allocation_amount: 142,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Conducted underwater survey of 500m² coral reef area. Documented 23 species of coral and 47 fish species. Identified and removed 15 pieces of marine debris harmful to reef ecosystem.",
+      proof_description: "Fed and cared for 8 orphaned elephant calves. Prepared nutritional supplements. Supported 4 Samburu women keepers in daily elephant care routines.",
       verified_date: "2024-01-13"
     },
+    // Mara Elephant Project
     {
       id: "7",
       booking_date: "2024-01-08", 
-      experience_title: "School Environmental Club Setup",
-      project_name: "Samburu Education Initiative",
-      theme: "Education",
+      experience_title: "Elephant Tracking & Research Experience",
+      project_name: "Mara Elephant Project",
+      theme: "Wildlife",
+      allocation_amount: 245,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg"],
+      proof_description: "Tracked 3 elephant families using GPS collars. Recorded behavioral data for conservation research. Conducted anti-poaching patrol covering 45km area.",
+      verified_date: "2024-01-11"
+    },
+    // Colobus Conservation
+    {
+      id: "8",
+      booking_date: "2024-01-06",
+      experience_title: "Colobus Monkey Conservation Experience", 
+      project_name: "Colobus Conservation",
+      theme: "Wildlife",
+      allocation_amount: 89,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Rehabilitated 2 rescued colobus monkeys. Planted 25 indigenous trees in degraded coastal forest. Educated 15 community members about primate conservation.",
+      verified_date: "2024-01-09"
+    },
+    // Giraffe Centre
+    {
+      id: "9",
+      booking_date: "2024-01-04",
+      experience_title: "Giraffe Feeding & Conservation Education", 
+      project_name: "Giraffe Centre",
+      theme: "Wildlife",
+      allocation_amount: 156,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Fed and monitored 14 Rothschild giraffes. Conducted conservation education for 35 school children. Supported breeding program documentation.",
+      verified_date: "2024-01-07"
+    },
+    // Friends of Karura Forest
+    {
+      id: "10",
+      booking_date: "2024-01-02",
+      experience_title: "Forest Conservation Tree Planting", 
+      project_name: "Friends of Karura Forest",
+      theme: "Habitat",
       allocation_amount: 78,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg"],
-      proof_description: "Established environmental club at local primary school with 25 student members. Planted school garden with 30 indigenous plants. Conducted first conservation awareness session.",
-      verified_date: "2024-01-11"
+      proof_description: "Planted 50 indigenous seedlings in degraded forest area. Cleared invasive species from 2 hectares. Trained 8 volunteers in forest restoration techniques.",
+      verified_date: "2024-01-05"
     },
+    // Local Ocean Conservation
     {
-      id: "8",
-      booking_date: "2024-01-06",
-      experience_title: "Beehive Installation & Training", 
-      project_name: "Maasai Mara Wildlife Conservancy",
-      theme: "Livelihoods",
-      allocation_amount: 195,
+      id: "11",
+      booking_date: "2023-12-30",
+      experience_title: "Marine Conservation Dive Experience", 
+      project_name: "Local Ocean Conservation",
+      theme: "Habitat",
+      allocation_amount: 124,
       currency: "USD",
       status: "verified",
       proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Installed 8 modern beehives for community cooperative. Trained 12 beekeepers in sustainable harvesting methods. Expected to generate annual income for participating families.",
-      verified_date: "2024-01-09"
+      proof_description: "Conducted coral reef health assessment. Removed 45kg of marine debris. Documented 28 fish species and 12 coral species in monitoring survey.",
+      verified_date: "2024-01-03"
+    },
+    // Friends of Nairobi National Park
+    {
+      id: "12",
+      booking_date: "2023-12-28",
+      experience_title: "National Park Cleanup & Wildlife Walk", 
+      project_name: "Friends of Nairobi National Park",
+      theme: "Habitat",
+      allocation_amount: 95,
+      currency: "USD",
+      status: "verified",
+      proof_images: ["/placeholder.svg"],
+      proof_description: "Removed 180kg of litter from park trails. Led wildlife walk documenting 23 mammal species. Engaged 12 volunteers in park conservation activities.",
+      verified_date: "2024-01-01"
     }
   ];
 

@@ -231,95 +231,150 @@ const Partners = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Partner Success Stories
               </h2>
+              <p className="text-lg text-muted-foreground">
+                Real impact stories from our conservation partners across Kenya.
+              </p>
             </div>
 
             <div className="relative">
               {/* Carousel Container */}
               <div className="partner-stories-carousel overflow-hidden">
                 <div className="flex gap-6 transition-transform duration-300 ease-in-out" id="partner-stories-track">
-                  <Link to="/projects/1" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
-                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  <Link to="/partners/success-stories/reteti-first-elephant-return" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full story-card">
+                      <div className="aspect-[16/10] bg-muted relative overflow-hidden">
+                        <img 
+                          src="/assets/reteti-elephant-orphanage.jpg" 
+                          alt="Reteti Elephant Release"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                       <CardHeader>
                         <div className="flex items-center gap-3 mb-4">
                           <Badge variant="outline" className="bg-primary/5 text-primary">Wildlife</Badge>
-                          <Badge variant="outline">Verified impact</Badge>
+                          <Badge variant="outline">Success Story</Badge>
                         </div>
-                        <CardTitle>Maasai Mara Wildlife Conservancy</CardTitle>
+                        <CardTitle className="text-lg">From Rescue to Release: Reteti's First Elephant Return</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-foreground mb-4">
-                          "NatuAsili has enabled us to fund critical wildlife protection programs 
-                          through meaningful tourism experiences. We've seen a 40% increase in conservation funding."
+                        <p className="text-foreground mb-4 text-sm">
+                          Reteti Elephant Sanctuary successfully released one of its first rescued calves back into the wild, marking a historic milestone for community-based conservation.
                         </p>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-primary font-semibold">$125,000 raised</span>
-                          <span className="text-foreground">45 experiences hosted</span>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">4 min read</span>
+                          <span className="text-primary font-semibold">Read more →</span>
                         </div>
                       </CardContent>
                     </Card>
                   </Link>
 
-                  <Link to="/projects/2" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
-                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  <Link to="/partners/success-stories/birds-bring-back-tourism-nairobi" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full story-card">
+                      <div className="aspect-[16/10] bg-muted relative overflow-hidden">
+                        <img 
+                          src="/assets/nature-kenya-birdwatching.jpg" 
+                          alt="Nature Kenya Birdwatching"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                       <CardHeader>
                         <div className="flex items-center gap-3 mb-4">
-                          <Badge variant="outline" className="bg-primary/5 text-primary">Education</Badge>
-                          <Badge variant="outline">Verified impact</Badge>
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Economic Impact</Badge>
+                          <Badge variant="outline">Success Story</Badge>
                         </div>
-                        <CardTitle>Samburu Education Initiative</CardTitle>
+                        <CardTitle className="text-lg">Birds Bring Back Tourism in Nairobi</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-foreground mb-4">
-                          "The platform has connected us with travelers who truly care about our mission. 
-                          The transparent funding model has helped us expand our education programs."
+                        <p className="text-foreground mb-4 text-sm">
+                          Nature Kenya's innovative urban birdwatching programs have attracted international eco-tourists, providing sustainable income for local guides.
                         </p>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-primary font-semibold">$78,000 raised</span>
-                          <span className="text-foreground">28 experiences hosted</span>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">5 min read</span>
+                          <span className="text-primary font-semibold">Read more →</span>
                         </div>
                       </CardContent>
                     </Card>
                   </Link>
 
-                  <Link to="/projects/3" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
-                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  <Link to="/partners/success-stories/colobus-conservation-saves-diani-forest" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full story-card">
+                      <div className="aspect-[16/10] bg-muted relative overflow-hidden">
+                        <img 
+                          src="/assets/colobus-conservation.jpg" 
+                          alt="Colobus Conservation Forest"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                       <CardHeader>
                         <div className="flex items-center gap-3 mb-4">
                           <Badge variant="outline" className="bg-primary/5 text-primary">Habitat</Badge>
-                          <Badge variant="outline">Verified impact</Badge>
+                          <Badge variant="outline">Success Story</Badge>
                         </div>
-                        <CardTitle>Coastal Forest Restoration</CardTitle>
+                        <CardTitle className="text-lg">Colobus Conservation Saves Diani Forest Patch</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-foreground mb-4">
-                          "Working with NatuAsili has allowed us to showcase our mangrove restoration work 
-                          while generating sustainable funding for our conservation efforts."
+                        <p className="text-foreground mb-4 text-sm">
+                          Through community patrols and advocacy, Colobus Conservation helped prevent deforestation of 20 hectares in Diani.
                         </p>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-primary font-semibold">$92,000 raised</span>
-                          <span className="text-foreground">38 experiences hosted</span>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">6 min read</span>
+                          <span className="text-primary font-semibold">Read more →</span>
                         </div>
                       </CardContent>
                     </Card>
                   </Link>
 
-                  <Link to="/projects/4" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
-                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                  <Link to="/partners/success-stories/technology-saves-mara-elephants" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full story-card">
+                      <div className="aspect-[16/10] bg-muted relative overflow-hidden">
+                        <img 
+                          src="/assets/mara-elephant-tracking.jpg" 
+                          alt="Mara Elephant Project Technology"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                       <CardHeader>
                         <div className="flex items-center gap-3 mb-4">
-                          <Badge variant="outline" className="bg-primary/5 text-primary">Livelihoods</Badge>
-                          <Badge variant="outline">Verified impact</Badge>
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Anti-Poaching</Badge>
+                          <Badge variant="outline">Success Story</Badge>
                         </div>
-                        <CardTitle>Community Beekeeping Project</CardTitle>
+                        <CardTitle className="text-lg">Technology Saves Mara Elephants from Poaching</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-foreground mb-4">
-                          "The income from conservation tourism has enabled us to expand our beekeeping 
-                          program and support 50 local families while protecting forest habitats."
+                        <p className="text-foreground mb-4 text-sm">
+                          Advanced GPS tracking and rapid response systems helped achieve a 78% reduction in elephant poaching incidents.
                         </p>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-primary font-semibold">$56,000 raised</span>
-                          <span className="text-foreground">22 experiences hosted</span>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">5 min read</span>
+                          <span className="text-primary font-semibold">Read more →</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link to="/partners/success-stories/karura-forest-urban-oasis" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full story-card">
+                      <div className="aspect-[16/10] bg-muted relative overflow-hidden">
+                        <img 
+                          src="/assets/karura-forest-planting.jpg" 
+                          alt="Karura Forest Conservation"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-4">
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Urban Conservation</Badge>
+                          <Badge variant="outline">Success Story</Badge>
+                        </div>
+                        <CardTitle className="text-lg">Karura Forest: From Threatened Land to Urban Oasis</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-foreground mb-4 text-sm">
+                          Community mobilization transformed threatened Karura Forest into Nairobi's premier urban conservation success story.
+                        </p>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">6 min read</span>
+                          <span className="text-primary font-semibold">Read more →</span>
                         </div>
                       </CardContent>
                     </Card>
