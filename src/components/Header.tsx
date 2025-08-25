@@ -25,8 +25,8 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
   return (
-    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header pt-3">
-      <div className="container mx-auto px-4 py-4">
+    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header">
+      <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">

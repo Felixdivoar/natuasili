@@ -1351,6 +1351,73 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
   }
 }
 
+/* ===== HEADER ===== */
+.site-header {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+@media (max-width: 768px) {
+  .site-header {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
+@media (max-width: 768px) {
+  .site-footer {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+}
+
+/* ===== MAIN MENU (desktop/laptop) ===== */
+.primary-menu,
+.primary-menu ul {
+  list-style: none !important;   /* removes dots/bullets */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+.primary-menu > li {
+  display: inline-block;         /* horizontal */
+  margin: 0 15px;                /* equal spacing */
+}
+.primary-menu > li > a {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ===== FOOTER MENU LINKS ===== */
+.site-footer .footer-explore ul,
+.site-footer .footer-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-footer .footer-explore li,
+.site-footer .footer-links li {
+  margin: 4px 0;
+}
+
+/* Ensure proper touch targets on mobile */
+@media (max-width: 768px) {
+  .site-footer a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+}
+
 /* ===== Modal styling ===== */
 .modal {
   position: fixed;
