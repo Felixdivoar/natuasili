@@ -37,6 +37,16 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
 
   const [paymentStatus, setPaymentStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
 
+  // Initialize booking utilities on mount
+  useEffect(() => {
+    // Import and initialize booking utilities
+    import('@/utils/bookingUtils').then((module) => {
+      if (module.initializeBookingForm) {
+        module.initializeBookingForm();
+      }
+    });
+  }, []);
+
   // Manual navigation validation
   const isStep1Valid = () => {
     const peopleValid = formData.people >= 1 && formData.people <= experience.capacity;
@@ -128,9 +138,20 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
   const peopleExceedsLimit = formData.people > experience.capacity;
 
   return (
-    <div className="booking-stepper" aria-live="polite">
+    <form id="booking-form" 
+          data-unit-price={experience.base_price} 
+          data-currency={formatPrice(0).split(' ')[0]}
+          className="booking-stepper" 
+          aria-live="polite">
       {/* Hidden announcer for screen readers */}
       <div id="step-announcer" aria-live="assertive" className="sr-only" />
+      
+      {/* Hidden mirrors for checkout */}
+      <input type="hidden" name="unit_price" id="bf-unit" value={experience.base_price} />
+      <input type="hidden" name="currency" id="bf-curr" value={formatPrice(0).split(' ')[0]} />
+      <input type="hidden" name="total_price" id="bf-total" value={total} />
+      <input type="hidden" name="partner_amount" id="bf-partner" value={partnerAmount} />
+      <input type="hidden" name="platform_amount" id="bf-platform" value={platformAmount} />
       
       {/* Progress indicator */}
       <div className="flex items-center justify-between mb-6 text-sm">
@@ -188,10 +209,18 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="people">Number of people *</Label>
+              <Label htmlFor="bf-people">Number of people *</Label>
               <div className="people-input" data-max={experience.capacity}>
+                <Button
+                  type="button"
+                  className="btn-step px-3 py-2 border border-border bg-muted hover:bg-muted/80 rounded-lg"
+                  onClick={() => handleStep1Change('people', Math.max(1, formData.people - 1))}
+                  aria-label="Decrease"
+                >
+                  −
+                </Button>
                 <Input
-                  id="people"
+                  id="bf-people"
                   name="people"
                   type="number"
                   min="1"
@@ -199,13 +228,21 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
                   value={formData.people}
                   onChange={(e) => handleStep1Change('people', parseInt(e.target.value) || 1)}
                   onBlur={(e) => handleStep1Change('people', parseInt(e.target.value) || 1)}
-                  className="w-full"
+                  className="w-20 text-center"
                   inputMode="numeric"
                   required
                 />
+                <Button
+                  type="button"
+                  className="btn-step px-3 py-2 border border-border bg-muted hover:bg-muted/80 rounded-lg"
+                  onClick={() => handleStep1Change('people', Math.min(experience.capacity, formData.people + 1))}
+                  aria-label="Increase"
+                >
+                  +
+                </Button>
               </div>
               {peopleExceedsLimit && (
-                <p className="people-error text-sm font-bold text-red-600" role="alert" aria-live="polite">
+                <p className="people-error text-sm font-bold" role="alert" aria-live="polite">
                   Booking limit reached.
                 </p>
               )}
@@ -313,17 +350,40 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
                   <span>{formData.date}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>People:</span>
-                  <span>{formData.people}</span>
-                </div>
-                <div className="flex justify-between">
                   <span>Contact:</span>
                   <span>{formData.name}</span>
                 </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Total:</span>
-                  <span>{formatPrice(total)}</span>
-                </div>
+              </div>
+            </div>
+
+            {/* Price Breakdown */}
+            <div id="price-review" className="price-review border border-border rounded-lg p-4">
+              <div className="row flex justify-between py-1">
+                <span>Experience cost</span>
+                <span>{formatPrice(experience.base_price)}</span>
+              </div>
+              <div className="row flex justify-between py-1">
+                <span>People</span>
+                <span>{formData.people}</span>
+              </div>
+              <div className="row flex justify-between py-1">
+                <span>Subtotal (cost × people)</span>
+                <span>{formatPrice(total)}</span>
+              </div>
+              <div className="row flex justify-between py-1">
+                <span>Partner share (90%)</span>
+                <span>{formatPrice(partnerAmount)}</span>
+              </div>
+              <div className="row flex justify-between py-1">
+                <span>Platform & operations (10%)</span>
+                <span>{formatPrice(platformAmount)}</span>
+              </div>
+              <div className="row total flex justify-between py-1 border-t border-border mt-2 pt-2 font-bold">
+                <span>Total</span>
+                <span>{formatPrice(total)}</span>
+              </div>
+              <div className="note text-sm text-muted-foreground mt-2">
+                Your booking funds conservation impact: 90% goes directly to the partner.
               </div>
             </div>
 
@@ -455,7 +515,7 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
           </CardContent>
         </Card>
       )}
-    </div>
+    </form>
   );
 };
 

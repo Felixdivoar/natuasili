@@ -55,7 +55,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="modal" aria-modal="true" role="dialog" aria-labelledby="availability-title">
+    <div id="availability-modal" className="modal" aria-modal="true" role="dialog" aria-labelledby="availability-title">
       <div className="modal-content">
         <div className="flex items-center justify-between mb-6">
           <h3 id="availability-title" className="text-xl font-semibold text-foreground">
@@ -70,11 +70,12 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           Check availability for <strong>{experienceTitle}</strong>
         </p>
         
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form id="availability-form" data-max={maxCapacity} onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="date">Select Date</Label>
+            <Label htmlFor="av-date">Select Date</Label>
             <Input
-              id="date"
+              id="av-date"
+              name="date"
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -85,9 +86,10 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           </div>
           
           <div>
-            <Label htmlFor="people">Number of People</Label>
+            <Label htmlFor="av-people">Number of People</Label>
             <Input
-              id="people"
+              id="av-people"
+              name="people"
               type="number"
               min="1"
               max={maxCapacity}
@@ -110,9 +112,9 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
             <Button 
               type="submit" 
               disabled={!!error || !date}
-              className="bg-primary hover:bg-primary/90"
+              className="bg-primary hover:bg-primary/90 btn btn-primary"
             >
-              Continue to Booking
+              Continue
             </Button>
           </div>
         </form>
