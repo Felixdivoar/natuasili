@@ -1930,8 +1930,8 @@ html, body {
 
 /* Menu item hit-area */
 .primary-menu > li > a {
-  padding-block: 10px !important;
-  padding-inline: 14px !important;
+  padding-block: 5px !important;
+  padding-inline: 7px !important;
   display: inline-flex;
   align-items: center;
 }
@@ -2115,13 +2115,13 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
 
 /* ===== HEADER ===== */
 .site-header {
-  padding-top: 30px !important;
-  padding-bottom: 30px !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
 }
 @media (max-width: 768px) {
   .site-header {
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
   }
 }
 

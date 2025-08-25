@@ -39,19 +39,19 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden xl:flex items-center space-x-4 xl:space-x-6 primary-menu">
-            <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
+            <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               About
             </Link></li>
-            <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
+            <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               Impact Ledger
             </Link></li>
-            <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
+            <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               Marketplace
             </Link></li>
-            <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
+            <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               My Dashboard
             </Link></li>
-            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
+            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               Partners
             </Link></li>
           </nav>

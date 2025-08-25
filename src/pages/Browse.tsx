@@ -298,6 +298,8 @@ const Browse = () => {
           )}
         </div>
       </section>
+      
+      <div className="pb-12"></div>
       <Footer />
     </div>
   );
