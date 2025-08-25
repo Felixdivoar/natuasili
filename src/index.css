@@ -302,6 +302,22 @@ button, .btn, .button, [role="button"],
   margin-bottom: 40px;
 }
 
+/* Marketplace - remove Book now buttons */
+.marketplace .experience-card .btn-book-now {
+  display: none !important;
+}
+
+/* Experience Hub - remove Book now buttons from Featured & New arrivals */
+.experience-hub .featured .btn-book-now,
+.experience-hub .new-arrivals .btn-book-now {
+  display: none !important;
+}
+
+/* Experience Hub - hide quick book tab */
+.experience-hub .quick-book-tab {
+  display: none !important;
+}
+
 /* Mobile Header - Hamburger menu for ≤1024px */
 @media (max-width: 1024px) {
   .primary-menu { display: none !important; } /* hide full menu */
