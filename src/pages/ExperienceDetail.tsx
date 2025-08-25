@@ -14,6 +14,7 @@ import MapComponent from "@/components/MapComponent";
 import ResponsiveBookingForm from "@/components/ResponsiveBookingForm";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import AvailabilityModal from "@/components/AvailabilityModal";
+import BookingFormModal from "@/components/BookingFormModal";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
 import { initializeHybridBookingFlow } from "@/utils/hybridBookingFlow";
 
@@ -22,6 +23,7 @@ const ExperienceDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
   const { formatPrice } = useCurrency();
   const bookingFormRef = useRef<HTMLDivElement>(null);
@@ -103,6 +105,10 @@ const ExperienceDetail = () => {
 
   const scrollToBooking = () => {
     bookingFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const openBookingModal = () => {
+    setIsBookingModalOpen(true);
   };
 
   return (
@@ -210,7 +216,7 @@ const ExperienceDetail = () => {
                   </div>
                 </div>
                 <Button 
-                  onClick={scrollToBooking}
+                  onClick={openBookingModal}
                   className="w-full"
                   size="lg"
                 >
@@ -365,16 +371,36 @@ const ExperienceDetail = () => {
 
       {/* Sticky Book Now Button */}
       {stickyVisible && (
-        <div className="sticky-book-now">
+        <>
+          {/* Mobile sticky bar */}
+          <div className="cta-bar lg:hidden">
+            <button 
+              className="btn-book"
+              onClick={openBookingModal}
+              aria-label="Book now"
+            >
+              Book Now
+            </button>
+          </div>
+          
+          {/* Desktop floating button */}
           <button 
-            id="sticky-book-now-btn" 
+            className="btn-book-fab hidden lg:block"
+            onClick={openBookingModal}
             aria-label="Book now"
-            onClick={scrollToBooking}
           >
-            Book now
+            Book Now
           </button>
-        </div>
+        </>
       )}
+
+      {/* Booking Form Modal */}
+      <BookingFormModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+        experience={experience}
+        project={project}
+      />
 
       <Footer />
     </div>

@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { mockExperiences } from "@/data/mockData";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { Clock, Users, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface RelatedExperiencesProps {
   currentExperienceId: number;
@@ -13,8 +18,9 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   currentExperienceId,
   theme,
   destination,
-  maxResults = 8
+  maxResults = 12
 }) => {
+  const { formatPrice } = useCurrency();
   // Filter related experiences with priority order
   const getRelatedExperiences = () => {
     let related = mockExperiences.filter(exp => Number(exp.id) !== Number(currentExperienceId));
@@ -170,54 +176,81 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
     wireRelatedCarousel();
   }, [relatedExperiences]);
 
+  const getThemeColor = (theme: string) => {
+    switch (theme) {
+      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      case 'Education': return 'bg-education/10 text-education border-education/20';
+      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
+      default: return 'bg-muted text-muted-foreground';
+    }
+  };
+
   if (relatedExperiences.length === 0) {
     return null;
   }
 
   return (
-    <section className="related-experiences v2" id="related-experiences">
-      {/* Header FIRST */}
-      <h2 className="rel-heading">You might also like…</h2>
-
-      <div className="rel-viewport" aria-live="polite">
-        <div className="rel-track">{/* Slides will be built here by JS */}</div>
-      </div>
-
-      <div className="rel-nav" aria-label="Similar experiences navigation">
-        <button className="rel-prev" aria-label="Previous slide">‹</button>
-        <button className="rel-next" aria-label="Next slide">›</button>
-      </div>
-
-      {/* Card template */}
-      <template id="rel-card-template">
-        <article className="rel-card">
-          <a className="rel-media" href="#">
-            <img src="" alt="" loading="lazy" />
-          </a>
-          <div className="rel-body">
-            <h3 className="rel-title"><a href="#"></a></h3>
-            <div className="rel-meta">
-              <span className="rel-destination"></span>
-              <span className="rel-theme"></span>
-            </div>
-            <a className="btn rel-view" href="#">View experience</a>
-          </div>
-        </article>
-      </template>
-
-      {/* Source data container (hidden) */}
-      <div id="rel-source" hidden>
+    <section className="space-y-6">
+      <h2 className="text-2xl font-bold text-foreground">Similar Experiences</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {relatedExperiences.map((exp) => (
-          <div
-            key={exp.id}
-            className="item"
-            data-href={`/experience/${exp.slug}`}
-            data-title={exp.title}
-            data-img={exp.images[0]}
-            data-img-alt={exp.title}
-            data-destination={exp.location_text}
-            data-theme={exp.theme}
-          />
+          <Card key={exp.id} className="group hover:shadow-lg transition-shadow">
+            <CardContent className="p-0">
+              <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+                <img
+                  src={exp.images[0]}
+                  alt={exp.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              
+              <div className="p-4 space-y-3">
+                <div>
+                  <Badge className={`mb-2 ${getThemeColor(exp.theme)}`}>
+                    {exp.theme}
+                  </Badge>
+                  <h3 className="font-semibold text-lg leading-tight line-clamp-2">
+                    {exp.title}
+                  </h3>
+                </div>
+                
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <MapPin className="h-3 w-3" />
+                  <span>{exp.location_text}</span>
+                </div>
+                
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    <span>{exp.duration_hours}h</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Users className="h-3 w-3" />
+                    <span>Up to {exp.capacity}</span>
+                  </div>
+                </div>
+                
+                <p className="text-sm text-muted-foreground line-clamp-2">
+                  {exp.description.slice(0, 80)}...
+                </p>
+                
+                <div className="flex items-center justify-between pt-2">
+                  <div className="font-bold text-foreground">
+                    {formatPrice(exp.base_price)}
+                    <span className="text-sm font-normal text-muted-foreground">/person</span>
+                  </div>
+                  <Link to={`/experience/${exp.slug}`}>
+                    <Button variant="outline" size="sm">
+                      View Details
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </section>
