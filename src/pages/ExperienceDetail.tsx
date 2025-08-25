@@ -1,10 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight } from "lucide-react";
+import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight, Camera, CalendarDays, CheckCircle, XCircle } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import Header from "@/components/Header";
@@ -22,7 +22,9 @@ const ExperienceDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
+  const [stickyVisible, setStickyVisible] = useState(false);
   const { formatPrice } = useCurrency();
+  const bookingFormRef = useRef<HTMLDivElement>(null);
   
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
@@ -46,40 +48,33 @@ const ExperienceDetail = () => {
     );
   }
   
-  // Initialize interactive booking form functionality after initial render
+  // Initialize sticky button and intersection observer
   useEffect(() => {
     initializeHybridBookingFlow();
     
-    // Wire sticky button → open availability → reveal booking
-    const qs = (s: string, r: Document | Element = document) => r.querySelector(s);
-    
-    const aModal = qs('#availability-modal') as HTMLElement;
-    const aOpen = qs('.btn-check-availability') as HTMLButtonElement;
-    const bWrap = qs('#booking-section') as HTMLElement;
-    const sticky = qs('#sticky-book-now-btn') as HTMLButtonElement;
-
-    if (sticky) {
-      // Prefer opening availability (so date + people are captured once),
-      // then our existing flow will reveal the booking section afterwards.
-      const openAvailability = () => {
-        if (aModal) {
-          // if you have an openAvail() function already, call it; else emulate click:
-          aModal.hidden = false;
-          const dateInput = aModal.querySelector('input[name="date"]') as HTMLInputElement;
-          if (dateInput) dateInput.focus();
-        } else if (aOpen) {
-          aOpen.click();
-        } else if (bWrap) {
-          // fallback: scroll to booking section if no modal exists
-          bWrap.hidden = false;
-          bWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    // Intersection observer for sticky button visibility
+    if (bookingFormRef.current) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setStickyVisible(!entry.isIntersecting);
+        },
+        { threshold: 0.1 }
+      );
+      
+      observer.observe(bookingFormRef.current);
+      
+      // Show sticky button after scrolling past hero (400px)
+      const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        setStickyVisible(scrollTop > 400 && !bookingFormRef.current?.getBoundingClientRect().top || 0 > window.innerHeight * 0.5);
       };
-
-      sticky.addEventListener('click', (e) => {
-        e.preventDefault();
-        openAvailability();
-      });
+      
+      window.addEventListener('scroll', handleScroll);
+      
+      return () => {
+        observer.disconnect();
+        window.removeEventListener('scroll', handleScroll);
+      };
     }
   }, [experience?.slug]);
 
@@ -102,31 +97,192 @@ const ExperienceDetail = () => {
   };
 
   const handleAvailabilitySubmit = (data: { date: string; people: number }) => {
-    // Navigate to booking form with prefilled data
-    const bookingUrl = `${window.location.pathname}#booking?date=${data.date}&people=${data.people}`;
-    window.location.href = bookingUrl;
+    // Scroll to booking form with prefilled data
+    bookingFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToBooking = () => {
+    bookingFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <div className="min-h-screen bg-background experience-booking">
       <Header />
-      <div className="container mx-auto px-4 py-8">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+      
+      {/* Breadcrumb */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-primary">Home</Link>
           <span>/</span>
           <Link to="/browse" className="hover:text-primary">Browse</Link>
           <span>/</span>
           <span className="text-foreground">{experience.title}</span>
         </div>
+      </div>
 
-        {/* Single Column Layout - Only Booking Form */}
-        <div className="max-w-4xl mx-auto">
-          <div className="experience-booking-form">
-            <ResponsiveBookingForm experience={experience} project={project} />
+      {/* Hero Section */}
+      <section className="relative">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+            {/* Image Gallery */}
+            <div className="relative">
+              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
+                <img 
+                  src={experience.images[currentImageIndex]} 
+                  alt={experience.title}
+                  className="w-full h-full object-cover"
+                />
+                {experience.images.length > 1 && (
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white"
+                      onClick={prevImage}
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white"
+                      onClick={nextImage}
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </Button>
+                  </>
+                )}
+              </div>
+              {experience.images.length > 1 && (
+                <div className="flex gap-2 mt-4 overflow-x-auto">
+                  {experience.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                        index === currentImageIndex ? 'border-primary' : 'border-transparent'
+                      }`}
+                    >
+                      <img src={image} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Experience Info */}
+            <div className="space-y-6">
+              <div>
+                <Badge className={`mb-3 ${getThemeColor(experience.theme)}`}>
+                  {experience.theme}
+                </Badge>
+                <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                  {experience.title}
+                </h1>
+                <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-6">
+                  <div className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4" />
+                    <span>{experience.location_text}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    <span>{experience.duration_hours} hours</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Users className="h-4 w-4" />
+                    <span>Up to {experience.capacity} people</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-card border rounded-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <div className="text-2xl font-bold text-foreground">
+                      {formatPrice(experience.base_price)}
+                    </div>
+                    <div className="text-sm text-muted-foreground">per person</div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium">4.8</span>
+                    <span className="text-muted-foreground text-sm">(42 reviews)</span>
+                  </div>
+                </div>
+                <Button 
+                  onClick={scrollToBooking}
+                  className="w-full"
+                  size="lg"
+                >
+                  Book Experience
+                </Button>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Similar Experiences Section */}
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto space-y-12">
+          {/* Overview */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Overview</h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              {experience.description}
+            </p>
+          </section>
+
+          {/* What's Included */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">What's Included</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600" />
+                  Included
+                </h3>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li>• Expert local guide</li>
+                  <li>• All necessary equipment</li>
+                  <li>• Transportation to/from location</li>
+                  <li>• Light refreshments</li>
+                  <li>• Conservation education materials</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <XCircle className="h-5 w-5 text-red-600" />
+                  Not Included
+                </h3>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li>• Personal travel insurance</li>
+                  <li>• Meals (unless specified)</li>
+                  <li>• Personal items and souvenirs</li>
+                  <li>• Tips for guides (optional)</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Location */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Location</h2>
+            <div className="bg-card border rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <MapPin className="h-5 w-5 text-primary" />
+                <span className="font-medium">{experience.location_text}</span>
+              </div>
+              <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
+                <div className="text-center text-muted-foreground">
+                  <MapPin className="h-8 w-8 mx-auto mb-2" />
+                  <p>Interactive map coming soon</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Similar Experiences */}
           <RelatedExperiences 
             currentExperienceId={Number(experience.id)}
             theme={experience.theme}
@@ -134,9 +290,14 @@ const ExperienceDetail = () => {
             maxResults={8}
           />
 
-          {/* Reviews Section */}
+          {/* Reviews */}
           <div className="experience-reviews">
             <ReviewSection experienceId={experience.id} />
+          </div>
+
+          {/* Booking Form */}
+          <div ref={bookingFormRef} className="experience-booking-form">
+            <ResponsiveBookingForm experience={experience} project={project} />
           </div>
         </div>
       </div>
@@ -203,20 +364,17 @@ const ExperienceDetail = () => {
       />
 
       {/* Sticky Book Now Button */}
-      <div className="sticky-book-now">
-        <button 
-          id="sticky-book-now-btn" 
-          aria-label="Book now"
-          onClick={() => {
-            document.querySelector('.experience-booking-form')?.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'start' 
-            });
-          }}
-        >
-          Book now
-        </button>
-      </div>
+      {stickyVisible && (
+        <div className="sticky-book-now">
+          <button 
+            id="sticky-book-now-btn" 
+            aria-label="Book now"
+            onClick={scrollToBooking}
+          >
+            Book now
+          </button>
+        </div>
+      )}
 
       <Footer />
     </div>
