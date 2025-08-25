@@ -500,6 +500,19 @@ button, .btn, .button, [role="button"],
     padding-bottom: 48px !important;
   }
 
+  @supports (padding: max(0px)) {
+    :is(main, #site-main, .site-main) {
+      padding-bottom: max(48px, calc(48px + env(safe-area-inset-bottom))) !important;
+    }
+  }
+
+  /* Prevent margin collapse with footer */
+  :is(main, #site-main, .site-main) > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+  }
+
   /* If mobile sticky CTA exists, ensure content isn't covered */
   @supports (padding: max(0px)) {
     :is(main, #site-main, .site-main) {
