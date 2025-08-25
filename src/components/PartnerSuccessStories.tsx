@@ -15,9 +15,9 @@ const PartnerSuccessStories: React.FC = () => {
       
       if (!track || !prev || !next) return;
 
-      // Cap to 6 stories
+      // Cap to 8 stories instead of 6
       const cards = Array.from(track.querySelectorAll('.ps-card'));
-      cards.slice(6).forEach(c => c.remove());
+      cards.slice(8).forEach(c => c.remove());
 
       // Scroll logic
       const step = () => {
@@ -46,10 +46,9 @@ const PartnerSuccessStories: React.FC = () => {
 
   return (
     <section className="partner-stories gyg-like" id="partner-stories">
-      <h2>Featured Partner Success Stories</h2>
       <div className="ps-viewport">
         <div className="ps-track">
-          {partnerSuccessStories.slice(0, 6).map((story) => (
+          {partnerSuccessStories.slice(0, 8).map((story) => (
             <article key={story.slug} className="ps-card">
               <Link className="ps-media" to={`/partners/success-stories/${story.slug}`}>
                 <img 

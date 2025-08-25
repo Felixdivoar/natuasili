@@ -272,6 +272,29 @@ button, .btn, .button, [role="button"],
   padding-bottom: 6px !important;
 }
 
+/* Partner stories heading - hide it completely */
+.partner-stories h2 {
+  display: none !important;
+}
+
+/* Partner stories cards - ensure consistent styling */
+.partner-stories .ps-card {
+  flex: 0 0 calc(50% - 8px);  /* 2-up desktop */
+  min-width: 360px;
+  background: hsl(var(--background)); 
+  border: 1px solid hsl(var(--border)); 
+  border-radius: 12px; 
+  overflow: hidden;
+  display: flex; 
+  flex-direction: column;
+}
+@media (max-width: 1024px) {
+  .partner-stories .ps-card { 
+    flex: 0 0 calc(100% - 8px); 
+    min-width: 280px; 
+  }
+}
+
 /* Experience page spacing before footer */
 .page-experience .content-area,
 [data-page="experience"] .content-area,
