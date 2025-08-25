@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Star } from "lucide-react";
@@ -18,7 +17,7 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   currentExperienceId,
   theme,
   destination,
-  maxResults = 4
+  maxResults = 6
 }) => {
   const { formatPrice } = useCurrency();
   
@@ -67,100 +66,108 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
 
   const relatedExperiences = getRelatedExperiences();
 
+  // Initialize carousel functionality after component mounts
+  useEffect(() => {
+    const wireRelated = () => {
+      const root = document.querySelector('#related-experiences');
+      if (!root) return;
+      
+      const track = root.querySelector('.rel-track') as HTMLElement;
+      const prev = root.querySelector('.rel-prev') as HTMLButtonElement;
+      const next = root.querySelector('.rel-next') as HTMLButtonElement;
+      
+      if (!track || !prev || !next) return;
+
+      // Cap to max 6 cards
+      const cards = Array.from(track.querySelectorAll('.rel-card'));
+      cards.slice(6).forEach(c => c.remove());
+
+      // Scroll logic
+      const cardStep = () => {
+        const card = track.querySelector('.rel-card') as HTMLElement;
+        if (!card) return 320;
+        const rect = card.getBoundingClientRect();
+        return Math.ceil(rect.width + 16); // width + gap
+      };
+
+      const updateButtons = () => {
+        const maxScroll = track.scrollWidth - track.clientWidth - 1;
+        prev.disabled = track.scrollLeft <= 0;
+        next.disabled = track.scrollLeft >= maxScroll;
+      };
+
+      prev.addEventListener('click', () => {
+        track.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+      });
+      
+      next.addEventListener('click', () => {
+        track.scrollBy({ left: cardStep(), behavior: 'smooth' });
+      });
+      
+      track.addEventListener('scroll', updateButtons);
+      window.addEventListener('resize', updateButtons, { passive: true });
+
+      // Initial state
+      updateButtons();
+    };
+
+    wireRelated();
+  }, [relatedExperiences]);
+
   if (relatedExperiences.length === 0) {
     return null;
   }
 
   return (
-    <section className="py-12">
-      <h2 className="text-2xl font-bold text-foreground mb-6">
-        You might also like…
-      </h2>
-      
-      <div className="related-experiences relative" id="related-experiences">
-        <div className="carousel-container overflow-hidden">
-          <div className="track flex gap-4 transition-transform duration-300 ease-in-out overflow-x-auto">
-            {relatedExperiences.slice(0, 5).map((experience: any, index: number) => {
-              const project = mockProjects.find(p => p.id === experience.project_id);
-              
-              return (
-                <Card key={experience.id} className="card flex-shrink-0 w-full md:w-[calc(50%-0.5rem)] min-w-[280px] overflow-hidden hover:shadow-lg transition-shadow group">
-                  <div className="aspect-[4/3] relative">
-                    <img
-                      src={experience.images[0]}
-                      alt={experience.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <Badge className={getThemeColor(experience.theme)}>
+    <section className="related-experiences gyg-like" id="related-experiences">
+      <div className="rel-header">
+        <h2>You might also like…</h2>
+      </div>
+
+      <div className="rel-viewport">
+        <div className="rel-track">
+          {relatedExperiences.slice(0, 6).map((experience: any) => {
+            const project = mockProjects.find(p => p.id === experience.project_id);
+            
+            return (
+              <article key={experience.id} className="rel-card">
+                <Link className="rel-media" to={`/experience/${experience.slug}`}>
+                  <img 
+                    src={experience.images[0]} 
+                    alt={experience.title}
+                    loading="lazy"
+                    onError={(e) => {
+                      const img = e.target as HTMLImageElement;
+                      img.src = '/images/placeholder-16x9.jpg';
+                      img.alt = experience.title || 'Experience image';
+                    }}
+                  />
+                </Link>
+                <div className="rel-body">
+                  <h3 className="rel-title">
+                    <Link to={`/experience/${experience.slug}`}>{experience.title}</Link>
+                  </h3>
+                  <div className="rel-meta">
+                    <span className="rel-destination">{experience.location_text}</span>
+                    <span className="rel-theme theme-chip">
+                      <Link to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}>
                         {experience.theme}
-                      </Badge>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <div className="bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1">
-                        <div className="text-sm font-bold text-foreground">
-                          {formatPrice(experience.base_price)}
-                        </div>
-                      </div>
-                    </div>
+                      </Link>
+                    </span>
                   </div>
-                  
-                  <CardContent className="p-4">
-                    <h3 className="font-semibold text-base mb-2 line-clamp-2">
-                      {experience.title}
-                    </h3>
-                    
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {experience.location_text}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="h-3 w-3" />
-                        {experience.capacity}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-4 text-xs">
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 fill-primary text-primary" />
-                        <span>4.8</span>
-                      </div>
-                      {project && (
-                        <span className="text-muted-foreground">
-                          by {project.name}
-                        </span>
-                      )}
-                    </div>
-
-                    <Link to={`/experience/${experience.slug}`}>
-                      <Button size="sm" variant="outline" className="w-full view-experience">
-                        View Experience
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                  <Link className="btn rel-view" to={`/experience/${experience.slug}`}>
+                    View experience
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
-        
-        {relatedExperiences.length > 2 && (
-          <div className="nav absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between items-center pointer-events-none px-2">
-            <button 
-              className="prev pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
-              aria-label="Previous"
-            >
-              ‹
-            </button>
-            <button 
-              className="next pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
-              aria-label="Next"
-            >
-              ›
-            </button>
-          </div>
-        )}
+      </div>
+
+      <div className="rel-nav">
+        <button className="rel-prev" aria-label="Previous">‹</button>
+        <button className="rel-next" aria-label="Next">›</button>
       </div>
     </section>
   );

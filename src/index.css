@@ -266,10 +266,161 @@ button, .btn, .button, [role="button"],
   font-weight: bold;
   transition: background-color 0.2s;
 }
-/* Primary menu padding -40% */
+/* Primary menu padding -70% (from 6px to ~2px) */
 .primary-menu > li > a {
-  padding-top: 6px !important;
-  padding-bottom: 6px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+/* ===== RELATED EXPERIENCES & PARTNER STORIES CAROUSELS ===== */
+/* Container & header */
+.related-experiences.gyg-like, .partner-stories.gyg-like { 
+  position: relative; 
+  min-height: 260px;
+}
+.related-experiences .rel-header, .partner-stories { 
+  display: flex; 
+  align-items: baseline; 
+  justify-content: space-between; 
+  margin-bottom: 10px; 
+}
+.related-experiences h2, .partner-stories h2 { 
+  margin: 0; 
+  font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.75rem); 
+  color: hsl(var(--foreground));
+}
+
+/* Viewport/track */
+.related-experiences .rel-viewport, .ps-viewport { overflow: hidden; }
+.related-experiences .rel-track, .ps-track {
+  display: flex; 
+  gap: 16px; 
+  scroll-behavior: smooth; 
+  padding: 4px;
+}
+
+/* Cards */
+.related-experiences .rel-card, .ps-card {
+  flex: 0 0 calc(50% - 8px);         /* 2-up on desktop/laptop */
+  min-width: 360px;                  /* protect against shrinking too small */
+  background: hsl(var(--background)); 
+  border: 1px solid hsl(var(--border)); 
+  border-radius: 12px; 
+  overflow: hidden;
+  display: flex; 
+  flex-direction: column;
+  transition: box-shadow 0.2s ease;
+}
+.related-experiences .rel-card:hover, .ps-card:hover {
+  box-shadow: 0 4px 12px -2px hsl(var(--foreground) / 0.1);
+}
+
+@media (max-width: 1024px) {
+  .related-experiences .rel-card, .ps-card {
+    flex: 0 0 calc(100% - 8px);      /* 1-up on tablet/mobile */
+    min-width: 280px;
+  }
+}
+
+/* Media */
+.related-experiences .rel-media img, .ps-media img {
+  display: block; 
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+  aspect-ratio: 16/9;
+  background: hsl(var(--muted));
+  transition: transform 0.2s ease;
+}
+.related-experiences .rel-card:hover .rel-media img, .ps-card:hover .ps-media img {
+  transform: scale(1.02);
+}
+
+/* Body */
+.related-experiences .rel-body, .ps-body { 
+  padding: 12px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
+  flex-grow: 1;
+}
+.related-experiences .rel-title, .ps-title { 
+  margin: 0; 
+  font-size: 1rem; 
+  line-height: 1.25; 
+  font-weight: 600;
+}
+.related-experiences .rel-title a, .ps-title a { 
+  text-decoration: none; 
+  color: hsl(var(--foreground)); 
+}
+.related-experiences .rel-title a:hover, .ps-title a:hover {
+  color: hsl(var(--primary));
+}
+
+.related-experiences .rel-meta { 
+  display: flex; 
+  gap: 10px; 
+  flex-wrap: wrap; 
+  color: hsl(var(--muted-foreground)); 
+  font-size: 0.875rem; 
+}
+.ps-teaser { 
+  margin: 0; 
+  line-height: 1.5; 
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+}
+
+.related-experiences .btn.rel-view, .btn.ps-read { 
+  align-self: flex-start; 
+  border: 1px solid hsl(var(--foreground)); 
+  border-radius: 9999px; 
+  padding: 0.45rem 0.9rem; 
+  text-decoration: none; 
+  font-size: 0.875rem;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+.related-experiences .btn.rel-view:hover, .btn.ps-read:hover {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+
+/* Arrows */
+.related-experiences .rel-nav, .ps-nav {
+  position: absolute; 
+  inset: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  pointer-events: none;
+}
+.related-experiences .rel-nav button, .ps-nav button {
+  pointer-events: auto;
+  width: 44px; 
+  height: 44px; 
+  border-radius: 50%;
+  border: 1px solid hsl(var(--border)); 
+  background: hsl(var(--background)); 
+  font-size: 24px; 
+  line-height: 1;
+  display: grid; 
+  place-items: center; 
+  box-shadow: 0 2px 8px hsl(var(--foreground) / 0.08);
+  color: hsl(var(--foreground));
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.related-experiences .rel-nav button:hover, .ps-nav button:hover {
+  background: hsl(var(--muted));
+  border-color: hsl(var(--primary));
+}
+.related-experiences .rel-nav button:disabled, .ps-nav button:disabled { 
+  opacity: 0.4; 
+  cursor: not-allowed; 
 }
 
 /* ===== AIRBNB × GETYOURGUIDE BOOKING FLOW ===== */
