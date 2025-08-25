@@ -2237,7 +2237,6 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
 }
-}
 
 /* ===== FOOTER ===== */
 .site-footer {
