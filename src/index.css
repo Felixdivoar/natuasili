@@ -1156,3 +1156,76 @@ html, body {
   color: hsl(var(--background)); 
   text-decoration: underline; 
 }
+
+/* ===== Global Spacing & Responsive Improvements ===== */
+
+/* Header spacing improvements */
+.site-header { 
+  padding-top: 12px; 
+}
+
+@media (max-width: 768px) {
+  .site-header { 
+    padding-top: 10px; 
+  }
+}
+
+/* Footer spacing improvements */
+.site-footer { 
+  padding-top: 18px; 
+}
+
+@media (max-width: 768px) { 
+  .site-footer { 
+    padding-top: 16px; 
+  } 
+}
+
+/* Footer explore links touch targets */
+.footer-explore a {
+  display: inline-block; 
+  padding: 6px 0;
+}
+
+/* Theme chips & blog category chips */
+.theme-chip, .post-category {
+  background: hsl(var(--primary)); 
+  color: hsl(var(--primary-foreground));
+  border-radius: 9999px; 
+  padding: 0.35rem 0.75rem;
+  display: inline-flex; 
+  align-items: center; 
+  gap: 0.35rem;
+  line-height: 1; 
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.theme-chip:hover, .post-category:hover { 
+  opacity: 0.9; 
+}
+
+/* Layout constraints */
+.page-content, .section, .main-content, .container, .site-container {
+  max-width: 1150px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .page-content, .section, .main-content, .container, .site-container { 
+    padding: 0 15px; 
+  }
+}
+
+/* Partner stories carousel improvements */
+.partner-stories-carousel {
+  scroll-behavior: smooth;
+}
+
+.partner-stories-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== End Global Spacing & Responsive Improvements ===== */

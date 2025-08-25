@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle, DollarSign, Users, TrendingUp, Shield, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -32,14 +33,41 @@ const Partners = () => {
       icon: <Target className="h-8 w-8" />,
       title: "Mission Alignment",
       description: "Partner with travelers who share your conservation values"
+    },
+    {
+      icon: <TrendingUp className="h-8 w-8" />,
+      title: "Analytics Dashboard",
+      description: "Analytics dashboard to track your success"
     }
   ];
 
   const requirements = [
     "Registered conservation organization in Kenya with community-based tourism activities",
     "Demonstrable conservation impact and programs",
-    "Ability to host and guide visitors safely",
-    "Commitment to impact reporting and transparency"
+    "Ability to host and guide visitors safely"
+  ];
+
+  const faqs = [
+    {
+      question: "What is NatuAsili?",
+      answer: "NatuAsili is a conservation-driven travel platform that connects travelers with experiences that protect wildlife, preserve natural habitats, and support local communities."
+    },
+    {
+      question: "Who can register?",
+      answer: "We work with both companies and independent operators who are legally registered, compliant, and offer high-quality travel products. Experiences must be responsible, socially just, and environmentally sustainable. These include wildlife tracking, anti-poaching, marine conservation, habitat restoration, research, education, cultural immersions, craft co-ops, youth programs, and conservation education."
+    },
+    {
+      question: "Are there any obligations on my side?",
+      answer: "No. You're free to deactivate your activity or account at any time. You also have full control over your pricing and availability, which you can update whenever you wish."
+    },
+    {
+      question: "How and when do I get paid?",
+      answer: "Payments are made after each fulfilled booking. You can choose between free monthly payouts or bi-monthly payouts with a small surcharge. The commission fee helps us manage the platform, develop tools, and promote your experiences globally. To ensure timely payments, we'll need your business details such as company registration number, tax identification number, and bank information."
+    },
+    {
+      question: "How much does it cost?",
+      answer: "Listing your activities is free. We only charge a commission fee on successful bookings."
+    }
   ];
 
   return (
@@ -331,6 +359,35 @@ const Partners = () => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQs Section */}
+      <section id="faqs" className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Everything you need to know about partnering with NatuAsili.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border border-border rounded-lg px-4">
+                  <AccordionTrigger className="text-left font-semibold">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>

@@ -25,7 +25,7 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
   return (
-    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
+    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header pt-3">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -39,19 +39,19 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 primary-menu">
-            <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm">
+            <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
               About
             </Link></li>
-            <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm">
+            <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
               Impact Ledger
             </Link></li>
-            <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm">
+            <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
               Marketplace
             </Link></li>
-            <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm">
+            <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
               My Dashboard
             </Link></li>
-            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm">
+            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
               Partners
             </Link></li>
           </nav>

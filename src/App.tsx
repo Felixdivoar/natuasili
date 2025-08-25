@@ -21,6 +21,7 @@ import About from "./pages/About";
 import Partners from "./pages/Partners";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import BlogCategory from "./pages/BlogCategory";
 import SamburuDestination from "./pages/destination/Samburu";
 import MasaiMaraDestination from "./pages/destination/MasaiMara";
 import CoastDestination from "./pages/destination/Coast";
@@ -70,6 +71,7 @@ const App = () => (
             <Route path="/partners" element={<Partners />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/blog/category/:category" element={<BlogCategory />} />
             <Route path="/destinations" element={<Destinations />} />
             <Route path="/destinations/samburu" element={<SamburuDestination />} />
             <Route path="/destinations/masai-mara" element={<MasaiMaraDestination />} />
@@ -78,7 +80,7 @@ const App = () => (
             <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
             <Route path="/experience-hub" element={<ExperienceHub />} />
             <Route path="/terms" element={<TermsAndConditions />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

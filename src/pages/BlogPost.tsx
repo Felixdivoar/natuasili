@@ -250,9 +250,14 @@ const BlogPost = () => {
           </Link>
           
           <div className="mb-6">
-            <Badge className={getCategoryColor(post.category)}>
-              {post.category}
-            </Badge>
+            <Link 
+              to={`/blog/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`}
+              className="inline-block"
+            >
+              <Badge className={`${getCategoryColor(post.category)} post-category hover:opacity-80 transition-opacity cursor-pointer`}>
+                {post.category}
+              </Badge>
+            </Link>
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
