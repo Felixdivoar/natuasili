@@ -13,7 +13,10 @@ const PartnerSuccessStories: React.FC = () => {
       const prev = root.querySelector('.ps-prev') as HTMLButtonElement;
       const next = root.querySelector('.ps-next') as HTMLButtonElement;
       
-      if (!track || !prev || !next) return;
+      if (!track || !prev || !next) {
+        console.warn('Partner stories carousel elements not found:', { track: !!track, prev: !!prev, next: !!next });
+        return;
+      }
 
       // Cap to 8 stories instead of 6
       const cards = Array.from(track.querySelectorAll('.ps-card'));
@@ -33,42 +36,52 @@ const PartnerSuccessStories: React.FC = () => {
         next.disabled = track.scrollLeft >= max;
       };
 
-      if (prev && next) {
-        // Clear any existing listeners to prevent duplicates
-        const newPrev = prev.cloneNode(true) as HTMLButtonElement;
-        const newNext = next.cloneNode(true) as HTMLButtonElement;
-        
-        prev.replaceWith(newPrev);
-        next.replaceWith(newNext);
-        
-        newPrev.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const scrollAmount = step();
-          track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-          setTimeout(update, 300);
-        });
-        
-        newNext.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const scrollAmount = step();
-          track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-          setTimeout(update, 300);
-        });
-        
-        track.addEventListener('scroll', update);
-        window.addEventListener('resize', update, { passive: true });
-        
-        // Initial update
-        update();
-      }
+      // Remove existing event listeners by cloning nodes
+      const newPrev = prev.cloneNode(true) as HTMLButtonElement;
+      const newNext = next.cloneNode(true) as HTMLButtonElement;
+      
+      prev.replaceWith(newPrev);
+      next.replaceWith(newNext);
+      
+      newPrev.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollAmount = step();
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        setTimeout(update, 300);
+      });
+      
+      newNext.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const scrollAmount = step();
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        setTimeout(update, 300);
+      });
+      
+      track.addEventListener('scroll', update);
+      window.addEventListener('resize', update, { passive: true });
+      
+      // Initial update
+      update();
     };
 
     // Add small delay to ensure DOM is ready
-    const timeoutId = setTimeout(wirePartnerStories, 100);
+    const timeoutId = setTimeout(wirePartnerStories, 200);
     
-    return () => clearTimeout(timeoutId);
+    // Also listen for DOM mutations in case component re-renders
+    const observer = new MutationObserver(() => {
+      if (document.querySelector('#partner-stories .ps-prev')) {
+        wirePartnerStories();
+      }
+    });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+    };
   }, []);
 
   return (

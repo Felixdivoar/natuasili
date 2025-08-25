@@ -146,14 +146,28 @@
         $$('[data-experience]').forEach(node=>{
           // A clickable button within the card/page:
           const btn = node.matches('button,a') ? node : node.querySelector('[data-action="reserve"], .btn-reserve, .btn-book, .btn-check-availability');
-          if (!btn) return;
-          btn.addEventListener('click', (e)=>{
+          if (!btn) {
+            console.warn('No reserve button found in:', node);
+            return;
+          }
+          
+          // Remove existing listeners by cloning
+          const newBtn = btn.cloneNode(true);
+          btn.replaceWith(newBtn);
+          
+          newBtn.addEventListener('click', (e)=>{
             e.preventDefault();
+            console.log('Reserve button clicked:', newBtn);
             const payload = safeJSON(node.getAttribute('data-experience'));
-            if (!payload) return console.warn('Missing/invalid data-experience JSON');
+            if (!payload) {
+              console.error('Missing/invalid data-experience JSON:', node.getAttribute('data-experience'));
+              return;
+            }
+            console.log('Opening booking with payload:', payload);
             openBooking(payload, node.closest('.experience-page') ? 'inline' : 'drawer');
           });
         });
+        console.log(`Wired ${$$('[data-experience]').length} experience components with reserve buttons`);
       }
 
       function safeJSON(x){ try{ return JSON.parse(x); } catch(e){ return null; } }
@@ -398,21 +412,29 @@
         }, 400);
       }
 
-      // ---- Boot ----
-      document.addEventListener('DOMContentLoaded', ()=>{
-        wireAllReserveButtons();
-        // Fallback: on experience pages (desktop), auto-show inline "Reserve" button if you have one:
-        $$('.experience-page [data-action="reserve"]').forEach(btn=>{
-          btn.addEventListener('click', (e)=>{
-            e.preventDefault();
-            const payload = safeJSON(btn.closest('[data-experience]')?.getAttribute('data-experience') || '{}');
-            if (payload) openBooking(payload, 'inline');
-          });
-        });
+  // ---- Boot ----
+  document.addEventListener('DOMContentLoaded', ()=>{
+    wireAllReserveButtons();
+    // Fallback: on experience pages (desktop), auto-show inline "Reserve" button if you have one:
+    $$('.experience-page [data-action="reserve"]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const payload = safeJSON(btn.closest('[data-experience]')?.getAttribute('data-experience') || '{}');
+        if (payload) openBooking(payload, 'inline');
       });
+    });
+  });
+
+  // Re-wire when React components render
+  document.addEventListener('reactComponentsReady', () => {
+    console.log('React components ready, re-wiring booking buttons...');
+    wireAllReserveButtons();
+  });
 
   // If your builder swaps DOM (SPA), re-wire:
-  const mo = new MutationObserver(()=> wireAllReserveButtons());
+  const mo = new MutationObserver(()=> {
+    wireAllReserveButtons();
+  });
   mo.observe(document.documentElement, { childList:true, subtree:true });
 
   // Expose openBooking globally for integration
@@ -505,8 +527,18 @@
     upgradeViewDetailsLinks();
     autoOpenOnDetail();
   }
+  
   document.addEventListener('DOMContentLoaded', boot);
-  const mo = new MutationObserver(()=> upgradeViewDetailsLinks());
+  
+  // Listen for React components being ready
+  document.addEventListener('reactComponentsReady', () => {
+    console.log('React ready, initializing auto-booking...');
+    boot();
+  });
+  
+  const mo = new MutationObserver(()=> {
+    upgradeViewDetailsLinks();
+  });
   mo.observe(document.documentElement, { childList:true, subtree:true });
 })();
 </script>

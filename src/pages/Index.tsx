@@ -6,6 +6,7 @@ import ConservationPartnersCarousel from "@/components/ConservationPartnersCarou
 import ImpactStats from "@/components/ImpactStats";
 import ImpactStories from "@/components/ImpactStories";
 import Footer from "@/components/Footer";
+import DebugInfo from "@/components/DebugInfo";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <ImpactStats />
       <ImpactStories />
       <Footer />
+      <DebugInfo />
     </div>
   );
 };
