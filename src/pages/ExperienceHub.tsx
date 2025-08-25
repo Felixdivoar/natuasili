@@ -88,9 +88,8 @@ const ExperienceHub = () => {
               <h2 className="text-3xl font-bold text-foreground">
                 Book Conservation Experiences
               </h2>
-              <TabsList className="grid w-full max-w-md grid-cols-3">
+              <TabsList className="grid w-full max-w-md grid-cols-2">
                 <TabsTrigger value="featured">Featured</TabsTrigger>
-                <TabsTrigger value="quick">Quick Book</TabsTrigger>
                 <TabsTrigger value="new">New Arrivals</TabsTrigger>
               </TabsList>
             </div>
@@ -161,11 +160,6 @@ const ExperienceHub = () => {
                                 View Details
                               </Button>
                             </Link>
-                            <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
-                              <Button size="sm" className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                                Book Now
-                              </Button>
-                            </Link>
                           </div>
                         </div>
                       </CardContent>
@@ -175,59 +169,6 @@ const ExperienceHub = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="quick" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {quickBookings.map((experience) => {
-                  const project = mockProjects.find(p => p.id === experience.project_id);
-                  
-                  return (
-                    <Link key={experience.id} to={`/experience/${experience.slug}`}>
-                      <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                        <CardContent className="p-6">
-                          <div className="flex items-start gap-4">
-                            <div className="w-20 h-20 bg-muted rounded-lg overflow-hidden flex-shrink-0">
-                              <img
-                                src={experience.images[0]}
-                                alt={experience.title}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-start justify-between mb-2">
-                                <h3 className="font-semibold text-sm line-clamp-2">{experience.title}</h3>
-                                <Badge className={`${getThemeColor(experience.theme)} ml-2`}>
-                                  {experience.theme}
-                                </Badge>
-                              </div>
-                              
-                              <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                                <div className="flex items-center gap-1">
-                                  <MapPin className="h-3 w-3" />
-                                  {experience.location_text}
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <Clock className="h-3 w-3" />
-                                  {experience.duration_hours}h
-                                </div>
-                              </div>
-
-                              <div className="flex items-center justify-between">
-                                <div className="text-lg font-bold text-conservation">
-                                  {formatPrice(experience.base_price)}
-                                </div>
-                                <Button size="sm" className="bg-conservation hover:bg-conservation/90 text-white">
-                                  Quick Book
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  );
-                })}
-              </div>
-            </TabsContent>
 
             <TabsContent value="new" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -270,11 +211,6 @@ const ExperienceHub = () => {
                           <Link to={`/experience/${experience.slug}`} className="flex-1">
                             <Button size="sm" variant="outline" className="w-full">
                               View Details
-                            </Button>
-                          </Link>
-                          <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
-                            <Button size="sm" className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                              Book Now
                             </Button>
                           </Link>
                         </div>

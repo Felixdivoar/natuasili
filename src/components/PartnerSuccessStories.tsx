@@ -33,23 +33,26 @@ const PartnerSuccessStories: React.FC = () => {
         next.disabled = track.scrollLeft >= max;
       };
 
-      // Remove any existing event listeners to prevent duplicates
-      prev.replaceWith(prev.cloneNode(true));
-      next.replaceWith(next.cloneNode(true));
-      
-      // Get fresh references after cloning
-      const newPrev = root.querySelector('.ps-prev') as HTMLButtonElement;
-      const newNext = root.querySelector('.ps-next') as HTMLButtonElement;
-      
-      if (newPrev && newNext) {
-        newPrev.addEventListener('click', () => {
+      if (prev && next) {
+        // Clear any existing listeners
+        const newPrev = prev.cloneNode(true) as HTMLButtonElement;
+        const newNext = next.cloneNode(true) as HTMLButtonElement;
+        
+        prev.replaceWith(newPrev);
+        next.replaceWith(newNext);
+        
+        newPrev.addEventListener('click', (e) => {
+          e.preventDefault();
           const scrollAmount = step();
           track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          setTimeout(update, 300);
         });
         
-        newNext.addEventListener('click', () => {
+        newNext.addEventListener('click', (e) => {
+          e.preventDefault();
           const scrollAmount = step();
           track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+          setTimeout(update, 300);
         });
         
         track.addEventListener('scroll', update);

@@ -277,11 +277,6 @@ const Browse = () => {
                           View details
                         </Button>
                       </Link>
-                      <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
-                        <Button size="sm" className="w-full bg-conservation hover:bg-conservation/90 text-white btn-price price-button">
-                          Book now
-                        </Button>
-                      </Link>
                     </div>
                   </CardContent>
                 </Card>
