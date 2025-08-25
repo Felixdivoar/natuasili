@@ -266,10 +266,26 @@ button, .btn, .button, [role="button"],
   font-weight: bold;
   transition: background-color 0.2s;
 }
-/* Primary menu padding -70% (from 6px to ~2px) */
+/* Primary menu padding -40% (from 10px to 6px) */
 .primary-menu > li > a {
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+/* Experience page spacing before footer */
+.page-experience .content-area,
+[data-page="experience"] .content-area,
+.experience-detail-page {
+  margin-bottom: 40px;
+}
+
+/* Mobile Header - Hamburger menu for ≤1024px */
+@media (max-width: 1024px) {
+  .primary-menu { display: none !important; } /* hide full menu */
+  .hamburger-toggle { display: inline-block !important; }
+  .site-header .logo { flex: 1; }
+  .site-header .partner-btn, 
+  .site-header .signin-icon { display: inline-flex; align-items: center; }
 }
 
 /* ===== RELATED EXPERIENCES & PARTNER STORIES CAROUSELS ===== */

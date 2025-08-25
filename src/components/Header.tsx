@@ -38,7 +38,7 @@ const Header = () => {
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6 primary-menu">
+          <nav className="hidden xl:flex items-center space-x-4 xl:space-x-6 primary-menu">
             <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm py-2.5 px-3.5">
               About
             </Link></li>
@@ -56,8 +56,8 @@ const Header = () => {
             </Link></li>
           </nav>
 
-          {/* Mobile Navigation Menu */}
-          <div className="flex lg:hidden relative" ref={menuRef}>
+          {/* Mobile Navigation Menu - Show on tablet and mobile (≤1024px) */}
+          <div className="flex xl:hidden relative hamburger-toggle" ref={menuRef}>
             <Button
               variant="ghost"
               size="sm"
