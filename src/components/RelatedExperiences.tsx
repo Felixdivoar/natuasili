@@ -77,98 +77,106 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         You might also like…
       </h2>
       
-      <div className="related-experiences">
-        <div className="track flex gap-4 overflow-hidden scroll-smooth">
-        {relatedExperiences.slice(0, 5).map((experience: any) => {
-          const project = mockProjects.find(p => p.id === experience.project_id);
-          
-            return (
-            <Card key={experience.id} className="card flex-shrink-0 w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.5rem)] overflow-hidden hover:shadow-lg transition-shadow group">
-              <div className="aspect-[4/3] relative">
-                <img
-                  src={experience.images[0]}
-                  alt={experience.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3">
-                  <Badge className={getThemeColor(experience.theme)}>
-                    {experience.theme}
-                  </Badge>
-                </div>
-                <div className="absolute top-3 right-3">
-                  <div className="bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1">
-                    <div className="text-sm font-bold text-foreground">
-                      {formatPrice(experience.base_price)}
+      <div className="related-experiences relative">
+        <div className="carousel-container overflow-hidden">
+          <div className="track flex gap-4 transition-transform duration-300 ease-in-out">
+            {relatedExperiences.slice(0, 5).map((experience: any, index: number) => {
+              const project = mockProjects.find(p => p.id === experience.project_id);
+              
+              return (
+                <Card key={experience.id} className="card flex-shrink-0 w-full md:w-[calc(50%-0.5rem)] overflow-hidden hover:shadow-lg transition-shadow group">
+                  <div className="aspect-[4/3] relative">
+                    <img
+                      src={experience.images[0]}
+                      alt={experience.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <Badge className={getThemeColor(experience.theme)}>
+                        {experience.theme}
+                      </Badge>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <div className="bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1">
+                        <div className="text-sm font-bold text-foreground">
+                          {formatPrice(experience.base_price)}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-base mb-2 line-clamp-2">
-                  {experience.title}
-                </h3>
-                
-                <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    {experience.location_text}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-3 w-3" />
-                    {experience.capacity}
-                  </div>
-                </div>
+                  
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-base mb-2 line-clamp-2">
+                      {experience.title}
+                    </h3>
+                    
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
+                      <div className="flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        {experience.location_text}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-3 w-3" />
+                        {experience.capacity}
+                      </div>
+                    </div>
 
-                <div className="flex items-center justify-between mb-4 text-xs">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-3 w-3 fill-primary text-primary" />
-                    <span>4.8</span>
-                  </div>
-                  {project && (
-                    <span className="text-muted-foreground">
-                      by {project.name}
-                    </span>
-                  )}
-                </div>
+                    <div className="flex items-center justify-between mb-4 text-xs">
+                      <div className="flex items-center gap-1">
+                        <Star className="h-3 w-3 fill-primary text-primary" />
+                        <span>4.8</span>
+                      </div>
+                      {project && (
+                        <span className="text-muted-foreground">
+                          by {project.name}
+                        </span>
+                      )}
+                    </div>
 
-                <Link to={`/experience/${experience.slug}`}>
-                  <Button size="sm" variant="outline" className="w-full view-experience">
-                    View Experience
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          );
-        })}
+                    <Link to={`/experience/${experience.slug}`}>
+                      <Button size="sm" variant="outline" className="w-full view-experience">
+                        View Experience
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </div>
         
-        <div className="nav absolute inset-y-0 flex items-center justify-between w-full pointer-events-none">
-          <button 
-            className="prev pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors"
-            onClick={() => {
-              const track = document.querySelector('.related-experiences .track') as HTMLElement;
-              if (track) {
-                const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
-                track.scrollBy({ left: -(cardWidth + 16), behavior: 'smooth' });
-              }
-            }}
-          >
-            ←
-          </button>
-          <button 
-            className="next pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors"
-            onClick={() => {
-              const track = document.querySelector('.related-experiences .track') as HTMLElement;
-              if (track) {
-                const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
-                track.scrollBy({ left: cardWidth + 16, behavior: 'smooth' });
-              }
-            }}
-          >
-            →
-          </button>
-        </div>
+        {relatedExperiences.length > 2 && (
+          <div className="nav flex justify-between items-center absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none px-4">
+            <button 
+              className="prev-btn pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
+              onClick={() => {
+                const track = document.querySelector('.related-experiences .track') as HTMLElement;
+                if (track) {
+                  const isMobile = window.innerWidth < 768;
+                  const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
+                  const scrollAmount = isMobile ? cardWidth + 16 : (cardWidth + 16) * 2;
+                  track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
+              }}
+            >
+              ←
+            </button>
+            <button 
+              className="next-btn pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
+              onClick={() => {
+                const track = document.querySelector('.related-experiences .track') as HTMLElement;
+                if (track) {
+                  const isMobile = window.innerWidth < 768;
+                  const cardWidth = track.querySelector('.card')?.getBoundingClientRect().width || 300;
+                  const scrollAmount = isMobile ? cardWidth + 16 : (cardWidth + 16) * 2;
+                  track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+              }}
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

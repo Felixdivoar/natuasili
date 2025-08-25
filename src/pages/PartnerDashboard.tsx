@@ -95,6 +95,74 @@ const PartnerDashboard = () => {
               </Card>
             </div>
 
+            {/* Enhanced Analytics */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Bookings Over Time</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center text-sm">
+                      <span>January 2024</span>
+                      <div className="flex items-center gap-2">
+                        <div className="bg-primary/10 h-2 rounded-full w-16"></div>
+                        <span>8 bookings</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <span>February 2024</span>
+                      <div className="flex items-center gap-2">
+                        <div className="bg-primary/30 h-2 rounded-full w-20"></div>
+                        <span>12 bookings</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <span>March 2024</span>
+                      <div className="flex items-center gap-2">
+                        <div className="bg-primary h-2 rounded-full w-24"></div>
+                        <span>24 bookings</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Key Performance Metrics</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span>Conversion Rate</span>
+                        <span className="font-semibold">12.4%</span>
+                      </div>
+                      <Progress value={12.4} className="h-2" />
+                      <p className="text-xs text-muted-foreground mt-1">Visitors to bookings</p>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span>Average Booking Value</span>
+                        <span className="font-semibold">{formatPrice(185)}</span>
+                      </div>
+                      <Progress value={75} className="h-2" />
+                      <p className="text-xs text-muted-foreground mt-1">Per experience booking</p>
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-sm mb-2">
+                        <span>Return Visitor Rate</span>
+                        <span className="font-semibold">28%</span>
+                      </div>
+                      <Progress value={28} className="h-2" />
+                      <p className="text-xs text-muted-foreground mt-1">Repeat bookings</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
             {/* Recent Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
@@ -118,30 +186,26 @@ const PartnerDashboard = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Performance Metrics</CardTitle>
+                  <CardTitle>Monthly Revenue Breakdown</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Booking Rate</span>
-                        <span>78%</span>
-                      </div>
-                      <Progress value={78} className="h-2" />
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Experience Fees</span>
+                      <span className="font-semibold">{formatPrice(4200)}</span>
                     </div>
-                    <div>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Response Time</span>
-                        <span>2.4 hours</span>
-                      </div>
-                      <Progress value={85} className="h-2" />
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Platform Fee (10%)</span>
+                      <span className="text-muted-foreground">-{formatPrice(420)}</span>
                     </div>
-                    <div>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Completion Rate</span>
-                        <span>95%</span>
-                      </div>
-                      <Progress value={95} className="h-2" />
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Processing Fees</span>
+                      <span className="text-muted-foreground">-{formatPrice(110)}</span>
+                    </div>
+                    <hr />
+                    <div className="flex justify-between items-center font-semibold">
+                      <span>Net Revenue</span>
+                      <span className="text-primary">{formatPrice(3670)}</span>
                     </div>
                   </div>
                 </CardContent>

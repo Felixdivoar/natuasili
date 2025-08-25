@@ -159,7 +159,7 @@ button, .btn, .button, [role="button"],
   letter-spacing: normal !important;
 }
 
-  }
+}
 
 /* ===== MODAL STYLES ===== */
 .modal {
@@ -245,6 +245,82 @@ button, .btn, .button, [role="button"],
   background: hsl(var(--primary-hover));
 }
 
+/* ===== CAROUSEL STYLES ===== */
+.related-experiences {
+  position: relative;
+}
+
+.related-experiences .track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.related-experiences .track::-webkit-scrollbar {
+  display: none;
+}
+
+.related-experiences .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -1rem;
+  right: -1rem;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.related-experiences .nav button {
+  pointer-events: auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.related-experiences .nav button:hover {
+  background: hsl(var(--muted));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Partner stories carousel */
+.partner-stories-carousel {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.partner-stories-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+#partner-stories-track {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 768px) {
+  .related-experiences .nav {
+    left: -0.5rem;
+    right: -0.5rem;
+  }
+  
+  .related-experiences .nav button {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 @layer utilities {

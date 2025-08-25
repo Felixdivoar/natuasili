@@ -165,9 +165,11 @@ const BlogSection = () => {
                   </div>
                   
                    <CardHeader className="pb-2">
-                    <h3 className="blog-carousel-title text-base font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-                      {post.title}
-                    </h3>
+                    <Link to={`/blog/${post.slug}`} className="block">
+                      <h3 className="blog-carousel-title text-sm font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                        {post.title}
+                      </h3>
+                    </Link>
                   </CardHeader>
                   
                   <CardContent>

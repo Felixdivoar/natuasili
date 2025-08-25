@@ -36,11 +36,10 @@ const Partners = () => {
   ];
 
   const requirements = [
-    "Registered conservation organization in Kenya",
+    "Registered conservation organization in Kenya with community-based tourism activities",
     "Demonstrable conservation impact and programs",
     "Ability to host and guide visitors safely",
-    "Commitment to impact reporting and transparency",
-    "Insurance coverage for visitor activities"
+    "Commitment to impact reporting and transparency"
   ];
 
   return (
@@ -206,50 +205,131 @@ const Partners = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Link to="/projects/1">
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-4">
-                      <Badge variant="outline" className="bg-primary/5 text-primary">Wildlife</Badge>
-                      <Badge variant="outline">Verified impact</Badge>
-                    </div>
-                    <CardTitle>Maasai Mara Wildlife Conservancy</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-foreground mb-4">
-                      "NatuAsili has enabled us to fund critical wildlife protection programs 
-                      through meaningful tourism experiences. We've seen a 40% increase in conservation funding."
-                    </p>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-primary font-semibold">$125,000 raised</span>
-                      <span className="text-foreground">45 experiences hosted</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+            <div className="relative">
+              {/* Carousel Container */}
+              <div className="partner-stories-carousel overflow-hidden">
+                <div className="flex gap-6 transition-transform duration-300 ease-in-out" id="partner-stories-track">
+                  <Link to="/projects/1" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-4">
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Wildlife</Badge>
+                          <Badge variant="outline">Verified impact</Badge>
+                        </div>
+                        <CardTitle>Maasai Mara Wildlife Conservancy</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-foreground mb-4">
+                          "NatuAsili has enabled us to fund critical wildlife protection programs 
+                          through meaningful tourism experiences. We've seen a 40% increase in conservation funding."
+                        </p>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-primary font-semibold">$125,000 raised</span>
+                          <span className="text-foreground">45 experiences hosted</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
 
-              <Link to="/projects/2">
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-4">
-                      <Badge variant="outline" className="bg-primary/5 text-primary">Education</Badge>
-                      <Badge variant="outline">Verified impact</Badge>
-                    </div>
-                    <CardTitle>Samburu Education Initiative</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-foreground mb-4">
-                      "The platform has connected us with travelers who truly care about our mission. 
-                      The transparent funding model has helped us expand our education programs."
-                    </p>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-primary font-semibold">$78,000 raised</span>
-                      <span className="text-foreground">28 experiences hosted</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                  <Link to="/projects/2" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-4">
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Education</Badge>
+                          <Badge variant="outline">Verified impact</Badge>
+                        </div>
+                        <CardTitle>Samburu Education Initiative</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-foreground mb-4">
+                          "The platform has connected us with travelers who truly care about our mission. 
+                          The transparent funding model has helped us expand our education programs."
+                        </p>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-primary font-semibold">$78,000 raised</span>
+                          <span className="text-foreground">28 experiences hosted</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link to="/projects/3" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-4">
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Habitat</Badge>
+                          <Badge variant="outline">Verified impact</Badge>
+                        </div>
+                        <CardTitle>Coastal Forest Restoration</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-foreground mb-4">
+                          "Working with NatuAsili has allowed us to showcase our mangrove restoration work 
+                          while generating sustainable funding for our conservation efforts."
+                        </p>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-primary font-semibold">$92,000 raised</span>
+                          <span className="text-foreground">38 experiences hosted</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link to="/projects/4" className="flex-shrink-0 w-full md:w-[calc(50%-0.75rem)]">
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-4">
+                          <Badge variant="outline" className="bg-primary/5 text-primary">Livelihoods</Badge>
+                          <Badge variant="outline">Verified impact</Badge>
+                        </div>
+                        <CardTitle>Community Beekeeping Project</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-foreground mb-4">
+                          "The income from conservation tourism has enabled us to expand our beekeeping 
+                          program and support 50 local families while protecting forest habitats."
+                        </p>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-primary font-semibold">$56,000 raised</span>
+                          <span className="text-foreground">22 experiences hosted</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Navigation Arrows */}
+              <div className="flex justify-between items-center absolute top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none px-4">
+                <button 
+                  className="prev-partner-btn pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
+                  onClick={() => {
+                    const track = document.getElementById('partner-stories-track');
+                    if (track) {
+                      const isMobile = window.innerWidth < 768;
+                      const cardWidth = track.querySelector('a')?.getBoundingClientRect().width || 300;
+                      const scrollAmount = isMobile ? cardWidth + 24 : (cardWidth + 24) * 2;
+                      track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  ←
+                </button>
+                <button 
+                  className="next-partner-btn pointer-events-auto w-10 h-10 rounded-full border border-border bg-background shadow-md flex items-center justify-center hover:bg-muted transition-colors z-10"
+                  onClick={() => {
+                    const track = document.getElementById('partner-stories-track');
+                    if (track) {
+                      const isMobile = window.innerWidth < 768;
+                      const cardWidth = track.querySelector('a')?.getBoundingClientRect().width || 300;
+                      const scrollAmount = isMobile ? cardWidth + 24 : (cardWidth + 24) * 2;
+                      track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  →
+                </button>
+              </div>
             </div>
           </div>
         </div>
