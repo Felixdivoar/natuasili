@@ -288,22 +288,7 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
                     
                     <div className="space-y-4">
                       <h4 className="font-medium">Additional Information (Optional)</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="dietary">Dietary Requirements</Label>
-                          <Select value={formData.dietary} onValueChange={(value) => handleInputChange('dietary', value)}>
-                            <SelectTrigger className="mt-1">
-                              <SelectValue placeholder="Select if any" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="none">None</SelectItem>
-                              <SelectItem value="vegetarian">Vegetarian</SelectItem>
-                              <SelectItem value="vegan">Vegan</SelectItem>
-                              <SelectItem value="gluten-free">Gluten Free</SelectItem>
-                              <SelectItem value="other">Other</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
+                      <div className="grid grid-cols-1 gap-4">
                         <div>
                           <Label htmlFor="mobility">Mobility Assistance</Label>
                           <Select value={formData.mobility} onValueChange={(value) => handleInputChange('mobility', value)}>

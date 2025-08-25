@@ -366,13 +366,6 @@ const ExperienceDetail = () => {
                 </CardContent>
               </Card>
 
-              {/* Related Experiences Section */}
-              <RelatedExperiences 
-                currentExperienceId={Number(experience.id)}
-                theme={experience.theme}
-                destination={experience.location_text}
-                maxResults={4}
-              />
 
               {/* Reviews Section */}
               <ReviewSection experienceId={experience.id} />
@@ -388,30 +381,6 @@ const ExperienceDetail = () => {
         </div>
       </div>
 
-      {/* 1) Availability CTA (shown first) */}
-      <div id="availability-cta" className="availability-cta">
-        <button className="btn btn-primary btn-check-availability">Check availability</button>
-      </div>
-
-      {/* 2) Availability modal */}
-      <div id="availability-modal" className="modal" hidden data-max="8" aria-modal="true" role="dialog" aria-labelledby="avail-title">
-        <div className="modal-content">
-          <h3 id="avail-title">Check availability</h3>
-          <form id="availability-form" data-max="8" className="form-grid">
-            <label>Date
-              <input type="date" name="date" required />
-            </label>
-            <label>People
-              <input type="number" name="people" min="1" defaultValue="1" inputMode="numeric" required />
-            </label>
-            <p className="people-error" role="alert" aria-live="polite" hidden>Booking limit reached.</p>
-            <div className="actions">
-              <button type="button" data-close="availability" className="btn btn-secondary">Cancel</button>
-              <button type="submit" className="btn btn-primary">Continue</button>
-            </div>
-          </form>
-        </div>
-      </div>
 
       {/* 3) Booking / Checkout panel */}
       <section id="booking-section" className="booking-wrap" hidden>
@@ -473,9 +442,13 @@ const ExperienceDetail = () => {
         experienceTitle={experience.title}
       />
 
-      {/* Sticky Book Now (mobile/tablet) - Add near the end of the page */}
-      <div className="sticky-book-now experience-page" id="sticky-book-now" role="region" aria-label="Booking actions">
-        <button className="btn btn-primary" id="sticky-book-now-btn" aria-label="Book now">
+      {/* Sticky Book Now (mobile/tablet) */}
+      <div className="fixed bottom-4 left-4 right-4 md:hidden z-50">
+        <button 
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold py-4 px-6 rounded-lg shadow-lg transition-colors" 
+          id="sticky-book-now-btn" 
+          aria-label="Book now"
+        >
           Book now
         </button>
       </div>

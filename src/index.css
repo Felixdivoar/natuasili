@@ -2125,6 +2125,15 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
   }
 }
 
+/* Hide availability elements on mobile/tablet */
+@media (max-width: 1023px) {
+  #availability-cta,
+  .availability-cta,
+  .btn-check-availability {
+    display: none !important;
+  }
+}
+
 /* ===== FOOTER ===== */
 .site-footer {
   padding-top: 30px !important;
