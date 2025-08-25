@@ -1123,69 +1123,107 @@ html, body {
   margin-top: .35rem; 
 }
 
-/* ===== Footer spacing ===== */
-.site-footer { 
-  padding-top: 16px; 
+/* ---------- Configurable spacing tokens ---------- */
+:root {
+  --pad-desktop: 20px;
+  --pad-mobile: 15px;
+  --maxw: 1150px;               /* your site width */
+  --header-bg: hsl(var(--background));
+  --footer-bg: hsl(var(--foreground));
+  --header-height: 64px;
 }
 
-/* ===== Cookie banner ===== */
-.cookie-banner {
-  position: fixed; 
-  left: 0; 
-  right: 0; 
-  bottom: 0; 
-  z-index: 1000;
-  background: hsl(var(--foreground)); 
-  color: hsl(var(--background)); 
-  padding: 14px 16px; 
-  display: flex; 
-  gap: 10px; 
-  align-items: center; 
-  flex-wrap: wrap;
+/* ---------- Containers (keep your 1150 width) ---------- */
+.site-container, .container, .page-content, .section, .main-content {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad-desktop);
+  box-sizing: border-box;
 }
-
-.cookie-banner .btn { 
-  background: hsl(var(--background)); 
-  color: hsl(var(--foreground)); 
-  padding: .5rem .9rem; 
-  border-radius: 9999px; 
-  font-weight: 600; 
-}
-
-.cookie-banner a { 
-  color: hsl(var(--background)); 
-  text-decoration: underline; 
-}
-
-/* ===== Global Spacing & Responsive Improvements ===== */
-
-/* Header spacing improvements */
-.site-header { 
-  padding-top: 12px; 
-}
-
 @media (max-width: 768px) {
-  .site-header { 
-    padding-top: 10px; 
+  .site-container, .container, .page-content, .section, .main-content {
+    padding-inline: var(--pad-mobile);
   }
 }
 
-/* Footer spacing improvements */
-.site-footer { 
-  padding-top: 18px; 
+/* ---------- HEADER & MENU ---------- */
+.site-header {
+  background: var(--header-bg);
+  /* Prevent margin-collapsing tricks & ensure padding is honored */
+  display: flow-root;  /* establishes a new block formatting context */
+  padding-block: var(--pad-desktop) !important;
+}
+@media (max-width: 768px) {
+  .site-header { 
+    padding-block: var(--pad-mobile) !important; 
+  }
 }
 
-@media (max-width: 768px) { 
+/* If your nav is the visible bar, pad it directly too */
+.site-header .primary-nav,
+.site-header .nav,
+.primary-menu {
+  padding-block: 10px !important; /* equal top/bottom */
+}
+
+/* Menu item hit-area */
+.primary-menu > li > a {
+  padding-block: 10px !important;
+  padding-inline: 14px !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* If header is fixed/sticky, avoid content sitting underneath */
+body { 
+  scroll-padding-top: var(--header-height); 
+}
+.has-sticky-header .page-after-hero,
+body.sticky .page-after-hero {
+  padding-top: 10px; /* a little breathing room below sticky header */
+}
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  background: var(--footer-bg);
+  color: hsl(var(--background));
+  /* padding must be on the element with the visible background */
+  display: flow-root;                  /* prevents margin collapse */
+  padding-top: 18px !important;        /* top spacing */
+  padding-bottom: 18px;
+}
+@media (max-width: 768px) {
   .site-footer { 
-    padding-top: 16px; 
-  } 
+    padding-top: 16px !important; 
+    padding-bottom: 16px; 
+  }
 }
 
-/* Footer explore links touch targets */
-.footer-explore a {
-  display: inline-block; 
+/* Footer columns touch targets */
+.site-footer .footer-explore a,
+.site-footer a {
   padding: 6px 0;
+  display: inline-block;
 }
+
+/* ---------- "Why padding didn't show" common offenders ---------- */
+/* 1) Hard heights: remove them so padding can expand */
+.site-header, .primary-menu, .site-footer {
+  height: auto !important;     /* kill fixed heights that clip padding */
+}
+
+/* 2) Utility resets overriding padding */
+* { box-sizing: border-box; }  /* ensure padding doesn't cause layout surprises */
+
+/* 3) If another stylesheet wins on specificity, bump once: */
+body .site-header,
+body .site-footer,
+body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
+
+/* ---------- Optional: ensure first/last child spacing looks clean ---------- */
+.site-header > :first-child { margin-top: 0; }
+.site-footer > :first-child { margin-top: 0; }
+.site-footer > :last-child  { margin-bottom: 0; }
 
 /* Theme chips & blog category chips */
 .theme-chip, .post-category {
