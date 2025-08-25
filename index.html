@@ -415,26 +415,10 @@
   // ---- Boot ----
   document.addEventListener('DOMContentLoaded', ()=>{
     wireAllReserveButtons();
-    // Fallback: on experience pages (desktop), auto-show inline "Reserve" button if you have one:
-    $$('.experience-page [data-action="reserve"]').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        e.preventDefault();
-        const payload = safeJSON(btn.closest('[data-experience]')?.getAttribute('data-experience') || '{}');
-        if (payload) openBooking(payload, 'inline');
-      });
-    });
-  });
-
-  // Re-wire when React components render
-  document.addEventListener('reactComponentsReady', () => {
-    console.log('React components ready, re-wiring booking buttons...');
-    wireAllReserveButtons();
   });
 
   // If your builder swaps DOM (SPA), re-wire:
-  const mo = new MutationObserver(()=> {
-    wireAllReserveButtons();
-  });
+  const mo = new MutationObserver(()=> wireAllReserveButtons());
   mo.observe(document.documentElement, { childList:true, subtree:true });
 
   // Expose openBooking globally for integration

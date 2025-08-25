@@ -23,6 +23,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogCategory from "./pages/BlogCategory";
 import PartnerSuccessStory from "./pages/PartnerSuccessStory";
+import PartnerProfile from "./pages/PartnerProfile";
 import SamburuDestination from "./pages/destination/Samburu";
 import MasaiMaraDestination from "./pages/destination/MasaiMara";
 import CoastDestination from "./pages/destination/Coast";
@@ -70,6 +71,7 @@ const App = () => (
             <Route path="/partner-dashboard" element={<PartnerDashboard />} />
             <Route path="/about" element={<About />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/partner/:slug" element={<PartnerProfile />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/blog/category/:category" element={<BlogCategory />} />

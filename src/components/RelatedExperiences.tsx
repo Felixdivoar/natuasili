@@ -80,6 +80,10 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
       const cardFromData = (d: any) => {
         const node = tpl.content.cloneNode(true) as DocumentFragment;
         const card = node.querySelector('.rel-card') as HTMLElement;
+        if (!card) {
+          console.warn('RelatedExperiences: rel-card template not found');
+          return document.createElement('div');
+        }
         const a1 = card.querySelector('.rel-media') as HTMLAnchorElement;
         a1.href = d.href;
         const img = card.querySelector('img') as HTMLImageElement;
