@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,8 +19,30 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedPeople, setSelectedPeople] = useState(1);
   const [selectedOption, setSelectedOption] = useState('standard');
+  const [participantsError, setParticipantsError] = useState('');
+
+  const validateParticipants = (value: number) => {
+    if (value > experience.capacity) {
+      setParticipantsError(`Maximum group size is ${experience.capacity}. Please reduce the number of people.`);
+      return false;
+    }
+    setParticipantsError('');
+    return true;
+  };
+
+  const handleParticipantsChange = (value: number) => {
+    const validValue = Math.max(1, value);
+    setSelectedPeople(validValue);
+    validateParticipants(validValue);
+  };
 
   const handleContinue = () => {
+    if (participantsError || !selectedDate) return;
+    
+    // Hide sticky CTA
+    const stickyElements = document.querySelectorAll('.na-cta-bar, .na-btn-book-fab');
+    stickyElements.forEach(el => (el as HTMLElement).style.display = 'none');
+    
     const params = new URLSearchParams({
       date: selectedDate,
       people: selectedPeople.toString(),
@@ -28,6 +50,10 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
     });
     navigate(`/checkout/${experience.slug}?${params.toString()}`);
   };
+
+  useEffect(() => {
+    validateParticipants(selectedPeople);
+  }, [experience.capacity]);
 
   const options = [
     {
@@ -98,7 +124,7 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
                         type="button"
                         variant="outline"
                         size="icon"
-                        onClick={() => setSelectedPeople(Math.max(1, selectedPeople - 1))}
+                        onClick={() => handleParticipantsChange(selectedPeople - 1)}
                         disabled={selectedPeople <= 1}
                       >
                         -
@@ -109,14 +135,14 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
                         min="1"
                         max={experience.capacity}
                         value={selectedPeople}
-                        onChange={(e) => setSelectedPeople(parseInt(e.target.value) || 1)}
-                        className="w-20 text-center"
+                        onChange={(e) => handleParticipantsChange(parseInt(e.target.value) || 1)}
+                        className={`w-20 text-center ${participantsError ? 'border-red-500' : ''}`}
                       />
                       <Button
                         type="button"
                         variant="outline"
                         size="icon"
-                        onClick={() => setSelectedPeople(Math.min(experience.capacity, selectedPeople + 1))}
+                        onClick={() => handleParticipantsChange(selectedPeople + 1)}
                         disabled={selectedPeople >= experience.capacity}
                       >
                         +
@@ -125,6 +151,11 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
                         (max {experience.capacity})
                       </span>
                     </div>
+                    {participantsError && (
+                      <div id="participants-error" role="alert" className="text-red-600 text-sm mt-2">
+                        {participantsError}
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -242,7 +273,7 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
 
                 <Button 
                   onClick={handleContinue}
-                  disabled={!selectedDate}
+                  disabled={!selectedDate || !!participantsError}
                   className="w-full"
                   size="lg"
                 >

@@ -147,7 +147,7 @@ const ExperienceDetail = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative">
+      <section className="relative section-hero pt-6">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-8 mb-8">
             {/* Image Gallery */}
@@ -265,10 +265,10 @@ const ExperienceDetail = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 page-content">
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Overview */}
-          <section>
+          <section className="section-overview mt-8">
             <h2 className="text-2xl font-bold text-foreground mb-6">Overview</h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
               {experience.description}
@@ -411,18 +411,17 @@ const ExperienceDetail = () => {
             </Card>
           </section>
 
-          {/* Similar Experiences */}
           <RelatedExperiences 
             currentExperienceId={Number(experience.id)}
             theme={experience.theme}
             destination={experience.location_text}
-            maxResults={12}
+            maxResults={5}
           />
 
-          {/* Reviews */}
-          <div className="experience-reviews">
+          {/* Reviews & Ratings */}
+          <section className="section-reviews mb-10">
             <ReviewSection experienceId={experience.id} />
-          </div>
+          </section>
         </div>
       </div>
 
@@ -430,24 +429,21 @@ const ExperienceDetail = () => {
       {stickyVisible && (
         <>
           {/* Mobile sticky bar */}
-          <div className="na-cta-bar lg:hidden">
-            <button 
-              className="btn-book"
-              onClick={openBookingModal}
-              aria-label="Book now"
-            >
+          <div className="na-cta-bar lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4" 
+               style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}>
+            <Button onClick={openBookingModal} className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
               Book Now
-            </button>
+            </Button>
           </div>
           
           {/* Desktop floating button */}
-          <button 
-            className="na-btn-book-fab hidden lg:block"
+          <Button 
             onClick={openBookingModal}
-            aria-label="Book now"
+            className="na-btn-book-fab hidden lg:block fixed right-6 bottom-6 z-50 shadow-xl bg-primary text-primary-foreground hover:bg-primary/90"
+            size="lg"
           >
             Book Now
-          </button>
+          </Button>
         </>
       )}
 

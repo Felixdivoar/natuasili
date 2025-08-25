@@ -19,6 +19,17 @@ const Checkout = () => {
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
   
+  // Hide sticky CTA on checkout page
+  useEffect(() => {
+    const stickyElements = document.querySelectorAll('.na-cta-bar, .na-btn-book-fab');
+    stickyElements.forEach(el => (el as HTMLElement).style.display = 'none');
+    
+    return () => {
+      // Re-show sticky elements when leaving checkout
+      stickyElements.forEach(el => (el as HTMLElement).style.display = '');
+    };
+  }, []);
+  
   // Hold timer countdown
   useEffect(() => {
     if (holdTimer > 0) {
@@ -62,7 +73,7 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background checkout-page">
       <Header />
       
       {/* Header with timer */}

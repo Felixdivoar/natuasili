@@ -18,7 +18,7 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   currentExperienceId,
   theme,
   destination,
-  maxResults = 12
+  maxResults = 5
 }) => {
   const { formatPrice } = useCurrency();
   // Filter related experiences with priority order
@@ -192,66 +192,98 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
 
   return (
     <section className="space-y-6">
-      <h2 className="text-2xl font-bold text-foreground">Similar Experiences</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-foreground">Similar Experiences</h2>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => {
+              const track = document.querySelector('.related-carousel-track') as HTMLElement;
+              if (track) {
+                track.scrollBy({ left: -320, behavior: 'smooth' });
+              }
+            }}
+          >
+            ←
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => {
+              const track = document.querySelector('.related-carousel-track') as HTMLElement;
+              if (track) {
+                track.scrollBy({ left: 320, behavior: 'smooth' });
+              }
+            }}
+          >
+            →
+          </Button>
+        </div>
+      </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {relatedExperiences.map((exp) => (
-          <Card key={exp.id} className="group hover:shadow-lg transition-shadow">
-            <CardContent className="p-0">
-              <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
-                <img
-                  src={exp.images[0]}
-                  alt={exp.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              
-              <div className="p-4 space-y-3">
-                <div>
-                  <Badge className={`mb-2 ${getThemeColor(exp.theme)}`}>
-                    {exp.theme}
-                  </Badge>
-                  <h3 className="font-semibold text-lg leading-tight line-clamp-2">
-                    {exp.title}
-                  </h3>
+      <div className="overflow-hidden">
+        <div className="related-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          {relatedExperiences.map((exp) => (
+            <Card key={exp.id} className="group hover:shadow-lg transition-shadow flex-shrink-0 w-80">
+              <CardContent className="p-0">
+                <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+                  <img
+                    src={exp.images[0]}
+                    alt={exp.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
                 </div>
                 
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <MapPin className="h-3 w-3" />
-                  <span>{exp.location_text}</span>
-                </div>
-                
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    <span>{exp.duration_hours}h</span>
+                <div className="p-4 space-y-3">
+                  <div>
+                    <Badge className={`mb-2 ${getThemeColor(exp.theme)}`}>
+                      {exp.theme}
+                    </Badge>
+                    <h3 className="font-semibold text-lg leading-tight line-clamp-2">
+                      {exp.title}
+                    </h3>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-3 w-3" />
-                    <span>Up to {exp.capacity}</span>
+                  
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <MapPin className="h-3 w-3" />
+                    <span>{exp.location_text}</span>
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      <span>{exp.duration_hours}h</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users className="h-3 w-3" />
+                      <span>Up to {exp.capacity}</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {exp.description.slice(0, 80)}...
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="font-bold text-foreground">
+                      {formatPrice(exp.base_price)}
+                      <span className="text-sm font-normal text-muted-foreground">/person</span>
+                    </div>
+                    <Link to={`/experience/${exp.slug}`}>
+                      <Button variant="outline" size="sm">
+                        View Details
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-                
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {exp.description.slice(0, 80)}...
-                </p>
-                
-                <div className="flex items-center justify-between pt-2">
-                  <div className="font-bold text-foreground">
-                    {formatPrice(exp.base_price)}
-                    <span className="text-sm font-normal text-muted-foreground">/person</span>
-                  </div>
-                  <Link to={`/experience/${exp.slug}`}>
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </section>
   );

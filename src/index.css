@@ -2238,6 +2238,44 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
   }
 }
 
+/* Hide scrollbar for related carousel but keep functionality */
+.related-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Global page content bottom spacing before footer */
+.page-content {
+  padding-bottom: 48px;
+}
+
+/* Mobile safe-area support for sticky elements */
+@supports(padding: max(0px)) {
+  .page-content {
+    padding-bottom: max(48px, calc(48px + env(safe-area-inset-bottom)));
+  }
+}
+
+/* Participants error styling */
+#participants-error {
+  display: block;
+  color: hsl(var(--destructive));
+  margin-top: 8px;
+  font-size: 0.875rem;
+}
+
+/* Disabled button styling */
+.na-btn-book-fab[disabled],
+button[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Checkout page - hide sticky CTA */
+.checkout-page .na-cta-bar,
+.checkout-page .na-btn-book-fab {
+  display: none !important;
+}
+
 /* ===== AVAILABILITY & STICKY CTA ===== */
 /* Mobile sticky bar */
 @media (max-width:1023px){
