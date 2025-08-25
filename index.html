@@ -26,5 +26,395 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Quick Reserve Drawer (for listings & mobile) -->
+    <div id="bk-drawer" class="bk-drawer" aria-hidden="true" role="dialog" aria-labelledby="bk-title">
+      <div class="bk-overlay" data-bk-close></div>
+      <div class="bk-panel">
+        <header class="bk-header">
+          <h3 id="bk-title">Reserve</h3>
+          <button class="bk-close" aria-label="Close" data-bk-close>✕</button>
+        </header>
+
+        <div class="bk-steps" data-bk-steps>
+          <!-- Step 1: Select -->
+          <section class="bk-step" data-step="select" aria-label="Select date and guests">
+            <label>Date
+              <input type="date" name="bk-date" required>
+            </label>
+
+            <label>Guests
+              <div class="bk-steppers">
+                <button type="button" class="bk-stepper" data-dir="-1" aria-label="Decrease">−</button>
+                <input type="number" name="bk-guests" min="1" value="1" inputmode="numeric" required>
+                <button type="button" class="bk-stepper" data-dir="1" aria-label="Increase">+</button>
+              </div>
+              <small class="bk-help" data-bk-capacity hidden>Max guests reached.</small>
+            </label>
+
+            <div class="bk-times" data-bk-times hidden>
+              <label>Time
+                <select name="bk-time"></select>
+              </label>
+            </div>
+
+            <button class="bk-primary" data-bk-next>Continue</button>
+          </section>
+
+          <!-- Step 2: Customize -->
+          <section class="bk-step" data-step="customize" hidden aria-label="Customize your experience">
+            <div class="bk-addons" data-bk-addons><!-- add-ons inserted by JS --></div>
+            <label>Promo code (optional)
+              <input type="text" name="bk-promo" placeholder="Enter code">
+            </label>
+            <button class="bk-secondary" data-bk-prev>Back</button>
+            <button class="bk-primary" data-bk-next>Continue</button>
+          </section>
+
+          <!-- Step 3: Details -->
+          <section class="bk-step" data-step="details" hidden aria-label="Your details">
+            <label>Name <input name="bk-name" required></label>
+            <label>Email <input name="bk-email" type="email" required></label>
+            <label>Phone <input name="bk-phone" required></label>
+            <label>Notes (optional)
+              <textarea name="bk-notes" rows="3" placeholder="Anything we should know?"></textarea>
+            </label>
+            <button class="bk-secondary" data-bk-prev>Back</button>
+            <button class="bk-primary" data-bk-next>Review & pay</button>
+          </section>
+
+          <!-- Step 4: Review & Pay -->
+          <section class="bk-step" data-step="review" hidden aria-label="Review and pay">
+            <div class="bk-review" data-bk-review><!-- price breakdown rendered here --></div>
+            <div class="bk-policy" data-bk-policy><!-- policy snippet inserted --></div>
+            <button class="bk-secondary" data-bk-prev>Back</button>
+            <button class="bk-primary" data-bk-pay>Pay now</button>
+          </section>
+
+          <!-- Step 5: Confirmation -->
+          <section class="bk-step" data-step="done" hidden aria-live="polite" aria-label="Confirmation">
+            <div class="bk-confirm">
+              <h4>Booking confirmed 🎉</h4>
+              <p>We've emailed your confirmation and receipt.</p>
+              <a class="bk-link" data-bk-manage href="/dashboard/bookings">Manage booking</a>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sticky bar (mobile/tablet) -->
+        <div class="bk-sticky">
+          <div class="bk-total"><span>Total</span> <strong data-bk-total>—</strong></div>
+          <button class="bk-primary" data-bk-cta>Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline Panel (for experience detail pages on desktop) -->
+    <section id="bk-inline" class="bk-inline" hidden aria-label="Booking panel">
+      <!-- JS reuses the same steps inside this container -->
+    </section>
+
+    <script>
+    (function(){
+      const $  = (s, r=document)=>r.querySelector(s);
+      const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+      const clamp = (v,min=1)=>{v=parseInt(v||min,10); return (isNaN(v)||v<min)?min:v;};
+      const money = (n,c)=>`${c} ${Number(n||0).toLocaleString()}`;
+
+      // ---- Booking state ----
+      const BK = {
+        experienceId: null, title: '', currency: 'USD', unitPrice: 0,
+        minGuests: 1, maxGuests: 10, hasTimeSlots: false, timeSlots: [],
+        addOns: [], // [{id,title,price}]
+        date: '', guests: 1, time: '',
+        promo: '', name:'', email:'', phone:'', notes:'',
+        taxesPct: 0.0, feesFlat: 0.0
+      };
+
+      // ---- Elements ----
+      const drawer = $('#bk-drawer');
+      const panel  = drawer?.querySelector('.bk-panel');
+      const steps  = drawer?.querySelector('[data-bk-steps]');
+      const stickyCta = drawer?.querySelector('[data-bk-cta]');
+      const totalEl  = drawer?.querySelector('[data-bk-total]');
+
+      const inline = $('#bk-inline'); // used on experience pages (desktop)
+
+      // ---- Public entrypoints wired site-wide ----
+      function wireAllReserveButtons(){
+        // expected markup on cards/pages: data-experience='{"experienceId":"...","title":"...","currency":"KES","unitPrice":7500,"minGuests":1,"maxGuests":6,"hasTimeSlots":true,"timeSlots":["08:00","14:00"],"addOns":[{"id":"guide","title":"Private guide","price":3000}]}'
+        $$('[data-experience]').forEach(node=>{
+          // A clickable button within the card/page:
+          const btn = node.matches('button,a') ? node : node.querySelector('[data-action="reserve"], .btn-reserve, .btn-book, .btn-check-availability');
+          if (!btn) return;
+          btn.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const payload = safeJSON(node.getAttribute('data-experience'));
+            if (!payload) return console.warn('Missing/invalid data-experience JSON');
+            openBooking(payload, node.closest('.experience-page') ? 'inline' : 'drawer');
+          });
+        });
+      }
+
+      function safeJSON(x){ try{ return JSON.parse(x); } catch(e){ return null; } }
+
+      // ---- Open booking (drawer on listings; inline on detail desktop) ----
+      function openBooking(payload, mode='drawer'){
+        Object.assign(BK, {
+          experienceId: payload.experienceId,
+          title: payload.title || 'Experience',
+          currency: payload.currency || 'USD',
+          unitPrice: Number(payload.unitPrice||0),
+          minGuests: Number(payload.minGuests||1),
+          maxGuests: Number(payload.maxGuests||10),
+          hasTimeSlots: !!payload.hasTimeSlots,
+          timeSlots: payload.timeSlots || [],
+          addOns: payload.addOns || [],
+          taxesPct: Number(payload.taxesPct||0),
+          feesFlat: Number(payload.feesFlat||0),
+          // reset user inputs each open
+          date:'', guests: payload.minGuests||1, time:'', promo:'', name:'', email:'', phone:'', notes:''
+        });
+
+        // Render steps into target container
+        const target = (mode==='inline' && inline && window.matchMedia('(min-width:1025px)').matches) ? inline : panel;
+        renderStepsInto(target);
+        if (target===inline){ inline.hidden=false; window.scrollTo({ top:inline.offsetTop-10, behavior:'smooth' }); }
+        else { drawer.setAttribute('aria-hidden','false'); }
+
+        updateSticky();
+      }
+
+      // ---- Render steps (clone from drawer's steps into target) ----
+      function renderStepsInto(target){
+        const srcSteps = $('#bk-drawer [data-bk-steps]');
+        if (!srcSteps) return;
+        // Clone to avoid moving nodes out of drawer
+        const clone = srcSteps.cloneNode(true);
+        // Clear target content area
+        if (target===panel){
+          panel.querySelector('[data-bk-steps]')?.remove();
+          panel.insertBefore(clone, drawer.querySelector('.bk-sticky'));
+        } else if (target===inline){
+          inline.innerHTML = '';
+          inline.appendChild(clone);
+        }
+        wireStepHandlers(target);
+        populateDynamicBits(target);
+        goTo(target, 'select');
+      }
+
+      // ---- Populate time slots, add-ons, policy snippet ----
+      function populateDynamicBits(ctx){
+        // Times
+        const timeWrap = ctx.querySelector('[data-bk-times]');
+        const timeSel  = ctx.querySelector('select[name="bk-time"]');
+        if (BK.hasTimeSlots && BK.timeSlots.length){
+          timeWrap.hidden = false;
+          timeSel.innerHTML = BK.timeSlots.map(t=>`<option value="${t}">${t}</option>`).join('');
+        } else { timeWrap.hidden = true; }
+
+        // Add-ons
+        const addWrap = ctx.querySelector('[data-bk-addons]');
+        if (addWrap){
+          addWrap.innerHTML = '';
+          BK.addOns.forEach(ao=>{
+            const row = document.createElement('div');
+            row.className='bk-addon';
+            row.innerHTML = `
+              <div>
+                <div class="bk-addon-title">${ao.title}</div>
+                <div class="bk-addon-price">${money(ao.price, BK.currency)}</div>
+              </div>
+              <div class="bk-addon-ctrl">
+                <button type="button" class="bk-stepper" data-ao="${ao.id}" data-dir="-1">−</button>
+                <input type="number" min="0" value="0" data-ao-input="${ao.id}">
+                <button type="button" class="bk-stepper" data-ao="${ao.id}" data-dir="1">+</button>
+              </div>
+            `;
+            addWrap.appendChild(row);
+          });
+        }
+
+        // Policy (short)
+        const pol = ctx.querySelector('[data-bk-policy]');
+        if (pol){
+          pol.innerHTML = `<small>Free cancellation up to 24h before start (unless otherwise stated). Full policy at checkout.</small>`;
+        }
+      }
+
+      // ---- Navigation + validation ----
+      function wireStepHandlers(ctx){
+        // close handlers (drawer only)
+        $$('.bk-overlay,[data-bk-close]', ctx===panel?drawer:ctx).forEach(el=> el.addEventListener('click', ()=> drawer.setAttribute('aria-hidden','true')));
+
+        // step nav
+        ctx.addEventListener('click', (e)=>{
+          const next = e.target.closest('[data-bk-next]');
+          const prev = e.target.closest('[data-bk-prev]');
+          const pay  = e.target.closest('[data-bk-pay]');
+          if (next){ e.preventDefault(); if (validateCurrent(ctx) && saveCurrent(ctx)) goNext(ctx); }
+          if (prev){ e.preventDefault(); goPrev(ctx); }
+          if (pay){  e.preventDefault(); if (validateCurrent(ctx) && saveCurrent(ctx)) simulatePayment(ctx); }
+        });
+
+        // steppers (guests & add-ons)
+        ctx.addEventListener('click', (e)=>{
+          const btn = e.target.closest('.bk-stepper');
+          if (!btn) return;
+          const dir = parseInt(btn.dataset.dir||'0',10);
+          const ao  = btn.dataset.ao;
+          if (ao){
+            const input = ctx.querySelector(`[data-ao-input="${ao}"]`);
+            const val = clamp((parseInt(input.value||'0',10) || 0)+dir, 0);
+            input.value = val;
+          } else {
+            const field = ctx.querySelector('input[name="bk-guests"]');
+            const min = BK.minGuests||1, max = BK.maxGuests||99;
+            let val = clamp(parseInt(field.value||min,10)+dir, min);
+            val = Math.min(val, max);
+            field.value = val;
+            const cap = ctx.querySelector('[data-bk-capacity]');
+            if (cap) cap.hidden = !(val>=max);
+          }
+          renderReview(ctx); updateSticky();
+        });
+
+        // input changes → totals
+        ctx.addEventListener('input', (e)=>{
+          if (['bk-date','bk-guests','bk-time','bk-promo'].includes(e.target.name)){
+            // live update; in real app you might re-fetch availability/price
+            renderReview(ctx); updateSticky();
+          }
+        });
+
+        // sticky CTA mirrors primary action
+        const sticky = (ctx===panel?panel:ctx).querySelector('[data-bk-cta]');
+        if (sticky){
+          sticky.onclick = ()=>{
+            const step = currentStep(ctx);
+            const primary = ctx.querySelector(`.bk-step[data-step="${step}"] .bk-primary, .bk-step[data-step="${step}"] [data-bk-pay]`);
+            primary?.click();
+          };
+        }
+      }
+
+      function validateCurrent(ctx){
+        const step = currentStep(ctx);
+        if (step==='select'){
+          const date = ctx.querySelector('input[name="bk-date"]')?.value;
+          const guests = clamp(ctx.querySelector('input[name="bk-guests"]')?.value, BK.minGuests);
+          if (!date) { alert('Please choose a date.'); return false; }
+          if (BK.hasTimeSlots && !ctx.querySelector('select[name="bk-time"]')?.value){ alert('Please choose a time.'); return false; }
+          if (guests > BK.maxGuests){ alert('Too many guests for this experience.'); return false; }
+          return true;
+        }
+        if (step==='details'){
+          const name = ctx.querySelector('input[name="bk-name"]')?.value?.trim();
+          const email = ctx.querySelector('input[name="bk-email"]')?.value?.trim();
+          if (!name || !email) { alert('Please enter your name and email.'); return false; }
+          return true;
+        }
+        return true;
+      }
+
+      function saveCurrent(ctx){
+        const step = currentStep(ctx);
+        if (step==='select'){
+          BK.date = ctx.querySelector('input[name="bk-date"]')?.value || '';
+          BK.guests = clamp(ctx.querySelector('input[name="bk-guests"]')?.value, BK.minGuests);
+          BK.time = BK.hasTimeSlots ? ctx.querySelector('select[name="bk-time"]')?.value || '' : '';
+          // Example availability check (replace with real API call)
+          // fetch(`/api/availability?exp=${BK.experienceId}&date=${BK.date}&guests=${BK.guests}`)
+          //   .then(...)
+        }
+        if (step==='customize'){
+          BK.promo = ctx.querySelector('input[name="bk-promo"]')?.value || '';
+          BK.addOns = BK.addOns.map(ao=>{
+            const qty = clamp(ctx.querySelector(`[data-ao-input="${ao.id}"]`)?.value,0);
+            return {...ao, qty};
+          });
+        }
+        if (step==='details'){
+          BK.name  = ctx.querySelector('input[name="bk-name"]')?.value || '';
+          BK.email = ctx.querySelector('input[name="bk-email"]')?.value || '';
+          BK.phone = ctx.querySelector('input[name="bk-phone"]')?.value || '';
+          BK.notes = ctx.querySelector('textarea[name="bk-notes"]')?.value || '';
+        }
+        renderReview(ctx); updateSticky();
+        return true;
+      }
+
+      function goTo(ctx, step){
+        $$('.bk-step', ctx).forEach(s=> s.hidden = s.dataset.step !== step);
+        renderReview(ctx); updateSticky();
+      }
+      function currentStep(ctx){ return ($$('.bk-step', ctx).find(s=>!s.hidden)?.dataset.step) || 'select'; }
+      function goNext(ctx){
+        const order = ['select','customize','details','review','done'];
+        const idx = order.indexOf(currentStep(ctx));
+        if (idx<order.length-1) goTo(ctx, order[idx+1]);
+      }
+      function goPrev(ctx){
+        const order = ['select','customize','details','review','done'];
+        const idx = order.indexOf(currentStep(ctx));
+        if (idx>0) goTo(ctx, order[idx-1]);
+      }
+
+      // ---- Pricing ----
+      function compute(){
+        const base = BK.unitPrice * BK.guests;
+        const add  = (BK.addOns||[]).reduce((sum,ao)=> sum + (ao.price * (ao.qty||0)), 0);
+        const sub  = base + add + BK.feesFlat;
+        const tax  = Math.round(sub * BK.taxesPct);
+        const total= sub + tax;
+        return { base, add, fees: BK.feesFlat, tax, total };
+      }
+
+      function renderReview(ctx){
+        const box = (ctx||document).querySelector('[data-bk-review]');
+        if (!box) return;
+        const {base, add, fees, tax, total} = compute();
+        box.innerHTML = `
+          <div class="row"><span>${BK.title}</span><span>${money(BK.unitPrice, BK.currency)} × ${BK.guests}</span></div>
+          ${add ? `<div class="row"><span>Add-ons</span><span>${money(add, BK.currency)}</span></div>`:''}
+          ${fees ? `<div class="row"><span>Fees</span><span>${money(fees, BK.currency)}</span></div>`:''}
+          ${tax ? `<div class="row"><span>Taxes</span><span>${money(tax, BK.currency)}</span></div>`:''}
+          <div class="row total"><span>Total</span><span>${money(total, BK.currency)}</span></div>
+        `;
+      }
+
+      function updateSticky(){
+        const t = compute().total;
+        if (totalEl) totalEl.textContent = money(t, BK.currency);
+      }
+
+      // ---- Payment (stub) ----
+      function simulatePayment(ctx){
+        // Replace with your real checkout redirect or payment SDK call
+        setTimeout(()=>{
+          goTo(ctx,'done');
+          // Optional: POST BK + totals to backend here
+        }, 400);
+      }
+
+      // ---- Boot ----
+      document.addEventListener('DOMContentLoaded', ()=>{
+        wireAllReserveButtons();
+        // Fallback: on experience pages (desktop), auto-show inline "Reserve" button if you have one:
+        $$('.experience-page [data-action="reserve"]').forEach(btn=>{
+          btn.addEventListener('click', (e)=>{
+            e.preventDefault();
+            const payload = safeJSON(btn.closest('[data-experience]')?.getAttribute('data-experience') || '{}');
+            if (payload) openBooking(payload, 'inline');
+          });
+        });
+      });
+
+      // If your builder swaps DOM (SPA), re-wire:
+      const mo = new MutationObserver(()=> wireAllReserveButtons());
+      mo.observe(document.documentElement, { childList:true, subtree:true });
+    })();
+    </script>
   </body>
 </html>

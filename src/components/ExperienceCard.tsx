@@ -43,6 +43,24 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
     if (location.includes('samburu')) return 'samburu';
     return 'other';
   };
+
+  // Generate booking data for the experience
+  const bookingData = {
+    experienceId: experience.id,
+    title: experience.title,
+    currency: "KES",
+    unitPrice: experience.base_price,
+    minGuests: 1,
+    maxGuests: experience.capacity,
+    hasTimeSlots: false,
+    timeSlots: [],
+    addOns: [
+      { id: "guide", title: "Private guide", price: 3000 },
+      { id: "transfers", title: "Round-trip transfers", price: 4500 }
+    ],
+    taxesPct: 0.00,
+    feesFlat: 0
+  };
   
   return (
     <Card 
@@ -50,6 +68,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
       data-destination={getDestination()}
       data-theme={experience.theme.toLowerCase().replace(' ', '-')}
       data-activity-impact={experience.activity_type.toLowerCase().replace(' ', '-')}
+      data-experience={JSON.stringify(bookingData)}
     >
       <div className="aspect-[4/3] bg-muted relative overflow-hidden">
         {experience.images[0] && (
@@ -137,11 +156,17 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
             </Link>
           </div>
           <div className="flex gap-2">
+            <Button 
+              className="btn-reserve flex-1" 
+              data-action="reserve"
+              size="sm"
+            >
+              Reserve
+            </Button>
             <SocialShare
               title={experience.title}
               description={experience.description}
               url={`${window.location.origin}/experience/${experience.slug}`}
-              className="flex-1"
             />
             <Button 
               variant="outline" 

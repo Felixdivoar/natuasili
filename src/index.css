@@ -2325,4 +2325,58 @@ body .primary-menu { padding-inline: inherit; } /* keeps order-local wins */
 
 /* ===== End Booking Form Improvements ===== */
 
+/* ===== Booking 2.0 Styles ===== */
+:root{
+  --bk-maxw: 1150px;
+  --bk-gap: 16px; --bk-gap-sm: 12px;
+  --bk-pad: 20px; --bk-pad-sm: 15px;
+  --bk-border: #e7e7e7; --bk-muted: #666; --bk-bg: #fff; --bk-brand: #000;
+  --bk-radius: 12px;
+  --bk-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+* { box-sizing: border-box; }
+.bk-primary{ background:var(--bk-brand); color:#fff; border:1px solid var(--bk-brand); border-radius:9999px; padding:.8rem 1.1rem; font-weight:700; cursor:pointer; }
+.bk-secondary{ background:#f7f7f7; border:1px solid var(--bk-border); border-radius:9999px; padding:.8rem 1.1rem; cursor:pointer; }
+.bk-link{ color:#000; text-decoration:underline; }
+
+/* Drawer */
+.bk-drawer[aria-hidden="true"]{ display:none !important; }
+.bk-drawer{ position:fixed; inset:0; z-index:1000; display:flex; }
+.bk-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.45); }
+.bk-panel{ margin-left:auto; width:min(560px, 100%); height:100%; background:#fff; display:flex; flex-direction:column; box-shadow: var(--bk-shadow); }
+@media (max-width: 768px){ .bk-panel{ width:100%; } }
+
+.bk-header{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--bk-border); }
+.bk-close{ background:#fff; border:1px solid var(--bk-border); border-radius:8px; padding:.4rem .6rem; cursor:pointer; }
+
+.bk-steps{ flex:1; overflow:auto; padding:16px; display:block; }
+.bk-step{ display:block; }
+.bk-step[hidden]{ display:none !important; }
+
+.bk-step label{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.bk-step input, .bk-step select, .bk-step textarea{
+  border:1px solid var(--bk-border); border-radius:8px; padding:.7rem .8rem; font:inherit;
+}
+.bk-steppers{ display:inline-flex; align-items:center; gap:8px; }
+.bk-stepper{ border:1px solid var(--bk-border); background:#f7f7f7; border-radius:8px; padding:.45rem .8rem; font-weight:700; }
+.bk-help{ color:#b00020; font-weight:700; }
+
+.bk-addons .bk-addon{ display:flex; justify-content:space-between; align-items:center; padding:10px; border:1px solid var(--bk-border); border-radius:10px; margin-bottom:10px; }
+.bk-addon-title{ font-weight:600; }
+.bk-addon-ctrl input{ width:72px; text-align:center; }
+
+.bk-review{ border:1px solid var(--bk-border); border-radius:10px; padding:12px; margin-bottom:12px; }
+.bk-review .row{ display:flex; justify-content:space-between; padding:6px 0; gap:12px; }
+.bk-review .row.total{ border-top:1px solid var(--bk-border); margin-top:6px; padding-top:10px; font-weight:700; }
+.bk-policy{ color:var(--bk-muted); font-size:.95rem; }
+
+/* Sticky bar */
+.bk-sticky{ position:sticky; bottom:0; padding:.7rem 16px calc(.7rem + env(safe-area-inset-bottom)); border-top:1px solid var(--bk-border); background:#fff; display:flex; align-items:center; gap:12px; }
+.bk-total{ display:flex; flex-direction:column; line-height:1.1; }
+@media (min-width: 1025px){ .bk-sticky{ display:none; } }
+
+/* Inline panel on experience pages (desktop) */
+.bk-inline{ max-width:var(--bk-maxw); margin:0 auto; padding:16px 20px; border:1px solid var(--bk-border); border-radius:12px; background:#fff; }
+@media (max-width:1024px){ .bk-inline{ display:none; } }
+
 /* ===== End Global Spacing & Responsive Improvements ===== */
