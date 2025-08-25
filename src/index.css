@@ -318,6 +318,65 @@ button, .btn, .button, [role="button"],
   display: none !important;
 }
 
+/* Experience page (mobile) - hide "Check availability" text */
+@media (max-width: 1024px) {
+  .experience-page .btn-check-availability {
+    position: relative;
+  }
+  /* If your button has an inner span/label, hide it */
+  .experience-page .btn-check-availability .label { 
+    display: none !important; 
+  }
+  /* If it's just text, make it visually hidden but screen-reader readable */
+  .experience-page .btn-check-availability {
+    color: transparent !important;
+  }
+  .experience-page .btn-check-availability::after {
+    content: " "; /* keep size; you can insert an icon via background-image if you like */
+  }
+}
+
+/* Sticky Book Now button (mobile/tablet) */
+.sticky-book-now {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .sticky-book-now {
+    position: sticky; 
+    bottom: 0;
+    inset-inline: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: .65rem 1rem calc(.65rem + env(safe-area-inset-bottom));
+    border-top: 1px solid hsl(var(--border));
+    background: hsl(var(--background));
+    z-index: 40;
+  }
+  /* Button styling follows your brand */
+  .sticky-book-now .btn {
+    border-radius: 9999px;
+    padding: .8rem 1.2rem;
+    font-weight: 700;
+  }
+  
+  /* Prevent overlap with footer on very short pages */
+  .page-experience .content-area { 
+    padding-bottom: 72px; 
+  }
+}
+
+/* OPTIONAL: make it stick to the top instead of bottom */
+@media (max-width: 1024px) {
+  .sticky-book-now.sticky-top {
+    top: 0; 
+    bottom: auto; 
+    border-top: 0; 
+    border-bottom: 1px solid hsl(var(--border));
+    padding: calc(.65rem + env(safe-area-inset-top)) 1rem .65rem;
+  }
+}
+
 /* Mobile Header - Hamburger menu for ≤1024px */
 @media (max-width: 1024px) {
   .primary-menu { display: none !important; } /* hide full menu */

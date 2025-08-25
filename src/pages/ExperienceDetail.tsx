@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ import BookingStepper from "@/components/BookingStepper";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import AvailabilityModal from "@/components/AvailabilityModal";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
-import "@/utils/hybridBookingFlow";
+import { initializeHybridBookingFlow } from "@/utils/hybridBookingFlow";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -24,11 +24,45 @@ const ExperienceDetail = () => {
   const [isAvailabilityModalOpen, setIsAvailabilityModalOpen] = useState(false);
   const { formatPrice } = useCurrency();
   
-  // Initialize interactive booking form functionality
-  useInteractiveBookingForm();
-
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
+  
+  // Initialize interactive booking form functionality after initial render
+  useEffect(() => {
+    initializeHybridBookingFlow();
+    
+    // Wire sticky button → open availability → reveal booking
+    const qs = (s: string, r: Document | Element = document) => r.querySelector(s);
+    
+    const aModal = qs('#availability-modal') as HTMLElement;
+    const aOpen = qs('.btn-check-availability') as HTMLButtonElement;
+    const bWrap = qs('#booking-section') as HTMLElement;
+    const sticky = qs('#sticky-book-now-btn') as HTMLButtonElement;
+
+    if (sticky) {
+      // Prefer opening availability (so date + people are captured once),
+      // then our existing flow will reveal the booking section afterwards.
+      const openAvailability = () => {
+        if (aModal) {
+          // if you have an openAvail() function already, call it; else emulate click:
+          aModal.hidden = false;
+          const dateInput = aModal.querySelector('input[name="date"]') as HTMLInputElement;
+          if (dateInput) dateInput.focus();
+        } else if (aOpen) {
+          aOpen.click();
+        } else if (bWrap) {
+          // fallback: scroll to booking section if no modal exists
+          bWrap.hidden = false;
+          bWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
+      sticky.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAvailability();
+      });
+    }
+  }, [experience?.slug]);
 
   if (!experience || !project) {
     return (
@@ -442,6 +476,13 @@ const ExperienceDetail = () => {
         maxCapacity={experience.capacity}
         experienceTitle={experience.title}
       />
+
+      {/* Sticky Book Now (mobile/tablet) - Add near the end of the page */}
+      <div className="sticky-book-now experience-page" id="sticky-book-now" role="region" aria-label="Booking actions">
+        <button className="btn btn-primary" id="sticky-book-now-btn" aria-label="Book now">
+          Book now
+        </button>
+      </div>
 
       <Footer />
     </div>
