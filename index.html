@@ -411,10 +411,104 @@
         });
       });
 
-      // If your builder swaps DOM (SPA), re-wire:
-      const mo = new MutationObserver(()=> wireAllReserveButtons());
-      mo.observe(document.documentElement, { childList:true, subtree:true });
-    })();
-    </script>
+  // If your builder swaps DOM (SPA), re-wire:
+  const mo = new MutationObserver(()=> wireAllReserveButtons());
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+
+  // Expose openBooking globally for integration
+  window.openBooking = openBooking;
+})();
+</script>
+
+<script>
+(function(){
+  const qs  = (s, r=document)=>r.querySelector(s);
+  const qsa = (s, r=document)=>Array.from(r.querySelectorAll(s));
+
+  // 1) On listing cards: ensure "View details" adds ?reserve=1 so detail page can auto-open booking
+  function upgradeViewDetailsLinks(){
+    qsa('.experience-card a.btn-view, .experience-card a.view-details, .experience-card a[href*="/experience/"]').forEach(a=>{
+      try {
+        const url = new URL(a.href, location.origin);
+        // Only add to experience detail pages
+        if (!/\/experience\//.test(url.pathname)) return;
+        if (!url.searchParams.has('reserve')) {
+          url.searchParams.set('reserve','1');
+          a.href = url.toString();
+        }
+      } catch(_) { /* ignore malformed hrefs */ }
+    });
+  }
+
+  // 2) On the experience page: auto-open booking if ?reserve=1 (or #reserve)
+  function autoOpenOnDetail(){
+    const isDetail = /\/experience\//.test(location.pathname);
+    if (!isDetail) return;
+
+    const wantReserve = new URLSearchParams(location.search).get('reserve') === '1'
+                        || location.hash.replace('#','') === 'reserve';
+    if (!wantReserve) return;
+
+    // Find payload: prefer a top-level data-experience (e.g., on the main wrapper)
+    const holder = qs('[data-experience].experience-page') 
+                || qs('.experience-page [data-experience]')
+                || qs('[data-experience]');
+
+    let payload = null;
+    if (holder) {
+      try { payload = JSON.parse(holder.getAttribute('data-experience') || '{}'); } catch(_) {}
+    }
+
+    // Fallback: minimal payload if page missed data-experience
+    if (!payload || !payload.unitPrice) {
+      payload = Object.assign({},
+        payload || {},
+        {
+          experienceId: payload?.experienceId || 'exp_unknown',
+          title:        payload?.title || qs('.experience-title')?.textContent?.trim() || 'Experience',
+          currency:     payload?.currency || 'KES',
+          unitPrice:    Number(payload?.unitPrice || 0),
+          minGuests:    Number(payload?.minGuests || 1),
+          maxGuests:    Number(payload?.maxGuests || 8),
+          hasTimeSlots: !!payload?.hasTimeSlots,
+          timeSlots:    payload?.timeSlots || [],
+          addOns:       payload?.addOns || []
+        }
+      );
+    }
+
+    // Decide inline (desktop) vs drawer (mobile/tablet)
+    const desktop = window.matchMedia('(min-width: 1025px)').matches;
+    if (typeof window.openBooking === 'function') {
+      // If you exposed openBooking globally; else we'll try to call via the Booking 2.0 module pattern below.
+      window.openBooking(payload, desktop ? 'inline' : 'drawer');
+    } else {
+      // Booking 2.0 module is IIFE; we can trigger by simulating a "reserve" click on any button inside a data-experience holder
+      const reserveBtn = holder?.querySelector('[data-action="reserve"], .btn-reserve, .btn-check-availability');
+      if (reserveBtn) reserveBtn.click();
+      else {
+        // Last resort: add a temp button to fire the Booking 2.0 listener
+        const tempBtn = document.createElement('button');
+        tempBtn.type = 'button';
+        tempBtn.style.display = 'none';
+        tempBtn.setAttribute('data-action','reserve');
+        tempBtn.setAttribute('data-experience', JSON.stringify(payload));
+        document.body.appendChild(tempBtn);
+        tempBtn.click();
+        tempBtn.remove();
+      }
+    }
+  }
+
+  // 3) Re-run when SPA frameworks inject/replace nodes
+  function boot(){
+    upgradeViewDetailsLinks();
+    autoOpenOnDetail();
+  }
+  document.addEventListener('DOMContentLoaded', boot);
+  const mo = new MutationObserver(()=> upgradeViewDetailsLinks());
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
   </body>
 </html>
