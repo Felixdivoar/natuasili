@@ -10,8 +10,7 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div className="bg-background">
       <div className="landing-hero pb-10">
         <Hero />
       </div>
@@ -20,8 +19,6 @@ const Index = () => {
       <ConservationPartnersCarousel />
       <ImpactStats />
       <ImpactStories />
-      <Footer />
-      
     </div>
   );
 };

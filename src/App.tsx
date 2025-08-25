@@ -7,10 +7,13 @@ import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { useEffect } from "react";
 import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import Checkout from "./pages/Checkout";
+import ConfirmationPage from "./pages/ConfirmationPage";
 import BookingSuccess from "./pages/BookingSuccess";
 import ImpactLedger from "./pages/ImpactLedger";
 import NotFound from "./pages/NotFound";
@@ -58,40 +61,47 @@ const App = () => (
           <BrowserRouter>
             <CookieBanner />
             <ScrollToTop />
-            <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/marketplace" element={<Browse />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/experience/:slug" element={<ExperienceDetail />} />
-            <Route path="/checkout/:slug" element={<Checkout />} />
-            <Route path="/booking-success" element={<BookingSuccess />} />
-            <Route path="/impact-ledger" element={<ImpactLedger />} />
-            <Route path="/dashboard" element={<TravelerDashboard />} />
-            <Route path="/projects/:projectId" element={<ProjectDetail />} />
-            <Route path="/partner-dashboard" element={<PartnerDashboard />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/partners" element={<Partners />} />
-            <Route path="/partner/:slug" element={<PartnerProfile />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/blog/category/:category" element={<BlogCategory />} />
-            <Route path="/partners/success-stories/:slug" element={<PartnerSuccessStory />} />
-            <Route path="/destinations" element={<Destinations />} />
-            <Route path="/destinations/samburu" element={<SamburuDestination />} />
-            <Route path="/destinations/masai-mara" element={<MasaiMaraDestination />} />
-            <Route path="/destinations/coast" element={<CoastDestination />} />
-            <Route path="/destinations/nairobi" element={<NairobiDestination />} />
-            <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
-            <Route path="/experience-hub" element={<ExperienceHub />} />
-            <Route path="/terms" element={<TermsAndConditions />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </CurrencyProvider>
-  </QueryClientProvider>
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <main id="site-main" className="flex-1 site-main">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/marketplace" element={<Browse />} />
+                  <Route path="/browse" element={<Browse />} />
+                  <Route path="/experience/:slug" element={<ExperienceDetail />} />
+                  <Route path="/checkout/:slug" element={<Checkout />} />
+                  <Route path="/confirmation/:slug" element={<ConfirmationPage />} />
+                  <Route path="/booking-success" element={<BookingSuccess />} />
+                  <Route path="/impact-ledger" element={<ImpactLedger />} />
+                  <Route path="/dashboard" element={<TravelerDashboard />} />
+                  <Route path="/projects/:projectId" element={<ProjectDetail />} />
+                  <Route path="/partner-dashboard" element={<PartnerDashboard />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/partners" element={<Partners />} />
+                  <Route path="/partner/:slug" element={<PartnerProfile />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/blog/category/:category" element={<BlogCategory />} />
+                  <Route path="/partners/success-stories/:slug" element={<PartnerSuccessStory />} />
+                  <Route path="/destinations" element={<Destinations />} />
+                  <Route path="/destinations/samburu" element={<SamburuDestination />} />
+                  <Route path="/destinations/masai-mara" element={<MasaiMaraDestination />} />
+                  <Route path="/destinations/coast" element={<CoastDestination />} />
+                  <Route path="/destinations/nairobi" element={<NairobiDestination />} />
+                  <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
+                  <Route path="/experience-hub" element={<ExperienceHub />} />
+                  <Route path="/terms" element={<TermsAndConditions />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/cookie-policy" element={<CookiePolicy />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </BrowserRouter>
+        </TooltipProvider>
+      </CurrencyProvider>
+    </QueryClientProvider>
   </ErrorBoundary>
 );
 
