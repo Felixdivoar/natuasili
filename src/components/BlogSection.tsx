@@ -128,8 +128,18 @@ const BlogSection = () => {
     }
   };
 
+  const slugify = (text: string) => {
+    return text.toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-');
+  };
+
+  // Limit to 6 posts for mobile carousel
+  const displayPosts = blogPosts.slice(0, 6);
+
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="py-16 bg-muted/30 home-blog">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -145,35 +155,41 @@ const BlogSection = () => {
             align: "start",
             loop: true,
           }}
-          className="w-full mb-8"
+          className="w-full mb-8 blog-track"
         >
           <CarouselContent className="-ml-2 md:-ml-4">
-            {blogPosts.map((post) => (
-              <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+            {displayPosts.map((post) => (
+              <CarouselItem key={post.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 blog-card">
                 <Card className="group hover:shadow-lg transition-shadow overflow-hidden h-full">
-                  <div className="relative aspect-[16/10]">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <Badge className={getCategoryColor(post.category)}>
-                        {post.category}
-                      </Badge>
+                  <Link to={`/blog/${post.slug}`} className="post-link block">
+                    <div className="relative aspect-[16/10] thumb">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <Link
+                          to={`/blog/category/${slugify(post.category)}`}
+                          className={`post-category ${getCategoryColor(post.category)}`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {post.category}
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                   
                    <CardHeader className="pb-2">
                     <Link to={`/blog/${post.slug}`} className="block">
-                      <h3 className="blog-carousel-title text-sm font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                      <h3 className="blog-carousel-title post-title text-sm font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight">
                         {post.title}
                       </h3>
                     </Link>
                   </CardHeader>
                   
                   <CardContent>
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3 post-excerpt">
                       {post.excerpt}
                     </p>
                     
@@ -189,7 +205,7 @@ const BlogSection = () => {
                       <span>{post.readTime}</span>
                     </div>
                     
-                    <Link to={`/blog/${post.slug}`}>
+                    <Link to={`/blog/${post.slug}`} className="read-more">
                       <Button variant="outline" size="sm" className="group/btn w-full">
                         Read More
                         <ArrowRight className="h-3 w-3 ml-1 group-hover/btn:translate-x-1 transition-transform" />
@@ -206,7 +222,7 @@ const BlogSection = () => {
         </Carousel>
 
         <div className="text-center">
-          <Link to="/blog">
+          <Link to="/blog" className="view-all-stories">
             <Button size="lg" className="bg-conservation hover:bg-conservation/90 text-white">
               View All Stories
             </Button>
