@@ -33,15 +33,37 @@ const PartnerSuccessStories: React.FC = () => {
         next.disabled = track.scrollLeft >= max;
       };
 
-      prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-      next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-      track.addEventListener('scroll', update);
-      window.addEventListener('resize', update, { passive: true });
+      // Remove any existing event listeners to prevent duplicates
+      prev.replaceWith(prev.cloneNode(true));
+      next.replaceWith(next.cloneNode(true));
       
-      update();
+      // Get fresh references after cloning
+      const newPrev = root.querySelector('.ps-prev') as HTMLButtonElement;
+      const newNext = root.querySelector('.ps-next') as HTMLButtonElement;
+      
+      if (newPrev && newNext) {
+        newPrev.addEventListener('click', () => {
+          const scrollAmount = step();
+          track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+        
+        newNext.addEventListener('click', () => {
+          const scrollAmount = step();
+          track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+        
+        track.addEventListener('scroll', update);
+        window.addEventListener('resize', update, { passive: true });
+        
+        // Initial update
+        update();
+      }
     };
 
-    wirePartnerStories();
+    // Add small delay to ensure DOM is ready
+    const timeoutId = setTimeout(wirePartnerStories, 100);
+    
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (

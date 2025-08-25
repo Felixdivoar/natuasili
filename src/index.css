@@ -303,13 +303,28 @@ button, .btn, .button, [role="button"],
 }
 
 /* Marketplace - remove Book now buttons */
-.marketplace .experience-card .btn-book-now {
+.marketplace .experience-card .btn-book-now,
+.marketplace .experience-card .price-button,
+.marketplace .experience-card .btn-price,
+.marketplace .experience-card button:contains("Book now"),
+.marketplace .experience-card a[href*="checkout"] {
   display: none !important;
 }
 
 /* Experience Hub - remove Book now buttons from Featured & New arrivals */
 .experience-hub .featured .btn-book-now,
-.experience-hub .new-arrivals .btn-book-now {
+.experience-hub .new-arrivals .btn-book-now,
+.experience-hub .featured button[class*="bg-conservation"],
+.experience-hub .new-arrivals button[class*="bg-conservation"],
+.experience-hub .featured a[href*="checkout"],
+.experience-hub .new-arrivals a[href*="checkout"] {
+  display: none !important;
+}
+
+/* Hide quick book tab entirely */
+.experience-hub [data-value="quick"],
+.experience-hub .quick-book-tab,
+.experience-hub button[aria-selected="false"][data-value="quick"] {
   display: none !important;
 }
 

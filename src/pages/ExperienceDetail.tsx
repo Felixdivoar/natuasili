@@ -11,7 +11,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import MapComponent from "@/components/MapComponent";
-import BookingStepper from "@/components/BookingStepper";
+import ResponsiveBookingForm from "@/components/ResponsiveBookingForm";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import AvailabilityModal from "@/components/AvailabilityModal";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
@@ -376,17 +376,7 @@ const ExperienceDetail = () => {
           {/* Right Column - Booking Panel */}
           <div className="lg:col-span-1">
             <div className="sticky top-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    Availability & Booking
-                    <Badge variant="outline">Available</Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <BookingStepper experience={experience} project={project} />
-                </CardContent>
-              </Card>
+              <ResponsiveBookingForm experience={experience} project={project} />
             </div>
           </div>
         </div>
