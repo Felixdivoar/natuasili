@@ -272,6 +272,90 @@ button, .btn, .button, [role="button"],
   padding-bottom: 6px !important;
 }
 
+/* ===== AIRBNB × GETYOURGUIDE BOOKING FLOW ===== */
+/* Kill confusing section globally */
+.complete-your-booking, .section-complete-booking { display: none !important; }
+
+/* Availability CTA visibility */
+#availability-cta.hidden { display: none !important; }
+#booking-section[hidden] { display: none !important; }
+
+/* Lock chips (Airbnb-style) */
+.booking-locks { 
+  display: flex; 
+  gap: 0.5rem; 
+  align-items: center; 
+  flex-wrap: wrap; 
+  margin: 0.5rem 0 1rem; 
+}
+.lock-chip { 
+  background: hsl(var(--muted)); 
+  border-radius: 9999px; 
+  padding: 0.35rem 0.75rem; 
+  font-size: 0.875rem;
+}
+
+/* People warning (consistent with checkout) */
+.people-error { 
+  color: #B00020 !important; 
+  font-weight: 700 !important; 
+  margin-top: 0.35rem; 
+}
+
+/* Review box */
+.price-review { 
+  margin-top: 1rem; 
+  border: 1px solid hsl(var(--border)); 
+  border-radius: 8px; 
+  padding: 0.75rem 0.9rem; 
+}
+.price-review .row { 
+  display: flex; 
+  justify-content: space-between; 
+  gap: 1rem; 
+  padding: 0.25rem 0; 
+}
+.price-review .row.total { 
+  border-top: 1px solid hsl(var(--border)); 
+  margin-top: 0.25rem; 
+  padding-top: 0.5rem; 
+  font-weight: 700; 
+}
+.price-review .note { 
+  font-size: 0.9rem; 
+  color: hsl(var(--muted-foreground)); 
+  margin-top: 0.25rem; 
+}
+
+/* Modal baseline; convert to drawer on small screens if preferred */
+.modal[hidden] { display: none !important; }
+.modal { 
+  position: fixed; 
+  inset: 0; 
+  display: grid; 
+  place-items: center; 
+  background: rgba(0,0,0,0.4); 
+  z-index: 100; 
+  backdrop-filter: blur(2px);
+}
+.modal-content { 
+  background: hsl(var(--background)); 
+  padding: 1.5rem; 
+  border-radius: 12px; 
+  width: min(560px, 92vw); 
+  max-height: 90vh; 
+  overflow: auto; 
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Mobile hint: placeholder 0 for people */
+@media (max-width: 768px) { 
+  #availability-form input[name="people"]::placeholder { 
+    content: "0"; 
+  } 
+}
+
 /* Blog carousel (mobile/tablet) */
 @media (max-width: 1024px) {
   .home-blog { position: relative; }

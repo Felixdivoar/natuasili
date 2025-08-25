@@ -15,7 +15,7 @@ import BookingStepper from "@/components/BookingStepper";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import AvailabilityModal from "@/components/AvailabilityModal";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
-import "@/utils/mobileBookingFlow";
+import "@/utils/hybridBookingFlow";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -358,11 +358,11 @@ const ExperienceDetail = () => {
         </div>
       </div>
 
-      {/* Availability CTA (visible initially) */}
-      <div className="availability-cta" id="availability-cta">
+      {/* 1) Availability CTA (shown first) */}
+      <div id="availability-cta" className="availability-cta">
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border z-50 md:hidden">
           <Button 
-            className="btn-check-availability w-full"
+            className="btn-check-availability w-full btn-primary"
             onClick={() => setIsAvailabilityModalOpen(true)}
           >
             Check Availability
@@ -370,39 +370,54 @@ const ExperienceDetail = () => {
         </div>
       </div>
 
-      {/* Booking section (collapsed by default on mobile) */}
-      <section id="booking-section" className="hidden md:block">
+      {/* 3) Booking panel (collapsed initially) */}
+      <section id="booking-section" className="hidden md:block" hidden>
         <Card className="mb-8">
           <CardContent>
             <form id="booking-form" className="space-y-4" data-unit-price={experience.base_price} data-currency="KES">
-              <div className="booking-field booking-field--date">
-                <label className="block text-sm font-medium mb-2">Date</label>
-                <input type="date" name="date" required className="w-full p-2 border border-input rounded-md" />
-              </div>
-
-              <div className="booking-field booking-field--people">
-                <label htmlFor="bf-people" className="block text-sm font-medium mb-2">Number of people</label>
-                <div className="people-input" data-max={experience.capacity}>
-                  <button type="button" className="btn-step" data-step="-1" aria-label="Decrease">−</button>
-                  <input
-                    id="bf-people" 
-                    name="people" 
-                    type="number" 
-                    min="1" 
-                    defaultValue="1" 
-                    inputMode="numeric" 
-                    required 
-                    className="text-center border border-input rounded-md"
-                  />
-                  <button type="button" className="btn-step" data-step="1" aria-label="Increase">+</button>
+              {/* Locked chips after availability */}
+              <div className="booking-locks">
+                <div className="lock-chip">
+                  <strong>Date:</strong> <span data-lock="date"></span>
                 </div>
-                <p className="people-error" role="alert" aria-live="polite" hidden>Booking limit reached.</p>
+                <div className="lock-chip">
+                  <strong>People:</strong> <span data-lock="people"></span>
+                </div>
+                <button type="button" className="btn-link text-primary hover:text-primary/80" id="edit-availability">
+                  Change
+                </button>
               </div>
 
-              {/* Review: price breakdown */}
+              {/* Traveler details (first editable step) */}
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="bf-name" className="block text-sm font-medium mb-2">Name *</label>
+                  <input id="bf-name" name="name" type="text" required className="w-full p-2 border border-input rounded-md" />
+                </div>
+                <div>
+                  <label htmlFor="bf-email" className="block text-sm font-medium mb-2">Email *</label>
+                  <input id="bf-email" name="email" type="email" required className="w-full p-2 border border-input rounded-md" />
+                </div>
+                <div>
+                  <label htmlFor="bf-phone" className="block text-sm font-medium mb-2">Phone *</label>
+                  <input id="bf-phone" name="phone" type="tel" required className="w-full p-2 border border-input rounded-md" />
+                </div>
+              </div>
+
+              {/* Review: unit × people + 90/10 split */}
               <div id="price-review" className="price-review"></div>
 
-              <Button className="w-full" type="submit">Continue to checkout</Button>
+              {/* Proceed */}
+              <Button type="submit" className="w-full btn-primary">Continue to payment</Button>
+
+              {/* Hidden mirrors (optional for backend) */}
+              <input type="hidden" name="date" id="bf-date" />
+              <input type="hidden" name="people" id="bf-people" />
+              <input type="hidden" name="unit_price" id="bf-unit" />
+              <input type="hidden" name="currency" id="bf-curr" />
+              <input type="hidden" name="total_price" id="bf-total" />
+              <input type="hidden" name="partner_amount" id="bf-partner" />
+              <input type="hidden" name="platform_amount" id="bf-platform" />
             </form>
           </CardContent>
         </Card>

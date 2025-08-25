@@ -104,7 +104,7 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           <h3 id="availability-title" className="text-xl font-semibold text-foreground">
             Check Availability
           </h3>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <Button variant="ghost" size="icon" onClick={onClose} data-close="availability">
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -130,10 +130,10 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           
           <div>
             <Label htmlFor="av-people">Number of People</Label>
-            <div className="people-input" data-max={maxCapacity}>
+            <div className="people-input flex items-center gap-2" data-max={maxCapacity}>
               <button 
                 type="button" 
-                className="btn-step" 
+                className="btn-step px-3 py-2 border border-border bg-muted hover:bg-muted/80 rounded-lg" 
                 data-step="-1" 
                 aria-label="Decrease"
                 onClick={() => setPeople(Math.max(1, people - 1))}
@@ -148,12 +148,13 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
                 max={maxCapacity}
                 value={people}
                 onChange={(e) => handlePeopleChange(e.target.value)}
-                className="text-center border border-input rounded-md"
+                className="w-20 text-center border border-input rounded-md"
                 placeholder="0"
+                inputMode="numeric"
               />
               <button 
                 type="button" 
-                className="btn-step" 
+                className="btn-step px-3 py-2 border border-border bg-muted hover:bg-muted/80 rounded-lg" 
                 data-step="1" 
                 aria-label="Increase"
                 onClick={() => setPeople(Math.min(maxCapacity, people + 1))}
@@ -162,20 +163,20 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
               </button>
             </div>
             {error && (
-              <p className="people-error text-sm mt-1" role="alert" aria-live="polite">
+              <p className="people-error text-sm font-bold mt-1" role="alert" aria-live="polite">
                 {error}
               </p>
             )}
           </div>
           
-          <div className="modal-actions">
-            <Button type="button" variant="outline" onClick={onClose}>
+          <div className="modal-actions flex gap-2">
+            <Button type="button" variant="outline" onClick={onClose} data-close="availability" className="flex-1 btn-secondary">
               Cancel
             </Button>
             <Button 
               type="submit" 
               disabled={!!error || !date}
-              className="bg-primary hover:bg-primary/90 btn btn-primary"
+              className="flex-1 bg-primary hover:bg-primary/90 btn btn-primary"
             >
               Continue
             </Button>
