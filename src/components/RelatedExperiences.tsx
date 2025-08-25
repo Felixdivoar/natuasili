@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MapPin, Users, Star } from "lucide-react";
-import { mockExperiences, mockProjects } from "@/data/mockData";
-import { useCurrency } from "@/contexts/CurrencyContext";
+import { mockExperiences } from "@/data/mockData";
 
 interface RelatedExperiencesProps {
   currentExperienceId: number;
@@ -17,10 +13,8 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   currentExperienceId,
   theme,
   destination,
-  maxResults = 6
+  maxResults = 8
 }) => {
-  const { formatPrice } = useCurrency();
-  
   // Filter related experiences with priority order
   const getRelatedExperiences = () => {
     let related = mockExperiences.filter(exp => Number(exp.id) !== Number(currentExperienceId));
@@ -54,40 +48,78 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
     return combined.slice(0, maxResults);
   };
 
-  const getThemeColor = (theme: string) => {
-    switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      default: return 'bg-muted text-muted-foreground';
-    }
-  };
-
   const relatedExperiences = getRelatedExperiences();
 
   // Initialize carousel functionality after component mounts
   useEffect(() => {
-    const wireRelated = () => {
+    const wireRelatedCarousel = () => {
       const root = document.querySelector('#related-experiences');
       if (!root) return;
       
       const track = root.querySelector('.rel-track') as HTMLElement;
       const prev = root.querySelector('.rel-prev') as HTMLButtonElement;
       const next = root.querySelector('.rel-next') as HTMLButtonElement;
+      const source = root.querySelector('#rel-source') as HTMLElement;
+      const tpl = root.querySelector('#rel-card-template') as HTMLTemplateElement;
       
-      if (!track || !prev || !next) return;
+      if (!track || !prev || !next || !source || !tpl) return;
 
-      // Cap to max 6 cards
-      const cards = Array.from(track.querySelectorAll('.rel-card'));
-      cards.slice(6).forEach(c => c.remove());
+      // Read all source items from data attributes
+      const readItems = () => {
+        return Array.from(source.querySelectorAll('.item')).map((el: any) => ({
+          href: el.dataset.href || '#',
+          title: el.dataset.title || 'Experience',
+          img: el.dataset.img || '/images/placeholder-16x9.jpg',
+          imgAlt: el.dataset.imgAlt || el.dataset.title || 'Experience image',
+          destination: el.dataset.destination || '',
+          theme: el.dataset.theme || ''
+        }));
+      };
 
-      // Scroll logic
-      const cardStep = () => {
-        const card = track.querySelector('.rel-card') as HTMLElement;
-        if (!card) return 320;
-        const rect = card.getBoundingClientRect();
-        return Math.ceil(rect.width + 16); // width + gap
+      // Build card node from data
+      const cardFromData = (d: any) => {
+        const node = tpl.content.cloneNode(true) as DocumentFragment;
+        const card = node.querySelector('.rel-card') as HTMLElement;
+        const a1 = card.querySelector('.rel-media') as HTMLAnchorElement;
+        a1.href = d.href;
+        const img = card.querySelector('img') as HTMLImageElement;
+        img.src = d.img;
+        img.alt = d.imgAlt;
+        img.addEventListener('error', () => { 
+          img.src = '/images/placeholder-16x9.jpg'; 
+        }, { once: true });
+        const titleLink = card.querySelector('.rel-title a') as HTMLAnchorElement;
+        titleLink.href = d.href;
+        titleLink.textContent = d.title;
+        const destSpan = card.querySelector('.rel-destination') as HTMLElement;
+        destSpan.textContent = d.destination;
+        const themeSpan = card.querySelector('.rel-theme') as HTMLElement;
+        themeSpan.textContent = d.theme;
+        const btn = card.querySelector('.rel-view') as HTMLAnchorElement;
+        btn.href = d.href;
+        return card;
+      };
+
+      // Determine columns based on viewport
+      const columnsForViewport = () => {
+        return window.matchMedia('(max-width: 1024px)').matches ? 1 : 2;
+      };
+
+      // Build slides: each slide contains "cols" cards
+      const buildSlides = () => {
+        track.innerHTML = '';
+        const items = readItems();
+        if (!items.length) return;
+
+        const cols = columnsForViewport(); // 1 or 2
+        for (let i = 0; i < items.length; i += cols) {
+          const slide = document.createElement('div');
+          slide.className = 'rel-slide';
+          const slice = items.slice(i, i + cols);
+          slice.forEach(item => slide.appendChild(cardFromData(item)));
+          track.appendChild(slide);
+        }
+        updateButtons();
       };
 
       const updateButtons = () => {
@@ -96,22 +128,21 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         next.disabled = track.scrollLeft >= maxScroll;
       };
 
-      prev.addEventListener('click', () => {
-        track.scrollBy({ left: -cardStep(), behavior: 'smooth' });
-      });
-      
-      next.addEventListener('click', () => {
-        track.scrollBy({ left: cardStep(), behavior: 'smooth' });
-      });
-      
-      track.addEventListener('scroll', updateButtons);
-      window.addEventListener('resize', updateButtons, { passive: true });
+      const slideWidth = () => {
+        const slide = track.querySelector('.rel-slide') as HTMLElement;
+        return slide ? Math.ceil(slide.getBoundingClientRect().width + 16) : track.clientWidth;
+      };
 
-      // Initial state
-      updateButtons();
+      prev.addEventListener('click', () => track.scrollBy({ left: -slideWidth(), behavior: 'smooth' }));
+      next.addEventListener('click', () => track.scrollBy({ left: slideWidth(), behavior: 'smooth' }));
+      track.addEventListener('scroll', updateButtons);
+      window.addEventListener('resize', buildSlides, { passive: true });
+
+      // Initialize
+      buildSlides();
     };
 
-    wireRelated();
+    wireRelatedCarousel();
   }, [relatedExperiences]);
 
   if (relatedExperiences.length === 0) {
@@ -119,55 +150,50 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   }
 
   return (
-    <section className="related-experiences gyg-like" id="related-experiences">
-      <div className="rel-header">
-        <h2>You might also like…</h2>
+    <section className="related-experiences v2" id="related-experiences">
+      {/* Header FIRST */}
+      <h2 className="rel-heading">You might also like…</h2>
+
+      <div className="rel-viewport" aria-live="polite">
+        <div className="rel-track">{/* Slides will be built here by JS */}</div>
       </div>
 
-      <div className="rel-viewport">
-        <div className="rel-track">
-          {relatedExperiences.slice(0, 6).map((experience: any) => {
-            const project = mockProjects.find(p => p.id === experience.project_id);
-            
-            return (
-              <article key={experience.id} className="rel-card">
-                <Link className="rel-media" to={`/experience/${experience.slug}`}>
-                  <img 
-                    src={experience.images[0]} 
-                    alt={experience.title}
-                    loading="lazy"
-                    onError={(e) => {
-                      const img = e.target as HTMLImageElement;
-                      img.src = '/images/placeholder-16x9.jpg';
-                      img.alt = experience.title || 'Experience image';
-                    }}
-                  />
-                </Link>
-                <div className="rel-body">
-                  <h3 className="rel-title">
-                    <Link to={`/experience/${experience.slug}`}>{experience.title}</Link>
-                  </h3>
-                  <div className="rel-meta">
-                    <span className="rel-destination">{experience.location_text}</span>
-                    <span className="rel-theme theme-chip">
-                      <Link to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`}>
-                        {experience.theme}
-                      </Link>
-                    </span>
-                  </div>
-                  <Link className="btn rel-view" to={`/experience/${experience.slug}`}>
-                    View experience
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+      <div className="rel-nav" aria-label="Similar experiences navigation">
+        <button className="rel-prev" aria-label="Previous slide">‹</button>
+        <button className="rel-next" aria-label="Next slide">›</button>
       </div>
 
-      <div className="rel-nav">
-        <button className="rel-prev" aria-label="Previous">‹</button>
-        <button className="rel-next" aria-label="Next">›</button>
+      {/* Card template */}
+      <template id="rel-card-template">
+        <article className="rel-card">
+          <a className="rel-media" href="#">
+            <img src="" alt="" loading="lazy" />
+          </a>
+          <div className="rel-body">
+            <h3 className="rel-title"><a href="#"></a></h3>
+            <div className="rel-meta">
+              <span className="rel-destination"></span>
+              <span className="rel-theme"></span>
+            </div>
+            <a className="btn rel-view" href="#">View experience</a>
+          </div>
+        </article>
+      </template>
+
+      {/* Source data container (hidden) */}
+      <div id="rel-source" hidden>
+        {relatedExperiences.map((exp) => (
+          <div
+            key={exp.id}
+            className="item"
+            data-href={`/experience/${exp.slug}`}
+            data-title={exp.title}
+            data-img={exp.images[0]}
+            data-img-alt={exp.title}
+            data-destination={exp.location_text}
+            data-theme={exp.theme}
+          />
+        ))}
       </div>
     </section>
   );

@@ -366,14 +366,120 @@ button, .btn, .button, [role="button"],
   }
 }
 
-/* OPTIONAL: make it stick to the top instead of bottom */
+/* ===== RELATED EXPERIENCES V2 (NEW SLIDE-BASED LAYOUT) ===== */
+/* Section */
+.related-experiences.v2 { 
+  position: relative; 
+  min-height: 260px;
+}
+.related-experiences.v2 .rel-heading {
+  margin: 0 0 12px 0;
+  font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.75rem);
+  color: hsl(var(--foreground));
+}
+
+/* Viewport/Track */
+.related-experiences.v2 .rel-viewport { 
+  overflow: hidden; 
+}
+.related-experiences.v2 .rel-track {
+  display: flex;
+  gap: 16px;
+  scroll-behavior: smooth;
+  padding: 4px;
+}
+
+/* Slide: grid of vertical cards */
+.related-experiences.v2 .rel-slide {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 verticals per slide */
+  gap: 16px;
+}
 @media (max-width: 1024px) {
-  .sticky-book-now.sticky-top {
-    top: 0; 
-    bottom: auto; 
-    border-top: 0; 
-    border-bottom: 1px solid hsl(var(--border));
-    padding: calc(.65rem + env(safe-area-inset-top)) 1rem .65rem;
+  .related-experiences.v2 .rel-slide {
+    grid-template-columns: 1fr; /* 1 vertical on mobile/tablet */
+  }
+}
+
+/* Cards */
+.related-experiences.v2 .rel-card {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.related-experiences.v2 .rel-media img {
+  width: 100%; 
+  height: auto; 
+  display: block; 
+  object-fit: cover; 
+  aspect-ratio: 16/9;
+  background: hsl(var(--muted));
+}
+.related-experiences.v2 .rel-body { 
+  padding: 12px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
+}
+.related-experiences.v2 .rel-title { 
+  margin: 0; 
+  font-size: 1rem; 
+  line-height: 1.25; 
+}
+.related-experiences.v2 .rel-title a { 
+  text-decoration: none; 
+  color: inherit; 
+}
+.related-experiences.v2 .rel-meta { 
+  color: hsl(var(--muted-foreground)); 
+  font-size: 0.9rem; 
+  display: flex; 
+  gap: 10px; 
+  flex-wrap: wrap; 
+}
+.related-experiences.v2 .btn.rel-view { 
+  align-self: flex-start; 
+  border: 1px solid hsl(var(--foreground)); 
+  border-radius: 9999px; 
+  padding: 0.45rem 0.9rem; 
+  text-decoration: none; 
+}
+
+/* Arrows */
+.related-experiences.v2 .rel-nav {
+  position: absolute; 
+  inset: 0;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+  pointer-events: none;
+}
+.related-experiences.v2 .rel-nav button {
+  pointer-events: auto;
+  width: 44px; 
+  height: 44px; 
+  border-radius: 50%;
+  border: 1px solid hsl(var(--border)); 
+  background: hsl(var(--background));
+  font-size: 24px; 
+  display: grid; 
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.related-experiences.v2 .rel-nav button:disabled { 
+  opacity: 0.4; 
+  cursor: not-allowed; 
+}
+
+/* OPTIONAL: Prevent overlap with footer on very short pages */
+@media (max-width: 1024px) {
+  .page-experience .content-area { 
+    padding-bottom: 72px; 
   }
 }
 
