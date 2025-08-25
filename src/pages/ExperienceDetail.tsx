@@ -15,6 +15,7 @@ import BookingStepper from "@/components/BookingStepper";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import AvailabilityModal from "@/components/AvailabilityModal";
 import { useInteractiveBookingForm } from "@/components/InteractiveBookingForm";
+import "@/utils/mobileBookingFlow";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -357,23 +358,58 @@ const ExperienceDetail = () => {
         </div>
       </div>
 
-      {/* Sticky/Floating Availability CTA */}
-      <div className="sticky-availability-bar">
-        <Button 
-          className="btn-check-availability"
-          onClick={() => setIsAvailabilityModalOpen(true)}
-        >
-          Check Availability
-        </Button>
+      {/* Availability CTA (visible initially) */}
+      <div className="availability-cta" id="availability-cta">
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background border-t border-border z-50 md:hidden">
+          <Button 
+            className="btn-check-availability w-full"
+            onClick={() => setIsAvailabilityModalOpen(true)}
+          >
+            Check Availability
+          </Button>
+        </div>
       </div>
-      <div className="floating-availability">
-        <Button 
-          className="btn-check-availability"
-          onClick={() => setIsAvailabilityModalOpen(true)}
-        >
-          Check Availability
-        </Button>
-      </div>
+
+      {/* Booking section (collapsed by default on mobile) */}
+      <section id="booking-section" className="hidden md:block">
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Complete Your Booking</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form id="booking-form" className="space-y-4" data-unit-price={experience.base_price} data-currency="KES">
+              <div>
+                <label className="block text-sm font-medium mb-2">Date</label>
+                <input type="date" name="date" required className="w-full p-2 border border-input rounded-md" />
+              </div>
+
+              <div>
+                <label htmlFor="bf-people" className="block text-sm font-medium mb-2">Number of people</label>
+                <div className="people-input" data-max={experience.capacity}>
+                  <button type="button" className="btn-step" data-step="-1" aria-label="Decrease">−</button>
+                  <input 
+                    id="bf-people" 
+                    name="people" 
+                    type="number" 
+                    min="1" 
+                    defaultValue="1" 
+                    inputMode="numeric" 
+                    required 
+                    className="text-center border border-input rounded-md"
+                  />
+                  <button type="button" className="btn-step" data-step="1" aria-label="Increase">+</button>
+                </div>
+                <p className="people-error" role="alert" aria-live="polite" hidden>Booking limit reached.</p>
+              </div>
+
+              {/* Review: price breakdown */}
+              <div id="price-review" className="price-review"></div>
+
+              <Button className="w-full" type="submit">Continue to checkout</Button>
+            </form>
+          </CardContent>
+        </Card>
+      </section>
 
       {/* Availability Modal */}
       <AvailabilityModal

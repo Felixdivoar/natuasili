@@ -32,12 +32,42 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
     }
     
     if (people > maxCapacity) {
-      setError(`Booking limit reached. Maximum ${maxCapacity} people.`);
+      setError(`Maximum ${maxCapacity} people allowed`);
       return;
     }
     
     setError('');
-    onSubmit({ date, people });
+    
+    // Hide availability CTA and show booking form
+    const availabilityCta = document.getElementById('availability-cta');
+    const bookingSection = document.getElementById('booking-section');
+    
+    if (availabilityCta) availabilityCta.classList.add('hidden');
+    if (bookingSection) {
+      bookingSection.hidden = false;
+      bookingSection.classList.remove('hidden');
+      
+      // Prefill booking form
+      const bookingForm = document.getElementById('booking-form') as HTMLFormElement;
+      if (bookingForm) {
+        const dateInput = bookingForm.querySelector('input[name="date"]') as HTMLInputElement;
+        const peopleInput = bookingForm.querySelector('input[name="people"]') as HTMLInputElement;
+        
+        if (dateInput) dateInput.value = date;
+        if (peopleInput) peopleInput.value = people.toString();
+        
+        // Scroll to booking form and focus
+        bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          (peopleInput || dateInput || bookingForm).focus();
+        }, 200);
+        
+        // Trigger price calculation
+        const event = new Event('input', { bubbles: true });
+        peopleInput?.dispatchEvent(event);
+      }
+    }
+    
     onClose();
   };
 
@@ -87,17 +117,37 @@ const AvailabilityModal: React.FC<AvailabilityModalProps> = ({
           
           <div>
             <Label htmlFor="av-people">Number of People</Label>
-            <Input
-              id="av-people"
-              name="people"
-              type="number"
-              min="1"
-              max={maxCapacity}
-              value={people}
-              onChange={(e) => handlePeopleChange(e.target.value)}
-              required
-              className="mt-1"
-            />
+            <div className="people-input" data-max={maxCapacity}>
+              <button 
+                type="button" 
+                className="btn-step" 
+                data-step="-1" 
+                aria-label="Decrease"
+                onClick={() => setPeople(Math.max(1, people - 1))}
+              >
+                −
+              </button>
+              <Input
+                id="av-people"
+                name="people"
+                type="number"
+                min="1"
+                max={maxCapacity}
+                value={people}
+                onChange={(e) => handlePeopleChange(e.target.value)}
+                className="text-center border border-input rounded-md"
+                placeholder="0"
+              />
+              <button 
+                type="button" 
+                className="btn-step" 
+                data-step="1" 
+                aria-label="Increase"
+                onClick={() => setPeople(Math.min(maxCapacity, people + 1))}
+              >
+                +
+              </button>
+            </div>
             {error && (
               <p className="people-error text-sm mt-1" role="alert" aria-live="polite">
                 {error}

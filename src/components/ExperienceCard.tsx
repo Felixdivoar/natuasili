@@ -135,14 +135,6 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
                 View Details
               </Button>
             </Link>
-            <Link to={`/checkout?experience=${experience.id}&quantity=1`} className="flex-1">
-              <Button 
-                className="w-full bg-conservation hover:bg-conservation/90 text-white" 
-                size="sm"
-              >
-                Book Now
-              </Button>
-            </Link>
           </div>
           <div className="flex gap-2">
             <SocialShare

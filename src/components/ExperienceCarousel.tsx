@@ -150,11 +150,6 @@ const ExperienceCarousel = () => {
                               View Details
                             </Button>
                           </Link>
-                          <Link to={`/checkout?experience=${experience.id}&quantity=1`}>
-                            <Button className="bg-conservation hover:bg-conservation/90 text-white" size="sm">
-                              Book Now
-                            </Button>
-                          </Link>
                         </div>
                       </div>
                     </CardContent>
