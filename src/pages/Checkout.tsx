@@ -9,6 +9,7 @@ import { ArrowLeft, Clock, MapPin } from "lucide-react";
 import { mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { getCart, clearCart } from "@/lib/cart";
+import { saveReceipt } from "@/lib/receipt";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -102,10 +103,30 @@ const Checkout = () => {
 
   const handlePlaceOrder = () => {
     if (!canPay) return;
-    // TODO: integrate payment here (e.g., Pesapal / Flutterwave)
-    // On success:
+    
+    // 1) Compute the EXACT numbers used for charging
+    const finalUnitPrice = unitPrice;               // already resolved (std/premium)
+    const finalSubtotal  = Number((finalUnitPrice * people).toFixed(2));
+    const finalPartner   = Number((finalSubtotal * 0.90).toFixed(2));
+    const finalPlatform  = Number((finalSubtotal - finalPartner).toFixed(2));
+
+    // 2) Persist a receipt snapshot for Confirmation page
+    saveReceipt({
+      slug,
+      date,
+      people,
+      optionId,
+      unitPrice: finalUnitPrice,
+      subtotal: finalSubtotal,
+      partner: finalPartner,
+      platform: finalPlatform,
+    });
+
+    // 3) (Optional) clear the cart so a new booking starts clean
     clearCart();
-    navigate(`/booking-success?experience=${slug}&date=${date}&people=${people}&option=${optionId}`, { replace: true });
+
+    // 4) Redirect with params too (nice for shareability, but Confirmation will trust receipt)
+    navigate(`/confirmation/${slug}?date=${encodeURIComponent(date)}&people=${people}&option=${optionId}`, { replace: true });
   };
   
   const getThemeColor = (theme: string) => {

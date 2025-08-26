@@ -12,7 +12,7 @@ interface PriceRangeFilterProps {
 }
 
 const PriceRangeFilter = ({ min, max, value, onChange, className = "" }: PriceRangeFilterProps) => {
-  const { formatPrice, convertPrice } = useCurrency();
+  const { formatPrice } = useCurrency();
   const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {

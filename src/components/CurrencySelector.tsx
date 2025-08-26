@@ -7,27 +7,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { SUPPORTED, SYMBOL, type Currency } from "@/lib/currency";
 
 const CurrencySelector = () => {
-  const { currentCurrency, setCurrency, currencies } = useCurrency();
+  const { currency, setCurrency } = useCurrency();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
           <Globe className="h-4 w-4" />
-          {currentCurrency.code}
+          {currency}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {currencies.map((currency) => (
+        {SUPPORTED.map((currencyCode) => (
           <DropdownMenuItem
-            key={currency.code}
-            onClick={() => setCurrency(currency)}
-            className={currency.code === currentCurrency.code ? "bg-muted" : ""}
+            key={currencyCode}
+            onClick={() => setCurrency(currencyCode)}
+            className={currencyCode === currency ? "bg-muted" : ""}
           >
-            <span className="font-medium">{currency.symbol}</span>
-            <span className="ml-2">{currency.name}</span>
+            <span className="font-medium">{SYMBOL[currencyCode]}</span>
+            <span className="ml-2">{currencyCode}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
