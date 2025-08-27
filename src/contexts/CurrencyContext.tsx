@@ -1,22 +1,28 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { SUPPORTED, SYMBOL, SITE_BASE_CURRENCY, type Currency } from "@/lib/currency";
 
-// Public, no-key FX API (Frankfurter). We fetch rates with base=USD,
-// then derive cross rates. You can swap in your own service if needed.
+// We fetch WITH base=KES so 1 KES -> { USD, EUR, GBP }
 const FX_ENDPOINT = "https://api.frankfurter.app/latest";
-
-// how often to refresh (ms)
 const REFRESH_MS = 12 * 60 * 60 * 1000; // 12h
+const KEY_RATES_KES = "na_fx_kes";
+const KEY_TS_KES = "na_fx_kes_ts";
+const KEY_CURR = "na_currency";
 
-type Rates = Record<Currency, number>; // price of 1 USD in each currency (or 1 BASE in chosen scheme)
+// Tiny static fallback (approx) in case fetch is blocked. Update occasionally if needed.
+const STATIC_FALLBACK_RATES_KES: Record<Currency, number> = {
+  KES: 1,        // 1 KES = 1 KES
+  USD: 0.0075,   // 1 KES ≈ 0.0075 USD (example)
+  EUR: 0.0069,   // 1 KES ≈ 0.0069 EUR
+  GBP: 0.0058,   // 1 KES ≈ 0.0058 GBP
+};
+
+type RatesKES = Record<Currency, number>; // value is: 1 KES -> currency
 
 type CurrencyContextType = {
   currency: Currency;
   setCurrency: (c: Currency) => void;
-  rates: Rates | null;
-  // converts amount FROM the site's base currency to the active currency
-  formatPrice: (amountInSiteBase: number, opts?: Intl.NumberFormatOptions) => string;
-  // generic converter (from → to)
+  rates: RatesKES | null; // 1 KES -> currency
+  formatPrice: (amountInKES: number, opts?: Intl.NumberFormatOptions) => string;
   convert: (amount: number, from: Currency, to: Currency) => number;
 };
 
@@ -24,79 +30,75 @@ const CurrencyContext = createContext<CurrencyContextType | null>(null);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<Currency>(() => {
-    return (localStorage.getItem("na_currency") as Currency) || "KES";
+    return (localStorage.getItem(KEY_CURR) as Currency) || "KES";
   });
-  const [ratesUSD, setRatesUSD] = useState<Rates | null>(() => {
-    // last cached rates (based on USD)
-    const cached = localStorage.getItem("na_fx_usd");
-    return cached ? (JSON.parse(cached) as Rates) : null;
+
+  const [ratesKES, setRatesKES] = useState<RatesKES | null>(() => {
+    const cached = localStorage.getItem(KEY_RATES_KES);
+    return cached ? (JSON.parse(cached) as RatesKES) : null;
   });
 
   const setCurrency = (c: Currency) => {
     setCurrencyState(c);
-    localStorage.setItem("na_currency", c);
+    localStorage.setItem(KEY_CURR, c);
   };
 
-  // fetch FX rates with base=USD, then store
+  // Fetch live rates with base=KES so we have direct KES->X multipliers
   const fetchRates = async () => {
     try {
-      // request only supported currencies to keep payload small
-      const to = SUPPORTED.join(",");
-      const res = await fetch(`${FX_ENDPOINT}?from=USD&to=${to}`);
+      const to = SUPPORTED.filter(c => c !== "KES").join(",");
+      const res = await fetch(`${FX_ENDPOINT}?from=KES&to=${to}`);
       if (!res.ok) throw new Error("FX fetch failed");
       const data = await res.json();
-      // normalize to ensure USD=1.0
-      const r: Rates = {
-        KES: data.rates.KES ?? 0,
-        EUR: data.rates.EUR ?? 0,
-        GBP: data.rates.GBP ?? 0,
-        USD: 1,
+      const r: RatesKES = {
+        KES: 1,
+        USD: data.rates.USD ?? STATIC_FALLBACK_RATES_KES.USD,
+        EUR: data.rates.EUR ?? STATIC_FALLBACK_RATES_KES.EUR,
+        GBP: data.rates.GBP ?? STATIC_FALLBACK_RATES_KES.GBP,
       };
-      setRatesUSD(r);
-      localStorage.setItem("na_fx_usd", JSON.stringify(r));
-      localStorage.setItem("na_fx_usd_ts", String(Date.now()));
-    } catch {
-      // silently keep old rates if offline
+      setRatesKES(r);
+      localStorage.setItem(KEY_RATES_KES, JSON.stringify(r));
+      localStorage.setItem(KEY_TS_KES, String(Date.now()));
+    } catch (err) {
+      // If we have nothing, fall back to static so conversion still works
+      if (!ratesKES) {
+        setRatesKES(STATIC_FALLBACK_RATES_KES);
+      }
+      // Optional: console.warn("Currency: using cached/static rates", err);
     }
   };
 
-  // initial fetch / refresh
   useEffect(() => {
-    const ts = Number(localStorage.getItem("na_fx_usd_ts") || 0);
+    const ts = Number(localStorage.getItem(KEY_TS_KES) || 0);
     const stale = !ts || Date.now() - ts > REFRESH_MS;
     if (stale) fetchRates();
-
     const id = setInterval(fetchRates, REFRESH_MS);
     return () => clearInterval(id);
   }, []);
 
-  // Build a generic converter using the rates we have (USD→X). If your site base is not USD,
-  // we still convert via USD so every pair is covered.
+  // Convert helper:
+  // If our table is 1 KES -> X, then:
+  //  - KES -> X: amount * rate[X]
+  //  - X -> KES: amount / rate[X]
+  //  - X -> Y:  (amount / rate[X]) * rate[Y]
   const convert = useMemo(() => {
     return (amount: number, from: Currency, to: Currency) => {
-      if (!ratesUSD) return amount; // fallback: no conversion
+      if (!ratesKES || Number.isNaN(amount)) return amount;
       if (from === to) return amount;
 
-      // Convert from "from" to USD, then USD to "to".
-      // If ratesUSD[C] is (1 USD -> C), then (1 C -> USD) = 1 / ratesUSD[C].
-      const toUSD = (amt: number, c: Currency) => (c === "USD" ? amt : amt / (ratesUSD[c] || 1));
-      const fromUSD = (amt: number, c: Currency) => (c === "USD" ? amt : amt * (ratesUSD[c] || 1));
+      const toKES = (amt: number, c: Currency) => (c === "KES" ? amt : amt / (ratesKES[c] || 1));
+      const fromKES = (amt: number, c: Currency) => (c === "KES" ? amt : amt * (ratesKES[c] || 1));
 
-      const inUSD = toUSD(amount, from);
-      return fromUSD(inUSD, to);
+      const inKES = toKES(amount, from);
+      return fromKES(inKES, to);
     };
-  }, [ratesUSD]);
+  }, [ratesKES]);
 
+  // Format numbers that are stored in KES across your DB
   const formatPrice = useMemo(() => {
-    return (amountInSiteBase: number, opts?: Intl.NumberFormatOptions) => {
+    return (amountInKES: number, opts?: Intl.NumberFormatOptions) => {
       const active = currency;
-      // amount is stored in SITE_BASE_CURRENCY; convert to active for display
-      const converted =
-        SITE_BASE_CURRENCY === active
-          ? amountInSiteBase
-          : convert(amountInSiteBase, SITE_BASE_CURRENCY, active);
-
-      // KES usually no minor units, but many Kenyan sites still show two decimals for consistency
+      const converted = convert(amountInKES, SITE_BASE_CURRENCY, active);
       const minimumFractionDigits = active === "KES" ? 0 : 2;
       const maximumFractionDigits = active === "KES" ? 0 : 2;
 
@@ -114,7 +116,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const value: CurrencyContextType = {
     currency,
     setCurrency,
-    rates: ratesUSD,
+    rates: ratesKES,
     formatPrice,
     convert,
   };

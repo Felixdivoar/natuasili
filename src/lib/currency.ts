@@ -1,4 +1,3 @@
-// Supported currencies, symbols, and default base the backend content uses
 export const SUPPORTED = ["KES", "USD", "EUR", "GBP"] as const;
 export type Currency = (typeof SUPPORTED)[number];
 
@@ -9,6 +8,5 @@ export const SYMBOL: Record<Currency, string> = {
   GBP: "£",
 };
 
-// Choose your site's canonical/base currency for stored prices.
-// If your DB prices are in KES, set to "KES". If USD, set to "USD".
+// Your site prices are stored in KES
 export const SITE_BASE_CURRENCY: Currency = "KES";

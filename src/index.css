@@ -512,6 +512,67 @@ button, .btn, .button, [role="button"],
   }
 }
 
+/* Consistent spacing utilities */
+.section { 
+  margin-top: 32px; 
+}
+@media (min-width: 1024px) { 
+  .section { 
+    margin-top: 40px; 
+  } 
+}
+
+.page-content { 
+  padding-bottom: 56px; 
+}
+@supports (padding: max(0px)) {
+  .page-content { 
+    padding-bottom: max(56px, calc(56px + env(safe-area-inset-bottom))); 
+  }
+}
+
+.post-section { 
+  margin-top: 32px; 
+}
+.article, .post-card { 
+  margin-bottom: 24px; 
+}
+.prose > h2, .prose > h3 { 
+  margin-top: 1.75rem; 
+}
+
+.section-hero { 
+  padding-top: 24px; 
+}
+
+/* Partner links and overlays */
+.section-overlay { 
+  pointer-events: none; 
+}
+
+.card a, .card button, .card .stretched-link {
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.section-gradient { 
+  pointer-events: none; 
+}
+
+.swiper-slide { 
+  pointer-events: auto; 
+}
+
+.stretched-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.card { 
+  position: relative; 
+}
+
 /* Partner Success Stories Carousel */
 .partner-stories.gyg-like {
   position: relative;
