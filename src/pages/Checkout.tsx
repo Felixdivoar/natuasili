@@ -10,8 +10,6 @@ import { mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { getCart, clearCart } from "@/lib/cart";
 import { saveReceipt } from "@/lib/receipt";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 interface Experience {
   slug: string;
@@ -95,7 +93,17 @@ const Checkout = () => {
   const partner = roundMoney(subtotal * 0.9);
   const platform = roundMoney(subtotal - partner);
 
-  const canPay = Boolean(date && people && !paxError && subtotal > 0);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  const contactErrors = {
+    fullName: fullName.trim().length < 2 ? "Please enter your full name." : "",
+    email: !isEmail(email) ? "Enter a valid email address." : "",
+  };
+
+  const contactValid = !contactErrors.fullName && !contactErrors.email;
+  const canPay = Boolean(date && people && !paxError && subtotal > 0 && contactValid);
 
   const handleChangeSelection = () => {
     navigate(`/experience/${slug}#availability`);
@@ -142,7 +150,6 @@ const Checkout = () => {
   if (!experience) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
@@ -150,14 +157,12 @@ const Checkout = () => {
             <Button onClick={() => navigate("/browse")}>Browse Experiences</Button>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background checkout-page">
-      <Header />
       
       {/* Header with timer */}
       <div className="border-b bg-card">
@@ -234,12 +239,14 @@ const Checkout = () => {
                 </CardHeader>
                 <CardContent className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <Label>Full name</Label>
-                    <Input placeholder="Your name" />
+                    <Label htmlFor="fullName">Full name</Label>
+                    <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required />
+                    {contactErrors.fullName && <div role="alert" className="text-red-600 text-sm mt-1">{contactErrors.fullName}</div>}
                   </div>
                   <div>
-                    <Label>Email</Label>
-                    <Input type="email" placeholder="you@example.com" />
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+                    {contactErrors.email && <div role="alert" className="text-red-600 text-sm mt-1">{contactErrors.email}</div>}
                   </div>
                   <div className="sm:col-span-2">
                     <Label>Phone</Label>
@@ -354,7 +361,6 @@ const Checkout = () => {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 };

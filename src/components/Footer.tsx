@@ -16,10 +16,8 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Explore</h4>
             <ul className="space-y-2 text-sm footer-explore">
               <li><Link to="/about" className="text-white/80 hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link to="/partners" className="text-white/80 hover:text-accent transition-colors">Conservation Partners</Link></li>
               <li><Link to="/destinations" className="text-white/80 hover:text-accent transition-colors">Destinations</Link></li>
-              <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">Experiences</Link></li>
-              <li><Link to="/impact-ledger" className="text-white/80 hover:text-accent transition-colors">Impact Ledger</Link></li>
+              <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">Marketplace</Link></li>
               <li><Link to="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>

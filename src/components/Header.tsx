@@ -39,9 +39,6 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden xl:flex items-center space-x-4 xl:space-x-6 primary-menu">
-            <li><Link to="/about" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
-              About
-            </Link></li>
             <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               Impact Ledger
             </Link></li>
@@ -50,9 +47,6 @@ const Header = () => {
             </Link></li>
             <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               My Dashboard
-            </Link></li>
-            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
-              Partners
             </Link></li>
           </nav>
 
@@ -70,13 +64,6 @@ const Header = () => {
             {isMobileMenuOpen && (
               <div className="absolute right-0 top-full mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-50">
                 <div className="p-2 space-y-1">
-                  <Link 
-                    to="/about" 
-                    className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    About
-                  </Link>
                   <Link 
                     to="/impact-ledger" 
                     className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
@@ -97,13 +84,6 @@ const Header = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     My Dashboard
-                  </Link>
-                  <Link 
-                    to="/partners" 
-                    className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Partners
                   </Link>
                 </div>
               </div>

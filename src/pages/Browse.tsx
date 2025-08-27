@@ -8,8 +8,6 @@ import { MapPin, Users } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import MoreFiltersDialog, { MoreFiltersState } from "@/components/MoreFiltersDialog";
 
@@ -121,7 +119,6 @@ const Browse = () => {
 
   return (
     <div className="min-h-screen bg-background marketplace-page" data-page="marketplace">
-      <Header />
       {/* Filters */}
       <section className="bg-muted/30 py-12">
         <div className="container mx-auto px-4">
@@ -300,7 +297,6 @@ const Browse = () => {
       </section>
       
       <div className="pb-12"></div>
-      <Footer />
     </div>
   );
 };

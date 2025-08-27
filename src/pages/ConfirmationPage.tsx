@@ -68,6 +68,17 @@ export default function ConfirmationPage() {
           <div className="bg-green-50 border border-green-200 p-4 rounded-md text-sm">
             🌍 Your impact: {formatPrice(partner)} goes directly to conservation partner initiatives.
           </div>
+          {/* What to expect */}
+          <div className="border-t pt-4">
+            <h3 className="text-lg font-semibold mb-2">What to expect</h3>
+            <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+              <li>Arrival & welcome briefing by your host.</li>
+              <li>Guided activity per your selected option and schedule.</li>
+              <li>Safety guidelines and responsible travel practices.</li>
+              <li>Support for partner conservation initiatives through your booking.</li>
+              <li>Exact meetup details will be sent to <b>your email</b> shortly.</li>
+            </ul>
+          </div>
         </CardContent>
       </Card>
     </div>

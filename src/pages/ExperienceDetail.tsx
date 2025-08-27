@@ -7,8 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight, CheckCircle, XCircle, Info } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import ReviewSection from "@/components/ReviewSection";
 import MapComponent from "@/components/MapComponent";
 import RelatedExperiences from "@/components/RelatedExperiences";
@@ -30,7 +28,6 @@ const ExperienceDetail = () => {
   if (!experience) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
@@ -40,7 +37,6 @@ const ExperienceDetail = () => {
             </Link>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -133,7 +129,6 @@ const ExperienceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 py-4">
@@ -454,8 +449,6 @@ const ExperienceDetail = () => {
         experience={experience}
         project={project}
       />
-
-      <Footer />
     </div>
   );
 };
