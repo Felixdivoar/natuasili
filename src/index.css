@@ -500,6 +500,92 @@ button, .btn, .button, [role="button"],
     padding-bottom: 48px !important;
   }
 
+  /* Additional spacing utilities */
+  .section { 
+    margin-top: 2rem; 
+  }
+
+  @media (min-width: 1024px) {
+    .section { 
+      margin-top: 2.5rem; 
+    }
+  }
+
+  .page-content { 
+    padding-bottom: 3.5rem; 
+  }
+
+  @supports (padding: max(0px)) {
+    .page-content { 
+      padding-bottom: max(3.5rem, calc(3.5rem + env(safe-area-inset-bottom))); 
+    }
+  }
+
+  .post-section { 
+    margin-top: 2rem; 
+  }
+
+  .article, .post-card { 
+    margin-bottom: 1.5rem; 
+  }
+
+  .prose > h2, .prose > h3 { 
+    margin-top: 1.75rem; 
+  }
+
+  .section-hero { 
+    padding-top: 1.5rem; 
+  }
+
+  /* Enhanced responsive layout standards */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 900px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 1150px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1.25rem;
+    }
+  }
+
+  /* Ensure clickable links work properly */
+  .card a, .card button, .stretched-link {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .section-overlay, .section-gradient {
+    pointer-events: none;
+  }
+
+  /* Prevent overlays from blocking clicks */
+  .swiper-slide, .carousel-item {
+    pointer-events: auto;
+  }
+  }
+
   @supports (padding: max(0px)) {
     :is(main, #site-main, .site-main) {
       padding-bottom: max(48px, calc(48px + env(safe-area-inset-bottom))) !important;

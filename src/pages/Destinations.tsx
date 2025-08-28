@@ -3,8 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, TreePine } from "lucide-react";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
 import samburuDestination from "@/assets/destinations/samburu-destination.jpg";
@@ -83,10 +81,8 @@ const destinations = [
 const Destinations = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      
       {/* Hero Section */}
-      <section className="py-16 bg-conservation/5">
+      <section className="py-16 bg-conservation/5 section">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -176,12 +172,12 @@ const Destinations = () => {
                   <div className="flex gap-3 pt-4">
                     <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`} className="flex-1">
                       <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
-                        Explore destination
+                        Explore Partners
                       </Button>
                     </Link>
                     <Link to={`/browse?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
                       <Button variant="outline" className="w-full">
-                        View experiences
+                        View All Experiences
                       </Button>
                     </Link>
                   </div>
@@ -191,8 +187,6 @@ const Destinations = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -9,8 +9,6 @@ import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from "recharts";
 import { Progress } from "@/components/ui/progress";
@@ -479,9 +477,8 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       {/* Hero Section */}
-      <section className="bg-primary/5 py-16">
+      <section className="bg-primary/5 py-16 section">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -946,7 +943,6 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

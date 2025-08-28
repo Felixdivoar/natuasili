@@ -45,6 +45,9 @@ const Header = () => {
             <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               Marketplace
             </Link></li>
+            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
+              Partners
+            </Link></li>
             <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
               My Dashboard
             </Link></li>
@@ -77,6 +80,13 @@ const Header = () => {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Marketplace
+                  </Link>
+                  <Link 
+                    to="/partners" 
+                    className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Partners
                   </Link>
                   <Link 
                     to="/dashboard" 

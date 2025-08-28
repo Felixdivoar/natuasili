@@ -7,12 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { 
   Calendar, DollarSign, Users, TrendingUp, Eye, Star, 
   Upload, FileText, Camera, MapPin, Clock, Plus 
 } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
 const PartnerDashboard = () => {
@@ -21,9 +20,7 @@ const PartnerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 section">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Partner Dashboard</h1>
           <p className="text-muted-foreground">Manage your conservation experiences and track impact</p>
@@ -357,7 +354,60 @@ const PartnerDashboard = () => {
                             <Badge variant="outline">Confirmed</Badge>
                           </td>
                           <td className="p-4">
-                            <Button variant="outline" size="sm">View Details</Button>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="outline" size="sm">View Details</Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-2xl">
+                                <DialogHeader>
+                                  <DialogTitle>Booking Details</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                  <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                      <Label>Guest Name</Label>
+                                      <p className="font-medium">John Smith</p>
+                                    </div>
+                                    <div>
+                                      <Label>Email</Label>
+                                      <p>john.smith@example.com</p>
+                                    </div>
+                                    <div>
+                                      <Label>Phone</Label>
+                                      <p>+254 700 123 456</p>
+                                    </div>
+                                    <div>
+                                      <Label>Experience</Label>
+                                      <p>Elephant Tracking</p>
+                                    </div>
+                                    <div>
+                                      <Label>Date & Time</Label>
+                                      <p>March 15, 2024 at 9:00 AM</p>
+                                    </div>
+                                    <div>
+                                      <Label>Participants</Label>
+                                      <p>2 guests</p>
+                                    </div>
+                                    <div>
+                                      <Label>Amount</Label>
+                                      <p className="font-semibold">{formatPrice(240)}</p>
+                                    </div>
+                                    <div>
+                                      <Label>Status</Label>
+                                      <Badge variant="outline">Confirmed</Badge>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <Label>Special Requests</Label>
+                                    <p className="text-muted-foreground">Dietary restrictions: Vegetarian meals preferred</p>
+                                  </div>
+                                  <div>
+                                    <Label>Emergency Contact</Label>
+                                    <p>Jane Smith: +254 700 654 321</p>
+                                  </div>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
                           </td>
                         </tr>
                       ))}
@@ -459,8 +509,6 @@ const PartnerDashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
-      
-      <Footer />
     </div>
   );
 };

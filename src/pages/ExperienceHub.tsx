@@ -6,8 +6,6 @@ import { MapPin, Users, Star, Clock, CheckCircle, Calendar, ExternalLink } from 
 import { Link } from "react-router-dom";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 const ExperienceHub = () => {
   const { formatPrice } = useCurrency();
@@ -27,10 +25,8 @@ const ExperienceHub = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      
       {/* Hero Section */}
-      <section id="conservation-experience-hub" className="py-16 bg-conservation/5">
+      <section id="conservation-experience-hub" className="py-16 bg-conservation/5 section">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="section-title text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -225,7 +221,6 @@ const ExperienceHub = () => {
       </section>
 
       <div className="pb-12"></div>
-      <Footer />
     </div>
   );
 };

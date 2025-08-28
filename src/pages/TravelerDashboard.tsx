@@ -11,8 +11,6 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { CalendarDays, MapPin, DollarSign, TreePine, Users, Droplets, GraduationCap, Eye, ExternalLink, User, Edit, Save, Heart } from "lucide-react";
 import { mockBookings, mockProjects, mockExperiences } from "@/data/mockData";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
 const TravelerDashboard = () => {
@@ -93,9 +91,8 @@ const TravelerDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       {/* Header */}
-      <section className="bg-primary/5 py-12">
+      <section className="bg-primary/5 py-12 section">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -239,11 +236,11 @@ const TravelerDashboard = () => {
                             </div>
 
                             <div className="flex gap-2">
-                              <Button variant="outline" size="sm" asChild>
-                                <Link to={`/projects/${booking.project_id}`}>
-                                  View Partner
-                                </Link>
-                              </Button>
+                            <Button variant="outline" size="sm" asChild>
+                              <Link to={`/partner/${mockProjects.find(p => p.id === booking.project_id)?.slug || booking.project_id}`}>
+                                View Partner Details
+                              </Link>
+                            </Button>
                               <Button variant="outline" size="sm" asChild>
                                 <Link to="/impact-ledger">
                                   <ExternalLink className="h-4 w-4" />
@@ -345,7 +342,7 @@ const TravelerDashboard = () => {
                             </div>
 
                             <Button variant="outline" size="sm" className="w-full" asChild>
-                              <Link to={`/projects/${project.id}`}>
+                              <Link to={`/partner/${mockProjects.find(p => p.id === project.id)?.slug || project.id}`}>
                                 View Partner Details
                               </Link>
                             </Button>
@@ -398,7 +395,6 @@ const TravelerDashboard = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

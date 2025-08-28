@@ -27,7 +27,6 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm footer-links">
               <li><Link to="/blog" className="text-white/80 hover:text-accent transition-colors">Blog & Insights</Link></li>
-              <li><Link to="/experience-hub" className="text-white/80 hover:text-accent transition-colors">Experience Hub</Link></li>
               <li><Link to="/partner-dashboard" className="text-white/80 hover:text-accent transition-colors">Partner Portal</Link></li>
               <li><a href="mailto:support@natuasili.com" className="text-white/80 hover:text-accent transition-colors">Support Center</a></li>
               <li><Link to="/dashboard" className="text-white/80 hover:text-accent transition-colors">Traveler Dashboard</Link></li>

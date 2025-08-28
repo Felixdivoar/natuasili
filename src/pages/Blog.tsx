@@ -6,8 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, User, Clock, Search } from "lucide-react";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 // Import blog images
 import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
@@ -157,10 +155,8 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      
       {/* Hero Section */}
-      <section className="py-16 bg-conservation/5">
+      <section className="py-16 bg-conservation/5 section">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -348,8 +344,6 @@ const Blog = () => {
           )}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
