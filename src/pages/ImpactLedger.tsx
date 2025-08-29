@@ -780,98 +780,336 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
             </TabsContent>
 
             <TabsContent value="analytics" className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Impact by Theme</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer
-                      config={{
-                        wildlife: { label: "Wildlife Protection", color: "hsl(var(--wildlife))" },
-                        livelihoods: { label: "Community Livelihoods", color: "hsl(var(--livelihoods))" },
-                        habitat: { label: "Habitat Restoration", color: "hsl(var(--habitat))" },
-                        education: { label: "Education", color: "hsl(var(--education))" },
-                      }}
-                      className="h-[200px]"
-                    >
-                      <PieChart>
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Pie
-                          data={[
-                            { name: "Wildlife Protection", value: 650, fill: "hsl(var(--wildlife))" },
-                            { name: "Community Livelihoods", value: 420, fill: "hsl(var(--livelihoods))" },
-                            { name: "Habitat Restoration", value: 380, fill: "hsl(var(--habitat))" },
-                            { name: "Education", value: 285, fill: "hsl(var(--education))" },
-                          ]}
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={80}
-                          dataKey="value"
-                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                        />
-                      </PieChart>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Geographic Distribution</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer
-                      config={{
-                        mara: { label: "Maasai Mara", color: "hsl(142 71% 45%)" },
-                        samburu: { label: "Samburu", color: "hsl(142 71% 35%)" },
-                        coast: { label: "Coastal Areas", color: "hsl(142 71% 55%)" },
-                        laikipia: { label: "Laikipia", color: "hsl(142 71% 65%)" },
-                      }}
-                      className="h-[200px]"
-                    >
-                      <PieChart>
-                        <ChartTooltip content={<ChartTooltipContent />} />
-                        <Pie
-                          data={[
-                            { name: "Maasai Mara", value: 35, fill: "hsl(142 71% 45%)" },
-                            { name: "Samburu", value: 28, fill: "hsl(142 71% 35%)" },
-                            { name: "Coastal Areas", value: 22, fill: "hsl(142 71% 55%)" },
-                            { name: "Laikipia", value: 15, fill: "hsl(142 71% 65%)" },
-                          ]}
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={80}
-                          dataKey="value"
-                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                        />
-                      </PieChart>
-                    </ChartContainer>
-                  </CardContent>
-                </Card>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Total Impact</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-primary">{formatPrice(647000)}</div>
+                      <p className="text-sm text-muted-foreground">Verified impact funding</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Active Projects</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-accent">189</div>
+                      <p className="text-sm text-muted-foreground">Conservation experiences</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Partner Organizations</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-conservation">8</div>
+                      <p className="text-sm text-muted-foreground">Verified partners</p>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Transparency Rate</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-primary">95%</div>
+                      <p className="text-sm text-muted-foreground">Impact verification</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Impact by Theme</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ChartContainer
+                        config={{
+                          wildlife: { label: "Wildlife Protection", color: "hsl(var(--wildlife))" },
+                          livelihoods: { label: "Community Livelihoods", color: "hsl(var(--livelihoods))" },
+                          habitat: { label: "Habitat Restoration", color: "hsl(var(--habitat))" },
+                          education: { label: "Education", color: "hsl(var(--education))" },
+                        }}
+                        className="h-[200px]"
+                      >
+                        <PieChart>
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Pie
+                            data={[
+                              { name: "Wildlife Protection", value: 650, fill: "hsl(var(--wildlife))" },
+                              { name: "Community Livelihoods", value: 420, fill: "hsl(var(--livelihoods))" },
+                              { name: "Habitat Restoration", value: 380, fill: "hsl(var(--habitat))" },
+                              { name: "Education", value: 285, fill: "hsl(var(--education))" },
+                            ]}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={80}
+                            dataKey="value"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                          />
+                        </PieChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Geographic Distribution</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ChartContainer
+                        config={{
+                          mara: { label: "Maasai Mara", color: "hsl(142 71% 45%)" },
+                          samburu: { label: "Samburu", color: "hsl(142 71% 35%)" },
+                          coast: { label: "Coastal Areas", color: "hsl(142 71% 55%)" },
+                          laikipia: { label: "Laikipia", color: "hsl(142 71% 65%)" },
+                        }}
+                        className="h-[200px]"
+                      >
+                        <PieChart>
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Pie
+                            data={[
+                              { name: "Maasai Mara", value: 35, fill: "hsl(142 71% 45%)" },
+                              { name: "Samburu", value: 28, fill: "hsl(142 71% 35%)" },
+                              { name: "Coastal Areas", value: 22, fill: "hsl(142 71% 55%)" },
+                              { name: "Laikipia", value: 15, fill: "hsl(142 71% 65%)" },
+                            ]}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={80}
+                            dataKey="value"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                          />
+                        </PieChart>
+                      </ChartContainer>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Top Performing Partners</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Maasai Mara Conservancy</span>
+                          <span className="text-sm font-semibold text-primary">{formatPrice(156000)}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Ol Pejeta Conservancy</span>
+                          <span className="text-sm font-semibold text-primary">{formatPrice(134000)}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Reteti Elephant Sanctuary</span>
+                          <span className="text-sm font-semibold text-primary">{formatPrice(98000)}</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Revenue Distribution</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">To Conservation (90%)</span>
+                          <span className="text-sm font-semibold text-primary">{formatPrice(647000)}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm">Platform Fee (10%)</span>
+                          <span className="text-sm font-semibold text-muted-foreground">{formatPrice(72000)}</span>
+                        </div>
+                        <div className="border-t pt-2 flex justify-between items-center font-semibold">
+                          <span className="text-sm">Total Revenue</span>
+                          <span className="text-sm">{formatPrice(719000)}</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Impact Metrics</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-primary">95%</div>
+                          <p className="text-xs text-muted-foreground">Impact verified within 30 days</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-accent">4.9</div>
+                          <p className="text-xs text-muted-foreground">Average partner rating</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-conservation">24</div>
+                          <p className="text-xs text-muted-foreground">Days average verification time</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             </TabsContent>
 
             <TabsContent value="forecasts" className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Next 6 Months</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-primary">{formatPrice(420000)}</div>
+                      <p className="text-sm text-muted-foreground">Projected impact allocation</p>
+                      <div className="text-xs text-green-600 mt-1">↗ +15% vs previous period</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">New Partners</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-accent">12</div>
+                      <p className="text-sm text-muted-foreground">Projected onboarding</p>
+                      <div className="text-xs text-green-600 mt-1">↗ +50% growth target</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Experiences</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-conservation">285</div>
+                      <p className="text-sm text-muted-foreground">Total projected offerings</p>
+                      <div className="text-xs text-green-600 mt-1">↗ +51% expansion</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Traveler Growth</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-primary">3,200</div>
+                      <p className="text-sm text-muted-foreground">Projected bookings</p>
+                      <div className="text-xs text-green-600 mt-1">↗ +35% increase</div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Impact Growth Scenarios</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="font-semibold text-green-600">Conservative (75%)</span>
+                            <span className="text-sm text-muted-foreground">Low growth</span>
+                          </div>
+                          <div className="text-lg font-bold">{formatPrice(380000)}</div>
+                          <p className="text-xs text-muted-foreground">12-month impact projection</p>
+                        </div>
+                        
+                        <div className="p-4 border rounded-lg bg-primary/5">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="font-semibold text-primary">Expected (90%)</span>
+                            <span className="text-sm text-muted-foreground">Target growth</span>
+                          </div>
+                          <div className="text-lg font-bold">{formatPrice(520000)}</div>
+                          <p className="text-xs text-muted-foreground">12-month impact projection</p>
+                        </div>
+                        
+                        <div className="p-4 border rounded-lg">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="font-semibold text-accent">Optimistic (95%)</span>
+                            <span className="text-sm text-muted-foreground">High growth</span>
+                          </div>
+                          <div className="text-lg font-bold">{formatPrice(680000)}</div>
+                          <p className="text-xs text-muted-foreground">12-month impact projection</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Seasonal Trends & Risk Analysis</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-medium text-sm mb-2">Seasonal Patterns</h4>
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Peak (Jul-Sep)</span>
+                              <span className="text-sm font-semibold text-primary">+45%</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">High (Dec-Mar)</span>
+                              <span className="text-sm font-semibold text-accent">+35%</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-sm mb-2">Risk Factors</h4>
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Climate variations</span>
+                              <Badge variant="outline" className="text-xs bg-red-50 text-red-700 border-red-200">High</Badge>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-sm">Economic conditions</span>
+                              <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200">Medium</Badge>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
                 <Card>
                   <CardHeader>
-                    <CardTitle>6-Month Impact Forecast</CardTitle>
+                    <CardTitle>Growth Opportunities & Strategic Initiatives</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-4">Based on current booking trends and seasonal patterns.</p>
-                    <div className="text-2xl font-bold text-primary mb-2">{formatPrice(2400)}</div>
-                    <p className="text-sm text-muted-foreground">Projected impact allocation</p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Growth Trajectory</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">Conservation impact growth compared to previous periods.</p>
-                    <div className="text-2xl font-bold text-primary mb-2">+24%</div>
-                    <p className="text-sm text-muted-foreground">Quarterly growth rate</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div>
+                        <h4 className="font-medium text-sm mb-3">New Destinations</h4>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <div>Mount Kenya Region</div>
+                          <div>Turkana County</div>
+                          <div>Tsavo Ecosystem</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-sm mb-3">Partnership Expansion</h4>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <div>Corporate ESG programs</div>
+                          <div>International NGOs</div>
+                          <div>Regional expansion (Tanzania, Uganda)</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-sm mb-3">Innovation</h4>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <div>Virtual conservation experiences</div>
+                          <div>Carbon offset marketplace</div>
+                          <div>Impact NFT certificates</div>
+                        </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>

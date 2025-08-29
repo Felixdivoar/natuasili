@@ -2,8 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
 import partnerSpotlightBlog from "@/assets/blog/partner-spotlight-blog.jpg";
@@ -211,15 +209,13 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
+      <div className="bg-background">
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold mb-4">Blog post not found</h1>
           <Link to="/blog">
             <Button>Return to Blog</Button>
           </Link>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -237,8 +233,7 @@ const BlogPost = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div className="bg-background">{/* Page content wrapper */}
       
       <article className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
@@ -311,8 +306,6 @@ const BlogPost = () => {
           </div>
         </div>
       </article>
-      
-      <Footer />
     </div>
   );
 };

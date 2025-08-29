@@ -170,16 +170,16 @@ const Destinations = () => {
                   </div>
                   
                   <div className="flex gap-3 pt-4">
-                    <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`} className="flex-1">
-                      <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
+                    <Button className="w-full bg-conservation hover:bg-conservation/90 text-white" asChild>
+                      <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`}>
                         Explore Partners
-                      </Button>
-                    </Link>
-                    <Link to={`/browse?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`} className="flex-1">
-                      <Button variant="outline" className="w-full">
+                      </Link>
+                    </Button>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to={`/browse?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
                         View All Experiences
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

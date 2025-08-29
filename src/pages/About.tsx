@@ -3,8 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Target, Users, Leaf, Heart, Globe, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 const teamMembers = [
   {
@@ -56,8 +54,7 @@ const teamMembers = [
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div className="bg-background">{/* Page content wrapper */}
       
       {/* Hero Section */}
       <section className="py-20 bg-primary/5">
@@ -353,8 +350,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
