@@ -500,6 +500,20 @@ button, .btn, .button, [role="button"],
     padding-bottom: 48px !important;
   }
 
+  /* Enhanced support for safe areas */
+  @supports (padding: max(0px)) {
+    :is(main, #site-main, .site-main) {
+      padding-bottom: max(48px, calc(48px + env(safe-area-inset-bottom))) !important;
+    }
+  }
+
+  /* Prevent margin collapse with footer */
+  :is(main, #site-main, .site-main) > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+  }
+
   /* Additional spacing utilities */
   .section { 
     margin-top: 2rem; 
@@ -584,20 +598,6 @@ button, .btn, .button, [role="button"],
   .swiper-slide, .carousel-item {
     pointer-events: auto;
   }
-  }
-
-  @supports (padding: max(0px)) {
-    :is(main, #site-main, .site-main) {
-      padding-bottom: max(48px, calc(48px + env(safe-area-inset-bottom))) !important;
-    }
-  }
-
-  /* Prevent margin collapse with footer */
-  :is(main, #site-main, .site-main) > :last-child {
-    margin-bottom: 0 !important;
-  }
-}
-
 /* Consistent spacing utilities */
 .section { 
   margin-top: 32px; 
