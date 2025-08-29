@@ -512,9 +512,8 @@ button, .btn, .button, [role="button"],
     margin-bottom: 0 !important;
   }
 }
-  }
 
-  /* Additional spacing utilities */
+/* Additional spacing utilities */
   .section { 
     margin-top: 2rem; 
   }
