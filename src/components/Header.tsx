@@ -3,11 +3,13 @@ import { Leaf, Search, User, Heart, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
+import { useI18n } from "@/contexts/I18nContext";
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const { lang, setLang } = useI18n();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -25,8 +27,8 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
   return (
-    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header">
-      <div className="container mx-auto px-4">
+    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header header-compact">
+      <div className="nav-inner">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
@@ -39,18 +41,18 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden xl:flex items-center space-x-4 xl:space-x-6 primary-menu">
-            <li><Link to="/impact-ledger" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
+            <Link to="/impact-ledger" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
               Impact Ledger
-            </Link></li>
-            <li><Link to="/marketplace" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
+            </Link>
+            <Link to="/marketplace" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
               Marketplace
-            </Link></li>
-            <li><Link to="/partners" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
+            </Link>
+            <Link to="/partners" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
               Partners
-            </Link></li>
-            <li><Link to="/dashboard" className="text-foreground hover:text-primary transition-colors text-sm py-1.5 px-2">
+            </Link>
+            <Link to="/dashboard" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
               My Dashboard
-            </Link></li>
+            </Link>
           </nav>
 
           {/* Mobile Navigation Menu - Show on tablet and mobile (≤1024px) */}
@@ -105,6 +107,19 @@ const Header = () => {
             <div className="hidden sm:block">
               <CurrencySelector />
             </div>
+            
+            {/* Language Selector */}
+            <select 
+              value={lang} 
+              onChange={e => setLang(e.target.value as any)}
+              className="text-xs border border-border rounded px-2 py-1 bg-background"
+            >
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+              <option value="de">DE</option>
+              <option value="es">ES</option>
+            </select>
+            
             <Button variant="outline" size="sm" className="hidden md:flex text-xs">
               <User className="w-4 h-4 mr-1" />
               <Link to="/dashboard">Sign In</Link>

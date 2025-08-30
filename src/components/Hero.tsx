@@ -7,17 +7,17 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 const Hero = () => {
   const { formatPrice } = useCurrency();
   return (
-    <section className="hero-section relative min-h-[80vh] flex items-center">
+    <section className="hero-full hero-section relative min-h-[80vh] flex items-center">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-transparent overlay"></div>
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-20">
+      <div className="hero-inner relative">
         <div className="max-w-2xl text-white">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Conservation Through

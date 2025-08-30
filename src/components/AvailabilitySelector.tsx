@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Users, Clock, MapPin, Star, CheckCircle } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { saveCart } from "@/lib/cart";
+import { isSameDayBookingCutoffPassed, isTodayInLocal } from "@/utils/time";
 
 interface Experience {
   slug: string;
@@ -111,7 +112,12 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
 
   const selectedOptionData = options.find((opt) => opt.id === selectedOption) || options[0];
   const totals = computeTotals(selectedOptionData.price, selectedPeople);
-  const proceedDisabled = !selectedDate || !!participantsError;
+  
+  // Same-day booking cutoff logic
+  const cutoffHit = selectedDate && isTodayInLocal(selectedDate) && isSameDayBookingCutoffPassed();
+  const cutoffMessage = "Same-day bookings close at 11:00 EAT. Please select a different date.";
+  
+  const proceedDisabled = !selectedDate || !!participantsError || cutoffHit;
 
   return (
     <section id="availability" className="availability-section scroll-mt-24">
@@ -139,8 +145,13 @@ const AvailabilitySelector = ({ experience }: AvailabilitySelectorProps) => {
                       value={selectedDate}
                       onChange={(e) => setSelectedDate(e.target.value)}
                       min={new Date().toISOString().split("T")[0]}
-                      className="w-full"
+                      className={`w-full ${cutoffHit ? "border-red-500" : ""}`}
                     />
+                    {cutoffHit && (
+                      <div className="text-red-600 text-sm mt-1" role="alert">
+                        {cutoffMessage}
+                      </div>
+                    )}
                   </div>
                   
                   <div className="space-y-2">

@@ -10,6 +10,7 @@ import { mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { getCart, clearCart } from "@/lib/cart";
 import { saveReceipt } from "@/lib/receipt";
+import { isSameDayBookingCutoffPassed, isTodayInLocal } from "@/utils/time";
 
 interface Experience {
   slug: string;
@@ -102,8 +103,12 @@ const Checkout = () => {
     email: !isEmail(email) ? "Enter a valid email address." : "",
   };
 
+  // Same-day booking cutoff logic
+  const cutoffHit = date && isTodayInLocal(date) && isSameDayBookingCutoffPassed();
+  const cutoffMessage = "Same-day bookings close at 11:00 EAT. Please pick a later date.";
+
   const contactValid = !contactErrors.fullName && !contactErrors.email;
-  const canPay = Boolean(date && people && !paxError && subtotal > 0 && contactValid);
+  const canPay = Boolean(date && people && !paxError && subtotal > 0 && contactValid && !cutoffHit);
 
   const handleChangeSelection = () => {
     navigate(`/experience/${slug}#availability`);
@@ -205,7 +210,17 @@ const Checkout = () => {
                   <div className="grid sm:grid-cols-3 gap-3">
                     <div>
                       <Label>Date</Label>
-                      <Input value={date} onChange={(e) => setDate(e.target.value)} type="date" />
+                      <Input 
+                        value={date} 
+                        onChange={(e) => setDate(e.target.value)} 
+                        type="date" 
+                        className={cutoffHit ? "border-red-500" : ""}
+                      />
+                      {cutoffHit && (
+                        <div className="text-red-600 text-sm mt-1" role="alert">
+                          {cutoffMessage}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <Label>Participants</Label>
@@ -269,7 +284,7 @@ const Checkout = () => {
                   </Button>
                   {!canPay && (
                     <div className="text-sm text-muted-foreground">
-                      Select a valid date and participants within the capacity to proceed.
+                      {cutoffHit ? cutoffMessage : "Select a valid date and participants within the capacity to proceed."}
                     </div>
                   )}
                 </CardContent>
