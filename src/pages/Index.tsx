@@ -11,9 +11,7 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <div className="bg-background">
-      <div className="landing-hero pb-10">
-        <Hero />
-      </div>
+      <Hero />
       <DestinationCarousel />
       <ExperienceCarousel />
       <ConservationPartnersCarousel />

@@ -142,8 +142,8 @@ const ExperienceDetail = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative section-hero pt-6">
-        <div className="container mx-auto px-4">
+      <section className="hero-full relative">
+        <div className="hero-inner">
           <div className="grid lg:grid-cols-2 gap-8 mb-8">
             {/* Image Gallery */}
             <div className="relative">

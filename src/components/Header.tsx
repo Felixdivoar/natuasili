@@ -55,6 +55,37 @@ const Header = () => {
             </Link>
           </nav>
 
+          {/* Search */}
+          <div className="hidden lg:flex items-center relative">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const query = formData.get('search') as string;
+                if (query?.trim()) {
+                  window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
+                }
+              }}
+              className="relative"
+            >
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                name="search"
+                type="text"
+                placeholder="Search..."
+                className="pl-10 pr-4 py-2 text-sm border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 w-48"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    const target = e.target as HTMLInputElement;
+                    if (target.value.trim()) {
+                      window.location.href = `/search?q=${encodeURIComponent(target.value.trim())}`;
+                    }
+                  }
+                }}
+              />
+            </form>
+          </div>
+
           {/* Mobile Navigation Menu - Show on tablet and mobile (≤1024px) */}
           <div className="flex xl:hidden relative hamburger-toggle" ref={menuRef}>
             <Button
@@ -127,7 +158,7 @@ const Header = () => {
             <Button variant="outline" size="sm" className="md:hidden p-2">
               <User className="w-4 h-4" />
             </Button>
-            <Link to="/partner-dashboard">
+            <Link to="/partner-entry">
               <Button size="sm" className="bg-primary hover:bg-primary-hover text-xs px-2 sm:px-3">
                 <span className="hidden sm:inline">Partner With Us</span>
                 <span className="sm:hidden">Partner</span>

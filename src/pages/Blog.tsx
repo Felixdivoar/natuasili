@@ -156,8 +156,8 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="py-16 bg-conservation/5 section">
-        <div className="container mx-auto px-4">
+      <section className="hero-full py-16 bg-conservation/5">
+        <div className="hero-inner">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Conservation Stories & Insights

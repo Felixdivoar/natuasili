@@ -36,6 +36,8 @@ import ExperienceHub from "./pages/ExperienceHub";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
+import Search from "./pages/Search";
+import PartnerEntry from "./pages/PartnerEntry";
 
 const queryClient = new QueryClient();
 
@@ -90,6 +92,8 @@ const App = () => (
                 <Route path="/terms" element={<TermsAndConditions />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/partner-entry" element={<PartnerEntry />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>

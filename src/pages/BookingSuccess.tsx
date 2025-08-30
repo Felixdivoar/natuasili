@@ -8,6 +8,7 @@ import { mockExperiences, mockProjects } from "@/data/mockData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { makeImpactSummary } from "@/lib/impactSummary";
 
 const BookingSuccess = () => {
   const [searchParams] = useSearchParams();
@@ -35,8 +36,16 @@ const BookingSuccess = () => {
   }
 
   const totalAmount = experience.base_price * quantity;
-  const projectShare = Math.round(totalAmount * 0.9); // 90% to project
-  const platformShare = Math.round(totalAmount * 0.1); // 10% to platform
+  
+  // Generate impact summary using the library
+  const impactSummary = makeImpactSummary({
+    title: experience.title,
+    location: experience.location_text,
+    date: new Date().toLocaleDateString(),
+    people: quantity,
+    unitPriceKES: experience.base_price,
+    currency: "KES"
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -102,17 +111,25 @@ const BookingSuccess = () => {
               <CardTitle>Your Impact</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">To {project.name}:</span>
-                  <span className="font-semibold text-foreground">{formatPrice(projectShare)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Platform & Operations:</span>
-                  <span className="font-semibold text-foreground">{formatPrice(platformShare)}</span>
-                </div>
+              <div className="space-y-4">  
+                {impactSummary.lines.map((line, index) => (
+                  <p key={index} className="text-muted-foreground">• {line}</p>
+                ))}
+                
                 <Separator />
-                <div className="text-sm text-muted-foreground">
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">To {project.name}:</span>
+                    <span className="font-semibold text-foreground">{formatPrice(impactSummary.numbers.partner)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Platform & Operations:</span>
+                    <span className="font-semibold text-foreground">{formatPrice(impactSummary.numbers.platform)}</span>
+                  </div>
+                </div>
+                
+                <div className="text-sm text-primary font-medium bg-primary/5 p-3 rounded-lg">
                   Your contribution directly supports {project.name} and their conservation efforts in {project.location_text}.
                 </div>
               </div>
