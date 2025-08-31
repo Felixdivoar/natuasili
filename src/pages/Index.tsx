@@ -1,25 +1,22 @@
+import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import QuickDiscovery from "@/components/QuickDiscovery";
+import DestinationCarousel from "@/components/DestinationCarousel";
 import ExperienceCarousel from "@/components/ExperienceCarousel";
-import TrustTransparency from "@/components/TrustTransparency";
-import ImpactStories from "@/components/ImpactStories";
 import ConservationPartnersCarousel from "@/components/ConservationPartnersCarousel";
-import HowItWorks from "@/components/HowItWorks";
-import Testimonials from "@/components/Testimonials";
-import FooterCTA from "@/components/FooterCTA";
+import ImpactStats from "@/components/ImpactStats";
+import ImpactStories from "@/components/ImpactStories";
+import Footer from "@/components/Footer";
+
 
 const Index = () => {
   return (
     <div className="bg-background">
       <Hero />
-      <QuickDiscovery />
+      <DestinationCarousel />
       <ExperienceCarousel />
-      <TrustTransparency />
-      <ImpactStories />
       <ConservationPartnersCarousel />
-      <HowItWorks />
-      <Testimonials />
-      <FooterCTA />
+      <ImpactStats />
+      <ImpactStories />
     </div>
   );
 };
