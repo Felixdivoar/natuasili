@@ -4,11 +4,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
+import { I18nProvider } from "@/i18n/I18nProvider";
 import { useEffect } from "react";
 import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import RootLayout from "@/layouts/RootLayout";
-import Index from "./pages/Index";
+import HeaderMega from "@/components/HeaderMega";
+import Footer from "@/components/Footer";
+import HomeLanding from "@/pages/HomeLanding";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import Checkout from "./pages/Checkout";
@@ -37,7 +39,8 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Search from "./pages/Search";
-import PartnerEntry from "./pages/PartnerEntry";
+import PartnerWithUs from "./pages/PartnerWithUs";
+import ContentStub from "./pages/ContentStub";
 
 const queryClient = new QueryClient();
 
@@ -56,17 +59,19 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <CurrencyProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <CookieBanner />
-            <ScrollToTop />
-            <Routes>
-              <Route element={<RootLayout />}>
-                <Route path="/" element={<Index />} />
+        <I18nProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <CookieBanner />
+              <ScrollToTop />
+              <HeaderMega />
+              <Routes>
+                <Route path="/" element={<HomeLanding />} />
                 <Route path="/marketplace" element={<Browse />} />
                 <Route path="/browse" element={<Browse />} />
+                <Route path="/experiences" element={<Browse />} />
                 <Route path="/experience/:slug" element={<ExperienceDetail />} />
                 <Route path="/checkout/:slug" element={<Checkout />} />
                 <Route path="/confirmation/:slug" element={<ConfirmationPage />} />
@@ -83,22 +88,27 @@ const App = () => (
                 <Route path="/blog/category/:category" element={<BlogCategory />} />
                 <Route path="/partners/success-stories/:slug" element={<PartnerSuccessStory />} />
                 <Route path="/destinations" element={<Destinations />} />
+                <Route path="/destinations/kenya/:slug" element={<ContentStub />} />
                 <Route path="/destinations/samburu" element={<SamburuDestination />} />
                 <Route path="/destinations/masai-mara" element={<MasaiMaraDestination />} />
                 <Route path="/destinations/coast" element={<CoastDestination />} />
                 <Route path="/destinations/nairobi" element={<NairobiDestination />} />
                 <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
+                <Route path="/themes/:theme" element={<ContentStub />} />
+                <Route path="/themes" element={<ContentStub />} />
                 <Route path="/experience-hub" element={<ExperienceHub />} />
                 <Route path="/terms" element={<TermsAndConditions />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/search" element={<Search />} />
-                <Route path="/partner-entry" element={<PartnerEntry />} />
+                <Route path="/partner-entry" element={<PartnerWithUs />} />
+                <Route path="/partner-with-us" element={<PartnerWithUs />} />
                 <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+              </Routes>
+              <Footer />
+            </BrowserRouter>
+          </TooltipProvider>
+        </I18nProvider>
       </CurrencyProvider>
     </QueryClientProvider>
   </ErrorBoundary>

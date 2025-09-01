@@ -11,6 +11,7 @@ export default function SemanticSearchBar() {
     title: string; 
     snippet: string; 
     url: string;
+    score?: number;
   }>>([]);
 
   const debouncedQ = useMemo(() => q, [q]);
