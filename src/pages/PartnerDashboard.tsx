@@ -8,22 +8,18 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { 
-  Calendar, DollarSign, Users, TrendingUp, Eye, Star, 
-  Upload, FileText, Camera, MapPin, Clock, Plus 
-} from "lucide-react";
+import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
-
 const PartnerDashboard = () => {
-  const { formatPrice } = useCurrency();
+  const {
+    formatPrice
+  } = useCurrency();
   const [activeTab, setActiveTab] = useState("overview");
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <section className="hero-full py-16 bg-primary/5">
         <div className="hero-inner">
           <div className="max-w-2xl">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Partner Dashboard</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">Partner dashboard</h1>
             <p className="text-muted-foreground">Manage your conservation experiences and track impact</p>
           </div>
         </div>
@@ -47,7 +43,7 @@ const PartnerDashboard = () => {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">This Month</span>
+                    <span className="text-sm font-medium text-muted-foreground">This month</span>
                   </div>
                   <div className="mt-2">
                     <div className="text-2xl font-bold">24</div>
@@ -100,7 +96,7 @@ const PartnerDashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Bookings Over Time</CardTitle>
+                  <CardTitle>Bookings over time</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -131,13 +127,13 @@ const PartnerDashboard = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Key Performance Metrics</CardTitle>
+                  <CardTitle>Key performance metrics</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
                       <div className="flex justify-between text-sm mb-2">
-                        <span>Conversion Rate</span>
+                        <span>Conversion rate</span>
                         <span className="font-semibold">12.4%</span>
                       </div>
                       <Progress value={12.4} className="h-2" />
@@ -145,7 +141,7 @@ const PartnerDashboard = () => {
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-2">
-                        <span>Average Booking Value</span>
+                        <span>Average booking value</span>
                         <span className="font-semibold">{formatPrice(185)}</span>
                       </div>
                       <Progress value={75} className="h-2" />
@@ -153,7 +149,7 @@ const PartnerDashboard = () => {
                     </div>
                     <div>
                       <div className="flex justify-between text-sm mb-2">
-                        <span>Return Visitor Rate</span>
+                        <span>Return visitor rate</span>
                         <span className="font-semibold">28%</span>
                       </div>
                       <Progress value={28} className="h-2" />
@@ -168,44 +164,42 @@ const PartnerDashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Recent Bookings</CardTitle>
+                  <CardTitle>Recent bookings</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                    {[1, 2, 3].map(i => <div key={i} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                         <div>
-                          <p className="font-medium">Elephant Tracking - Maasai Mara</p>
+                          <p className="font-medium">Elephant tracking - Maasai Mara</p>
                           <p className="text-sm text-muted-foreground">2 guests • March 15, 2024</p>
                         </div>
                         <Badge variant="outline">Confirmed</Badge>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Monthly Revenue Breakdown</CardTitle>
+                  <CardTitle>Monthly revenue breakdown</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Experience Fees</span>
+                      <span className="text-sm">Experience fees</span>
                       <span className="font-semibold">{formatPrice(4200)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Platform Fee (10%)</span>
+                      <span className="text-sm">Platform fee (10%)</span>
                       <span className="text-muted-foreground">-{formatPrice(420)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Processing Fees</span>
+                      <span className="text-sm">Processing fees</span>
                       <span className="text-muted-foreground">-{formatPrice(110)}</span>
                     </div>
                     <hr />
                     <div className="flex justify-between items-center font-semibold">
-                      <span>Net Revenue</span>
+                      <span>Net revenue</span>
                       <span className="text-primary">{formatPrice(3670)}</span>
                     </div>
                   </div>
@@ -224,8 +218,7 @@ const PartnerDashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <Card key={i}>
+              {[1, 2, 3].map(i => <Card key={i}>
                   <CardContent className="p-4">
                     <div className="aspect-video bg-muted rounded-lg mb-4"></div>
                     <h3 className="font-semibold mb-2">Elephant Tracking - Maasai Mara</h3>
@@ -249,8 +242,7 @@ const PartnerDashboard = () => {
                       </div>
                     </div>
                   </CardContent>
-                </Card>
-              ))}
+                </Card>)}
             </div>
           </TabsContent>
 
@@ -293,20 +285,12 @@ const PartnerDashboard = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="testimonials">Community Testimonials</Label>
-                    <Textarea
-                      id="testimonials"
-                      placeholder="Share testimonials from local community members about your impact..."
-                      className="min-h-[100px]"
-                    />
+                    <Textarea id="testimonials" placeholder="Share testimonials from local community members about your impact..." className="min-h-[100px]" />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="partnerships">Partnership Agreements</Label>
-                    <Textarea
-                      id="partnerships"
-                      placeholder="List official partnerships with conservation organizations, government agencies, etc..."
-                      className="min-h-[80px]"
-                    />
+                    <Textarea id="partnerships" placeholder="List official partnerships with conservation organizations, government agencies, etc..." className="min-h-[80px]" />
                   </div>
 
                   <Button className="w-full">Submit for Review</Button>
@@ -343,8 +327,7 @@ const PartnerDashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <tr key={i} className="border-b">
+                      {[1, 2, 3, 4, 5].map(i => <tr key={i} className="border-b">
                           <td className="p-4">
                             <div>
                               <p className="font-medium">John Smith</p>
@@ -413,8 +396,7 @@ const PartnerDashboard = () => {
                               </DialogContent>
                             </Dialog>
                           </td>
-                        </tr>
-                      ))}
+                        </tr>)}
                     </tbody>
                   </table>
                 </div>
@@ -497,15 +479,13 @@ const PartnerDashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="border-l-4 border-primary pl-4">
+                    {[1, 2, 3].map(i => <div key={i} className="border-l-4 border-primary pl-4">
                         <p className="font-medium">Tree planting completed</p>
                         <p className="text-sm text-muted-foreground">
                           50 indigenous trees planted in degraded habitat
                         </p>
                         <p className="text-xs text-muted-foreground">2 days ago</p>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                 </CardContent>
               </Card>
@@ -513,8 +493,6 @@ const PartnerDashboard = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PartnerDashboard;
