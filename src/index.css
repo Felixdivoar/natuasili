@@ -275,7 +275,7 @@ button, .btn, .button, [role="button"],
 .hero-full .hero-inner {   /* text/content remains aligned to site container */
   max-width: 1150px;
   margin: 0 auto;
-  padding: 36px 24px;           /* inner breathing room for text/buttons */
+  padding: 24px;           /* inner breathing room for text/buttons */
 }
 
 /* Primary menu (header) height/spacing */
@@ -290,9 +290,6 @@ button, .btn, .button, [role="button"],
 .header-compact .nav-link {
   padding: 8px 10px;       /* smaller link padding */
 }
-
-.section{margin-top: 32px;}
-.na-container{width: 100%; max-width: 1150px; margin: 0 auto; padding: 0 16px;}
 
 /* Prevent decorative/gradient overlays from blocking clicks */
 .overlay, .section-gradient { 
