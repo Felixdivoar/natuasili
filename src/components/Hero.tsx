@@ -3,16 +3,15 @@ import { ArrowRight, Users, TreePine, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 const heroImage = "/lovable-uploads/86a97e9c-06e8-4907-baf7-f6cfa229935f.png";
 import { useCurrency } from "@/contexts/CurrencyContext";
-
 const Hero = () => {
-  const { formatPrice } = useCurrency();
-  return (
-    <section className="hero-full hero-section relative min-h-[80vh] flex items-center">
+  const {
+    formatPrice
+  } = useCurrency();
+  return <section className="hero-full hero-section relative min-h-[80vh] flex items-center">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+      <div style={{
+      backgroundImage: `url(${heroImage})`
+    }} className="absolute inset-0 bg-cover bg-center bg-no-repeat px-0 mx-px">
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-transparent overlay"></div>
       </div>
 
@@ -67,8 +66,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;

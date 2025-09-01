@@ -1,78 +1,47 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  useCarousel,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, useCarousel } from "@/components/ui/carousel";
 import { MapPin, Users, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockProjects } from "@/data/mockData";
-
 const CarouselControls = () => {
-  const { scrollPrev, scrollNext, canScrollPrev, canScrollNext } = useCarousel();
-  
-  return (
-    <div className="flex justify-center gap-2 mt-8">
-      <Button
-        variant="outline"
-        size="icon"
-        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
-        onClick={scrollPrev}
-        disabled={!canScrollPrev}
-      >
+  const {
+    scrollPrev,
+    scrollNext,
+    canScrollPrev,
+    canScrollNext
+  } = useCarousel();
+  return <div className="flex justify-center gap-2 mt-8">
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollPrev} disabled={!canScrollPrev}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground"
-        onClick={scrollNext}
-        disabled={!canScrollNext}
-      >
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollNext} disabled={!canScrollNext}>
         <ChevronRight className="h-4 w-4" />
       </Button>
-    </div>
-  );
+    </div>;
 };
-
 const ConservationPartnersCarousel = () => {
   const displayProjects = mockProjects.slice(0, 6);
-
-  return (
-    <section id="projects" className="py-16 bg-muted/30">
+  return <section id="projects" className="bg-muted/30 py-[30px]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Conservation Partners
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Conservation partners</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center">
             Meet the dedicated organizations working tirelessly to protect Kenya's 
             natural heritage and support local communities.
           </p>
         </div>
         
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full"
-        >
+        <Carousel opts={{
+        align: "start",
+        loop: true
+      }} className="w-full">
           <CarouselContent className="-ml-2 md:-ml-4">
-            {displayProjects.map((project) => (
-              <CarouselItem key={project.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+            {displayProjects.map(project => <CarouselItem key={project.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Card className="group hover:shadow-lg transition-shadow overflow-hidden h-full">
                   <div className="relative aspect-[4/3]">
-                    <img
-                      src={project.hero_image}
-                      alt={project.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                    <img src={project.hero_image} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-conservation text-white">
@@ -117,8 +86,7 @@ const ConservationPartnersCarousel = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </CarouselItem>
-            ))}
+              </CarouselItem>)}
           </CarouselContent>
           <div className="hidden md:block">
             <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
@@ -137,8 +105,6 @@ const ConservationPartnersCarousel = () => {
           </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ConservationPartnersCarousel;
