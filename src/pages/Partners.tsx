@@ -5,29 +5,29 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, ExternalLink } from "lucide-react";
 import { expandedPartnerProfiles } from "@/data/partnerProfiles";
-
 export default function Partners() {
   // Hide any global booking overlay if it was left open
   useEffect(() => {
-    document.querySelectorAll<HTMLElement>(".na-cta-bar,.na-btn-book-fab,.booking-modal")
-      .forEach(el => el.style.display = "");
+    document.querySelectorAll<HTMLElement>(".na-cta-bar,.na-btn-book-fab,.booking-modal").forEach(el => el.style.display = "");
   }, []);
-
   const getThemeColor = (category: string) => {
     switch (category) {
-      case 'Wildlife Conservation': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      case 'Conservation Education': return 'bg-education/10 text-education border-education/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Wildlife Conservation':
+        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Habitat':
+        return 'bg-habitat/10 text-habitat border-habitat/20';
+      case 'Conservation Education':
+        return 'bg-education/10 text-education border-education/20';
+      case 'Livelihoods':
+        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
-
-  return (
-    <main id="site-main" className="page-content">
+  return <main id="site-main" className="page-content">
       <section className="container mx-auto px-4 py-10">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Our Conservation Partners</h1>
+          <h1 className="text-4xl font-bold mb-4">Our conservation partners</h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Meet the incredible organizations we work with to create lasting conservation impact across Kenya. 
             Each partner brings unique expertise and local knowledge to protect wildlife, habitats, and communities.
@@ -35,14 +35,9 @@ export default function Partners() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {expandedPartnerProfiles.map((partner) => (
-            <Card key={partner.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+          {expandedPartnerProfiles.map(partner => <Card key={partner.id} className="overflow-hidden hover:shadow-lg transition-shadow">
               <div className="aspect-video relative overflow-hidden">
-                <img 
-                  src={partner.gallery[0]} 
-                  alt={partner.name}
-                  className="w-full h-full object-cover"
-                />
+                <img src={partner.gallery[0]} alt={partner.name} className="w-full h-full object-cover" />
               </div>
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between gap-2 mb-2">
@@ -79,38 +74,28 @@ export default function Partners() {
                         View Profile
                       </Link>
                     </Button>
-                    {partner.contact.email && (
-                      <Button variant="outline" size="sm" asChild>
-                        <a 
-                          href={`mailto:${partner.contact.email}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                    {partner.contact.email && <Button variant="outline" size="sm" asChild>
+                        <a href={`mailto:${partner.contact.email}`} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="h-3 w-3" />
                         </a>
-                      </Button>
-                    )}
+                      </Button>}
                   </div>
                 </div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
 
         <div className="text-center mt-16">
           <Card className="inline-block p-8 bg-muted/50">
             <CardContent className="p-0">
-              <h2 className="text-2xl font-bold mb-3">Become a Partner</h2>
+              <h2 className="text-2xl font-bold mb-3">Become a partner</h2>
               <p className="text-muted-foreground mb-6 max-w-md">
                 Join our network of conservation partners and connect your organization with travelers who want to make a difference.
               </p>
-              <Button size="lg">
-                Partner With Us
-              </Button>
+              <Button size="lg">Partner with us</Button>
             </CardContent>
           </Card>
         </div>
       </section>
-    </main>
-  );
+    </main>;
 }
