@@ -12,69 +12,116 @@ import { Link } from "react-router-dom";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from "recharts";
 import { Progress } from "@/components/ui/progress";
-
 const ImpactLedger = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
   const [selectedTheme, setSelectedTheme] = useState("all");
   const [activeTab, setActiveTab] = useState("entries");
-  const { formatPrice } = useCurrency();
+  const {
+    formatPrice
+  } = useCurrency();
 
   // Analytics data
-  const themeData = [
-    { name: 'Wildlife', value: 45, color: 'hsl(var(--wildlife))' },
-    { name: 'Habitat', value: 30, color: 'hsl(var(--habitat))' },
-    { name: 'Education', value: 15, color: 'hsl(var(--education))' },
-    { name: 'Livelihoods', value: 10, color: 'hsl(var(--livelihoods))' }
-  ];
-
-  const geographicData = [
-    { region: 'Maasai Mara', projects: 12, funding: 250000 },
-    { region: 'Laikipia', projects: 8, funding: 180000 },
-    { region: 'Samburu', projects: 6, funding: 120000 },
-    { region: 'Coast', projects: 10, funding: 200000 },
-    { region: 'Nairobi', projects: 5, funding: 90000 }
-  ];
-
-  const monthlyImpact = [
-    { month: 'Jan', wildlife: 12, habitat: 8, education: 5, livelihoods: 3 },
-    { month: 'Feb', wildlife: 15, habitat: 10, education: 6, livelihoods: 4 },
-    { month: 'Mar', wildlife: 18, habitat: 12, education: 8, livelihoods: 5 },
-    { month: 'Apr', wildlife: 22, habitat: 15, education: 10, livelihoods: 6 },
-    { month: 'May', wildlife: 25, habitat: 18, education: 12, livelihoods: 8 },
-    { month: 'Jun', wildlife: 28, habitat: 20, education: 15, livelihoods: 10 }
-  ];
-
-  const forecastData = [
-    {
-      year: '2024',
-      projectedFunding: 2500000,
-      projectsLaunched: 85,
-      communitiesImpacted: 45,
-      wildlifeProtected: 15000,
-      habitatRestored: 2800,
-      confidence: 'High'
-    },
-    {
-      year: '2025', 
-      projectedFunding: 3200000,
-      projectsLaunched: 110,
-      communitiesImpacted: 60,
-      wildlifeProtected: 20000,
-      habitatRestored: 3500,
-      confidence: 'Medium'
-    },
-    {
-      year: '2026',
-      projectedFunding: 4100000,
-      projectsLaunched: 140,
-      communitiesImpacted: 78,
-      wildlifeProtected: 26000,
-      habitatRestored: 4200,
-      confidence: 'Medium'
-    }
-  ];
-
+  const themeData = [{
+    name: 'Wildlife',
+    value: 45,
+    color: 'hsl(var(--wildlife))'
+  }, {
+    name: 'Habitat',
+    value: 30,
+    color: 'hsl(var(--habitat))'
+  }, {
+    name: 'Education',
+    value: 15,
+    color: 'hsl(var(--education))'
+  }, {
+    name: 'Livelihoods',
+    value: 10,
+    color: 'hsl(var(--livelihoods))'
+  }];
+  const geographicData = [{
+    region: 'Maasai Mara',
+    projects: 12,
+    funding: 250000
+  }, {
+    region: 'Laikipia',
+    projects: 8,
+    funding: 180000
+  }, {
+    region: 'Samburu',
+    projects: 6,
+    funding: 120000
+  }, {
+    region: 'Coast',
+    projects: 10,
+    funding: 200000
+  }, {
+    region: 'Nairobi',
+    projects: 5,
+    funding: 90000
+  }];
+  const monthlyImpact = [{
+    month: 'Jan',
+    wildlife: 12,
+    habitat: 8,
+    education: 5,
+    livelihoods: 3
+  }, {
+    month: 'Feb',
+    wildlife: 15,
+    habitat: 10,
+    education: 6,
+    livelihoods: 4
+  }, {
+    month: 'Mar',
+    wildlife: 18,
+    habitat: 12,
+    education: 8,
+    livelihoods: 5
+  }, {
+    month: 'Apr',
+    wildlife: 22,
+    habitat: 15,
+    education: 10,
+    livelihoods: 6
+  }, {
+    month: 'May',
+    wildlife: 25,
+    habitat: 18,
+    education: 12,
+    livelihoods: 8
+  }, {
+    month: 'Jun',
+    wildlife: 28,
+    habitat: 20,
+    education: 15,
+    livelihoods: 10
+  }];
+  const forecastData = [{
+    year: '2024',
+    projectedFunding: 2500000,
+    projectsLaunched: 85,
+    communitiesImpacted: 45,
+    wildlifeProtected: 15000,
+    habitatRestored: 2800,
+    confidence: 'High'
+  }, {
+    year: '2025',
+    projectedFunding: 3200000,
+    projectsLaunched: 110,
+    communitiesImpacted: 60,
+    wildlifeProtected: 20000,
+    habitatRestored: 3500,
+    confidence: 'Medium'
+  }, {
+    year: '2026',
+    projectedFunding: 4100000,
+    projectsLaunched: 140,
+    communitiesImpacted: 78,
+    wildlifeProtected: 26000,
+    habitatRestored: 4200,
+    confidence: 'Medium'
+  }];
   const generateReport = (type: string) => {
     if (type === 'monthly') {
       const reportContent = `
@@ -147,8 +194,9 @@ TESTIMONIALS
 
 For detailed metrics and additional information, visit our impact dashboard at natuasili.com/impact
       `;
-      
-      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const blob = new Blob([reportContent], {
+        type: 'text/plain'
+      });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -269,8 +317,9 @@ PARTNER TESTIMONIALS
 
 Contact partnerships@natuasili.com for detailed partner-specific reports.
       `;
-      
-      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const blob = new Blob([reportContent], {
+        type: 'text/plain'
+      });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -281,209 +330,201 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
 
   // Mock ledger data - in real app this would come from API with all 12 partners
   const mockLedgerEntries = [
-    // Maasai Mara Wildlife Conservancy
-    {
-      id: "1",
-      booking_date: "2024-01-20",
-      experience_title: "Big Five Wildlife Tracking Experience",
-      project_name: "Maasai Mara Wildlife Conservancy",
-      theme: "Wildlife",
-      allocation_amount: 263,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Successfully tracked 3 lion prides and 2 elephant herds. Collected GPS data for 15 individual animals contributing to migration pattern research. Installed 2 new camera traps in strategic locations.",
-      verified_date: "2024-01-23"
-    },
-    // Samburu Education Initiative  
-    {
-      id: "2",
-      booking_date: "2024-01-18",
-      experience_title: "Traditional Beadwork Workshop",
-      project_name: "Samburu Education Initiative",
-      theme: "Education", 
-      allocation_amount: 96,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Conducted 2-hour workshop with 8 local women artisans. Created 15 traditional beadwork pieces. All workshop materials purchased from local suppliers, supporting 3 additional families.",
-      verified_date: "2024-01-21"
-    },
-    // Coastal Forest Restoration
-    {
-      id: "3",
-      booking_date: "2024-01-16",
-      experience_title: "Mangrove Restoration Volunteer Day",
-      project_name: "Coastal Forest Restoration",
-      theme: "Habitat",
-      allocation_amount: 60,
-      currency: "USD", 
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Planted 45 mangrove seedlings in degraded coastal area. Removed 2.3 tons of marine debris. Trained 6 community members in mangrove cultivation techniques.",
-      verified_date: "2024-01-19"
-    },
-    // Nature Kenya
-    {
-      id: "4",
-      booking_date: "2024-01-14",
-      experience_title: "Urban Bird Watching Safari",
-      project_name: "Nature Kenya",
-      theme: "Wildlife",
-      allocation_amount: 68,
-      currency: "USD",
-      status: "verified", 
-      proof_images: ["/placeholder.svg"],
-      proof_description: "Documented 47 bird species in Nairobi Arboretum. Trained 3 local guides in bird identification. Contributed data to Kenya Bird Atlas project.",
-      verified_date: "2024-01-17"
-    },
-    // Ol Pejeta Conservancy
-    {
-      id: "5",
-      booking_date: "2024-01-12",
-      experience_title: "Rhino Conservation & Technology Tour",
-      project_name: "Ol Pejeta Conservancy", 
-      theme: "Wildlife",
-      allocation_amount: 290,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Monitored northern white rhinos Najin and Fatu. Updated GPS tracking systems for 12 black rhinos. Demonstrated anti-poaching technology to visitors.",
-      verified_date: "2024-01-15"
-    },
-    // Reteti Elephant Orphanage
-    {
-      id: "6", 
-      booking_date: "2024-01-10",
-      experience_title: "Meet Orphaned Elephants Experience",
-      project_name: "Reteti Elephant Orphanage",
-      theme: "Wildlife",
-      allocation_amount: 142,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Fed and cared for 8 orphaned elephant calves. Prepared nutritional supplements. Supported 4 Samburu women keepers in daily elephant care routines.",
-      verified_date: "2024-01-13"
-    },
-    // Mara Elephant Project
-    {
-      id: "7",
-      booking_date: "2024-01-08", 
-      experience_title: "Elephant Tracking & Research Experience",
-      project_name: "Mara Elephant Project",
-      theme: "Wildlife",
-      allocation_amount: 245,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg"],
-      proof_description: "Tracked 3 elephant families using GPS collars. Recorded behavioral data for conservation research. Conducted anti-poaching patrol covering 45km area.",
-      verified_date: "2024-01-11"
-    },
-    // Colobus Conservation
-    {
-      id: "8",
-      booking_date: "2024-01-06",
-      experience_title: "Colobus Monkey Conservation Experience", 
-      project_name: "Colobus Conservation",
-      theme: "Wildlife",
-      allocation_amount: 89,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Rehabilitated 2 rescued colobus monkeys. Planted 25 indigenous trees in degraded coastal forest. Educated 15 community members about primate conservation.",
-      verified_date: "2024-01-09"
-    },
-    // Giraffe Centre
-    {
-      id: "9",
-      booking_date: "2024-01-04",
-      experience_title: "Giraffe Feeding & Conservation Education", 
-      project_name: "Giraffe Centre",
-      theme: "Wildlife",
-      allocation_amount: 156,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Fed and monitored 14 Rothschild giraffes. Conducted conservation education for 35 school children. Supported breeding program documentation.",
-      verified_date: "2024-01-07"
-    },
-    // Friends of Karura Forest
-    {
-      id: "10",
-      booking_date: "2024-01-02",
-      experience_title: "Forest Conservation Tree Planting", 
-      project_name: "Friends of Karura Forest",
-      theme: "Habitat",
-      allocation_amount: 78,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg"],
-      proof_description: "Planted 50 indigenous seedlings in degraded forest area. Cleared invasive species from 2 hectares. Trained 8 volunteers in forest restoration techniques.",
-      verified_date: "2024-01-05"
-    },
-    // Local Ocean Conservation
-    {
-      id: "11",
-      booking_date: "2023-12-30",
-      experience_title: "Marine Conservation Dive Experience", 
-      project_name: "Local Ocean Conservation",
-      theme: "Habitat",
-      allocation_amount: 124,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg", "/placeholder.svg"],
-      proof_description: "Conducted coral reef health assessment. Removed 45kg of marine debris. Documented 28 fish species and 12 coral species in monitoring survey.",
-      verified_date: "2024-01-03"
-    },
-    // Friends of Nairobi National Park
-    {
-      id: "12",
-      booking_date: "2023-12-28",
-      experience_title: "National Park Cleanup & Wildlife Walk", 
-      project_name: "Friends of Nairobi National Park",
-      theme: "Habitat",
-      allocation_amount: 95,
-      currency: "USD",
-      status: "verified",
-      proof_images: ["/placeholder.svg"],
-      proof_description: "Removed 180kg of litter from park trails. Led wildlife walk documenting 23 mammal species. Engaged 12 volunteers in park conservation activities.",
-      verified_date: "2024-01-01"
-    }
-  ];
-
+  // Maasai Mara Wildlife Conservancy
+  {
+    id: "1",
+    booking_date: "2024-01-20",
+    experience_title: "Big Five Wildlife Tracking Experience",
+    project_name: "Maasai Mara Wildlife Conservancy",
+    theme: "Wildlife",
+    allocation_amount: 263,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Successfully tracked 3 lion prides and 2 elephant herds. Collected GPS data for 15 individual animals contributing to migration pattern research. Installed 2 new camera traps in strategic locations.",
+    verified_date: "2024-01-23"
+  },
+  // Samburu Education Initiative  
+  {
+    id: "2",
+    booking_date: "2024-01-18",
+    experience_title: "Traditional Beadwork Workshop",
+    project_name: "Samburu Education Initiative",
+    theme: "Education",
+    allocation_amount: 96,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Conducted 2-hour workshop with 8 local women artisans. Created 15 traditional beadwork pieces. All workshop materials purchased from local suppliers, supporting 3 additional families.",
+    verified_date: "2024-01-21"
+  },
+  // Coastal Forest Restoration
+  {
+    id: "3",
+    booking_date: "2024-01-16",
+    experience_title: "Mangrove Restoration Volunteer Day",
+    project_name: "Coastal Forest Restoration",
+    theme: "Habitat",
+    allocation_amount: 60,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Planted 45 mangrove seedlings in degraded coastal area. Removed 2.3 tons of marine debris. Trained 6 community members in mangrove cultivation techniques.",
+    verified_date: "2024-01-19"
+  },
+  // Nature Kenya
+  {
+    id: "4",
+    booking_date: "2024-01-14",
+    experience_title: "Urban Bird Watching Safari",
+    project_name: "Nature Kenya",
+    theme: "Wildlife",
+    allocation_amount: 68,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg"],
+    proof_description: "Documented 47 bird species in Nairobi Arboretum. Trained 3 local guides in bird identification. Contributed data to Kenya Bird Atlas project.",
+    verified_date: "2024-01-17"
+  },
+  // Ol Pejeta Conservancy
+  {
+    id: "5",
+    booking_date: "2024-01-12",
+    experience_title: "Rhino Conservation & Technology Tour",
+    project_name: "Ol Pejeta Conservancy",
+    theme: "Wildlife",
+    allocation_amount: 290,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Monitored northern white rhinos Najin and Fatu. Updated GPS tracking systems for 12 black rhinos. Demonstrated anti-poaching technology to visitors.",
+    verified_date: "2024-01-15"
+  },
+  // Reteti Elephant Orphanage
+  {
+    id: "6",
+    booking_date: "2024-01-10",
+    experience_title: "Meet Orphaned Elephants Experience",
+    project_name: "Reteti Elephant Orphanage",
+    theme: "Wildlife",
+    allocation_amount: 142,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Fed and cared for 8 orphaned elephant calves. Prepared nutritional supplements. Supported 4 Samburu women keepers in daily elephant care routines.",
+    verified_date: "2024-01-13"
+  },
+  // Mara Elephant Project
+  {
+    id: "7",
+    booking_date: "2024-01-08",
+    experience_title: "Elephant Tracking & Research Experience",
+    project_name: "Mara Elephant Project",
+    theme: "Wildlife",
+    allocation_amount: 245,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg"],
+    proof_description: "Tracked 3 elephant families using GPS collars. Recorded behavioral data for conservation research. Conducted anti-poaching patrol covering 45km area.",
+    verified_date: "2024-01-11"
+  },
+  // Colobus Conservation
+  {
+    id: "8",
+    booking_date: "2024-01-06",
+    experience_title: "Colobus Monkey Conservation Experience",
+    project_name: "Colobus Conservation",
+    theme: "Wildlife",
+    allocation_amount: 89,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Rehabilitated 2 rescued colobus monkeys. Planted 25 indigenous trees in degraded coastal forest. Educated 15 community members about primate conservation.",
+    verified_date: "2024-01-09"
+  },
+  // Giraffe Centre
+  {
+    id: "9",
+    booking_date: "2024-01-04",
+    experience_title: "Giraffe Feeding & Conservation Education",
+    project_name: "Giraffe Centre",
+    theme: "Wildlife",
+    allocation_amount: 156,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Fed and monitored 14 Rothschild giraffes. Conducted conservation education for 35 school children. Supported breeding program documentation.",
+    verified_date: "2024-01-07"
+  },
+  // Friends of Karura Forest
+  {
+    id: "10",
+    booking_date: "2024-01-02",
+    experience_title: "Forest Conservation Tree Planting",
+    project_name: "Friends of Karura Forest",
+    theme: "Habitat",
+    allocation_amount: 78,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg"],
+    proof_description: "Planted 50 indigenous seedlings in degraded forest area. Cleared invasive species from 2 hectares. Trained 8 volunteers in forest restoration techniques.",
+    verified_date: "2024-01-05"
+  },
+  // Local Ocean Conservation
+  {
+    id: "11",
+    booking_date: "2023-12-30",
+    experience_title: "Marine Conservation Dive Experience",
+    project_name: "Local Ocean Conservation",
+    theme: "Habitat",
+    allocation_amount: 124,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg", "/placeholder.svg"],
+    proof_description: "Conducted coral reef health assessment. Removed 45kg of marine debris. Documented 28 fish species and 12 coral species in monitoring survey.",
+    verified_date: "2024-01-03"
+  },
+  // Friends of Nairobi National Park
+  {
+    id: "12",
+    booking_date: "2023-12-28",
+    experience_title: "National Park Cleanup & Wildlife Walk",
+    project_name: "Friends of Nairobi National Park",
+    theme: "Habitat",
+    allocation_amount: 95,
+    currency: "USD",
+    status: "verified",
+    proof_images: ["/placeholder.svg"],
+    proof_description: "Removed 180kg of litter from park trails. Led wildlife walk documenting 23 mammal species. Engaged 12 volunteers in park conservation activities.",
+    verified_date: "2024-01-01"
+  }];
   const filteredEntries = mockLedgerEntries.filter(entry => {
-    const matchesSearch = 
-      entry.experience_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      entry.project_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      entry.proof_description.toLowerCase().includes(searchTerm.toLowerCase());
-    
+    const matchesSearch = entry.experience_title.toLowerCase().includes(searchTerm.toLowerCase()) || entry.project_name.toLowerCase().includes(searchTerm.toLowerCase()) || entry.proof_description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPartner = selectedPartner === "all" || entry.project_name === selectedPartner;
     const matchesTheme = selectedTheme === "all" || entry.theme === selectedTheme;
-    
     return matchesSearch && matchesPartner && matchesTheme;
   });
-
   const getThemeColor = (theme: string) => {
     switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Wildlife':
+        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Livelihoods':
+        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      case 'Education':
+        return 'bg-education/10 text-education border-education/20';
+      case 'Habitat':
+        return 'bg-habitat/10 text-habitat border-habitat/20';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
-
   const totalImpact = filteredEntries.reduce((sum, entry) => sum + entry.allocation_amount, 0);
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="bg-primary/5 py-16 section">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Impact Transparency Ledger
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Impact transparency ledger</h1>
             <p className="text-xl text-muted-foreground mb-8">
               Every dollar tracked. Every impact verified. See exactly how traveler contributions 
               are creating real conservation outcomes across Kenya.
@@ -516,12 +557,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search experiences, partners..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+              <Input placeholder="Search experiences, partners..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
             </div>
             
             <Select value={selectedPartner} onValueChange={setSelectedPartner}>
@@ -530,11 +566,9 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Partners</SelectItem>
-                {mockProjects.map(project => (
-                  <SelectItem key={project.id} value={project.name}>
+                {mockProjects.map(project => <SelectItem key={project.id} value={project.name}>
                     {project.name}
-                  </SelectItem>
-                ))}
+                  </SelectItem>)}
               </SelectContent>
             </Select>
 
@@ -564,9 +598,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
         <div className="container mx-auto px-4">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold text-foreground">
-                Impact Dashboard
-              </h2>
+              <h2 className="text-2xl font-bold text-foreground">Impact dashboard</h2>
               <Button variant="outline" className="gap-2">
                 <ExternalLink className="h-4 w-4" />
                 Export Data
@@ -583,8 +615,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
             <TabsContent value="entries" className="mt-8">
 
           <div className="space-y-6">
-            {filteredEntries.map((entry) => (
-              <Card key={entry.id} className="overflow-hidden">
+            {filteredEntries.map(entry => <Card key={entry.id} className="overflow-hidden">
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                     {/* Main Info */}
@@ -645,45 +676,31 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                         Impact Proof ({entry.proof_images.length})
                       </div>
                       <div className="grid grid-cols-2 gap-2">
-                        {entry.proof_images.slice(0, 4).map((image, index) => (
-                          <div key={index} className="aspect-square bg-muted rounded-lg overflow-hidden">
-                            <img
-                              src={image}
-                              alt={`Impact proof ${index + 1}`}
-                              className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
-                            />
-                          </div>
-                        ))}
+                        {entry.proof_images.slice(0, 4).map((image, index) => <div key={index} className="aspect-square bg-muted rounded-lg overflow-hidden">
+                            <img src={image} alt={`Impact proof ${index + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer" />
+                          </div>)}
                       </div>
-                      {entry.proof_images.length > 4 && (
-                        <Button variant="outline" size="sm" className="w-full mt-2">
+                      {entry.proof_images.length > 4 && <Button variant="outline" size="sm" className="w-full mt-2">
                           View All ({entry.proof_images.length})
-                        </Button>
-                      )}
+                        </Button>}
                     </div>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
 
-          {filteredEntries.length === 0 && (
-            <div className="text-center py-12">
+          {filteredEntries.length === 0 && <div className="text-center py-12">
               <p className="text-muted-foreground text-lg mb-4">
                 No verified impact entries found matching your criteria.
               </p>
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedPartner("all");
-                  setSelectedTheme("all");
-                }}
-              >
+              <Button variant="outline" onClick={() => {
+                setSearchTerm("");
+                setSelectedPartner("all");
+                setSelectedTheme("all");
+              }}>
                 Clear Filters
               </Button>
-            </div>
-          )}
+            </div>}
             </TabsContent>
 
             <TabsContent value="reports" className="mt-8">
@@ -740,12 +757,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                   <CardContent>
                     <p className="text-muted-foreground mb-4">Predictive analysis of conservation impact based on current trends.</p>
                     <div className="space-y-2">
-                    <Button 
-                      variant="default" 
-                      size="sm"
-                      onClick={() => setActiveTab("forecasts")}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                    >
+                    <Button variant="default" size="sm" onClick={() => setActiveTab("forecasts")} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                       View forecast
                     </Button>
                       <div className="text-xs text-muted-foreground">
@@ -826,30 +838,46 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                       <CardTitle>Impact by Theme</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ChartContainer
-                        config={{
-                          wildlife: { label: "Wildlife Protection", color: "hsl(var(--wildlife))" },
-                          livelihoods: { label: "Community Livelihoods", color: "hsl(var(--livelihoods))" },
-                          habitat: { label: "Habitat Restoration", color: "hsl(var(--habitat))" },
-                          education: { label: "Education", color: "hsl(var(--education))" },
-                        }}
-                        className="h-[200px]"
-                      >
+                      <ChartContainer config={{
+                      wildlife: {
+                        label: "Wildlife Protection",
+                        color: "hsl(var(--wildlife))"
+                      },
+                      livelihoods: {
+                        label: "Community Livelihoods",
+                        color: "hsl(var(--livelihoods))"
+                      },
+                      habitat: {
+                        label: "Habitat Restoration",
+                        color: "hsl(var(--habitat))"
+                      },
+                      education: {
+                        label: "Education",
+                        color: "hsl(var(--education))"
+                      }
+                    }} className="h-[200px]">
                         <PieChart>
                           <ChartTooltip content={<ChartTooltipContent />} />
-                          <Pie
-                            data={[
-                              { name: "Wildlife Protection", value: 650, fill: "hsl(var(--wildlife))" },
-                              { name: "Community Livelihoods", value: 420, fill: "hsl(var(--livelihoods))" },
-                              { name: "Habitat Restoration", value: 380, fill: "hsl(var(--habitat))" },
-                              { name: "Education", value: 285, fill: "hsl(var(--education))" },
-                            ]}
-                            cx="50%"
-                            cy="50%"
-                            outerRadius={80}
-                            dataKey="value"
-                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                          />
+                          <Pie data={[{
+                          name: "Wildlife Protection",
+                          value: 650,
+                          fill: "hsl(var(--wildlife))"
+                        }, {
+                          name: "Community Livelihoods",
+                          value: 420,
+                          fill: "hsl(var(--livelihoods))"
+                        }, {
+                          name: "Habitat Restoration",
+                          value: 380,
+                          fill: "hsl(var(--habitat))"
+                        }, {
+                          name: "Education",
+                          value: 285,
+                          fill: "hsl(var(--education))"
+                        }]} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({
+                          name,
+                          percent
+                        }) => `${name}: ${(percent * 100).toFixed(0)}%`} />
                         </PieChart>
                       </ChartContainer>
                     </CardContent>
@@ -860,30 +888,46 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
                       <CardTitle>Geographic Distribution</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <ChartContainer
-                        config={{
-                          mara: { label: "Maasai Mara", color: "hsl(142 71% 45%)" },
-                          samburu: { label: "Samburu", color: "hsl(142 71% 35%)" },
-                          coast: { label: "Coastal Areas", color: "hsl(142 71% 55%)" },
-                          laikipia: { label: "Laikipia", color: "hsl(142 71% 65%)" },
-                        }}
-                        className="h-[200px]"
-                      >
+                      <ChartContainer config={{
+                      mara: {
+                        label: "Maasai Mara",
+                        color: "hsl(142 71% 45%)"
+                      },
+                      samburu: {
+                        label: "Samburu",
+                        color: "hsl(142 71% 35%)"
+                      },
+                      coast: {
+                        label: "Coastal Areas",
+                        color: "hsl(142 71% 55%)"
+                      },
+                      laikipia: {
+                        label: "Laikipia",
+                        color: "hsl(142 71% 65%)"
+                      }
+                    }} className="h-[200px]">
                         <PieChart>
                           <ChartTooltip content={<ChartTooltipContent />} />
-                          <Pie
-                            data={[
-                              { name: "Maasai Mara", value: 35, fill: "hsl(142 71% 45%)" },
-                              { name: "Samburu", value: 28, fill: "hsl(142 71% 35%)" },
-                              { name: "Coastal Areas", value: 22, fill: "hsl(142 71% 55%)" },
-                              { name: "Laikipia", value: 15, fill: "hsl(142 71% 65%)" },
-                            ]}
-                            cx="50%"
-                            cy="50%"
-                            outerRadius={80}
-                            dataKey="value"
-                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                          />
+                          <Pie data={[{
+                          name: "Maasai Mara",
+                          value: 35,
+                          fill: "hsl(142 71% 45%)"
+                        }, {
+                          name: "Samburu",
+                          value: 28,
+                          fill: "hsl(142 71% 35%)"
+                        }, {
+                          name: "Coastal Areas",
+                          value: 22,
+                          fill: "hsl(142 71% 55%)"
+                        }, {
+                          name: "Laikipia",
+                          value: 15,
+                          fill: "hsl(142 71% 65%)"
+                        }]} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({
+                          name,
+                          percent
+                        }) => `${name}: ${(percent * 100).toFixed(0)}%`} />
                         </PieChart>
                       </ChartContainer>
                     </CardContent>
@@ -1122,9 +1166,7 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              How Impact Verification Works
-            </h2>
+            <h2 className="text-3xl font-bold text-foreground mb-4">How impact verification works</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Our transparent process ensures every dollar creates real, measurable conservation impact.
             </p>
@@ -1181,8 +1223,6 @@ Contact partnerships@natuasili.com for detailed partner-specific reports.
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default ImpactLedger;
