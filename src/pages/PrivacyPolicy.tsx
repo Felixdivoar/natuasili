@@ -1,10 +1,8 @@
-
 const PrivacyPolicy = () => {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <section className="hero-full py-16 bg-primary/5">
         <div className="hero-inner">
-          <h1 className="text-4xl font-bold text-foreground mb-8">Privacy Policy</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-8">Privacy policy</h1>
         </div>
       </section>
       <div className="container mx-auto px-4 py-16 section">
@@ -12,9 +10,7 @@ const PrivacyPolicy = () => {
           
           <div className="prose prose-lg max-w-none">
             <div className="space-y-6 text-muted-foreground leading-relaxed">
-              <p>
-                <strong>Privacy Policy – NatuAsili</strong>
-              </p>
+              
               
               <p>
                 We collect information you provide (e.g., name, email, phone) when you create an account, make a booking, or contact us. We also collect usage data (cookies, device info) to improve our services.
@@ -39,8 +35,6 @@ const PrivacyPolicy = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PrivacyPolicy;
