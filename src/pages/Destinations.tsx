@@ -3,91 +3,79 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, TreePine } from "lucide-react";
 import { Link } from "react-router-dom";
-
 import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
 import samburuDestination from "@/assets/destinations/samburu-destination.jpg";
 import masaiMaraDestination from "@/assets/destinations/masai-mara-destination.jpg";
 import coastDestination from "@/assets/destinations/coast-destination.jpg";
 import laikipiaDestination from "@/assets/destinations/laikipia-destination.jpg";
-
-const destinations = [
-  {
-    id: 1,
-    name: "Nairobi Conservation Area",
-    description: "Urban conservation initiatives including Nairobi National Park, Karura Forest, and community-based urban wildlife corridors.",
-    image: nairobiDestination,
-    location: "Nairobi County",
-    partners: 8,
-    projects: 12,
-    hectares: "12,000",
-    communities: 25,
-    highlights: ["Urban Wildlife Corridors", "Forest Restoration", "Environmental Education"],
-    keySpecies: ["Giraffe", "Lion", "Rhino", "Leopard"]
-  },
-  {
-    id: 2,
-    name: "Samburu Ecosystem",
-    description: "Community conservancies protecting unique northern Kenya wildlife and supporting traditional pastoralist communities.",
-    image: samburuDestination,
-    location: "Samburu County",
-    partners: 6,
-    projects: 9,
-    hectares: "8,500",
-    communities: 18,
-    highlights: ["Community Conservancies", "Cultural Tourism", "Wildlife Research"],
-    keySpecies: ["Elephant", "Grevy's Zebra", "Reticulated Giraffe", "Wild Dog"]
-  },
-  {
-    id: 3,
-    name: "Maasai Mara Ecosystem",
-    description: "Protecting the world-famous migration route and supporting Maasai communities through conservation tourism.",
-    image: masaiMaraDestination,
-    location: "Narok County",
-    partners: 10,
-    projects: 15,
-    hectares: "15,000",
-    communities: 30,
-    highlights: ["Great Migration", "Community Conservancies", "Anti-Poaching"],
-    keySpecies: ["Wildebeest", "Lion", "Cheetah", "Elephant"]
-  },
-  {
-    id: 4,
-    name: "Coastal Conservation Zone",
-    description: "Marine and coastal ecosystem protection including mangrove restoration and community-based fisheries management.",
-    image: coastDestination,
-    location: "Coastal Counties",
-    partners: 7,
-    projects: 11,
-    hectares: "6,500",
-    communities: 22,
-    highlights: ["Mangrove Restoration", "Marine Conservation", "Sustainable Fisheries"],
-    keySpecies: ["Whale Shark", "Turtle", "Dolphin", "Dugong"]
-  },
-  {
-    id: 5,
-    name: "Laikipia Plateau",
-    description: "Private and community conservancies working together to protect wildlife on Kenya's central highlands.",
-    image: laikipiaDestination,
-    location: "Laikipia County",
-    partners: 9,
-    projects: 13,
-    hectares: "11,000",
-    communities: 20,
-    highlights: ["Private Conservancies", "Wildlife Research", "Community Partnerships"],
-    keySpecies: ["Elephant", "Lion", "Wild Dog", "Grevy's Zebra"]
-  }
-];
-
+const destinations = [{
+  id: 1,
+  name: "Nairobi Conservation Area",
+  description: "Urban conservation initiatives including Nairobi National Park, Karura Forest, and community-based urban wildlife corridors.",
+  image: nairobiDestination,
+  location: "Nairobi County",
+  partners: 8,
+  projects: 12,
+  hectares: "12,000",
+  communities: 25,
+  highlights: ["Urban Wildlife Corridors", "Forest Restoration", "Environmental Education"],
+  keySpecies: ["Giraffe", "Lion", "Rhino", "Leopard"]
+}, {
+  id: 2,
+  name: "Samburu Ecosystem",
+  description: "Community conservancies protecting unique northern Kenya wildlife and supporting traditional pastoralist communities.",
+  image: samburuDestination,
+  location: "Samburu County",
+  partners: 6,
+  projects: 9,
+  hectares: "8,500",
+  communities: 18,
+  highlights: ["Community Conservancies", "Cultural Tourism", "Wildlife Research"],
+  keySpecies: ["Elephant", "Grevy's Zebra", "Reticulated Giraffe", "Wild Dog"]
+}, {
+  id: 3,
+  name: "Maasai Mara Ecosystem",
+  description: "Protecting the world-famous migration route and supporting Maasai communities through conservation tourism.",
+  image: masaiMaraDestination,
+  location: "Narok County",
+  partners: 10,
+  projects: 15,
+  hectares: "15,000",
+  communities: 30,
+  highlights: ["Great Migration", "Community Conservancies", "Anti-Poaching"],
+  keySpecies: ["Wildebeest", "Lion", "Cheetah", "Elephant"]
+}, {
+  id: 4,
+  name: "Coastal Conservation Zone",
+  description: "Marine and coastal ecosystem protection including mangrove restoration and community-based fisheries management.",
+  image: coastDestination,
+  location: "Coastal Counties",
+  partners: 7,
+  projects: 11,
+  hectares: "6,500",
+  communities: 22,
+  highlights: ["Mangrove Restoration", "Marine Conservation", "Sustainable Fisheries"],
+  keySpecies: ["Whale Shark", "Turtle", "Dolphin", "Dugong"]
+}, {
+  id: 5,
+  name: "Laikipia Plateau",
+  description: "Private and community conservancies working together to protect wildlife on Kenya's central highlands.",
+  image: laikipiaDestination,
+  location: "Laikipia County",
+  partners: 9,
+  projects: 13,
+  hectares: "11,000",
+  communities: 20,
+  highlights: ["Private Conservancies", "Wildlife Research", "Community Partnerships"],
+  keySpecies: ["Elephant", "Lion", "Wild Dog", "Grevy's Zebra"]
+}];
 const Destinations = () => {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="py-16 bg-conservation/5 section">
+      <section className="bg-conservation/5 section py-[30px]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Conservation Destinations
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Conservation destinations</h1>
             <p className="text-xl text-muted-foreground mb-8">
               Explore Kenya's most important conservation areas where your travel makes a direct impact. 
               Each destination offers unique experiences while supporting vital conservation work.
@@ -100,14 +88,9 @@ const Destinations = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {destinations.map((destination) => (
-              <Card key={destination.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            {destinations.map(destination => <Card key={destination.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="relative aspect-[16/10]">
-                  <img
-                    src={destination.image}
-                    alt={destination.name}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={destination.image} alt={destination.name} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex items-center gap-2 text-white mb-2">
@@ -147,48 +130,37 @@ const Destinations = () => {
                   
                   {/* Highlights */}
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Conservation Highlights</h4>
+                    <h4 className="font-semibold text-foreground mb-2">Conservation highlights</h4>
                     <div className="flex flex-wrap gap-2">
-                      {destination.highlights.map((highlight, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
+                      {destination.highlights.map((highlight, index) => <Badge key={index} variant="secondary" className="text-xs">
                           {highlight}
-                        </Badge>
-                      ))}
+                        </Badge>)}
                     </div>
                   </div>
                   
                   {/* Key Species */}
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Key Species</h4>
+                    <h4 className="font-semibold text-foreground mb-2">Key species</h4>
                     <div className="flex flex-wrap gap-2">
-                      {destination.keySpecies.map((species, index) => (
-                        <Badge key={index} className="text-xs bg-conservation/10 text-conservation border-conservation/20">
+                      {destination.keySpecies.map((species, index) => <Badge key={index} className="text-xs bg-conservation/10 text-conservation border-conservation/20">
                           {species}
-                        </Badge>
-                      ))}
+                        </Badge>)}
                     </div>
                   </div>
                   
                   <div className="flex gap-3 pt-4">
                     <Button className="w-full bg-conservation hover:bg-conservation/90 text-white" asChild>
-                      <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`}>
-                        Explore Partners
-                      </Link>
+                      <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`}>Explore partners</Link>
                     </Button>
                     <Button variant="outline" className="w-full" asChild>
-                      <Link to={`/browse?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        View All Experiences
-                      </Link>
+                      <Link to={`/browse?destination=${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>View all experiences</Link>
                     </Button>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Destinations;
