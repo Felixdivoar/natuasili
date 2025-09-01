@@ -25,7 +25,7 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMobileMenuOpen]);
-  return <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header header-compact py-0 my-[7px]">
+  return <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50 site-header header-compact py-0 my-0">
       <div className="nav-inner">
         <div className="flex items-center justify-between">
           {/* Logo */}
