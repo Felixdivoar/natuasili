@@ -20,7 +20,7 @@ const Hero = () => {
         <div className="max-w-2xl text-white">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
             Conservation Through
-            <span className="text-accent block">Authentic Experiences</span>
+            <span className="text-accent block">Authentic experiences</span>
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
@@ -40,7 +40,7 @@ const Hero = () => {
               </div>
               <div>
                 <div className="text-2xl font-bold">150+</div>
-                <div className="text-sm text-white/80">Conservation Projects</div>
+                <div className="text-sm text-white/80">Conservation projects</div>
               </div>
             </div>
             
@@ -50,7 +50,7 @@ const Hero = () => {
               </div>
               <div>
                 <div className="text-2xl font-bold">2,500+</div>
-                <div className="text-sm text-white/80">Travelers Connected</div>
+                <div className="text-sm text-white/80">Travelers connected</div>
               </div>
             </div>
             
@@ -60,7 +60,7 @@ const Hero = () => {
               </div>
               <div>
                 <div className="text-2xl font-bold whitespace-nowrap price">{formatPrice(580000)}</div>
-                <div className="text-sm text-white/80">Impact Generated</div>
+                <div className="text-sm text-white/80">Impact generated</div>
               </div>
             </div>
           </div>
