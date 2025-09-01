@@ -51,9 +51,7 @@ const ExperienceCarousel = () => {
             </p>
           </div>
           <Link to="/marketplace">
-            <Button variant="outline" className="hidden md:block">
-              View All Experiences
-            </Button>
+            <Button variant="outline" className="hidden md:block">View all experiences</Button>
           </Link>
         </div>
 
@@ -118,9 +116,7 @@ const ExperienceCarousel = () => {
                         </div>
                         <div className="flex gap-2">
                           <Link to={`/experience/${experience.slug}`}>
-                            <Button variant="outline" size="sm">
-                              View Details
-                            </Button>
+                            <Button variant="outline" size="sm">View details</Button>
                           </Link>
                         </div>
                       </div>

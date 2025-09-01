@@ -71,9 +71,7 @@ const DestinationCarousel = () => {
             </p>
           </div>
           <Link to="/destinations">
-            <Button variant="outline" className="hidden md:block">
-              View All Destinations
-            </Button>
+            <Button variant="outline" className="hidden md:block">View all destinations</Button>
           </Link>
         </div>
 

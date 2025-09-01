@@ -132,9 +132,7 @@ const ImpactStories = () => {
             </p>
           </div>
           <Link to="/blog">
-            <Button variant="outline" className="hidden md:block">
-              View All Stories
-            </Button>
+            <Button variant="outline" className="hidden md:block">View all stories</Button>
           </Link>
         </div>
         

@@ -99,9 +99,7 @@ const ConservationPartnersCarousel = () => {
 
         <div className="text-center mt-8">
           <Link to="/partners">
-            <Button variant="outline" size="lg">
-              View All Partners
-            </Button>
+            <Button variant="outline" size="lg">View all partners</Button>
           </Link>
         </div>
       </div>
