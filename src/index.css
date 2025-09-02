@@ -266,11 +266,13 @@ button, .btn, .button, [role="button"],
   font-weight: bold;
   transition: background-color 0.2s;
 }
-/* Full-bleed hero wrapper */
+/* Full-bleed hero wrapper - CRITICAL for all pages */
 .hero-full {
-  width: 100%;
-  margin: 0;               /* remove margins */
-  padding: 0;              /* hero image touches edges */
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  padding: 0 !important;
+  position: relative;
 }
 .hero-full .hero-inner {   /* text/content remains aligned to site container */
   max-width: 1150px;

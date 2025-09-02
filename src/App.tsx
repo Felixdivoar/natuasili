@@ -4,10 +4,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
+import { I18nProvider } from "@/i18n/I18nProvider";
 import { useEffect } from "react";
 import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RootLayout from "@/layouts/RootLayout";
+import HeaderMega from "@/components/HeaderMega";
+import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
@@ -38,6 +41,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Search from "./pages/Search";
 import PartnerEntry from "./pages/PartnerEntry";
+import ContentStub from "./pages/ContentStub";
 
 const queryClient = new QueryClient();
 
@@ -52,54 +56,69 @@ function ScrollToTop() {
   return null;
 }
 
+// Layout with new header
+function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-background">
+      <HeaderMega />
+      <main className="flex-1">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <CurrencyProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <CookieBanner />
-            <ScrollToTop />
-            <Routes>
-              <Route element={<RootLayout />}>
-                <Route path="/" element={<Index />} />
-                <Route path="/marketplace" element={<Browse />} />
-                <Route path="/browse" element={<Browse />} />
-                <Route path="/experience/:slug" element={<ExperienceDetail />} />
-                <Route path="/checkout/:slug" element={<Checkout />} />
-                <Route path="/confirmation/:slug" element={<ConfirmationPage />} />
-                <Route path="/booking-success" element={<BookingSuccess />} />
-                <Route path="/impact-ledger" element={<ImpactLedger />} />
-                <Route path="/dashboard" element={<TravelerDashboard />} />
-                <Route path="/projects/:projectId" element={<ProjectDetail />} />
-                <Route path="/partner-dashboard" element={<PartnerDashboard />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/partners" element={<Partners />} />
-                <Route path="/partner/:slug" element={<PartnerProfile />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/blog/category/:category" element={<BlogCategory />} />
-                <Route path="/partners/success-stories/:slug" element={<PartnerSuccessStory />} />
-                <Route path="/destinations" element={<Destinations />} />
-                <Route path="/destinations/samburu" element={<SamburuDestination />} />
-                <Route path="/destinations/masai-mara" element={<MasaiMaraDestination />} />
-                <Route path="/destinations/coast" element={<CoastDestination />} />
-                <Route path="/destinations/nairobi" element={<NairobiDestination />} />
-                <Route path="/destinations/laikipia" element={<LaikipiaDestination />} />
-                <Route path="/experience-hub" element={<ExperienceHub />} />
-                <Route path="/terms" element={<TermsAndConditions />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/partner-entry" element={<PartnerEntry />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </CurrencyProvider>
+      <I18nProvider>
+        <CurrencyProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <CookieBanner />
+              <ScrollToTop />
+              <Routes>
+                <Route path="/" element={<AppLayout><Index /></AppLayout>} />
+                <Route path="/marketplace" element={<AppLayout><Browse /></AppLayout>} />
+                <Route path="/browse" element={<AppLayout><Browse /></AppLayout>} />
+                <Route path="/experiences" element={<AppLayout><Browse /></AppLayout>} />
+                <Route path="/experience/:slug" element={<AppLayout><ExperienceDetail /></AppLayout>} />
+                <Route path="/checkout/:slug" element={<AppLayout><Checkout /></AppLayout>} />
+                <Route path="/confirmation/:slug" element={<AppLayout><ConfirmationPage /></AppLayout>} />
+                <Route path="/booking-success" element={<AppLayout><BookingSuccess /></AppLayout>} />
+                <Route path="/impact-ledger" element={<AppLayout><ImpactLedger /></AppLayout>} />
+                <Route path="/dashboard" element={<AppLayout><TravelerDashboard /></AppLayout>} />
+                <Route path="/projects/:projectId" element={<AppLayout><ProjectDetail /></AppLayout>} />
+                <Route path="/partner-dashboard" element={<AppLayout><PartnerDashboard /></AppLayout>} />
+                <Route path="/about" element={<AppLayout><About /></AppLayout>} />
+                <Route path="/partners" element={<AppLayout><Partners /></AppLayout>} />
+                <Route path="/partner/:slug" element={<AppLayout><PartnerProfile /></AppLayout>} />
+                <Route path="/blog" element={<AppLayout><Blog /></AppLayout>} />
+                <Route path="/blog/:slug" element={<AppLayout><BlogPost /></AppLayout>} />
+                <Route path="/blog/category/:category" element={<AppLayout><BlogCategory /></AppLayout>} />
+                <Route path="/partners/success-stories/:slug" element={<AppLayout><PartnerSuccessStory /></AppLayout>} />
+                <Route path="/destinations" element={<AppLayout><Destinations /></AppLayout>} />
+                <Route path="/destinations/samburu" element={<AppLayout><SamburuDestination /></AppLayout>} />
+                <Route path="/destinations/masai-mara" element={<AppLayout><MasaiMaraDestination /></AppLayout>} />
+                <Route path="/destinations/coast" element={<AppLayout><CoastDestination /></AppLayout>} />
+                <Route path="/destinations/nairobi" element={<AppLayout><NairobiDestination /></AppLayout>} />
+                <Route path="/destinations/laikipia" element={<AppLayout><LaikipiaDestination /></AppLayout>} />
+                <Route path="/themes/:theme" element={<AppLayout><ContentStub title="Theme Page" description="This theme page is being developed. Check back soon for curated experiences and stories." /></AppLayout>} />
+                <Route path="/experience-hub" element={<AppLayout><ExperienceHub /></AppLayout>} />
+                <Route path="/terms" element={<AppLayout><TermsAndConditions /></AppLayout>} />
+                <Route path="/privacy-policy" element={<AppLayout><PrivacyPolicy /></AppLayout>} />
+                <Route path="/cookie-policy" element={<AppLayout><CookiePolicy /></AppLayout>} />
+                <Route path="/search" element={<AppLayout><Search /></AppLayout>} />
+                <Route path="/partner-entry" element={<AppLayout><PartnerEntry /></AppLayout>} />
+                <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </CurrencyProvider>
+      </I18nProvider>
     </QueryClientProvider>
   </ErrorBoundary>
 );
