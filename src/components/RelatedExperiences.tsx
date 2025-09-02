@@ -6,37 +6,34 @@ import { Clock, Users, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 interface RelatedExperiencesProps {
   currentExperienceId: number;
   theme: string;
   destination: string;
   maxResults?: number;
 }
-
 const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   currentExperienceId,
   theme,
   destination,
   maxResults = 5
 }) => {
-  const { formatPrice } = useCurrency();
+  const {
+    formatPrice
+  } = useCurrency();
   // Filter related experiences with priority order
   const getRelatedExperiences = () => {
     let related = mockExperiences.filter(exp => Number(exp.id) !== Number(currentExperienceId));
-    
+
     // Priority 1: Same theme
     const sameTheme = related.filter(exp => exp.theme === theme);
-    
+
     // Priority 2: Same destination/region
-    const sameDestination = related.filter(exp => 
-      exp.location_text.toLowerCase().includes(destination.toLowerCase()) ||
-      destination.toLowerCase().includes(exp.location_text.toLowerCase())
-    );
-    
+    const sameDestination = related.filter(exp => exp.location_text.toLowerCase().includes(destination.toLowerCase()) || destination.toLowerCase().includes(exp.location_text.toLowerCase()));
+
     // Priority 3: Highest rated or most popular (simulate with random selection)
     const popular = related.sort((a, b) => b.base_price - a.base_price);
-    
+
     // Combine with priority order, avoiding duplicates
     const combined: any[] = [];
     const addUnique = (experiences: typeof mockExperiences) => {
@@ -46,14 +43,11 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         }
       });
     };
-    
     addUnique(sameTheme);
     addUnique(sameDestination);
     addUnique(popular);
-    
     return combined.slice(0, maxResults);
   };
-
   const relatedExperiences = getRelatedExperiences();
 
   // Initialize carousel functionality after component mounts
@@ -61,13 +55,11 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
     const wireRelatedCarousel = () => {
       const root = document.querySelector('#related-experiences');
       if (!root) return;
-      
       const track = root.querySelector('.rel-track') as HTMLElement;
       const prev = root.querySelector('.rel-prev') as HTMLButtonElement;
       const next = root.querySelector('.rel-next') as HTMLButtonElement;
       const source = root.querySelector('#rel-source') as HTMLElement;
       const tpl = root.querySelector('#rel-card-template') as HTMLTemplateElement;
-      
       if (!track || !prev || !next || !source || !tpl) return;
 
       // Read all source items from data attributes
@@ -95,9 +87,11 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         const img = card.querySelector('img') as HTMLImageElement;
         img.src = d.img;
         img.alt = d.imgAlt;
-        img.addEventListener('error', () => { 
-          img.src = '/images/placeholder-16x9.jpg'; 
-        }, { once: true });
+        img.addEventListener('error', () => {
+          img.src = '/images/placeholder-16x9.jpg';
+        }, {
+          once: true
+        });
         const titleLink = card.querySelector('.rel-title a') as HTMLAnchorElement;
         titleLink.href = d.href;
         titleLink.textContent = d.title;
@@ -120,7 +114,6 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         track.innerHTML = '';
         const items = readItems();
         if (!items.length) return;
-
         const cols = columnsForViewport(); // 1 or 2
         for (let i = 0; i < items.length; i += cols) {
           const slide = document.createElement('div');
@@ -131,13 +124,11 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         }
         updateButtons();
       };
-
       const updateButtons = () => {
         const maxScroll = track.scrollWidth - track.clientWidth - 1;
         prev.disabled = track.scrollLeft <= 0;
         next.disabled = track.scrollLeft >= maxScroll;
       };
-
       const slideWidth = () => {
         const slide = track.querySelector('.rel-slide') as HTMLElement;
         return slide ? Math.ceil(slide.getBoundingClientRect().width + 16) : track.clientWidth;
@@ -146,96 +137,93 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
       // Clear any existing event listeners and add new ones
       const newPrev = prev.cloneNode(true) as HTMLButtonElement;
       const newNext = next.cloneNode(true) as HTMLButtonElement;
-      
       prev.replaceWith(newPrev);
       next.replaceWith(newNext);
-
-      newPrev.addEventListener('click', (e) => {
+      newPrev.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
         const scrollAmount = slideWidth();
-        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        track.scrollBy({
+          left: -scrollAmount,
+          behavior: 'smooth'
+        });
         setTimeout(updateButtons, 300);
       });
-      
-      newNext.addEventListener('click', (e) => {
+      newNext.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
         const scrollAmount = slideWidth();
-        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        track.scrollBy({
+          left: scrollAmount,
+          behavior: 'smooth'
+        });
         setTimeout(updateButtons, 300);
       });
-      
       track.addEventListener('scroll', updateButtons);
-      window.addEventListener('resize', buildSlides, { passive: true });
+      window.addEventListener('resize', buildSlides, {
+        passive: true
+      });
 
       // Initialize
       buildSlides();
     };
-
     wireRelatedCarousel();
   }, [relatedExperiences]);
-
   const getThemeColor = (theme: string) => {
     switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Wildlife':
+        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Livelihoods':
+        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      case 'Education':
+        return 'bg-education/10 text-education border-education/20';
+      case 'Habitat':
+        return 'bg-habitat/10 text-habitat border-habitat/20';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
-
   if (relatedExperiences.length === 0) {
     return null;
   }
-
-  return (
-    <section className="space-y-6">
+  return <section className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-foreground">Similar Experiences</h2>
+        <h2 className="text-2xl font-bold text-foreground">Explore other options</h2>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => {
-              const track = document.querySelector('.related-carousel-track') as HTMLElement;
-              if (track) {
-                track.scrollBy({ left: -320, behavior: 'smooth' });
-              }
-            }}
-          >
+          <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => {
+          const track = document.querySelector('.related-carousel-track') as HTMLElement;
+          if (track) {
+            track.scrollBy({
+              left: -320,
+              behavior: 'smooth'
+            });
+          }
+        }}>
             ←
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => {
-              const track = document.querySelector('.related-carousel-track') as HTMLElement;
-              if (track) {
-                track.scrollBy({ left: 320, behavior: 'smooth' });
-              }
-            }}
-          >
+          <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => {
+          const track = document.querySelector('.related-carousel-track') as HTMLElement;
+          if (track) {
+            track.scrollBy({
+              left: 320,
+              behavior: 'smooth'
+            });
+          }
+        }}>
             →
           </Button>
         </div>
       </div>
       
       <div className="overflow-hidden">
-        <div className="related-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {relatedExperiences.map((exp) => (
-            <Card key={exp.id} className="group hover:shadow-lg transition-shadow flex-shrink-0 w-80">
+        <div className="related-carousel-track flex gap-6 overflow-x-auto scroll-smooth pb-4" style={{
+        scrollbarWidth: 'none',
+        msOverflowStyle: 'none'
+      }}>
+          {relatedExperiences.map(exp => <Card key={exp.id} className="group hover:shadow-lg transition-shadow flex-shrink-0 w-80">
               <CardContent className="p-0">
                 <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
-                  <img
-                    src={exp.images[0]}
-                    alt={exp.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
+                  <img src={exp.images[0]} alt={exp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                 </div>
                 
                 <div className="p-4 space-y-3">
@@ -274,19 +262,14 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
                       <span className="text-sm font-normal text-muted-foreground">/person</span>
                     </div>
                     <Link to={`/experience/${exp.slug}`}>
-                      <Button variant="outline" size="sm">
-                        View Details
-                      </Button>
+                      <Button variant="outline" size="sm">View details</Button>
                     </Link>
                   </div>
                 </div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default RelatedExperiences;

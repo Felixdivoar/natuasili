@@ -12,22 +12,23 @@ import MapComponent from "@/components/MapComponent";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import AvailabilitySelector from "@/components/AvailabilitySelector";
 import BookingFormModal from "@/components/BookingFormModal";
-
 const ExperienceDetail = () => {
-  const { slug } = useParams();
+  const {
+    slug
+  } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
-  const { formatPrice } = useCurrency();
+  const {
+    formatPrice
+  } = useCurrency();
   const availabilityRef = useRef<HTMLDivElement>(null);
-  
   const experience = mockExperiences.find(exp => exp.slug === slug);
   const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
-  
+
   // Return early if experience not found to prevent errors
   if (!experience) {
-    return (
-      <div className="min-h-screen bg-background">
+    return <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
@@ -37,98 +38,80 @@ const ExperienceDetail = () => {
             </Link>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
-  
+
   // Initialize sticky button and intersection observer
   useEffect(() => {
     // Intersection observer for sticky button visibility
     if (availabilityRef.current) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          setStickyVisible(!entry.isIntersecting);
-        },
-        { threshold: 0.6 }
-      );
-      
+      const observer = new IntersectionObserver(([entry]) => {
+        setStickyVisible(!entry.isIntersecting);
+      }, {
+        threshold: 0.6
+      });
       observer.observe(availabilityRef.current);
-      
       return () => {
         observer.disconnect();
       };
     }
   }, [experience?.slug]);
-
   const getThemeColor = (theme: string) => {
     switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Wildlife':
+        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Livelihoods':
+        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      case 'Education':
+        return 'bg-education/10 text-education border-education/20';
+      case 'Habitat':
+        return 'bg-habitat/10 text-habitat border-habitat/20';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
-
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % experience.images.length);
+    setCurrentImageIndex(prev => (prev + 1) % experience.images.length);
   };
-
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + experience.images.length) % experience.images.length);
+    setCurrentImageIndex(prev => (prev - 1 + experience.images.length) % experience.images.length);
   };
-
   const scrollToAvailability = () => {
-    availabilityRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    availabilityRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
-
   const openBookingModal = () => {
     setIsBookingModalOpen(true);
   };
-
-  const highlights = [
-    "Track endangered species with expert wildlife conservationists",
-    "Learn traditional tracking techniques from local Maasai guides", 
-    "Contribute directly to wildlife monitoring and conservation data",
-    "Experience the raw beauty of Kenya's most pristine wilderness areas",
-    "Support community-led conservation initiatives"
-  ];
-
-  const itinerary = [
-    {
-      time: "6:00 AM",
-      title: "Early Morning Departure",
-      description: "Pick up from your accommodation and journey to the conservancy with a briefing on the day's activities."
-    },
-    {
-      time: "7:30 AM", 
-      title: "Wildlife Tracking Begins",
-      description: "Begin tracking with our expert guides using traditional methods and modern conservation techniques."
-    },
-    {
-      time: "10:00 AM",
-      title: "Data Collection",
-      description: "Learn how to collect vital conservation data and contribute to ongoing wildlife monitoring efforts."
-    },
-    {
-      time: "12:00 PM",
-      title: "Bush Lunch",
-      description: "Enjoy a traditional bush lunch while discussing conservation challenges and successes."
-    },
-    {
-      time: "2:00 PM",
-      title: "Continue Tracking",
-      description: "Afternoon tracking session focusing on different species and habitat areas."
-    },
-    {
-      time: "4:30 PM",
-      title: "Return Journey", 
-      description: "Debrief the day's discoveries and return to your accommodation."
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-background">
+  const highlights = ["Track endangered species with expert wildlife conservationists", "Learn traditional tracking techniques from local Maasai guides", "Contribute directly to wildlife monitoring and conservation data", "Experience the raw beauty of Kenya's most pristine wilderness areas", "Support community-led conservation initiatives"];
+  const itinerary = [{
+    time: "6:00 AM",
+    title: "Early Morning Departure",
+    description: "Pick up from your accommodation and journey to the conservancy with a briefing on the day's activities."
+  }, {
+    time: "7:30 AM",
+    title: "Wildlife Tracking Begins",
+    description: "Begin tracking with our expert guides using traditional methods and modern conservation techniques."
+  }, {
+    time: "10:00 AM",
+    title: "Data Collection",
+    description: "Learn how to collect vital conservation data and contribute to ongoing wildlife monitoring efforts."
+  }, {
+    time: "12:00 PM",
+    title: "Bush Lunch",
+    description: "Enjoy a traditional bush lunch while discussing conservation challenges and successes."
+  }, {
+    time: "2:00 PM",
+    title: "Continue Tracking",
+    description: "Afternoon tracking session focusing on different species and habitat areas."
+  }, {
+    time: "4:30 PM",
+    title: "Return Journey",
+    description: "Debrief the day's discoveries and return to your accommodation."
+  }];
+  return <div className="min-h-screen bg-background">
       
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 py-4">
@@ -148,47 +131,21 @@ const ExperienceDetail = () => {
             {/* Image Gallery */}
             <div className="relative">
               <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                <img 
-                  src={experience.images[currentImageIndex]} 
-                  alt={experience.title}
-                  className="w-full h-full object-cover"
-                />
-                {experience.images.length > 1 && (
-                  <>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white"
-                      onClick={prevImage}
-                    >
+                <img src={experience.images[currentImageIndex]} alt={experience.title} className="w-full h-full object-cover" />
+                {experience.images.length > 1 && <>
+                    <Button variant="ghost" size="icon" className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white" onClick={prevImage}>
                       <ChevronLeft className="h-6 w-6" />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white"
-                      onClick={nextImage}
-                    >
+                    <Button variant="ghost" size="icon" className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white" onClick={nextImage}>
                       <ChevronRight className="h-6 w-6" />
                     </Button>
-                  </>
-                )}
+                  </>}
               </div>
-              {experience.images.length > 1 && (
-                <div className="flex gap-2 mt-4 overflow-x-auto">
-                  {experience.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
-                        index === currentImageIndex ? 'border-primary' : 'border-transparent'
-                      }`}
-                    >
+              {experience.images.length > 1 && <div className="flex gap-2 mt-4 overflow-x-auto">
+                  {experience.images.map((image, index) => <button key={index} onClick={() => setCurrentImageIndex(index)} className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${index === currentImageIndex ? 'border-primary' : 'border-transparent'}`}>
                       <img src={image} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
+                    </button>)}
+                </div>}
             </div>
 
             {/* Experience Info */}
@@ -204,9 +161,7 @@ const ExperienceDetail = () => {
                 {/* Rating */}
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                    {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                   </div>
                   <span className="font-medium">4.8</span>
                   <span className="text-muted-foreground text-sm">(42 reviews)</span>
@@ -290,21 +245,18 @@ const ExperienceDetail = () => {
           <section>
             <h2 className="text-2xl font-bold text-foreground mb-6">Highlights</h2>
             <ul className="space-y-3">
-              {highlights.map((highlight, index) => (
-                <li key={index} className="flex items-start gap-3">
+              {highlights.map((highlight, index) => <li key={index} className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">{highlight}</span>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </section>
 
           {/* Itinerary */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Itinerary</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">What to expect</h2>
             <div className="space-y-6">
-              {itinerary.map((item, index) => (
-                <div key={index} className="flex gap-4">
+              {itinerary.map((item, index) => <div key={index} className="flex gap-4">
                   <div className="flex-shrink-0 w-20 text-sm font-medium text-primary">
                     {item.time}
                   </div>
@@ -312,14 +264,13 @@ const ExperienceDetail = () => {
                     <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
                     <p className="text-muted-foreground">{item.description}</p>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </section>
 
           {/* Map */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Location</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Where you'll be</h2>
             <div className="bg-card border rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
                 <MapPin className="h-5 w-5 text-primary" />
@@ -406,12 +357,7 @@ const ExperienceDetail = () => {
             </Card>
           </section>
 
-          <RelatedExperiences 
-            currentExperienceId={Number(experience.id)}
-            theme={experience.theme}
-            destination={experience.location_text}
-            maxResults={5}
-          />
+          <RelatedExperiences currentExperienceId={Number(experience.id)} theme={experience.theme} destination={experience.location_text} maxResults={5} />
 
           {/* Reviews & Ratings */}
           <section className="section-reviews mb-10">
@@ -421,36 +367,24 @@ const ExperienceDetail = () => {
       </div>
 
       {/* Sticky Book Now Button */}
-      {stickyVisible && (
-        <>
+      {stickyVisible && <>
           {/* Mobile sticky bar */}
-          <div className="na-cta-bar lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4" 
-               style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}>
+          <div className="na-cta-bar lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4" style={{
+        paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))'
+      }}>
             <Button onClick={openBookingModal} className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
               Book Now
             </Button>
           </div>
           
           {/* Desktop floating button */}
-          <Button 
-            onClick={openBookingModal}
-            className="na-btn-book-fab hidden lg:block fixed right-6 bottom-6 z-50 shadow-xl bg-primary text-primary-foreground hover:bg-primary/90"
-            size="lg"
-          >
+          <Button onClick={openBookingModal} className="na-btn-book-fab hidden lg:block fixed right-6 bottom-6 z-50 shadow-xl bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
             Book Now
           </Button>
-        </>
-      )}
+        </>}
 
       {/* Booking Form Modal */}
-      <BookingFormModal
-        isOpen={isBookingModalOpen}
-        onClose={() => setIsBookingModalOpen(false)}
-        experience={experience}
-        project={project}
-      />
-    </div>
-  );
+      <BookingFormModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} experience={experience} project={project} />
+    </div>;
 };
-
 export default ExperienceDetail;
