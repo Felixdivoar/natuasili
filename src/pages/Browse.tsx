@@ -28,6 +28,7 @@ const Browse = () => {
   // Top-level filters for Browse page
   const [theme, setTheme] = useState(searchParams.get('theme') || 'all');
   const [destination, setDestination] = useState(searchParams.get('destination') || 'all');
+  const partnerFilter = searchParams.get('partner'); // Read-only partner filter from URL
   const [moreFilters, setMoreFilters] = useState<MoreFiltersState>({
     duration: searchParams.get('duration') || 'all',
     activityImpact: searchParams.get('activity_impact') || 'all',
@@ -96,6 +97,7 @@ const Browse = () => {
 
     // Activity/Impact type filter
     const matchesActivityImpact = moreFilters.activityImpact === "all" || experience.activity_type.toLowerCase().includes(moreFilters.activityImpact.toLowerCase());
+    
     return matchesPrice && matchesTheme && matchesDestination && matchesDuration && matchesActivityImpact;
   });
   const getThemeColor = (theme: string) => {
@@ -132,6 +134,14 @@ const Browse = () => {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Book authentic experiences that create lasting impact for wildlife, communities, and habitats across Kenya.
             </p>
+            {partnerFilter && (
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                <p className="text-sm text-blue-800">
+                  <strong>Partner Filter:</strong> Currently showing experiences from all partners. 
+                  Partner-specific filtering is available on the <Link to="/partners" className="underline">Partners page</Link>.
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="max-w-4xl mx-auto">

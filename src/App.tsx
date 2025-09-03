@@ -29,6 +29,7 @@ import BlogPost from "./pages/BlogPost";
 import BlogCategory from "./pages/BlogCategory";
 import PartnerSuccessStory from "./pages/PartnerSuccessStory";
 import PartnerProfile from "./pages/PartnerProfile";
+import PartnerDetail from "./pages/PartnerDetail";
 import SamburuDestination from "./pages/destination/Samburu";
 import MasaiMaraDestination from "./pages/destination/MasaiMara";
 import CoastDestination from "./pages/destination/Coast";
@@ -95,6 +96,7 @@ const App = () => (
                 <Route path="/partner-dashboard" element={<AppLayout><PartnerDashboard /></AppLayout>} />
                 <Route path="/about" element={<AppLayout><About /></AppLayout>} />
                 <Route path="/partners" element={<AppLayout><Partners /></AppLayout>} />
+                <Route path="/partners/:slug" element={<AppLayout><PartnerDetail /></AppLayout>} />
                 <Route path="/partner/:slug" element={<AppLayout><PartnerProfile /></AppLayout>} />
                 <Route path="/blog" element={<AppLayout><Blog /></AppLayout>} />
                 <Route path="/blog/:slug" element={<AppLayout><BlogPost /></AppLayout>} />
