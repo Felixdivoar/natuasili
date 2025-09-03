@@ -5,18 +5,32 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MapPin, Users, ExternalLink, Filter, SlidersHorizontal } from "lucide-react";
-import { expandedPartnerProfiles } from "@/data/partnerProfiles";
+import { MapPin, Users, Calendar, Filter } from "lucide-react";
+import { PARTNERS, EXPERIENCES, type Destination, type Theme } from "@/data/partners";
 import { useI18n } from "@/i18n/I18nProvider";
-const DESTINATIONS = ["Nairobi", "Coastal Kenya", "Samburu", "Masai Mara", "Laikipia"];
-const THEMES = ["Wildlife", "Marine", "Community", "Culture"];
-const ACTIVITIES = ["Tracking", "Workshop", "Patrol", "Habitat", "Education", "Research"];
+
+const DESTINATIONS: { label: string; value: Destination }[] = [
+  { label: "Nairobi", value: "nairobi" },
+  { label: "Coastal Kenya", value: "coastal-kenya" },
+  { label: "Samburu", value: "samburu" },
+  { label: "Masai Mara", value: "masai-mara" },
+  { label: "Laikipia", value: "laikipia" }
+];
+
+const THEMES: { label: string; value: Theme }[] = [
+  { label: "Conservation Education", value: "Conservation education" },
+  { label: "Wildlife Conservation", value: "Wildlife conservation" },
+  { label: "Community & Cultural Exploration", value: "Community and Cultural exploration" }
+];
+
+// Extract unique activities from experiences
+const ALL_ACTIVITIES = [...new Set(EXPERIENCES.flatMap(exp => exp.activities))].sort();
 
 export default function Partners() {
   const { t } = useI18n();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
-  const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
+  const [selectedDestinations, setSelectedDestinations] = useState<Destination[]>([]);
+  const [selectedThemes, setSelectedThemes] = useState<Theme[]>([]);
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("relevance");
   const [showFilters, setShowFilters] = useState(false);
@@ -26,28 +40,26 @@ export default function Partners() {
     document.querySelectorAll<HTMLElement>(".na-cta-bar,.na-btn-book-fab,.booking-modal").forEach(el => el.style.display = "");
   }, []);
 
-  const getThemeColor = (category: string) => {
-    switch (category) {
-      case 'Wildlife Conservation':
-        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Habitat':
-        return 'bg-habitat/10 text-habitat border-habitat/20';
-      case 'Conservation Education':
-        return 'bg-education/10 text-education border-education/20';
-      case 'Livelihoods':
-        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+  const getThemeColor = (theme: Theme) => {
+    switch (theme) {
+      case 'Wildlife conservation':
+        return 'bg-primary/10 text-primary border-primary/20';
+      case 'Conservation education':
+        return 'bg-secondary/10 text-secondary border-secondary/20';
+      case 'Community and Cultural exploration':
+        return 'bg-accent/10 text-accent border-accent/20';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-muted text-muted-foreground border-muted/20';
     }
   };
 
-  const handleDestinationChange = (destination: string, checked: boolean) => {
+  const handleDestinationChange = (destination: Destination, checked: boolean) => {
     setSelectedDestinations(prev => 
       checked ? [...prev, destination] : prev.filter(d => d !== destination)
     );
   };
 
-  const handleThemeChange = (theme: string, checked: boolean) => {
+  const handleThemeChange = (theme: Theme, checked: boolean) => {
     setSelectedThemes(prev =>
       checked ? [...prev, theme] : prev.filter(t => t !== theme)
     );
@@ -59,21 +71,26 @@ export default function Partners() {
     );
   };
 
-  const filteredPartners = expandedPartnerProfiles.filter(partner => {
+  const filteredPartners = PARTNERS.filter(partner => {
     const matchesSearch = partner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         partner.mission.toLowerCase().includes(searchTerm.toLowerCase());
+                         partner.description.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesDestination = selectedDestinations.length === 0 || 
                               selectedDestinations.some(dest => 
-                                partner.location.toLowerCase().includes(dest.toLowerCase())
+                                partner.location.toLowerCase().includes(dest.replace("-", " "))
                               );
     
     const matchesTheme = selectedThemes.length === 0 ||
                         selectedThemes.some(theme =>
-                          partner.category.toLowerCase().includes(theme.toLowerCase())
+                          partner.themes.includes(theme)
                         );
     
-    return matchesSearch && matchesDestination && matchesTheme;
+    const matchesActivity = selectedActivities.length === 0 ||
+                           selectedActivities.some(activity =>
+                             partner.activities.includes(activity)
+                           );
+    
+    return matchesSearch && matchesDestination && matchesTheme && matchesActivity;
   });
 
   const sortedPartners = [...filteredPartners].sort((a, b) => {
@@ -81,7 +98,7 @@ export default function Partners() {
       case "az":
         return a.name.localeCompare(b.name);
       case "experiences":
-        return (b.communityImpact?.jobs || 0) - (a.communityImpact?.jobs || 0);
+        return b.experienceCount - a.experienceCount;
       default:
         return 0;
     }
@@ -89,15 +106,15 @@ export default function Partners() {
   return (
     <main id="site-main">
       {/* Full-width hero */}
-      <section className="hero-full bg-gradient-to-r from-conservation/90 to-conservation/70" style={{
+      <section className="hero-full bg-gradient-to-r from-foreground/90 to-foreground/70" style={{
         backgroundImage: "url(/src/assets/coastal-forest.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}>
-        <div className="hero-inner text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("partners_title")}</h1>
-          <p className="text-xl text-white/90 max-w-3xl">
-            {t("partners_subtitle")}
+        <div className="hero-inner text-background">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Conservation Partners</h1>
+          <p className="text-xl text-background/90 max-w-3xl">
+            Discover our network of conservation organizations making a real impact across Kenya
           </p>
         </div>
       </section>
@@ -142,22 +159,22 @@ export default function Partners() {
               <div className="space-y-6">
                 {/* Destination filter */}
                 <div>
-                  <h3 className="font-medium mb-3">{t("filter_destination")}</h3>
+                  <h3 className="font-medium mb-3">Destination</h3>
                   <div className="space-y-2">
                     {DESTINATIONS.map((dest) => (
-                      <div key={dest} className="flex items-center space-x-2">
+                      <div key={dest.value} className="flex items-center space-x-2">
                         <Checkbox
-                          id={`dest-${dest}`}
-                          checked={selectedDestinations.includes(dest)}
+                          id={`dest-${dest.value}`}
+                          checked={selectedDestinations.includes(dest.value)}
                           onCheckedChange={(checked) => 
-                            handleDestinationChange(dest, !!checked)
+                            handleDestinationChange(dest.value, !!checked)
                           }
                         />
                         <label
-                          htmlFor={`dest-${dest}`}
+                          htmlFor={`dest-${dest.value}`}
                           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                          {dest}
+                          {dest.label}
                         </label>
                       </div>
                     ))}
@@ -166,22 +183,22 @@ export default function Partners() {
 
                 {/* Theme filter */}
                 <div>
-                  <h3 className="font-medium mb-3">{t("filter_theme")}</h3>
+                  <h3 className="font-medium mb-3">Theme</h3>
                   <div className="space-y-2">
                     {THEMES.map((theme) => (
-                      <div key={theme} className="flex items-center space-x-2">
+                      <div key={theme.value} className="flex items-center space-x-2">
                         <Checkbox
-                          id={`theme-${theme}`}
-                          checked={selectedThemes.includes(theme)}
+                          id={`theme-${theme.value}`}
+                          checked={selectedThemes.includes(theme.value)}
                           onCheckedChange={(checked) => 
-                            handleThemeChange(theme, !!checked)
+                            handleThemeChange(theme.value, !!checked)
                           }
                         />
                         <label
-                          htmlFor={`theme-${theme}`}
+                          htmlFor={`theme-${theme.value}`}
                           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                          {theme}
+                          {theme.label}
                         </label>
                       </div>
                     ))}
@@ -190,9 +207,9 @@ export default function Partners() {
 
                 {/* Activities filter */}
                 <div>
-                  <h3 className="font-medium mb-3">{t("filter_activities")}</h3>
-                  <div className="space-y-2">
-                    {ACTIVITIES.map((activity) => (
+                  <h3 className="font-medium mb-3">Activities</h3>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {ALL_ACTIVITIES.map((activity) => (
                       <div key={activity} className="flex items-center space-x-2">
                         <Checkbox
                           id={`activity-${activity}`}
@@ -203,7 +220,7 @@ export default function Partners() {
                         />
                         <label
                           htmlFor={`activity-${activity}`}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize"
                         >
                           {activity}
                         </label>
@@ -226,14 +243,25 @@ export default function Partners() {
             <div className="grid md:grid-cols-2 gap-6">
               {sortedPartners.map(partner => (
                 <Card key={partner.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-video relative overflow-hidden">
-                    <img src={partner.gallery[0]} alt={partner.name} className="w-full h-full object-cover" />
+                  <div className="aspect-video relative overflow-hidden bg-muted">
+                    <img 
+                      src={partner.logo} 
+                      alt={partner.name}
+                      className="w-full h-full object-contain p-4" 
+                      onError={(e) => {
+                        e.currentTarget.src = '/img/ph1.jpg';
+                      }}
+                    />
                   </div>
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <Badge className={`text-xs ${getThemeColor(partner.category)}`}>
-                        {partner.category}
-                      </Badge>
+                      <div className="flex flex-wrap gap-1">
+                        {partner.themes.slice(0, 2).map((theme) => (
+                          <Badge key={theme} className={`text-xs ${getThemeColor(theme)}`}>
+                            {theme}
+                          </Badge>
+                        ))}
+                      </div>
                       <div className="text-xs text-muted-foreground">
                         Est. {partner.established}
                       </div>
@@ -241,32 +269,32 @@ export default function Partners() {
                     <CardTitle className="text-lg leading-tight">{partner.name}</CardTitle>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
                       <MapPin className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{partner.location}</span>
+                      <span className="truncate capitalize">{partner.location.replace(/-/g, ' ')}</span>
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                      {partner.mission}
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      {partner.description}
                     </p>
                     
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">{t("jobs_created")}</span>
+                        <span className="text-muted-foreground">Experiences</span>
                         <div className="flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          <span className="font-medium">{partner.communityImpact.jobs}</span>
+                          <Calendar className="h-3 w-3" />
+                          <span className="font-medium">{partner.experienceCount}</span>
                         </div>
                       </div>
                       
                       <div className="flex gap-2">
                         <Button asChild className="flex-1" size="sm">
-                          <Link to={`/partner/${partner.slug}`}>
-                            {t("view_partner")}
+                          <Link to={`/partners/${partner.slug}`}>
+                            View Partner
                           </Link>
                         </Button>
                         <Button variant="outline" asChild size="sm">
                           <Link to={`/experiences?partner=${partner.slug}`}>
-                            {t("view_experiences")}
+                            View Experiences
                           </Link>
                         </Button>
                       </div>
