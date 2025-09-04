@@ -8,7 +8,11 @@ const I18nCtx = createContext<{
   lang: Lang; 
   setLang: (l: Lang) => void; 
   t: (k: string, fallback?: string) => string;
-}>({} as any);
+}>({
+  lang: "en",
+  setLang: () => {},
+  t: (k: string, fallback?: string) => fallback || k
+});
 
 const DICTS: Record<Lang, Dict> = { 
   en: {}, 
