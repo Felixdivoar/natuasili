@@ -9,6 +9,9 @@ import whyPartnerBlog from "@/assets/blog/why-partner-blog.jpg";
 import sustainableTourismBlog from "@/assets/blog/sustainable-tourism-blog.jpg";
 import communityImpactBlog from "@/assets/blog/community-impact-blog.jpg";
 import conservationTechBlog from "@/assets/blog/conservation-tech-blog.jpg";
+import maasaiMaraProject from "@/assets/maasai-mara-project.jpg";
+import sambururEducation from "@/assets/samburu-education.jpg";
+import karuraForestPlanting from "@/assets/karura-forest-planting.jpg";
 
 const blogContent = {
   "real-impact-conservation-tourism-kenya": {
@@ -200,6 +203,78 @@ const blogContent = {
       <h2>Data-Driven Conservation</h2>
       <p>Big data analytics reveal patterns in wildlife movement, helping conservationists make informed decisions about habitat management and protection strategies.</p>
     `
+  },
+  "protecting-the-great-migration-corridor": {
+    title: "Protecting the Great Migration Corridor",
+    excerpt: "How community conservancies are securing wildlife corridors critical for the annual wildebeest migration, ensuring this natural wonder continues for future generations.",
+    category: "Wildlife Protection",
+    author: "Dr. Sarah Kimani",
+    date: "2024-01-15",
+    readTime: "6 min read",
+    image: maasaiMaraProject,
+    content: `
+      <p>The Great Migration is one of the world's most spectacular wildlife events, with over 2 million wildebeest, zebras, and gazelles crossing between Kenya and Tanzania. However, rapid human development threatens this ancient pathway.</p>
+      
+      <p>Through our partnership with local Maasai conservancies, we've helped establish protected corridors that allow wildlife to move freely between protected areas. These corridors are managed by communities who receive direct benefits from conservation tourism.</p>
+      
+      <h2>Key Achievements:</h2>
+      <ul>
+        <li>15,000 hectares of corridor land under community protection</li>
+        <li>85% reduction in human-wildlife conflict incidents</li>
+        <li>200 community members employed as conservancy rangers</li>
+        <li>$400,000 annually in community conservation payments</li>
+      </ul>
+      
+      <p>The success of this model demonstrates that conservation and community development can work hand in hand. Local families who once viewed wildlife as competition now see them as partners in their economic future.</p>
+    `
+  },
+  "empowering-the-next-generation-of-conservationists": {
+    title: "Empowering the Next Generation of Conservationists",
+    excerpt: "Educational programs in Samburu County are inspiring young people to become conservation leaders, combining traditional knowledge with modern conservation science.",
+    category: "Education",
+    author: "James Mwangi",
+    date: "2024-01-10",
+    readTime: "5 min read",
+    image: sambururEducation,
+    content: `
+      <p>In Samburu County, a new generation of conservation leaders is emerging through innovative educational programs that blend traditional ecological knowledge with modern conservation science.</p>
+      
+      <p>Our Junior Conservationist Program works with local schools to provide hands-on environmental education. Students learn about wildlife tracking, habitat restoration, and sustainable resource management from both community elders and trained conservationists.</p>
+      
+      <h2>Program Impact:</h2>
+      <ul>
+        <li>500 students enrolled across 15 schools</li>
+        <li>12 community-based learning centers established</li>
+        <li>90% of graduates pursuing conservation-related careers</li>
+        <li>Traditional ecological knowledge documented and preserved</li>
+      </ul>
+      
+      <p>The program has also created employment opportunities for community members as environmental educators and mentors, ensuring that traditional knowledge is passed on while introducing modern conservation techniques.</p>
+    `
+  },
+  "urban-forest-restoration-karura-s-renaissance": {
+    title: "Urban Forest Restoration: Karura's Renaissance",
+    excerpt: "The transformation of Karura Forest from a degraded urban space to a thriving ecosystem showcases the power of community-led restoration efforts in Nairobi.",
+    category: "Restoration",
+    author: "Dr. Grace Wanjiru",
+    date: "2024-01-05",
+    readTime: "4 min read",
+    image: karuraForestPlanting,
+    content: `
+      <p>Karura Forest, once facing severe degradation from encroachment and pollution, has become a model for urban forest restoration through community engagement and sustainable tourism.</p>
+      
+      <p>Our restoration program combines scientific forest management with community participation. Volunteers from local schools, businesses, and visitor groups have planted over 50,000 indigenous trees while learning about forest ecology.</p>
+      
+      <h2>Restoration Results:</h2>
+      <ul>
+        <li>200 hectares of forest successfully restored</li>
+        <li>50,000 indigenous trees planted</li>
+        <li>35 bird species returned to the forest</li>
+        <li>1,200 community volunteers trained</li>
+      </ul>
+      
+      <p>The forest now serves as an outdoor classroom and recreation space for Nairobi residents while providing essential ecosystem services like air purification and watershed protection.</p>
+    `
   }
 };
 
@@ -226,7 +301,9 @@ const BlogPost = () => {
       case 'Partner Spotlight': return 'bg-primary/10 text-primary border-primary/20';
       case 'Partnership Guide': return 'bg-accent/10 text-accent border-accent/20';
       case 'Community Impact': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Restoration': return 'bg-primary/10 text-primary border-primary/20';
+      case 'Wildlife Protection': return 'bg-conservation/10 text-conservation border-conservation/20';
+      case 'Education': return 'bg-primary/10 text-primary border-primary/20';
+      case 'Restoration': return 'bg-accent/10 text-accent border-accent/20';
       case 'Innovation': return 'bg-accent/10 text-accent border-accent/20';
       default: return 'bg-muted text-muted-foreground';
     }

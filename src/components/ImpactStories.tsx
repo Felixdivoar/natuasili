@@ -185,10 +185,12 @@ const ImpactStories = () => {
                       </div>
                     </div>
                     
-                    <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">
-                      Read Full Story
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
+                    <Link to={`/blog/${story.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                      <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">
+                        Read Full Story
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </CarouselItem>)}
