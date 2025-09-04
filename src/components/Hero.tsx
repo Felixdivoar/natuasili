@@ -17,18 +17,9 @@ const Hero = () => {
           {t("hero_title")}
         </h1>
         
-        <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
+        <p className="text-xl md:text-2xl mb-12 text-white/90 leading-relaxed">
           {t("hero_sub")}
         </p>
-
-        <div className="mb-12 flex gap-4">
-          <Link to="/experiences" className="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-md font-medium transition-colors">
-            {t("cta_explore")}
-          </Link>
-          <Link to="/partners" className="border border-white/30 text-white px-6 py-3 rounded-md font-medium hover:bg-white/10 transition-colors">
-            {t("cta_see_partners")}
-          </Link>
-        </div>
 
         {/* Stats */}
         <div className="flex flex-wrap gap-8">

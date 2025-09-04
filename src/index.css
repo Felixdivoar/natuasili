@@ -282,7 +282,7 @@ button, .btn, .button, [role="button"],
 .hero-full .hero-inner {   /* text/content remains aligned to site container */
   max-width: 1150px;
   margin: 0 auto;
-  padding: 24px;           /* inner breathing room for text/buttons */
+  padding: 30vh 24px;      /* 30% responsive top/bottom padding with side padding */
 }
 
 /* Primary menu (header) height/spacing */

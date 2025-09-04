@@ -12,7 +12,7 @@ export const DICT = {
     
     // Hero
     hero_title: "Travel that funds conservation",
-    hero_sub: "90% to partner initiatives, 10% to platform & operations",
+    hero_sub: "Go beyond the safari. Book conservation-driven experiences that support wildlife and local communities across Kenya. Add them to any itinerary, and make every trip meaningful. Book now.",
     cta_explore: "Explore experiences",
     cta_see_partners: "See partners",
     
