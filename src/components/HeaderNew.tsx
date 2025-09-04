@@ -114,18 +114,11 @@ export default function HeaderNew() {
                               <Link
                                 key={dest.slug}
                                 to={`/destinations/${dest.slug}`}
-                                className="flex items-center gap-3 p-2 hover:bg-muted rounded-lg transition-colors"
+                                className="block p-2 hover:bg-muted rounded-lg transition-colors"
                                 onClick={() => setOpenMenu(null)}
                               >
-                                <img 
-                                  src={dest.image} 
-                                  alt={dest.label}
-                                  className="w-12 h-8 object-cover rounded"
-                                />
-                                <div>
-                                  <div className="font-medium text-sm">{dest.label}</div>
-                                  <div className="text-xs text-muted-foreground">Kenya</div>
-                                </div>
+                                <div className="font-medium text-sm">{dest.label}</div>
+                                <div className="text-xs text-muted-foreground">Kenya</div>
                               </Link>
                             ))}
                           </div>

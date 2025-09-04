@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { mockProjects, mockExperiences } from "@/data/mockData";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 import masaiMaraDestination from "@/assets/destinations/masai-mara-destination.jpg";
 
 const MasaiMaraDestination = () => {
+  const { formatPrice } = useCurrency();
   // Get Maasai Mara-related partners and experiences
   const maraPartners = mockProjects.filter(project => 
     project.location_text.toLowerCase().includes('mara') || 
@@ -195,7 +197,7 @@ const MasaiMaraDestination = () => {
                   )}
                   <div className="absolute top-3 left-3 flex gap-2">
                     <Badge className="bg-white/90 text-foreground">
-                      ${experience.base_price}
+                      {formatPrice(experience.base_price)}
                     </Badge>
                   </div>
                 </div>

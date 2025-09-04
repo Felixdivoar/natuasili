@@ -55,6 +55,7 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [filters, setFilters] = useState({ destination: "", theme: "", activity: "" });
   const [showFilters, setShowFilters] = useState(false);
+  const [isMouseOverPanel, setIsMouseOverPanel] = useState(false);
   
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -84,10 +85,12 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
     const debounceTimer = setTimeout(() => {
       if (query.trim()) {
         performSearch(query);
+        setShowSuggestions(true);
       } else {
         setResults([]);
+        setShowSuggestions(false);
       }
-    }, 250);
+    }, 300);
 
     return () => clearTimeout(debounceTimer);
   }, [query, performSearch]);
@@ -172,7 +175,9 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
         handleClose();
       }
     } else if (e.key === "Escape") {
-      handleClose();
+      e.preventDefault();
+      setShowSuggestions(false);
+      inputRef.current?.focus();
     }
   };
 
@@ -193,7 +198,7 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
 
   const handleSuggestionClick = (suggestion: string) => {
     setQuery(suggestion);
-    setShowSuggestions(false);
+    setShowSuggestions(true);
     inputRef.current?.focus();
   };
 
@@ -223,9 +228,26 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
               ref={inputRef}
               type="text"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                if (!e.target.value.trim()) {
+                  setShowSuggestions(false);
+                }
+              }}
               onKeyDown={handleKeyDown}
-              onFocus={() => setShowSuggestions(true)}
+              onFocus={() => {
+                if (query.trim() || (!query && variant === "desktop")) {
+                  setShowSuggestions(true);
+                }
+              }}
+              onBlur={() => {
+                // Hide suggestions after a small delay to allow clicks on suggestions
+                setTimeout(() => {
+                  if (!isMouseOverPanel) {
+                    setShowSuggestions(false);
+                  }
+                }, 150);
+              }}
               placeholder="Search experiences, partners, destinations…"
               className={`w-full pl-10 pr-4 py-2.5 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 ${
                 variant === "desktop" ? "min-w-[280px]" : ""
@@ -236,7 +258,11 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setQuery("")}
+                onClick={() => {
+                  setQuery("");
+                  setShowSuggestions(false);
+                  inputRef.current?.focus();
+                }}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 h-6 w-6"
               >
                 <X className="h-4 w-4" />
@@ -266,8 +292,12 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
           )}
 
           {/* Dropdown Results */}
-          {(query || showSuggestions) && (
-            <Card className="absolute top-full left-0 right-0 mt-1 max-h-96 overflow-y-auto z-50 border-border">
+          {showSuggestions && (query || (!query && variant === "desktop")) && (
+            <Card 
+              className="absolute top-full left-0 right-0 mt-1 max-h-96 overflow-y-auto z-50 border-border"
+              onMouseEnter={() => setIsMouseOverPanel(true)}
+              onMouseLeave={() => setIsMouseOverPanel(false)}
+            >
               <CardContent className="p-0">
                 {loading && (
                   <div className="p-4 flex items-center gap-2 text-sm text-muted-foreground">

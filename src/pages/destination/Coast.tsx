@@ -6,10 +6,12 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { mockProjects, mockExperiences } from "@/data/mockData";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 import coastDestination from "@/assets/destinations/coast-destination.jpg";
 
 const CoastDestination = () => {
+  const { formatPrice } = useCurrency();
   // Get Coast-related partners and experiences
   const coastPartners = mockProjects.filter(project => 
     project.location_text.toLowerCase().includes('coast') || 
@@ -198,7 +200,7 @@ const CoastDestination = () => {
                   )}
                   <div className="absolute top-3 left-3 flex gap-2">
                     <Badge className="bg-white/90 text-foreground">
-                      ${experience.base_price}
+                      {formatPrice(experience.base_price)}
                     </Badge>
                   </div>
                 </div>
