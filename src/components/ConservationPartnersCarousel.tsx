@@ -5,6 +5,9 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { MapPin, Users, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockProjects } from "@/data/mockData";
+import { useI18n } from "@/i18n/I18nProvider";
+import T from "@/i18n/T";
+import DynamicTranslated from "@/i18n/DynamicTranslated";
 const CarouselControls = () => {
   const {
     scrollPrev,
@@ -22,14 +25,14 @@ const CarouselControls = () => {
     </div>;
 };
 const ConservationPartnersCarousel = () => {
+  const { t } = useI18n();
   const displayProjects = mockProjects.slice(0, 6);
   return <section id="projects" className="bg-muted/30 py-[20px]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Conservation partners</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center"><T k="conservation_partners_title" /></h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center">
-            Meet the dedicated organizations working tirelessly to protect Kenya's 
-            natural heritage and support local communities.
+            <T k="conservation_partners_subtitle" />
           </p>
         </div>
         
@@ -50,7 +53,7 @@ const ConservationPartnersCarousel = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-conservation text-white">
-                        {project.category}
+                        <DynamicTranslated text={project.category} />
                       </Badge>
                     </div>
                   </div>
@@ -67,17 +70,17 @@ const ConservationPartnersCarousel = () => {
                   
                   <CardContent>
                     <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                      {project.bio}
+                      <DynamicTranslated text={project.bio} />
                     </p>
                     
                     <div className="grid grid-cols-2 gap-4 mb-6 p-3 bg-muted/50 rounded-lg">
                       <div className="text-center">
                         <div className="text-lg font-bold text-conservation">{project.metrics_bookings_count}</div>
-                        <div className="text-xs text-muted-foreground">Bookings</div>
+                        <div className="text-xs text-muted-foreground"><T k="partners_bookings" /></div>
                       </div>
                       <div className="text-center">
                         <div className="text-lg font-bold text-conservation">${project.metrics_funds_total.toLocaleString()}</div>
-                        <div className="text-xs text-muted-foreground">Funds Raised</div>
+                        <div className="text-xs text-muted-foreground"><T k="partners_funds_raised" /></div>
                       </div>
                     </div>
                     
@@ -85,7 +88,7 @@ const ConservationPartnersCarousel = () => {
                       <Link to={`/partners/${project.slug}`}>
                         <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
                           <Heart className="w-4 h-4 mr-2" />
-                          View Partner
+                          <T k="btn_view_partner" />
                         </Button>
                       </Link>
                     </div>
@@ -105,7 +108,7 @@ const ConservationPartnersCarousel = () => {
         <div className="text-center mt-8">
           <Link to="/partners">
             <Button variant="outline" size="lg">
-              View All Partners
+              <T k="btn_view_all_partners" />
             </Button>
           </Link>
         </div>

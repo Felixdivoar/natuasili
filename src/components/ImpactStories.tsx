@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, useCarousel } from "@/components/ui/carousel";
 import { Calendar, User, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useI18n } from "@/i18n/I18nProvider";
+import T from "@/i18n/T";
+import DynamicTranslated from "@/i18n/DynamicTranslated";
 const CarouselControls = () => {
   const {
     scrollPrev,
@@ -109,6 +112,7 @@ const impactStories = [{
   }
 }];
 const ImpactStories = () => {
+  const { t } = useI18n();
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Wildlife Protection':
@@ -125,15 +129,14 @@ const ImpactStories = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-12">
           <div className="text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Impact stories</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4"><T k="impact_stories_title" /></h2>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Real stories of conservation success, community empowerment, and positive change 
-              happening across Kenya through responsible tourism.
+              <T k="impact_stories_subtitle" />
             </p>
           </div>
           <Link to="/blog">
             <Button variant="outline" className="hidden md:block">
-              View All Stories
+              <T k="btn_view_all_stories" />
             </Button>
           </Link>
         </div>
@@ -149,7 +152,7 @@ const ImpactStories = () => {
                     <img src={story.image} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute top-4 left-4">
                       <Badge className={getCategoryColor(story.category)}>
-                        {story.category}
+                        <DynamicTranslated text={story.category} />
                       </Badge>
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -157,13 +160,13 @@ const ImpactStories = () => {
                   
                   <CardHeader>
                     <CardTitle className="text-xl group-hover:text-conservation transition-colors line-clamp-2">
-                      {story.title}
+                      <DynamicTranslated text={story.title} />
                     </CardTitle>
                   </CardHeader>
                   
                   <CardContent>
                     <p className="text-muted-foreground mb-6 line-clamp-3">
-                      {story.excerpt}
+                      <DynamicTranslated text={story.excerpt} />
                     </p>
                     
                     {/* Impact Metrics */}
@@ -187,7 +190,7 @@ const ImpactStories = () => {
                     
                     <Link to={`/blog/${story.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
                       <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">
-                        Read Full Story
+                        <T k="btn_read_full_story" />
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
@@ -204,7 +207,7 @@ const ImpactStories = () => {
         <div className="text-center mt-8 md:hidden">
           <Link to="/blog">
             <Button className="bg-conservation hover:bg-conservation/90 text-white">
-              View All Impact Stories
+              <T k="btn_view_all_impact_stories" />
             </Button>
           </Link>
         </div>

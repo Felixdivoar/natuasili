@@ -29,7 +29,7 @@ const Hero = () => {
             </div>
             <div>
               <div className="text-2xl font-bold">150+</div>
-              <div className="text-sm text-white/80">Conservation projects</div>
+              <div className="text-sm text-white/80">{t("hero_stat_conservation")}</div>
             </div>
           </div>
           
@@ -39,7 +39,7 @@ const Hero = () => {
             </div>
             <div>
               <div className="text-2xl font-bold">2,500+</div>
-              <div className="text-sm text-white/80">Travelers connected</div>
+              <div className="text-sm text-white/80">{t("hero_stat_travelers")}</div>
             </div>
           </div>
           
@@ -49,7 +49,7 @@ const Hero = () => {
             </div>
             <div>
               <div className="text-2xl font-bold whitespace-nowrap price">{formatPrice(580000)}</div>
-              <div className="text-sm text-white/80">Impact generated</div>
+              <div className="text-sm text-white/80">{t("hero_stat_impact")}</div>
             </div>
           </div>
         </div>

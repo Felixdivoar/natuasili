@@ -13,6 +13,9 @@ export const DICT = {
     // Hero
     hero_title: "Travel that funds conservation",
     hero_sub: "Go beyond the safari. Book conservation-driven experiences that support wildlife and local communities across Kenya. Add them to any itinerary, and make every trip meaningful. Book now.",
+    hero_stat_conservation: "Conservation projects",
+    hero_stat_travelers: "Travelers connected",
+    hero_stat_impact: "Impact generated",
     cta_explore: "Explore experiences",
     cta_see_partners: "See partners",
     
@@ -188,7 +191,21 @@ export const DICT = {
     // Search & Other UI
     search_button: "Search",
     max_guests: "max",
-    book_now_button: "Book Now"
+    book_now_button: "Book Now",
+    
+    // Impact Stories section
+    impact_stories_title: "Impact stories",
+    impact_stories_subtitle: "Real stories of conservation success, community empowerment, and positive change happening across Kenya through responsible tourism.",
+    btn_view_all_stories: "View All Stories",
+    btn_read_full_story: "Read Full Story", 
+    btn_view_all_impact_stories: "View All Impact Stories",
+    
+    // Conservation Partners section
+    conservation_partners_title: "Conservation partners",
+    conservation_partners_subtitle: "Meet the dedicated organizations working tirelessly to protect Kenya's natural heritage and support local communities.",
+    partners_bookings: "Bookings",
+    partners_funds_raised: "Funds Raised",
+    btn_view_all_partners: "View All Partners",
   },
   fr: {
     // Navigation
@@ -204,6 +221,9 @@ export const DICT = {
     // Hero
     hero_title: "Voyager pour financer la conservation",
     hero_sub: "Dépassez le safari. Réservez des expériences axées sur la conservation qui soutiennent la faune et les communautés locales au Kenya. Ajoutez-les à n'importe quel itinéraire et donnez du sens à chaque voyage. Réservez maintenant.",
+    hero_stat_conservation: "Projets de conservation",
+    hero_stat_travelers: "Voyageurs connectés",
+    hero_stat_impact: "Impact généré",
     cta_explore: "Découvrir les expériences",
     cta_see_partners: "Voir les partenaires",
     
@@ -379,7 +399,21 @@ export const DICT = {
     // Search & Other UI
     search_button: "Rechercher",
     max_guests: "max",
-    book_now_button: "Réserver Maintenant"
+    book_now_button: "Réserver Maintenant",
+    
+    // Impact Stories section
+    impact_stories_title: "Histoires d'impact",
+    impact_stories_subtitle: "Des histoires vraies de succès en matière de conservation, d'autonomisation des communautés et de changement positif au Kenya grâce au tourisme responsable.",
+    btn_view_all_stories: "Voir toutes les histoires",
+    btn_read_full_story: "Lire l'histoire complète",
+    btn_view_all_impact_stories: "Voir toutes les histoires d'impact",
+    
+    // Conservation Partners section
+    conservation_partners_title: "Partenaires de conservation",
+    conservation_partners_subtitle: "Rencontrez les organisations dévouées qui travaillent sans relâche pour protéger le patrimoine naturel du Kenya et soutenir les communautés locales.",
+    partners_bookings: "Réservations",
+    partners_funds_raised: "Fonds collectés",
+    btn_view_all_partners: "Voir tous les partenaires",
   },
   de: {
     // Navigation
@@ -395,6 +429,9 @@ export const DICT = {
     // Hero
     hero_title: "Reisen, die den Naturschutz finanzieren",
     hero_sub: "Über die Safari hinausgehen. Buchen Sie naturschutzorientierte Erfahrungen, die Wildtiere und lokale Gemeinden in Kenia unterstützen. Fügen Sie sie zu jeder Reiseroute hinzu und machen Sie jede Reise bedeutungsvoll. Jetzt buchen.",
+    hero_stat_conservation: "Naturschutzprojekte",
+    hero_stat_travelers: "Verbundene Reisende",
+    hero_stat_impact: "Generierte Wirkung",
     cta_explore: "Erfahrungen entdecken",
     cta_see_partners: "Partner sehen",
     
@@ -570,7 +607,21 @@ export const DICT = {
     // Search & Other UI  
     search_button: "Suchen",
     max_guests: "max",
-    book_now_button: "Jetzt Buchen"
+    book_now_button: "Jetzt Buchen",
+    
+    // Impact Stories section
+    impact_stories_title: "Wirkungsgeschichten",
+    impact_stories_subtitle: "Echte Geschichten von Naturschutzerfolgen, Gemeinschaftsstärkung und positivem Wandel in Kenia durch verantwortlichen Tourismus.",
+    btn_view_all_stories: "Alle Geschichten anzeigen",
+    btn_read_full_story: "Vollständige Geschichte lesen",
+    btn_view_all_impact_stories: "Alle Wirkungsgeschichten anzeigen",
+    
+    // Conservation Partners section
+    conservation_partners_title: "Naturschutzpartner",
+    conservation_partners_subtitle: "Lernen Sie die engagierten Organisationen kennen, die unermüdlich daran arbeiten, Kenias Naturerbe zu schützen und lokale Gemeinden zu unterstützen.",
+    partners_bookings: "Buchungen",
+    partners_funds_raised: "Gesammelte Mittel",
+    btn_view_all_partners: "Alle Partner anzeigen",
   },
   es: {
     // Navigation
@@ -586,6 +637,9 @@ export const DICT = {
     // Hero
     hero_title: "Viajes que financian la conservación",
     hero_sub: "Más allá del safari. Reserva experiencias orientadas a la conservación que apoyen la vida silvestre y las comunidades locales en Kenia. Añádelas a cualquier itinerario y haz cada viaje significativo. Reserva ahora.",
+    hero_stat_conservation: "Proyectos de conservación",
+    hero_stat_travelers: "Viajeros conectados",
+    hero_stat_impact: "Impacto generado",
     cta_explore: "Explorar experiencias",
     cta_see_partners: "Ver socios",
     
@@ -761,6 +815,20 @@ export const DICT = {
     // Search & Other UI
     search_button: "Buscar",
     max_guests: "máx",
-    book_now_button: "Reservar Ahora"
+    book_now_button: "Reservar Ahora",
+    
+    // Impact Stories section
+    impact_stories_title: "Historias de impacto",
+    impact_stories_subtitle: "Historias reales de éxito en conservación, empoderamiento comunitario y cambio positivo en Kenia a través del turismo responsable.",
+    btn_view_all_stories: "Ver todas las historias",
+    btn_read_full_story: "Leer historia completa",
+    btn_view_all_impact_stories: "Ver todas las historias de impacto",
+    
+    // Conservation Partners section
+    conservation_partners_title: "Socios de conservación", 
+    conservation_partners_subtitle: "Conoce las organizaciones dedicadas que trabajan incansablemente para proteger el patrimonio natural de Kenia y apoyar a las comunidades locales.",
+    partners_bookings: "Reservas",
+    partners_funds_raised: "Fondos recaudados",
+    btn_view_all_partners: "Ver todos los socios",
   }
 };
