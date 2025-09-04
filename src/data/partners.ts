@@ -13,6 +13,22 @@ export type Experience = {
   sourceUrl?: string;   // original link you gave
 };
 
+export type Partner = {
+  id: string;
+  name: string;
+  slug: string;
+  destination: Destination;
+  themes: Theme[];
+  description: string;
+  image: string;
+  logo: string;
+  location: string;
+  established: number;
+  activities: string[];
+  experienceCount: number;
+  experiences: Experience[];
+};
+
 const P = (title: string) =>
   title
     .toLowerCase()
@@ -306,43 +322,57 @@ export const EXPERIENCES: Experience[] = [
   },
 ];
 
-export type Partner = {
-  id: string;
-  name: string;
-  slug: string;
-  destination: Destination;
-  themes: Theme[];
-  description: string;
-  image: string;
-  logo: string;
-  location: string;
-  established: number;
-  activities: string[];
-  experienceCount: number;
-  experiences: Experience[];
-};
+// Generate partners lazily to avoid temporal dead zone
+let _partners: Partner[] | null = null;
 
-// Generate partners from experiences
-export const PARTNERS: Partner[] = [
-  ...new Set(EXPERIENCES.map(exp => exp.partner))
-].map((partnerName, index) => {
-  const partnerExps = EXPERIENCES.filter(exp => exp.partner === partnerName);
-  const allThemes = [...new Set(partnerExps.flatMap(exp => exp.themes))];
-  const allActivities = [...new Set(partnerExps.flatMap(exp => exp.activities))];
-  
-  return {
-    id: (index + 1).toString(),
-    name: partnerName,
-    slug: partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-    destination: partnerExps[0].destination,
-    themes: allThemes,
-    description: `Conservation partner working on ${allThemes.join(', ')} initiatives in Kenya.`,
-    image: DUMMY[0],
-    logo: DUMMY[0],
-    location: partnerExps[0].destination.replace(/-/g, ' '),
-    established: 2010 + index,
-    activities: allActivities,
-    experienceCount: partnerExps.length,
-    experiences: partnerExps
-  };
+function generatePartners(): Partner[] {
+  if (_partners !== null) {
+    return _partners;
+  }
+
+  _partners = [
+    ...new Set(EXPERIENCES.map(exp => exp.partner))
+  ].map((partnerName, index) => {
+    const partnerExps = EXPERIENCES.filter(exp => exp.partner === partnerName);
+    const allThemes = [...new Set(partnerExps.flatMap(exp => exp.themes))];
+    const allActivities = [...new Set(partnerExps.flatMap(exp => exp.activities))];
+    
+    return {
+      id: (index + 1).toString(),
+      name: partnerName,
+      slug: partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      destination: partnerExps[0].destination,
+      themes: allThemes,
+      description: `Conservation partner working on ${allThemes.join(', ')} initiatives in Kenya.`,
+      image: DUMMY[0],
+      logo: DUMMY[0],
+      location: partnerExps[0].destination.replace(/-/g, ' '),
+      established: 2010 + index,
+      activities: allActivities,
+      experienceCount: partnerExps.length,
+      experiences: partnerExps
+    };
+  });
+
+  return _partners;
+}
+
+// Export partners as a getter to avoid initialization issues
+export const PARTNERS: Partner[] = new Proxy([], {
+  get(target, prop, receiver) {
+    const partners = generatePartners();
+    return Reflect.get(partners, prop, receiver);
+  },
+  has(target, prop) {
+    const partners = generatePartners();
+    return Reflect.has(partners, prop);
+  },
+  ownKeys(target) {
+    const partners = generatePartners();
+    return Reflect.ownKeys(partners);
+  },
+  getOwnPropertyDescriptor(target, prop) {
+    const partners = generatePartners();
+    return Reflect.getOwnPropertyDescriptor(partners, prop);
+  }
 });
