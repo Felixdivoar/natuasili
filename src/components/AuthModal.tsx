@@ -204,7 +204,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
         <div className="mt-4 text-center">
           <p className="text-xs text-muted-foreground">
             By continuing, you agree to our{' '}
-            <a href="/terms-and-conditions" className="text-primary hover:underline">
+            <a href="/terms" className="text-primary hover:underline">
               Terms of Service
             </a>{' '}
             and{' '}

@@ -327,7 +327,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                         {t('termsConditions', 'Terms & Conditions')}
                       </a>{' '}
                       {t('and', 'and')}{' '}
-                      <a href="/privacy" className="text-primary hover:underline">
+                      <a href="/privacy-policy" className="text-primary hover:underline">
                         {t('privacyPolicy', 'Privacy Policy')}
                       </a>
                     </Label>

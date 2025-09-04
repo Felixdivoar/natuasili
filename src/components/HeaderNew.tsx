@@ -236,7 +236,7 @@ export default function HeaderNew() {
                   Partners
                 </Link>
                 <Link 
-                  to="/listings" 
+                  to="/marketplace" 
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
