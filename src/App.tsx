@@ -91,7 +91,7 @@ const App = () => (
                 <Route path="/experiences" element={<AppLayout><Browse /></AppLayout>} />
                 <Route path="/listings" element={<AppLayout><Listings /></AppLayout>} />
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
-                <Route path="/experience/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
+                <Route path="/experience/:slug" element={<AppLayout><ExperienceDetail /></AppLayout>} />
                 <Route path="/checkout/:slug" element={<AppLayout><Checkout /></AppLayout>} />
                 <Route path="/confirmation/:slug" element={<AppLayout><ConfirmationPage /></AppLayout>} />
                 <Route path="/booking-success" element={<AppLayout><BookingSuccess /></AppLayout>} />
