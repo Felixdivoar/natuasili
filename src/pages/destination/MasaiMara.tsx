@@ -216,7 +216,7 @@ const MasaiMaraDestination = () => {
                       {experience.capacity} max
                     </div>
                     <Button size="sm" asChild>
-                      <Link to={`/experiences/${experience.slug}`}>
+                      <Link to={`/experience/${experience.slug}`}>
                         Book Now
                       </Link>
                     </Button>
