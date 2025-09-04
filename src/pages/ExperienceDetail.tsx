@@ -111,96 +111,132 @@ const ExperienceDetail = () => {
     title: "Return Journey",
     description: "Debrief the day's discoveries and return to your accommodation."
   }];
-  return <div className="min-h-screen bg-background">
-      
-      {/* Breadcrumb */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link to="/" className="hover:text-primary">Home</Link>
-          <span>/</span>
-          <Link to="/browse" className="hover:text-primary">Browse</Link>
-          <span>/</span>
-          <span className="text-foreground">{experience.title}</span>
-        </div>
-      </div>
+  const getThemeSlug = (theme: string) => {
+    return theme.toLowerCase().replace(/\s+/g, '-');
+  };
 
+  const getPartnerSlug = (partnerName: string) => {
+    return partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  };
+
+  return <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="hero-full relative">
-        <div className="hero-inner">
-          <div className="grid lg:grid-cols-2 gap-8 mb-8">
-            {/* Image Gallery */}
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                <img src={experience.images[currentImageIndex]} alt={experience.title} className="w-full h-full object-cover" />
-                {experience.images.length > 1 && <>
-                    <Button variant="ghost" size="icon" className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white" onClick={prevImage}>
-                      <ChevronLeft className="h-6 w-6" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white" onClick={nextImage}>
-                      <ChevronRight className="h-6 w-6" />
-                    </Button>
-                  </>}
-              </div>
-              {experience.images.length > 1 && <div className="flex gap-2 mt-4 overflow-x-auto">
-                  {experience.images.map((image, index) => <button key={index} onClick={() => setCurrentImageIndex(index)} className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${index === currentImageIndex ? 'border-primary' : 'border-transparent'}`}>
-                      <img src={image} alt="" className="w-full h-full object-cover" />
-                    </button>)}
-                </div>}
-            </div>
-
-            {/* Experience Info */}
-            <div className="space-y-6">
-              <div>
-                <Badge className={`mb-3 ${getThemeColor(experience.theme)}`}>
+        <div className="hero-inner max-w-[1150px] mx-auto px-4">
+          {/* Header Info */}
+          <div className="py-6 space-y-4">
+            {/* Theme chip */}
+            <div>
+              <Link to={`/themes/${getThemeSlug(experience.theme)}`} className="inline-block">
+                <Badge className={`${getThemeColor(experience.theme)} hover:opacity-80 transition-opacity cursor-pointer`}>
                   {experience.theme}
                 </Badge>
-                <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                  {experience.title}
-                </h1>
-                
-                {/* Rating */}
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
-                  </div>
-                  <span className="font-medium">4.8</span>
-                  <span className="text-muted-foreground text-sm">(42 reviews)</span>
-                </div>
+              </Link>
+            </div>
 
-                <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-6">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    <span>{experience.location_text}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{experience.duration_hours} hours</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-4 w-4" />
-                    <span>Up to {experience.capacity} people</span>
-                  </div>
-                </div>
+            {/* Title */}
+            <h1 className="text-3xl lg:text-4xl font-bold text-foreground">
+              {experience.title}
+            </h1>
 
-                {/* Perks */}
-                <div className="flex flex-wrap gap-3 mb-6">
-                  <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    Free cancellation
-                  </Badge>
-                  <Badge variant="outline" className="text-blue-600 border-blue-200 bg-blue-50">
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                    Reserve now, pay later
-                  </Badge>
+            {/* Meta line */}
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
                 </div>
+                <span className="font-medium">4.8</span>
+                <span className="text-muted-foreground text-sm">(42 reviews)</span>
+              </div>
+              <span className="text-muted-foreground">•</span>
+              {project && (
+                <Link to={`/partners/${getPartnerSlug(project.name)}`} className="text-primary hover:underline">
+                  {project.name}
+                </Link>
+              )}
+            </div>
+          </div>
 
-                <div className="flex items-center gap-2">
-                  <div className="text-sm text-muted-foreground">from</div>
-                  <div className="text-3xl font-bold text-foreground">
-                    {formatPrice(experience.base_price)}
-                  </div>
-                  <div className="text-sm text-muted-foreground">per person</div>
+          {/* Full-width Image Carousel */}
+          <div className="relative mb-6 -mx-4">
+            <div className="aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-muted">
+              <img 
+                src={experience.images[currentImageIndex]} 
+                alt={experience.title} 
+                className="w-full h-full object-cover" 
+              />
+              {experience.images.length > 1 && (
+                <>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white" 
+                    onClick={prevImage}
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </Button>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white" 
+                    onClick={nextImage}
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </Button>
+                </>
+              )}
+            </div>
+            
+            {/* Thumbnail navigation */}
+            {experience.images.length > 1 && (
+              <div className="flex gap-2 mt-4 overflow-x-auto px-4">
+                {experience.images.map((image, index) => (
+                  <button 
+                    key={index} 
+                    onClick={() => setCurrentImageIndex(index)} 
+                    className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                      index === currentImageIndex ? 'border-primary' : 'border-transparent'
+                    }`}
+                  >
+                    <img src={image} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Top Actions Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b">
+            {/* Left side - basic info */}
+            <div className="flex flex-wrap items-center gap-4 text-muted-foreground text-sm">
+              <div className="flex items-center gap-1">
+                <MapPin className="h-4 w-4" />
+                <span>{experience.location_text}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Users className="h-4 w-4" />
+                <span>Up to {experience.capacity} people</span>
+              </div>
+            </div>
+
+            {/* Right side - actions */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4" />
+                <span>{experience.duration_hours} hours</span>
+              </div>
+              <Button variant="outline" size="sm">
+                <Heart className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="sm">
+                <Share className="h-4 w-4" />
+              </Button>
+              <div className="flex items-center gap-2">
+                <div className="text-sm text-muted-foreground">from</div>
+                <div className="text-2xl font-bold text-foreground">
+                  {formatPrice(experience.base_price)}
                 </div>
+                <div className="text-sm text-muted-foreground">per person</div>
               </div>
             </div>
           </div>
@@ -217,13 +253,6 @@ const ExperienceDetail = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 page-content">
         <div className="max-w-4xl mx-auto space-y-12">
-          {/* Overview */}
-          <section className="section-overview mt-8">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Overview</h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">
-              {experience.description}
-            </p>
-          </section>
 
           {/* About this activity */}
           <section>
@@ -372,9 +401,31 @@ const ExperienceDetail = () => {
           <div className="na-cta-bar lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4" style={{
         paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))'
       }}>
-            <Button onClick={openBookingModal} className="w-full bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
-              Book Now
-            </Button>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="text-lg font-bold text-foreground">
+                    {formatPrice(experience.base_price)}
+                  </div>
+                  <div className="text-xs text-muted-foreground">per person</div>
+                </div>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  <span>{experience.duration_hours}h</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm">
+                  <Heart className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Share className="h-4 w-4" />
+                </Button>
+                <Button onClick={openBookingModal} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                  Book Now
+                </Button>
+              </div>
+            </div>
           </div>
           
           {/* Desktop floating button */}
