@@ -44,7 +44,22 @@ import { Link } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { supabase } from "@/integrations/supabase/client";
 
-// Data interfaces
+// Types and interfaces - moved to top
+type Theme =
+  | "Conservation education"
+  | "Wildlife conservation"
+  | "Community and Cultural exploration";
+
+type LedgerEntry = {
+  id: string;
+  date: string;            // ISO
+  destination: "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
+  theme: Theme;
+  activities: string[];    // tags
+  partner: string;
+  amount: number;
+};
+
 interface ImpactEntry {
   id: string;
   booking_date: string;
@@ -76,6 +91,52 @@ interface DataState {
   isLoading: boolean;
   error: string | null;
   lastFetch: Date | null;
+}
+
+// Helper functions - hoisted function declarations
+function getThemeColor(theme: Theme): string {
+  switch (theme) {
+    case "Conservation education": return "hsl(var(--foreground))";      // black
+    case "Wildlife conservation": return "hsl(var(--muted-foreground))"; // medium gray
+    case "Community and Cultural exploration": return "hsl(var(--border))"; // light gray
+    default: return "hsl(var(--foreground))";
+  }
+}
+
+function byDateDesc(a: LedgerEntry, b: LedgerEntry) {
+  return new Date(b.date).getTime() - new Date(a.date).getTime();
+}
+
+function matchesFilters(e: LedgerEntry, f: {
+  destination?: LedgerEntry["destination"];
+  theme?: Theme;
+  activity?: string;
+  q?: string; // free text
+}) {
+  if (f.destination && e.destination !== f.destination) return false;
+  if (f.theme && e.theme !== f.theme) return false;
+  if (f.activity && !e.activities.includes(f.activity)) return false;
+  if (f.q) {
+    const hay = `${e.partner} ${e.activities.join(" ")} ${e.theme}`.toLowerCase();
+    if (!hay.includes(f.q.toLowerCase())) return false;
+  }
+  return true;
+}
+
+// Map legacy themes to new themes
+function mapLegacyTheme(theme: string): Theme {
+  switch (theme.toLowerCase()) {
+    case 'wildlife':
+    case 'habitat':
+      return "Wildlife conservation";
+    case 'education':
+    case 'community':
+    case 'culture':
+    case 'livelihoods':
+      return "Community and Cultural exploration";
+    default:
+      return "Conservation education";
+  }
 }
 
 // Safe chart component wrapper for SSR compatibility
@@ -303,53 +364,7 @@ const ImpactLedger = () => {
     loadData();
   }, []);
 
-  // Helper function for theme colors
-  const getThemeColor = (theme: string) => {
-    const colors = {
-      'Wildlife': 'hsl(var(--wildlife))',
-      'Habitat': 'hsl(var(--habitat))',
-      'Education': 'hsl(var(--education))',
-      'Livelihoods': 'hsl(var(--livelihoods))'
-    };
-    return colors[theme as keyof typeof colors] || 'hsl(var(--muted))';
-  };
-
-  // Chart data processing
-  const chartData = useMemo(() => {
-    const themeData = filteredEntries.reduce((acc, entry) => {
-      acc[entry.theme] = (acc[entry.theme] || 0) + entry.allocation_amount;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const locationData = filteredEntries.reduce((acc, entry) => {
-      acc[entry.location] = (acc[entry.location] || 0) + entry.allocation_amount;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const monthlyData = filteredEntries.reduce((acc, entry) => {
-      const month = new Date(entry.booking_date).toLocaleDateString('en-US', { month: 'short' });
-      acc[month] = (acc[month] || 0) + entry.allocation_amount;
-      return acc;
-    }, {} as Record<string, number>);
-
-    return {
-      themes: Object.entries(themeData).map(([name, value]) => ({ name, value, fill: getThemeColor(name) })),
-      locations: Object.entries(locationData).map(([name, value]) => ({ name, value })),
-      monthly: Object.entries(monthlyData).map(([month, amount]) => ({ month, amount }))
-    };
-  }, []);
-
-  const getThemeBadgeStyle = (theme: string) => {
-    switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      default: return 'bg-muted text-muted-foreground';
-    }
-  };
-
-  // Filter and sort entries
+  // Filter and sort entries - MOVED UP before chartData
   const filteredEntries = useMemo(() => {
     return entries.filter(entry => {
       const matchesSearch = searchTerm === "" || 
@@ -380,6 +395,46 @@ const ImpactLedger = () => {
       return matchesSearch && matchesPartner && matchesTheme && matchesLocation && matchesDate;
     });
   }, [entries, searchTerm, selectedPartner, selectedTheme, selectedLocation, dateRange]);
+
+  // Chart data processing - now uses filteredEntries safely
+  const chartData = useMemo(() => {
+    const themeData = filteredEntries.reduce((acc, entry) => {
+      const mappedTheme = mapLegacyTheme(entry.theme);
+      acc[mappedTheme] = (acc[mappedTheme] || 0) + entry.allocation_amount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const locationData = filteredEntries.reduce((acc, entry) => {
+      acc[entry.location] = (acc[entry.location] || 0) + entry.allocation_amount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const monthlyData = filteredEntries.reduce((acc, entry) => {
+      const month = new Date(entry.booking_date).toLocaleDateString('en-US', { month: 'short' });
+      acc[month] = (acc[month] || 0) + entry.allocation_amount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return {
+      themes: Object.entries(themeData).map(([name, value]) => ({ 
+        name, 
+        value, 
+        fill: getThemeColor(name as Theme) 
+      })),
+      locations: Object.entries(locationData).map(([name, value]) => ({ name, value })),
+      monthly: Object.entries(monthlyData).map(([month, amount]) => ({ month, amount }))
+    };
+  }, [filteredEntries]);
+
+  const getThemeBadgeStyle = (theme: string) => {
+    const mappedTheme = mapLegacyTheme(theme);
+    switch (mappedTheme) {
+      case 'Conservation education': return 'bg-foreground/10 text-foreground border-foreground/20';
+      case 'Wildlife conservation': return 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20';
+      case 'Community and Cultural exploration': return 'bg-border/10 text-border border-border/20';
+      default: return 'bg-muted text-muted-foreground';
+    }
+  };
 
   // Sorted entries for table
   const sortedEntries = useMemo(() => {
