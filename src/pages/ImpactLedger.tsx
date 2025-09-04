@@ -43,6 +43,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { supabase } from "@/integrations/supabase/client";
+import { EXPERIENCES } from "@/data/partners";
 
 // Types and interfaces - moved to top
 type Theme =
@@ -456,21 +457,30 @@ const ImpactLedger = () => {
     ];
   }, [filteredEntries, currency, convert]);
 
-  // Get unique values for filters
-  const uniquePartners = useMemo(() => 
-    [...new Set(entries.map(entry => entry.project_name))].sort(), 
-    [entries]
+  // Static filter options from seed data - always available
+  const seedPartners = useMemo(() => 
+    [...new Set(EXPERIENCES.map(exp => exp.partner))].sort(),
+    []
   );
   
-  const uniqueThemes = useMemo(() => 
-    [...new Set(entries.map(entry => entry.theme))].sort(), 
-    [entries]
-  );
+  const seedThemes = useMemo(() => {
+    const legacyThemes = [...new Set(EXPERIENCES.flatMap(exp => exp.themes))];
+    return [...new Set(legacyThemes.map(mapLegacyTheme))].sort();
+  }, []);
   
-  const uniqueLocations = useMemo(() => 
-    [...new Set(entries.map(entry => entry.location))].sort(), 
-    [entries]
+  const seedActivities = useMemo(() => 
+    [...new Set(EXPERIENCES.flatMap(exp => exp.activities))].sort(),
+    []
   );
+
+  // Use seed data for filter options (always available) or actual data if available
+  const filterPartners = entries.length > 0 
+    ? [...new Set(entries.map(entry => entry.project_name))].sort()
+    : seedPartners;
+    
+  const filterThemes = entries.length > 0 
+    ? [...new Set(entries.map(entry => mapLegacyTheme(entry.theme)))].sort()
+    : seedThemes;
 
   // Event handlers and utility functions
   const getThemeBadgeStyle = (theme: string) => {
@@ -740,7 +750,7 @@ const ImpactLedger = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="all">All Partners</SelectItem>
-                          {uniquePartners.map(partner => (
+                          {filterPartners.map(partner => (
                             <SelectItem key={partner} value={partner}>{partner}</SelectItem>
                           ))}
                         </SelectContent>
@@ -755,13 +765,30 @@ const ImpactLedger = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="all">All Themes</SelectItem>
-                          {uniqueThemes.map(theme => (
+                          {filterThemes.map(theme => (
                             <SelectItem key={theme} value={theme}>{theme}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
 
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Activity</label>
+                      <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="All Activities" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Activities</SelectItem>
+                          {seedActivities.map(activity => (
+                            <SelectItem key={activity} value={activity}>{activity}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Date Range</label>
                       <Select value={dateRange} onValueChange={setDateRange}>
@@ -929,9 +956,9 @@ const ImpactLedger = () => {
                   {filteredEntries.length === 0 && (
                     <div className="text-center py-8">
                       <TreePine className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold mb-2">No entries found</h3>
+                      <h3 className="text-lg font-semibold mb-2">No entries found yet</h3>
                       <p className="text-muted-foreground">
-                        Try adjusting your filters or search terms.
+                        Book an experience to see your conservation impact here
                       </p>
                     </div>
                   )}
@@ -1000,9 +1027,9 @@ const ImpactLedger = () => {
                     {filteredEntries.length === 0 && (
                       <div className="text-center py-8">
                         <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold mb-2">No stories found</h3>
+                        <h3 className="text-lg font-semibold mb-2">No stories found yet</h3>
                         <p className="text-muted-foreground">
-                          Try adjusting your filters to see impact stories.
+                          Book an experience to see your conservation impact stories here
                         </p>
                       </div>
                     )}
