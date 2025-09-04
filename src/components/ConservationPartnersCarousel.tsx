@@ -25,9 +25,11 @@ const CarouselControls = () => {
     </div>;
 };
 const ConservationPartnersCarousel = () => {
-  const { t } = useI18n();
+  const {
+    t
+  } = useI18n();
   const displayProjects = mockProjects.slice(0, 6);
-  return <section id="projects" className="bg-muted/30 py-[20px]">
+  return <section id="projects" className="bg-muted/30 py-[10px]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center"><T k="conservation_partners_title" /></h2>

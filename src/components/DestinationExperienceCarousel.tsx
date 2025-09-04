@@ -39,8 +39,12 @@ const getThemeColor = (theme: string) => {
 export default function DestinationExperienceCarousel({
   destination
 }: DestinationExperienceCarouselProps) {
-  const { formatPrice } = useCurrency();
-  const { t } = useI18n();
+  const {
+    formatPrice
+  } = useCurrency();
+  const {
+    t
+  } = useI18n();
 
   // Filter experiences by destination (need to convert from location_text to destination)
   const destinationExperiences = mockExperiences.filter(exp => {
@@ -54,8 +58,8 @@ export default function DestinationExperienceCarousel({
     return locationMapping[exp.location_text] === destination;
   });
   if (destinationExperiences.length === 0) return null;
-  return <section className="bg-background py-[20px]">
-        <div className="max-w-[1150px] mx-auto px-4">
+  return <section className="bg-background py-[10px]">
+        <div className="max-w-[1150px] mx-auto px-[15px]">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
             <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
