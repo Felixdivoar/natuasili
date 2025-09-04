@@ -4,9 +4,10 @@ import { useI18n } from "./I18nProvider";
 interface DynamicTranslatedProps {
   text: string;
   className?: string;
+  children?: (translatedText: string) => React.ReactNode;
 }
 
-export default function DynamicTranslated({ text, className }: DynamicTranslatedProps) {
+export default function DynamicTranslated({ text, className, children }: DynamicTranslatedProps) {
   const { lang, tDynamic } = useI18n();
   const [translatedText, setTranslatedText] = useState(text);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +32,8 @@ export default function DynamicTranslated({ text, className }: DynamicTranslated
   }, [text, lang, tDynamic]);
 
   if (isLoading) {
-    return <span className={className}>{text}</span>;
+    return children ? <>{children(text)}</> : <span className={className}>{text}</span>;
   }
 
-  return <span className={className}>{translatedText}</span>;
+  return children ? <>{children(translatedText)}</> : <span className={className}>{translatedText}</span>;
 }

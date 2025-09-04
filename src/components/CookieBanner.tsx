@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import T from "@/i18n/T";
 
 const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -21,12 +22,12 @@ const CookieBanner = () => {
 
   return (
     <div className="cookie-banner">
-      <span>We use cookies to improve your experience. By using NatuAsili, you accept our cookie use.</span>
+      <span><T k="cookie_message" /></span>
       <Link to="/cookie-policy" target="_blank" rel="noopener">
-        Learn more
+        <T k="cookie_learn_more" />
       </Link>
       <Button className="btn" onClick={acceptCookies}>
-        Accept
+        <T k="cookie_accept" />
       </Button>
     </div>
   );

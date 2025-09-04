@@ -97,7 +97,72 @@ export const DICT = {
     all_destinations: "All destinations",
     all_themes: "All themes",
     read_story: "Read full story",
-    from_price: "From"
+    from_price: "From",
+    
+    // Common elements
+    learn_more: "Learn More",
+    view_details: "View Details",
+    book_now: "Book Now",
+    get_started: "Get Started",
+    coming_soon: "Coming Soon",
+    loading: "Loading...",
+    
+    // Buttons & Actions
+    btn_view_details: "View Details",
+    btn_view_partner: "View Partner",
+    btn_book_now: "Book Now",
+    btn_reserve: "Reserve",
+    btn_export_csv: "Export CSV",
+    btn_clear_filters: "Clear Filters",
+    btn_read_more: "Read More",
+    btn_sign_in: "Sign In",
+    btn_sign_up: "Sign Up",
+    btn_return_home: "Return to Home",
+    
+    // Placeholders & Search
+    ph_search_experiences_partners: "Search experiences and partners...",
+    ph_search: "Search...",
+    aria_search: "Search",
+    tt_search: "Search experiences and partners",
+    
+    // Page titles
+    title_impact_ledger: "Impact Ledger",
+    title_partners: "Partners",
+    title_marketplace: "Marketplace",
+    title_destinations: "Destinations",
+    title_about: "About",
+    title_blog: "Blog",
+    title_not_found: "Page Not Found",
+    
+    // Empty states & Messages
+    no_entries_found: "No entries found",
+    no_results: "No results found",
+    try_different_search: "Try adjusting your search or filters",
+    
+    // Filters & Labels
+    filter_price_range: "Price Range",
+    label_activities: "Activities",
+    label_duration: "Duration",
+    label_capacity: "Capacity",
+    label_per_person: "per person",
+    
+    // Navigation & Tabs
+    tab_dashboard: "Dashboard",
+    tab_entries: "Entries", 
+    tab_impact_stories: "Impact Stories",
+    nav_home: "Home",
+    nav_about: "About",
+    nav_blog: "Blog",
+    
+    // Cookie Banner
+    cookie_message: "We use cookies to enhance your experience and analyze site usage.",
+    cookie_accept: "Accept All",
+    cookie_decline: "Decline",
+    cookie_learn_more: "Learn More",
+    
+    // 404 Page
+    not_found_title: "Oops! This page couldn't be found",
+    not_found_message: "The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL."
   },
   fr: {
     // Navigation
@@ -197,7 +262,72 @@ export const DICT = {
     all_destinations: "Toutes les destinations",
     all_themes: "Tous les thèmes",
     read_story: "Lire l'histoire complète",
-    from_price: "À partir de"
+    from_price: "À partir de",
+    
+    // Common elements
+    learn_more: "En savoir plus",
+    view_details: "Voir les détails",
+    book_now: "Réserver maintenant",
+    get_started: "Commencer",
+    coming_soon: "Bientôt disponible",
+    loading: "Chargement...",
+    
+    // Buttons & Actions
+    btn_view_details: "Voir les détails",
+    btn_view_partner: "Voir le partenaire",
+    btn_book_now: "Réserver maintenant",
+    btn_reserve: "Réserver",
+    btn_export_csv: "Exporter CSV",
+    btn_clear_filters: "Effacer les filtres",
+    btn_read_more: "Lire plus",
+    btn_sign_in: "Se connecter",
+    btn_sign_up: "S'inscrire",
+    btn_return_home: "Retour à l'accueil",
+    
+    // Placeholders & Search
+    ph_search_experiences_partners: "Rechercher expériences et partenaires...",
+    ph_search: "Rechercher...",
+    aria_search: "Rechercher",
+    tt_search: "Rechercher expériences et partenaires",
+    
+    // Page titles
+    title_impact_ledger: "Registre d'impact",
+    title_partners: "Partenaires",
+    title_marketplace: "Marché",
+    title_destinations: "Destinations",
+    title_about: "À propos",
+    title_blog: "Blog",
+    title_not_found: "Page non trouvée",
+    
+    // Empty states & Messages
+    no_entries_found: "Aucune entrée trouvée",
+    no_results: "Aucun résultat trouvé",
+    try_different_search: "Essayez d'ajuster votre recherche ou vos filtres",
+    
+    // Filters & Labels
+    filter_price_range: "Gamme de prix",
+    label_activities: "Activités",
+    label_duration: "Durée",
+    label_capacity: "Capacité",
+    label_per_person: "par personne",
+    
+    // Navigation & Tabs
+    tab_dashboard: "Tableau de bord",
+    tab_entries: "Entrées", 
+    tab_impact_stories: "Histoires d'impact",
+    nav_home: "Accueil",
+    nav_about: "À propos",
+    nav_blog: "Blog",
+    
+    // Cookie Banner
+    cookie_message: "Nous utilisons des cookies pour améliorer votre expérience et analyser l'utilisation du site.",
+    cookie_accept: "Accepter tout",
+    cookie_decline: "Décliner",
+    cookie_learn_more: "En savoir plus",
+    
+    // 404 Page
+    not_found_title: "Oups ! Cette page n'a pas pu être trouvée",
+    not_found_message: "La page que vous recherchez n'existe pas. Elle a peut-être été déplacée, supprimée, ou vous avez entré une mauvaise URL."
   },
   de: {
     // Navigation
@@ -297,7 +427,72 @@ export const DICT = {
     all_destinations: "Alle Destinationen",
     all_themes: "Alle Themen",
     read_story: "Vollständige Geschichte lesen",
-    from_price: "Ab"
+    from_price: "Ab",
+    
+    // Common elements
+    learn_more: "Mehr erfahren",
+    view_details: "Details ansehen",
+    book_now: "Jetzt buchen",
+    get_started: "Loslegen",
+    coming_soon: "Demnächst verfügbar",
+    loading: "Wird geladen...",
+    
+    // Buttons & Actions
+    btn_view_details: "Details ansehen",
+    btn_view_partner: "Partner ansehen",
+    btn_book_now: "Jetzt buchen",
+    btn_reserve: "Reservieren",
+    btn_export_csv: "CSV exportieren",
+    btn_clear_filters: "Filter löschen",
+    btn_read_more: "Mehr lesen",
+    btn_sign_in: "Anmelden",
+    btn_sign_up: "Registrieren",
+    btn_return_home: "Zur Startseite",
+    
+    // Placeholders & Search
+    ph_search_experiences_partners: "Erfahrungen und Partner suchen...",
+    ph_search: "Suchen...",
+    aria_search: "Suchen",
+    tt_search: "Erfahrungen und Partner suchen",
+    
+    // Page titles
+    title_impact_ledger: "Impact-Register",
+    title_partners: "Partner",
+    title_marketplace: "Marktplatz",
+    title_destinations: "Reiseziele",
+    title_about: "Über uns",
+    title_blog: "Blog",
+    title_not_found: "Seite nicht gefunden",
+    
+    // Empty states & Messages
+    no_entries_found: "Keine Einträge gefunden",
+    no_results: "Keine Ergebnisse gefunden",
+    try_different_search: "Versuchen Sie, Ihre Suche oder Filter anzupassen",
+    
+    // Filters & Labels
+    filter_price_range: "Preisspanne",
+    label_activities: "Aktivitäten",
+    label_duration: "Dauer",
+    label_capacity: "Kapazität",
+    label_per_person: "pro Person",
+    
+    // Navigation & Tabs
+    tab_dashboard: "Dashboard",
+    tab_entries: "Einträge", 
+    tab_impact_stories: "Impact-Geschichten",
+    nav_home: "Startseite",
+    nav_about: "Über uns",
+    nav_blog: "Blog",
+    
+    // Cookie Banner
+    cookie_message: "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern und die Website-Nutzung zu analysieren.",
+    cookie_accept: "Alle akzeptieren",
+    cookie_decline: "Ablehnen",
+    cookie_learn_more: "Mehr erfahren",
+    
+    // 404 Page
+    not_found_title: "Ups! Diese Seite konnte nicht gefunden werden",
+    not_found_message: "Die gesuchte Seite existiert nicht. Sie wurde möglicherweise verschoben, gelöscht, oder Sie haben eine falsche URL eingegeben."
   },
   es: {
     // Navigation
@@ -397,6 +592,71 @@ export const DICT = {
     all_destinations: "Todos los destinos",
     all_themes: "Todos los temas", 
     read_story: "Leer historia completa",
-    from_price: "Desde"
+    from_price: "Desde",
+    
+    // Common elements
+    learn_more: "Saber más",
+    view_details: "Ver detalles",
+    book_now: "Reservar ahora",
+    get_started: "Comenzar",
+    coming_soon: "Próximamente",
+    loading: "Cargando...",
+    
+    // Buttons & Actions
+    btn_view_details: "Ver detalles",
+    btn_view_partner: "Ver socio",
+    btn_book_now: "Reservar ahora",
+    btn_reserve: "Reservar",
+    btn_export_csv: "Exportar CSV",
+    btn_clear_filters: "Limpiar filtros",
+    btn_read_more: "Leer más",
+    btn_sign_in: "Iniciar sesión",
+    btn_sign_up: "Registrarse",
+    btn_return_home: "Volver al inicio",
+    
+    // Placeholders & Search
+    ph_search_experiences_partners: "Buscar experiencias y socios...",
+    ph_search: "Buscar...",
+    aria_search: "Buscar",
+    tt_search: "Buscar experiencias y socios",
+    
+    // Page titles
+    title_impact_ledger: "Registro de impacto",
+    title_partners: "Socios",
+    title_marketplace: "Mercado",
+    title_destinations: "Destinos",
+    title_about: "Acerca de",
+    title_blog: "Blog",
+    title_not_found: "Página no encontrada",
+    
+    // Empty states & Messages
+    no_entries_found: "No se encontraron entradas",
+    no_results: "No se encontraron resultados",
+    try_different_search: "Intenta ajustar tu búsqueda o filtros",
+    
+    // Filters & Labels
+    filter_price_range: "Rango de precios",
+    label_activities: "Actividades",
+    label_duration: "Duración",
+    label_capacity: "Capacidad",
+    label_per_person: "por persona",
+    
+    // Navigation & Tabs
+    tab_dashboard: "Panel",
+    tab_entries: "Entradas", 
+    tab_impact_stories: "Historias de impacto",
+    nav_home: "Inicio",
+    nav_about: "Acerca de",
+    nav_blog: "Blog",
+    
+    // Cookie Banner
+    cookie_message: "Utilizamos cookies para mejorar tu experiencia y analizar el uso del sitio.",
+    cookie_accept: "Aceptar todo",
+    cookie_decline: "Rechazar",
+    cookie_learn_more: "Saber más",
+    
+    // 404 Page
+    not_found_title: "¡Ups! Esta página no se pudo encontrar",
+    not_found_message: "La página que buscas no existe. Puede haber sido movida, eliminada, o ingresaste una URL incorrecta."
   }
 };
