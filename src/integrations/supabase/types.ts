@@ -14,16 +14,384 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          adults: number
+          booking_date: string
+          booking_time: string | null
+          children: number | null
+          created_at: string | null
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          experience_id: string
+          id: string
+          special_requests: string | null
+          status: string | null
+          total_kes: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          adults?: number
+          booking_date: string
+          booking_time?: string | null
+          children?: number | null
+          created_at?: string | null
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          experience_id: string
+          id?: string
+          special_requests?: string | null
+          status?: string | null
+          total_kes: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          adults?: number
+          booking_date?: string
+          booking_time?: string | null
+          children?: number | null
+          created_at?: string | null
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          experience_id?: string
+          id?: string
+          special_requests?: string | null
+          status?: string | null
+          total_kes?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      experiences: {
+        Row: {
+          activities: Json | null
+          capacity: number | null
+          child_half_price_rule: boolean | null
+          created_at: string | null
+          description: string | null
+          gallery: Json | null
+          hero_image: string | null
+          id: string
+          location_text: string | null
+          partner_id: string
+          price_kes_adult: number
+          slug: string
+          themes: Json | null
+          title: string
+          updated_at: string | null
+          visible_on_marketplace: boolean | null
+        }
+        Insert: {
+          activities?: Json | null
+          capacity?: number | null
+          child_half_price_rule?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          gallery?: Json | null
+          hero_image?: string | null
+          id?: string
+          location_text?: string | null
+          partner_id: string
+          price_kes_adult: number
+          slug: string
+          themes?: Json | null
+          title: string
+          updated_at?: string | null
+          visible_on_marketplace?: boolean | null
+        }
+        Update: {
+          activities?: Json | null
+          capacity?: number | null
+          child_half_price_rule?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          gallery?: Json | null
+          hero_image?: string | null
+          id?: string
+          location_text?: string | null
+          partner_id?: string
+          price_kes_adult?: number
+          slug?: string
+          themes?: Json | null
+          title?: string
+          updated_at?: string | null
+          visible_on_marketplace?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experiences_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      impact_proofs: {
+        Row: {
+          booking_id: string
+          caption: string | null
+          created_at: string | null
+          id: string
+          url: string
+        }
+        Insert: {
+          booking_id: string
+          caption?: string | null
+          created_at?: string | null
+          id?: string
+          url: string
+        }
+        Update: {
+          booking_id?: string
+          caption?: string | null
+          created_at?: string | null
+          id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "impact_proofs_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          booking_id: string
+          content: string
+          created_at: string | null
+          id: string
+          read_at: string | null
+          sender_id: string
+        }
+        Insert: {
+          booking_id: string
+          content: string
+          created_at?: string | null
+          id?: string
+          read_at?: string | null
+          sender_id: string
+        }
+        Update: {
+          booking_id?: string
+          content?: string
+          created_at?: string | null
+          id?: string
+          read_at?: string | null
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_profiles: {
+        Row: {
+          bio: string | null
+          contacts: Json | null
+          created_at: string | null
+          id: string
+          kyc_status: string | null
+          location: string | null
+          logo: string | null
+          org_name: string
+          slug: string
+          team: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          bio?: string | null
+          contacts?: Json | null
+          created_at?: string | null
+          id?: string
+          kyc_status?: string | null
+          location?: string | null
+          logo?: string | null
+          org_name: string
+          slug: string
+          team?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          bio?: string | null
+          contacts?: Json | null
+          created_at?: string | null
+          id?: string
+          kyc_status?: string | null
+          location?: string | null
+          logo?: string | null
+          org_name?: string
+          slug?: string
+          team?: Json | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payouts: {
+        Row: {
+          amount_kes: number
+          created_at: string | null
+          id: string
+          partner_id: string
+          payout_date: string
+          reference: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          amount_kes: number
+          created_at?: string | null
+          id?: string
+          partner_id: string
+          payout_date: string
+          reference?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          amount_kes?: number
+          created_at?: string | null
+          id?: string
+          partner_id?: string
+          payout_date?: string
+          reference?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payouts_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          preferences: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          phone?: string | null
+          preferences?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          preferences?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wishlists: {
+        Row: {
+          created_at: string | null
+          experience_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          experience_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          experience_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlists_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "partner" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +518,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "partner", "user"],
+    },
   },
 } as const
