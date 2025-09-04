@@ -23,11 +23,15 @@ const ExperienceDetail = () => {
   const availabilityRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
+  // Debug logging
   console.log("Looking for slug:", slug);
   console.log("Available slugs:", EXPERIENCES.map(exp => exp.slug));
   const experience = EXPERIENCES.find(exp => exp.slug === slug);
-
+  console.log("Found experience:", experience);
+  
+  // Early return with debug if not found
   if (!experience) {
+    console.log("Experience not found, showing error page");
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-16">
@@ -43,7 +47,12 @@ const ExperienceDetail = () => {
     );
   }
 
-  // Initialize sticky button observer
+  console.log("Experience found, rendering component with:", {
+    title: experience.title,
+    themes: experience.themes,
+    gallery: experience.gallery?.length || 0,
+    id: experience.id
+  });
   useEffect(() => {
     if (heroRef.current) {
       const observer = new IntersectionObserver(
