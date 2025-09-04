@@ -50,16 +50,6 @@ type Theme =
   | "Wildlife conservation"
   | "Community and Cultural exploration";
 
-type LedgerEntry = {
-  id: string;
-  date: string;            // ISO
-  destination: "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
-  theme: Theme;
-  activities: string[];    // tags
-  partner: string;
-  amount: number;
-};
-
 interface ImpactEntry {
   id: string;
   booking_date: string;
@@ -96,34 +86,13 @@ interface DataState {
 // Helper functions - hoisted function declarations
 function getThemeColor(theme: Theme): string {
   switch (theme) {
-    case "Conservation education": return "hsl(var(--foreground))";      // black
-    case "Wildlife conservation": return "hsl(var(--muted-foreground))"; // medium gray
-    case "Community and Cultural exploration": return "hsl(var(--border))"; // light gray
+    case "Conservation education": return "hsl(var(--foreground))";
+    case "Wildlife conservation": return "hsl(var(--muted-foreground))";
+    case "Community and Cultural exploration": return "hsl(var(--border))";
     default: return "hsl(var(--foreground))";
   }
 }
 
-function byDateDesc(a: LedgerEntry, b: LedgerEntry) {
-  return new Date(b.date).getTime() - new Date(a.date).getTime();
-}
-
-function matchesFilters(e: LedgerEntry, f: {
-  destination?: LedgerEntry["destination"];
-  theme?: Theme;
-  activity?: string;
-  q?: string; // free text
-}) {
-  if (f.destination && e.destination !== f.destination) return false;
-  if (f.theme && e.theme !== f.theme) return false;
-  if (f.activity && !e.activities.includes(f.activity)) return false;
-  if (f.q) {
-    const hay = `${e.partner} ${e.activities.join(" ")} ${e.theme}`.toLowerCase();
-    if (!hay.includes(f.q.toLowerCase())) return false;
-  }
-  return true;
-}
-
-// Map legacy themes to new themes
 function mapLegacyTheme(theme: string): Theme {
   switch (theme.toLowerCase()) {
     case 'wildlife':
@@ -207,7 +176,6 @@ const DebugPanel = ({ dataState, entries }: { dataState: DataState; entries: Imp
 // Real data function using Supabase
 const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<ImpactEntry[]> => {
   if (source === 'mock') {
-    // Mock data for fallback
     await new Promise(resolve => setTimeout(resolve, 500));
     
     return [
@@ -231,7 +199,6 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
     ];
   }
 
-  // Fetch real data from Supabase
   try {
     const { data: bookingsData, error: bookingsError } = await supabase
       .from('bookings')
@@ -267,14 +234,12 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
       return [];
     }
 
-    // Transform data to match ImpactEntry interface
     const entries: ImpactEntry[] = bookingsData.map((booking: any) => {
       const experience = booking.experiences;
       const partner = experience?.partner_profiles;
       const themes = experience?.themes || [];
       const primaryTheme = Array.isArray(themes) && themes.length > 0 ? themes[0] : 'Wildlife';
       
-      // Calculate allocation (assuming 10% goes to conservation)
       const allocationAmount = Math.round(booking.total_kes * 0.1);
       
       return {
@@ -291,7 +256,7 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
         proof_description: `Conservation allocation from ${experience?.title || 'experience'} booking. Funds support ${partner?.org_name || 'conservation'} activities.`,
         verified_date: booking.status === 'pending' ? '' : booking.booking_date,
         participants: (booking.adults || 0) + (booking.children || 0),
-        impact_score: Math.round((Math.random() * 30) + 70), // Random score between 70-100
+        impact_score: Math.round((Math.random() * 30) + 70),
         location: experience?.location_text || partner?.location || 'Kenya'
       };
     });
@@ -304,6 +269,7 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
 };
 
 const ImpactLedger = () => {
+  // State variables first
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
   const [selectedTheme, setSelectedTheme] = useState("all");
@@ -330,7 +296,6 @@ const ImpactLedger = () => {
       setDataState(prev => ({ ...prev, isLoading: true, error: null }));
       
       try {
-        // Try live data first, fallback to mock
         let data: ImpactEntry[] = [];
         let source: 'live' | 'mock' = 'live';
         
@@ -364,7 +329,7 @@ const ImpactLedger = () => {
     loadData();
   }, []);
 
-  // Filter and sort entries - MOVED UP before chartData
+  // Core computed values in proper dependency order
   const filteredEntries = useMemo(() => {
     return entries.filter(entry => {
       const matchesSearch = searchTerm === "" || 
@@ -376,7 +341,6 @@ const ImpactLedger = () => {
       const matchesTheme = selectedTheme === "all" || entry.theme === selectedTheme;
       const matchesLocation = selectedLocation === "all" || entry.location === selectedLocation;
       
-      // Date range filtering
       const entryDate = new Date(entry.booking_date);
       const now = new Date();
       let matchesDate = true;
@@ -396,7 +360,19 @@ const ImpactLedger = () => {
     });
   }, [entries, searchTerm, selectedPartner, selectedTheme, selectedLocation, dateRange]);
 
-  // Chart data processing - now uses filteredEntries safely
+  const sortedEntries = useMemo(() => {
+    return [...filteredEntries].sort((a, b) => {
+      const aValue = a[sortField];
+      const bValue = b[sortField];
+      
+      let comparison = 0;
+      if (aValue < bValue) comparison = -1;
+      if (aValue > bValue) comparison = 1;
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+  }, [filteredEntries, sortField, sortDirection]);
+
   const chartData = useMemo(() => {
     const themeData = filteredEntries.reduce((acc, entry) => {
       const mappedTheme = mapLegacyTheme(entry.theme);
@@ -426,31 +402,6 @@ const ImpactLedger = () => {
     };
   }, [filteredEntries]);
 
-  const getThemeBadgeStyle = (theme: string) => {
-    const mappedTheme = mapLegacyTheme(theme);
-    switch (mappedTheme) {
-      case 'Conservation education': return 'bg-foreground/10 text-foreground border-foreground/20';
-      case 'Wildlife conservation': return 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20';
-      case 'Community and Cultural exploration': return 'bg-border/10 text-border border-border/20';
-      default: return 'bg-muted text-muted-foreground';
-    }
-  };
-
-  // Sorted entries for table
-  const sortedEntries = useMemo(() => {
-    return [...filteredEntries].sort((a, b) => {
-      const aValue = a[sortField];
-      const bValue = b[sortField];
-      
-      let comparison = 0;
-      if (aValue < bValue) comparison = -1;
-      if (aValue > bValue) comparison = 1;
-      
-      return sortDirection === 'asc' ? comparison : -comparison;
-    });
-  }, [filteredEntries, sortField, sortDirection]);
-
-  // Calculate KPIs
   const kpis: KPIMetric[] = useMemo(() => {
     const totalBookings = filteredEntries.length;
     const totalAllocated = filteredEntries.reduce((sum, entry) => sum + entry.allocation_amount, 0);
@@ -521,7 +472,17 @@ const ImpactLedger = () => {
     [entries]
   );
 
-  // Event handlers
+  // Event handlers and utility functions
+  const getThemeBadgeStyle = (theme: string) => {
+    const mappedTheme = mapLegacyTheme(theme);
+    switch (mappedTheme) {
+      case 'Conservation education': return 'bg-foreground/10 text-foreground border-foreground/20';
+      case 'Wildlife conservation': return 'bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20';
+      case 'Community and Cultural exploration': return 'bg-border/10 text-border border-border/20';
+      default: return 'bg-muted text-muted-foreground';
+    }
+  };
+
   const handleSort = (field: keyof ImpactEntry) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -553,31 +514,24 @@ const ImpactLedger = () => {
       ].join(','))
     ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `impact-ledger-${new Date().toISOString().split('T')[0]}.csv`);
+    link.href = url;
+    link.download = `impact-ledger-${new Date().toISOString().split('T')[0]}.csv`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
     
     toast({
-      title: "Export Complete",
-      description: `Downloaded ${sortedEntries.length} entries as CSV`,
+      title: "Export successful",
+      description: `Exported ${sortedEntries.length} entries to CSV`,
     });
   }, [sortedEntries, toast]);
 
-  const clearAllFilters = () => {
-    setSearchTerm("");
-    setSelectedPartner("all");
-    setSelectedTheme("all");
-    setSelectedLocation("all");
-    setDateRange("all");
-  };
-
-  const retryDataFetch = async () => {
-    setDataState(prev => ({ ...prev, isLoading: true }));
+  const retryDataFetch = useCallback(async () => {
+    setDataState(prev => ({ ...prev, isLoading: true, error: null }));
     
     try {
       const data = await getImpactLedgerData('live');
@@ -590,20 +544,23 @@ const ImpactLedger = () => {
       });
       
       toast({
-        title: "Data Refreshed",
-        description: "Successfully loaded live data.",
+        title: "Data refreshed",
+        description: "Live data loaded successfully",
       });
     } catch (error) {
-      const data = await getImpactLedgerData('mock');
-      setEntries(data);
-      setDataState({
-        source: 'mock',
+      setDataState(prev => ({
+        ...prev,
         isLoading: false,
-        error: 'Live data unavailable',
-        lastFetch: new Date()
+        error: 'Live data unavailable'
+      }));
+      
+      toast({
+        title: "Refresh failed",
+        description: "Still using demo data",
+        variant: "destructive"
       });
     }
-  };
+  }, [toast]);
 
   if (dataState.isLoading) {
     return (
@@ -655,127 +612,47 @@ const ImpactLedger = () => {
             </Alert>
           )}
 
-          {/* KPI Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {kpis.map((kpi, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">{kpi.title}</p>
-                      <p className="text-2xl font-bold">{kpi.value}</p>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-500" />}
-                      {kpi.trend === 'down' && <ArrowDownRight className="h-4 w-4 text-red-500" />}
-                      {kpi.trend === 'neutral' && <Minus className="h-4 w-4 text-muted-foreground" />}
-                      {kpi.percentage && (
-                        <span className={`text-sm ${
-                          kpi.trend === 'up' ? 'text-green-500' : 
-                          kpi.trend === 'down' ? 'text-red-500' : 'text-muted-foreground'
-                        }`}>
-                          {kpi.percentage}%
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">{kpi.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          {/* Main Content */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-              <TabsTrigger value="details">Detailed Records</TabsTrigger>
+              <TabsTrigger value="entries">Entries</TabsTrigger>
               <TabsTrigger value="stories">Impact Stories</TabsTrigger>
             </TabsList>
 
             {/* Dashboard Tab */}
-            <TabsContent value="dashboard" className="space-y-6">
-              {/* Filters */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Filter className="h-5 w-5" />
-                    Filters & Search
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        placeholder="Search experiences, partners, descriptions..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
-                    
-                    <Select value={selectedPartner} onValueChange={setSelectedPartner}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="All Partners" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Partners</SelectItem>
-                        {uniquePartners.map(partner => (
-                          <SelectItem key={partner} value={partner}>{partner}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+            <TabsContent value="dashboard" className="space-y-8">
+              {/* KPI Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {kpis.map((kpi, index) => (
+                  <Card key={index} className="relative overflow-hidden">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-sm font-medium text-muted-foreground">
+                          {kpi.title}
+                        </CardTitle>
+                        <div className="flex items-center gap-1 text-sm">
+                          {kpi.trend === "up" && <ArrowUpRight className="h-4 w-4 text-green-600" />}
+                          {kpi.trend === "down" && <ArrowDownRight className="h-4 w-4 text-red-600" />}
+                          {kpi.trend === "neutral" && <Minus className="h-4 w-4 text-gray-600" />}
+                          {kpi.percentage && (
+                            <span className={kpi.trend === "up" ? "text-green-600" : "text-red-600"}>
+                              {kpi.percentage}%
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold text-foreground">{kpi.value}</div>
+                      <p className="text-xs text-muted-foreground mt-1">{kpi.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
-                    <Select value={selectedTheme} onValueChange={setSelectedTheme}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="All Themes" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Themes</SelectItem>
-                        {uniqueThemes.map(theme => (
-                          <SelectItem key={theme} value={theme}>{theme}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="All Locations" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Locations</SelectItem>
-                        {uniqueLocations.map(location => (
-                          <SelectItem key={location} value={location}>{location}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={dateRange} onValueChange={setDateRange}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="All Time" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Time</SelectItem>
-                        <SelectItem value="7days">Last 7 Days</SelectItem>
-                        <SelectItem value="30days">Last 30 Days</SelectItem>
-                        <SelectItem value="90days">Last 90 Days</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Button variant="outline" onClick={clearAllFilters}>
-                      Clear All
-                    </Button>
-                  </div>
-                  
-                  <div className="text-sm text-muted-foreground">
-                    Showing {filteredEntries.length} of {entries.length} entries
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Interactive Charts */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Charts Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -784,35 +661,22 @@ const ImpactLedger = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <SafeChartContainer title="Impact by Theme" className="h-[300px]">
-                      <div className="h-full flex flex-col">
-                        {chartData.themes.length > 0 ? (
-                          <div className="flex-1 space-y-4">
-                            {chartData.themes.map((item, index) => (
-                              <div key={item.name} className="flex items-center justify-between p-3 border rounded-lg">
-                                <div className="flex items-center gap-3">
-                                  <div 
-                                    className="w-4 h-4 rounded" 
-                                    style={{ backgroundColor: item.fill }}
-                                  />
-                                  <span className="font-medium">{item.name}</span>
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-bold">
-                                    {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                                  </div>
-                                  <div className="text-sm text-muted-foreground">
-                                    {((item.value / chartData.themes.reduce((sum, t) => sum + t.value, 0)) * 100).toFixed(1)}%
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
+                    <SafeChartContainer title="Impact by Theme" className="h-64">
+                      <div className="space-y-4">
+                        {chartData.themes.map((item, index) => (
+                          <div key={index} className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div 
+                                className="w-4 h-4 rounded-full"
+                                style={{ backgroundColor: item.fill }}
+                              />
+                              <span className="text-sm font-medium">{item.name}</span>
+                            </div>
+                            <span className="text-sm text-muted-foreground">
+                              {currency} {convert(item.value, 'KES', currency).toLocaleString()}
+                            </span>
                           </div>
-                        ) : (
-                          <div className="flex-1 flex items-center justify-center text-muted-foreground">
-                            No data available
-                          </div>
-                        )}
+                        ))}
                       </div>
                     </SafeChartContainer>
                   </CardContent>
@@ -821,98 +685,138 @@ const ImpactLedger = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <TrendingUp className="h-5 w-5" />
+                      <MapPin className="h-5 w-5" />
                       Geographic Distribution
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <SafeChartContainer title="Geographic Distribution" className="h-[300px]">
-                      <div className="h-full flex flex-col">
-                        {chartData.locations.length > 0 ? (
-                          <div className="flex-1 space-y-4">
-                            {chartData.locations.map((item, index) => (
-                              <div key={item.name} className="flex items-center justify-between p-3 border rounded-lg">
-                                <div className="flex items-center gap-3">
-                                  <MapPin className="w-4 h-4 text-muted-foreground" />
-                                  <span className="font-medium">{item.name}</span>
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-bold">
-                                    {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                                  </div>
-                                  <div className="text-sm text-muted-foreground">
-                                    {((item.value / chartData.locations.reduce((sum, l) => sum + l.value, 0)) * 100).toFixed(1)}%
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
+                    <SafeChartContainer title="Geographic Distribution" className="h-64">
+                      <div className="space-y-4">
+                        {chartData.locations.slice(0, 5).map((item, index) => (
+                          <div key={index} className="flex items-center justify-between">
+                            <span className="text-sm font-medium">{item.name}</span>
+                            <span className="text-sm text-muted-foreground">
+                              {currency} {convert(item.value, 'KES', currency).toLocaleString()}
+                            </span>
                           </div>
-                        ) : (
-                          <div className="flex-1 flex items-center justify-center text-muted-foreground">
-                            No data available
-                          </div>
-                        )}
+                        ))}
                       </div>
                     </SafeChartContainer>
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
 
-              {/* Top Performers */}
+            {/* Entries Tab */}
+            <TabsContent value="entries" className="space-y-6">
+              {/* Filters */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Heart className="h-5 w-5" />
-                    Top Performing Partners
+                    <Filter className="h-5 w-5" />
+                    Filters & Search
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {chartData.themes.slice(0, 5).map((item, index) => (
-                      <div key={item.name} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div className="flex items-center gap-4">
-                          <div className="text-2xl font-bold text-muted-foreground">
-                            #{index + 1}
-                          </div>
-                          <div>
-                            <h4 className="font-semibold">{item.name}</h4>
-                            <p className="text-sm text-muted-foreground">Conservation Theme</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-bold text-lg">
-                            {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                          </div>
-                          <Progress 
-                            value={(item.value / Math.max(...chartData.themes.map(t => t.value))) * 100} 
-                            className="w-24 mt-1"
-                          />
-                        </div>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Search</label>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Search experiences, partners..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="pl-10"
+                        />
                       </div>
-                    ))}
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Partner</label>
+                      <Select value={selectedPartner} onValueChange={setSelectedPartner}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="All Partners" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Partners</SelectItem>
+                          {uniquePartners.map(partner => (
+                            <SelectItem key={partner} value={partner}>{partner}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Theme</label>
+                      <Select value={selectedTheme} onValueChange={setSelectedTheme}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="All Themes" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Themes</SelectItem>
+                          {uniqueThemes.map(theme => (
+                            <SelectItem key={theme} value={theme}>{theme}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Date Range</label>
+                      <Select value={dateRange} onValueChange={setDateRange}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="All Time" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Time</SelectItem>
+                          <SelectItem value="7days">Last 7 Days</SelectItem>
+                          <SelectItem value="30days">Last 30 Days</SelectItem>
+                          <SelectItem value="90days">Last 90 Days</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSearchTerm("");
+                        setSelectedPartner("all");
+                        setSelectedTheme("all");
+                        setSelectedLocation("all");
+                        setDateRange("all");
+                      }}
+                    >
+                      Clear All Filters
+                    </Button>
+                    
+                    <div className="flex items-center gap-4">
+                      <Button
+                        variant="outline"
+                        onClick={exportToCSV}
+                        className="flex items-center gap-2"
+                      >
+                        <Download className="h-4 w-4" />
+                        Export CSV
+                      </Button>
+                      
+                      <div className="text-sm text-muted-foreground">
+                        Showing {filteredEntries.length} of {entries.length} entries
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
 
-            {/* Detailed Records Tab */}
-            <TabsContent value="details" className="space-y-6">
+              {/* Entries Table */}
               <Card>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <Eye className="h-5 w-5" />
-                      Detailed Impact Records
-                    </CardTitle>
-                    <Button onClick={exportToCSV} variant="outline" size="sm">
-                      <Download className="h-4 w-4 mr-2" />
-                      Export CSV
-                    </Button>
-                  </div>
+                  <CardTitle>Impact Entries</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {/* Desktop Table */}
-                  <div className="hidden md:block overflow-x-auto">
+                  <div className="rounded-md border overflow-x-auto">
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -920,57 +824,30 @@ const ImpactLedger = () => {
                             className="cursor-pointer hover:bg-muted/50"
                             onClick={() => handleSort('booking_date')}
                           >
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-2">
                               Date
                               {sortField === 'booking_date' && (
-                                sortDirection === 'asc' ? 
-                                <SortAsc className="h-4 w-4" /> : 
-                                <SortDesc className="h-4 w-4" />
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
                               )}
                             </div>
                           </TableHead>
-                          <TableHead 
-                            className="cursor-pointer hover:bg-muted/50"
-                            onClick={() => handleSort('experience_title')}
-                          >
-                            <div className="flex items-center gap-1">
-                              Experience
-                              {sortField === 'experience_title' && (
-                                sortDirection === 'asc' ? 
-                                <SortAsc className="h-4 w-4" /> : 
-                                <SortDesc className="h-4 w-4" />
-                              )}
-                            </div>
-                          </TableHead>
-                          <TableHead 
-                            className="cursor-pointer hover:bg-muted/50"
-                            onClick={() => handleSort('project_name')}
-                          >
-                            <div className="flex items-center gap-1">
-                              Partner
-                              {sortField === 'project_name' && (
-                                sortDirection === 'asc' ? 
-                                <SortAsc className="h-4 w-4" /> : 
-                                <SortDesc className="h-4 w-4" />
-                              )}
-                            </div>
-                          </TableHead>
+                          <TableHead>Experience</TableHead>
+                          <TableHead>Partner</TableHead>
                           <TableHead>Theme</TableHead>
+                          <TableHead>Location</TableHead>
                           <TableHead 
                             className="cursor-pointer hover:bg-muted/50"
                             onClick={() => handleSort('allocation_amount')}
                           >
-                            <div className="flex items-center gap-1">
-                              Impact Allocation
+                            <div className="flex items-center gap-2">
+                              Allocation
                               {sortField === 'allocation_amount' && (
-                                sortDirection === 'asc' ? 
-                                <SortAsc className="h-4 w-4" /> : 
-                                <SortDesc className="h-4 w-4" />
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
                               )}
                             </div>
                           </TableHead>
                           <TableHead>Participants</TableHead>
-                          <TableHead>Score</TableHead>
+                          <TableHead>Impact Score</TableHead>
                           <TableHead>Status</TableHead>
                           <TableHead>Actions</TableHead>
                         </TableRow>
@@ -978,25 +855,16 @@ const ImpactLedger = () => {
                       <TableBody>
                         {sortedEntries.map((entry) => (
                           <TableRow key={entry.id}>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <Calendar className="h-4 w-4 text-muted-foreground" />
-                                {new Date(entry.booking_date).toLocaleDateString()}
-                              </div>
+                            <TableCell className="font-medium">
+                              {new Date(entry.booking_date).toLocaleDateString()}
                             </TableCell>
-                            <TableCell>
-                              <div>
-                                <div className="font-medium">{entry.experience_title}</div>
-                                <div className="text-sm text-muted-foreground flex items-center gap-1">
-                                  <MapPin className="h-3 w-3" />
-                                  {entry.location}
-                                </div>
-                              </div>
+                            <TableCell className="max-w-xs truncate">
+                              {entry.experience_title}
                             </TableCell>
                             <TableCell>
                               <Link 
                                 to={`/partners/${entry.project_id}`}
-                                className="text-primary hover:underline font-medium"
+                                className="text-primary hover:underline"
                               >
                                 {entry.project_name}
                               </Link>
@@ -1006,54 +874,50 @@ const ImpactLedger = () => {
                                 variant="outline" 
                                 className={getThemeBadgeStyle(entry.theme)}
                               >
-                                {entry.theme}
+                                {mapLegacyTheme(entry.theme)}
                               </Badge>
                             </TableCell>
+                            <TableCell className="text-sm text-muted-foreground">
+                              {entry.location}
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
+                            </TableCell>
+                            <TableCell>{entry.participants}</TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
-                                <DollarSign className="h-4 w-4 text-green-600" />
-                                <span className="font-medium">
-                                   {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
-                                </span>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-1">
-                                <Users className="h-4 w-4 text-muted-foreground" />
-                                {entry.participants}
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm">{entry.impact_score}/100</span>
-                                <div className="w-16">
-                                  <Progress value={entry.impact_score} className="h-2" />
+                                <span className="text-sm font-medium">{entry.impact_score}/100</span>
+                                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                                  <div 
+                                    className="h-full bg-primary"
+                                    style={{ width: `${entry.impact_score}%` }}
+                                  />
                                 </div>
                               </div>
                             </TableCell>
                             <TableCell>
-                              <Badge variant={
-                                entry.status === 'verified' ? 'default' : 
-                                entry.status === 'pending' ? 'secondary' : 
-                                'destructive'
-                              }>
-                                {entry.status === 'verified' && <CheckCircle className="h-3 w-3 mr-1" />}
-                                {entry.status === 'pending' && <AlertTriangle className="h-3 w-3 mr-1" />}
-                                {entry.status}
+                              <Badge variant={entry.status === 'verified' ? 'default' : 'secondary'}>
+                                {entry.status === 'verified' ? (
+                                  <>
+                                    <CheckCircle className="h-3 w-3 mr-1" />
+                                    Verified
+                                  </>
+                                ) : (
+                                  <>
+                                    <AlertTriangle className="h-3 w-3 mr-1" />
+                                    Pending
+                                  </>
+                                )}
                               </Badge>
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
-                                <Link to={`/partners/${entry.project_id}`}>
-                                  <Button variant="ghost" size="sm">
-                                    <ExternalLink className="h-4 w-4" />
-                                  </Button>
-                                </Link>
-                                {entry.proof_images.length > 0 && (
-                                  <Button variant="ghost" size="sm">
-                                    <Camera className="h-4 w-4" />
-                                  </Button>
-                                )}
+                                <Button variant="ghost" size="sm">
+                                  <Eye className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="sm">
+                                  <ExternalLink className="h-4 w-4" />
+                                </Button>
                               </div>
                             </TableCell>
                           </TableRow>
@@ -1061,85 +925,13 @@ const ImpactLedger = () => {
                       </TableBody>
                     </Table>
                   </div>
-
-                  {/* Mobile Cards */}
-                  <div className="md:hidden space-y-4">
-                    {sortedEntries.map((entry) => (
-                      <Card key={entry.id}>
-                        <CardContent className="p-4">
-                          <div className="space-y-3">
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <h4 className="font-semibold">{entry.experience_title}</h4>
-                                <p className="text-sm text-muted-foreground flex items-center gap-1">
-                                  <MapPin className="h-3 w-3" />
-                                  {entry.location}
-                                </p>
-                              </div>
-                              <Badge variant={
-                                entry.status === 'verified' ? 'default' : 
-                                entry.status === 'pending' ? 'secondary' : 
-                                'destructive'
-                              }>
-                                {entry.status}
-                              </Badge>
-                            </div>
-                            
-                            <div className="flex items-center justify-between">
-                              <Link 
-                                to={`/partners/${entry.project_id}`}
-                                className="text-primary hover:underline font-medium"
-                              >
-                                {entry.project_name}
-                              </Link>
-                              <Badge 
-                                variant="outline" 
-                                className={getThemeBadgeStyle(entry.theme)}
-                              >
-                                {entry.theme}
-                              </Badge>
-                            </div>
-                            
-                            <div className="grid grid-cols-2 gap-4 text-sm">
-                              <div>
-                                <div className="text-muted-foreground">Date</div>
-                                <div>{new Date(entry.booking_date).toLocaleDateString()}</div>
-                              </div>
-                              <div>
-                                <div className="text-muted-foreground">Participants</div>
-                                <div>{entry.participants}</div>
-                              </div>
-                            </div>
-                            
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <div className="text-muted-foreground text-sm">Impact Allocation</div>
-                                <div className="font-bold text-lg">
-                                   {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
-                                </div>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-muted-foreground text-sm">Impact Score</div>
-                                <div className="flex items-center gap-2">
-                                  <span>{entry.impact_score}/100</span>
-                                  <div className="w-16">
-                                    <Progress value={entry.impact_score} className="h-2" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-
-                  {sortedEntries.length === 0 && (
+                  
+                  {filteredEntries.length === 0 && (
                     <div className="text-center py-8">
                       <TreePine className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                       <h3 className="text-lg font-semibold mb-2">No entries found</h3>
                       <p className="text-muted-foreground">
-                        Try adjusting your filters or search terms
+                        Try adjusting your filters or search terms.
                       </p>
                     </div>
                   )}
@@ -1153,7 +945,7 @@ const ImpactLedger = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Heart className="h-5 w-5" />
-                    Conservation Impact Stories
+                    Impact Stories
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -1163,41 +955,44 @@ const ImpactLedger = () => {
                         <div className="flex items-start justify-between mb-3">
                           <div>
                             <h4 className="font-semibold text-lg">{entry.experience_title}</h4>
-                            <p className="text-muted-foreground">
-                              Partnership with {entry.project_name}
+                            <p className="text-sm text-muted-foreground">
+                              by {entry.project_name} • {new Date(entry.booking_date).toLocaleDateString()}
                             </p>
                           </div>
                           <Badge 
                             variant="outline" 
                             className={getThemeBadgeStyle(entry.theme)}
                           >
-                            {entry.theme}
+                            {mapLegacyTheme(entry.theme)}
                           </Badge>
                         </div>
                         
-                        <p className="text-sm leading-relaxed mb-4">
+                        <p className="text-muted-foreground mb-4">
                           {entry.proof_description}
                         </p>
                         
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <div className="flex items-center gap-4">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              {new Date(entry.booking_date).toLocaleDateString()}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />
-                              {entry.participants} participants
-                            </span>
-                            <span className="flex items-center gap-1">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-1">
                               <DollarSign className="h-4 w-4" />
                               {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
-                            </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Users className="h-4 w-4" />
+                              {entry.participants} participants
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <TrendingUp className="h-4 w-4" />
+                              {entry.impact_score}/100 impact
+                            </div>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <span>Impact Score: {entry.impact_score}/100</span>
-                            <Progress value={entry.impact_score} className="w-16 h-2" />
-                          </div>
+                          
+                          <Link 
+                            to={`/partners/${entry.project_id}`}
+                            className="text-primary hover:underline text-sm"
+                          >
+                            View Partner →
+                          </Link>
                         </div>
                       </div>
                     ))}
@@ -1207,7 +1002,7 @@ const ImpactLedger = () => {
                         <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                         <h3 className="text-lg font-semibold mb-2">No stories found</h3>
                         <p className="text-muted-foreground">
-                          Impact stories will appear here as conservation projects are completed
+                          Try adjusting your filters to see impact stories.
                         </p>
                       </div>
                     )}
