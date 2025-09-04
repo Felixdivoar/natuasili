@@ -1,6 +1,18 @@
 // New mock data based on partners.ts experiences
 import { Project, Experience, User, Booking, ImpactProof, ProjectCategory, ActivityType } from '@/types';
 import { EXPERIENCES, Destination, Theme } from './partners';
+import koijaCommunityImg from "@/assets/partner-koija-community.jpg";
+import seraConservancyImg from "@/assets/partner-sera-conservancy.jpg";
+import rukoConservancyImg from "@/assets/partner-ruko-conservancy.jpg";
+import colobusConservationImg from "@/assets/partner-colobus-conservation.jpg";
+import localOceanImg from "@/assets/partner-local-ocean.jpg";
+import forestHeritageImg from "@/assets/partner-forest-heritage.jpg";
+import natureKenyaImg from "@/assets/partner-nature-kenya.jpg";
+import afewGiraffeImg from "@/assets/partner-afew-giraffe.jpg";
+import retetiSanctuaryImg from "@/assets/partner-reteti-sanctuary.jpg";
+import olPejetaImg from "@/assets/partner-ol-pejeta.jpg";
+import reefolutionImg from "@/assets/partner-reefolution.jpg";
+import maraElephantImg from "@/assets/partner-mara-elephant.jpg";
 
 // Convert partner theme to Experience theme (ProjectCategory)
 const convertTheme = (partnerThemes: Theme[]): ProjectCategory => {
@@ -30,23 +42,44 @@ const getLocationText = (destination: Destination): string => {
   }
 };
 
+// Partner image mapping for conservation carousel
+const PARTNER_CAROUSEL_IMAGES: Record<string, string> = {
+  "Koija Community": koijaCommunityImg,
+  "Sera Conservancy": seraConservancyImg,
+  "Ruko Community Conservancy": rukoConservancyImg,
+  "Colobus Conservation": colobusConservationImg,
+  "Local Ocean (Watamu)": localOceanImg,
+  "Kenya Forest Heritage": forestHeritageImg,
+  "Nature Kenya": natureKenyaImg,
+  "Giraffe Centre (AFEW)": afewGiraffeImg,
+  "Reteti Elephant Sanctuary": retetiSanctuaryImg,
+  "Ol Pejeta Conservancy": olPejetaImg,
+  "Reefolution": reefolutionImg,
+  "Mara Elephant Project": maraElephantImg,
+};
+
 // Generate projects from unique partners
 const uniquePartners = [...new Set(EXPERIENCES.map(exp => exp.partner))];
-export const mockProjects: Project[] = uniquePartners.map((partner, index) => ({
-  id: (index + 1).toString(),
-  name: partner,
-  slug: partner.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-  status: 'active' as const,
-  category: 'Wildlife Conservation' as ProjectCategory,
-  contact_email: `contact@${partner.toLowerCase().replace(/[^a-z0-9]+/g, '')}.org`,
-  phone: `+254-70${index + 1}-123456`,
-  location_text: getLocationText(EXPERIENCES.find(exp => exp.partner === partner)?.destination || 'nairobi'),
-  hero_image: '/img/ph1.jpg',
-  bio: `Supporting conservation and community development through sustainable tourism and education programs in Kenya.`,
-  metrics_bookings_count: Math.floor(Math.random() * 50) + 10,
-  metrics_funds_total: Math.floor(Math.random() * 100000) + 25000,
-  created_at: '2023-04-01T10:00:00Z'
-}));
+export const mockProjects: Project[] = uniquePartners.map((partner, index) => {
+  const partnerExperience = EXPERIENCES.find(exp => exp.partner === partner);
+  const heroImage = PARTNER_CAROUSEL_IMAGES[partner] || '/img/ph1.jpg';
+  
+  return {
+    id: (index + 1).toString(),
+    name: partner,
+    slug: partner.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    status: 'active' as const,
+    category: convertTheme(partnerExperience?.themes || ['wildlife']),
+    contact_email: `contact@${partner.toLowerCase().replace(/[^a-z0-9]+/g, '')}.org`,
+    phone: `+254-70${index + 1}-123456`,
+    location_text: getLocationText(partnerExperience?.destination || 'nairobi'),
+    hero_image: heroImage,
+    bio: `Supporting conservation and community development through sustainable tourism and education programs in Kenya.`,
+    metrics_bookings_count: Math.floor(Math.random() * 50) + 10,
+    metrics_funds_total: Math.floor(Math.random() * 100000) + 25000,
+    created_at: '2023-04-01T10:00:00Z'
+  };
+});
 
 // Convert partner experiences to mock experiences
 export const mockExperiences: Experience[] = EXPERIENCES.map((partnerExp, index) => {

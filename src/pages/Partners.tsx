@@ -249,12 +249,17 @@ export default function Partners() {
                   <div className="aspect-video relative overflow-hidden bg-muted">
                     <img 
                       src={partner.logo} 
-                      alt={partner.name}
-                      className="w-full h-full object-contain p-4" 
+                      alt={`${partner.name} conservation work - ${partner.themes.join(', ')} initiatives`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
                       onError={(e) => {
-                        e.currentTarget.src = '/img/ph1.jpg';
+                        const target = e.currentTarget;
+                        target.src = '/img/ph1.jpg';
+                        target.alt = `${partner.name} - Image not available`;
+                        target.className = "w-full h-full object-contain p-4 bg-muted-foreground/10";
                       }}
+                      loading="lazy"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between gap-2 mb-2">

@@ -1,3 +1,16 @@
+import koijaCommunityImg from "@/assets/partner-koija-community.jpg";
+import seraConservancyImg from "@/assets/partner-sera-conservancy.jpg";
+import rukoConservancyImg from "@/assets/partner-ruko-conservancy.jpg";
+import colobusConservationImg from "@/assets/partner-colobus-conservation.jpg";
+import localOceanImg from "@/assets/partner-local-ocean.jpg";
+import forestHeritageImg from "@/assets/partner-forest-heritage.jpg";
+import natureKenyaImg from "@/assets/partner-nature-kenya.jpg";
+import afewGiraffeImg from "@/assets/partner-afew-giraffe.jpg";
+import retetiSanctuaryImg from "@/assets/partner-reteti-sanctuary.jpg";
+import olPejetaImg from "@/assets/partner-ol-pejeta.jpg";
+import reefolutionImg from "@/assets/partner-reefolution.jpg";
+import maraElephantImg from "@/assets/partner-mara-elephant.jpg";
+
 export type Destination = "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
 export type Theme = "wildlife" | "marine" | "community" | "culture";
 
@@ -35,6 +48,23 @@ export type Partner = {
   activities: string[];
   experienceCount: number;
   experiences: Experience[];
+};
+
+// Partner image mapping for unique, high-quality conservation images
+const PARTNER_IMAGES: Record<string, string> = {
+  "Koija Community": koijaCommunityImg,
+  "Sera Conservancy": seraConservancyImg,
+  "Ruko Community Conservancy": rukoConservancyImg,
+  "Colobus Conservation": colobusConservationImg,
+  "Local Ocean (Watamu)": localOceanImg,
+  "Kenya Forest Heritage": forestHeritageImg,
+  "Nature Kenya": natureKenyaImg,
+  "Giraffe Centre (AFEW)": afewGiraffeImg,
+  "Reteti Elephant Sanctuary": retetiSanctuaryImg,
+  "Ol Pejeta Conservancy": olPejetaImg,
+  "Reefolution": reefolutionImg,
+  "Mara Elephant Project": maraElephantImg,
+  // Fallback for any partners not explicitly mapped
 };
 
 const P = (title: string) =>
@@ -514,6 +544,9 @@ function generatePartners(): Partner[] {
     const allThemes = [...new Set(partnerExps.flatMap(exp => exp.themes))];
     const allActivities = [...new Set(partnerExps.flatMap(exp => exp.activities))];
     
+    // Get unique partner image or fallback to themed placeholder
+    const partnerImage = PARTNER_IMAGES[partnerName] || DUMMY[index % DUMMY.length];
+    
     return {
       id: (index + 1).toString(),
       name: partnerName,
@@ -521,8 +554,8 @@ function generatePartners(): Partner[] {
       destination: partnerExps[0].destination,
       themes: allThemes,
       description: `Conservation partner working on ${allThemes.join(', ')} initiatives in Kenya.`,
-      image: DUMMY[0],
-      logo: DUMMY[0],
+      image: partnerImage,
+      logo: partnerImage, // Use same high-quality image for logo display
       location: partnerExps[0].destination.replace(/-/g, ' '),
       established: 2010 + index,
       activities: allActivities,

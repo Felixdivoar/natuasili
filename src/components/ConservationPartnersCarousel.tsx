@@ -41,7 +41,18 @@ const ConservationPartnersCarousel = () => {
             {displayProjects.map(project => <CarouselItem key={project.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Card className="group hover:shadow-lg transition-shadow overflow-hidden h-full">
                   <div className="relative aspect-[4/3]">
-                    <img src={project.hero_image} alt={project.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <img 
+                      src={project.hero_image} 
+                      alt={`${project.name} conservation partner - ${project.category} work in ${project.location_text}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.src = '/img/ph1.jpg';
+                        target.alt = `${project.name} - Image not available`;
+                        target.className = "w-full h-full object-contain p-4 bg-muted-foreground/10";
+                      }}
+                      loading="lazy"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-conservation text-white">
