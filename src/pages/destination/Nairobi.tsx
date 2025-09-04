@@ -7,11 +7,20 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useI18n } from "@/i18n/I18nProvider";
+import { usePageTitle } from "@/hooks/usePageTitle";
+import { useHtmlLang } from "@/hooks/useHtmlLang";
+import T from "@/i18n/T";
+import DynamicTranslated from "@/i18n/DynamicTranslated";
 
 import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
 
 const NairobiDestination = () => {
   const { formatPrice } = useCurrency();
+  const { t } = useI18n();
+  
+  usePageTitle("title_destinations");
+  useHtmlLang();
   
   // Get Nairobi-related partners and experiences
   const nairobiPartners = mockProjects.filter(project => 
@@ -33,26 +42,26 @@ const NairobiDestination = () => {
       <section className="relative h-[60vh] bg-gray-900">
         <img
           src={nairobiDestination}
-          alt="Nairobi Conservation Area"
+          alt={t("dest_nairobi_title")}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white max-w-4xl mx-auto px-4">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Nairobi Conservation Area
+              <T k="dest_nairobi_title" />
             </h1>
             <p className="text-xl md:text-2xl mb-8">
-              Urban conservation initiatives including Nairobi National Park, Karura Forest, and community-based urban wildlife corridors.
+              <T k="dest_nairobi_subtitle" />
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-conservation hover:bg-conservation/90">
                 <Link to="/marketplace?destination=nairobi">
-                  Explore Experiences
+                  <T k="dest_explore_experiences" />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
-                View Urban Impact
+                <T k="dest_view_urban_impact" />
               </Button>
             </div>
           </div>
@@ -66,49 +75,63 @@ const NairobiDestination = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">8</div>
-                <div className="text-sm text-muted-foreground">Urban Partners</div>
+                <div className="text-sm text-muted-foreground"><T k="dest_urban_partners" /></div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">12</div>
-                <div className="text-sm text-muted-foreground">Active Projects</div>
+                <div className="text-sm text-muted-foreground"><T k="dest_active_projects" /></div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">12,000</div>
-                <div className="text-sm text-muted-foreground">Hectares Protected</div>
+                <div className="text-sm text-muted-foreground"><T k="dest_hectares_protected" /></div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">25</div>
-                <div className="text-sm text-muted-foreground">Communities Involved</div>
+                <div className="text-sm text-muted-foreground"><T k="dest_communities_involved" /></div>
               </div>
             </div>
 
             <div className="prose prose-lg max-w-none">
-              <h2 className="text-2xl font-bold mb-4">About Nairobi's Urban Conservation</h2>
-              <p className="text-muted-foreground mb-6">
-                Nairobi is unique as one of the world's only capital cities with a national park within its boundaries. The Nairobi Conservation Area encompasses not just the famous national park, but also critical urban forests like Karura, community conservancies, and green corridors that connect fragmented habitats.
-              </p>
+              <h2 className="text-2xl font-bold mb-4"><T k="dest_about_nairobi" /></h2>
+              <DynamicTranslated 
+                text="Nairobi is unique as one of the world's only capital cities with a national park within its boundaries. The Nairobi Conservation Area encompasses not just the famous national park, but also critical urban forests like Karura, community conservancies, and green corridors that connect fragmented habitats."
+                className="text-muted-foreground mb-6"
+              />
               
-              <p className="text-muted-foreground mb-6">
-                Urban conservation in Nairobi faces unique challenges and opportunities. The proximity of wildlife to over 4 million residents creates both human-wildlife conflict and unprecedented opportunities for conservation education and community engagement. Initiatives here serve as models for urban conservation across Africa.
-              </p>
+              <DynamicTranslated 
+                text="Urban conservation in Nairobi faces unique challenges and opportunities. The proximity of wildlife to over 4 million residents creates both human-wildlife conflict and unprecedented opportunities for conservation education and community engagement. Initiatives here serve as models for urban conservation across Africa."
+                className="text-muted-foreground mb-6"
+              />
 
-              <h3 className="text-xl font-semibold mb-4">Conservation Highlights</h3>
+              <h3 className="text-xl font-semibold mb-4"><T k="dest_conservation_highlights" /></h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Urban Wildlife Corridors</h4>
-                  <p className="text-sm text-muted-foreground">Creating safe passages for wildlife movement between protected areas and reducing human-wildlife conflict.</p>
+                  <h4 className="font-semibold mb-2"><T k="dest_urban_wildlife_corridors" /></h4>
+                  <DynamicTranslated 
+                    text="Creating safe passages for wildlife movement between protected areas and reducing human-wildlife conflict."
+                    className="text-sm text-muted-foreground"
+                  />
                 </div>
                 <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Forest Restoration</h4>
-                  <p className="text-sm text-muted-foreground">Restoration of degraded urban forests and establishment of new green spaces for biodiversity and carbon sequestration.</p>
+                  <h4 className="font-semibold mb-2"><T k="dest_forest_restoration" /></h4>
+                  <DynamicTranslated 
+                    text="Restoration of degraded urban forests and establishment of new green spaces for biodiversity and carbon sequestration."
+                    className="text-sm text-muted-foreground"
+                  />
                 </div>
                 <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Environmental Education</h4>
-                  <p className="text-sm text-muted-foreground">Engaging urban communities and schools in conservation through hands-on environmental education programs.</p>
+                  <h4 className="font-semibold mb-2"><T k="dest_environmental_education" /></h4>
+                  <DynamicTranslated 
+                    text="Engaging urban communities and schools in conservation through hands-on environmental education programs."
+                    className="text-sm text-muted-foreground"
+                  />
                 </div>
                 <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Research & Monitoring</h4>
-                  <p className="text-sm text-muted-foreground">Long-term research on urban ecology and wildlife behavior in human-dominated landscapes.</p>
+                  <h4 className="font-semibold mb-2"><T k="dest_research_monitoring" /></h4>
+                  <DynamicTranslated 
+                    text="Long-term research on urban ecology and wildlife behavior in human-dominated landscapes."
+                    className="text-sm text-muted-foreground"
+                  />
                 </div>
               </div>
             </div>
@@ -121,11 +144,12 @@ const NairobiDestination = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Urban Conservation Partners
+              <T k="dest_urban_conservation_partners" />
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Meet the organizations pioneering urban conservation in Kenya's capital city.
-            </p>
+            <DynamicTranslated 
+              text="Meet the organizations pioneering urban conservation in Kenya's capital city."
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -151,18 +175,19 @@ const NairobiDestination = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {partner.bio}
-                  </p>
+                  <DynamicTranslated 
+                    text={partner.bio}
+                    className="text-sm text-muted-foreground mb-4 line-clamp-3"
+                  />
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
                       <Link to={`/projects/${partner.id}`}>
-                        View Partner
+                        <T k="dest_view_partner" />
                       </Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
                       <Link to={`/marketplace?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        Experiences
+                        <T k="dest_experiences" />
                       </Link>
                     </Button>
                   </div>
@@ -178,11 +203,12 @@ const NairobiDestination = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Featured Nairobi Experiences
+              <T k="dest_featured_experiences" />
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover unique urban conservation experiences in Kenya's vibrant capital city.
-            </p>
+            <DynamicTranslated 
+              text="Discover unique urban conservation experiences in Kenya's vibrant capital city."
+              className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -204,19 +230,20 @@ const NairobiDestination = () => {
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-semibold text-lg mb-2 line-clamp-2">
-                    {experience.title}
+                    <DynamicTranslated text={experience.title} />
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {experience.description}
-                  </p>
+                  <DynamicTranslated 
+                    text={experience.description}
+                    className="text-sm text-muted-foreground mb-4 line-clamp-3"
+                  />
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Users className="h-4 w-4 mr-1" />
-                      {experience.capacity} max
+                      {experience.capacity} <T k="max_guests" />
                     </div>
                     <Button size="sm" asChild>
                       <Link to={`/experience/${experience.slug}`}>
-                        Book Now
+                        <T k="book_now_button" />
                       </Link>
                     </Button>
                   </div>
@@ -228,7 +255,7 @@ const NairobiDestination = () => {
           <div className="text-center mt-8">
             <Button size="lg" variant="outline" asChild>
               <Link to="/marketplace?destination=nairobi">
-                View All Nairobi Experiences
+                <T k="dest_view_all_experiences" />
               </Link>
             </Button>
           </div>

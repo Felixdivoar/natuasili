@@ -162,7 +162,33 @@ export const DICT = {
     
     // 404 Page
     not_found_title: "Oops! This page couldn't be found",
-    not_found_message: "The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL."
+    not_found_message: "The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.",
+    
+    // Destination Pages
+    dest_nairobi_title: "Nairobi Conservation Area",
+    dest_nairobi_subtitle: "Urban conservation initiatives including Nairobi National Park, Karura Forest, and community-based urban wildlife corridors.",
+    dest_urban_partners: "Urban Partners",
+    dest_active_projects: "Active Projects", 
+    dest_hectares_protected: "Hectares Protected",
+    dest_communities_involved: "Communities Involved",
+    dest_about_nairobi: "About Nairobi's Urban Conservation",
+    dest_conservation_highlights: "Conservation Highlights",
+    dest_urban_wildlife_corridors: "Urban Wildlife Corridors",
+    dest_forest_restoration: "Forest Restoration",
+    dest_environmental_education: "Environmental Education",
+    dest_research_monitoring: "Research & Monitoring",
+    dest_urban_conservation_partners: "Urban Conservation Partners",
+    dest_featured_experiences: "Featured Nairobi Experiences",
+    dest_explore_experiences: "Explore Experiences",
+    dest_view_urban_impact: "View Urban Impact",
+    dest_view_partner: "View Partner",
+    dest_experiences: "Experiences",
+    dest_view_all_experiences: "View All Nairobi Experiences",
+    
+    // Search & Other UI
+    search_button: "Search",
+    max_guests: "max",
+    book_now_button: "Book Now"
   },
   fr: {
     // Navigation
@@ -327,7 +353,33 @@ export const DICT = {
     
     // 404 Page
     not_found_title: "Oups ! Cette page n'a pas pu être trouvée",
-    not_found_message: "La page que vous recherchez n'existe pas. Elle a peut-être été déplacée, supprimée, ou vous avez entré une mauvaise URL."
+    not_found_message: "La page que vous recherchez n'existe pas. Elle a peut-être été déplacée, supprimée, ou vous avez entré une mauvaise URL.",
+    
+    // Destination Pages
+    dest_nairobi_title: "Zone de Conservation de Nairobi",
+    dest_nairobi_subtitle: "Initiatives de conservation urbaine incluant le Parc National de Nairobi, la Forêt de Karura, et les corridors de faune urbains communautaires.",
+    dest_urban_partners: "Partenaires Urbains",
+    dest_active_projects: "Projets Actifs",
+    dest_hectares_protected: "Hectares Protégés", 
+    dest_communities_involved: "Communautés Impliquées",
+    dest_about_nairobi: "À propos de la Conservation Urbaine de Nairobi",
+    dest_conservation_highlights: "Points Forts de la Conservation",
+    dest_urban_wildlife_corridors: "Corridors de Faune Urbains",
+    dest_forest_restoration: "Restauration Forestière",
+    dest_environmental_education: "Éducation Environnementale",
+    dest_research_monitoring: "Recherche et Surveillance",
+    dest_urban_conservation_partners: "Partenaires de Conservation Urbaine",
+    dest_featured_experiences: "Expériences Nairobi Sélectionnées",
+    dest_explore_experiences: "Découvrir les Expériences",
+    dest_view_urban_impact: "Voir l'Impact Urbain",
+    dest_view_partner: "Voir le Partenaire",
+    dest_experiences: "Expériences",
+    dest_view_all_experiences: "Voir Toutes les Expériences de Nairobi",
+    
+    // Search & Other UI
+    search_button: "Rechercher",
+    max_guests: "max",
+    book_now_button: "Réserver Maintenant"
   },
   de: {
     // Navigation
@@ -492,7 +544,33 @@ export const DICT = {
     
     // 404 Page
     not_found_title: "Ups! Diese Seite konnte nicht gefunden werden",
-    not_found_message: "Die gesuchte Seite existiert nicht. Sie wurde möglicherweise verschoben, gelöscht, oder Sie haben eine falsche URL eingegeben."
+    not_found_message: "Die gesuchte Seite existiert nicht. Sie wurde möglicherweise verschoben, gelöscht, oder Sie haben eine falsche URL eingegeben.",
+    
+    // Destination Pages
+    dest_nairobi_title: "Nairobi-Naturschutzgebiet",
+    dest_nairobi_subtitle: "Städtische Naturschutzinitiativen einschließlich Nairobi-Nationalpark, Karura-Wald und gemeinschaftsbasierte städtische Wildtierkorridore.",
+    dest_urban_partners: "Städtische Partner",
+    dest_active_projects: "Aktive Projekte",
+    dest_hectares_protected: "Geschützte Hektar",
+    dest_communities_involved: "Beteiligte Gemeinden",
+    dest_about_nairobi: "Über Nairobis Städtischen Naturschutz",  
+    dest_conservation_highlights: "Naturschutz-Highlights",
+    dest_urban_wildlife_corridors: "Städtische Wildtierkorridore",
+    dest_forest_restoration: "Waldrestaurierung",
+    dest_environmental_education: "Umweltbildung",
+    dest_research_monitoring: "Forschung und Überwachung",
+    dest_urban_conservation_partners: "Städtische Naturschutzpartner",
+    dest_featured_experiences: "Empfohlene Nairobi-Erfahrungen",
+    dest_explore_experiences: "Erfahrungen Entdecken",
+    dest_view_urban_impact: "Städtische Wirkung Anzeigen",
+    dest_view_partner: "Partner Ansehen",
+    dest_experiences: "Erfahrungen",
+    dest_view_all_experiences: "Alle Nairobi-Erfahrungen Anzeigen",
+    
+    // Search & Other UI  
+    search_button: "Suchen",
+    max_guests: "max",
+    book_now_button: "Jetzt Buchen"
   },
   es: {
     // Navigation
@@ -657,6 +735,32 @@ export const DICT = {
     
     // 404 Page
     not_found_title: "¡Ups! Esta página no se pudo encontrar",
-    not_found_message: "La página que buscas no existe. Puede haber sido movida, eliminada, o ingresaste una URL incorrecta."
+    not_found_message: "La página que buscas no existe. Puede haber sido movida, eliminada, o ingresaste una URL incorrecta.",
+    
+    // Destination Pages
+    dest_nairobi_title: "Área de Conservación de Nairobi",
+    dest_nairobi_subtitle: "Iniciativas de conservación urbana que incluyen el Parque Nacional de Nairobi, el Bosque de Karura y corredores de vida silvestre urbanos comunitarios.",
+    dest_urban_partners: "Socios Urbanos",
+    dest_active_projects: "Proyectos Activos",
+    dest_hectares_protected: "Hectáreas Protegidas",
+    dest_communities_involved: "Comunidades Involucradas",
+    dest_about_nairobi: "Acerca de la Conservación Urbana de Nairobi",
+    dest_conservation_highlights: "Aspectos Destacados de la Conservación",
+    dest_urban_wildlife_corridors: "Corredores de Vida Silvestre Urbanos",
+    dest_forest_restoration: "Restauración Forestal", 
+    dest_environmental_education: "Educación Ambiental",
+    dest_research_monitoring: "Investigación y Monitoreo",
+    dest_urban_conservation_partners: "Socios de Conservación Urbana",
+    dest_featured_experiences: "Experiencias Destacadas de Nairobi",
+    dest_explore_experiences: "Explorar Experiencias",
+    dest_view_urban_impact: "Ver Impacto Urbano",
+    dest_view_partner: "Ver Socio", 
+    dest_experiences: "Experiencias",
+    dest_view_all_experiences: "Ver Todas las Experiencias de Nairobi",
+    
+    // Search & Other UI
+    search_button: "Buscar",
+    max_guests: "máx",
+    book_now_button: "Reservar Ahora"
   }
 };

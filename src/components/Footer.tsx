@@ -80,7 +80,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="text-sm text-white/60 text-center">
-            {t("footer_copyright")}
+            © 2024 <span translate="no">NatuAsili</span>. {t("footer_copyright").replace(/^© \d{4} NatuAsili\. /, "")}
           </p>
         </div>
       </div>

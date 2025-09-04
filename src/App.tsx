@@ -14,6 +14,7 @@ import RootLayout from "@/layouts/RootLayout";
 import HeaderMega from "@/components/HeaderMega";
 import HeaderNew from "@/components/HeaderNew";
 import Footer from "@/components/Footer";
+import { useHtmlLang } from "@/hooks/useHtmlLang";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
@@ -67,6 +68,8 @@ function ScrollToTop() {
 
 // Layout with new header
 function AppLayout({ children }: { children: React.ReactNode }) {
+  useHtmlLang();
+  
   return (
     <div className="min-h-screen bg-background">
       <HeaderNew />

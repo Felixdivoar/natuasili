@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
+import T from "@/i18n/T";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
@@ -63,7 +64,8 @@ export default function HeaderMega() {
               <img 
                 src={logoImage} 
                 alt="NatuAsili" 
-                className="h-8 w-auto object-contain" 
+                className="h-8 w-auto object-contain"
+                translate="no"
               />
             </Link>
 
@@ -180,7 +182,7 @@ export default function HeaderMega() {
                       autoFocus
                     />
                     <Button type="submit" size="sm" className="w-full">
-                      Search
+                      <T k="search_button" />
                     </Button>
                   </form>
                 </div>
