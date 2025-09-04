@@ -10,7 +10,7 @@ import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RootLayout from "@/layouts/RootLayout";
 import HeaderMega from "@/components/HeaderMega";
-import HeaderCompact from "@/components/HeaderCompact";
+import HeaderNew from "@/components/HeaderNew";
 import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
@@ -64,7 +64,7 @@ function ScrollToTop() {
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
-      <HeaderCompact />
+      <HeaderNew />
       <main className="flex-1">
         {children}
       </main>
