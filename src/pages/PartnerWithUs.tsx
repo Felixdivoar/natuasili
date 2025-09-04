@@ -171,7 +171,7 @@ const PartnerWithUs: React.FC = () => {
         </div>
       </section>
 
-      {/* Trusted Partners */}
+      {/* Trusted Partners Carousel */}
       <section className="py-16 bg-muted/30">
         <div className="max-w-[1150px] mx-auto px-6">
           <div className="text-center mb-12">
@@ -180,96 +180,99 @@ const PartnerWithUs: React.FC = () => {
               We collaborate with established initiatives across Kenya to ensure bookings create measurable impact.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-8 items-center">
-            <a href="/partners/ol-pejeta-conservancy" className="group block" aria-label="Ol Pejeta Conservancy">
-              <img 
-                src="/logos/olp.png" 
-                alt="Ol Pejeta Conservancy" 
-                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </a>
-            <a href="/partners/mara-elephant-project" className="group block" aria-label="Mara Elephant Project">
-              <img 
-                src="/logos/mep.png" 
-                alt="Mara Elephant Project" 
-                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </a>
-            <a href="/partners/reefolution" className="group block" aria-label="Reefolution">
-              <img 
-                src="/logos/reef.png" 
-                alt="Reefolution" 
-                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </a>
-            <a href="/partners/colobus-conservation" className="group block" aria-label="Colobus Conservation">
-              <img 
-                src="/logos/colobus.png" 
-                alt="Colobus Conservation" 
-                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </a>
-            <a href="/partners/friends-of-karura" className="group block" aria-label="Friends of Karura">
-              <img 
-                src="/logos/fok.png" 
-                alt="Friends of Karura" 
-                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </a>
-            <a href="/partners/giraffe-centre-afew" className="group block" aria-label="Giraffe Centre (AFEW)">
-              <img 
-                src="/logos/afeW.png" 
-                alt="Giraffe Centre (AFEW)" 
-                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-            </a>
-          </div>
           
-          {/* Mobile Carousel for smaller screens */}
-          <div className="md:hidden mt-8 overflow-x-auto">
-            <div className="flex gap-6 pb-4">
-              <a href="/partners/ol-pejeta-conservancy" className="flex-shrink-0">
-                <img 
-                  src="/logos/olp.png" 
-                  alt="Ol Pejeta Conservancy" 
-                  className="h-10 w-auto object-contain"
-                />
-              </a>
-              <a href="/partners/mara-elephant-project" className="flex-shrink-0">
-                <img 
-                  src="/logos/mep.png" 
-                  alt="Mara Elephant Project" 
-                  className="h-10 w-auto object-contain"
-                />
-              </a>
-              <a href="/partners/reefolution" className="flex-shrink-0">
-                <img 
-                  src="/logos/reef.png" 
-                  alt="Reefolution" 
-                  className="h-10 w-auto object-contain"
-                />
-              </a>
-              <a href="/partners/colobus-conservation" className="flex-shrink-0">
-                <img 
-                  src="/logos/colobus.png" 
-                  alt="Colobus Conservation" 
-                  className="h-10 w-auto object-contain"
-                />
-              </a>
-              <a href="/partners/friends-of-karura" className="flex-shrink-0">
-                <img 
-                  src="/logos/fok.png" 
-                  alt="Friends of Karura" 
-                  className="h-10 w-auto object-contain"
-                />
-              </a>
-              <a href="/partners/giraffe-centre-afew" className="flex-shrink-0">
-                <img 
-                  src="/logos/afeW.png" 
-                  alt="Giraffe Centre (AFEW)" 
-                  className="h-10 w-auto object-contain"
-                />
-              </a>
+          {/* Partner Logos Carousel */}
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div className="flex animate-scroll gap-12 items-center">
+                {/* First set of partners */}
+                <a href="/partners/ol-pejeta-conservancy" className="group flex-shrink-0" aria-label="Ol Pejeta Conservancy">
+                  <img 
+                    src="/logos/olp.png" 
+                    alt="Ol Pejeta Conservancy" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/mara-elephant-project" className="group flex-shrink-0" aria-label="Mara Elephant Project">
+                  <img 
+                    src="/logos/mep.png" 
+                    alt="Mara Elephant Project" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/reefolution" className="group flex-shrink-0" aria-label="Reefolution">
+                  <img 
+                    src="/logos/reef.png" 
+                    alt="Reefolution" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/colobus-conservation" className="group flex-shrink-0" aria-label="Colobus Conservation">
+                  <img 
+                    src="/logos/colobus.png" 
+                    alt="Colobus Conservation" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura">
+                  <img 
+                    src="/logos/fok.png" 
+                    alt="Friends of Karura" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/giraffe-centre-afew" className="group flex-shrink-0" aria-label="Giraffe Centre (AFEW)">
+                  <img 
+                    src="/logos/afeW.png" 
+                    alt="Giraffe Centre (AFEW)" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                
+                {/* Duplicate set for seamless loop */}
+                <a href="/partners/ol-pejeta-conservancy" className="group flex-shrink-0" aria-label="Ol Pejeta Conservancy">
+                  <img 
+                    src="/logos/olp.png" 
+                    alt="Ol Pejeta Conservancy" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/mara-elephant-project" className="group flex-shrink-0" aria-label="Mara Elephant Project">
+                  <img 
+                    src="/logos/mep.png" 
+                    alt="Mara Elephant Project" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/reefolution" className="group flex-shrink-0" aria-label="Reefolution">
+                  <img 
+                    src="/logos/reef.png" 
+                    alt="Reefolution" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/colobus-conservation" className="group flex-shrink-0" aria-label="Colobus Conservation">
+                  <img 
+                    src="/logos/colobus.png" 
+                    alt="Colobus Conservation" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura">
+                  <img 
+                    src="/logos/fok.png" 
+                    alt="Friends of Karura" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+                <a href="/partners/giraffe-centre-afew" className="group flex-shrink-0" aria-label="Giraffe Centre (AFEW)">
+                  <img 
+                    src="/logos/afeW.png" 
+                    alt="Giraffe Centre (AFEW)" 
+                    className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>

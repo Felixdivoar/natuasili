@@ -248,6 +248,24 @@ button, .btn, .button, [role="button"],
   margin: 0 0 8px 0;
 }
 
+/* Partner carousel animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 24px));
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
 /* arrows */
 .related-experiences .nav {
   position: absolute; 
