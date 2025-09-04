@@ -476,6 +476,17 @@ const ImpactLedger = () => {
     });
   }, [filteredEntries, sortField, sortDirection]);
 
+  // Helper function for theme colors
+  const getThemeColor = (theme: string) => {
+    const colors = {
+      'Wildlife': 'hsl(var(--wildlife))',
+      'Habitat': 'hsl(var(--habitat))',
+      'Education': 'hsl(var(--education))',
+      'Livelihoods': 'hsl(var(--livelihoods))'
+    };
+    return colors[theme as keyof typeof colors] || 'hsl(var(--muted))';
+  };
+
   // Chart data processing
   const chartData = useMemo(() => {
     const themeData = filteredEntries.reduce((acc, entry) => {
@@ -500,16 +511,6 @@ const ImpactLedger = () => {
       monthly: Object.entries(monthlyData).map(([month, amount]) => ({ month, amount }))
     };
   }, [filteredEntries]);
-
-  const getThemeColor = (theme: string) => {
-    const colors = {
-      'Wildlife': 'hsl(var(--wildlife))',
-      'Habitat': 'hsl(var(--habitat))',
-      'Education': 'hsl(var(--education))',
-      'Livelihoods': 'hsl(var(--livelihoods))'
-    };
-    return colors[theme as keyof typeof colors] || 'hsl(var(--muted))';
-  };
 
   const getThemeBadgeStyle = (theme: string) => {
     switch (theme) {
