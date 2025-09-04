@@ -6,10 +6,14 @@ import { MapPin, Users, Clock, ArrowLeft, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BookingForm from "@/components/BookingForm";
 import { useState } from "react";
+import { useI18n } from "@/i18n/I18nProvider";
+import T from "@/i18n/T";
+import DynamicTranslated from "@/i18n/DynamicTranslated";
 
 export default function ListingDetail() {
   const { slug } = useParams();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const { t } = useI18n();
   
   const experience = EXPERIENCES.find(exp => exp.slug === slug);
 
@@ -17,10 +21,10 @@ export default function ListingDetail() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Experience Not Found</h1>
-          <p className="text-muted-foreground">The experience you're looking for doesn't exist.</p>
+          <h1 className="text-2xl font-bold mb-4"><T k="listing_not_found" /></h1>
+          <p className="text-muted-foreground"><T k="listing_not_found_desc" /></p>
           <Link to="/listings">
-            <Button className="mt-4">Browse All Experiences</Button>
+            <Button className="mt-4"><T k="listing_browse_all" /></Button>
           </Link>
         </div>
       </div>
@@ -40,7 +44,7 @@ export default function ListingDetail() {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to experiences
+            <T k="listing_back_to_experiences" />
           </Link>
         </div>
 
@@ -88,7 +92,7 @@ export default function ListingDetail() {
                     >
                       <img 
                         src={image} 
-                        alt={`Gallery ${index + 1}`}
+                        alt={t("listing_gallery_alt").replace("{index}", (index + 1).toString())}
                         className="w-full h-full object-cover"
                       />
                     </button>
@@ -97,10 +101,10 @@ export default function ListingDetail() {
               </div>
 
               <div>
-                <h2 className="text-xl font-semibold mb-3">About This Experience</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {experience.description}
-                </p>
+                <h2 className="text-xl font-semibold mb-3"><T k="listing_about_experience" /></h2>
+                <div className="text-muted-foreground leading-relaxed">
+                  <DynamicTranslated text={experience.description} />
+                </div>
               </div>
             </div>
           </div>

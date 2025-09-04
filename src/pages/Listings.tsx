@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MapPin, Calendar, Clock } from "lucide-react";
 import { EXPERIENCES } from "@/data/partners";
+import { useI18n } from "@/i18n/I18nProvider";
+import T from "@/i18n/T";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("relevance");
+  const { t } = useI18n();
 
   // Hide any global booking overlay if it was left open
   useEffect(() => {
@@ -59,9 +62,9 @@ export default function Listings() {
         backgroundPosition: "center"
       }}>
         <div className="hero-inner text-background">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Conservation Experiences</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4"><T k="listings_hero_title" /></h1>
           <p className="text-xl text-background/90 max-w-3xl">
-            Discover meaningful conservation experiences across Kenya's most pristine destinations
+            <T k="listings_hero_desc" />
           </p>
         </div>
       </section>
@@ -71,7 +74,7 @@ export default function Listings() {
         <div className="mb-8 space-y-4">
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <Input
-              placeholder="Search experiences..."
+              placeholder={t("listings_search_placeholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="md:max-w-md"
@@ -82,9 +85,9 @@ export default function Listings() {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="px-3 py-2 border border-border rounded-md bg-background"
               >
-                <option value="relevance">Sort by Relevance</option>
-                <option value="az">Sort A-Z</option>
-                <option value="partner">Sort by Partner</option>
+                <option value="relevance">{t("listings_sort_relevance")}</option>
+                <option value="az">{t("listings_sort_az")}</option>
+                <option value="partner">{t("listings_sort_partner")}</option>
               </select>
             </div>
           </div>
@@ -93,7 +96,7 @@ export default function Listings() {
         {/* Results */}
         <div className="mb-4">
           <p className="text-sm text-muted-foreground">
-            {sortedExperiences.length} experiences found
+            {t("listings_experiences_found").replace("{count}", sortedExperiences.length.toString())}
           </p>
         </div>
 
@@ -124,7 +127,7 @@ export default function Listings() {
                   <span className="truncate capitalize">{experience.destination.replace(/-/g, ' ')}</span>
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  by {experience.partner}
+                  {t("listings_by_partner").replace("{partner}", experience.partner)}
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
@@ -139,7 +142,7 @@ export default function Listings() {
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <Clock className="h-3 w-3" />
-                    <span>4-6 hours</span>
+                    <span><T k="listings_duration" /></span>
                   </div>
                   <div className="text-lg font-bold">
                     $120
@@ -148,7 +151,7 @@ export default function Listings() {
                 
                 <Button asChild size="sm" className="w-full">
                   <Link to={`/listings/${experience.slug}`}>
-                    View Experience
+                    <T k="listings_view_experience" />
                   </Link>
                 </Button>
               </CardContent>
@@ -158,8 +161,8 @@ export default function Listings() {
 
         {sortedExperiences.length === 0 && (
           <div className="text-center py-12">
-            <h3 className="text-lg font-medium mb-2">No experiences found</h3>
-            <p className="text-muted-foreground">Try adjusting your search criteria</p>
+            <h3 className="text-lg font-medium mb-2"><T k="listings_no_experiences" /></h3>
+            <p className="text-muted-foreground"><T k="listings_no_experiences_desc" /></p>
           </div>
         )}
       </div>
