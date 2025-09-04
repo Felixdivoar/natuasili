@@ -4,10 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { useEffect } from "react";
 import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import RootLayout from "@/layouts/RootLayout";
 import HeaderMega from "@/components/HeaderMega";
 import HeaderNew from "@/components/HeaderNew";
@@ -46,6 +48,9 @@ import CookiePolicy from "./pages/CookiePolicy";
 import Search from "./pages/Search";
 import PartnerEntry from "./pages/PartnerEntry";
 import ContentStub from "./pages/ContentStub";
+import Auth from "./pages/Auth";
+import PartnerWithUs from "./pages/PartnerWithUs";
+import UserDashboard from "./pages/UserDashboard";
 
 const queryClient = new QueryClient();
 
@@ -78,12 +83,13 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <CurrencyProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <CookieBanner />
-              <ScrollToTop />
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <CookieBanner />
+                <ScrollToTop />
               <Routes>
                 <Route path="/" element={<AppLayout><Index /></AppLayout>} />
                 <Route path="/marketplace" element={<AppLayout><Browse /></AppLayout>} />
@@ -96,7 +102,19 @@ const App = () => (
                 <Route path="/confirmation/:slug" element={<AppLayout><ConfirmationPage /></AppLayout>} />
                 <Route path="/booking-success" element={<AppLayout><BookingSuccess /></AppLayout>} />
                 <Route path="/impact-ledger" element={<AppLayout><ImpactLedger /></AppLayout>} />
+                <Route path="/auth" element={<AppLayout><Auth /></AppLayout>} />
+                <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
                 <Route path="/dashboard" element={<AppLayout><TravelerDashboard /></AppLayout>} />
+                <Route path="/dashboard/user" element={
+                  <ProtectedRoute requiredRole="user">
+                    <AppLayout><UserDashboard /></AppLayout>
+                  </ProtectedRoute>
+                } />
+                <Route path="/dashboard/partner" element={
+                  <ProtectedRoute requiredRole="partner">
+                    <AppLayout><PartnerDashboard /></AppLayout>
+                  </ProtectedRoute>
+                } />
                 <Route path="/projects/:projectId" element={<AppLayout><ProjectDetail /></AppLayout>} />
                 <Route path="/partner-dashboard" element={<AppLayout><PartnerDashboard /></AppLayout>} />
                 <Route path="/about" element={<AppLayout><About /></AppLayout>} />
@@ -126,10 +144,11 @@ const App = () => (
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
-        </CurrencyProvider>
-      </I18nProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
+        </AuthProvider>
+      </CurrencyProvider>
+    </I18nProvider>
+  </QueryClientProvider>
+</ErrorBoundary>
 );
 
 export default App;
