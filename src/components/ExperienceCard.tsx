@@ -5,6 +5,7 @@ import { MapPin, Clock, Users, DollarSign, Share2 } from "lucide-react";
 import { Experience } from "@/types";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useI18n } from "@/i18n/I18nProvider";
 import SocialShare from "@/components/SocialShare";
 import { initializeThemeChips } from "@/utils/themeUtils";
 
@@ -32,6 +33,7 @@ const getThemeSlug = (theme: string) => {
 
 const ExperienceCard = ({ experience }: ExperienceCardProps) => {
   const { formatPrice } = useCurrency();
+  const { t } = useI18n();
   
   // Determine destination for data attribute
   const getDestination = () => {
@@ -95,7 +97,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
               {formatPrice(experience.base_price)}
             </div>
             <div className="text-xs opacity-90">
-              per person
+              {t("exp_per_person")}
             </div>
           </div>
         </div>
@@ -119,7 +121,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         {/* Partner information */}
         {experience.project && (
           <div className="mb-4 p-2 bg-muted/50 rounded-lg">
-            <p className="text-xs text-muted-foreground mb-1">Conservation Partner</p>
+            <p className="text-xs text-muted-foreground mb-1">{t("exp_conservation_partner")}</p>
               <Link 
                 to={`/projects/${experience.project?.id}`}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
@@ -132,13 +134,13 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Users className="w-4 h-4 mr-1" />
-            Up to {experience.capacity} people
+            {t("exp_up_to")} {experience.capacity} {t("exp_people")}
           </div>
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-1" />
             {experience.duration_hours % 1 === 0 
-              ? `${experience.duration_hours} hour${experience.duration_hours > 1 ? 's' : ''}`
-              : `${experience.duration_hours} hours`
+              ? `${experience.duration_hours} ${experience.duration_hours > 1 ? t("exp_hours") : t("exp_hour")}`
+              : `${experience.duration_hours} ${t("exp_hours")}`
             }
           </div>
         </div>
@@ -151,7 +153,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
                 className="w-full" 
                 size="sm"
               >
-                View Details
+                {t("exp_view_details")}
               </Button>
             </Link>
           </div>
@@ -161,7 +163,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
               data-action="reserve"
               size="sm"
             >
-              Reserve
+              {t("exp_reserve")}
             </Button>
             <SocialShare
               title={experience.title}

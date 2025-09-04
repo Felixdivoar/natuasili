@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, Users, Star } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useI18n } from "@/i18n/I18nProvider";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { mockExperiences } from "@/data/newMockData";
 import { Destination } from "@/data/partners";
@@ -38,9 +39,8 @@ const getThemeColor = (theme: string) => {
 export default function DestinationExperienceCarousel({
   destination
 }: DestinationExperienceCarouselProps) {
-  const {
-    formatPrice
-  } = useCurrency();
+  const { formatPrice } = useCurrency();
+  const { t } = useI18n();
 
   // Filter experiences by destination (need to convert from location_text to destination)
   const destinationExperiences = mockExperiences.filter(exp => {
@@ -59,11 +59,11 @@ export default function DestinationExperienceCarousel({
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
             <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
-              Experiences in {destinationLabels[destination]}
+              {t("dest_experiences_in")} {destinationLabels[destination]}
             </Link>
           </h2>
           <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="text-primary hover:underline">
-            View all
+            {t("dest_view_all")}
           </Link>
         </div>
 
@@ -105,18 +105,18 @@ export default function DestinationExperienceCarousel({
                           </div>
                           <div className="flex items-center gap-1">
                             <Users className="h-3 w-3" />
-                            <span>Up to {experience.capacity}</span>
+                            <span>{t("exp_up_to")} {experience.capacity}</span>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            <span className="text-xs text-muted-foreground">from</span>
-                            <span className="font-bold text-foreground">
-                              {formatPrice(experience.base_price)}
-                            </span>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                              <span className="text-xs text-muted-foreground">{t("dest_from")}</span>
+                              <span className="font-bold text-foreground">
+                                {formatPrice(experience.base_price)}
+                              </span>
+                            </div>
                           </div>
-                        </div>
                       </div>
                     </CardContent>
                   </Card>

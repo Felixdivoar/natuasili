@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useI18n } from "@/i18n/I18nProvider";
 import visaLogo from "@/assets/visa-logo.png";
 import mastercardLogo from "@/assets/mastercard-logo.png";
 import mpesaLogo from "@/assets/mpesa-logo.png";
 
 const Footer = () => {
+  const { t } = useI18n();
+  
   return (
     <footer className="bg-foreground text-white site-footer">
       <div className="container mx-auto px-4">
@@ -13,18 +16,18 @@ const Footer = () => {
 
           {/* Quick Links - Alphabetically Organized */}
           <div>
-            <h4 className="font-semibold mb-4">Explore</h4>
+            <h4 className="font-semibold mb-4">{t("footer_explore")}</h4>
             <ul className="space-y-2 text-sm footer-explore">
-              <li><Link to="/about" className="text-white/80 hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link to="/destinations" className="text-white/80 hover:text-accent transition-colors">Destinations</Link></li>
-              <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">Marketplace</Link></li>
-              <li><Link to="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/about" className="text-white/80 hover:text-accent transition-colors">{t("footer_about")}</Link></li>
+              <li><Link to="/destinations" className="text-white/80 hover:text-accent transition-colors">{t("footer_destinations")}</Link></li>
+              <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">{t("footer_marketplace")}</Link></li>
+              <li><Link to="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">{t("footer_privacy")}</Link></li>
             </ul>
           </div>
 
           {/* Resources - Alphabetically Organized */}
           <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
+            <h4 className="font-semibold mb-4">{t("footer_resources")}</h4>
             <ul className="space-y-2 text-sm footer-links">
               <li><Link to="/auth" className="text-white/80 hover:text-accent transition-colors">Sign In / Sign Up</Link></li>
               <li><Link to="/blog" className="text-white/80 hover:text-accent transition-colors">Blog & Insights</Link></li>
@@ -37,7 +40,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4">Contact</h4>
+            <h4 className="font-semibold mb-4">{t("footer_contact")}</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 mt-0.5 text-accent" />
@@ -69,7 +72,7 @@ const Footer = () => {
 
         <div className="border-t border-white/20 mt-8 pt-8">
           <div className="text-center mb-6">
-            <h4 className="font-semibold mb-4">We Accept</h4>
+            <h4 className="font-semibold mb-4">{t("footer_we_accept")}</h4>
             <div className="flex items-center justify-center gap-6">
               <img src={visaLogo} alt="Visa" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
               <img src={mastercardLogo} alt="Mastercard" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
@@ -77,7 +80,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="text-sm text-white/60 text-center">
-            © 2024 NatuAsili. All rights reserved. Built for conservation impact.
+            {t("footer_copyright")}
           </p>
         </div>
       </div>

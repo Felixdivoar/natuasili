@@ -1,54 +1,62 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { TreePine, Users, GraduationCap, Heart, DollarSign, Globe } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useI18n } from "@/i18n/I18nProvider";
+
 const ImpactStats = () => {
-  const {
-    formatPrice
-  } = useCurrency();
-  const stats = [{
-    icon: TreePine,
-    value: "45,000",
-    label: "Hectares Protected",
-    color: "bg-habitat",
-    description: "Wildlife habitats preserved through conservation efforts"
-  }, {
-    icon: Users,
-    value: "1,200",
-    label: "Communities Supported",
-    color: "bg-livelihoods",
-    description: "Local families benefiting from sustainable tourism"
-  }, {
-    icon: GraduationCap,
-    value: "850",
-    label: "Students Educated",
-    color: "bg-education",
-    description: "Children receiving environmental education"
-  }, {
-    icon: Heart,
-    value: "120",
-    label: "Species Monitored",
-    color: "bg-wildlife",
-    description: "Wildlife species under active protection"
-  }, {
-    icon: DollarSign,
-    value: formatPrice(2100000),
-    label: "Funds Distributed",
-    color: "bg-accent",
-    description: "Direct funding to conservation projects"
-  }, {
-    icon: Globe,
-    value: "15",
-    label: "Counties Reached",
-    color: "bg-primary",
-    description: "Kenyan counties with active projects"
-  }];
+  const { formatPrice } = useCurrency();
+  const { t } = useI18n();
+  
+  const stats = [
+    {
+      icon: TreePine,
+      value: "45,000",
+      label: t("stat_hectares"),
+      color: "bg-habitat",
+      description: t("stat_hectares_desc")
+    },
+    {
+      icon: Users,
+      value: "1,200",
+      label: t("stat_communities"),
+      color: "bg-livelihoods",
+      description: t("stat_communities_desc")
+    },
+    {
+      icon: GraduationCap,
+      value: "850",
+      label: t("stat_students"),
+      color: "bg-education",
+      description: t("stat_education_desc")
+    },
+    {
+      icon: Heart,
+      value: "120",
+      label: t("stat_species"),
+      color: "bg-wildlife",
+      description: t("stat_species_desc")
+    },
+    {
+      icon: DollarSign,
+      value: formatPrice(2100000),
+      label: t("stat_funds"),
+      color: "bg-accent",
+      description: t("stat_funds_desc")
+    },
+    {
+      icon: Globe,
+      value: "15",
+      label: t("stat_counties"),
+      color: "bg-primary",
+      description: t("stat_counties_desc")
+    }
+  ];
   return <section id="impact" className="bg-background py-[20px]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Conservation impact</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t("impact_title")}</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Together with our partners and travelers, we're creating measurable 
-            impact across Kenya's conservation landscape.
+            {t("impact_subtitle")}
           </p>
         </div>
         

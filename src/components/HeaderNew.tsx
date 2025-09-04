@@ -77,14 +77,14 @@ export default function HeaderNew() {
                   to="/impact-ledger" 
                   className="text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
                 >
-                  Impact Ledger
+                  {t("nav_impact")}
                 </Link>
                 
                 <Link 
                   to="/partners" 
                   className="text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
                 >
-                  Partners
+                  {t("nav_partners")}
                 </Link>
                 
                 {/* Marketplace Mega Menu */}
@@ -94,7 +94,7 @@ export default function HeaderNew() {
                     onMouseEnter={() => setOpenMenu("marketplace")}
                     onFocus={() => setOpenMenu("marketplace")}
                   >
-                    Marketplace
+                    {t("nav_marketplace")}
                     <ChevronDown className="h-3 w-3" />
                   </button>
                   
@@ -107,7 +107,7 @@ export default function HeaderNew() {
                       <div className="grid grid-cols-2 gap-8">
                         {/* Destinations */}
                         <div>
-                          <h3 className="font-medium mb-4 text-muted-foreground">Destinations</h3>
+                          <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_destinations")}</h3>
                           <div className="space-y-2">
                             {DESTINATIONS.map((dest) => (
                               <Link
@@ -125,7 +125,7 @@ export default function HeaderNew() {
 
                         {/* Themes */}
                         <div>
-                          <h3 className="font-medium mb-4 text-muted-foreground">Themes</h3>
+                          <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_themes")}</h3>
                           <div className="space-y-2">
                             {THEMES.map((theme) => (
                               <Link
@@ -193,14 +193,14 @@ export default function HeaderNew() {
               <Link to="/auth">
                 <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  <span>Sign In</span>
+                  <span>{t("nav_signin")}</span>
                 </Button>
               </Link>
 
               {/* Partner CTA */}
               <Link to="/partner-with-us">
                 <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
-                  <span className="hidden sm:inline">Partner With Us</span>
+                  <span className="hidden sm:inline">{t("nav_partner")}</span>
                   <span className="sm:hidden">Partner</span>
                 </Button>
               </Link>
@@ -226,26 +226,26 @@ export default function HeaderNew() {
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Impact Ledger
+                  {t("nav_impact")}
                 </Link>
                 <Link 
                   to="/partners" 
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Partners
+                  {t("nav_partners")}
                 </Link>
                 <Link 
                   to="/marketplace" 
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Marketplace
+                  {t("nav_marketplace")}
                 </Link>
                 
                 <div className="space-y-1">
                   <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    Destinations
+                    {t("nav_destinations")}
                   </div>
                   {DESTINATIONS.map((dest) => (
                     <Link
@@ -261,7 +261,7 @@ export default function HeaderNew() {
 
                 <div className="space-y-1">
                   <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    Themes
+                    {t("nav_themes")}
                   </div>
                   {THEMES.map((theme) => (
                     <Link
@@ -282,7 +282,7 @@ export default function HeaderNew() {
                 <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
                   <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
                     <User className="w-4 h-4 mr-2" />
-                    Sign In / Sign Up
+                    {t("nav_signin")}
                   </Button>
                 </Link>
               </nav>

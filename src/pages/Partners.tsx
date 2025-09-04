@@ -112,9 +112,9 @@ export default function Partners() {
         backgroundPosition: "center"
       }}>
         <div className="hero-inner text-background">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Conservation Partners</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("partners_title")}</h1>
           <p className="text-xl text-background/90 max-w-3xl">
-            Discover our network of conservation organizations making a real impact across Kenya
+            {t("partners_subtitle")}
           </p>
         </div>
       </section>
@@ -124,7 +124,7 @@ export default function Partners() {
         <div className="mb-8 space-y-4">
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
             <Input
-              placeholder="Search partners..."
+              placeholder={t("partners_search_placeholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="md:max-w-md"
@@ -146,7 +146,7 @@ export default function Partners() {
                 className="md:hidden"
               >
                 <Filter className="h-4 w-4 mr-2" />
-                Filters
+                {t("partners_filters")}
               </Button>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function Partners() {
               <div className="space-y-6">
                 {/* Destination filter */}
                 <div>
-                  <h3 className="font-medium mb-3">Destination</h3>
+                  <h3 className="font-medium mb-3">{t("filter_destination")}</h3>
                   <div className="space-y-2">
                     {DESTINATIONS.map((dest) => (
                       <div key={dest.value} className="flex items-center space-x-2">
@@ -183,7 +183,7 @@ export default function Partners() {
 
                 {/* Theme filter */}
                 <div>
-                  <h3 className="font-medium mb-3">Theme</h3>
+                  <h3 className="font-medium mb-3">{t("filter_theme")}</h3>
                   <div className="space-y-2">
                     {THEMES.map((theme) => (
                       <div key={theme.value} className="flex items-center space-x-2">
@@ -207,7 +207,7 @@ export default function Partners() {
 
                 {/* Activities filter */}
                 <div>
-                  <h3 className="font-medium mb-3">Activities</h3>
+                  <h3 className="font-medium mb-3">{t("filter_activities")}</h3>
                   <div className="space-y-2 max-h-48 overflow-y-auto">
                     {ALL_ACTIVITIES.map((activity) => (
                       <div key={activity} className="flex items-center space-x-2">
@@ -236,7 +236,7 @@ export default function Partners() {
           <div className="lg:col-span-3">
             <div className="mb-4">
               <p className="text-sm text-muted-foreground">
-                {sortedPartners.length} partners found
+                {sortedPartners.length} {t("partners_found")}
               </p>
             </div>
 
@@ -268,7 +268,7 @@ export default function Partners() {
                         ))}
                       </div>
                       <div className="text-xs text-muted-foreground">
-                        Est. {partner.established}
+                        {t("partners_established")} {partner.established}
                       </div>
                     </div>
                     <CardTitle className="text-lg leading-tight">{partner.name}</CardTitle>
@@ -284,7 +284,7 @@ export default function Partners() {
                     
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Experiences</span>
+                        <span className="text-muted-foreground">{t("partners_experiences")}</span>
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           <span className="font-medium">{partner.experienceCount}</span>
@@ -294,12 +294,12 @@ export default function Partners() {
                       <div className="flex gap-2">
                         <Button asChild className="flex-1" size="sm">
                           <Link to={`/partners/${partner.slug}`}>
-                            View Partner
+                            {t("view_partner")}
                           </Link>
                         </Button>
                         <Button variant="outline" asChild size="sm">
                           <Link to={`/experiences?partner=${partner.slug}`}>
-                            View Experiences
+                            {t("view_experiences")}
                           </Link>
                         </Button>
                       </div>
@@ -314,11 +314,11 @@ export default function Partners() {
         <div className="text-center mt-16">
           <Card className="inline-block p-8 bg-muted/50">
             <CardContent className="p-0">
-              <h2 className="text-2xl font-bold mb-3">Become a partner</h2>
+              <h2 className="text-2xl font-bold mb-3">{t("partners_become_partner")}</h2>
               <p className="text-muted-foreground mb-6 max-w-md">
-                Join our network of conservation partners and connect your organization with travelers who want to make a difference.
+                {t("partners_become_partner_desc")}
               </p>
-              <Button size="lg">Partner with us</Button>
+              <Button size="lg">{t("nav_partner")}</Button>
             </CardContent>
           </Card>
         </div>
