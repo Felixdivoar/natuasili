@@ -46,12 +46,14 @@ const LaikipiaDestination = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-conservation hover:bg-conservation/90">
-                <Link to="/marketplace?destination=laikipia">
+                <Link to="/listings?destination=laikipia">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
-                View Highland Impact
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black" asChild>
+                <Link to="/impact-ledger">
+                  View Highland Impact
+                </Link>
               </Button>
             </div>
           </div>
@@ -155,12 +157,12 @@ const LaikipiaDestination = () => {
                   </p>
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
-                      <Link to={`/projects/${partner.id}`}>
+                      <Link to={`/partners/${partner.id}`}>
                         View Partner
                       </Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                      <Link to={`/marketplace?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <Link to={`/listings?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
                         Experiences
                       </Link>
                     </Button>
@@ -214,7 +216,7 @@ const LaikipiaDestination = () => {
                       {experience.capacity} max
                     </div>
                     <Button size="sm" asChild>
-                      <Link to={`/experience/${experience.slug}`}>
+                      <Link to={`/listings/${experience.slug}`}>
                         Book Now
                       </Link>
                     </Button>
@@ -226,7 +228,7 @@ const LaikipiaDestination = () => {
 
           <div className="text-center mt-8">
             <Button size="lg" variant="outline" asChild>
-              <Link to="/marketplace?destination=laikipia">
+              <Link to="/listings?destination=laikipia">
                 View All Laikipia Experiences
               </Link>
             </Button>

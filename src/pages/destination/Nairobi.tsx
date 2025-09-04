@@ -56,12 +56,14 @@ const NairobiDestination = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-conservation hover:bg-conservation/90">
-                <Link to="/marketplace?destination=nairobi">
+                <Link to="/listings?destination=nairobi">
                   <T k="dest_explore_experiences" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
-                <T k="dest_view_urban_impact" />
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black" asChild>
+                <Link to="/impact-ledger">
+                  <T k="dest_view_urban_impact" />
+                </Link>
               </Button>
             </div>
           </div>
@@ -181,12 +183,12 @@ const NairobiDestination = () => {
                   />
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
-                      <Link to={`/projects/${partner.id}`}>
+                      <Link to={`/partners/${partner.id}`}>
                         <T k="dest_view_partner" />
                       </Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                      <Link to={`/marketplace?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <Link to={`/listings?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
                         <T k="dest_experiences" />
                       </Link>
                     </Button>
@@ -242,7 +244,7 @@ const NairobiDestination = () => {
                       {experience.capacity} <T k="max_guests" />
                     </div>
                     <Button size="sm" asChild>
-                      <Link to={`/experience/${experience.slug}`}>
+                      <Link to={`/listings/${experience.slug}`}>
                         <T k="book_now_button" />
                       </Link>
                     </Button>
@@ -254,7 +256,7 @@ const NairobiDestination = () => {
 
           <div className="text-center mt-8">
             <Button size="lg" variant="outline" asChild>
-              <Link to="/marketplace?destination=nairobi">
+              <Link to="/listings?destination=nairobi">
                 <T k="dest_view_all_experiences" />
               </Link>
             </Button>

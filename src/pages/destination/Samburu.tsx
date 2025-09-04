@@ -44,12 +44,14 @@ const SamburuDestination = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-conservation hover:bg-conservation/90">
-                <Link to="/marketplace?destination=samburu">
+                <Link to="/listings?destination=samburu">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black">
-                View Conservation Impact
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black" asChild>
+                <Link to="/impact-ledger">
+                  View Conservation Impact
+                </Link>
               </Button>
             </div>
           </div>
@@ -153,12 +155,12 @@ const SamburuDestination = () => {
                   </p>
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
-                      <Link to={`/projects/${partner.id}`}>
+                      <Link to={`/partners/${partner.id}`}>
                         View Partner
                       </Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                      <Link to={`/marketplace?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <Link to={`/listings?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
                         Experiences
                       </Link>
                     </Button>
@@ -212,7 +214,7 @@ const SamburuDestination = () => {
                       {experience.capacity} max
                     </div>
                     <Button size="sm" asChild>
-                      <Link to={`/experience/${experience.slug}`}>
+                      <Link to={`/listings/${experience.slug}`}>
                         Book Now
                       </Link>
                     </Button>
@@ -224,7 +226,7 @@ const SamburuDestination = () => {
 
           <div className="text-center mt-8">
             <Button size="lg" variant="outline" asChild>
-              <Link to="/marketplace?destination=samburu">
+              <Link to="/listings?destination=samburu">
                 View All Samburu Experiences
               </Link>
             </Button>
