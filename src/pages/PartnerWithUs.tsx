@@ -141,7 +141,7 @@ const PartnerWithUs: React.FC = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-[1150px] mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Partner with Conservation Leaders
@@ -160,30 +160,124 @@ const PartnerWithUs: React.FC = () => {
           </div>
           <div className="relative">
             <img 
-              src="/images/partner-hero.jpg" 
-              alt="Conservation partner working with wildlife" 
-              className="rounded-lg shadow-2xl w-full h-96 object-cover"
+              src="/img/partner-wildlife.jpg" 
+              alt="Conservation partner monitoring wildlife in the field" 
+              className="rounded-2xl shadow-2xl w-full h-96 object-cover"
             />
+            <p className="text-xs text-muted-foreground mt-2 text-center">
+              On-the-ground conservation, powered by your bookings.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Trust Bar */}
-      <section className="py-12 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4">
-          <p className="text-center text-muted-foreground mb-8">Trusted by leading conservation organizations</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center opacity-60">
-            <div className="h-12 bg-muted rounded mx-auto w-32" />
-            <div className="h-12 bg-muted rounded mx-auto w-32" />
-            <div className="h-12 bg-muted rounded mx-auto w-32" />
-            <div className="h-12 bg-muted rounded mx-auto w-32" />
+      {/* Trusted Partners */}
+      <section className="py-16 bg-muted/30">
+        <div className="max-w-[1150px] mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Trusted by leading conservation organizations</h2>
+            <p className="text-muted-foreground">
+              We collaborate with established initiatives across Kenya to ensure bookings create measurable impact.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-8 items-center">
+            <a href="/partners/ol-pejeta-conservancy" className="group block" aria-label="Ol Pejeta Conservancy">
+              <img 
+                src="/logos/olp.png" 
+                alt="Ol Pejeta Conservancy" 
+                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </a>
+            <a href="/partners/mara-elephant-project" className="group block" aria-label="Mara Elephant Project">
+              <img 
+                src="/logos/mep.png" 
+                alt="Mara Elephant Project" 
+                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </a>
+            <a href="/partners/reefolution" className="group block" aria-label="Reefolution">
+              <img 
+                src="/logos/reef.png" 
+                alt="Reefolution" 
+                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </a>
+            <a href="/partners/colobus-conservation" className="group block" aria-label="Colobus Conservation">
+              <img 
+                src="/logos/colobus.png" 
+                alt="Colobus Conservation" 
+                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </a>
+            <a href="/partners/friends-of-karura" className="group block" aria-label="Friends of Karura">
+              <img 
+                src="/logos/fok.png" 
+                alt="Friends of Karura" 
+                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </a>
+            <a href="/partners/giraffe-centre-afew" className="group block" aria-label="Giraffe Centre (AFEW)">
+              <img 
+                src="/logos/afeW.png" 
+                alt="Giraffe Centre (AFEW)" 
+                className="h-12 w-auto object-contain mx-auto grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </a>
+          </div>
+          
+          {/* Mobile Carousel for smaller screens */}
+          <div className="md:hidden mt-8 overflow-x-auto">
+            <div className="flex gap-6 pb-4">
+              <a href="/partners/ol-pejeta-conservancy" className="flex-shrink-0">
+                <img 
+                  src="/logos/olp.png" 
+                  alt="Ol Pejeta Conservancy" 
+                  className="h-10 w-auto object-contain"
+                />
+              </a>
+              <a href="/partners/mara-elephant-project" className="flex-shrink-0">
+                <img 
+                  src="/logos/mep.png" 
+                  alt="Mara Elephant Project" 
+                  className="h-10 w-auto object-contain"
+                />
+              </a>
+              <a href="/partners/reefolution" className="flex-shrink-0">
+                <img 
+                  src="/logos/reef.png" 
+                  alt="Reefolution" 
+                  className="h-10 w-auto object-contain"
+                />
+              </a>
+              <a href="/partners/colobus-conservation" className="flex-shrink-0">
+                <img 
+                  src="/logos/colobus.png" 
+                  alt="Colobus Conservation" 
+                  className="h-10 w-auto object-contain"
+                />
+              </a>
+              <a href="/partners/friends-of-karura" className="flex-shrink-0">
+                <img 
+                  src="/logos/fok.png" 
+                  alt="Friends of Karura" 
+                  className="h-10 w-auto object-contain"
+                />
+              </a>
+              <a href="/partners/giraffe-centre-afew" className="flex-shrink-0">
+                <img 
+                  src="/logos/afeW.png" 
+                  alt="Giraffe Centre (AFEW)" 
+                  className="h-10 w-auto object-contain"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Value Props */}
       <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Partner With Natuasili?</h2>
             <p className="text-xl text-muted-foreground">
@@ -208,7 +302,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* How It Works */}
       <section className="py-20 px-4 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
             <p className="text-xl text-muted-foreground">
@@ -231,7 +325,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* Features */}
       <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Platform Features</h2>
             <p className="text-xl text-muted-foreground">
@@ -258,7 +352,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* Pricing */}
       <section className="py-20 px-4 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
             <p className="text-xl text-muted-foreground">
@@ -294,7 +388,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* FAQ */}
       <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
           </div>
@@ -313,7 +407,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* CTA Banner */}
       <section className="py-20 px-4 bg-primary text-primary-foreground">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-[1150px] mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Partner with Us?</h2>
           <p className="text-xl mb-8 opacity-90">
             Join the leading platform for conservation tourism in Kenya and start making a greater impact today.
