@@ -270,7 +270,9 @@ const ExperienceDetail = () => {
         <div ref={availabilityRef}>
           <AvailabilityAndOptions 
             experience={experience} 
-            onBookingStart={() => setBookingStarted(true)}
+            onBookingStart={() => {
+              setBookingStarted(true);
+            }}
             onBookingModalOpen={openBookingModal}
           />
         </div>
@@ -427,7 +429,7 @@ const ExperienceDetail = () => {
       </div>
 
       {/* Sticky Book Now CTA */}
-      {stickyVisible && !bookingStarted && (
+      {stickyVisible && !isBookingModalOpen && (
         <>
           {/* Desktop sticky bar */}
           <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b shadow-sm">
@@ -470,7 +472,10 @@ const ExperienceDetail = () => {
       {isBookingModalOpen && (
         <BookingWizard 
           isOpen={isBookingModalOpen}
-          onClose={() => setIsBookingModalOpen(false)}
+          onClose={() => {
+            setIsBookingModalOpen(false);
+            setBookingStarted(false);
+          }}
           experience={experience}
         />
       )}
@@ -510,10 +515,11 @@ const AvailabilityAndOptions = ({
       newErrors.push('Maximum capacity exceeded. Please select fewer participants.');
     }
 
-    // Check cutoff time for same-day bookings
+    // Check cutoff time for same-day bookings - proper EAT timezone handling
     if (selectedDate === new Date().toISOString().split('T')[0]) {
       const now = new Date();
-      const eatNow = new Date(now.getTime() + (3 * 60 * 60 * 1000)); // EAT is UTC+3
+      // Convert current time to EAT (UTC+3)
+      const eatNow = new Date(now.toLocaleString("en-US", {timeZone: "Africa/Nairobi"}));
       if (eatNow.getHours() >= 11) {
         newErrors.push('Same-day bookings close at 11:00 EAT. Please select a different date.');
       }
