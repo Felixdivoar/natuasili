@@ -23,6 +23,8 @@ const ExperienceDetail = () => {
   const availabilityRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
+  console.log("Looking for slug:", slug);
+  console.log("Available slugs:", EXPERIENCES.map(exp => exp.slug));
   const experience = EXPERIENCES.find(exp => exp.slug === slug);
 
   if (!experience) {
