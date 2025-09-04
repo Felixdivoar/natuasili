@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("relevance");
   const { t } = useI18n();
+  const [searchParams] = useSearchParams();
+  const themeFilter = searchParams.get('theme');
 
   // Hide any global booking overlay if it was left open
   useEffect(() => {
@@ -24,7 +26,12 @@ export default function Listings() {
                          experience.partner.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          experience.activities.some(activity => activity.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    return matchesSearch;
+    const matchesTheme = !themeFilter || experience.themes.some(theme => 
+      theme.toLowerCase().includes(themeFilter.toLowerCase()) ||
+      themeFilter.toLowerCase().includes(theme.toLowerCase())
+    );
+    
+    return matchesSearch && matchesTheme;
   });
 
   const sortedExperiences = [...filteredExperiences].sort((a, b) => {

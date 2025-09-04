@@ -128,9 +128,9 @@ export default function HeaderNew() {
                           <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_themes")}</h3>
                           <div className="space-y-2">
                             {THEMES.map((theme) => (
-                              <Link
+                            <Link
                                 key={theme.slug}
-                                to={`/browse?theme=${theme.slug}`}
+                                to={`/listings?theme=${encodeURIComponent(theme.label)}`}
                                 className="block p-2 hover:bg-muted rounded-lg transition-colors"
                                 onClick={() => setOpenMenu(null)}
                               >
@@ -266,7 +266,7 @@ export default function HeaderNew() {
                   {THEMES.map((theme) => (
                     <Link
                       key={theme.slug}
-                      to={`/browse?theme=${theme.slug}`}
+                      to={`/listings?theme=${encodeURIComponent(theme.label)}`}
                       className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
