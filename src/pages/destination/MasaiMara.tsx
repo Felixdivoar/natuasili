@@ -157,7 +157,7 @@ const MasaiMaraDestination = () => {
                   </p>
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
-                      <Link to={`/partners/${partner.id}`}>
+                      <Link to={`/partners/${partner.slug}`}>
                         View Partner
                       </Link>
                     </Button>
