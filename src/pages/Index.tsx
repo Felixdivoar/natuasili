@@ -1,11 +1,8 @@
-import HeaderMega from "@/components/HeaderMega";
 import Hero from "@/components/Hero";
-import DestinationCarousel from "@/components/DestinationCarousel";
-import ExperienceCarousel from "@/components/ExperienceCarousel";
 import ConservationPartnersCarousel from "@/components/ConservationPartnersCarousel";
 import ImpactStats from "@/components/ImpactStats";
 import ImpactStories from "@/components/ImpactStories";
-import Footer from "@/components/Footer";
+import DestinationExperienceCarousel from "@/components/DestinationExperienceCarousel";
 
 const Index = () => {
   return (
@@ -17,8 +14,14 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-transparent"></div>
         <Hero />
       </section>
-      <DestinationCarousel />
-      <ExperienceCarousel />
+      
+      {/* Per-destination experience carousels */}
+      <DestinationExperienceCarousel destination="nairobi" />
+      <DestinationExperienceCarousel destination="coastal-kenya" />
+      <DestinationExperienceCarousel destination="samburu" />
+      <DestinationExperienceCarousel destination="masai-mara" />
+      <DestinationExperienceCarousel destination="laikipia" />
+      
       <ConservationPartnersCarousel />
       <ImpactStats />
       <ImpactStories />
