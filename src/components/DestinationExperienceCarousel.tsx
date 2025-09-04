@@ -6,27 +6,23 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { mockExperiences } from "@/data/newMockData";
 import { Destination } from "@/data/partners";
-
 interface DestinationExperienceCarouselProps {
   destination: Destination;
 }
-
 const destinationLabels: Record<Destination, string> = {
   "nairobi": "Nairobi",
-  "coastal-kenya": "Coastal Kenya", 
+  "coastal-kenya": "Coastal Kenya",
   "samburu": "Samburu",
   "masai-mara": "Masai Mara",
   "laikipia": "Laikipia"
 };
-
 const destinationPaths: Record<Destination, string> = {
   "nairobi": "nairobi",
-  "coastal-kenya": "coast", 
+  "coastal-kenya": "coast",
   "samburu": "samburu",
   "masai-mara": "masai-mara",
   "laikipia": "laikipia"
 };
-
 const getThemeColor = (theme: string) => {
   switch (theme) {
     case 'Wildlife Conservation':
@@ -39,56 +35,45 @@ const getThemeColor = (theme: string) => {
       return 'bg-muted text-muted-foreground';
   }
 };
+export default function DestinationExperienceCarousel({
+  destination
+}: DestinationExperienceCarouselProps) {
+  const {
+    formatPrice
+  } = useCurrency();
 
-export default function DestinationExperienceCarousel({ destination }: DestinationExperienceCarouselProps) {
-  const { formatPrice } = useCurrency();
-  
   // Filter experiences by destination (need to convert from location_text to destination)
   const destinationExperiences = mockExperiences.filter(exp => {
     const locationMapping: Record<string, Destination> = {
       'Nairobi, Kenya': 'nairobi',
       'Coast Province, Kenya': 'coastal-kenya',
-      'Samburu County, Kenya': 'samburu', 
+      'Samburu County, Kenya': 'samburu',
       'Maasai Mara, Kenya': 'masai-mara',
       'Laikipia County, Kenya': 'laikipia'
     };
     return locationMapping[exp.location_text] === destination;
   });
-
   if (destinationExperiences.length === 0) return null;
-
-  return (
-      <section className="py-16 bg-background">
+  return <section className="bg-background py-[20px]">
         <div className="max-w-[1150px] mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-            <Link 
-              to={`/destinations/kenya/${destinationPaths[destination]}`}
-              className="hover:text-primary transition-colors"
-            >
+            <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
               Experiences in {destinationLabels[destination]}
             </Link>
           </h2>
-          <Link 
-            to={`/destinations/kenya/${destinationPaths[destination]}`}
-            className="text-primary hover:underline"
-          >
+          <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="text-primary hover:underline">
             View all
           </Link>
         </div>
 
         <Carousel className="w-full">
           <CarouselContent className="-ml-2 md:-ml-4">
-            {destinationExperiences.map((experience) => (
-              <CarouselItem key={experience.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+            {destinationExperiences.map(experience => <CarouselItem key={experience.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Link to={`/experience/${experience.slug}`} className="group block">
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted">
-                      <img
-                        src={experience.images[0]}
-                        alt={experience.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                      <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
                     <CardContent className="p-4">
                       <div className="space-y-3">
@@ -136,13 +121,11 @@ export default function DestinationExperienceCarousel({ destination }: Destinati
                     </CardContent>
                   </Card>
                 </Link>
-              </CarouselItem>
-            ))}
+              </CarouselItem>)}
           </CarouselContent>
           <CarouselPrevious className="-left-4" />
           <CarouselNext className="-right-4" />
         </Carousel>
       </div>
-    </section>
-  );
+    </section>;
 }

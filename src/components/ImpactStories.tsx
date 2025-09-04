@@ -121,7 +121,7 @@ const ImpactStories = () => {
         return 'bg-muted text-muted-foreground';
     }
   };
-  return <section id="impact-stories" className="py-16 bg-muted/30">
+  return <section id="impact-stories" className="bg-muted/30 py-[20px]">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-12">
           <div className="text-center md:text-left">

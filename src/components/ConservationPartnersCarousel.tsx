@@ -23,7 +23,7 @@ const CarouselControls = () => {
 };
 const ConservationPartnersCarousel = () => {
   const displayProjects = mockProjects.slice(0, 6);
-  return <section id="projects" className="bg-muted/30 py-[30px]">
+  return <section id="projects" className="bg-muted/30 py-[20px]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-center">Conservation partners</h2>
@@ -41,18 +41,12 @@ const ConservationPartnersCarousel = () => {
             {displayProjects.map(project => <CarouselItem key={project.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Card className="group hover:shadow-lg transition-shadow overflow-hidden h-full">
                   <div className="relative aspect-[4/3]">
-                    <img 
-                      src={project.hero_image} 
-                      alt={`${project.name} conservation partner - ${project.category} work in ${project.location_text}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.src = '/img/ph1.jpg';
-                        target.alt = `${project.name} - Image not available`;
-                        target.className = "w-full h-full object-contain p-4 bg-muted-foreground/10";
-                      }}
-                      loading="lazy"
-                    />
+                    <img src={project.hero_image} alt={`${project.name} conservation partner - ${project.category} work in ${project.location_text}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError={e => {
+                  const target = e.currentTarget;
+                  target.src = '/img/ph1.jpg';
+                  target.alt = `${project.name} - Image not available`;
+                  target.className = "w-full h-full object-contain p-4 bg-muted-foreground/10";
+                }} loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-conservation text-white">
