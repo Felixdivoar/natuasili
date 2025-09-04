@@ -25,15 +25,22 @@ export default function PartnerDetail() {
     );
   }
 
-  const getThemeColor = (theme: Theme) => {
-    switch (theme) {
-      case 'wildlife':
+  const getThemeColor = (theme: string) => {
+    // Map old theme values to new ones for backward compatibility
+    const themeMap: Record<string, string> = {
+      'wildlife': 'Wildlife conservation',
+      'marine': 'Conservation education',
+      'community': 'Community & cultural exploration',
+      'culture': 'Community & cultural exploration'
+    };
+    const mappedTheme = themeMap[theme] || theme;
+    
+    switch (mappedTheme) {
+      case 'Wildlife conservation':
         return 'bg-primary/10 text-primary border-primary/20';
-      case 'marine':
+      case 'Conservation education':
         return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'community':
-        return 'bg-secondary/10 text-secondary border-secondary/20';
-      case 'culture':
+      case 'Community & cultural exploration':
         return 'bg-accent/10 text-accent border-accent/20';
       default:
         return 'bg-muted text-muted-foreground border-muted/20';

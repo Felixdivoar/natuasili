@@ -18,10 +18,9 @@ const DESTINATIONS = [
 ];
 
 const THEMES = [
-  { label: "Wildlife", slug: "wildlife", desc: "Protect endangered species" },
-  { label: "Marine", slug: "marine", desc: "Ocean conservation efforts" },
-  { label: "Community", slug: "community", desc: "Support local livelihoods" },
-  { label: "Culture", slug: "culture", desc: "Preserve cultural heritage" },
+  { label: "Wildlife Conservation", slug: "wildlife-conservation", desc: "Protect endangered species and habitats" },
+  { label: "Conservation Education", slug: "conservation-education", desc: "Learn about conservation through hands-on experiences" },
+  { label: "Community & Cultural Exploration", slug: "community-cultural-exploration", desc: "Support local communities and preserve cultural heritage" },
 ];
 
 export default function HeaderNew() {

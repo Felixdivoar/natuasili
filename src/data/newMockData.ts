@@ -16,9 +16,9 @@ import maraElephantImg from "@/assets/partner-mara-elephant.jpg";
 
 // Convert partner theme to Experience theme (ProjectCategory)
 const convertTheme = (partnerThemes: Theme[]): ProjectCategory => {
-  if (partnerThemes.includes('wildlife')) return 'Wildlife Conservation';
-  if (partnerThemes.includes('marine')) return 'Conservation Education'; 
-  if (partnerThemes.includes('community') || partnerThemes.includes('culture')) return 'Cultural Exploration';
+  if (partnerThemes.includes('Wildlife conservation')) return 'Wildlife Conservation';
+  if (partnerThemes.includes('Conservation education')) return 'Conservation Education'; 
+  if (partnerThemes.includes('Community & cultural exploration')) return 'Cultural Exploration';
   return 'Wildlife Conservation'; // default
 };
 
@@ -69,7 +69,7 @@ export const mockProjects: Project[] = uniquePartners.map((partner, index) => {
     name: partner,
     slug: partner.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
     status: 'active' as const,
-    category: convertTheme(partnerExperience?.themes || ['wildlife']),
+    category: convertTheme(partnerExperience?.themes || ['Wildlife conservation']),
     contact_email: `contact@${partner.toLowerCase().replace(/[^a-z0-9]+/g, '')}.org`,
     phone: `+254-70${index + 1}-123456`,
     location_text: getLocationText(partnerExperience?.destination || 'nairobi'),

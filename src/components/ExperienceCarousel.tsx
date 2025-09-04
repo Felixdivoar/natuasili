@@ -27,15 +27,22 @@ const ExperienceCarousel = () => {
     formatPrice
   } = useCurrency();
   const getThemeColor = (theme: string) => {
-    switch (theme) {
-      case 'Wildlife':
+    // Map old theme values to new ones for backward compatibility
+    const themeMap: Record<string, string> = {
+      'Wildlife': 'Wildlife conservation',
+      'Livelihoods': 'Community & cultural exploration',
+      'Education': 'Conservation education',
+      'Habitat': 'Wildlife conservation'
+    };
+    const mappedTheme = themeMap[theme] || theme;
+    
+    switch (mappedTheme) {
+      case 'Wildlife conservation':
         return 'bg-conservation/10 text-conservation border-conservation/20';
-      case 'Livelihoods':
+      case 'Community & cultural exploration':
         return 'bg-primary/10 text-primary border-primary/20';
-      case 'Education':
+      case 'Conservation education':
         return 'bg-accent/10 text-accent border-accent/20';
-      case 'Habitat':
-        return 'bg-conservation/10 text-conservation border-conservation/20';
       default:
         return 'bg-muted text-muted-foreground';
     }

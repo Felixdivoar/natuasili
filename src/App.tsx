@@ -131,6 +131,9 @@ const App = () => (
                 <Route path="/destinations/coast" element={<AppLayout><CoastDestination /></AppLayout>} />
                 <Route path="/destinations/nairobi" element={<AppLayout><NairobiDestination /></AppLayout>} />
                 <Route path="/destinations/laikipia" element={<AppLayout><LaikipiaDestination /></AppLayout>} />
+                <Route path="/themes/wildlife-conservation" element={<AppLayout><Browse /></AppLayout>} />
+                <Route path="/themes/conservation-education" element={<AppLayout><Browse /></AppLayout>} />
+                <Route path="/themes/community-cultural-exploration" element={<AppLayout><Browse /></AppLayout>} />
                 <Route path="/themes/:theme" element={<AppLayout><ContentStub title="Theme Page" description="This theme page is being developed. Check back soon for curated experiences and stories." /></AppLayout>} />
                 <Route path="/experience-hub" element={<AppLayout><ExperienceHub /></AppLayout>} />
                 <Route path="/terms" element={<AppLayout><TermsAndConditions /></AppLayout>} />

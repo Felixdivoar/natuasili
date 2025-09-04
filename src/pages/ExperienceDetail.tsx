@@ -89,7 +89,16 @@ const ExperienceDetail = () => {
   };
 
   const getThemeSlug = (theme: string) => {
-    return theme.toLowerCase().replace(/\s+/g, '-');
+    const themeMap: Record<string, string> = {
+      'wildlife': 'wildlife-conservation',
+      'marine': 'conservation-education',
+      'community': 'community-cultural-exploration',
+      'culture': 'community-cultural-exploration',
+      'Wildlife conservation': 'wildlife-conservation',
+      'Conservation education': 'conservation-education',
+      'Community & cultural exploration': 'community-cultural-exploration'
+    };
+    return themeMap[theme] || theme.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   };
 
   const getPartnerSlug = (partner: string) => {

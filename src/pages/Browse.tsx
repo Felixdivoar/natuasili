@@ -170,10 +170,10 @@ const Browse = () => {
                   <SelectValue placeholder="All themes" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All themes</SelectItem>
-                  <SelectItem value="Wildlife Conservation">Wildlife conservation</SelectItem>
-                  <SelectItem value="Cultural Exploration">Cultural exploration</SelectItem>
-                  <SelectItem value="Conservation Education">Conservation education</SelectItem>
+                  <SelectItem value="all">All Themes</SelectItem>
+                  <SelectItem value="Wildlife conservation">Wildlife Conservation</SelectItem>
+                  <SelectItem value="Conservation education">Conservation Education</SelectItem>
+                  <SelectItem value="Community & cultural exploration">Community & Cultural Exploration</SelectItem>
                 </SelectContent>
               </Select>
 

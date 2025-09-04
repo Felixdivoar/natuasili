@@ -143,12 +143,24 @@ const Checkout = () => {
   };
   
   const getThemeColor = (theme: string) => {
-    switch (theme) {
-      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education': return 'bg-education/10 text-education border-education/20';
-      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
-      default: return 'bg-muted text-muted-foreground';
+    // Map old theme values to new ones for backward compatibility
+    const themeMap: Record<string, string> = {
+      'Wildlife': 'Wildlife conservation',
+      'Livelihoods': 'Community & cultural exploration',
+      'Education': 'Conservation education',
+      'Habitat': 'Wildlife conservation'
+    };
+    const mappedTheme = themeMap[theme] || theme;
+    
+    switch (mappedTheme) {
+      case 'Wildlife conservation':
+        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Community & cultural exploration':
+        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      case 'Conservation education':
+        return 'bg-education/10 text-education border-education/20';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
 

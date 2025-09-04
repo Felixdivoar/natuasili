@@ -18,10 +18,9 @@ const DESTINATIONS: { label: string; value: Destination }[] = [
 ];
 
 const THEMES: { label: string; value: Theme }[] = [
-  { label: "Wildlife", value: "wildlife" },
-  { label: "Marine Conservation", value: "marine" },
-  { label: "Community Development", value: "community" },
-  { label: "Cultural Heritage", value: "culture" }
+  { label: "Wildlife Conservation", value: "Wildlife conservation" },
+  { label: "Conservation Education", value: "Conservation education" },
+  { label: "Community & Cultural Exploration", value: "Community & cultural exploration" },
 ];
 
 // Extract unique activities from experiences
@@ -43,13 +42,11 @@ export default function Partners() {
 
   const getThemeColor = (theme: Theme) => {
     switch (theme) {
-      case 'wildlife':
+      case 'Wildlife conservation':
         return 'bg-primary/10 text-primary border-primary/20';
-      case 'marine':
+      case 'Conservation education':
         return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'community':
-        return 'bg-secondary/10 text-secondary border-secondary/20';
-      case 'culture':
+      case 'Community & cultural exploration':
         return 'bg-accent/10 text-accent border-accent/20';
       default:
         return 'bg-muted text-muted-foreground border-muted/20';
