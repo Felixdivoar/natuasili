@@ -198,13 +198,15 @@ export default function HeaderNew() {
               <LanguageSwitcher />
 
               {/* Sign In/Up */}
-              <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span>Sign In</span>
-              </Button>
+              <Link to="/auth">
+                <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  <span>Sign In</span>
+                </Button>
+              </Link>
 
               {/* Partner CTA */}
-              <Link to="/partner-entry">
+              <Link to="/partner-with-us">
                 <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
                   <span className="hidden sm:inline">Partner With Us</span>
                   <span className="sm:hidden">Partner</span>
@@ -285,10 +287,12 @@ export default function HeaderNew() {
                   <CurrencySelector />
                 </div>
 
-                <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
-                  <User className="w-4 h-4 mr-2" />
-                  Sign In / Sign Up
-                </Button>
+                <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
+                    <User className="w-4 h-4 mr-2" />
+                    Sign In / Sign Up
+                  </Button>
+                </Link>
               </nav>
             </div>
           )}
