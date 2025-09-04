@@ -11,6 +11,14 @@ import olPejetaImg from "@/assets/partner-ol-pejeta.jpg";
 import reefolutionImg from "@/assets/partner-reefolution.jpg";
 import maraElephantImg from "@/assets/partner-mara-elephant.jpg";
 
+// Reteti specific images
+import retetiMainImg from "/lovable-uploads/d42dcb33-a2f6-4418-8d2a-921127f8d45a.png";
+import retetiFeedingImg from "/lovable-uploads/12a93a46-de0f-4be8-a867-015fd5d9daa3.png";
+import retetiCareOutdoorImg from "/lovable-uploads/b5d1c970-74f7-4351-acce-42ab7f85a2f8.png";
+import retetiCareFacilityImg from "/lovable-uploads/89f29078-42d9-498b-91e8-de9387a64250.png";
+import retetiHerdImg from "/lovable-uploads/4792e461-d848-4287-965d-d24aace650e6.png";
+import retetiBottleFeedingImg from "/lovable-uploads/742fd269-1c53-4671-b608-aa22d7e09e4e.png";
+
 // Additional experience-specific images
 import giraffeCentre from "@/assets/giraffe-centre.jpg";
 import olPejeteRhino from "@/assets/ol-pejeta-rhino.jpg";
@@ -328,9 +336,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "masai-mara",
     themes: ["Wildlife conservation"],
     activities: ["elephant", "sanctuary"],
-    images: getExperienceImages("Reteti Community Elephant Experience", ["elephant", "sanctuary"]),
-    heroImage: maraElephantTracking,
-    gallery: [maraElephantTracking, retetiSanctuaryImg, "/images/placeholder-2.jpg"],
+    images: [retetiMainImg, retetiFeedingImg, retetiCareOutdoorImg, retetiCareFacilityImg, retetiHerdImg, retetiBottleFeedingImg],
+    heroImage: retetiMainImg,
+    gallery: [retetiMainImg, retetiFeedingImg, retetiCareOutdoorImg, retetiCareFacilityImg, retetiHerdImg, retetiBottleFeedingImg],
     description: "Experience the heartwarming work of Reteti Elephant Sanctuary, Kenya's first community-owned elephant sanctuary. Meet orphaned elephants, learn about their rescue and rehabilitation, and discover how local communities are leading conservation efforts.",
     priceKESAdult: 400,
     childHalfPriceRule: false,
