@@ -57,18 +57,18 @@ export const mockExperiences: Experience[] = EXPERIENCES.map((partnerExp, index)
     project_id: project?.id || '1',
     title: partnerExp.title,
     slug: partnerExp.slug,
-    description: `Immerse yourself in ${partnerExp.title.toLowerCase()} with our expert guides. This unique conservation experience combines education, adventure, and direct impact on local communities and wildlife protection efforts.`,
+    description: partnerExp.description,
     images: partnerExp.images,
     location_text: getLocationText(partnerExp.destination),
     theme: convertTheme(partnerExp.themes),
     activity_type: convertActivityType(partnerExp.activities),
     duration_hours: Math.floor(Math.random() * 6) + 2, // 2-8 hours
-    base_price: Math.floor(Math.random() * 300) + 75, // $75-$375
-    currency: 'USD',
+    base_price: partnerExp.priceKESAdult, // Use correct KES pricing
+    currency: 'KES',
     allocation_pct_project: 90,
     allocation_pct_platform: 10,
     capacity: Math.floor(Math.random() * 15) + 5, // 5-20 people
-    visible_on_marketplace: true,
+    visible_on_marketplace: partnerExp.visibleOnMarketplace,
     search_text: `${partnerExp.title.toLowerCase()} ${partnerExp.activities.join(' ')} ${partnerExp.destination} ${partnerExp.themes.join(' ')}`,
     created_at: '2023-04-01T10:00:00Z'
   };
