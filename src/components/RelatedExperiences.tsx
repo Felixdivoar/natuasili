@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { mockExperiences } from "@/data/mockData";
+import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Clock, Users, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 interface RelatedExperiencesProps {
-  currentExperienceId: number;
+  currentExperienceId: number | string;
   theme: string;
   destination: string;
   maxResults?: number;
@@ -23,29 +23,35 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
   } = useCurrency();
   // Filter related experiences with priority order
   const getRelatedExperiences = () => {
-    let related = mockExperiences.filter(exp => Number(exp.id) !== Number(currentExperienceId));
+    // Filter out current experience
+    let related = EXPERIENCES.filter(exp => exp.id !== `exp-${currentExperienceId}` && exp.id !== currentExperienceId);
 
-    // Priority 1: Same theme
-    const sameTheme = related.filter(exp => exp.theme === theme);
+    // Priority 1: Same theme (convert theme string to match array)
+    const sameTheme = related.filter(exp => exp.themes.some(t => t.toLowerCase() === theme.toLowerCase()));
 
-    // Priority 2: Same destination/region
-    const sameDestination = related.filter(exp => exp.location_text.toLowerCase().includes(destination.toLowerCase()) || destination.toLowerCase().includes(exp.location_text.toLowerCase()));
+    // Priority 2: Same destination/region  
+    const sameDestination = related.filter(exp => 
+      exp.destination === destination || 
+      (exp.locationText && exp.locationText.toLowerCase().includes(destination.toLowerCase()))
+    );
 
-    // Priority 3: Highest rated or most popular (simulate with random selection)
-    const popular = related.sort((a, b) => b.base_price - a.base_price);
+    // Priority 3: Highest priced (as proxy for premium experiences)
+    const popular = related.sort((a, b) => (b.priceKESAdult || 0) - (a.priceKESAdult || 0));
 
     // Combine with priority order, avoiding duplicates
     const combined: any[] = [];
-    const addUnique = (experiences: typeof mockExperiences) => {
+    const addUnique = (experiences: typeof EXPERIENCES) => {
       experiences.forEach(exp => {
-        if (!combined.find((c: any) => Number(c.id) === Number(exp.id)) && combined.length < maxResults) {
+        if (!combined.find((c: any) => c.id === exp.id) && combined.length < maxResults) {
           combined.push(exp);
         }
       });
     };
+
     addUnique(sameTheme);
     addUnique(sameDestination);
     addUnique(popular);
+    
     return combined.slice(0, maxResults);
   };
   const relatedExperiences = getRelatedExperiences();
@@ -170,15 +176,15 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
     wireRelatedCarousel();
   }, [relatedExperiences]);
   const getThemeColor = (theme: string) => {
-    switch (theme) {
-      case 'Wildlife':
-        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods':
-        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education':
-        return 'bg-education/10 text-education border-education/20';
-      case 'Habitat':
-        return 'bg-habitat/10 text-habitat border-habitat/20';
+    switch (theme.toLowerCase()) {
+      case 'wildlife':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'marine':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'community':
+        return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'culture':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
       default:
         return 'bg-muted text-muted-foreground';
     }
@@ -220,16 +226,22 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
         scrollbarWidth: 'none',
         msOverflowStyle: 'none'
       }}>
-          {relatedExperiences.map(exp => <Card key={exp.id} className="group hover:shadow-lg transition-shadow flex-shrink-0 w-80">
+          {relatedExperiences.map(exp => (
+            <Card key={exp.id} className="group hover:shadow-lg transition-shadow flex-shrink-0 w-80">
               <CardContent className="p-0">
                 <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
-                  <img src={exp.images[0]} alt={exp.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                  <img 
+                    src={exp.heroImage} 
+                    alt={exp.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                    loading="lazy" 
+                  />
                 </div>
                 
                 <div className="p-4 space-y-3">
                   <div>
-                    <Badge className={`mb-2 ${getThemeColor(exp.theme)}`}>
-                      {exp.theme}
+                    <Badge className={`mb-2 ${getThemeColor(exp.themes[0])}`}>
+                      {exp.themes[0]}
                     </Badge>
                     <h3 className="font-semibold text-lg leading-tight line-clamp-2">
                       {exp.title}
@@ -238,17 +250,17 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
                   
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <MapPin className="h-3 w-3" />
-                    <span>{exp.location_text}</span>
+                    <span>{exp.locationText}</span>
                   </div>
                   
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      <span>{exp.duration_hours}h</span>
+                      <span>6h</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Users className="h-3 w-3" />
-                      <span>Up to {exp.capacity}</span>
+                      <span>Up to 15</span>
                     </div>
                   </div>
                   
@@ -258,7 +270,7 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
                   
                   <div className="flex items-center justify-between pt-2">
                     <div className="font-bold text-foreground">
-                      {formatPrice(exp.base_price)}
+                      {formatPrice(exp.priceKESAdult)}
                       <span className="text-sm font-normal text-muted-foreground">/person</span>
                     </div>
                     <Link to={`/experience/${exp.slug}`}>
@@ -267,7 +279,8 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
                   </div>
                 </div>
               </CardContent>
-            </Card>)}
+            </Card>
+          ))}
         </div>
       </div>
     </section>;

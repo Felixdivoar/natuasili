@@ -1,135 +1,155 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight, CheckCircle, XCircle, Info } from "lucide-react";
-import { mockExperiences, mockProjects } from "@/data/mockData";
+import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useI18n } from "@/contexts/I18nContext";
 import ReviewSection from "@/components/ReviewSection";
-import MapComponent from "@/components/MapComponent";
 import RelatedExperiences from "@/components/RelatedExperiences";
-import AvailabilitySelector from "@/components/AvailabilitySelector";
-import BookingFormModal from "@/components/BookingFormModal";
+import BookingWizard from "@/components/BookingWizard";
+
 const ExperienceDetail = () => {
-  const {
-    slug
-  } = useParams();
+  const { slug } = useParams();
+  const { t } = useI18n();
+  const { formatPrice } = useCurrency();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
-  const {
-    formatPrice
-  } = useCurrency();
+  const [bookingStarted, setBookingStarted] = useState(false);
   const availabilityRef = useRef<HTMLDivElement>(null);
-  const experience = mockExperiences.find(exp => exp.slug === slug);
-  const project = experience ? mockProjects.find(p => p.id === experience.project_id) : null;
+  const heroRef = useRef<HTMLDivElement>(null);
 
-  // Return early if experience not found to prevent errors
+  const experience = EXPERIENCES.find(exp => exp.slug === slug);
+
   if (!experience) {
-    return <div className="min-h-screen bg-background">
+    return (
+      <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-foreground mb-4">Experience Not Found</h1>
-            <p className="text-muted-foreground mb-6">The experience you're looking for doesn't exist.</p>
+            <h1 className="text-2xl font-bold text-foreground mb-4">{t('experienceNotFound', 'Experience Not Found')}</h1>
+            <p className="text-muted-foreground mb-6">{t('experienceNotFoundDesc', 'The experience you\'re looking for doesn\'t exist.')}</p>
             <Link to="/browse">
-              <Button>Browse Experiences</Button>
+              <Button>{t('browseExperiences', 'Browse Experiences')}</Button>
             </Link>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 
-  // Initialize sticky button and intersection observer
+  // Initialize sticky button observer
   useEffect(() => {
-    // Intersection observer for sticky button visibility
-    if (availabilityRef.current) {
-      const observer = new IntersectionObserver(([entry]) => {
-        setStickyVisible(!entry.isIntersecting);
-      }, {
-        threshold: 0.6
-      });
-      observer.observe(availabilityRef.current);
-      return () => {
-        observer.disconnect();
-      };
+    if (heroRef.current) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setStickyVisible(!entry.isIntersecting);
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(heroRef.current);
+      return () => observer.disconnect();
     }
-  }, [experience?.slug]);
-  const getThemeColor = (theme: string) => {
-    switch (theme) {
-      case 'Wildlife':
-        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods':
-        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education':
-        return 'bg-education/10 text-education border-education/20';
-      case 'Habitat':
-        return 'bg-habitat/10 text-habitat border-habitat/20';
-      default:
-        return 'bg-muted text-muted-foreground';
-    }
-  };
+  }, []);
+
   const nextImage = () => {
-    setCurrentImageIndex(prev => (prev + 1) % experience.images.length);
+    setCurrentImageIndex(prev => (prev + 1) % experience.gallery.length);
   };
+
   const prevImage = () => {
-    setCurrentImageIndex(prev => (prev - 1 + experience.images.length) % experience.images.length);
+    setCurrentImageIndex(prev => (prev - 1 + experience.gallery.length) % experience.gallery.length);
   };
+
   const scrollToAvailability = () => {
     availabilityRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
   };
+
   const openBookingModal = () => {
     setIsBookingModalOpen(true);
   };
-  const highlights = ["Track endangered species with expert wildlife conservationists", "Learn traditional tracking techniques from local Maasai guides", "Contribute directly to wildlife monitoring and conservation data", "Experience the raw beauty of Kenya's most pristine wilderness areas", "Support community-led conservation initiatives"];
-  const itinerary = [{
-    time: "6:00 AM",
-    title: "Early Morning Departure",
-    description: "Pick up from your accommodation and journey to the conservancy with a briefing on the day's activities."
-  }, {
-    time: "7:30 AM",
-    title: "Wildlife Tracking Begins",
-    description: "Begin tracking with our expert guides using traditional methods and modern conservation techniques."
-  }, {
-    time: "10:00 AM",
-    title: "Data Collection",
-    description: "Learn how to collect vital conservation data and contribute to ongoing wildlife monitoring efforts."
-  }, {
-    time: "12:00 PM",
-    title: "Bush Lunch",
-    description: "Enjoy a traditional bush lunch while discussing conservation challenges and successes."
-  }, {
-    time: "2:00 PM",
-    title: "Continue Tracking",
-    description: "Afternoon tracking session focusing on different species and habitat areas."
-  }, {
-    time: "4:30 PM",
-    title: "Return Journey",
-    description: "Debrief the day's discoveries and return to your accommodation."
-  }];
+
   const getThemeSlug = (theme: string) => {
     return theme.toLowerCase().replace(/\s+/g, '-');
   };
 
-  const getPartnerSlug = (partnerName: string) => {
-    return partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const getPartnerSlug = (partner: string) => {
+    return partner.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   };
 
-  return <div className="min-h-screen bg-background">
+  const getThemeColor = (theme: string) => {
+    switch (theme.toLowerCase()) {
+      case 'wildlife':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'marine':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'community':
+        return 'bg-orange-100 text-orange-800 border-orange-200';
+      case 'culture':
+        return 'bg-purple-100 text-purple-800 border-purple-200';
+      default:
+        return 'bg-muted text-muted-foreground';
+    }
+  };
+
+  const highlights = [
+    "Immersive conservation experience with expert guides",
+    "Direct contribution to wildlife and community protection",
+    "Traditional and modern conservation techniques",
+    "Authentic cultural exchange with local communities",
+    "90% of proceeds support partner initiatives"
+  ];
+
+  const itinerary = [
+    {
+      time: "6:00 AM",
+      title: "Early Morning Departure", 
+      description: "Pick up from your accommodation and journey to the location with expert briefing."
+    },
+    {
+      time: "8:00 AM",
+      title: "Experience Begins",
+      description: "Begin your conservation experience with local guides and community members."
+    },
+    {
+      time: "10:30 AM", 
+      title: "Hands-On Activities",
+      description: "Participate in conservation activities and learn traditional techniques."
+    },
+    {
+      time: "12:30 PM",
+      title: "Community Lunch",
+      description: "Enjoy locally prepared meals while discussing conservation impact."
+    },
+    {
+      time: "2:00 PM",
+      title: "Continued Learning", 
+      description: "Deepen your understanding through additional activities and exploration."
+    },
+    {
+      time: "4:30 PM",
+      title: "Return Journey",
+      description: "Reflect on the day's experiences and return to your accommodation."
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="hero-full relative">
-        <div className="hero-inner max-w-[1150px] mx-auto px-4">
+      <section className="relative" ref={heroRef}>
+        <div className="max-w-[1150px] mx-auto px-4">
           {/* Header Info */}
           <div className="py-6 space-y-4">
             {/* Theme chip */}
             <div>
-              <Link to={`/themes/${getThemeSlug(experience.theme)}`} className="inline-block">
-                <Badge className={`${getThemeColor(experience.theme)} hover:opacity-80 transition-opacity cursor-pointer`}>
-                  {experience.theme}
+              <Link to={`/themes/${getThemeSlug(experience.themes[0])}`} className="inline-block">
+                <Badge className={`${getThemeColor(experience.themes[0])} hover:opacity-80 transition-opacity cursor-pointer capitalize`}>
+                  {experience.themes[0]}
                 </Badge>
               </Link>
             </div>
@@ -143,29 +163,32 @@ const ExperienceDetail = () => {
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />)}
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
                 </div>
                 <span className="font-medium">4.8</span>
                 <span className="text-muted-foreground text-sm">(42 reviews)</span>
               </div>
               <span className="text-muted-foreground">•</span>
-              {project && (
-                <Link to={`/partners/${getPartnerSlug(project.name)}`} className="text-primary hover:underline">
-                  {project.name}
-                </Link>
-              )}
+              <Link 
+                to={`/partners/${getPartnerSlug(experience.partner)}`} 
+                className="text-primary hover:underline"
+              >
+                {experience.partner}
+              </Link>
             </div>
           </div>
 
           {/* Full-width Image Carousel */}
-          <div className="relative mb-6 -mx-4">
-            <div className="aspect-[16/9] lg:aspect-[21/9] overflow-hidden bg-muted">
+          <div className="relative mb-6">
+            <div className="aspect-[16/9] lg:aspect-[21/9] overflow-hidden rounded-lg bg-muted">
               <img 
-                src={experience.images[currentImageIndex]} 
+                src={experience.gallery[currentImageIndex]} 
                 alt={experience.title} 
                 className="w-full h-full object-cover" 
               />
-              {experience.images.length > 1 && (
+              {experience.gallery.length > 1 && (
                 <>
                   <Button 
                     variant="ghost" 
@@ -188,9 +211,9 @@ const ExperienceDetail = () => {
             </div>
             
             {/* Thumbnail navigation */}
-            {experience.images.length > 1 && (
-              <div className="flex gap-2 mt-4 overflow-x-auto px-4">
-                {experience.images.map((image, index) => (
+            {experience.gallery.length > 1 && (
+              <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                {experience.gallery.map((image, index) => (
                   <button 
                     key={index} 
                     onClick={() => setCurrentImageIndex(index)} 
@@ -205,26 +228,14 @@ const ExperienceDetail = () => {
             )}
           </div>
 
-          {/* Top Actions Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b">
-            {/* Left side - basic info */}
-            <div className="flex flex-wrap items-center gap-4 text-muted-foreground text-sm">
-              <div className="flex items-center gap-1">
-                <MapPin className="h-4 w-4" />
-                <span>{experience.location_text}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Users className="h-4 w-4" />
-                <span>Up to {experience.capacity} people</span>
-              </div>
+          {/* Top Actions Bar - Desktop */}
+          <div className="hidden lg:flex items-center justify-between gap-4 py-4 border-t border-b">
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              <span>6 hours</span>
             </div>
 
-            {/* Right side - actions */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                <span>{experience.duration_hours} hours</span>
-              </div>
               <Button variant="outline" size="sm">
                 <Heart className="h-4 w-4" />
               </Button>
@@ -234,7 +245,7 @@ const ExperienceDetail = () => {
               <div className="flex items-center gap-2">
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-2xl font-bold text-foreground">
-                  {formatPrice(experience.base_price)}
+                  {formatPrice(experience.priceKESAdult)}
                 </div>
                 <div className="text-sm text-muted-foreground">per person</div>
               </div>
@@ -244,48 +255,47 @@ const ExperienceDetail = () => {
       </section>
 
       {/* Availability & Options */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-[1150px] mx-auto px-4 py-8">
         <div ref={availabilityRef}>
-          <AvailabilitySelector experience={experience} project={project} />
+          <AvailabilityAndOptions 
+            experience={experience} 
+            onBookingStart={() => setBookingStarted(true)}
+            onBookingModalOpen={openBookingModal}
+          />
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8 page-content">
+      <div className="max-w-[1150px] mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-12">
-
+          
           {/* About this activity */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">About this activity</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('aboutActivity', 'About this activity')}</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
-              <p>
-                Embark on an extraordinary conservation adventure that combines the thrill of wildlife tracking with meaningful conservation impact. This immersive experience takes you deep into Kenya's pristine wilderness areas where you'll work alongside expert conservationists and local Maasai guides.
-              </p>
-              <p>
-                You'll learn traditional tracking techniques passed down through generations while contributing to vital wildlife monitoring data that helps protect endangered species. This isn't just tourism – it's active participation in conservation efforts that make a real difference.
-              </p>
-              <p>
-                The experience offers unparalleled access to some of Kenya's most pristine wildlife areas, where you'll witness the incredible biodiversity that makes this region so special. Every booking directly supports community-led conservation initiatives and provides sustainable livelihoods for local families.
-              </p>
+              <p>{experience.description}</p>
             </div>
           </section>
 
           {/* Highlights */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Highlights</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('highlights', 'Highlights')}</h2>
             <ul className="space-y-3">
-              {highlights.map((highlight, index) => <li key={index} className="flex items-start gap-3">
+              {highlights.map((highlight, index) => (
+                <li key={index} className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">{highlight}</span>
-                </li>)}
+                </li>
+              ))}
             </ul>
           </section>
 
-          {/* Itinerary */}
+          {/* What to expect */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">What to expect</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('whatToExpect', 'What to expect')}</h2>
             <div className="space-y-6">
-              {itinerary.map((item, index) => <div key={index} className="flex gap-4">
+              {itinerary.map((item, index) => (
+                <div key={index} className="flex gap-4">
                   <div className="flex-shrink-0 w-20 text-sm font-medium text-primary">
                     {item.time}
                   </div>
@@ -293,50 +303,51 @@ const ExperienceDetail = () => {
                     <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
                     <p className="text-muted-foreground">{item.description}</p>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
           </section>
 
-          {/* Map */}
+          {/* Where you'll be */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Where you'll be</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('whereYoullBe', 'Where you\'ll be')}</h2>
             <div className="bg-card border rounded-lg p-6">
               <div className="flex items-center gap-2 mb-4">
                 <MapPin className="h-5 w-5 text-primary" />
-                <span className="font-medium">{experience.location_text}</span>
+                <span className="font-medium">{experience.locationText}</span>
               </div>
               <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
                 <div className="text-center text-muted-foreground">
                   <MapPin className="h-8 w-8 mx-auto mb-2" />
-                  <p>Interactive map coming soon</p>
+                  <p>{t('mapComingSoon', 'Interactive map coming soon')}</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Includes / Excludes */}
+          {/* What's included */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">What's included</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('whatsIncluded', 'What\'s included')}</h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  Included
+                  {t('included', 'Included')}
                 </h3>
                 <ul className="space-y-2 text-muted-foreground">
                   <li>• Expert local guide and conservationist</li>
-                  <li>• All necessary tracking equipment</li>
+                  <li>• All necessary equipment and materials</li>
                   <li>• Transportation to/from location</li>
-                  <li>• Traditional bush lunch</li>
+                  <li>• Local community lunch</li>
                   <li>• Conservation education materials</li>
                   <li>• Certificate of participation</li>
-                  <li>• Contribution to conservation project</li>
+                  <li>• Direct conservation contribution</li>
                 </ul>
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                   <XCircle className="h-5 w-5 text-red-600" />
-                  Not included
+                  {t('notIncluded', 'Not included')}
                 </h3>
                 <ul className="space-y-2 text-muted-foreground">
                   <li>• Personal travel insurance</li>
@@ -349,16 +360,16 @@ const ExperienceDetail = () => {
             </div>
           </section>
 
-          {/* Important Information */}
+          {/* Important information */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Important information</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('importantInfo', 'Important information')}</h2>
             <Card>
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <div>
                     <h3 className="font-semibold mb-2 flex items-center gap-2">
                       <Info className="h-4 w-4 text-blue-600" />
-                      What to bring
+                      {t('whatToBring', 'What to bring')}
                     </h3>
                     <ul className="text-sm text-muted-foreground space-y-1">
                       <li>• Comfortable walking shoes</li>
@@ -372,9 +383,9 @@ const ExperienceDetail = () => {
                   <Separator />
                   
                   <div>
-                    <h3 className="font-semibold mb-2">Know before you go</h3>
+                    <h3 className="font-semibold mb-2">{t('knowBeforeGo', 'Know before you go')}</h3>
                     <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Activity involves moderate walking on uneven terrain</li>
+                      <li>• Activity involves moderate physical activity</li>
                       <li>• Wildlife sightings cannot be guaranteed</li>
                       <li>• Minimum age: 12 years</li>
                       <li>• Not suitable for pregnant women</li>
@@ -386,56 +397,360 @@ const ExperienceDetail = () => {
             </Card>
           </section>
 
-          <RelatedExperiences currentExperienceId={Number(experience.id)} theme={experience.theme} destination={experience.location_text} maxResults={5} />
+          {/* Explore other options */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('exploreOther', 'Explore other options')}</h2>
+            <RelatedExperiences 
+              currentExperienceId={parseInt(experience.id.replace('exp-', ''))} 
+              theme={experience.themes[0]} 
+              destination={experience.destination} 
+              maxResults={5} 
+            />
+          </section>
 
           {/* Reviews & Ratings */}
-          <section className="section-reviews mb-10">
+          <section>
             <ReviewSection experienceId={experience.id} />
           </section>
         </div>
       </div>
 
-      {/* Sticky Book Now Button */}
-      {stickyVisible && <>
-          {/* Mobile sticky bar */}
-          <div className="na-cta-bar lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4" style={{
-        paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))'
-      }}>
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <div className="text-lg font-bold text-foreground">
-                    {formatPrice(experience.base_price)}
-                  </div>
-                  <div className="text-xs text-muted-foreground">per person</div>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="h-3 w-3" />
-                  <span>{experience.duration_hours}h</span>
+      {/* Sticky Book Now CTA */}
+      {stickyVisible && !bookingStarted && (
+        <>
+          {/* Desktop sticky bar */}
+          <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b shadow-sm">
+            <div className="max-w-[1150px] mx-auto px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <h3 className="font-semibold text-foreground">{experience.title}</h3>
+                <div className="flex items-center gap-1">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <span className="text-sm font-medium">4.8</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm">
-                  <Heart className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Share className="h-4 w-4" />
-                </Button>
-                <Button onClick={openBookingModal} className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  Book Now
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <div className="text-sm text-muted-foreground">from</div>
+                  <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
+                </div>
+                <Button onClick={scrollToAvailability} size="lg">
+                  {t('bookNow', 'Book Now')}
                 </Button>
               </div>
             </div>
           </div>
-          
-          {/* Desktop floating button */}
-          <Button onClick={openBookingModal} className="na-btn-book-fab hidden lg:block fixed right-6 bottom-6 z-50 shadow-xl bg-primary text-primary-foreground hover:bg-primary/90" size="lg">
-            Book Now
-          </Button>
-        </>}
 
-      {/* Booking Form Modal */}
-      <BookingFormModal isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} experience={experience} project={project} />
-    </div>;
+          {/* Mobile sticky bar */}
+          <div className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4 safe-area-padding">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <div className="text-sm text-muted-foreground">from</div>
+                <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
+              </div>
+              <Button onClick={scrollToAvailability} size="lg" className="flex-1">
+                {t('bookNow', 'Book Now')}
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Booking Modal */}
+      {isBookingModalOpen && (
+        <BookingWizard 
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+          experience={experience}
+        />
+      )}
+    </div>
+  );
 };
+
+// Availability and Options Component
+const AvailabilityAndOptions = ({ 
+  experience, 
+  onBookingStart, 
+  onBookingModalOpen 
+}: { 
+  experience: any, 
+  onBookingStart: () => void,
+  onBookingModalOpen: () => void 
+}) => {
+  const { formatPrice } = useCurrency();
+  const { t } = useI18n();
+  const [selectedDate, setSelectedDate] = useState('');
+  const [participants, setParticipants] = useState({ adults: 1, children: 0 });
+  const [selectedOption, setSelectedOption] = useState<'standard' | 'premium'>('standard');
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const validateForm = () => {
+    const newErrors: string[] = [];
+    
+    if (!selectedDate) {
+      newErrors.push('Please select a date');
+    }
+    
+    if (participants.adults + participants.children === 0) {
+      newErrors.push('Please select at least one participant');
+    }
+    
+    if (participants.adults + participants.children > 15) { // Assuming max capacity of 15
+      newErrors.push('Maximum capacity exceeded. Please select fewer participants.');
+    }
+
+    // Check cutoff time for same-day bookings
+    if (selectedDate === new Date().toISOString().split('T')[0]) {
+      const now = new Date();
+      const eatNow = new Date(now.getTime() + (3 * 60 * 60 * 1000)); // EAT is UTC+3
+      if (eatNow.getHours() >= 11) {
+        newErrors.push('Same-day bookings close at 11:00 EAT. Please select a different date.');
+      }
+    }
+
+    setErrors(newErrors);
+    return newErrors.length === 0;
+  };
+
+  const handleContinue = () => {
+    if (validateForm()) {
+      onBookingStart();
+      onBookingModalOpen();
+    }
+  };
+
+  // Pricing calculations
+  const adultPrice = experience.priceKESAdult;
+  const childPrice = experience.childHalfPriceRule ? Math.round(adultPrice / 2) : adultPrice;
+  
+  const subtotal = (participants.adults * adultPrice) + (participants.children * childPrice);
+  const partnerAmount = Math.round(subtotal * 0.9);
+  const platformAmount = subtotal - partnerAmount;
+
+  return (
+    <div className="space-y-8">
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Left side - Date and Participants */}
+        <div className="lg:col-span-2 space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-foreground mb-6">{t('availabilityOptions', 'Availability & Options')}</h2>
+            
+            {/* Date Picker */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">{t('selectDate', 'Select date')}</label>
+                <input 
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  min={new Date().toISOString().split('T')[0]}
+                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+
+              {/* Participants */}
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  {t('participants', 'Participants')} (max 15)
+                </label>
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm text-muted-foreground">{t('adults', 'Adults')}</label>
+                    <div className="flex items-center border rounded-md">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setParticipants(prev => ({ ...prev, adults: Math.max(0, prev.adults - 1) }))}
+                        disabled={participants.adults <= 0}
+                      >
+                        -
+                      </Button>
+                      <span className="px-3 py-1 min-w-[40px] text-center">{participants.adults}</span>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setParticipants(prev => ({ ...prev, adults: prev.adults + 1 }))}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  {experience.childHalfPriceRule && (
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm text-muted-foreground">{t('children', 'Children')}</label>
+                      <div className="flex items-center border rounded-md">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => setParticipants(prev => ({ ...prev, children: Math.max(0, prev.children - 1) }))}
+                          disabled={participants.children <= 0}
+                        >
+                          -
+                        </Button>
+                        <span className="px-3 py-1 min-w-[40px] text-center">{participants.children}</span>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => setParticipants(prev => ({ ...prev, children: prev.children + 1 }))}
+                        >
+                          +
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Experience Options */}
+          <div>
+            <h3 className="text-lg font-semibold text-foreground mb-4">{t('selectOption', 'Select your option')}</h3>
+            <div className="grid gap-4">
+              <Card 
+                className={`cursor-pointer transition-colors ${selectedOption === 'standard' ? 'ring-2 ring-primary' : ''}`}
+                onClick={() => setSelectedOption('standard')}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold">{t('standard', 'Standard Experience')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('standardDesc', 'Full conservation experience with all inclusions')}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold">{formatPrice(adultPrice)}</div>
+                      <div className="text-sm text-muted-foreground">{t('perPerson', 'per person')}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card 
+                className={`cursor-pointer transition-colors ${selectedOption === 'premium' ? 'ring-2 ring-primary' : ''}`}
+                onClick={() => setSelectedOption('premium')}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold">{t('premium', 'Premium Experience')}</h4>
+                      <p className="text-sm text-muted-foreground">{t('premiumDesc', 'Enhanced experience with additional activities')}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-bold">{formatPrice(Math.round(adultPrice * 1.3))}</div>
+                      <div className="text-sm text-muted-foreground">{t('perPerson', 'per person')}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Error Messages */}
+          {errors.length > 0 && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <ul className="text-red-600 text-sm space-y-1">
+                {errors.map((error, index) => (
+                  <li key={index}>• {error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Right side - Order Summary */}
+        <div className="lg:col-span-1">
+          <Card className="sticky top-4">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-semibold text-foreground mb-4">{t('orderSummary', 'Order Summary')}</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <img 
+                    src={experience.heroImage} 
+                    alt={experience.title}
+                    className="w-16 h-12 object-cover rounded"
+                  />
+                  <div className="flex-1">
+                    <h4 className="font-medium text-sm">{experience.title}</h4>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />
+                      {experience.locationText}
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>{t('date', 'Date')}</span>
+                    <span>{selectedDate || t('selectDate', 'Select date')}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>{t('participants', 'Participants')}</span>
+                    <span>
+                      {participants.adults + participants.children} {t('people', 'people')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>{t('option', 'Option')}</span>
+                    <span className="capitalize">{selectedOption}</span>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  {participants.adults > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span>{participants.adults} × {t('adults', 'Adults')}</span>
+                      <span>{formatPrice(participants.adults * adultPrice)}</span>
+                    </div>
+                  )}
+                  {participants.children > 0 && experience.childHalfPriceRule && (
+                    <div className="flex justify-between text-sm">
+                      <span>{participants.children} × {t('children', 'Children')}</span>
+                      <span>{formatPrice(participants.children * childPrice)}</span>
+                    </div>
+                  )}
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2 text-xs text-muted-foreground">
+                  <div className="flex justify-between">
+                    <span>{t('partnerInitiatives', 'Partner initiatives (90%)')}</span>
+                    <span>{formatPrice(partnerAmount)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>{t('platformOperations', 'Platform & operations (10%)')}</span>
+                    <span>{formatPrice(platformAmount)}</span>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="flex justify-between font-bold">
+                  <span>{t('total', 'Total')}</span>
+                  <span>{formatPrice(subtotal)}</span>
+                </div>
+
+                <Button 
+                  className="w-full" 
+                  size="lg" 
+                  onClick={handleContinue}
+                  disabled={errors.length > 0 || !selectedDate || (participants.adults + participants.children) === 0}
+                >
+                  {t('continue', 'Continue')}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default ExperienceDetail;
