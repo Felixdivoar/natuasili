@@ -8,9 +8,12 @@ import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight, Ch
 import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/contexts/I18nContext";
-import ReviewSection from "@/components/ReviewSection";
+import { useToast } from "@/hooks/use-toast";
+import { CartProvider } from "@/contexts/CartContext";
+import BookingWizardNew from "@/components/BookingWizardNew";
 import RelatedExperiences from "@/components/RelatedExperiences";
-import BookingWizard from "@/components/BookingWizard";
+import ReviewSection from "@/components/ReviewSection";
+import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -150,20 +153,21 @@ const ExperienceDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative" ref={heroRef}>
-        <div className="max-w-[1150px] mx-auto px-4">
-          {/* Header Info */}
-          <div className="py-6 space-y-4">
-            {/* Theme chip */}
-            <div>
-              <Link to={`/themes/${getThemeSlug(experience.themes[0])}`} className="inline-block">
-                <Badge className={`${getThemeColor(experience.themes[0])} hover:opacity-80 transition-opacity cursor-pointer capitalize`}>
-                  {experience.themes[0]}
-                </Badge>
-              </Link>
-            </div>
+    <CartProvider experienceSlug={experience.slug} basePrice={experience.priceKESAdult}>
+      <div className="min-h-screen bg-background">
+        {/* Hero Section */}
+        <section className="relative" ref={heroRef}>
+          <div className="max-w-[1150px] mx-auto px-4">
+            {/* Header Info */}
+            <div className="py-6 space-y-4">
+              {/* Theme chip */}
+              <div>
+                <Link to={`/themes/${getThemeSlug(experience.themes[0])}`} className="inline-block">
+                  <Badge className={`${getThemeColor(experience.themes[0])} hover:opacity-80 transition-opacity cursor-pointer capitalize`}>
+                    {experience.themes[0]}
+                  </Badge>
+                </Link>
+              </div>
 
             {/* Title */}
             <h1 className="text-3xl lg:text-4xl font-bold text-foreground">
@@ -269,7 +273,11 @@ const ExperienceDetail = () => {
       <div className="max-w-[1150px] mx-auto px-4 py-8">
         <div ref={availabilityRef}>
           <AvailabilityAndOptions 
-            experience={experience} 
+            experience={{
+              ...experience,
+              base_price: experience.priceKESAdult,
+              capacity: 15 // Default capacity
+            }} 
             onBookingStart={() => {
               setBookingStarted(true);
             }}
@@ -470,7 +478,7 @@ const ExperienceDetail = () => {
 
       {/* Booking Modal */}
       {isBookingModalOpen && (
-        <BookingWizard 
+        <BookingWizardNew 
           isOpen={isBookingModalOpen}
           onClose={() => {
             setIsBookingModalOpen(false);
@@ -480,294 +488,10 @@ const ExperienceDetail = () => {
         />
       )}
     </div>
-  );
+  </CartProvider>
+);
 };
 
-// Availability and Options Component
-const AvailabilityAndOptions = ({ 
-  experience, 
-  onBookingStart, 
-  onBookingModalOpen 
-}: { 
-  experience: any, 
-  onBookingStart: () => void,
-  onBookingModalOpen: () => void 
-}) => {
-  const { formatPrice } = useCurrency();
-  const { t } = useI18n();
-  const [selectedDate, setSelectedDate] = useState('');
-  const [participants, setParticipants] = useState({ adults: 1, children: 0 });
-  const [selectedOption, setSelectedOption] = useState<'standard' | 'premium'>('standard');
-  const [errors, setErrors] = useState<string[]>([]);
-
-  const validateForm = () => {
-    const newErrors: string[] = [];
-    
-    if (!selectedDate) {
-      newErrors.push('Please select a date');
-    }
-    
-    if (participants.adults + participants.children === 0) {
-      newErrors.push('Please select at least one participant');
-    }
-    
-    if (participants.adults + participants.children > 15) { // Assuming max capacity of 15
-      newErrors.push('Maximum capacity exceeded. Please select fewer participants.');
-    }
-
-    // Check cutoff time for same-day bookings - proper EAT timezone handling
-    if (selectedDate === new Date().toISOString().split('T')[0]) {
-      const now = new Date();
-      // Convert current time to EAT (UTC+3)
-      const eatNow = new Date(now.toLocaleString("en-US", {timeZone: "Africa/Nairobi"}));
-      if (eatNow.getHours() >= 11) {
-        newErrors.push('Same-day bookings close at 11:00 EAT. Please select a different date.');
-      }
-    }
-
-    setErrors(newErrors);
-    return newErrors.length === 0;
-  };
-
-  const handleContinue = () => {
-    if (validateForm()) {
-      onBookingStart();
-      onBookingModalOpen();
-    }
-  };
-
-  // Pricing calculations
-  const adultPrice = experience.priceKESAdult;
-  const childPrice = experience.childHalfPriceRule ? Math.round(adultPrice / 2) : adultPrice;
-  
-  const subtotal = (participants.adults * adultPrice) + (participants.children * childPrice);
-  const partnerAmount = Math.round(subtotal * 0.9);
-  const platformAmount = subtotal - partnerAmount;
-
-  return (
-    <div className="space-y-8">
-      <div className="grid lg:grid-cols-3 gap-8">
-        {/* Left side - Date and Participants */}
-        <div className="lg:col-span-2 space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('availabilityOptions', 'Availability & Options')}</h2>
-            
-            {/* Date Picker */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">{t('selectDate', 'Select date')}</label>
-                <input 
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                />
-              </div>
-
-              {/* Participants */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  {t('participants', 'Participants')} (max 15)
-                </label>
-                <div className="flex gap-4">
-                  <div className="flex items-center gap-2">
-                    <label className="text-sm text-muted-foreground">{t('adults', 'Adults')}</label>
-                    <div className="flex items-center border rounded-md">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => setParticipants(prev => ({ ...prev, adults: Math.max(0, prev.adults - 1) }))}
-                        disabled={participants.adults <= 0}
-                      >
-                        -
-                      </Button>
-                      <span className="px-3 py-1 min-w-[40px] text-center">{participants.adults}</span>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => setParticipants(prev => ({ ...prev, adults: prev.adults + 1 }))}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  {experience.childHalfPriceRule && (
-                    <div className="flex items-center gap-2">
-                      <label className="text-sm text-muted-foreground">{t('children', 'Children')}</label>
-                      <div className="flex items-center border rounded-md">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => setParticipants(prev => ({ ...prev, children: Math.max(0, prev.children - 1) }))}
-                          disabled={participants.children <= 0}
-                        >
-                          -
-                        </Button>
-                        <span className="px-3 py-1 min-w-[40px] text-center">{participants.children}</span>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => setParticipants(prev => ({ ...prev, children: prev.children + 1 }))}
-                        >
-                          +
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Experience Options */}
-          <div>
-            <h3 className="text-lg font-semibold text-foreground mb-4">{t('selectOption', 'Select your option')}</h3>
-            <div className="grid gap-4">
-              <Card 
-                className={`cursor-pointer transition-colors ${selectedOption === 'standard' ? 'ring-2 ring-primary' : ''}`}
-                onClick={() => setSelectedOption('standard')}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold">{t('standard', 'Standard Experience')}</h4>
-                      <p className="text-sm text-muted-foreground">{t('standardDesc', 'Full conservation experience with all inclusions')}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold">{formatPrice(adultPrice)}</div>
-                      <div className="text-sm text-muted-foreground">{t('perPerson', 'per person')}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className={`cursor-pointer transition-colors ${selectedOption === 'premium' ? 'ring-2 ring-primary' : ''}`}
-                onClick={() => setSelectedOption('premium')}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-semibold">{t('premium', 'Premium Experience')}</h4>
-                      <p className="text-sm text-muted-foreground">{t('premiumDesc', 'Enhanced experience with additional activities')}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold">{formatPrice(Math.round(adultPrice * 1.3))}</div>
-                      <div className="text-sm text-muted-foreground">{t('perPerson', 'per person')}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Error Messages */}
-          {errors.length > 0 && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <ul className="text-red-600 text-sm space-y-1">
-                {errors.map((error, index) => (
-                  <li key={index}>• {error}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Right side - Order Summary */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-4">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4">{t('orderSummary', 'Order Summary')}</h3>
-              
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={experience.heroImage} 
-                    alt={experience.title}
-                    className="w-16 h-12 object-cover rounded"
-                  />
-                  <div className="flex-1">
-                    <h4 className="font-medium text-sm">{experience.title}</h4>
-                    <div className="text-xs text-muted-foreground flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {experience.locationText}
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>{t('date', 'Date')}</span>
-                    <span>{selectedDate || t('selectDate', 'Select date')}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>{t('participants', 'Participants')}</span>
-                    <span>
-                      {participants.adults + participants.children} {t('people', 'people')}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>{t('option', 'Option')}</span>
-                    <span className="capitalize">{selectedOption}</span>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  {participants.adults > 0 && (
-                    <div className="flex justify-between text-sm">
-                      <span>{participants.adults} × {t('adults', 'Adults')}</span>
-                      <span>{formatPrice(participants.adults * adultPrice)}</span>
-                    </div>
-                  )}
-                  {participants.children > 0 && experience.childHalfPriceRule && (
-                    <div className="flex justify-between text-sm">
-                      <span>{participants.children} × {t('children', 'Children')}</span>
-                      <span>{formatPrice(participants.children * childPrice)}</span>
-                    </div>
-                  )}
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2 text-xs text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>{t('partnerInitiatives', 'Partner initiatives (90%)')}</span>
-                    <span>{formatPrice(partnerAmount)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>{t('platformOperations', 'Platform & operations (10%)')}</span>
-                    <span>{formatPrice(platformAmount)}</span>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="flex justify-between font-bold">
-                  <span>{t('total', 'Total')}</span>
-                  <span>{formatPrice(subtotal)}</span>
-                </div>
-
-                <Button 
-                  className="w-full" 
-                  size="lg" 
-                  onClick={handleContinue}
-                  disabled={errors.length > 0 || !selectedDate || (participants.adults + participants.children) === 0}
-                >
-                  {t('continue', 'Continue')}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  );
-};
+// Availability and Options Component is now imported from separate file
 
 export default ExperienceDetail;
