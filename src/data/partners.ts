@@ -1,36 +1,6 @@
 export type Destination = "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
 export type Theme = "wildlife" | "marine" | "community" | "culture";
 
-export type Partner = {
-  id: string;
-  name: string;
-  slug: string;
-  destination: Destination;
-  themes: Theme[];
-  description: string;
-  image: string;
-  experienceCount: number;
-};
-
-// Generate partners from experiences
-export const PARTNERS: Partner[] = [
-  ...new Set(EXPERIENCES.map(exp => exp.partner))
-].map((partnerName, index) => {
-  const partnerExps = EXPERIENCES.filter(exp => exp.partner === partnerName);
-  const allThemes = [...new Set(partnerExps.flatMap(exp => exp.themes))];
-  
-  return {
-    id: (index + 1).toString(),
-    name: partnerName,
-    slug: partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-    destination: partnerExps[0].destination,
-    themes: allThemes,
-    description: `Conservation partner working on ${allThemes.join(', ')} initiatives in Kenya.`,
-    image: DUMMY[0],
-    experienceCount: partnerExps.length
-  };
-});
-
 export type Experience = {
   id: string;
   title: string;
@@ -335,3 +305,44 @@ export const EXPERIENCES: Experience[] = [
     sourceUrl: "file://thumbnail_Opportunity Factory Brochure.jpg",
   },
 ];
+
+export type Partner = {
+  id: string;
+  name: string;
+  slug: string;
+  destination: Destination;
+  themes: Theme[];
+  description: string;
+  image: string;
+  logo: string;
+  location: string;
+  established: number;
+  activities: string[];
+  experienceCount: number;
+  experiences: Experience[];
+};
+
+// Generate partners from experiences
+export const PARTNERS: Partner[] = [
+  ...new Set(EXPERIENCES.map(exp => exp.partner))
+].map((partnerName, index) => {
+  const partnerExps = EXPERIENCES.filter(exp => exp.partner === partnerName);
+  const allThemes = [...new Set(partnerExps.flatMap(exp => exp.themes))];
+  const allActivities = [...new Set(partnerExps.flatMap(exp => exp.activities))];
+  
+  return {
+    id: (index + 1).toString(),
+    name: partnerName,
+    slug: partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    destination: partnerExps[0].destination,
+    themes: allThemes,
+    description: `Conservation partner working on ${allThemes.join(', ')} initiatives in Kenya.`,
+    image: DUMMY[0],
+    logo: DUMMY[0],
+    location: partnerExps[0].destination.replace(/-/g, ' '),
+    established: 2010 + index,
+    activities: allActivities,
+    experienceCount: partnerExps.length,
+    experiences: partnerExps
+  };
+});

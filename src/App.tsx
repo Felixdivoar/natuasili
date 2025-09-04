@@ -10,6 +10,7 @@ import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RootLayout from "@/layouts/RootLayout";
 import HeaderMega from "@/components/HeaderMega";
+import HeaderCompact from "@/components/HeaderCompact";
 import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
@@ -37,6 +38,8 @@ import NairobiDestination from "./pages/destination/Nairobi";
 import LaikipiaDestination from "./pages/destination/Laikipia";
 import Destinations from "./pages/Destinations";
 import ExperienceHub from "./pages/ExperienceHub";
+import Listings from "./pages/Listings";
+import ListingDetail from "./pages/ListingDetail";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -61,7 +64,7 @@ function ScrollToTop() {
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
-      <HeaderMega />
+      <HeaderCompact />
       <main className="flex-1">
         {children}
       </main>
@@ -115,6 +118,8 @@ const App = () => (
                 <Route path="/cookie-policy" element={<AppLayout><CookiePolicy /></AppLayout>} />
                 <Route path="/search" element={<AppLayout><Search /></AppLayout>} />
                 <Route path="/partner-entry" element={<AppLayout><PartnerEntry /></AppLayout>} />
+                <Route path="/listings" element={<AppLayout><Listings /></AppLayout>} />
+                <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
                 <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
               </Routes>
             </BrowserRouter>
