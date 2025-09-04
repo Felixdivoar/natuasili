@@ -58,8 +58,8 @@ export default function DestinationExperienceCarousel({ destination }: Destinati
   if (destinationExperiences.length === 0) return null;
 
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4">
+      <section className="py-16 bg-background">
+        <div className="max-w-[1150px] mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
             <Link 

@@ -1,1228 +1,1037 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Filter, Eye, ExternalLink, Calendar, DollarSign, MapPin, Camera, Download, TrendingUp, BarChart3, Users, TreePine, Heart } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { 
+  Search, 
+  Filter, 
+  Eye, 
+  ExternalLink, 
+  Calendar, 
+  DollarSign, 
+  MapPin, 
+  Camera, 
+  Download, 
+  TrendingUp, 
+  BarChart3, 
+  Users, 
+  TreePine, 
+  Heart,
+  ArrowUpRight,
+  ArrowDownRight,
+  Minus,
+  SortAsc,
+  SortDesc,
+  Info,
+  CheckCircle
+} from "lucide-react";
 import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from "recharts";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  PieChart, 
+  Pie, 
+  Cell, 
+  LineChart, 
+  Line, 
+  ResponsiveContainer,
+  Area,
+  AreaChart,
+  ReferenceLine,
+  Tooltip
+} from "recharts";
 import { Progress } from "@/components/ui/progress";
+
+interface ImpactEntry {
+  id: string;
+  booking_date: string;
+  experience_title: string;
+  project_name: string;
+  project_id: string;
+  theme: string;
+  allocation_amount: number;
+  currency: string;
+  status: string;
+  proof_images: string[];
+  proof_description: string;
+  verified_date: string;
+  participants: number;
+  impact_score: number;
+  location: string;
+}
+
+interface KPIMetric {
+  title: string;
+  value: string | number;
+  description: string;
+  trend: "up" | "down" | "neutral";
+  percentage?: number;
+}
+
 const ImpactLedger = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
   const [selectedTheme, setSelectedTheme] = useState("all");
-  const [activeTab, setActiveTab] = useState("entries");
-  const {
-    formatPrice
-  } = useCurrency();
+  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [sortField, setSortField] = useState<keyof ImpactEntry>("booking_date");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [isLoading, setIsLoading] = useState(false);
+  const [dateRange, setDateRange] = useState("all");
+  
+  const { formatPrice } = useCurrency();
+  const { toast } = useToast();
 
-  // Analytics data
-  const themeData = [{
-    name: 'Wildlife',
-    value: 45,
-    color: 'hsl(var(--wildlife))'
-  }, {
-    name: 'Habitat',
-    value: 30,
-    color: 'hsl(var(--habitat))'
-  }, {
-    name: 'Education',
-    value: 15,
-    color: 'hsl(var(--education))'
-  }, {
-    name: 'Livelihoods',
-    value: 10,
-    color: 'hsl(var(--livelihoods))'
-  }];
-  const geographicData = [{
-    region: 'Maasai Mara',
-    projects: 12,
-    funding: 250000
-  }, {
-    region: 'Laikipia',
-    projects: 8,
-    funding: 180000
-  }, {
-    region: 'Samburu',
-    projects: 6,
-    funding: 120000
-  }, {
-    region: 'Coast',
-    projects: 10,
-    funding: 200000
-  }, {
-    region: 'Nairobi',
-    projects: 5,
-    funding: 90000
-  }];
-  const monthlyImpact = [{
-    month: 'Jan',
-    wildlife: 12,
-    habitat: 8,
-    education: 5,
-    livelihoods: 3
-  }, {
-    month: 'Feb',
-    wildlife: 15,
-    habitat: 10,
-    education: 6,
-    livelihoods: 4
-  }, {
-    month: 'Mar',
-    wildlife: 18,
-    habitat: 12,
-    education: 8,
-    livelihoods: 5
-  }, {
-    month: 'Apr',
-    wildlife: 22,
-    habitat: 15,
-    education: 10,
-    livelihoods: 6
-  }, {
-    month: 'May',
-    wildlife: 25,
-    habitat: 18,
-    education: 12,
-    livelihoods: 8
-  }, {
-    month: 'Jun',
-    wildlife: 28,
-    habitat: 20,
-    education: 15,
-    livelihoods: 10
-  }];
-  const forecastData = [{
-    year: '2024',
-    projectedFunding: 2500000,
-    projectsLaunched: 85,
-    communitiesImpacted: 45,
-    wildlifeProtected: 15000,
-    habitatRestored: 2800,
-    confidence: 'High'
-  }, {
-    year: '2025',
-    projectedFunding: 3200000,
-    projectsLaunched: 110,
-    communitiesImpacted: 60,
-    wildlifeProtected: 20000,
-    habitatRestored: 3500,
-    confidence: 'Medium'
-  }, {
-    year: '2026',
-    projectedFunding: 4100000,
-    projectsLaunched: 140,
-    communitiesImpacted: 78,
-    wildlifeProtected: 26000,
-    habitatRestored: 4200,
-    confidence: 'Medium'
-  }];
-  const generateReport = (type: string) => {
-    if (type === 'monthly') {
-      const reportContent = `
-NATUASILI MONTHLY IMPACT REPORT
-Generated: ${new Date().toLocaleDateString()}
-
-EXECUTIVE SUMMARY
-This month, NatuAsili facilitated 156 conservation experiences across Kenya, directly supporting 12 community-led conservation projects and generating ${formatPrice(89500)} in conservation funding.
-
-KEY ACHIEVEMENTS
-• Wildlife Protection: 2,450 animals monitored and protected
-• Habitat Restoration: 340 hectares of forest and marine habitat restored  
-• Community Engagement: 1,200 local community members directly involved
-• Education Impact: 890 participants gained conservation knowledge
-• Economic Impact: ${formatPrice(67200)} distributed to local communities
-
-PROJECT HIGHLIGHTS
-1. Maasai Mara Wildlife Conservancy - 45 experiences completed
-   - Big Five tracking contributed to 3 new lion pride documentations
-   - ${formatPrice(15750)} generated for anti-poaching efforts
-
-2. Ol Pejeta Conservancy - 32 experiences completed
-   - Northern white rhino conservation program supported
-   - K-9 anti-poaching unit training expanded
-
-3. Coastal Forest Restoration - 28 experiences completed
-   - 450 mangrove seedlings planted by volunteers
-   - 15 hectares of coastal habitat protected
-
-CONSERVATION METRICS
-• Species Monitoring: 15 endangered species actively monitored
-• Anti-Poaching: 24/7 ranger patrols across 8,500 hectares
-• Research Impact: 12 scientific papers supported with field data
-• Technology Integration: GPS collaring, camera traps, drone surveys
-
-COMMUNITY IMPACT
-• Direct Employment: 89 local guides and rangers employed
-• Skill Development: 156 community members trained in conservation techniques
-• Women's Participation: 42% of program participants were women
-• Youth Engagement: 234 young people involved in conservation education
-
-FINANCIAL TRANSPARENCY
-Total Revenue: ${formatPrice(89500)}
-• Conservation Projects (85%): ${formatPrice(76075)}
-• Platform Operations (10%): ${formatPrice(8950)}
-• Marketing & Growth (5%): ${formatPrice(4475)}
-
-ENVIRONMENTAL IMPACT
-• Carbon Footprint: Net negative through forest restoration activities
-• Waste Reduction: 2.3 tonnes of marine debris removed
-• Water Conservation: 15,000 liters saved through efficiency programs
-• Renewable Energy: 67% of partner facilities using solar power
-
-CHALLENGES & OPPORTUNITIES
-• Seasonal booking fluctuations affecting consistent funding
-• Need for expanded ranger training programs
-• Opportunity to scale successful models to new regions
-• Technology upgrades required for better impact tracking
-
-UPCOMING INITIATIVES
-• Launch of youth conservation leadership program (July 2024)
-• Expansion into Northern Kenya conservancies (August 2024)
-• New marine conservation partnerships (September 2024)
-• Mobile app launch for real-time impact tracking (October 2024)
-
-TESTIMONIALS
-"The rhino conservation experience at Ol Pejeta changed my perspective on wildlife protection. Seeing the technology and dedication firsthand was incredible." - Sarah M., Conservation Traveler
-
-"Our community has benefited tremendously from the Samburu beadwork workshops. It's preserving our culture while providing sustainable income." - Mary L., Local Artisan
-
-For detailed metrics and additional information, visit our impact dashboard at natuasili.com/impact
-      `;
-      const blob = new Blob([reportContent], {
-        type: 'text/plain'
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `NatuAsili_Monthly_Impact_Report_${new Date().getMonth() + 1}_${new Date().getFullYear()}.txt`;
-      a.click();
-    } else if (type === 'partner') {
-      const reportContent = `
-NATUASILI PARTNER PERFORMANCE REPORT
-Generated: ${new Date().toLocaleDateString()}
-
-PARTNER ECOSYSTEM OVERVIEW
-NatuAsili currently supports 12 conservation partners across Kenya, from grassroots community organizations to established conservancies. This report analyzes partner performance across key impact areas.
-
-TOP PERFORMING PARTNERS
-
-1. OL PEJETA CONSERVANCY
-   Performance Score: 96/100
-   • Bookings Completed: 41 (Target: 35)
-   • Revenue Generated: ${formatPrice(156000)}
-   • Impact Metrics: Northern white rhino program, 2,400 hectares protected
-   • Guest Satisfaction: 4.9/5.0
-   • Innovation Score: Excellent (GPS tracking, drone monitoring)
-   
-2. MAASAI MARA WILDLIFE CONSERVANCY  
-   Performance Score: 92/100
-   • Bookings Completed: 45 (Target: 40)
-   • Revenue Generated: ${formatPrice(125000)}
-   • Impact Metrics: 15 lion prides monitored, anti-poaching expansion
-   • Guest Satisfaction: 4.8/5.0
-   • Community Integration: Excellent
-
-3. MARA ELEPHANT PROJECT
-   Performance Score: 89/100
-   • Bookings Completed: 35 (Target: 30)
-   • Revenue Generated: ${formatPrice(98000)}
-   • Impact Metrics: 450 elephants monitored, human-wildlife conflict reduction
-   • Research Contribution: High
-   • Technology Adoption: Advanced GPS collaring
-
-EMERGING PARTNERS
-
-RETETI ELEPHANT ORPHANAGE
-• Community Ownership Model: 100% community-owned
-• Rehabilitation Success: 12 orphaned elephants successfully released
-• Cultural Integration: Traditional Samburu practices incorporated
-• Growth Potential: High - expanding rehabilitation capacity
-
-GIRAFFE CENTRE
-• Education Impact: 890 students reached monthly
-• Breeding Program: 8 Rothschild giraffes born this year
-• Urban Conservation: Leading Nairobi conservation education
-• Visitor Engagement: Consistently high satisfaction scores
-
-AREAS FOR IMPROVEMENT
-
-COASTAL PARTNERS
-• Seasonal Variations: Need year-round programming
-• Marketing Support: Require enhanced digital presence  
-• Capacity Building: Training needed for advanced booking systems
-• Infrastructure: Basic facility upgrades recommended
-
-COMMUNITY-BASED ORGANIZATIONS
-• Financial Management: Training in bookkeeping and reporting
-• Quality Standards: Standardization of experience delivery
-• Safety Protocols: Enhanced safety training programs
-• Technology Integration: Digital literacy development
-
-PERFORMANCE METRICS BY CATEGORY
-
-CONSERVATION IMPACT
-• Wildlife Protection: 15,670 animals under active protection
-• Habitat Restoration: 2,840 hectares restored or protected
-• Research Support: 23 ongoing scientific studies
-• Anti-Poaching: 156 rangers deployed across partner sites
-
-COMMUNITY ENGAGEMENT  
-• Direct Employment: 234 community members employed
-• Skill Development: 456 people trained in new skills
-• Women's Participation: 38% leadership positions held by women
-• Youth Programs: 789 young people engaged
-
-FINANCIAL PERFORMANCE
-• Total Partner Revenue: ${formatPrice(892000)}
-• Average Revenue Per Partner: ${formatPrice(74333)}
-• Growth Rate: 23% year-over-year
-• Payment Efficiency: 96% on-time payments
-
-GUEST EXPERIENCE
-• Overall Satisfaction: 4.7/5.0
-• Repeat Bookings: 34% of guests book multiple experiences
-• Referral Rate: 67% of guests refer others
-• Safety Record: Zero major incidents reported
-
-RECOMMENDATIONS
-
-SHORT-TERM (1-3 months)
-• Implement standardized safety protocols across all partners
-• Launch partner training program for digital marketing
-• Establish monthly partner check-in meetings
-• Create shared resource library for best practices
-
-MEDIUM-TERM (3-6 months)  
-• Develop tiered partnership levels with performance incentives
-• Launch partner exchange program for knowledge sharing
-• Implement automated impact tracking systems
-• Expand micro-financing options for infrastructure improvements
-
-LONG-TERM (6-12 months)
-• Establish NatuAsili Conservation Excellence Awards
-• Create partner-led innovation grants program
-• Develop regional partner clusters for coordination
-• Launch international partnership expansion pilot
-
-PARTNER TESTIMONIALS
-"NatuAsili has transformed how we engage with conservation travelers. The platform gives us access to people who truly care about our mission." - Dr. Richard Vigne, Ol Pejeta Conservancy
-
-"The support from NatuAsili goes beyond bookings - they're helping us build sustainable conservation enterprises." - Mary Lengees, Reteti Elephant Orphanage
-
-Contact partnerships@natuasili.com for detailed partner-specific reports.
-      `;
-      const blob = new Blob([reportContent], {
-        type: 'text/plain'
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `NatuAsili_Partner_Performance_Report_${new Date().getFullYear()}.txt`;
-      a.click();
+  // Enhanced mock data with additional fields for interactive features
+  const mockLedgerEntries: ImpactEntry[] = [
+    {
+      id: "1",
+      booking_date: "2024-01-20",
+      experience_title: "Big Five Wildlife Tracking Experience",
+      project_name: "Maasai Mara Wildlife Conservancy",
+      project_id: "mara-wildlife-conservancy",
+      theme: "Wildlife",
+      allocation_amount: 26300,
+      currency: "KES",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Successfully tracked 3 lion prides and 2 elephant herds. Collected GPS data for 15 individual animals contributing to migration pattern research. Installed 2 new camera traps in strategic locations.",
+      verified_date: "2024-01-23",
+      participants: 4,
+      impact_score: 95,
+      location: "Masai Mara"
+    },
+    {
+      id: "2", 
+      booking_date: "2024-01-18",
+      experience_title: "Traditional Beadwork Workshop",
+      project_name: "Samburu Education Initiative",
+      project_id: "samburu-education",
+      theme: "Education",
+      allocation_amount: 9600,
+      currency: "KES",
+      status: "verified", 
+      proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Conducted 2-hour workshop with 8 local women artisans. Created 15 traditional beadwork pieces. All workshop materials purchased from local suppliers, supporting 3 additional families.",
+      verified_date: "2024-01-21",
+      participants: 8,
+      impact_score: 88,
+      location: "Samburu"
+    },
+    {
+      id: "3",
+      booking_date: "2024-01-16", 
+      experience_title: "Mangrove Restoration Volunteer Day",
+      project_name: "Coastal Forest Restoration",
+      project_id: "coastal-restoration",
+      theme: "Habitat",
+      allocation_amount: 6000,
+      currency: "KES",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Planted 45 mangrove seedlings in degraded coastal area. Removed 2.3 tons of marine debris. Trained 6 community members in mangrove cultivation techniques.",
+      verified_date: "2024-01-19",
+      participants: 6,
+      impact_score: 92,
+      location: "Coast"
+    },
+    {
+      id: "4",
+      booking_date: "2024-01-14",
+      experience_title: "Urban Bird Watching Safari", 
+      project_name: "Nature Kenya",
+      project_id: "nature-kenya",
+      theme: "Wildlife",
+      allocation_amount: 6800,
+      currency: "KES", 
+      status: "verified",
+      proof_images: ["/placeholder.svg"],
+      proof_description: "Documented 47 bird species in Nairobi Arboretum. Trained 3 local guides in bird identification. Contributed data to Kenya Bird Atlas project.",
+      verified_date: "2024-01-17",
+      participants: 12,
+      impact_score: 78,
+      location: "Nairobi"
+    },
+    {
+      id: "5",
+      booking_date: "2024-01-12",
+      experience_title: "Rhino Conservation & Technology Tour",
+      project_name: "Ol Pejeta Conservancy", 
+      project_id: "ol-pejeta",
+      theme: "Wildlife",
+      allocation_amount: 29000,
+      currency: "KES",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Monitored northern white rhinos Najin and Fatu. Updated GPS tracking systems for 12 black rhinos. Demonstrated anti-poaching technology to visitors.",
+      verified_date: "2024-01-15",
+      participants: 6,
+      impact_score: 98,
+      location: "Laikipia"
+    },
+    {
+      id: "6",
+      booking_date: "2024-01-10",
+      experience_title: "Meet Orphaned Elephants Experience",
+      project_name: "Reteti Elephant Orphanage",
+      project_id: "reteti-elephants", 
+      theme: "Wildlife",
+      allocation_amount: 14200,
+      currency: "KES",
+      status: "verified",
+      proof_images: ["/placeholder.svg", "/placeholder.svg"],
+      proof_description: "Fed and cared for 8 orphaned elephant calves. Prepared nutritional supplements. Supported 4 Samburu women keepers in daily elephant care routines.",
+      verified_date: "2024-01-13",
+      participants: 8,
+      impact_score: 94,
+      location: "Samburu"
     }
-  };
+  ];
 
-  // Mock ledger data - in real app this would come from API with all 12 partners
-  const mockLedgerEntries = [
-  // Maasai Mara Wildlife Conservancy
-  {
-    id: "1",
-    booking_date: "2024-01-20",
-    experience_title: "Big Five Wildlife Tracking Experience",
-    project_name: "Maasai Mara Wildlife Conservancy",
-    theme: "Wildlife",
-    allocation_amount: 263,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Successfully tracked 3 lion prides and 2 elephant herds. Collected GPS data for 15 individual animals contributing to migration pattern research. Installed 2 new camera traps in strategic locations.",
-    verified_date: "2024-01-23"
-  },
-  // Samburu Education Initiative  
-  {
-    id: "2",
-    booking_date: "2024-01-18",
-    experience_title: "Traditional Beadwork Workshop",
-    project_name: "Samburu Education Initiative",
-    theme: "Education",
-    allocation_amount: 96,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Conducted 2-hour workshop with 8 local women artisans. Created 15 traditional beadwork pieces. All workshop materials purchased from local suppliers, supporting 3 additional families.",
-    verified_date: "2024-01-21"
-  },
-  // Coastal Forest Restoration
-  {
-    id: "3",
-    booking_date: "2024-01-16",
-    experience_title: "Mangrove Restoration Volunteer Day",
-    project_name: "Coastal Forest Restoration",
-    theme: "Habitat",
-    allocation_amount: 60,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Planted 45 mangrove seedlings in degraded coastal area. Removed 2.3 tons of marine debris. Trained 6 community members in mangrove cultivation techniques.",
-    verified_date: "2024-01-19"
-  },
-  // Nature Kenya
-  {
-    id: "4",
-    booking_date: "2024-01-14",
-    experience_title: "Urban Bird Watching Safari",
-    project_name: "Nature Kenya",
-    theme: "Wildlife",
-    allocation_amount: 68,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg"],
-    proof_description: "Documented 47 bird species in Nairobi Arboretum. Trained 3 local guides in bird identification. Contributed data to Kenya Bird Atlas project.",
-    verified_date: "2024-01-17"
-  },
-  // Ol Pejeta Conservancy
-  {
-    id: "5",
-    booking_date: "2024-01-12",
-    experience_title: "Rhino Conservation & Technology Tour",
-    project_name: "Ol Pejeta Conservancy",
-    theme: "Wildlife",
-    allocation_amount: 290,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Monitored northern white rhinos Najin and Fatu. Updated GPS tracking systems for 12 black rhinos. Demonstrated anti-poaching technology to visitors.",
-    verified_date: "2024-01-15"
-  },
-  // Reteti Elephant Orphanage
-  {
-    id: "6",
-    booking_date: "2024-01-10",
-    experience_title: "Meet Orphaned Elephants Experience",
-    project_name: "Reteti Elephant Orphanage",
-    theme: "Wildlife",
-    allocation_amount: 142,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Fed and cared for 8 orphaned elephant calves. Prepared nutritional supplements. Supported 4 Samburu women keepers in daily elephant care routines.",
-    verified_date: "2024-01-13"
-  },
-  // Mara Elephant Project
-  {
-    id: "7",
-    booking_date: "2024-01-08",
-    experience_title: "Elephant Tracking & Research Experience",
-    project_name: "Mara Elephant Project",
-    theme: "Wildlife",
-    allocation_amount: 245,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg"],
-    proof_description: "Tracked 3 elephant families using GPS collars. Recorded behavioral data for conservation research. Conducted anti-poaching patrol covering 45km area.",
-    verified_date: "2024-01-11"
-  },
-  // Colobus Conservation
-  {
-    id: "8",
-    booking_date: "2024-01-06",
-    experience_title: "Colobus Monkey Conservation Experience",
-    project_name: "Colobus Conservation",
-    theme: "Wildlife",
-    allocation_amount: 89,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Rehabilitated 2 rescued colobus monkeys. Planted 25 indigenous trees in degraded coastal forest. Educated 15 community members about primate conservation.",
-    verified_date: "2024-01-09"
-  },
-  // Giraffe Centre
-  {
-    id: "9",
-    booking_date: "2024-01-04",
-    experience_title: "Giraffe Feeding & Conservation Education",
-    project_name: "Giraffe Centre",
-    theme: "Wildlife",
-    allocation_amount: 156,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Fed and monitored 14 Rothschild giraffes. Conducted conservation education for 35 school children. Supported breeding program documentation.",
-    verified_date: "2024-01-07"
-  },
-  // Friends of Karura Forest
-  {
-    id: "10",
-    booking_date: "2024-01-02",
-    experience_title: "Forest Conservation Tree Planting",
-    project_name: "Friends of Karura Forest",
-    theme: "Habitat",
-    allocation_amount: 78,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg"],
-    proof_description: "Planted 50 indigenous seedlings in degraded forest area. Cleared invasive species from 2 hectares. Trained 8 volunteers in forest restoration techniques.",
-    verified_date: "2024-01-05"
-  },
-  // Local Ocean Conservation
-  {
-    id: "11",
-    booking_date: "2023-12-30",
-    experience_title: "Marine Conservation Dive Experience",
-    project_name: "Local Ocean Conservation",
-    theme: "Habitat",
-    allocation_amount: 124,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg", "/placeholder.svg"],
-    proof_description: "Conducted coral reef health assessment. Removed 45kg of marine debris. Documented 28 fish species and 12 coral species in monitoring survey.",
-    verified_date: "2024-01-03"
-  },
-  // Friends of Nairobi National Park
-  {
-    id: "12",
-    booking_date: "2023-12-28",
-    experience_title: "National Park Cleanup & Wildlife Walk",
-    project_name: "Friends of Nairobi National Park",
-    theme: "Habitat",
-    allocation_amount: 95,
-    currency: "USD",
-    status: "verified",
-    proof_images: ["/placeholder.svg"],
-    proof_description: "Removed 180kg of litter from park trails. Led wildlife walk documenting 23 mammal species. Engaged 12 volunteers in park conservation activities.",
-    verified_date: "2024-01-01"
-  }];
-  const filteredEntries = mockLedgerEntries.filter(entry => {
-    const matchesSearch = entry.experience_title.toLowerCase().includes(searchTerm.toLowerCase()) || entry.project_name.toLowerCase().includes(searchTerm.toLowerCase()) || entry.proof_description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPartner = selectedPartner === "all" || entry.project_name === selectedPartner;
-    const matchesTheme = selectedTheme === "all" || entry.theme === selectedTheme;
-    return matchesSearch && matchesPartner && matchesTheme;
-  });
+  // Enhanced KPI calculations with meaningful outcome metrics
+  const kpiMetrics = useMemo((): KPIMetric[] => {
+    const totalImpact = mockLedgerEntries.reduce((sum, entry) => sum + entry.allocation_amount, 0);
+    const totalParticipants = mockLedgerEntries.reduce((sum, entry) => sum + entry.participants, 0);
+    const avgImpactScore = mockLedgerEntries.reduce((sum, entry) => sum + entry.impact_score, 0) / mockLedgerEntries.length;
+    const avgBookingValue = totalImpact / mockLedgerEntries.length;
+    const conservationPercentage = 90; // 90% goes to conservation
+    
+    return [
+      {
+        title: "Total Conservation Impact",
+        value: formatPrice(totalImpact),
+        description: "Direct funding allocated to verified conservation projects",
+        trend: "up",
+        percentage: 23
+      },
+      {
+        title: "Conservation Allocation Rate", 
+        value: `${conservationPercentage}%`,
+        description: "Percentage of revenue directly funding conservation efforts",
+        trend: "up",
+        percentage: 5
+      },
+      {
+        title: "Average Impact Effectiveness",
+        value: Math.round(avgImpactScore),
+        description: "Verified impact score based on measurable outcomes",
+        trend: "up", 
+        percentage: 12
+      },
+      {
+        title: "Community Members Engaged",
+        value: totalParticipants,
+        description: "Local participants directly involved in conservation activities",
+        trend: "up",
+        percentage: 34
+      },
+      {
+        title: "Average Project Value", 
+        value: formatPrice(avgBookingValue),
+        description: "Mean funding per conservation experience",
+        trend: "neutral"
+      },
+      {
+        title: "Verification Rate",
+        value: "95%", 
+        description: "Impact entries verified with proof within 30 days",
+        trend: "up",
+        percentage: 8
+      }
+    ];
+  }, [mockLedgerEntries, formatPrice]);
+
+  // Enhanced filtering with multiple criteria
+  const filteredEntries = useMemo(() => {
+    return mockLedgerEntries.filter(entry => {
+      const matchesSearch = 
+        entry.experience_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        entry.project_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        entry.proof_description.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesPartner = selectedPartner === "all" || entry.project_name === selectedPartner;
+      const matchesTheme = selectedTheme === "all" || entry.theme === selectedTheme;
+      const matchesLocation = selectedLocation === "all" || entry.location === selectedLocation;
+      
+      // Date range filtering
+      let matchesDate = true;
+      if (dateRange !== "all") {
+        const entryDate = new Date(entry.booking_date);
+        const now = new Date();
+        
+        switch (dateRange) {
+          case "30d":
+            matchesDate = (now.getTime() - entryDate.getTime()) <= 30 * 24 * 60 * 60 * 1000;
+            break;
+          case "90d":
+            matchesDate = (now.getTime() - entryDate.getTime()) <= 90 * 24 * 60 * 60 * 1000;
+            break;
+          case "1y":
+            matchesDate = (now.getTime() - entryDate.getTime()) <= 365 * 24 * 60 * 60 * 1000;
+            break;
+        }
+      }
+      
+      return matchesSearch && matchesPartner && matchesTheme && matchesLocation && matchesDate;
+    });
+  }, [mockLedgerEntries, searchTerm, selectedPartner, selectedTheme, selectedLocation, dateRange]);
+
+  // Enhanced sorting
+  const sortedEntries = useMemo(() => {
+    return [...filteredEntries].sort((a, b) => {
+      const aValue = a[sortField];
+      const bValue = b[sortField];
+      
+      let comparison = 0;
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        comparison = aValue.localeCompare(bValue);
+      } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+        comparison = aValue - bValue;
+      }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+  }, [filteredEntries, sortField, sortDirection]);
+
+  // Chart data processing
+  const chartData = useMemo(() => {
+    const themeData = filteredEntries.reduce((acc, entry) => {
+      acc[entry.theme] = (acc[entry.theme] || 0) + entry.allocation_amount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const locationData = filteredEntries.reduce((acc, entry) => {
+      acc[entry.location] = (acc[entry.location] || 0) + entry.allocation_amount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const monthlyData = filteredEntries.reduce((acc, entry) => {
+      const month = new Date(entry.booking_date).toLocaleDateString('en-US', { month: 'short' });
+      acc[month] = (acc[month] || 0) + entry.allocation_amount;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return {
+      themes: Object.entries(themeData).map(([name, value]) => ({ name, value, fill: getThemeColor(name) })),
+      locations: Object.entries(locationData).map(([name, value]) => ({ name, value })),
+      monthly: Object.entries(monthlyData).map(([month, amount]) => ({ month, amount }))
+    };
+  }, [filteredEntries]);
+
   const getThemeColor = (theme: string) => {
+    const colors = {
+      'Wildlife': 'hsl(var(--wildlife))',
+      'Habitat': 'hsl(var(--habitat))',
+      'Education': 'hsl(var(--education))',
+      'Livelihoods': 'hsl(var(--livelihoods))'
+    };
+    return colors[theme as keyof typeof colors] || 'hsl(var(--muted))';
+  };
+
+  const getThemeBadgeStyle = (theme: string) => {
     switch (theme) {
-      case 'Wildlife':
-        return 'bg-wildlife/10 text-wildlife border-wildlife/20';
-      case 'Livelihoods':
-        return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
-      case 'Education':
-        return 'bg-education/10 text-education border-education/20';
-      case 'Habitat':
-        return 'bg-habitat/10 text-habitat border-habitat/20';
-      default:
-        return 'bg-muted text-muted-foreground';
+      case 'Wildlife': return 'bg-wildlife/10 text-wildlife border-wildlife/20';
+      case 'Habitat': return 'bg-habitat/10 text-habitat border-habitat/20';
+      case 'Education': return 'bg-education/10 text-education border-education/20';
+      case 'Livelihoods': return 'bg-livelihoods/10 text-livelihoods border-livelihoods/20';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
-  const totalImpact = filteredEntries.reduce((sum, entry) => sum + entry.allocation_amount, 0);
-  return <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="bg-primary/5 py-16 section">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Impact transparency ledger</h1>
+
+  const handleSort = (field: keyof ImpactEntry) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  const exportToCSV = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const headers = [
+        'Date',
+        'Experience',
+        'Partner',
+        'Theme', 
+        'Location',
+        'Amount (KES)',
+        'Participants',
+        'Impact Score',
+        'Status',
+        'Verified Date'
+      ];
+      
+      const csvData = sortedEntries.map(entry => [
+        entry.booking_date,
+        entry.experience_title,
+        entry.project_name,
+        entry.theme,
+        entry.location,
+        entry.allocation_amount.toString(),
+        entry.participants.toString(),
+        entry.impact_score.toString(),
+        entry.status,
+        entry.verified_date
+      ]);
+      
+      const csvContent = [headers, ...csvData]
+        .map(row => row.map(field => `"${field}"`).join(','))
+        .join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `natuasili-impact-ledger-${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast({
+        title: "Export Successful",
+        description: `Downloaded ${sortedEntries.length} entries as CSV`,
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Unable to export data. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [sortedEntries, toast]);
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSelectedPartner("all");
+    setSelectedTheme("all");
+    setSelectedLocation("all");
+    setDateRange("all");
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Enhanced Hero Section with KPIs */}
+      <section className="bg-gradient-to-r from-primary/5 via-conservation/5 to-accent/5 py-16" role="banner">
+        <div className="max-w-[1150px] mx-auto px-4">
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Conservation Impact Transparency
+            </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Every dollar tracked. Every impact verified. See exactly how traveler contributions 
-              are creating real conservation outcomes across Kenya.
+              Every dollar tracked. Every impact verified. Real-time transparency into conservation outcomes across Kenya's leading projects.
             </p>
-            <div className="flex flex-wrap justify-center gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold text-primary">{formatPrice(totalImpact)}</div>
-                <div className="text-sm text-muted-foreground">Total Verified Impact</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary">{filteredEntries.length}</div>
-                <div className="text-sm text-muted-foreground">Verified Entries</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary">3</div>
-                <div className="text-sm text-muted-foreground">Active Partners</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary">95%</div>
-                <div className="text-sm text-muted-foreground">Allocation Transparency</div>
-              </div>
-            </div>
+          </div>
+          
+          {/* KPI Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {kpiMetrics.map((metric, index) => (
+              <Card key={index} className="hover:shadow-lg transition-shadow">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-sm font-medium text-muted-foreground">
+                      {metric.title}
+                    </CardTitle>
+                    <div className="flex items-center gap-1">
+                      {metric.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-500" />}
+                      {metric.trend === 'down' && <ArrowDownRight className="h-4 w-4 text-red-500" />}
+                      {metric.trend === 'neutral' && <Minus className="h-4 w-4 text-muted-foreground" />}
+                      {metric.percentage && (
+                        <span className={`text-xs ${metric.trend === 'up' ? 'text-green-500' : metric.trend === 'down' ? 'text-red-500' : 'text-muted-foreground'}`}>
+                          {metric.percentage}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-foreground mb-2">
+                    {metric.value}
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {metric.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="py-8 border-b">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="relative">
+      {/* Enhanced Filters with Multi-Select */}
+      <section className="py-8 border-b bg-background/50" role="search">
+        <div className="max-w-[1150px] mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+            <div className="relative lg:col-span-2">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search experiences, partners..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+              <Input 
+                placeholder="Search experiences, partners, descriptions..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+                aria-label="Search impact entries"
+              />
             </div>
             
             <Select value={selectedPartner} onValueChange={setSelectedPartner}>
-              <SelectTrigger>
+              <SelectTrigger aria-label="Filter by partner">
                 <SelectValue placeholder="All Partners" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Partners</SelectItem>
-                {mockProjects.map(project => <SelectItem key={project.id} value={project.name}>
-                    {project.name}
-                  </SelectItem>)}
+                {Array.from(new Set(mockLedgerEntries.map(entry => entry.project_name))).map(partner => (
+                  <SelectItem key={partner} value={partner}>{partner}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
 
             <Select value={selectedTheme} onValueChange={setSelectedTheme}>
-              <SelectTrigger>
+              <SelectTrigger aria-label="Filter by theme">
                 <SelectValue placeholder="All Themes" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Themes</SelectItem>
                 <SelectItem value="Wildlife">Wildlife</SelectItem>
-                <SelectItem value="Livelihoods">Livelihoods</SelectItem>
-                <SelectItem value="Education">Education</SelectItem>
                 <SelectItem value="Habitat">Habitat</SelectItem>
+                <SelectItem value="Education">Education</SelectItem>
+                <SelectItem value="Livelihoods">Livelihoods</SelectItem>
               </SelectContent>
             </Select>
 
-            <Button variant="outline" className="gap-2">
-              <Filter className="h-4 w-4" />
-              Date Range
-            </Button>
+            <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+              <SelectTrigger aria-label="Filter by location">
+                <SelectValue placeholder="All Locations" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Locations</SelectItem>
+                {Array.from(new Set(mockLedgerEntries.map(entry => entry.location))).map(location => (
+                  <SelectItem key={location} value={location}>{location}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={dateRange} onValueChange={setDateRange}>
+              <SelectTrigger aria-label="Filter by date range">
+                <SelectValue placeholder="All Time" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Time</SelectItem>
+                <SelectItem value="30d">Last 30 days</SelectItem>
+                <SelectItem value="90d">Last 3 months</SelectItem>
+                <SelectItem value="1y">Last year</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
+          
+          {(searchTerm || selectedPartner !== "all" || selectedTheme !== "all" || selectedLocation !== "all" || dateRange !== "all") && (
+            <div className="flex items-center justify-between mt-4">
+              <p className="text-sm text-muted-foreground">
+                Showing {filteredEntries.length} of {mockLedgerEntries.length} entries
+              </p>
+              <Button variant="outline" size="sm" onClick={clearFilters}>
+                Clear all filters
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Tabs for different views */}
+      {/* Main Content Tabs */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
+        <div className="max-w-[1150px] mx-auto px-4">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold text-foreground">Impact dashboard</h2>
-              <Button variant="outline" className="gap-2">
-                <ExternalLink className="h-4 w-4" />
+              <TabsList className="grid w-full max-w-md grid-cols-4">
+                <TabsTrigger value="dashboard" aria-label="Dashboard view">Dashboard</TabsTrigger>
+                <TabsTrigger value="entries" aria-label="Entries table">Entries</TabsTrigger>
+                <TabsTrigger value="analytics" aria-label="Analytics charts">Analytics</TabsTrigger>
+                <TabsTrigger value="stories" aria-label="Impact stories">Stories</TabsTrigger>
+              </TabsList>
+              
+              <Button 
+                variant="outline" 
+                className="gap-2"
+                onClick={exportToCSV}
+                disabled={isLoading}
+                aria-label="Export data to CSV"
+              >
+                {isLoading ? (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                ) : (
+                  <Download className="h-4 w-4" />
+                )}
                 Export Data
               </Button>
             </div>
-            
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="entries">Impact entries</TabsTrigger>
-              <TabsTrigger value="reports">Reports</TabsTrigger>
-              <TabsTrigger value="analytics">Analytics</TabsTrigger>
-              <TabsTrigger value="forecasts">Forecasts</TabsTrigger>
-            </TabsList>
 
-            <TabsContent value="entries" className="mt-8">
-
-          <div className="space-y-6">
-            {filteredEntries.map(entry => <Card key={entry.id} className="overflow-hidden">
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* Main Info */}
-                    <div className="lg:col-span-2">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-lg font-semibold text-foreground mb-2">
-                            {entry.experience_title}
-                          </h3>
-                           <p className="text-muted-foreground">
-                             by <Link to={`/projects/${entry.project_name === 'Maasai Mara Wildlife Conservancy' ? '1' : entry.project_name === 'Samburu Education Initiative' ? '2' : '3'}`} className="hover:text-primary underline">
-                               {entry.project_name}
-                             </Link>
-                           </p>
-                        </div>
-                        <div className="flex gap-2">
-                          <Badge className={getThemeColor(entry.theme)}>
-                            {entry.theme}
-                          </Badge>
-                          <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
-                            Verified
-                          </Badge>
-                        </div>
-                      </div>
-
-                      <p className="text-muted-foreground mb-4 leading-relaxed">
-                        {entry.proof_description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          Booked: {new Date(entry.booking_date).toLocaleDateString()}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Eye className="h-4 w-4" />
-                          Verified: {new Date(entry.verified_date).toLocaleDateString()}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Amount */}
-                    <div className="flex flex-col justify-center">
-                      <div className="text-center p-4 bg-primary/5 rounded-lg">
-                        <div className="text-2xl font-bold text-primary">
-                          {formatPrice(entry.allocation_amount)}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          Impact Allocation
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Proof Images */}
-                    <div>
-                      <div className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
-                        <Camera className="h-4 w-4" />
-                        Impact Proof ({entry.proof_images.length})
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        {entry.proof_images.slice(0, 4).map((image, index) => <div key={index} className="aspect-square bg-muted rounded-lg overflow-hidden">
-                            <img src={image} alt={`Impact proof ${index + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer" />
-                          </div>)}
-                      </div>
-                      {entry.proof_images.length > 4 && <Button variant="outline" size="sm" className="w-full mt-2">
-                          View All ({entry.proof_images.length})
-                        </Button>}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>)}
-          </div>
-
-          {filteredEntries.length === 0 && <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg mb-4">
-                No verified impact entries found matching your criteria.
-              </p>
-              <Button variant="outline" onClick={() => {
-                setSearchTerm("");
-                setSelectedPartner("all");
-                setSelectedTheme("all");
-              }}>
-                Clear Filters
-              </Button>
-            </div>}
-            </TabsContent>
-
-            <TabsContent value="reports" className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Download className="h-5 w-5" />
-                      Monthly Impact Report
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">Comprehensive monthly breakdown of conservation impact across all partners.</p>
-                    <div className="space-y-2">
-                      <Button size="sm" className="w-full" onClick={() => generateReport('monthly')}>
-                        <Download className="h-4 w-4 mr-2" />
-                        Download detailed report
-                      </Button>
-                      <div className="text-xs text-muted-foreground">
-                        Last updated: {new Date().toLocaleDateString()}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <BarChart3 className="h-5 w-5" />
-                      Partner Performance
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">Detailed analysis of each partner's conservation outcomes and efficiency.</p>
-                    <div className="space-y-2">
-                      <Button size="sm" className="w-full" onClick={() => generateReport('partner')}>
-                        <Download className="h-4 w-4 mr-2" />
-                        Download detailed report
-                      </Button>
-                      <div className="text-xs text-muted-foreground">
-                        Quarterly assessment data
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <TrendingUp className="h-5 w-5" />
-                      Impact Forecasting
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">Predictive analysis of conservation impact based on current trends.</p>
-                    <div className="space-y-2">
-                    <Button variant="default" size="sm" onClick={() => setActiveTab("forecasts")} className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                      View forecast
-                    </Button>
-                      <div className="text-xs text-muted-foreground">
-                        Next 12 months projection
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="md:col-span-2 lg:col-span-3">
-                  <CardHeader>
-                    <CardTitle>Recent Report Highlights</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="text-center p-4 bg-primary/5 rounded-lg">
-                        <div className="text-2xl font-bold text-primary">342</div>
-                        <div className="text-sm text-muted-foreground">Wildlife Protected This Month</div>
-                      </div>
-                      <div className="text-center p-4 bg-conservation/5 rounded-lg">
-                        <div className="text-2xl font-bold text-conservation">87</div>
-                        <div className="text-sm text-muted-foreground">Community Members Trained</div>
-                      </div>
-                      <div className="text-center p-4 bg-accent/5 rounded-lg">
-                        <div className="text-2xl font-bold text-accent">156 ha</div>
-                        <div className="text-sm text-muted-foreground">Habitat Restored</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="analytics" className="mt-8">
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Total Impact</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-primary">{formatPrice(647000)}</div>
-                      <p className="text-sm text-muted-foreground">Verified impact funding</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Active Projects</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-accent">189</div>
-                      <p className="text-sm text-muted-foreground">Conservation experiences</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Partner Organizations</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-conservation">8</div>
-                      <p className="text-sm text-muted-foreground">Verified partners</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Transparency Rate</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-primary">95%</div>
-                      <p className="text-sm text-muted-foreground">Impact verification</p>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Impact by Theme</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ChartContainer config={{
-                      wildlife: {
-                        label: "Wildlife Protection",
-                        color: "hsl(var(--wildlife))"
-                      },
-                      livelihoods: {
-                        label: "Community Livelihoods",
-                        color: "hsl(var(--livelihoods))"
-                      },
-                      habitat: {
-                        label: "Habitat Restoration",
-                        color: "hsl(var(--habitat))"
-                      },
-                      education: {
-                        label: "Education",
-                        color: "hsl(var(--education))"
-                      }
-                    }} className="h-[200px]">
-                        <PieChart>
-                          <ChartTooltip content={<ChartTooltipContent />} />
-                          <Pie data={[{
-                          name: "Wildlife Protection",
-                          value: 650,
-                          fill: "hsl(var(--wildlife))"
-                        }, {
-                          name: "Community Livelihoods",
-                          value: 420,
-                          fill: "hsl(var(--livelihoods))"
-                        }, {
-                          name: "Habitat Restoration",
-                          value: 380,
-                          fill: "hsl(var(--habitat))"
-                        }, {
-                          name: "Education",
-                          value: 285,
-                          fill: "hsl(var(--education))"
-                        }]} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({
-                          name,
-                          percent
-                        }) => `${name}: ${(percent * 100).toFixed(0)}%`} />
-                        </PieChart>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Geographic Distribution</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ChartContainer config={{
-                      mara: {
-                        label: "Maasai Mara",
-                        color: "hsl(142 71% 45%)"
-                      },
-                      samburu: {
-                        label: "Samburu",
-                        color: "hsl(142 71% 35%)"
-                      },
-                      coast: {
-                        label: "Coastal Areas",
-                        color: "hsl(142 71% 55%)"
-                      },
-                      laikipia: {
-                        label: "Laikipia",
-                        color: "hsl(142 71% 65%)"
-                      }
-                    }} className="h-[200px]">
-                        <PieChart>
-                          <ChartTooltip content={<ChartTooltipContent />} />
-                          <Pie data={[{
-                          name: "Maasai Mara",
-                          value: 35,
-                          fill: "hsl(142 71% 45%)"
-                        }, {
-                          name: "Samburu",
-                          value: 28,
-                          fill: "hsl(142 71% 35%)"
-                        }, {
-                          name: "Coastal Areas",
-                          value: 22,
-                          fill: "hsl(142 71% 55%)"
-                        }, {
-                          name: "Laikipia",
-                          value: 15,
-                          fill: "hsl(142 71% 65%)"
-                        }]} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({
-                          name,
-                          percent
-                        }) => `${name}: ${(percent * 100).toFixed(0)}%`} />
-                        </PieChart>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Top Performing Partners</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Maasai Mara Conservancy</span>
-                          <span className="text-sm font-semibold text-primary">{formatPrice(156000)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Ol Pejeta Conservancy</span>
-                          <span className="text-sm font-semibold text-primary">{formatPrice(134000)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Reteti Elephant Sanctuary</span>
-                          <span className="text-sm font-semibold text-primary">{formatPrice(98000)}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Revenue Distribution</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">To Conservation (90%)</span>
-                          <span className="text-sm font-semibold text-primary">{formatPrice(647000)}</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Platform Fee (10%)</span>
-                          <span className="text-sm font-semibold text-muted-foreground">{formatPrice(72000)}</span>
-                        </div>
-                        <div className="border-t pt-2 flex justify-between items-center font-semibold">
-                          <span className="text-sm">Total Revenue</span>
-                          <span className="text-sm">{formatPrice(719000)}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Impact Metrics</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-primary">95%</div>
-                          <p className="text-xs text-muted-foreground">Impact verified within 30 days</p>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-accent">4.9</div>
-                          <p className="text-xs text-muted-foreground">Average partner rating</p>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-conservation">24</div>
-                          <p className="text-xs text-muted-foreground">Days average verification time</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="forecasts" className="mt-8">
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Next 6 Months</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-primary">{formatPrice(420000)}</div>
-                      <p className="text-sm text-muted-foreground">Projected impact allocation</p>
-                      <div className="text-xs text-green-600 mt-1">↗ +15% vs previous period</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">New Partners</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-accent">12</div>
-                      <p className="text-sm text-muted-foreground">Projected onboarding</p>
-                      <div className="text-xs text-green-600 mt-1">↗ +50% growth target</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Experiences</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-conservation">285</div>
-                      <p className="text-sm text-muted-foreground">Total projected offerings</p>
-                      <div className="text-xs text-green-600 mt-1">↗ +51% expansion</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Traveler Growth</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold text-primary">3,200</div>
-                      <p className="text-sm text-muted-foreground">Projected bookings</p>
-                      <div className="text-xs text-green-600 mt-1">↗ +35% increase</div>
-                    </CardContent>
-                  </Card>
-                </div>
-
+            {/* Enhanced Dashboard Tab */}
+            <TabsContent value="dashboard" className="mt-8" role="tabpanel">
+              <div className="space-y-8">
+                {/* Interactive Charts Row */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Impact Growth Scenarios</CardTitle>
+                      <CardTitle className="flex items-center gap-2">
+                        <BarChart3 className="h-5 w-5" />
+                        Impact by Theme
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-4">
-                        <div className="p-4 border rounded-lg">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-semibold text-green-600">Conservative (75%)</span>
-                            <span className="text-sm text-muted-foreground">Low growth</span>
-                          </div>
-                          <div className="text-lg font-bold">{formatPrice(380000)}</div>
-                          <p className="text-xs text-muted-foreground">12-month impact projection</p>
-                        </div>
-                        
-                        <div className="p-4 border rounded-lg bg-primary/5">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-semibold text-primary">Expected (90%)</span>
-                            <span className="text-sm text-muted-foreground">Target growth</span>
-                          </div>
-                          <div className="text-lg font-bold">{formatPrice(520000)}</div>
-                          <p className="text-xs text-muted-foreground">12-month impact projection</p>
-                        </div>
-                        
-                        <div className="p-4 border rounded-lg">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="font-semibold text-accent">Optimistic (95%)</span>
-                            <span className="text-sm text-muted-foreground">High growth</span>
-                          </div>
-                          <div className="text-lg font-bold">{formatPrice(680000)}</div>
-                          <p className="text-xs text-muted-foreground">12-month impact projection</p>
-                        </div>
-                      </div>
+                      <ChartContainer
+                        config={{
+                          Wildlife: { label: "Wildlife Protection", color: "hsl(var(--wildlife))" },
+                          Habitat: { label: "Habitat Restoration", color: "hsl(var(--habitat))" },
+                          Education: { label: "Education", color: "hsl(var(--education))" },
+                          Livelihoods: { label: "Community Livelihoods", color: "hsl(var(--livelihoods))" }
+                        }}
+                        className="h-[300px]"
+                      >
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart data={chartData.themes}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis tickFormatter={(value) => formatPrice(value)} />
+                            <ChartTooltip
+                              content={({ active, payload }) => {
+                                if (active && payload && payload[0]) {
+                                  return (
+                                    <div className="bg-background p-3 border rounded-lg shadow-lg">
+                                      <p className="font-medium">{payload[0].payload.name}</p>
+                                      <p className="text-primary">{formatPrice(payload[0].value as number)}</p>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Bar dataKey="value" fill="currentColor" radius={[4, 4, 0, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </ChartContainer>
                     </CardContent>
                   </Card>
 
                   <Card>
                     <CardHeader>
-                      <CardTitle>Seasonal Trends & Risk Analysis</CardTitle>
+                      <CardTitle className="flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5" />
+                        Monthly Impact Trend
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="font-medium text-sm mb-2">Seasonal Patterns</h4>
-                          <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm">Peak (Jul-Sep)</span>
-                              <span className="text-sm font-semibold text-primary">+45%</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm">High (Dec-Mar)</span>
-                              <span className="text-sm font-semibold text-accent">+35%</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-sm mb-2">Risk Factors</h4>
-                          <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm">Climate variations</span>
-                              <Badge variant="outline" className="text-xs bg-red-50 text-red-700 border-red-200">High</Badge>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm">Economic conditions</span>
-                              <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200">Medium</Badge>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <ChartContainer
+                        config={{
+                          amount: { label: "Impact Amount", color: "hsl(var(--primary))" }
+                        }}
+                        className="h-[300px]"
+                      >
+                        <ResponsiveContainer width="100%" height="100%">
+                          <AreaChart data={chartData.monthly}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="month" />
+                            <YAxis tickFormatter={(value) => formatPrice(value)} />
+                            <ChartTooltip
+                              content={({ active, payload }) => {
+                                if (active && payload && payload[0]) {
+                                  return (
+                                    <div className="bg-background p-3 border rounded-lg shadow-lg">
+                                      <p className="font-medium">{payload[0].payload.month}</p>
+                                      <p className="text-primary">{formatPrice(payload[0].value as number)}</p>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Area 
+                              type="monotone" 
+                              dataKey="amount" 
+                              stroke="hsl(var(--primary))" 
+                              fill="hsl(var(--primary))" 
+                              fillOpacity={0.2}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      </ChartContainer>
                     </CardContent>
                   </Card>
                 </div>
 
+                {/* Top Partners with Impact Journey */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Growth Opportunities & Strategic Initiatives</CardTitle>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5" />
+                      Top Performing Partners
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div>
-                        <h4 className="font-medium text-sm mb-3">New Destinations</h4>
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                          <div>Mount Kenya Region</div>
-                          <div>Turkana County</div>
-                          <div>Tsavo Ecosystem</div>
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-sm mb-3">Partnership Expansion</h4>
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                          <div>Corporate ESG programs</div>
-                          <div>International NGOs</div>
-                          <div>Regional expansion (Tanzania, Uganda)</div>
-                        </div>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-sm mb-3">Innovation</h4>
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                          <div>Virtual conservation experiences</div>
-                          <div>Carbon offset marketplace</div>
-                          <div>Impact NFT certificates</div>
-                        </div>
-                      </div>
+                    <div className="space-y-4">
+                      {Array.from(new Set(sortedEntries.map(e => e.project_name))).slice(0, 5).map((partnerName) => {
+                        const partnerEntries = sortedEntries.filter(e => e.project_name === partnerName);
+                        const totalAmount = partnerEntries.reduce((sum, e) => sum + e.allocation_amount, 0);
+                        const avgScore = partnerEntries.reduce((sum, e) => sum + e.impact_score, 0) / partnerEntries.length;
+                        const totalParticipants = partnerEntries.reduce((sum, e) => sum + e.participants, 0);
+                        
+                        return (
+                          <div key={partnerName} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div className="flex items-center justify-between mb-3">
+                              <Link 
+                                to={`/partners/${partnerEntries[0].project_id}`}
+                                className="font-medium hover:text-primary transition-colors"
+                              >
+                                {partnerName}
+                              </Link>
+                              <Badge className="bg-primary/10 text-primary border-primary/20">
+                                Score: {Math.round(avgScore)}
+                              </Badge>
+                            </div>
+                            <div className="grid grid-cols-3 gap-4 text-sm">
+                              <div>
+                                <p className="text-muted-foreground">Total Impact</p>
+                                <p className="font-semibold text-primary">{formatPrice(totalAmount)}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Experiences</p>
+                                <p className="font-semibold">{partnerEntries.length}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Participants</p>
+                                <p className="font-semibold">{totalParticipants}</p>
+                              </div>
+                            </div>
+                            <Progress value={(avgScore / 100) * 100} className="mt-3" />
+                          </div>
+                        );
+                      })}
                     </div>
                   </CardContent>
                 </Card>
+              </div>
+            </TabsContent>
+
+            {/* Enhanced Entries Tab with Sortable Table */}
+            <TabsContent value="entries" className="mt-8" role="tabpanel">
+              {filteredEntries.length === 0 ? (
+                <div className="text-center py-12">
+                  <TreePine className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-medium mb-2">No entries found</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Try adjusting your search criteria or filters.
+                  </p>
+                  <Button variant="outline" onClick={clearFilters}>
+                    Clear all filters
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block border rounded-lg overflow-hidden">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead 
+                            className="cursor-pointer hover:bg-muted/50"
+                            onClick={() => handleSort('booking_date')}
+                          >
+                            <div className="flex items-center gap-1">
+                              Date
+                              {sortField === 'booking_date' && (
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                              )}
+                            </div>
+                          </TableHead>
+                          <TableHead 
+                            className="cursor-pointer hover:bg-muted/50"
+                            onClick={() => handleSort('experience_title')}
+                          >
+                            <div className="flex items-center gap-1">
+                              Experience
+                              {sortField === 'experience_title' && (
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                              )}
+                            </div>
+                          </TableHead>
+                          <TableHead 
+                            className="cursor-pointer hover:bg-muted/50"
+                            onClick={() => handleSort('project_name')}
+                          >
+                            <div className="flex items-center gap-1">
+                              Partner
+                              {sortField === 'project_name' && (
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                              )}
+                            </div>
+                          </TableHead>
+                          <TableHead>Theme</TableHead>
+                          <TableHead 
+                            className="cursor-pointer hover:bg-muted/50"
+                            onClick={() => handleSort('allocation_amount')}
+                          >
+                            <div className="flex items-center gap-1">
+                              Impact Amount
+                              {sortField === 'allocation_amount' && (
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                              )}
+                            </div>
+                          </TableHead>
+                          <TableHead 
+                            className="cursor-pointer hover:bg-muted/50"
+                            onClick={() => handleSort('impact_score')}
+                          >
+                            <div className="flex items-center gap-1">
+                              Score
+                              {sortField === 'impact_score' && (
+                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                              )}
+                            </div>
+                          </TableHead>
+                          <TableHead>Status</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {sortedEntries.map((entry) => (
+                          <TableRow key={entry.id} className="hover:bg-muted/50">
+                            <TableCell>
+                              {new Date(entry.booking_date).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                              <div className="max-w-xs">
+                                <p className="font-medium truncate">{entry.experience_title}</p>
+                                <p className="text-xs text-muted-foreground">{entry.participants} participants</p>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Link 
+                                to={`/partners/${entry.project_id}`}
+                                className="text-primary hover:underline"
+                              >
+                                {entry.project_name}
+                              </Link>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={getThemeBadgeStyle(entry.theme)}>
+                                {entry.theme}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <span className="font-medium text-primary">
+                                {formatPrice(entry.allocation_amount)}
+                              </span>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium">{entry.impact_score}</span>
+                                <div className="w-16">
+                                  <Progress value={entry.impact_score} className="h-2" />
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge className="bg-green-50 text-green-700 border-green-200">
+                                <CheckCircle className="h-3 w-3 mr-1" />
+                                Verified
+                              </Badge>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {/* Mobile Card View */}
+                  <div className="md:hidden space-y-4">
+                    {sortedEntries.map((entry) => (
+                      <Card key={entry.id}>
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-medium text-sm leading-tight mb-1">
+                                {entry.experience_title}
+                              </h3>
+                              <Link 
+                                to={`/partners/${entry.project_id}`}
+                                className="text-xs text-primary hover:underline"
+                              >
+                                {entry.project_name}
+                              </Link>
+                            </div>
+                            <Badge className={getThemeBadgeStyle(entry.theme)}>
+                              {entry.theme}
+                            </Badge>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <p className="text-muted-foreground text-xs">Impact Amount</p>
+                              <p className="font-medium text-primary">{formatPrice(entry.allocation_amount)}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-xs">Impact Score</p>
+                              <p className="font-medium">{entry.impact_score}/100</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-xs">Participants</p>
+                              <p className="font-medium">{entry.participants}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground text-xs">Date</p>
+                              <p className="font-medium">{new Date(entry.booking_date).toLocaleDateString()}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </>
+              )}
+            </TabsContent>
+
+            {/* Enhanced Analytics Tab */}
+            <TabsContent value="analytics" className="mt-8" role="tabpanel">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Geographic Distribution</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ChartContainer
+                      config={{
+                        value: { label: "Impact Amount", color: "hsl(var(--primary))" }
+                      }}
+                      className="h-[300px]"
+                    >
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={chartData.locations}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={80}
+                            dataKey="value"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                          >
+                            {chartData.locations.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={`hsl(${142 + index * 30}, 71%, ${45 + index * 10}%)`} />
+                            ))}
+                          </Pie>
+                          <ChartTooltip
+                            content={({ active, payload }) => {
+                              if (active && payload && payload[0]) {
+                                return (
+                                  <div className="bg-background p-3 border rounded-lg shadow-lg">
+                                    <p className="font-medium">{payload[0].payload.name}</p>
+                                    <p className="text-primary">{formatPrice(payload[0].value as number)}</p>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Impact Effectiveness Scores</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {sortedEntries.slice(0, 6).map((entry) => (
+                        <div key={entry.id} className="flex items-center justify-between">
+                          <div className="flex-1 min-w-0 mr-4">
+                            <p className="text-sm font-medium truncate">{entry.experience_title}</p>
+                            <p className="text-xs text-muted-foreground">{entry.location}</p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm font-medium">{entry.impact_score}</span>
+                            <div className="w-20">
+                              <Progress value={entry.impact_score} className="h-2" />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Impact Stories Tab */}
+            <TabsContent value="stories" className="mt-8" role="tabpanel">
+              <div className="space-y-6">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold mb-4">Real Conservation Stories</h2>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    Discover the human stories behind the data - real impact verified by our conservation partners.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {sortedEntries.slice(0, 4).map((entry) => (
+                    <Card key={entry.id} className="overflow-hidden">
+                      <div className="aspect-video bg-muted flex items-center justify-center">
+                        <Camera className="h-8 w-8 text-muted-foreground" />
+                      </div>
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <Badge className={getThemeBadgeStyle(entry.theme)}>
+                            {entry.theme}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(entry.booking_date).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <h3 className="font-semibold mb-3">{entry.experience_title}</h3>
+                        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                          {entry.proof_description}
+                        </p>
+                        <div className="flex items-center justify-between pt-4 border-t">
+                          <Link 
+                            to={`/partners/${entry.project_id}`}
+                            className="text-sm text-primary hover:underline"
+                          >
+                            {entry.project_name}
+                          </Link>
+                          <div className="text-right">
+                            <p className="text-sm font-medium text-primary">
+                              {formatPrice(entry.allocation_amount)}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {entry.participants} participants
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
             </TabsContent>
           </Tabs>
         </div>
       </section>
-
-      {/* How It Works */}
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">How impact verification works</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our transparent process ensures every dollar creates real, measurable conservation impact.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">
-                    1
-                  </div>
-                  Booking Made
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  When you book an experience, funds are allocated transparently to conservation partners.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">
-                    2
-                  </div>
-                  Impact Created
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Partners use funds for conservation activities and document the impact with photos and reports.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">
-                    3
-                  </div>
-                  Verification
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Our team verifies the impact proof and publishes it to this public ledger for full transparency.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-    </div>;
+    </div>
+  );
 };
+
 export default ImpactLedger;
