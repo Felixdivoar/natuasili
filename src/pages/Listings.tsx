@@ -70,9 +70,9 @@ export default function Listings() {
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}>
-        <div className="hero-inner text-background">
+        <div className="hero-inner text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4"><T k="listings_hero_title" /></h1>
-          <p className="text-xl text-background/90 max-w-3xl">
+          <p className="text-xl text-white/90 max-w-3xl">
             <T k="listings_hero_desc" />
           </p>
         </div>
