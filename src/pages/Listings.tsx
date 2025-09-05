@@ -7,12 +7,14 @@ import { Input } from "@/components/ui/input";
 import { MapPin, Calendar, Clock } from "lucide-react";
 import { EXPERIENCES } from "@/data/partners";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import T from "@/i18n/T";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("relevance");
   const { t } = useI18n();
+  const { formatPrice } = useCurrency();
   const [searchParams] = useSearchParams();
   const themeFilter = searchParams.get('theme');
 
@@ -152,7 +154,7 @@ export default function Listings() {
                     <span><T k="listings_duration" /></span>
                   </div>
                   <div className="text-lg font-bold">
-                    $120
+                    {formatPrice(experience.priceKESAdult || 0)}
                   </div>
                 </div>
                 
