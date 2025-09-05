@@ -423,7 +423,7 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
               <CardContent className="p-4">
                 <div className="aspect-[4/3] bg-muted rounded-lg overflow-hidden mb-4">
                   <img
-                    src={experience.images[0]}
+                    src={experience.heroImage || experience.images?.[0] || experience.gallery?.[0] || "/images/placeholder-1.jpg"}
                     alt={experience.title}
                     className="w-full h-full object-cover"
                   />

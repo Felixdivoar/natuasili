@@ -17,6 +17,7 @@ interface Experience {
   childHalfPriceRule?: boolean;
   capacity: number;
   duration_hours?: number;
+  partner?: string;
 }
 
 interface BookingParams {
@@ -117,10 +118,11 @@ const AvailabilityAndOptions = ({
   };
 
   const getOptions = () => {
-    const standardAdultPrice = 350;
-    const standardChildPrice = experience.childHalfPriceRule ? 175 : 350;
-    const premiumAdultPrice = 455;
-    const premiumChildPrice = experience.childHalfPriceRule ? 228 : 455;
+    const experienceBasePrice = experience.priceKESAdult || experience.base_price || 350;
+    const standardAdultPrice = experienceBasePrice;
+    const standardChildPrice = experience.childHalfPriceRule ? Math.round(experienceBasePrice * 0.5) : experienceBasePrice;
+    const premiumAdultPrice = Math.round(experienceBasePrice * 1.3); // 30% premium
+    const premiumChildPrice = experience.childHalfPriceRule ? Math.round(premiumAdultPrice * 0.5) : premiumAdultPrice;
 
     return [
       {
@@ -276,6 +278,8 @@ const AvailabilityAndOptions = ({
                       </div>
                     </div>
 
+                    {/* Show children selector only for specific partners that have child pricing */}
+                    {experience.childHalfPriceRule && (
                     <div className="space-y-2">
                       <Label htmlFor="children" className="flex items-center gap-2">
                         <Users className="h-4 w-4" />
@@ -314,6 +318,8 @@ const AvailabilityAndOptions = ({
                         </Button>
                       </div>
                     </div>
+                    )}
+
                   </div>
 
                   <div className="text-sm text-muted-foreground">

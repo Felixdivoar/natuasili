@@ -517,7 +517,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
               <CardContent className="p-4">
                 <div className="aspect-video bg-muted rounded-lg mb-3 overflow-hidden">
                   <img 
-                    src={experience.hero_image || '/images/placeholder-1.jpg'} 
+                    src={experience.heroImage || experience.images?.[0] || experience.gallery?.[0] || '/images/placeholder-1.jpg'} 
                     alt={experience.title}
                     className="w-full h-full object-cover"
                   />
