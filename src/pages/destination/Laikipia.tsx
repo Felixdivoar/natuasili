@@ -5,33 +5,22 @@ import { MapPin, Users, TreePine, Camera, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { PARTNERS, EXPERIENCES } from "@/data/partners";
+import { mockProjects, mockExperiences } from "@/data/mockData";
 import { useCurrency } from "@/contexts/CurrencyContext";
-
 import laikipiaDestination from "@/assets/destinations/laikipia-destination.jpg";
-
 const LaikipiaDestination = () => {
-  const { formatPrice } = useCurrency();
+  const {
+    formatPrice
+  } = useCurrency();
   // Get Laikipia-related partners and experiences
-  const laikipiaPartners = PARTNERS.filter(partner => 
-    partner.location.toLowerCase().includes('laikipia')
-  );
-
-  const laikipiaExperiences = EXPERIENCES.filter(experience => 
-    experience.destination === 'laikipia'
-  );
-
-  return (
-    <div className="min-h-screen bg-background">
+  const laikipiaPartners = mockProjects.filter(project => project.location_text.toLowerCase().includes('laikipia') || project.name.toLowerCase().includes('laikipia') || project.name.toLowerCase().includes('ol pejeta'));
+  const laikipiaExperiences = mockExperiences.filter(experience => experience.location_text.toLowerCase().includes('laikipia') || experience.location_text.toLowerCase().includes('ol pejeta'));
+  return <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section */}
       <section className="relative h-[60vh] bg-gray-900">
-        <img
-          src={laikipiaDestination}
-          alt="Laikipia Plateau"
-          className="w-full h-full object-cover"
-        />
+        <img src={laikipiaDestination} alt="Laikipia Plateau" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white max-w-4xl mx-auto px-4">
@@ -63,8 +52,8 @@ const LaikipiaDestination = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
               <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">{laikipiaPartners.length}</div>
-                <div className="text-sm text-muted-foreground">Conservation Partners</div>
+                <div className="text-3xl font-bold text-conservation mb-2">9</div>
+                <div className="text-sm text-muted-foreground">13</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">13</div>
@@ -127,17 +116,12 @@ const LaikipiaDestination = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {laikipiaPartners.map((partner) => (
-              <Card key={partner.id} className="hover:shadow-lg transition-shadow">
+            {laikipiaPartners.map(partner => <Card key={partner.id} className="hover:shadow-lg transition-shadow">
                 <div className="aspect-[16/10] relative">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="w-full h-full object-cover rounded-t-lg"
-                  />
+                  <img src={partner.hero_image} alt={partner.name} className="w-full h-full object-cover rounded-t-lg" />
                   <div className="absolute top-3 left-3">
                     <Badge className="bg-conservation/90 text-white">
-                      {partner.themes[0]}
+                      {partner.category}
                     </Badge>
                   </div>
                 </div>
@@ -145,12 +129,12 @@ const LaikipiaDestination = () => {
                   <CardTitle className="text-lg">{partner.name}</CardTitle>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {partner.location}
+                    {partner.location_text}
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {partner.description}
+                    {partner.bio}
                   </p>
                   <Button size="sm" asChild className="w-full">
                     <Link to={`/partners/${partner.slug}`}>
@@ -158,8 +142,7 @@ const LaikipiaDestination = () => {
                     </Link>
                   </Button>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -177,19 +160,12 @@ const LaikipiaDestination = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {laikipiaExperiences.slice(0, 6).map((experience) => (
-              <Card key={experience.id} className="hover:shadow-lg transition-shadow">
+            {laikipiaExperiences.slice(0, 6).map(experience => <Card key={experience.id} className="hover:shadow-lg transition-shadow">
                 <div className="aspect-[16/10] relative">
-                  {experience.images[0] && (
-                    <img
-                      src={experience.images[0]}
-                      alt={experience.title}
-                      className="w-full h-full object-cover rounded-t-lg"
-                    />
-                  )}
+                  {experience.images[0] && <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover rounded-t-lg" />}
                   <div className="absolute top-3 left-3 flex gap-2">
                     <Badge className="bg-white/90 text-foreground">
-                      {formatPrice(experience.priceKESAdult)}
+                      {formatPrice(experience.base_price)}
                     </Badge>
                   </div>
                 </div>
@@ -203,7 +179,7 @@ const LaikipiaDestination = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Users className="h-4 w-4 mr-1" />
-                      8 max
+                      {experience.capacity} max
                     </div>
                     <Button size="sm" asChild>
                       <Link to={`/listings/${experience.slug}`}>
@@ -212,8 +188,7 @@ const LaikipiaDestination = () => {
                     </Button>
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
 
           <div className="text-center mt-8">
@@ -227,8 +202,6 @@ const LaikipiaDestination = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default LaikipiaDestination;
