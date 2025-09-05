@@ -5,7 +5,7 @@ import { MapPin, Users, TreePine, Camera, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { mockProjects, mockExperiences } from "@/data/mockData";
+import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
 import laikipiaDestination from "@/assets/destinations/laikipia-destination.jpg";
@@ -13,15 +13,12 @@ import laikipiaDestination from "@/assets/destinations/laikipia-destination.jpg"
 const LaikipiaDestination = () => {
   const { formatPrice } = useCurrency();
   // Get Laikipia-related partners and experiences
-  const laikipiaPartners = mockProjects.filter(project => 
-    project.location_text.toLowerCase().includes('laikipia') || 
-    project.name.toLowerCase().includes('laikipia') ||
-    project.name.toLowerCase().includes('ol pejeta')
+  const laikipiaPartners = PARTNERS.filter(partner => 
+    partner.location.toLowerCase().includes('laikipia')
   );
 
-  const laikipiaExperiences = mockExperiences.filter(experience => 
-    experience.location_text.toLowerCase().includes('laikipia') ||
-    experience.location_text.toLowerCase().includes('ol pejeta')
+  const laikipiaExperiences = EXPERIENCES.filter(experience => 
+    experience.destination === 'laikipia'
   );
 
   return (
@@ -134,13 +131,13 @@ const LaikipiaDestination = () => {
               <Card key={partner.id} className="hover:shadow-lg transition-shadow">
                 <div className="aspect-[16/10] relative">
                   <img
-                    src={partner.hero_image}
+                    src={partner.logo}
                     alt={partner.name}
                     className="w-full h-full object-cover rounded-t-lg"
                   />
                   <div className="absolute top-3 left-3">
                     <Badge className="bg-conservation/90 text-white">
-                      {partner.category}
+                      {partner.themes[0]}
                     </Badge>
                   </div>
                 </div>
@@ -148,12 +145,12 @@ const LaikipiaDestination = () => {
                   <CardTitle className="text-lg">{partner.name}</CardTitle>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {partner.location_text}
+                    {partner.location}
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {partner.bio}
+                    {partner.description}
                   </p>
                   <Button size="sm" asChild className="w-full">
                     <Link to={`/partners/${partner.slug}`}>
@@ -192,7 +189,7 @@ const LaikipiaDestination = () => {
                   )}
                   <div className="absolute top-3 left-3 flex gap-2">
                     <Badge className="bg-white/90 text-foreground">
-                      {formatPrice(experience.base_price)}
+                      {formatPrice(experience.priceKESAdult)}
                     </Badge>
                   </div>
                 </div>
@@ -206,7 +203,7 @@ const LaikipiaDestination = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Users className="h-4 w-4 mr-1" />
-                      {experience.capacity} max
+                      8 max
                     </div>
                     <Button size="sm" asChild>
                       <Link to={`/listings/${experience.slug}`}>

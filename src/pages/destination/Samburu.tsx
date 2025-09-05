@@ -5,7 +5,7 @@ import { MapPin, Users, TreePine, Camera, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { mockProjects, mockExperiences } from "@/data/mockData";
+import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import samburuDestination from "@/assets/destinations/samburu-destination.jpg";
 const SamburuDestination = () => {
@@ -13,8 +13,12 @@ const SamburuDestination = () => {
     formatPrice
   } = useCurrency();
   // Get Samburu-related partners and experiences
-  const samburuPartners = mockProjects.filter(project => project.location_text.toLowerCase().includes('samburu') || project.name.toLowerCase().includes('samburu'));
-  const samburuExperiences = mockExperiences.filter(experience => experience.location_text.toLowerCase().includes('samburu'));
+  const samburuPartners = PARTNERS.filter(partner => 
+    partner.location.toLowerCase().includes('samburu')
+  );
+  const samburuExperiences = EXPERIENCES.filter(experience => 
+    experience.destination === 'samburu'
+  );
   return <div className="min-h-screen bg-background">
       <Header />
       
@@ -118,10 +122,14 @@ const SamburuDestination = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {samburuPartners.map(partner => <Card key={partner.id} className="hover:shadow-lg transition-shadow">
                 <div className="aspect-[16/10] relative">
-                  <img src={partner.hero_image} alt={partner.name} className="w-full h-full object-cover rounded-t-lg" />
+                  <img 
+                    src={partner.logo} 
+                    alt={partner.name} 
+                    className="w-full h-full object-cover rounded-t-lg" 
+                  />
                   <div className="absolute top-3 left-3">
                     <Badge className="bg-conservation/90 text-white">
-                      {partner.category}
+                      {partner.themes[0]}
                     </Badge>
                   </div>
                 </div>
@@ -129,12 +137,12 @@ const SamburuDestination = () => {
                   <CardTitle className="text-lg">{partner.name}</CardTitle>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {partner.location_text}
+                    {partner.location}
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {partner.bio}
+                    {partner.description}
                   </p>
                   <div className="flex gap-2">
                     <Button size="sm" asChild className="flex-1">
@@ -167,7 +175,7 @@ const SamburuDestination = () => {
                   {experience.images[0] && <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover rounded-t-lg" />}
                   <div className="absolute top-3 left-3 flex gap-2">
                     <Badge className="bg-white/90 text-foreground">
-                      {formatPrice(experience.base_price)}
+                      {formatPrice(experience.priceKESAdult)}
                     </Badge>
                   </div>
                 </div>
@@ -181,7 +189,7 @@ const SamburuDestination = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Users className="h-4 w-4 mr-1" />
-                      {experience.capacity} max
+                      8 max
                     </div>
                     <Button size="sm" asChild>
                       <Link to={`/listings/${experience.slug}`}>

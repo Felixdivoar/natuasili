@@ -5,7 +5,7 @@ import { MapPin, Users, TreePine, Camera, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { mockProjects, mockExperiences } from "@/data/mockData";
+import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
 import coastDestination from "@/assets/destinations/coast-destination.jpg";
@@ -13,18 +13,12 @@ import coastDestination from "@/assets/destinations/coast-destination.jpg";
 const CoastDestination = () => {
   const { formatPrice } = useCurrency();
   // Get Coast-related partners and experiences
-  const coastPartners = mockProjects.filter(project => 
-    project.location_text.toLowerCase().includes('coast') || 
-    project.name.toLowerCase().includes('coast') ||
-    project.name.toLowerCase().includes('marine') ||
-    project.name.toLowerCase().includes('mangrove')
+  const coastPartners = PARTNERS.filter(partner => 
+    partner.location.toLowerCase().includes('coast')
   );
 
-  const coastExperiences = mockExperiences.filter(experience => 
-    experience.location_text.toLowerCase().includes('coast') ||
-    experience.location_text.toLowerCase().includes('marine') ||
-    experience.location_text.toLowerCase().includes('diani') ||
-    experience.location_text.toLowerCase().includes('watamu')
+  const coastExperiences = EXPERIENCES.filter(experience => 
+    experience.destination === 'coastal-kenya'
   );
 
   return (
@@ -137,13 +131,13 @@ const CoastDestination = () => {
               <Card key={partner.id} className="hover:shadow-lg transition-shadow">
                 <div className="aspect-[16/10] relative">
                   <img
-                    src={partner.hero_image}
+                    src={partner.logo}
                     alt={partner.name}
                     className="w-full h-full object-cover rounded-t-lg"
                   />
                   <div className="absolute top-3 left-3">
                     <Badge className="bg-conservation/90 text-white">
-                      {partner.category}
+                      {partner.themes[0]}
                     </Badge>
                   </div>
                 </div>
@@ -151,12 +145,12 @@ const CoastDestination = () => {
                   <CardTitle className="text-lg">{partner.name}</CardTitle>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <MapPin className="h-4 w-4 mr-1" />
-                    {partner.location_text}
+                    {partner.location}
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                    {partner.bio}
+                    {partner.description}
                   </p>
                   <Button size="sm" asChild className="w-full">
                     <Link to={`/partners/${partner.slug}`}>
@@ -195,7 +189,7 @@ const CoastDestination = () => {
                   )}
                   <div className="absolute top-3 left-3 flex gap-2">
                     <Badge className="bg-white/90 text-foreground">
-                      {formatPrice(experience.base_price)}
+                      {formatPrice(experience.priceKESAdult)}
                     </Badge>
                   </div>
                 </div>
@@ -209,7 +203,7 @@ const CoastDestination = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-xs text-muted-foreground">
                       <Users className="h-4 w-4 mr-1" />
-                      {experience.capacity} max
+                      8 max
                     </div>
                     <Button size="sm" asChild>
                       <Link to={`/listings/${experience.slug}`}>
