@@ -78,7 +78,7 @@ export type Partner = {
 // Partner image mapping for unique, high-quality conservation images
 const PARTNER_IMAGES: Record<string, string> = {
   "Koija Community": "/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png",
-  "Sera Conservancy": seraConservancyImg,
+  "Sera Conservancy": "/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png",
   "Ruko Community Conservancy": rukoConservancyImg,
   "Colobus Conservation": colobusConservationImg,
   "Local Ocean (Watamu)": localOceanImg,
@@ -107,7 +107,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return ["/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png", "/lovable-uploads/3a4d487a-fe3a-40ce-aa28-18adf4191e69.png", "/lovable-uploads/396bdd72-dc8d-4727-8fd8-e73dba015ec2.png"];
   }
   if (titleLower.includes("rhino") && titleLower.includes("tracking")) {
-    return [olPejeteRhino, northernWhiteRhinos, seraConservancyImg];
+    return ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"];
   }
   if (titleLower.includes("giraffe") && titleLower.includes("ruko")) {
     return [giraffeCentre, afewGiraffeImg, rukoConservancyImg];
@@ -203,9 +203,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "samburu",
     themes: ["Wildlife conservation"],
     activities: ["rhino", "tracking", "walking"],
-    images: getExperienceImages("Sera On-Foot Rhino Tracking", ["rhino", "tracking", "walking"]),
-    heroImage: olPejeteRhino,
-    gallery: [olPejeteRhino, northernWhiteRhinos, seraConservancyImg],
+    images: ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"],
+    heroImage: "/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png",
+    gallery: ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"],
     description: "Experience the thrill of tracking endangered black rhinos on foot in the Sera Conservancy. This unique conservation experience offers intimate wildlife encounters while supporting critical anti-poaching efforts and community-based conservation initiatives in Samburu.",
     priceKESAdult: 4000,
     childHalfPriceRule: false,
