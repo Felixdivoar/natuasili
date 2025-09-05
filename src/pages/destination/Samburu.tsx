@@ -153,18 +153,11 @@ const SamburuDestination = () => {
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
                     {partner.bio}
                   </p>
-                  <div className="flex gap-2">
-                    <Button size="sm" asChild className="flex-1">
-                      <Link to={`/partners/${partner.slug}`}>
-                        View Partner
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to={`/listings?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        Experiences
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button size="sm" asChild className="w-full">
+                    <Link to={`/partners/${partner.slug}`}>
+                      View Partner
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}

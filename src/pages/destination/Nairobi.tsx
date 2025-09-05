@@ -181,18 +181,11 @@ const NairobiDestination = () => {
                     text={partner.bio}
                     className="text-sm text-muted-foreground mb-4 line-clamp-3"
                   />
-                  <div className="flex gap-2">
-                    <Button size="sm" asChild className="flex-1">
-                      <Link to={`/partners/${partner.slug}`}>
-                        <T k="dest_view_partner" />
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to={`/listings?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        <T k="dest_experiences" />
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button size="sm" asChild className="w-full">
+                    <Link to={`/partners/${partner.slug}`}>
+                      <T k="dest_view_partner" />
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}
