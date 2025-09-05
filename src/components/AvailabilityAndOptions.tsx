@@ -1,116 +1,205 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Users, Clock, MapPin, Star, CheckCircle } from "lucide-react";
+import { Calendar, Users, Clock, MapPin, Star, CheckCircle, Minus, Plus } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import { useCart } from "@/contexts/CartContext";
+import { saveCart } from "@/lib/cart";
 import { isSameDayBookingCutoffPassed, isTodayInLocal } from "@/utils/time";
 
 interface Experience {
-  slug: string;
-  base_price: number;
+  slug?: string;
+  base_price?: number;
+  priceKESAdult: number;
+  childHalfPriceRule?: boolean;
   capacity: number;
   duration_hours?: number;
+}
+
+interface BookingParams {
+  date: string;
+  adults: number;
+  children: number;
+  option: 'standard' | 'premium';
 }
 
 interface AvailabilityAndOptionsProps {
   experience: Experience;
   onBookingStart?: () => void;
-  onBookingModalOpen: () => void;
+  onBookingModalOpen?: () => void;
+  onUpdateParams?: (params: Partial<BookingParams>) => void;
+  initialParams?: Partial<BookingParams>;
 }
 
-const AvailabilityAndOptions = ({ 
-  experience, 
+const AvailabilityAndOptions = ({
+  experience,
   onBookingStart,
-  onBookingModalOpen 
+  onBookingModalOpen,
+  onUpdateParams,
+  initialParams
 }: AvailabilityAndOptionsProps) => {
+  const navigate = useNavigate();
   const { formatPrice } = useCurrency();
-  const { cart, updateCart, isValid } = useCart();
+  
+  // Initialize state from props or defaults
+  const [selectedDate, setSelectedDate] = useState(initialParams?.date || "");
+  const [selectedAdults, setSelectedAdults] = useState(initialParams?.adults || 1);
+  const [selectedChildren, setSelectedChildren] = useState(initialParams?.children || 0);
+  const [selectedOption, setSelectedOption] = useState<"standard" | "premium">(initialParams?.option || "standard");
   const [participantsError, setParticipantsError] = useState("");
 
-  // Validate participants against capacity
-  const validateParticipants = (value: number) => {
-    if (value > experience.capacity) {
+  const basePrice = experience.base_price || experience.priceKESAdult || 350;
+  const childPrice = experience.childHalfPriceRule ? Math.round(basePrice * 0.5) : basePrice;
+
+  // Update parent component when selections change
+  useEffect(() => {
+    if (onUpdateParams) {
+      onUpdateParams({
+        date: selectedDate,
+        adults: selectedAdults,
+        children: selectedChildren,
+        option: selectedOption
+      });
+    }
+  }, [selectedDate, selectedAdults, selectedChildren, selectedOption, onUpdateParams]);
+
+  // --- helpers ---
+  const totalParticipants = selectedAdults + selectedChildren;
+  
+  const validateParticipants = (adults: number, children: number) => {
+    const total = adults + children;
+    if (total > experience.capacity) {
       setParticipantsError(`Maximum group size is ${experience.capacity}. Please reduce the number of people.`);
+      return false;
+    }
+    if (adults < 1) {
+      setParticipantsError("At least 1 adult is required.");
       return false;
     }
     setParticipantsError("");
     return true;
   };
 
-  const handleParticipantsChange = (value: number) => {
+  const handleAdultsChange = (value: number) => {
     const validValue = Math.max(1, value || 1);
-    updateCart({ people: validValue });
-    validateParticipants(validValue);
+    setSelectedAdults(validValue);
+    validateParticipants(validValue, selectedChildren);
   };
 
-  const handleDateChange = (date: string) => {
-    updateCart({ date });
+  const handleChildrenChange = (value: number) => {
+    const validValue = Math.max(0, value || 0);
+    setSelectedChildren(validValue);
+    validateParticipants(selectedAdults, validValue);
   };
 
-  const handleOptionChange = (optionId: 'standard' | 'premium') => {
-    updateCart({ optionId });
-  };
-
-  const handleContinue = () => {
-    if (participantsError || !cart?.date) return;
+  const roundMoney = (n: number) => Math.round(n * 100) / 100;
+  
+  const computeTotals = (optionId: string, adults: number, children: number) => {
+    const options = getOptions();
+    const option = options.find(opt => opt.id === optionId) || options[0];
     
-    onBookingStart?.();
-    onBookingModalOpen();
+    const adultTotal = option.adultPrice * adults;
+    const childTotal = option.childPrice * children;
+    const subtotal = roundMoney(adultTotal + childTotal);
+    const partner = roundMoney(subtotal * 0.9);
+    const platform = roundMoney(subtotal - partner);
+    
+    return {
+      subtotal,
+      partner,
+      platform,
+      adultSubtotal: adultTotal,
+      childSubtotal: childTotal
+    };
+  };
+
+  const getOptions = () => {
+    const standardAdultPrice = 350;
+    const standardChildPrice = experience.childHalfPriceRule ? 175 : 350;
+    const premiumAdultPrice = 455;
+    const premiumChildPrice = experience.childHalfPriceRule ? 228 : 455;
+
+    return [
+      {
+        id: "standard",
+        name: "Standard Experience",
+        description: "Join our regular conservation experience with expert guides.",
+        duration: experience.duration_hours || 3,
+        language: "English, Swahili",
+        pickup: "Hotel pickup available",
+        startTimes: ["9:00 AM", "2:00 PM"],
+        adultPrice: standardAdultPrice,
+        childPrice: standardChildPrice,
+        cancellation: "Free cancellation up to 24 hours",
+        payLater: "Reserve now, pay later"
+      },
+      {
+        id: "premium",
+        name: "Premium Experience",
+        description: "Enhanced experience with extended time and exclusive access.",
+        duration: (experience.duration_hours || 3) + 1,
+        language: "English, Swahili",
+        pickup: "Private pickup included",
+        startTimes: ["9:00 AM", "1:00 PM"],
+        adultPrice: premiumAdultPrice,
+        childPrice: premiumChildPrice,
+        cancellation: "Free cancellation up to 24 hours",
+        payLater: "Reserve now, pay later"
+      }
+    ] as const;
+  };
+
+  // persist + navigate
+  const handleContinue = () => {
+    if (participantsError || !selectedDate) return;
+
+    // Trigger booking start callback
+    if (onBookingStart) {
+      onBookingStart();
+    }
+
+    // Hide sticky CTA on all breakpoints
+    document.querySelectorAll<HTMLElement>(".na-cta-bar, .na-btn-book-fab").forEach(el => el.style.display = "none");
+
+    // Save cart to sessionStorage for checkout hydration
+    saveCart({
+      slug: experience.slug || '',
+      date: selectedDate,
+      people: totalParticipants,
+      optionId: selectedOption
+    });
+
+    // If we have a booking modal callback, use that instead of navigation
+    if (onBookingModalOpen) {
+      onBookingModalOpen();
+      return;
+    }
+
+    const params = new URLSearchParams({
+      date: selectedDate,
+      adults: String(selectedAdults),
+      children: String(selectedChildren),
+      option: selectedOption
+    });
+    navigate(`/checkout/${experience.slug}?${params.toString()}`);
   };
 
   useEffect(() => {
-    if (cart) {
-      validateParticipants(cart.people);
-    }
-  }, [experience.capacity, cart?.people]);
+    validateParticipants(selectedAdults, selectedChildren);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experience.capacity]);
 
-  const options = [
-    {
-      id: "standard" as const,
-      name: "Standard Experience",
-      description: "Join our regular conservation experience with expert guides.",
-      duration: experience.duration_hours || 0,
-      language: "English, Swahili",
-      pickup: "Hotel pickup available",
-      startTimes: ["9:00 AM", "2:00 PM"],
-      price: experience.base_price,
-      cancellation: "Free cancellation up to 24 hours",
-      payLater: "Reserve now, pay later"
-    },
-    {
-      id: "premium" as const,
-      name: "Premium Experience",
-      description: "Enhanced experience with extended time and exclusive access.",
-      duration: (experience.duration_hours || 0) + 1,
-      language: "English, Swahili",
-      pickup: "Private pickup included",
-      startTimes: ["9:00 AM", "1:00 PM"],
-      price: Math.round((experience.base_price || 0) * 1.3),
-      cancellation: "Free cancellation up to 24 hours",
-      payLater: "Reserve now, pay later",
-      extras: [
-        "Private transportation with guide",
-        "Extended 30-minute photo session",
-        "Exclusive behind-the-scenes access",
-        "Priority booking for follow-up visits",
-        "Complimentary conservation toolkit",
-        "Personal impact certificate"
-      ]
-    }
-  ];
-
-  const selectedOptionData = options.find(opt => opt.id === cart?.optionId) || options[0];
+  const options = getOptions();
+  const selectedOptionData = options.find(opt => opt.id === selectedOption) || options[0];
+  const totals = computeTotals(selectedOption, selectedAdults, selectedChildren);
 
   // Same-day booking cutoff logic
-  const cutoffHit = cart?.date && isTodayInLocal(cart.date) && isSameDayBookingCutoffPassed();
+  const cutoffHit = selectedDate && isTodayInLocal(selectedDate) && isSameDayBookingCutoffPassed();
   const cutoffMessage = "Same-day bookings close at 11:00 EAT. Please select a different date.";
-  const proceedDisabled = !isValid || !!participantsError || cutoffHit;
-
-  if (!cart) return null;
+  const proceedDisabled = !selectedDate || !!participantsError || cutoffHit;
 
   return (
     <section id="availability" className="availability-section scroll-mt-24">
@@ -126,7 +215,7 @@ const AvailabilityAndOptions = ({
             {/* Date and People Selection */}
             <Card>
               <CardContent className="p-6">
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="date" className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
@@ -135,8 +224,8 @@ const AvailabilityAndOptions = ({
                     <Input 
                       id="date" 
                       type="date" 
-                      value={cart.date} 
-                      onChange={(e) => handleDateChange(e.target.value)}
+                      value={selectedDate} 
+                      onChange={e => setSelectedDate(e.target.value)} 
                       min={new Date().toISOString().split("T")[0]} 
                       className={`w-full ${cutoffHit ? "border-red-500" : ""}`} 
                     />
@@ -147,50 +236,95 @@ const AvailabilityAndOptions = ({
                     )}
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="people" className="flex items-center gap-2">
-                      <Users className="h-4 w-4" />
-                      Participants
-                    </Label>
-                    <div className="flex items-center gap-2">
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="icon" 
-                        onClick={() => handleParticipantsChange(cart.people - 1)}
-                        disabled={cart.people <= 1} 
-                        aria-label="Decrease participants"
-                      >
-                        -
-                      </Button>
-                      <Input 
-                        id="people" 
-                        type="number" 
-                        min={1} 
-                        max={experience.capacity} 
-                        value={cart.people} 
-                        onChange={(e) => handleParticipantsChange(parseInt(e.target.value) || 1)}
-                        className={`w-20 text-center ${participantsError ? "border-red-500" : ""}`} 
-                        inputMode="numeric" 
-                      />
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="icon" 
-                        onClick={() => handleParticipantsChange(cart.people + 1)}
-                        disabled={cart.people >= experience.capacity} 
-                        aria-label="Increase participants"
-                      >
-                        +
-                      </Button>
-                      <span className="text-sm text-muted-foreground ml-2">(max {experience.capacity})</span>
-                    </div>
-                    {participantsError && (
-                      <div id="participants-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-2">
-                        {participantsError}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="adults" className="flex items-center gap-2">
+                        <Users className="h-4 w-4" />
+                        Adults
+                      </Label>
+                      <div className="flex items-center border rounded-md">
+                        <Button 
+                          type="button" 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => handleAdultsChange(selectedAdults - 1)} 
+                          disabled={selectedAdults <= 1}
+                          className="h-10 w-10 rounded-r-none"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <Input 
+                          id="adults"
+                          type="number" 
+                          min={1} 
+                          max={experience.capacity} 
+                          value={selectedAdults} 
+                          onChange={e => handleAdultsChange(parseInt(e.target.value) || 1)} 
+                          className="border-0 text-center rounded-none focus-visible:ring-0" 
+                          inputMode="numeric" 
+                        />
+                        <Button 
+                          type="button" 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => handleAdultsChange(selectedAdults + 1)} 
+                          disabled={totalParticipants >= experience.capacity}
+                          className="h-10 w-10 rounded-l-none"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
                       </div>
-                    )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="children" className="flex items-center gap-2">
+                        <Users className="h-4 w-4" />
+                        Children {experience.childHalfPriceRule && <span className="text-xs text-muted-foreground">(50% off)</span>}
+                      </Label>
+                      <div className="flex items-center border rounded-md">
+                        <Button 
+                          type="button" 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => handleChildrenChange(selectedChildren - 1)} 
+                          disabled={selectedChildren <= 0}
+                          className="h-10 w-10 rounded-r-none"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <Input 
+                          id="children"
+                          type="number" 
+                          min={0} 
+                          max={experience.capacity} 
+                          value={selectedChildren} 
+                          onChange={e => handleChildrenChange(parseInt(e.target.value) || 0)} 
+                          className="border-0 text-center rounded-none focus-visible:ring-0" 
+                          inputMode="numeric" 
+                        />
+                        <Button 
+                          type="button" 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => handleChildrenChange(selectedChildren + 1)} 
+                          disabled={totalParticipants >= experience.capacity}
+                          className="h-10 w-10 rounded-l-none"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
                   </div>
+
+                  <div className="text-sm text-muted-foreground">
+                    Total: {totalParticipants} participant{totalParticipants !== 1 ? 's' : ''} (max {experience.capacity})
+                  </div>
+                  
+                  {participantsError && (
+                    <div id="participants-error" role="alert" aria-live="assertive" className="text-red-600 text-sm">
+                      {participantsError}
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -201,8 +335,8 @@ const AvailabilityAndOptions = ({
               {options.map(option => (
                 <Card 
                   key={option.id} 
-                  className={`cursor-pointer transition-colors ${cart.optionId === option.id ? "ring-2 ring-primary" : ""}`} 
-                  onClick={() => handleOptionChange(option.id)}
+                  className={`cursor-pointer transition-colors ${selectedOption === option.id ? "ring-2 ring-primary" : ""}`} 
+                  onClick={() => setSelectedOption(option.id as "standard" | "premium")}
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -212,8 +346,8 @@ const AvailabilityAndOptions = ({
                             type="radio" 
                             name="option" 
                             value={option.id} 
-                            checked={cart.optionId === option.id} 
-                            onChange={() => handleOptionChange(option.id)}
+                            checked={selectedOption === option.id} 
+                            onChange={() => setSelectedOption(option.id as "standard" | "premium")}
                             className="w-4 h-4" 
                             aria-label={option.name} 
                           />
@@ -222,21 +356,6 @@ const AvailabilityAndOptions = ({
                         </div>
 
                         <p className="text-muted-foreground mb-3">{option.description}</p>
-
-                        {/* Premium includes list */}
-                        {option.id === "premium" && option.extras && (
-                          <div className="mb-3">
-                            <p className="text-sm font-medium text-foreground mb-2">Premium includes:</p>
-                            <ul className="text-sm text-muted-foreground space-y-1">
-                              {option.extras.map((extra, index) => (
-                                <li key={index} className="flex items-center gap-2">
-                                  <CheckCircle className="h-3 w-3 text-green-600 flex-shrink-0" />
-                                  <span>{extra}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
 
                         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
                           <div className="flex items-center gap-1">
@@ -274,8 +393,22 @@ const AvailabilityAndOptions = ({
                       </div>
 
                       <div className="text-right ml-4">
-                        <div className="text-2xl font-bold">{formatPrice(option.price)}</div>
-                        <div className="text-sm text-muted-foreground">per person</div>
+                        <div className="space-y-1">
+                          {selectedAdults > 0 && (
+                            <div className="text-sm">
+                              <span className="text-muted-foreground">Adults:</span> {formatPrice(option.adultPrice)} × {selectedAdults}
+                            </div>
+                          )}
+                          {selectedChildren > 0 && (
+                            <div className="text-sm">
+                              <span className="text-muted-foreground">Children:</span> {formatPrice(option.childPrice)} × {selectedChildren}
+                            </div>
+                          )}
+                          <div className="text-2xl font-bold">
+                            {formatPrice(option.adultPrice * selectedAdults + option.childPrice * selectedChildren)}
+                          </div>
+                          <div className="text-sm text-muted-foreground">total</div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -294,12 +427,18 @@ const AvailabilityAndOptions = ({
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>Date:</span>
-                    <span>{cart.date || "Select date"}</span>
+                    <span>{selectedDate || "Select date"}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Participants:</span>
-                    <span>{cart.people}</span>
+                    <span>Adults:</span>
+                    <span>{selectedAdults}</span>
                   </div>
+                  {selectedChildren > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span>Children:</span>
+                      <span>{selectedChildren}</span>
+                    </div>
+                  )}
                   <div className="flex justify-between text-sm">
                     <span>Option:</span>
                     <span>{selectedOptionData.name}</span>
@@ -308,30 +447,36 @@ const AvailabilityAndOptions = ({
 
                 {/* Pricing */}
                 <div className="border-t pt-4 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>
-                      {formatPrice(cart.unitPrice)} × {cart.people}
-                    </span>
-                    <span>{formatPrice(cart.subtotal)}</span>
-                  </div>
+                  {selectedAdults > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span>{formatPrice(selectedOptionData.adultPrice)} × {selectedAdults} adults</span>
+                      <span>{formatPrice(totals.adultSubtotal)}</span>
+                    </div>
+                  )}
+                  {selectedChildren > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span>{formatPrice(selectedOptionData.childPrice)} × {selectedChildren} children</span>
+                      <span>{formatPrice(totals.childSubtotal)}</span>
+                    </div>
+                  )}
 
                   {/* 90/10 split once valid */}
-                  {isValid && !participantsError && (
+                  {selectedDate && !participantsError && (
                     <div className="space-y-1 text-xs text-muted-foreground">
                       <div className="flex justify-between">
                         <span>Partner initiatives (90%)</span>
-                        <span>{formatPrice(cart.split.partner90)}</span>
+                        <span>{formatPrice(totals.partner)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Platform &amp; operations (10%)</span>
-                        <span>{formatPrice(cart.split.platform10)}</span>
+                        <span>Platform & operations (10%)</span>
+                        <span>{formatPrice(totals.platform)}</span>
                       </div>
                     </div>
                   )}
 
                   <div className="flex justify-between font-semibold pt-2">
                     <span>Total:</span>
-                    <span>{formatPrice(cart.subtotal)}</span>
+                    <span>{formatPrice(totals.subtotal)}</span>
                   </div>
                 </div>
 

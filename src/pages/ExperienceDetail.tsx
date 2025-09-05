@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,6 +17,8 @@ import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { t } = useI18n();
   const { formatPrice } = useCurrency();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -56,6 +58,22 @@ const ExperienceDetail = () => {
     gallery: experience.gallery?.length || 0,
     id: experience.id
   });
+  // Update URL with booking selections for persistence
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    const date = params.get('date');
+    const adults = params.get('adults');
+    const children = params.get('children');
+    const option = params.get('option');
+    
+    // If we have booking parameters, scroll to availability section
+    if (date || adults || children || option) {
+      setTimeout(() => {
+        availabilityRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     if (heroRef.current) {
       const observer = new IntersectionObserver(
@@ -75,6 +93,18 @@ const ExperienceDetail = () => {
 
   const prevImage = () => {
     setCurrentImageIndex(prev => (prev - 1 + experience.gallery.length) % experience.gallery.length);
+  };
+
+  const updateBookingParams = (params: { date?: string; adults?: number; children?: number; option?: string }) => {
+    const newParams = new URLSearchParams(searchParams);
+    
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        newParams.set(key, String(value));
+      }
+    });
+    
+    setSearchParams(newParams, { replace: true });
   };
 
   const scrollToAvailability = () => {
@@ -281,17 +311,25 @@ const ExperienceDetail = () => {
       {/* Availability & Options */}
       <div className="max-w-[1150px] mx-auto px-4 py-8">
         <div ref={availabilityRef}>
-          <AvailabilityAndOptions 
-            experience={{
-              ...experience,
-              base_price: experience.priceKESAdult,
-              capacity: 15 // Default capacity
-            }} 
-            onBookingStart={() => {
-              setBookingStarted(true);
-            }}
-            onBookingModalOpen={openBookingModal}
-          />
+            <AvailabilityAndOptions 
+              experience={{
+                ...experience,
+                base_price: experience.priceKESAdult,
+                capacity: (experience as any).capacity || 15, // Default capacity
+                childHalfPriceRule: experience.childHalfPriceRule || false
+              }} 
+              onBookingStart={() => {
+                setBookingStarted(true);
+              }}
+              onBookingModalOpen={openBookingModal}
+              onUpdateParams={updateBookingParams}
+              initialParams={{
+                date: searchParams.get('date') || '',
+                adults: parseInt(searchParams.get('adults') || '1'),
+                children: parseInt(searchParams.get('children') || '0'),
+                option: (searchParams.get('option') as 'standard' | 'premium') || 'standard'
+              }}
+            />
         </div>
       </div>
 
