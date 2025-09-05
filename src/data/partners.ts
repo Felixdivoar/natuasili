@@ -79,7 +79,7 @@ export type Partner = {
 const PARTNER_IMAGES: Record<string, string> = {
   "Koija Community": "/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png",
   "Sera Conservancy": "/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png",
-  "Ruko Community Conservancy": rukoConservancyImg,
+  "Ruko Community Conservancy": "/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png",
   "Colobus Conservation": colobusConservationImg,
   "Local Ocean (Watamu)": localOceanImg,
   "Kenya Forest Heritage": forestHeritageImg,
@@ -110,7 +110,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"];
   }
   if (titleLower.includes("giraffe") && titleLower.includes("ruko")) {
-    return [giraffeCentre, afewGiraffeImg, rukoConservancyImg];
+    return ["/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png", "/lovable-uploads/235266ed-14bb-4381-9304-a9f8e2934776.png", "/lovable-uploads/34b44d9c-3c11-44ee-9f21-bbf1e8c51a5c.png", "/lovable-uploads/d41fd5bc-a9e9-44de-a975-dc5ae1f2eb29.png"];
   }
   if (titleLower.includes("colobus") || activities.includes("primates")) {
     return [colobusConservation, colobusConservationImg, "/images/placeholder-2.jpg"];
@@ -222,9 +222,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "samburu",
     themes: ["Wildlife conservation"],
     activities: ["giraffe", "sanctuary"],
-    images: getExperienceImages("Giraffe at Ruko Sanctuary", ["giraffe", "sanctuary"]),
-    heroImage: giraffeCentre,
-    gallery: [giraffeCentre, afewGiraffeImg, rukoConservancyImg],
+    images: ["/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png", "/lovable-uploads/235266ed-14bb-4381-9304-a9f8e2934776.png", "/lovable-uploads/34b44d9c-3c11-44ee-9f21-bbf1e8c51a5c.png", "/lovable-uploads/d41fd5bc-a9e9-44de-a975-dc5ae1f2eb29.png"],
+    heroImage: "/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png",
+    gallery: ["/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png", "/lovable-uploads/235266ed-14bb-4381-9304-a9f8e2934776.png", "/lovable-uploads/34b44d9c-3c11-44ee-9f21-bbf1e8c51a5c.png", "/lovable-uploads/d41fd5bc-a9e9-44de-a975-dc5ae1f2eb29.png"],
     description: "Get up close with endangered Rothschild's giraffes at Ruko Community Conservancy. Learn about giraffe conservation efforts, feeding behaviors, and the community's role in protecting these magnificent creatures in their natural habitat.",
     priceKESAdult: 2000,
     childHalfPriceRule: false,
