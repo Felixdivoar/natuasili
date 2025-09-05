@@ -12,9 +12,11 @@ import { CheckCircle, MapPin, Users, Calendar, Mail, Phone, User, ArrowLeft } fr
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCart } from "@/contexts/CartContext";
 import { useI18n } from "@/contexts/I18nContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { saveReceipt } from "@/lib/receipt";
 import { makeImpactSummary } from "@/lib/impactSummary";
+import { supabase } from "@/integrations/supabase/client";
 
 interface BookingWizardNewProps {
   isOpen: boolean;
@@ -27,6 +29,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   const { cart, updateCart } = useCart();
   const { t } = useI18n();
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const [currentStep, setCurrentStep] = useState(2); // Start at Step 2 (Contact)
   const [formData, setFormData] = useState({
@@ -65,30 +68,128 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     }, 100);
   };
 
-  const handleConfirmBooking = () => {
-    if (!validateStep3() || !cart) return;
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-    // Save receipt data
-    const receipt = {
-      slug: experience.slug,
-      date: cart.date,
-      people: cart.people,
-      optionId: cart.optionId,
-      unitPrice: cart.unitPrice,
-      subtotal: cart.subtotal,
-      partner: cart.split.partner90,
-      platform: cart.split.platform10,
-      currency: cart.currency
-    };
-    saveReceipt(receipt);
+  const handleConfirmBooking = async () => {
+    if (!validateStep3() || !cart || isProcessingPayment) return;
 
-    // Show success step
-    setCurrentStep(4);
+    setIsProcessingPayment(true);
 
-    toast({
-      title: t('bookingConfirmed', 'Booking Confirmed!'),
-      description: t('bookingConfirmedDesc', 'You will receive a confirmation email shortly.'),
-    });
+    try {
+      // First, check if the experience exists in Supabase or create it
+      let experienceId = experience.id;
+      
+      // If the experience ID is not in UUID format, try to find it by slug or create it
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(experience.id)) {
+        const { data: existingExperience } = await supabase
+          .from('experiences')
+          .select('id')
+          .eq('slug', experience.slug)
+          .single();
+          
+        if (existingExperience) {
+          experienceId = existingExperience.id;
+        } else {
+          // Create the experience in Supabase
+          const { data: newExperience, error: expError } = await supabase
+            .from('experiences')
+            .insert({
+              title: experience.title,
+              slug: experience.slug,
+              description: experience.description || '',
+              location_text: experience.location_text || '',
+              hero_image: experience.hero_image || '',
+              price_kes_adult: cart.optionId === 'premium' ? 455 : 350,
+              capacity: experience.capacity || 15,
+              partner_id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479', // Default partner ID - should be updated
+              visible_on_marketplace: true,
+            })
+            .select('id')
+            .single();
+            
+          if (expError) {
+            throw new Error(`Failed to create experience: ${expError.message}`);
+          }
+          
+          experienceId = newExperience.id;
+        }
+      }
+
+      // Create the booking in the database
+      const { data: booking, error: bookingError } = await supabase
+        .from('bookings')
+        .insert({
+          experience_id: experienceId,
+          user_id: user?.id || null,
+          customer_name: formData.name,
+          customer_email: formData.email,
+          customer_phone: formData.phone,
+          booking_date: cart.date,
+          adults: cart.people,
+          children: 0,
+          total_kes: cart.subtotal,
+          status: 'pending',
+          payment_status: 'pending',
+          special_requests: formData.specialRequests,
+        })
+        .select()
+        .single();
+
+      if (bookingError) {
+        throw new Error(`Failed to create booking: ${bookingError.message}`);
+      }
+
+      // Create Pesapal payment order
+      const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('create-pesapal-order', {
+        body: {
+          booking_id: booking.id,
+          amount: cart.subtotal,
+          currency: cart.currency,
+          description: `Booking for ${experience.title} - ${cart.people} people on ${cart.date}`,
+          customer: {
+            email: formData.email,
+            first_name: formData.name.split(' ')[0] || formData.name,
+            last_name: formData.name.split(' ').slice(1).join(' ') || '',
+            phone_number: formData.phone || '',
+          },
+        },
+      });
+
+      if (paymentError) {
+        throw new Error(`Payment setup failed: ${paymentError.message}`);
+      }
+
+      if (!paymentResponse.success || !paymentResponse.redirect_url) {
+        throw new Error('Failed to create payment session');
+      }
+
+      // Save receipt data for later reference
+      const receipt = {
+        slug: experience.slug,
+        date: cart.date,
+        people: cart.people,
+        optionId: cart.optionId,
+        unitPrice: cart.unitPrice,
+        subtotal: cart.subtotal,
+        partner: cart.split.partner90,
+        platform: cart.split.platform10,
+        currency: cart.currency,
+      };
+      saveReceipt(receipt);
+
+      // Redirect to Pesapal payment page
+      window.location.href = paymentResponse.redirect_url;
+
+    } catch (error) {
+      console.error('Error processing booking:', error);
+      toast({
+        title: 'Booking Failed',
+        description: error.message || 'There was an error processing your booking. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsProcessingPayment(false);
+    }
   };
 
   const impactSummary = cart ? makeImpactSummary({
@@ -349,8 +450,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                   <Button variant="outline" onClick={() => setCurrentStep(2)}>
                     {t('back', 'Back')}
                   </Button>
-                  <Button onClick={handleConfirmBooking} disabled={!validateStep3()}>
-                    {t('confirmBooking', 'Confirm Booking')}
+                  <Button onClick={handleConfirmBooking} disabled={!validateStep3() || isProcessingPayment}>
+                    {isProcessingPayment ? 'Processing...' : t('payWithPesapal', 'Pay with Pesapal')}
                   </Button>
                 </div>
               </div>

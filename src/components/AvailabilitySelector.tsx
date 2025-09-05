@@ -86,22 +86,22 @@ const AvailabilitySelector = ({
     id: "standard",
     name: "Standard Experience",
     description: "Join our regular conservation experience with expert guides.",
-    duration: experience.duration_hours || 0,
+    duration: experience.duration_hours || 3,
     language: "English, Swahili",
     pickup: "Hotel pickup available",
     startTimes: ["9:00 AM", "2:00 PM"],
-    price: experience.base_price,
+    price: 350, // Fixed KES 350 per person for Standard
     cancellation: "Free cancellation up to 24 hours",
     payLater: "Reserve now, pay later"
   }, {
     id: "premium",
     name: "Premium Experience",
     description: "Enhanced experience with extended time and exclusive access.",
-    duration: (experience.duration_hours || 0) + 1,
+    duration: (experience.duration_hours || 3) + 1,
     language: "English, Swahili",
     pickup: "Private pickup included",
     startTimes: ["9:00 AM", "1:00 PM"],
-    price: Math.round((experience.base_price || 0) * 1.3),
+    price: 455, // Fixed KES 455 per person for Premium
     cancellation: "Free cancellation up to 24 hours",
     payLater: "Reserve now, pay later"
   }] as const;
