@@ -67,7 +67,7 @@ const LaikipiaDestination = () => {
                 <div className="text-sm text-muted-foreground">Conservation Partners</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">13</div>
+                <div className="text-3xl font-bold text-conservation mb-2">{laikipiaExperiences.length}</div>
                 <div className="text-sm text-muted-foreground">Active Projects</div>
               </div>
               <div className="text-center">

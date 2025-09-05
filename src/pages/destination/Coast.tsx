@@ -67,7 +67,7 @@ const CoastDestination = () => {
                  <div className="text-sm text-muted-foreground">Marine Partners</div>
                </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">11</div>
+                <div className="text-3xl font-bold text-conservation mb-2">{coastExperiences.length}</div>
                 <div className="text-sm text-muted-foreground">Active Projects</div>
               </div>
               <div className="text-center">

@@ -77,7 +77,7 @@ const NairobiDestination = () => {
                  <div className="text-sm text-muted-foreground"><T k="dest_urban_partners" /></div>
                </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">12</div>
+                <div className="text-3xl font-bold text-conservation mb-2">{nairobiExperiences.length}</div>
                 <div className="text-sm text-muted-foreground"><T k="dest_active_projects" /></div>
               </div>
               <div className="text-center">
