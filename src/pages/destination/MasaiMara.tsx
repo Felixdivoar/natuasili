@@ -50,7 +50,7 @@ const MasaiMaraDestination = () => {
                   Explore experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black" asChild>
+              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white" asChild>
                 <Link to="/impact-ledger">
                   View conservation impact
                 </Link>
