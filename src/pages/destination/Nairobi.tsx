@@ -72,10 +72,10 @@ const NairobiDestination = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">8</div>
-                <div className="text-sm text-muted-foreground"><T k="dest_urban_partners" /></div>
-              </div>
+               <div className="text-center">
+                 <div className="text-3xl font-bold text-conservation mb-2">{nairobiPartners.length}</div>
+                 <div className="text-sm text-muted-foreground"><T k="dest_urban_partners" /></div>
+               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">12</div>
                 <div className="text-sm text-muted-foreground"><T k="dest_active_projects" /></div>

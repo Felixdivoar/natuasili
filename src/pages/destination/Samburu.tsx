@@ -55,10 +55,10 @@ const SamburuDestination = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">6</div>
-                <div className="text-sm text-muted-foreground">Conservation Partners</div>
-              </div>
+               <div className="text-center">
+                 <div className="text-3xl font-bold text-conservation mb-2">{samburuPartners.length}</div>
+                 <div className="text-sm text-muted-foreground">Conservation Partners</div>
+               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">9</div>
                 <div className="text-sm text-muted-foreground">Active Projects</div>
