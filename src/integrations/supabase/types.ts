@@ -26,6 +26,7 @@ export type Database = {
           customer_phone: string | null
           experience_id: string
           id: string
+          payment_status: string | null
           special_requests: string | null
           status: string | null
           total_kes: number
@@ -43,6 +44,7 @@ export type Database = {
           customer_phone?: string | null
           experience_id: string
           id?: string
+          payment_status?: string | null
           special_requests?: string | null
           status?: string | null
           total_kes: number
@@ -60,6 +62,7 @@ export type Database = {
           customer_phone?: string | null
           experience_id?: string
           id?: string
+          payment_status?: string | null
           special_requests?: string | null
           status?: string | null
           total_kes?: number
@@ -252,6 +255,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          booking_id: string
+          created_at: string
+          currency: string
+          id: string
+          order_tracking_id: string
+          payment_data: Json | null
+          pesapal_transaction_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          booking_id: string
+          created_at?: string
+          currency?: string
+          id?: string
+          order_tracking_id: string
+          payment_data?: Json | null
+          pesapal_transaction_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          booking_id?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          order_tracking_id?: string
+          payment_data?: Json | null
+          pesapal_transaction_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       payouts: {
         Row: {
