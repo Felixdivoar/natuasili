@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useCurrency } from './CurrencyContext';
-import { isValidBookingDate, formatDateForBooking } from '@/utils/time';
+import { isValidBookingDate, formatDateForBooking, validateBookingDate } from '@/utils/time';
 
 export interface CartState {
   experienceSlug: string;
@@ -75,7 +75,14 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       
       // Validate and format date if it's being updated
       if (updates.date !== undefined) {
-        updated.date = formatDateForBooking(updates.date) || '';
+        const formattedDate = formatDateForBooking(updates.date);
+        if (formattedDate) {
+          const validation = validateBookingDate(formattedDate);
+          // Only store the date if it's valid, otherwise keep the previous date
+          updated.date = validation.isValid ? formattedDate : prev.date;
+        } else {
+          updated.date = '';
+        }
       }
       
       // Recalculate pricing if option or people changed
@@ -95,7 +102,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({
     setCart(initializeCart());
   };
 
-  const isValid = Boolean(cart?.date && isValidBookingDate(cart.date) && cart?.people > 0);
+  const isValid = Boolean(
+    cart?.date && 
+    isValidBookingDate(cart.date) && 
+    validateBookingDate(cart.date).isValid &&
+    cart?.people > 0
+  );
 
   // Update currency when it changes
   useEffect(() => {

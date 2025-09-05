@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Users, Clock, MapPin, Star, CheckCircle, Minus, Plus } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { saveCart } from "@/lib/cart";
-import { isSameDayBookingCutoffPassed, isTodayInLocal, isValidBookingDate } from "@/utils/time";
+import { isSameDayBookingCutoffPassed, isTodayInLocal, isValidBookingDate, validateBookingDate } from "@/utils/time";
 
 interface Experience {
   slug?: string;
@@ -156,7 +156,7 @@ const AvailabilityAndOptions = ({
 
   // persist + navigate
   const handleContinue = () => {
-    if (participantsError || !selectedDate || !isValidBookingDate(selectedDate)) return;
+    if (participantsError || !selectedDate || !dateValidation.isValid) return;
 
     // Trigger booking start callback
     if (onBookingStart) {
@@ -198,14 +198,13 @@ const AvailabilityAndOptions = ({
   const selectedOptionData = options.find(opt => opt.id === selectedOption) || options[0];
   const totals = computeTotals(selectedOption, selectedAdults, selectedChildren);
 
-  // Date validation
-  const isDateValid = !selectedDate || isValidBookingDate(selectedDate);
-  const dateError = selectedDate && !isDateValid ? "Please enter a valid date in YYYY-MM-DD format." : null;
+  // Date validation with comprehensive checks
+  const dateValidation = selectedDate ? validateBookingDate(selectedDate) : { isValid: false };
+  const isDateValid = !selectedDate || dateValidation.isValid;
+  const dateError = selectedDate && !dateValidation.isValid ? dateValidation.error : null;
 
-  // Same-day booking cutoff logic
-  const cutoffHit = selectedDate && isValidBookingDate(selectedDate) && isTodayInLocal(selectedDate) && isSameDayBookingCutoffPassed();
-  const cutoffMessage = "Same-day bookings close at 11:00 EAT. Please select a different date.";
-  const proceedDisabled = !selectedDate || !isDateValid || !!participantsError || cutoffHit;
+  // Updated proceed condition to use comprehensive validation
+  const proceedDisabled = !selectedDate || !dateValidation.isValid || !!participantsError;
 
   return (
     <section id="availability" className="availability-section scroll-mt-24">
@@ -233,16 +232,11 @@ const AvailabilityAndOptions = ({
                       value={selectedDate} 
                       onChange={e => setSelectedDate(e.target.value)} 
                       min={new Date().toISOString().split("T")[0]} 
-                      className={`w-full ${(cutoffHit || dateError) ? "border-red-500" : ""}`} 
+                      className={`w-full ${dateError ? "border-red-500" : ""}`} 
                     />
                     {dateError && (
                       <div className="text-red-600 text-sm mt-1" role="alert">
                         {dateError}
-                      </div>
-                    )}
-                    {cutoffHit && !dateError && (
-                      <div className="text-red-600 text-sm mt-1" role="alert">
-                        {cutoffMessage}
                       </div>
                     )}
                   </div>

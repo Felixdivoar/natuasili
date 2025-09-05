@@ -14,7 +14,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { isValidBookingDate } from "@/utils/time";
+import { isValidBookingDate, validateBookingDate } from "@/utils/time";
 import { saveReceipt } from "@/lib/receipt";
 import { makeImpactSummary } from "@/lib/impactSummary";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,6 +55,23 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     return formData.agreeTerms;
   };
 
+  const validateBookingData = () => {
+    if (!cart?.date) {
+      return { isValid: false, error: "Please select a booking date before continuing." };
+    }
+    
+    const dateValidation = validateBookingDate(cart.date);
+    if (!dateValidation.isValid) {
+      return { isValid: false, error: dateValidation.error };
+    }
+    
+    if (!cart.people || cart.people < 1) {
+      return { isValid: false, error: "Please select at least one participant." };
+    }
+    
+    return { isValid: true };
+  };
+
   const handleNextStep = () => {
     if (currentStep === 2 && validateStep2()) {
       setCurrentStep(3);
@@ -74,13 +91,18 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   const handleConfirmBooking = async () => {
     if (!validateStep3() || !cart || isProcessingPayment) return;
 
-    // Validate date before proceeding
-    if (!cart.date || !isValidBookingDate(cart.date)) {
+    // Comprehensive validation before proceeding
+    const validation = validateBookingData();
+    if (!validation.isValid) {
       toast({
-        title: "Invalid Date",
-        description: "Please select a valid booking date before continuing.",
+        title: "Booking Error",
+        description: validation.error,
         variant: "destructive",
       });
+      // If it's a date issue, go back to step 1 to fix it
+      if (validation.error?.includes("date") || validation.error?.includes("11:00")) {
+        handleEditDetails();
+      }
       return;
     }
 
@@ -444,7 +466,10 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                   <Button variant="outline" onClick={() => setCurrentStep(2)}>
                     {t('back', 'Back')}
                   </Button>
-                  <Button onClick={handleConfirmBooking} disabled={!validateStep3() || isProcessingPayment}>
+                  <Button 
+                    onClick={handleConfirmBooking} 
+                    disabled={!validateStep3() || isProcessingPayment || !validateBookingData().isValid}
+                  >
                     {isProcessingPayment ? 'Processing...' : t('payWithPesapal', 'Pay with Pesapal')}
                   </Button>
                 </div>

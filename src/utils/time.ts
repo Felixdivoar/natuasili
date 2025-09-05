@@ -52,3 +52,36 @@ export function formatDateForBooking(dateString: string): string | null {
     return null;
   }
 }
+
+export function validateBookingDate(dateString: string): { isValid: boolean; error?: string } {
+  if (!dateString) {
+    return { isValid: false, error: "Please select a booking date." };
+  }
+  
+  if (!isValidBookingDate(dateString)) {
+    return { isValid: false, error: "Please select a valid booking date." };
+  }
+  
+  // Check if it's in the past (excluding today)
+  const today = new Date();
+  const eatMs = today.getTime() + 3 * 60 * 60 * 1000; // Convert to EAT
+  const eatToday = new Date(eatMs);
+  const todayString = eatToday.toISOString().split('T')[0];
+  
+  const selectedDate = new Date(dateString);
+  const todayDate = new Date(todayString);
+  
+  if (selectedDate < todayDate) {
+    return { isValid: false, error: "Booking date cannot be in the past." };
+  }
+  
+  // Check same-day cutoff (11:00 AM EAT)
+  if (isTodayInLocal(dateString) && isSameDayBookingCutoffPassed()) {
+    return { 
+      isValid: false, 
+      error: "Same-day bookings must be made before 11:00 AM EAT. Please select a later date." 
+    };
+  }
+  
+  return { isValid: true };
+}
