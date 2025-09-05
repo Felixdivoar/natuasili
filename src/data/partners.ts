@@ -630,8 +630,9 @@ function generatePartners(): Partner[] {
     const allThemes = [...new Set(partnerExps.flatMap(exp => exp.themes))];
     const allActivities = [...new Set(partnerExps.flatMap(exp => exp.activities))];
     
-    // Get unique partner image or fallback to themed placeholder
-    const partnerImage = PARTNER_IMAGES[partnerName] || getExperienceImages(partnerName, allActivities)[0];
+    // Get the first image from the partner's first experience with uploaded images
+    const experienceWithImages = partnerExps.find(exp => exp.images && exp.images.length > 0 && exp.images[0].startsWith('/lovable-uploads/'));
+    const partnerImage = experienceWithImages?.images?.[0] || PARTNER_IMAGES[partnerName] || getExperienceImages(partnerName, allActivities)[0];
     
     return {
       id: (index + 1).toString(),
