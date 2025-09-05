@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
-import masaiMaraDestination from "@/assets/destinations/masai-mara-destination.jpg";
+const masaiMaraDestination = "/lovable-uploads/e6151cde-ba00-40f3-9644-e9e41db45d3c.png";
 
 const MasaiMaraDestination = () => {
   const { formatPrice } = useCurrency();

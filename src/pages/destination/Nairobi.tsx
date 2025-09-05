@@ -13,7 +13,7 @@ import { useHtmlLang } from "@/hooks/useHtmlLang";
 import T from "@/i18n/T";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
 
-import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
+const nairobiDestination = "/lovable-uploads/c6ba72b7-b716-46f6-8a41-82a8aa392147.png";
 
 const NairobiDestination = () => {
   const { formatPrice } = useCurrency();

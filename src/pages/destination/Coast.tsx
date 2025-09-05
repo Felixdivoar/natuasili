@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
-import coastDestination from "@/assets/destinations/coast-destination.jpg";
+const coastDestination = "/lovable-uploads/c850b659-fc68-43f0-9bab-ac31a0ed1bc8.png";
 
 const CoastDestination = () => {
   const { formatPrice } = useCurrency();

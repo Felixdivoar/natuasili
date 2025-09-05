@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 
-import laikipiaDestination from "@/assets/destinations/laikipia-destination.jpg";
+const laikipiaDestination = "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png";
 
 const LaikipiaDestination = () => {
   const { formatPrice } = useCurrency();

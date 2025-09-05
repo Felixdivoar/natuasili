@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import samburuDestination from "@/assets/destinations/samburu-destination.jpg";
+const samburuDestination = "/lovable-uploads/01b8fcc6-ad62-462a-aad8-c45697827e2e.png";
 const SamburuDestination = () => {
   const {
     formatPrice
