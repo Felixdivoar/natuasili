@@ -36,7 +36,7 @@ const SamburuDestination = () => {
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white" asChild>
+              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white hover:text-black active:text-black focus:text-black" asChild>
                 <Link to="/impact-ledger">
                   View Conservation Impact
                 </Link>

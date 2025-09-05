@@ -60,7 +60,7 @@ const NairobiDestination = () => {
                   <T k="dest_explore_experiences" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white" asChild>
+              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white hover:text-black active:text-black focus:text-black" asChild>
                 <Link to="/impact-ledger">
                   <T k="dest_view_urban_impact" />
                 </Link>
