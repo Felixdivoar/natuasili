@@ -14,6 +14,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { isValidBookingDate } from "@/utils/time";
 import { saveReceipt } from "@/lib/receipt";
 import { makeImpactSummary } from "@/lib/impactSummary";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,6 +73,16 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
   const handleConfirmBooking = async () => {
     if (!validateStep3() || !cart || isProcessingPayment) return;
+
+    // Validate date before proceeding
+    if (!cart.date || !isValidBookingDate(cart.date)) {
+      toast({
+        title: "Invalid Date",
+        description: "Please select a valid booking date before continuing.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsProcessingPayment(true);
 

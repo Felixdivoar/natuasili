@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useCurrency } from './CurrencyContext';
+import { isValidBookingDate, formatDateForBooking } from '@/utils/time';
 
 export interface CartState {
   experienceSlug: string;
@@ -41,7 +42,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({
   
   // Initialize cart with URL params if available
   const initializeCart = (): CartState => {
-    const urlDate = searchParams.get('date') || '';
+    const rawUrlDate = searchParams.get('date') || '';
+    const urlDate = formatDateForBooking(rawUrlDate) || '';
     const urlPeople = parseInt(searchParams.get('people') || '1');
     const urlOption = (searchParams.get('option') as 'standard' | 'premium') || 'standard';
     
@@ -71,6 +73,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       
       const updated = { ...prev, ...updates };
       
+      // Validate and format date if it's being updated
+      if (updates.date !== undefined) {
+        updated.date = formatDateForBooking(updates.date) || '';
+      }
+      
       // Recalculate pricing if option or people changed
       if (updates.optionId || updates.people) {
         const optionMultiplier = updated.optionId === 'premium' ? 1.3 : 1;
@@ -88,7 +95,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
     setCart(initializeCart());
   };
 
-  const isValid = Boolean(cart?.date && cart?.people > 0);
+  const isValid = Boolean(cart?.date && isValidBookingDate(cart.date) && cart?.people > 0);
 
   // Update currency when it changes
   useEffect(() => {

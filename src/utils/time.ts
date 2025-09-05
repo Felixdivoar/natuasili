@@ -24,3 +24,31 @@ export function isTodayInLocal(selectedISO: string, tzOffsetMinutes = 0): boolea
   const eatYYYYMMDD = `${y}-${m}-${d}`;
   return selectedISO === eatYYYYMMDD;
 }
+
+export function isValidBookingDate(dateString: string): boolean {
+  if (!dateString) return false;
+  
+  // Check if it matches YYYY-MM-DD format
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(dateString)) return false;
+  
+  // Check if it's a valid date
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return false;
+  
+  // Check if the date string matches what we get back from toISOString
+  const isoString = date.toISOString().split('T')[0];
+  return isoString === dateString;
+}
+
+export function formatDateForBooking(dateString: string): string | null {
+  if (!dateString) return null;
+  
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return null;
+    return date.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+  } catch {
+    return null;
+  }
+}
