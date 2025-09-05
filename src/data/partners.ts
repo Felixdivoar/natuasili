@@ -77,7 +77,7 @@ export type Partner = {
 
 // Partner image mapping for unique, high-quality conservation images
 const PARTNER_IMAGES: Record<string, string> = {
-  "Koija Community": koijaCommunityImg,
+  "Koija Community": "/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png",
   "Sera Conservancy": seraConservancyImg,
   "Ruko Community Conservancy": rukoConservancyImg,
   "Colobus Conservation": colobusConservationImg,
@@ -104,7 +104,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
   
   // Map experience titles/activities to appropriate images
   if (titleLower.includes("cultural village") || titleLower.includes("koija")) {
-    return [beadworkWorkshop, koijaCommunityImg, "/images/placeholder-1.jpg"];
+    return ["/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png", "/lovable-uploads/3a4d487a-fe3a-40ce-aa28-18adf4191e69.png", "/lovable-uploads/396bdd72-dc8d-4727-8fd8-e73dba015ec2.png"];
   }
   if (titleLower.includes("rhino") && titleLower.includes("tracking")) {
     return [olPejeteRhino, northernWhiteRhinos, seraConservancyImg];
@@ -184,9 +184,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "samburu",
     themes: ["Community & cultural exploration"],
     activities: ["village", "culture", "community"],
-    images: getExperienceImages("Koija Cultural Village", ["village", "culture", "community"]),
-    heroImage: beadworkWorkshop,
-    gallery: [beadworkWorkshop, koijaCommunityImg, "/images/placeholder-1.jpg"],
+    images: ["/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png", "/lovable-uploads/3a4d487a-fe3a-40ce-aa28-18adf4191e69.png", "/lovable-uploads/396bdd72-dc8d-4727-8fd8-e73dba015ec2.png", "/lovable-uploads/cc847573-d3b5-4aa6-8d5c-26b81ce2b693.png", "/lovable-uploads/a4b8d107-90cf-4f50-9401-95350c393f65.png", "/lovable-uploads/c6c43dc7-52c0-4f45-baf7-4093fc59cf98.png"],
+    heroImage: "/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png",
+    gallery: ["/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png", "/lovable-uploads/3a4d487a-fe3a-40ce-aa28-18adf4191e69.png", "/lovable-uploads/396bdd72-dc8d-4727-8fd8-e73dba015ec2.png", "/lovable-uploads/cc847573-d3b5-4aa6-8d5c-26b81ce2b693.png", "/lovable-uploads/a4b8d107-90cf-4f50-9401-95350c393f65.png", "/lovable-uploads/c6c43dc7-52c0-4f45-baf7-4093fc59cf98.png"],
     description: "Immerse yourself in the rich cultural heritage of the Samburu people at Koija Cultural Village. Experience traditional dances, learn about ancient customs, and witness the daily life of this proud community. This authentic cultural exchange supports local livelihoods while preserving important traditions for future generations.",
     priceKESAdult: 2000,
     childHalfPriceRule: false,
