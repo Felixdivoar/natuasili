@@ -62,11 +62,11 @@ export default function DestinationExperienceCarousel({
         <div className="max-w-[1150px] mx-auto px-[15px]">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-            <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
+            <Link to={`/destinations/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
               {t("dest_experiences_in")} {destinationLabels[destination]}
             </Link>
           </h2>
-          <Link to={`/destinations/kenya/${destinationPaths[destination]}`} className="text-primary hover:underline">
+          <Link to={`/destinations/${destinationPaths[destination]}`} className="text-primary hover:underline">
             {t("dest_view_all")}
           </Link>
         </div>
