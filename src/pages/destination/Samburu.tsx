@@ -142,11 +142,6 @@ const SamburuDestination = () => {
                         View Partner
                       </Link>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link to={`/listings?partner=${partner.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                        Experiences
-                      </Link>
-                    </Button>
                   </div>
                 </CardContent>
               </Card>)}
