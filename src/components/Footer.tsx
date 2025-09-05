@@ -12,18 +12,7 @@ const Footer = () => {
   return (
     <footer className="bg-foreground text-white site-footer">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-          {/* Quick Links - Alphabetically Organized */}
-          <div>
-            <h4 className="font-semibold mb-4">{t("footer_explore")}</h4>
-            <ul className="space-y-2 text-sm footer-explore">
-              <li><Link to="/about" className="text-white/80 hover:text-accent transition-colors">{t("footer_about")}</Link></li>
-              <li><Link to="/destinations" className="text-white/80 hover:text-accent transition-colors">{t("footer_destinations")}</Link></li>
-              <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">{t("footer_marketplace")}</Link></li>
-              <li><Link to="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">{t("footer_privacy")}</Link></li>
-            </ul>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
           {/* Resources - Alphabetically Organized */}
           <div>
