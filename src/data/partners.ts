@@ -88,7 +88,7 @@ const PARTNER_IMAGES: Record<string, string> = {
   "Reteti Elephant Sanctuary": retetiSanctuaryImg,
   "Ol Pejeta Conservancy": olPejetaImg,
   "Reefolution": "/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png",
-  "Mara Elephant Project": maraElephantImg,
+  "Mara Elephant Project": "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png",
   // Fallback for any partners not explicitly mapped
 };
 
@@ -149,7 +149,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png"];
   }
   if (titleLower.includes("drone") || titleLower.includes("mara elephant")) {
-    return [maraElephantTracking, maraElephantImg, "/images/placeholder-2.jpg"];
+    return ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"];
   }
   
   // Default fallback based on theme/activities
@@ -488,9 +488,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "masai-mara",
     themes: ["Wildlife conservation"],
     activities: ["drone", "elephant"],
-    images: getExperienceImages("Drone Conservation – Mara Elephant", ["drone", "elephant"]),
-    heroImage: maraElephantTracking,
-    gallery: [maraElephantTracking, maraElephantImg, "/images/placeholder-2.jpg"],
+    images: ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"],
+    heroImage: "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png",
+    gallery: ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"],
     description: "Experience cutting-edge conservation technology with the Mara Elephant Project's drone program. Learn how aerial surveillance protects elephants, prevents human-wildlife conflict, and supports community-based conservation efforts in the Maasai Mara ecosystem.",
     priceKESAdult: 10000,
     childHalfPriceRule: false,
