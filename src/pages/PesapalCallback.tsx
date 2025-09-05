@@ -88,7 +88,7 @@ export default function PesapalCallback() {
           )
         `)
         .eq('order_tracking_id', orderTrackingId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching payment:', error);

@@ -26,10 +26,13 @@ export type Database = {
           customer_phone: string | null
           experience_id: string
           id: string
+          option_id: string | null
           payment_status: string | null
           special_requests: string | null
           status: string | null
+          subtotal_kes: number | null
           total_kes: number
+          unit_price_kes: number | null
           updated_at: string | null
           user_id: string
         }
@@ -44,10 +47,13 @@ export type Database = {
           customer_phone?: string | null
           experience_id: string
           id?: string
+          option_id?: string | null
           payment_status?: string | null
           special_requests?: string | null
           status?: string | null
+          subtotal_kes?: number | null
           total_kes: number
+          unit_price_kes?: number | null
           updated_at?: string | null
           user_id: string
         }
@@ -62,10 +68,13 @@ export type Database = {
           customer_phone?: string | null
           experience_id?: string
           id?: string
+          option_id?: string | null
           payment_status?: string | null
           special_requests?: string | null
           status?: string | null
+          subtotal_kes?: number | null
           total_kes?: number
+          unit_price_kes?: number | null
           updated_at?: string | null
           user_id?: string
         }

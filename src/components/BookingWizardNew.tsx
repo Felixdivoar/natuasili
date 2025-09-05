@@ -76,51 +76,29 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     setIsProcessingPayment(true);
 
     try {
-      // First, check if the experience exists in Supabase or create it
-      let experienceId = experience.id;
+      // Find existing experience in Supabase (don't create new ones)
+      let experienceId: string;
       
-      // If the experience ID is not in UUID format, try to find it by slug or create it
-      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(experience.id)) {
-        const { data: existingExperience } = await supabase
-          .from('experiences')
-          .select('id')
-          .eq('slug', experience.slug)
-          .single();
-          
-        if (existingExperience) {
-          experienceId = existingExperience.id;
-        } else {
-          // Create the experience in Supabase
-          const { data: newExperience, error: expError } = await supabase
-            .from('experiences')
-            .insert({
-              title: experience.title,
-              slug: experience.slug,
-              description: experience.description || '',
-              location_text: experience.location_text || '',
-              hero_image: experience.hero_image || '',
-              price_kes_adult: cart.optionId === 'premium' ? 455 : 350,
-              capacity: experience.capacity || 15,
-              partner_id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479', // Default partner ID - should be updated
-              visible_on_marketplace: true,
-            })
-            .select('id')
-            .single();
-            
-          if (expError) {
-            throw new Error(`Failed to create experience: ${expError.message}`);
-          }
-          
-          experienceId = newExperience.id;
-        }
+      const { data: existingExperience } = await supabase
+        .from('experiences')
+        .select('id')
+        .eq('slug', experience.slug)
+        .single();
+        
+      if (existingExperience?.id) {
+        experienceId = existingExperience.id;
+      } else {
+        // For demo purposes, use a fixed UUID when experience doesn't exist in DB
+        // In production, all experiences should exist in the database
+        experienceId = '00000000-0000-0000-0000-000000000001';
       }
 
-      // Create the booking in the database
+      // Create the booking in the database with new fields
       const { data: booking, error: bookingError } = await supabase
         .from('bookings')
         .insert({
           experience_id: experienceId,
-          user_id: user?.id || null,
+          user_id: user?.id,
           customer_name: formData.name,
           customer_email: formData.email,
           customer_phone: formData.phone,
@@ -128,6 +106,9 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           adults: cart.people,
           children: 0,
           total_kes: cart.subtotal,
+          option_id: cart.optionId || 'standard',
+          unit_price_kes: cart.unitPrice,
+          subtotal_kes: cart.subtotal,
           status: 'pending',
           payment_status: 'pending',
           special_requests: formData.specialRequests,
@@ -136,6 +117,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         .single();
 
       if (bookingError) {
+        console.error('Booking error:', bookingError);
         throw new Error(`Failed to create booking: ${bookingError.message}`);
       }
 
@@ -156,6 +138,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       });
 
       if (paymentError) {
+        console.error('Payment error:', paymentError);
         throw new Error(`Payment setup failed: ${paymentError.message}`);
       }
 
@@ -184,7 +167,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       console.error('Error processing booking:', error);
       toast({
         title: 'Booking Failed',
-        description: error.message || 'There was an error processing your booking. Please try again.',
+        description: error instanceof Error ? error.message : 'There was an error processing your booking. Please try again.',
         variant: 'destructive',
       });
     } finally {
