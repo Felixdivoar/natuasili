@@ -87,7 +87,7 @@ const PARTNER_IMAGES: Record<string, string> = {
   "Giraffe Centre (AFEW)": afewGiraffeImg,
   "Reteti Elephant Sanctuary": retetiSanctuaryImg,
   "Ol Pejeta Conservancy": olPejetaImg,
-  "Reefolution": reefolutionImg,
+  "Reefolution": "/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png",
   "Mara Elephant Project": maraElephantImg,
   // Fallback for any partners not explicitly mapped
 };
@@ -146,7 +146,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return [k9HandlerTraining, olPejetaImg, "/images/placeholder-4.jpg"];
   }
   if (titleLower.includes("coral") || titleLower.includes("reef")) {
-    return [localOceanConservation, reefolutionImg, "/images/placeholder-1.jpg"];
+    return ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png"];
   }
   if (titleLower.includes("drone") || titleLower.includes("mara elephant")) {
     return [maraElephantTracking, maraElephantImg, "/images/placeholder-2.jpg"];
@@ -469,9 +469,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "coastal-kenya",
     themes: ["Conservation education"],
     activities: ["coral", "diving"],
-    images: getExperienceImages("Dive into Coral Conservation (Reefolution)", ["coral", "diving"]),
-    heroImage: localOceanConservation,
-    gallery: [localOceanConservation, reefolutionImg, "/images/placeholder-1.jpg"],
+    images: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png", "/lovable-uploads/34e27ffd-1e7e-4e27-b73c-8c4a32dfaf96.png", "/lovable-uploads/e6f4a974-f663-48e0-8aa7-dcecd15fb88a.png", "/lovable-uploads/22d0e577-d64d-4381-a819-432a4c010611.png", "/lovable-uploads/6116148a-eaef-4942-b31a-feacddf7129c.png", "/lovable-uploads/75c0a6d6-4ca2-43a5-adcc-0734f2ac5e95.png"],
+    heroImage: "/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png",
+    gallery: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png", "/lovable-uploads/34e27ffd-1e7e-4e27-b73c-8c4a32dfaf96.png", "/lovable-uploads/e6f4a974-f663-48e0-8aa7-dcecd15fb88a.png", "/lovable-uploads/22d0e577-d64d-4381-a819-432a4c010611.png", "/lovable-uploads/6116148a-eaef-4942-b31a-feacddf7129c.png", "/lovable-uploads/75c0a6d6-4ca2-43a5-adcc-0734f2ac5e95.png"],
     description: "Dive into marine conservation with Reefolution's coral restoration program. Participate in coral planting, learn about reef ecosystems, and contribute to groundbreaking efforts to restore Kenya's threatened coral reefs through innovative techniques.",
     priceKESAdult: 10000,
     childHalfPriceRule: false,
