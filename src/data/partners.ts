@@ -333,7 +333,7 @@ export const EXPERIENCES: Experience[] = [
     id: "exp-reteti-elephant",
     slug: P("Reteti Community Elephant Experience"),
     partner: "Reteti Elephant Sanctuary",
-    destination: "masai-mara",
+    destination: "samburu",
     themes: ["Wildlife conservation"],
     activities: ["elephant", "sanctuary"],
     images: [retetiMainImg, retetiFeedingImg, retetiCareOutdoorImg, retetiCareFacilityImg, retetiHerdImg, retetiBottleFeedingImg],
