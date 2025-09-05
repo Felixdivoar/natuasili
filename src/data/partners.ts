@@ -82,7 +82,7 @@ const PARTNER_IMAGES: Record<string, string> = {
   "Ruko Community Conservancy": "/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png",
   "Colobus Conservation": colobusConservationImg,
   "Local Ocean (Watamu)": localOceanImg,
-  "Kenya Forest Heritage": forestHeritageImg,
+  "Kenya Forest Heritage": "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png",
   "Nature Kenya": natureKenyaImg,
   "Giraffe Centre (AFEW)": afewGiraffeImg,
   "Reteti Elephant Sanctuary": retetiSanctuaryImg,
@@ -119,7 +119,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return [localOceanConservation, mangroveRestoration, localOceanImg];
   }
   if (titleLower.includes("tree walk") || titleLower.includes("forest")) {
-    return [karuraForestPlanting, forestHeritageImg, "/images/placeholder-3.jpg"];
+    return ["/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/lovable-uploads/7ecd7176-f5b7-48b1-ae30-b697e0501c03.png", "/lovable-uploads/caa3fd6e-7c09-4774-91b1-9f5c0d61c57f.png", "/lovable-uploads/5dff9e8b-0607-44a7-88c3-525c96ba6fd4.png", "/lovable-uploads/4125d657-63a3-40bd-9a41-21d7bd0c3129.png"];
   }
   if (titleLower.includes("dudu") || titleLower.includes("insect") || activities.includes("education")) {
     return [natureKenyaBirdwatching, natureKenyaImg, "/images/placeholder-4.jpg"];
@@ -279,9 +279,9 @@ export const EXPERIENCES: Experience[] = [
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["forest", "walk", "trees"],
-    images: getExperienceImages("Tree Walk – Kenya Forest Heritage", ["forest", "walk", "trees"]),
-    heroImage: karuraForestPlanting,
-    gallery: [karuraForestPlanting, forestHeritageImg, "/images/placeholder-3.jpg"],
+    images: ["/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/lovable-uploads/7ecd7176-f5b7-48b1-ae30-b697e0501c03.png", "/lovable-uploads/caa3fd6e-7c09-4774-91b1-9f5c0d61c57f.png", "/lovable-uploads/5dff9e8b-0607-44a7-88c3-525c96ba6fd4.png", "/lovable-uploads/4125d657-63a3-40bd-9a41-21d7bd0c3129.png"],
+    heroImage: "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png",
+    gallery: ["/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/lovable-uploads/7ecd7176-f5b7-48b1-ae30-b697e0501c03.png", "/lovable-uploads/caa3fd6e-7c09-4774-91b1-9f5c0d61c57f.png", "/lovable-uploads/5dff9e8b-0607-44a7-88c3-525c96ba6fd4.png", "/lovable-uploads/4125d657-63a3-40bd-9a41-21d7bd0c3129.png"],
     description: "Explore Kenya's indigenous forest heritage through guided tree walks. Learn about native species, traditional uses of forest resources, and ongoing conservation efforts to preserve these vital ecosystems for future generations.",
     priceKESAdult: 500,
     childHalfPriceRule: false,
