@@ -118,6 +118,16 @@ const ExperienceDetail = () => {
     setIsBookingModalOpen(true);
   };
 
+  const handleBookNowClick = () => {
+    // If booking has started (valid selections made), open modal directly
+    if (bookingStarted) {
+      openBookingModal();
+    } else {
+      // Otherwise scroll to availability section
+      scrollToAvailability();
+    }
+  };
+
   const getThemeSlug = (theme: string) => {
     const themeMap: Record<string, string> = {
       'wildlife': 'wildlife-conservation',
@@ -192,7 +202,11 @@ const ExperienceDetail = () => {
   ];
 
   return (
-    <CartProvider experienceSlug={experience.slug} basePrice={experience.priceKESAdult}>
+    <CartProvider 
+      experienceSlug={experience.slug} 
+      basePrice={experience.priceKESAdult}
+      childHalfPriceRule={experience.childHalfPriceRule || false}
+    >
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative" ref={heroRef}>
@@ -501,7 +515,7 @@ const ExperienceDetail = () => {
                   <div className="text-sm text-muted-foreground">from</div>
                   <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
                 </div>
-                <Button onClick={scrollToAvailability} size="lg">
+                <Button onClick={handleBookNowClick} size="lg">
                   {t('bookNow', 'Book Now')}
                 </Button>
               </div>
@@ -515,8 +529,8 @@ const ExperienceDetail = () => {
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
               </div>
-              <Button onClick={scrollToAvailability} size="lg" className="flex-1">
-                {t('bookNow', 'Book Now')}
+              <Button onClick={handleBookNowClick} size="lg" className="flex-1">
+                {bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
               </Button>
             </div>
           </div>

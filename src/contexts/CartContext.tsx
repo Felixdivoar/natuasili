@@ -6,9 +6,11 @@ import { isValidBookingDate, formatDateForBooking, validateBookingDate } from '@
 export interface CartState {
   experienceSlug: string;
   date: string;
-  people: number;
+  adults: number;
+  children: number;
   optionId: 'standard' | 'premium';
   unitPrice: number;
+  childPrice: number;
   subtotal: number;
   split: {
     partner90: number;
@@ -30,12 +32,14 @@ interface CartProviderProps {
   children: React.ReactNode;
   experienceSlug: string;
   basePrice: number;
+  childHalfPriceRule?: boolean;
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ 
   children, 
   experienceSlug, 
-  basePrice 
+  basePrice,
+  childHalfPriceRule = false
 }) => {
   const [searchParams] = useSearchParams();
   const { currency } = useCurrency();
@@ -44,21 +48,25 @@ export const CartProvider: React.FC<CartProviderProps> = ({
   const initializeCart = (): CartState => {
     const rawUrlDate = searchParams.get('date') || '';
     const urlDate = formatDateForBooking(rawUrlDate) || '';
-    const urlPeople = parseInt(searchParams.get('people') || '1');
+    const urlAdults = parseInt(searchParams.get('adults') || searchParams.get('people') || '1');
+    const urlChildren = parseInt(searchParams.get('children') || '0');
     const urlOption = (searchParams.get('option') as 'standard' | 'premium') || 'standard';
     
     const optionMultiplier = urlOption === 'premium' ? 1.3 : 1;
     const unitPrice = Math.round(basePrice * optionMultiplier);
-    const subtotal = unitPrice * urlPeople;
+    const childPrice = childHalfPriceRule ? Math.round(unitPrice * 0.5) : unitPrice;
+    const subtotal = (unitPrice * urlAdults) + (childPrice * urlChildren);
     const partner90 = Math.round(subtotal * 0.9);
     const platform10 = subtotal - partner90;
 
     return {
       experienceSlug,
       date: urlDate,
-      people: urlPeople,
+      adults: urlAdults,
+      children: urlChildren,
       optionId: urlOption,
       unitPrice,
+      childPrice,
       subtotal,
       split: { partner90, platform10 },
       currency
@@ -85,11 +93,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({
         }
       }
       
-      // Recalculate pricing if option or people changed
-      if (updates.optionId || updates.people) {
+      // Recalculate pricing if option, adults, or children changed
+      if (updates.optionId || updates.adults !== undefined || updates.children !== undefined) {
         const optionMultiplier = updated.optionId === 'premium' ? 1.3 : 1;
         updated.unitPrice = Math.round(basePrice * optionMultiplier);
-        updated.subtotal = updated.unitPrice * updated.people;
+        updated.childPrice = childHalfPriceRule ? Math.round(updated.unitPrice * 0.5) : updated.unitPrice;
+        updated.subtotal = (updated.unitPrice * updated.adults) + (updated.childPrice * updated.children);
         updated.split.partner90 = Math.round(updated.subtotal * 0.9);
         updated.split.platform10 = updated.subtotal - updated.split.partner90;
       }
@@ -106,7 +115,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
     cart?.date && 
     isValidBookingDate(cart.date) && 
     validateBookingDate(cart.date).isValid &&
-    cart?.people > 0
+    cart?.adults > 0
   );
 
   // Update currency when it changes

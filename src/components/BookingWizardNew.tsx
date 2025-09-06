@@ -65,8 +65,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       return { isValid: false, error: dateValidation.error };
     }
     
-    if (!cart.people || cart.people < 1) {
-      return { isValid: false, error: "Please select at least one participant." };
+    if (!cart.adults || cart.adults < 1) {
+      return { isValid: false, error: "Please select at least one adult participant." };
     }
     
     return { isValid: true };
@@ -136,8 +136,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           customer_email: formData.email,
           customer_phone: formData.phone,
           booking_date: cart.date,
-          adults: cart.people,
-          children: 0,
+          adults: cart.adults,
+          children: cart.children,
           total_kes: cart.subtotal,
           option_id: cart.optionId || 'standard',
           unit_price_kes: cart.unitPrice,
@@ -160,7 +160,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           booking_id: booking.id,
           amount: cart.subtotal,
           currency: cart.currency,
-          description: `Booking for ${experience.title} - ${cart.people} people on ${cart.date}`,
+          description: `Booking for ${experience.title} - ${cart.adults + cart.children} people on ${cart.date}`,
           customer: {
             email: formData.email,
             first_name: formData.name.split(' ')[0] || formData.name,
@@ -183,7 +183,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       const receipt = {
         slug: experience.slug,
         date: cart.date,
-        people: cart.people,
+        people: cart.adults + cart.children,
         optionId: cart.optionId,
         unitPrice: cart.unitPrice,
         subtotal: cart.subtotal,
@@ -212,7 +212,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     title: experience.title,
     location: experience.locationText,
     date: cart.date,
-    people: cart.people,
+    people: cart.adults + cart.children,
     unitPriceKES: cart.unitPrice,
     currency: cart.currency
   }) : null;
@@ -292,7 +292,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                       </div>
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-muted-foreground" />
-                        <span>{cart.people} people</span>
+                        <span>{cart.adults + cart.children} people</span>
                       </div>
                       <div className="col-span-2">
                         <Badge variant="secondary">{cart.optionId === 'premium' ? 'Premium Experience' : 'Standard Experience'}</Badge>
@@ -388,7 +388,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                           </div>
                           <div className="flex items-center gap-2">
                             <Users className="h-4 w-4 text-muted-foreground" />
-                            <span>{cart.people} people</span>
+                            <span>{cart.adults + cart.children} people</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <User className="h-4 w-4 text-muted-foreground" />
@@ -409,7 +409,11 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                       {/* Price Summary */}
                       <div className="border-t pt-4 space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span>{formatPrice(cart.unitPrice)} × {cart.people} people</span>
+                          <span>
+                            {cart.adults > 0 && `${formatPrice(cart.unitPrice)} × ${cart.adults} adults`}
+                            {cart.adults > 0 && cart.children > 0 && " + "}
+                            {cart.children > 0 && `${formatPrice(cart.childPrice)} × ${cart.children} children`}
+                          </span>
                           <span>{formatPrice(cart.subtotal)}</span>
                         </div>
                         <div className="space-y-1 text-xs text-muted-foreground">
@@ -499,8 +503,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                         <span>{cart.date}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>People:</span>
-                        <span>{cart.people}</span>
+                        <span>Participants:</span>
+                        <span>{cart.adults + cart.children} {cart.adults + cart.children === 1 ? 'person' : 'people'}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Option:</span>
@@ -577,10 +581,18 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                 <h4 className="font-semibold">Price Summary</h4>
                 
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>{formatPrice(cart.unitPrice)} × {cart.people}</span>
-                    <span>{formatPrice(cart.subtotal)}</span>
-                  </div>
+                  {cart.adults > 0 && (
+                    <div className="flex justify-between">
+                      <span>{formatPrice(cart.unitPrice)} × {cart.adults} adults</span>
+                      <span>{formatPrice(cart.unitPrice * cart.adults)}</span>
+                    </div>
+                  )}
+                  {cart.children > 0 && (
+                    <div className="flex justify-between">
+                      <span>{formatPrice(cart.childPrice)} × {cart.children} children</span>
+                      <span>{formatPrice(cart.childPrice * cart.children)}</span>
+                    </div>
+                  )}
                   
                   <div className="border-t pt-2 space-y-1 text-xs text-muted-foreground">
                     <div className="flex justify-between">

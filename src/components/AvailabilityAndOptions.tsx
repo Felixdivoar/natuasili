@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Users, Clock, MapPin, Star, CheckCircle, Minus, Plus } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useCart } from "@/contexts/CartContext";
 import { saveCart } from "@/lib/cart";
 import { isSameDayBookingCutoffPassed, isTodayInLocal, isValidBookingDate, validateBookingDate } from "@/utils/time";
 
@@ -44,6 +45,7 @@ const AvailabilityAndOptions = ({
 }: AvailabilityAndOptionsProps) => {
   const navigate = useNavigate();
   const { formatPrice } = useCurrency();
+  const { updateCart } = useCart();
   
   // Initialize state from props or defaults
   const [selectedDate, setSelectedDate] = useState(initialParams?.date || "");
@@ -54,6 +56,16 @@ const AvailabilityAndOptions = ({
 
   const basePrice = experience.base_price || experience.priceKESAdult || 350;
   const childPrice = experience.childHalfPriceRule ? Math.round(basePrice * 0.5) : basePrice;
+
+  // Update cart whenever selections change
+  useEffect(() => {
+    updateCart({
+      date: selectedDate,
+      adults: selectedAdults,
+      children: selectedChildren,
+      optionId: selectedOption
+    });
+  }, [selectedDate, selectedAdults, selectedChildren, selectedOption, updateCart]);
 
   // Update parent component when selections change
   useEffect(() => {
