@@ -139,7 +139,7 @@ const BlogSection = () => {
   const displayPosts = blogPosts.slice(0, 6);
 
   return (
-    <section className="py-16 bg-muted/30 home-blog">
+    <section className="section-padding-lg bg-muted/30 home-blog">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

@@ -140,7 +140,7 @@ const PartnerWithUs: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
+      <section className="relative hero-padding px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-[1150px] mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
@@ -172,7 +172,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Trusted Partners Carousel */}
-      <section className="py-16 bg-muted/30">
+      <section className="section-padding-lg bg-muted/30">
         <div className="max-w-[1150px] mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Trusted by leading conservation organizations</h2>
@@ -279,7 +279,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Value Props */}
-      <section className="py-20 px-4">
+      <section className="hero-padding px-4">
         <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Partner With Natuasili?</h2>
@@ -304,7 +304,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="hero-padding px-4 bg-muted/30">
         <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
@@ -327,7 +327,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Features */}
-      <section className="py-20 px-4">
+      <section className="hero-padding px-4">
         <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Platform Features</h2>
@@ -354,7 +354,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Pricing */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="hero-padding px-4 bg-muted/30">
         <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
@@ -390,7 +390,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 px-4">
+      <section className="hero-padding px-4">
         <div className="max-w-[1150px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
@@ -409,7 +409,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-20 px-4 bg-primary text-primary-foreground">
+      <section className="hero-padding px-4 bg-primary text-primary-foreground">
         <div className="max-w-[1150px] mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Partner with Us?</h2>
           <p className="text-xl mb-8 opacity-90">

@@ -28,7 +28,7 @@ const PartnerProfile = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 section-padding-lg">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">Partner not found</h1>
             <p className="text-muted-foreground mb-6">
@@ -144,7 +144,7 @@ const PartnerProfile = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 section-padding-lg">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}

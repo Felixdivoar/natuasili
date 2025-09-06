@@ -39,7 +39,7 @@ const ExperienceDetail = () => {
     console.log("Experience not found, showing error page");
     return (
       <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-16">
+        <div className="container mx-auto px-4 section-padding-lg">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">{t('experienceNotFound', 'Experience Not Found')}</h1>
             <p className="text-muted-foreground mb-6">{t('experienceNotFoundDesc', 'The experience you\'re looking for doesn\'t exist.')}</p>

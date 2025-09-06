@@ -5,7 +5,7 @@ import { mockExperiences } from "@/data/mockData";
 
 const FeaturedExperiences = () => {
   return (
-      <section className="py-16 bg-background landing-experiences featured-experiences">
+      <section className="section-padding-lg bg-background landing-experiences featured-experiences">
         <div className="max-w-[1150px] mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

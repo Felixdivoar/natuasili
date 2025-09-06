@@ -126,7 +126,7 @@ const PartnerEntry = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="hero-full py-16 bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white">
+      <section className="hero-full section-padding-lg bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white">
         <div className="hero-inner">
           <div className="max-w-4xl">
             <Badge className="bg-white/20 text-white border-white/30 mb-6">
@@ -157,7 +157,7 @@ const PartnerEntry = () => {
       </section>
 
       {/* Benefits */}
-      <section className="py-16">
+      <section className="section-padding-lg">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -185,7 +185,7 @@ const PartnerEntry = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-muted/30">
+      <section className="section-padding-lg bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -213,7 +213,7 @@ const PartnerEntry = () => {
       </section>
 
       {/* Requirements */}
-      <section className="py-16">
+      <section className="section-padding-lg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -242,7 +242,7 @@ const PartnerEntry = () => {
       </section>
 
       {/* Success Stories */}
-      <section className="py-16 bg-muted/30">
+      <section className="section-padding-lg bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -276,7 +276,7 @@ const PartnerEntry = () => {
       </section>
 
       {/* FAQs */}
-      <section className="py-16">
+      <section className="section-padding-lg">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -302,7 +302,7 @@ const PartnerEntry = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-primary text-white">
+      <section className="section-padding-lg bg-primary text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">
             {t("Ready to Start Your Partnership?", "Ready to Start Your Partnership?")}

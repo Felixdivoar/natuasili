@@ -27,7 +27,7 @@ const ContentStub = ({
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="hero-full py-16 bg-muted/30">
+      <section className="hero-full section-padding-lg bg-muted/30">
         <div className="hero-inner">
           <div className="max-w-2xl">
             <h1 className="text-4xl font-bold text-foreground mb-4">
@@ -41,7 +41,7 @@ const ContentStub = ({
       </section>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 section-padding-lg">
         <div className="max-w-2xl mx-auto text-center">
           <Card>
             <CardContent className="p-8">

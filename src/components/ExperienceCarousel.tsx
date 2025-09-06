@@ -47,7 +47,7 @@ const ExperienceCarousel = () => {
         return 'bg-muted text-muted-foreground';
     }
   };
-  return <section className="py-16 bg-background">
+  return <section className="section-padding-lg bg-background">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-12">
           <div className="text-center md:text-left">

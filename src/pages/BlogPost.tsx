@@ -285,7 +285,7 @@ const BlogPost = () => {
   if (!post) {
     return (
       <div className="bg-background">
-        <div className="container mx-auto px-4 py-16 text-center">
+        <div className="container mx-auto px-4 section-padding-lg text-center">
           <h1 className="text-2xl font-bold mb-4">Blog post not found</h1>
           <Link to="/blog">
             <Button>Return to Blog</Button>

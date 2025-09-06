@@ -85,7 +85,7 @@ const Destinations = () => {
       </section>
 
       {/* Destinations Grid */}
-      <section className="py-16">
+      <section className="section-padding-lg">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {destinations.map(destination => <Card key={destination.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">

@@ -26,7 +26,7 @@ const ExperienceHub = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section id="conservation-experience-hub" className="py-16 bg-conservation/5 section">
+      <section id="conservation-experience-hub" className="section-padding-lg bg-conservation/5 section">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="section-title text-4xl md:text-5xl font-bold text-foreground mb-6">

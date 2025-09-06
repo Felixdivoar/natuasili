@@ -300,7 +300,20 @@ button, .btn, .button, [role="button"],
 .hero-full .hero-inner {   /* text/content remains aligned to site container */
   max-width: 1150px;
   margin: 0 auto;
-  padding: 30vh 24px;      /* 30% responsive top/bottom padding with side padding */
+  padding: 12vh 24px;      /* Reduced responsive top/bottom padding with side padding */
+}
+
+/* Responsive section padding utilities */
+.section-padding {
+  @apply py-8 md:py-12;
+}
+
+.section-padding-lg {
+  @apply py-12 md:py-16;  
+}
+
+.hero-padding {
+  @apply py-16 md:py-20 lg:py-24;
 }
 
 /* Primary menu (header) height/spacing */

@@ -16,7 +16,7 @@ const PartnerDashboard = () => {
   } = useCurrency();
   const [activeTab, setActiveTab] = useState("overview");
   return <div className="min-h-screen bg-background">
-      <section className="hero-full py-16 bg-primary/5">
+      <section className="hero-full section-padding-lg bg-primary/5">
         <div className="hero-inner">
           <div className="max-w-2xl">
             <h1 className="text-3xl font-bold text-foreground mb-2">Partner dashboard</h1>

@@ -20,7 +20,7 @@ const ProjectDetail = () => {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="flex items-center justify-center py-20">
+        <div className="flex items-center justify-center hero-padding">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">Project Not Found</h1>
             <Button asChild>
