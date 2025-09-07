@@ -34,8 +34,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   
   const [currentStep, setCurrentStep] = useState(2); // Start at Step 2 (Contact)
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    name: user?.user_metadata?.full_name || '',
+    email: user?.email || '',
     phone: '',
     mobility: '',
     specialRequests: '',

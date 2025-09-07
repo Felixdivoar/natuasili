@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search, User, Menu, X, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -26,8 +27,8 @@ const THEMES = [
 ];
 
 export default function HeaderMega() {
-  const { t } = useI18n();
-  const { user, signOut } = useAuth();
+const { t } = useI18n();
+  const { user, userRole, signOut } = useAuth();
   const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -193,26 +194,42 @@ export default function HeaderMega() {
               )}
             </div>
 
-            {/* Sign In/Up or Profile */}
+            {/* Profile or Sign In */}
             {user ? (
               <div className="relative">
                 <Button 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm" 
-                  className="hidden md:flex"
+                  className="hidden md:flex items-center gap-2 p-2"
                   onMouseEnter={() => setOpenMenu("profile")}
                   onFocus={() => setOpenMenu("profile")}
+                  aria-label="Open your dashboard"
                 >
-                  <User className="w-4 h-4 mr-2" />
-                  Profile
+                  <Avatar className="h-7 w-7">
+                    <AvatarImage src={user.user_metadata?.avatar_url} />
+                    <AvatarFallback className="text-xs">
+                      {user.user_metadata?.full_name ? 
+                        user.user_metadata.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 
+                        user.email?.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm">Profile</span>
                 </Button>
                 <Button 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm" 
                   className="md:hidden p-2"
                   onClick={() => setOpenMenu(openMenu === "profile" ? null : "profile")}
+                  aria-label="Open your dashboard"
                 >
-                  <User className="w-4 h-4" />
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src={user.user_metadata?.avatar_url} />
+                    <AvatarFallback className="text-xs">
+                      {user.user_metadata?.full_name ? 
+                        user.user_metadata.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 
+                        user.email?.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </Button>
                 {openMenu === "profile" && (
                   <div 
@@ -221,7 +238,7 @@ export default function HeaderMega() {
                     onMouseLeave={() => setOpenMenu(null)}
                   >
                     <Link
-                      to="/dashboard"
+                      to={userRole === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
                       className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
                       onClick={() => setOpenMenu(null)}
                     >

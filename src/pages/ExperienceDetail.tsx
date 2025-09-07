@@ -525,9 +525,14 @@ const ExperienceDetail = () => {
                   <div className="text-sm text-muted-foreground">from</div>
                   <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
                 </div>
-                <Button onClick={handleBookNowClick} size="lg">
+                <button 
+                  onClick={handleBookNowClick} 
+                  className="bg-primary hover:bg-primary-hover text-primary-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-200 pointer-events-auto z-10 relative touch-manipulation"
+                  type="button"
+                  aria-label="Book this experience"
+                >
                   {!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
-                </Button>
+                </button>
               </div>
             </div>
           </div>
@@ -539,13 +544,14 @@ const ExperienceDetail = () => {
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
               </div>
-              <Button 
-                onClick={handleBookNowClick} 
-                size="lg" 
-                className="flex-1 min-h-[44px] touch-manipulation"
-              >
-                {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
-              </Button>
+                <button 
+                  onClick={handleBookNowClick} 
+                  className="flex-1 min-h-[44px] touch-manipulation bg-primary hover:bg-primary-hover text-primary-foreground font-semibold rounded-lg transition-all duration-200 pointer-events-auto z-10 relative"
+                  type="button"
+                  aria-label="Book this experience"
+                >
+                  {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
+                </button>
             </div>
           </div>
         </>
