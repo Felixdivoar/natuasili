@@ -1,5 +1,5 @@
 import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,11 +9,13 @@ import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import BookingWizardNew from "@/components/BookingWizardNew";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import ReviewSection from "@/components/ReviewSection";
 import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
+import AuthModal from "@/components/AuthModal";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -21,8 +23,10 @@ const ExperienceDetail = () => {
   const navigate = useNavigate();
   const { t } = useI18n();
   const { formatPrice } = useCurrency();
+  const { user } = useAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
   const [bookingStarted, setBookingStarted] = useState(false);
   const availabilityRef = useRef<HTMLDivElement>(null);
@@ -95,7 +99,7 @@ const ExperienceDetail = () => {
     setCurrentImageIndex(prev => (prev - 1 + experience.gallery.length) % experience.gallery.length);
   };
 
-  const updateBookingParams = (params: { date?: string; adults?: number; children?: number; option?: string }) => {
+  const updateBookingParams = useCallback((params: { date?: string; adults?: number; children?: number; option?: string }) => {
     const newParams = new URLSearchParams(searchParams);
     
     Object.entries(params).forEach(([key, value]) => {
@@ -105,7 +109,7 @@ const ExperienceDetail = () => {
     });
     
     setSearchParams(newParams, { replace: true });
-  };
+  }, [searchParams, setSearchParams]);
 
   const scrollToAvailability = () => {
     availabilityRef.current?.scrollIntoView({
@@ -119,6 +123,12 @@ const ExperienceDetail = () => {
   };
 
   const handleBookNowClick = () => {
+    // Check if user is authenticated first
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
+
     // If booking has started (valid selections made), open modal directly
     if (bookingStarted) {
       openBookingModal();
@@ -516,7 +526,7 @@ const ExperienceDetail = () => {
                   <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
                 </div>
                 <Button onClick={handleBookNowClick} size="lg">
-                  {t('bookNow', 'Book Now')}
+                  {!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
                 </Button>
               </div>
             </div>
@@ -529,16 +539,33 @@ const ExperienceDetail = () => {
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
               </div>
-              <Button onClick={handleBookNowClick} size="lg" className="flex-1">
-                {bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
+              <Button 
+                onClick={handleBookNowClick} 
+                size="lg" 
+                className="flex-1 min-h-[44px] touch-manipulation"
+              >
+                {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
               </Button>
             </div>
           </div>
         </>
       )}
 
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)}
+        onAuth={() => {
+          setAuthModalOpen(false);
+          // After successful auth, if booking was started, open booking modal
+          if (bookingStarted) {
+            setTimeout(() => openBookingModal(), 100);
+          }
+        }}
+      />
+
       {/* Booking Modal */}
-      {isBookingModalOpen && (
+      {isBookingModalOpen && user && (
         <BookingWizardNew 
           isOpen={isBookingModalOpen}
           onClose={() => {

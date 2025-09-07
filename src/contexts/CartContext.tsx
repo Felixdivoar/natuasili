@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useCurrency } from './CurrencyContext';
 import { isValidBookingDate, formatDateForBooking, validateBookingDate } from '@/utils/time';
@@ -75,7 +75,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
 
   const [cart, setCart] = useState<CartState>(initializeCart);
 
-  const updateCart = (updates: Partial<CartState>) => {
+  const updateCart = useCallback((updates: Partial<CartState>) => {
     setCart(prev => {
       if (!prev) return prev;
       
@@ -105,7 +105,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       
       return updated;
     });
-  };
+  }, [basePrice, childHalfPriceRule]);
 
   const clearCart = () => {
     setCart(initializeCart());
@@ -120,7 +120,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
 
   // Update currency when it changes
   useEffect(() => {
-    updateCart({ currency });
+    setCart(prev => ({ ...prev, currency }));
   }, [currency]);
 
   return (

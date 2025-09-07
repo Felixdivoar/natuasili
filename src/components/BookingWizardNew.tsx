@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,6 +42,46 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     agreeTerms: false,
     marketingOptIn: false
   });
+
+  // Auto-fill user profile data
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (user?.id) {
+        try {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('first_name, last_name')
+            .eq('id', user.id)
+            .single();
+          
+          if (profile) {
+            setFormData(prev => ({
+              ...prev,
+              name: `${profile.first_name || ''} ${profile.last_name || ''}`.trim(),
+              email: user.email || '',
+            }));
+          } else {
+            // Fallback to user email from auth
+            setFormData(prev => ({
+              ...prev,
+              email: user.email || '',
+            }));
+          }
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+          // Fallback to user email from auth
+          setFormData(prev => ({
+            ...prev,
+            email: user.email || '',
+          }));
+        }
+      }
+    };
+
+    if (isOpen && user) {
+      fetchUserProfile();
+    }
+  }, [isOpen, user]);
 
   const updateFormData = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));

@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useAuth } from "@/contexts/AuthContext";
+import AuthModal from "@/components/AuthModal";
 import T from "@/i18n/T";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
@@ -25,9 +27,11 @@ const THEMES = [
 
 export default function HeaderMega() {
   const { t } = useI18n();
-  const [openMenu, setOpenMenu] = useState<null | "dest" | "theme">(null);
+  const { user, signOut } = useAuth();
+  const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -189,14 +193,77 @@ export default function HeaderMega() {
               )}
             </div>
 
-            {/* Sign In/Up */}
-            <Button variant="outline" size="sm" className="hidden md:flex">
-              <User className="w-4 h-4 mr-2" />
-              {t("nav_signin")}
-            </Button>
-            <Button variant="outline" size="sm" className="md:hidden p-2">
-              <User className="w-4 h-4" />
-            </Button>
+            {/* Sign In/Up or Profile */}
+            {user ? (
+              <div className="relative">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="hidden md:flex"
+                  onMouseEnter={() => setOpenMenu("profile")}
+                  onFocus={() => setOpenMenu("profile")}
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  Profile
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="md:hidden p-2"
+                  onClick={() => setOpenMenu(openMenu === "profile" ? null : "profile")}
+                >
+                  <User className="w-4 h-4" />
+                </Button>
+                {openMenu === "profile" && (
+                  <div 
+                    className="absolute right-0 mt-2 w-48 rounded-lg border bg-background p-2 shadow-xl z-50"
+                    onMouseEnter={() => setOpenMenu("profile")}
+                    onMouseLeave={() => setOpenMenu(null)}
+                  >
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
+                      onClick={() => setOpenMenu(null)}
+                    >
+                      <Settings className="h-4 w-4" />
+                      Dashboard
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm hover:bg-muted rounded-md"
+                      onClick={() => {
+                        signOut();
+                        setOpenMenu(null);
+                      }}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="hidden md:flex"
+                  onClick={() => setAuthModalOpen(true)}
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  {t("nav_signin")}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="md:hidden p-2"
+                  onClick={() => setAuthModalOpen(true)}
+                >
+                  <User className="w-4 h-4" />
+                </Button>
+              </>
+            )}
 
             {/* Partner CTA */}
             <Link to="/partner-entry">
@@ -279,6 +346,11 @@ export default function HeaderMega() {
           </div>
         )}
       </div>
+
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
+      />
     </header>
   );
 }

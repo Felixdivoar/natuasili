@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { X, Mail, Lock, User } from "lucide-react";
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAuth: (user: any) => void;
+  onAuth?: (user: any) => void;
   defaultTab?: 'signin' | 'signup';
 }
 
@@ -26,34 +28,59 @@ const AuthModal: React.FC<AuthModalProps> = ({
     name: '',
     confirmPassword: ''
   });
+  const [errors, setErrors] = useState<string>('');
+  
+  const { signIn, signUp } = useAuth();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrors('');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      let result;
       
-      // Mock successful auth
-      const user = {
-        id: 1,
-        email: formData.email,
-        name: formData.name || formData.email.split('@')[0],
-        isAuthenticated: true
-      };
+      if (activeTab === 'signin') {
+        result = await signIn(formData.email, formData.password);
+      } else {
+        if (formData.password !== formData.confirmPassword) {
+          setErrors('Passwords do not match');
+          setIsLoading(false);
+          return;
+        }
+        
+        const [firstName, ...lastNameParts] = formData.name.trim().split(' ');
+        const lastName = lastNameParts.join(' ');
+        
+        result = await signUp(formData.email, formData.password, {
+          first_name: firstName,
+          last_name: lastName
+        });
+      }
       
-      onAuth(user);
-      onClose();
+      if (result.error) {
+        setErrors(result.error.message);
+      } else {
+        toast({
+          title: activeTab === 'signin' ? 'Welcome back!' : 'Account created!',
+          description: activeTab === 'signin' 
+            ? 'You have been successfully signed in.' 
+            : 'Please check your email to verify your account.',
+        });
+        onAuth && onAuth({ isAuthenticated: true });
+        onClose();
+      }
     } catch (error) {
       console.error('Auth error:', error);
+      setErrors('An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleGuestContinue = () => {
-    onAuth({ isGuest: true, isAuthenticated: false });
+    onAuth && onAuth({ isGuest: true, isAuthenticated: false });
     onClose();
   };
 
@@ -74,6 +101,12 @@ const AuthModal: React.FC<AuthModalProps> = ({
             <X className="h-4 w-4" />
           </Button>
         </div>
+
+        {errors && (
+          <div className="mb-4 p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+            {errors}
+          </div>
+        )}
 
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
@@ -169,6 +202,22 @@ const AuthModal: React.FC<AuthModalProps> = ({
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => handleInputChange('password', e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="confirm-password">Confirm Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                     className="pl-10"
                     required
                   />
