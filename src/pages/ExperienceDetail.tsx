@@ -571,25 +571,9 @@ const ExperienceDetail = () => {
             </div>
           </div>
 
-          {/* Mobile sticky bar */}
-          <div className="lg:hidden fixed left-0 right-0 bottom-0 bg-background border-t p-4 mobile-sticky-booking"
-               style={{ 
-                 zIndex: 1000, 
-                 pointerEvents: 'auto',
-                 paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0))'
-               }}>
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <div className="text-sm text-muted-foreground">from</div>
-                <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
-              </div>
-              <BookNowButton 
-                href={user ? "#booking" : "#auth"}
-                label={!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
-                onTap={handleBookNowClick}
-                className="flex-1"
-              />
-            </div>
+          {/* Mobile sticky bar - Hidden per mobile optimization */}
+          <div className="hidden">
+            {/* Book Now button hidden on mobile - availability selector handles booking flow */}
           </div>
         </>
       )}

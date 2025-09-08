@@ -511,7 +511,7 @@ const AvailabilityAndOptions = ({
                   size="lg"
                   style={{ touchAction: 'manipulation' }}
                 >
-                  Continue
+                  Next
                 </Button>
 
                 <div className="text-xs text-muted-foreground text-center">
@@ -524,6 +524,48 @@ const AvailabilityAndOptions = ({
               </CardContent>
             </Card>
           </div>
+
+          {/* Mobile Sticky Order Summary */}
+          <div className="lg:hidden">
+            {(selectedDate && isDateValid && !participantsError) && (
+              <div className="fixed left-0 right-0 bottom-0 bg-background border-t p-4 z-50" 
+                   style={{ 
+                     pointerEvents: 'auto',
+                     paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0))'
+                   }}>
+                <div className="flex items-center justify-between gap-4 mb-3">
+                  <div className="text-sm space-y-1">
+                    <div><span className="text-muted-foreground">Date:</span> {selectedDate}</div>
+                    <div><span className="text-muted-foreground">Participants:</span> {totalParticipants}</div>
+                    <div><span className="text-muted-foreground">Option:</span> {selectedOptionData.name}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xl font-bold">{formatPrice(totals.subtotal)}</div>
+                    <div className="text-sm text-muted-foreground">total</div>
+                  </div>
+                </div>
+                
+                <Button 
+                  onClick={handleContinue} 
+                  disabled={proceedDisabled} 
+                  className="w-full min-h-[48px] touch-manipulation pointer-events-auto relative" 
+                  size="lg"
+                  style={{ touchAction: 'manipulation' }}
+                >
+                  Start Booking
+                </Button>
+
+                <div className="text-xs text-muted-foreground text-center mt-2">
+                  <div className="flex items-center justify-center gap-1 mb-1">
+                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    <span>Free cancellation</span>
+                  </div>
+                  <div>You won't be charged yet</div>
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
     </section>
