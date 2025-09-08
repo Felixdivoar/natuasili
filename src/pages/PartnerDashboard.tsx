@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2, TreePine } from "lucide-react";
 import MessageCenter from "@/components/MessageCenter";
 import { useCurrency } from "@/contexts/CurrencyContext";
@@ -17,6 +16,7 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { uploadFile, validateFile } from "@/lib/fileUpload";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
@@ -24,6 +24,7 @@ const PartnerDashboard = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [uploadingDoc, setUploadingDoc] = useState<string | null>(null);
+  const [showExperienceForm, setShowExperienceForm] = useState(false);
 
   const handleFileUpload = async (file: File, category: string) => {
     if (!user?.id) return;
@@ -245,20 +246,10 @@ const PartnerDashboard = () => {
               <TabsContent value="experiences" className="space-y-6 animate-fade-in">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Your Experiences</h2>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Add New Experience
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
-                      <ExperienceSubmissionForm 
-                        onClose={() => {}} 
-                        onSubmit={() => window.location.reload()} 
-                      />
-                    </DialogContent>
-                  </Dialog>
+                  <Button onClick={() => setShowExperienceForm(true)}>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add New Experience
+                  </Button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -276,6 +267,7 @@ const PartnerDashboard = () => {
                         </DialogTrigger>
                         <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
                           <ExperienceSubmissionForm 
+                            isOpen={true}
                             onClose={() => {}} 
                             onSubmit={() => window.location.reload()} 
                           />
@@ -541,6 +533,16 @@ const PartnerDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Experience Submission Form */}
+      <ExperienceSubmissionForm
+        isOpen={showExperienceForm}
+        onClose={() => setShowExperienceForm(false)}
+        onSubmit={() => {
+          // Refresh the experiences list
+          window.location.reload();
+        }}
+      />
     </div>
   );
 };
