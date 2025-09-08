@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2, TreePine } from "lucide-react";
+import MessageCenter from "@/components/MessageCenter";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { usePartnerDashboard } from "@/hooks/usePartnerDashboard";
 import { FileUpload } from "@/components/ui/file-upload";
@@ -107,13 +108,14 @@ const PartnerDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
                   <p className="text-muted-foreground">Monitor your conservation business and impact metrics</p>
                 </div>
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-1 bg-muted/50 p-1 rounded-xl">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 xl:grid-cols-7 gap-1 bg-muted/50 p-1 rounded-xl">
                   <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Overview</TabsTrigger>
                   <TabsTrigger value="experiences" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Experiences</TabsTrigger>
                   <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Bookings</TabsTrigger>
                   <TabsTrigger value="earnings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Earnings</TabsTrigger>
                   <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Impact</TabsTrigger>
                   <TabsTrigger value="verification" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Verification</TabsTrigger>
+                  <TabsTrigger value="messages" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Messages</TabsTrigger>
                 </TabsList>
               </div>
 
@@ -509,6 +511,10 @@ const PartnerDashboard = () => {
                     </CardContent>
                   </Card>
                 </div>
+              </TabsContent>
+
+              <TabsContent value="messages" className="space-y-6 animate-fade-in">
+                <MessageCenter />
               </TabsContent>
             </Tabs>
           </div>

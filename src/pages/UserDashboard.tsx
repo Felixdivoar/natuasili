@@ -23,6 +23,7 @@ import {
   Mail,
   Loader2
 } from 'lucide-react';
+import MessageCenter from "@/components/MessageCenter";
 
 const UserDashboard: React.FC = () => {
   const { user, profile, signOut } = useAuth();
@@ -234,20 +235,7 @@ const UserDashboard: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="messages">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5" />
-                  Messages
-                </CardTitle>
-                <CardDescription>Communication with conservation partners</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8 text-muted-foreground">
-                  No messages yet
-                </div>
-              </CardContent>
-            </Card>
+            <MessageCenter />
           </TabsContent>
 
           <TabsContent value="profile">

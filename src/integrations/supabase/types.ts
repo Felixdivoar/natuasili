@@ -609,6 +609,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_message_read: {
+        Args: { message_id: string }
+        Returns: undefined
+      }
       promote_to_admin: {
         Args: { user_email: string }
         Returns: undefined
