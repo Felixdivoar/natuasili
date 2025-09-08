@@ -68,8 +68,7 @@ const TravelerDashboard = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
-                Your Dashboard
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Impact</span>
+                Your dashboard
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto animate-fade-in">
                 Track your bookings and see exactly how your travel dollars are creating real conservation impact across Kenya.
