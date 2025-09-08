@@ -6,6 +6,8 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
+  console.log('get-maps-config function called with method:', req.method)
+  
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -13,8 +15,10 @@ serve(async (req) => {
 
   try {
     const apiKey = Deno.env.get('GOOGLE_MAPS_API_KEY')
+    console.log('API Key found:', !!apiKey)
     
     if (!apiKey) {
+      console.error('Google Maps API key not found in environment')
       return new Response(
         JSON.stringify({ error: 'Google Maps API key not configured' }),
         { 
@@ -24,6 +28,7 @@ serve(async (req) => {
       )
     }
 
+    console.log('Returning API key successfully')
     return new Response(
       JSON.stringify({ apiKey }),
       { 
@@ -32,6 +37,7 @@ serve(async (req) => {
       }
     )
   } catch (error) {
+    console.error('Error in get-maps-config:', error)
     return new Response(
       JSON.stringify({ error: error.message }),
       { 

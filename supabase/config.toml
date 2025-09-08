@@ -1,5 +1,8 @@
 project_id = "zeiqetimpspjgppfhbdu"
 
+[functions.get-maps-config]
+verify_jwt = false
+
 [functions.pesapal-auth]
 verify_jwt = false
 

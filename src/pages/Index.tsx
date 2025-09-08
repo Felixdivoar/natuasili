@@ -9,7 +9,7 @@ const Index = () => {
     <div className="bg-background">
       {/* Use shared Hero component */}
       <Hero 
-        backgroundImage="/lovable-uploads/86a97e9c-06e8-4907-baf7-f6cfa229935f.png"
+        backgroundImage="/lovable-uploads/dff689cd-8df1-4136-b9be-292db031f572.png"
         showStats={true}
       />
       
