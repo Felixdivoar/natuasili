@@ -95,6 +95,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
         optionId: formData.option,
         unitPrice,
         subtotal,
+        donation: 0, // Will be updated when donation feature is added
         partner: partnerAmount,
         platform: platformAmount,
         currency: 'KES'

@@ -84,7 +84,7 @@ const TravelerDashboard = () => {
                       <DollarSign className="h-8 w-8 text-primary" />
                     </div>
                     <div className="text-3xl font-bold text-foreground mb-2">{formatPrice(stats.totalSpent)}</div>
-                    <div className="text-sm text-muted-foreground font-medium">Total Investment</div>
+                    <div className="text-sm text-muted-foreground font-medium">Your total contribution</div>
                   </CardContent>
                 </Card>
                 

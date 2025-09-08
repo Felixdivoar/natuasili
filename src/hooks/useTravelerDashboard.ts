@@ -117,11 +117,19 @@ export function useTravelerDashboard() {
           booking.status === 'confirmed' || booking.status === 'completed'
         );
 
-        const totalSpent = confirmedBookings.reduce((sum, booking) => sum + booking.total_kes, 0);
+        const totalSpent = confirmedBookings.reduce((sum, booking) => {
+          const bookingAmount = booking.total_kes || 0;
+          const donationAmount = (booking as any).donation_kes || 0;
+          return sum + bookingAmount + donationAmount;
+        }, 0);
         const totalBookings = confirmedBookings.length;
         const totalExperiences = new Set(confirmedBookings.map(booking => booking.experience_id)).size;
-        // Assume 75% of booking amount goes to conservation (can be made dynamic)
-        const conservationContribution = totalSpent * 0.75;
+        // Conservation contribution: 90% of bookings + 100% of donations
+        const conservationContribution = confirmedBookings.reduce((sum, booking) => {
+          const bookingAmount = booking.total_kes || 0;
+          const donationAmount = (booking as any).donation_kes || 0;
+          return sum + (bookingAmount * 0.9) + donationAmount;
+        }, 0);
 
         setStats({
           totalSpent,

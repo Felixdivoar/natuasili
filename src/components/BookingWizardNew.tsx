@@ -39,6 +39,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     phone: '',
     mobility: '',
     specialRequests: '',
+    donation: 0, // Optional donation amount
     agreeTerms: false,
     marketingOptIn: false
   });
@@ -142,6 +143,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       }
 
       // Create the booking in the database with new fields
+      const totalAmount = cart.subtotal + (formData.donation || 0);
       const { data: booking, error: bookingError } = await supabase
         .from('bookings')
         .insert({
@@ -154,6 +156,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           adults: cart.adults,
           children: cart.children,
           total_kes: cart.subtotal,
+          donation_kes: formData.donation || 0,
           option_id: cart.optionId || 'standard',
           unit_price_kes: cart.unitPrice,
           subtotal_kes: cart.subtotal,
@@ -173,9 +176,9 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('create-pesapal-order', {
         body: {
           booking_id: booking.id,
-          amount: cart.subtotal,
+          amount: totalAmount,
           currency: cart.currency,
-          description: `Booking for ${experience.title} - ${cart.adults + cart.children} people on ${cart.date}`,
+          description: `Booking for ${experience.title} - ${cart.adults + cart.children} people on ${cart.date}${formData.donation ? ` + KES ${formData.donation} donation` : ''}`,
           customer: {
             email: formData.email,
             first_name: formData.name.split(' ')[0] || formData.name,
@@ -195,6 +198,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       }
 
       // Save receipt data for later reference
+      const donationAmount = formData.donation || 0;
       const receipt = {
         slug: experience.slug,
         date: cart.date,
@@ -202,8 +206,9 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         optionId: cart.optionId,
         unitPrice: cart.unitPrice,
         subtotal: cart.subtotal,
-        partner: cart.split.partner90,
-        platform: cart.split.platform10,
+        donation: donationAmount,
+        partner: cart.split.partner90 + donationAmount, // 90% of booking + 100% of donation
+        platform: cart.split.platform10, // 10% of booking only
         currency: cart.currency,
       };
       saveReceipt(receipt);
@@ -229,6 +234,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     date: cart.date,
     people: cart.adults + cart.children,
     unitPriceKES: cart.unitPrice,
+    donationKES: formData.donation || 0,
     currency: cart.currency
   }) : null;
 
@@ -375,6 +381,37 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                   />
                 </div>
 
+                {/* Optional Donation Section */}
+                <Card className="bg-gradient-to-r from-green-50/50 to-emerald-50/50 border-green-200/50">
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">+</span>
+                        </div>
+                        <h4 className="font-medium text-green-800">{t('addDonation', 'Add a donation (optional)')}</h4>
+                      </div>
+                      <p className="text-xs text-green-700">
+                        {t('donationDescription', '100% of your donation goes directly to conservation initiatives (minus transfer charges).')}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="donation" className="text-sm font-medium text-green-800">KES</Label>
+                        <Input
+                          id="donation"
+                          type="number"
+                          min="0"
+                          step="50"
+                          value={formData.donation || ''}
+                          onChange={(e) => updateFormData('donation', parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          className="w-24 border-green-200 focus:border-green-400"
+                        />
+                        <span className="text-xs text-green-600">Optional</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 <div className="flex justify-end">
                   <Button onClick={handleNextStep} disabled={!validateStep2()}>
                     {t('continue', 'Continue')}
@@ -431,10 +468,16 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                           </span>
                           <span>{formatPrice(cart.subtotal)}</span>
                         </div>
+                        {formData.donation > 0 && (
+                          <div className="flex justify-between text-sm text-green-600">
+                            <span>Optional donation</span>
+                            <span>{formatPrice(formData.donation)}</span>
+                          </div>
+                        )}
                         <div className="space-y-1 text-xs text-muted-foreground">
                           <div className="flex justify-between">
-                            <span>Partner initiatives (90%)</span>
-                            <span>{formatPrice(cart.split.partner90)}</span>
+                            <span>Partner initiatives (90% + donations)</span>
+                            <span>{formatPrice(cart.split.partner90 + (formData.donation || 0))}</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Platform & operations (10%)</span>
@@ -443,7 +486,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                         </div>
                         <div className="flex justify-between font-semibold text-lg pt-2 border-t">
                           <span>Total</span>
-                          <span>{formatPrice(cart.subtotal)}</span>
+                          <span>{formatPrice(cart.subtotal + (formData.donation || 0))}</span>
                         </div>
                       </div>
                     </div>
@@ -527,7 +570,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                       </div>
                       <div className="flex justify-between border-t pt-2 font-semibold">
                         <span>Total paid:</span>
-                        <span>{formatPrice(cart.subtotal)}</span>
+                        <span>{formatPrice(cart.subtotal + (formData.donation || 0))}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -608,11 +651,17 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                       <span>{formatPrice(cart.childPrice * cart.children)}</span>
                     </div>
                   )}
+                  {formData.donation > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Optional donation</span>
+                      <span>{formatPrice(formData.donation)}</span>
+                    </div>
+                  )}
                   
                   <div className="border-t pt-2 space-y-1 text-xs text-muted-foreground">
                     <div className="flex justify-between">
-                      <span>Partner initiatives (90%)</span>
-                      <span>{formatPrice(cart.split.partner90)}</span>
+                      <span>Partner initiatives (90% + donations)</span>
+                      <span>{formatPrice(cart.split.partner90 + (formData.donation || 0))}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Platform & operations (10%)</span>
@@ -622,7 +671,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                   
                   <div className="flex justify-between font-semibold pt-2 border-t">
                     <span>Total</span>
-                    <span>{formatPrice(cart.subtotal)}</span>
+                    <span>{formatPrice(cart.subtotal + (formData.donation || 0))}</span>
                   </div>
                 </div>
               </CardContent>

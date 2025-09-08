@@ -6,8 +6,9 @@ export type Receipt = {
   optionId: "standard" | "premium";
   unitPrice: number;          // resolved unit price used to charge
   subtotal: number;           // unitPrice * people at time of booking
-  partner: number;            // 90%
-  platform: number;           // 10%
+  donation: number;           // optional donation amount
+  partner: number;            // 90% of booking + 100% of donation
+  platform: number;           // 10% of booking only
   currency?: string;          // optional, if you have it
 };
 

@@ -124,15 +124,16 @@ const Checkout = () => {
     const finalPlatform  = Number((finalSubtotal - finalPartner).toFixed(2));
 
     // 2) Persist a receipt snapshot for Confirmation page
-    saveReceipt({
-      slug,
-      date,
-      people,
-      optionId,
-      unitPrice: finalUnitPrice,
-      subtotal: finalSubtotal,
-      partner: finalPartner,
-      platform: finalPlatform,
+      saveReceipt({
+        slug,
+        date,
+        people,
+        optionId,
+        unitPrice: finalUnitPrice,
+        subtotal: finalSubtotal,
+        donation: 0, // Will be updated when donation feature is added
+        partner: finalPartner,
+        platform: finalPlatform,
     });
 
     // 3) (Optional) clear the cart so a new booking starts clean
