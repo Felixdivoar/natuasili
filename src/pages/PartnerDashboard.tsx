@@ -8,13 +8,32 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus } from "lucide-react";
+import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2 } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { usePartnerDashboard } from "@/hooks/usePartnerDashboard";
 const PartnerDashboard = () => {
-  const {
-    formatPrice
-  } = useCurrency();
+  const { formatPrice } = useCurrency();
+  const { stats, recentBookings, experiences, loading, error } = usePartnerDashboard();
   const [activeTab, setActiveTab] = useState("overview");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-destructive mb-4">Error loading dashboard: {error}</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
   return <div className="min-h-screen bg-background">
       <section className="hero-full section-padding-lg bg-primary/5">
         <div className="hero-inner">
@@ -46,7 +65,7 @@ const PartnerDashboard = () => {
                     <span className="text-sm font-medium text-muted-foreground">This month</span>
                   </div>
                   <div className="mt-2">
-                    <div className="text-2xl font-bold">24</div>
+                    <div className="text-2xl font-bold">{stats.monthlyBookings}</div>
                     <p className="text-sm text-muted-foreground">Bookings</p>
                   </div>
                 </CardContent>
@@ -59,8 +78,8 @@ const PartnerDashboard = () => {
                     <span className="text-sm font-medium text-muted-foreground">Revenue</span>
                   </div>
                   <div className="mt-2">
-                    <div className="text-2xl font-bold">{formatPrice(4890)}</div>
-                    <p className="text-sm text-muted-foreground">+12% from last month</p>
+                    <div className="text-2xl font-bold">{formatPrice(stats.monthlyRevenue)}</div>
+                    <p className="text-sm text-muted-foreground">This month</p>
                   </div>
                 </CardContent>
               </Card>
@@ -72,7 +91,7 @@ const PartnerDashboard = () => {
                     <span className="text-sm font-medium text-muted-foreground">Travelers</span>
                   </div>
                   <div className="mt-2">
-                    <div className="text-2xl font-bold">89</div>
+                    <div className="text-2xl font-bold">{stats.totalTravelers}</div>
                     <p className="text-sm text-muted-foreground">Total served</p>
                   </div>
                 </CardContent>
@@ -85,7 +104,7 @@ const PartnerDashboard = () => {
                     <span className="text-sm font-medium text-muted-foreground">Rating</span>
                   </div>
                   <div className="mt-2">
-                    <div className="text-2xl font-bold">4.8</div>
+                    <div className="text-2xl font-bold">{stats.averageRating}</div>
                     <p className="text-sm text-muted-foreground">Average rating</p>
                   </div>
                 </CardContent>
@@ -140,10 +159,10 @@ const PartnerDashboard = () => {
                       <p className="text-xs text-muted-foreground mt-1">Visitors to bookings</p>
                     </div>
                     <div>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Average booking value</span>
-                        <span className="font-semibold">{formatPrice(185)}</span>
-                      </div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span>Average booking value</span>
+                      <span className="font-semibold">{stats.totalEarnings > 0 && stats.monthlyBookings > 0 ? formatPrice(Math.round(stats.totalEarnings / stats.monthlyBookings)) : formatPrice(0)}</span>
+                    </div>
                       <Progress value={75} className="h-2" />
                       <p className="text-xs text-muted-foreground mt-1">Per experience booking</p>
                     </div>
@@ -168,13 +187,27 @@ const PartnerDashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {[1, 2, 3].map(i => <div key={i} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                        <div>
-                          <p className="font-medium">Elephant tracking - Maasai Mara</p>
-                          <p className="text-sm text-muted-foreground">2 guests • March 15, 2024</p>
+                    {recentBookings.length === 0 ? (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                        <p>No recent bookings</p>
+                        <p className="text-sm">Bookings will appear here when travelers book your experiences</p>
+                      </div>
+                    ) : (
+                      recentBookings.slice(0, 3).map(booking => (
+                        <div key={booking.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                          <div>
+                            <p className="font-medium">{booking.experience_title}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {booking.adults + (booking.children || 0)} guests • {new Date(booking.booking_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <Badge variant={booking.status === 'confirmed' ? 'default' : 'outline'}>
+                            {booking.status}
+                          </Badge>
                         </div>
-                        <Badge variant="outline">Confirmed</Badge>
-                      </div>)}
+                      ))
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -186,21 +219,21 @@ const PartnerDashboard = () => {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Experience fees</span>
-                      <span className="font-semibold">{formatPrice(4200)}</span>
+                      <span className="text-sm">Total earnings</span>
+                      <span className="font-semibold">{formatPrice(stats.totalEarnings)}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm">Platform fee (10%)</span>
-                      <span className="text-muted-foreground">-{formatPrice(420)}</span>
+                      <span className="text-muted-foreground">-{formatPrice(stats.totalEarnings * 0.1)}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Processing fees</span>
-                      <span className="text-muted-foreground">-{formatPrice(110)}</span>
+                      <span className="text-sm">Processing fees (est.)</span>
+                      <span className="text-muted-foreground">-{formatPrice(stats.totalEarnings * 0.03)}</span>
                     </div>
                     <hr />
                     <div className="flex justify-between items-center font-semibold">
-                      <span>Net revenue</span>
-                      <span className="text-primary">{formatPrice(3670)}</span>
+                      <span>Net revenue (est.)</span>
+                      <span className="text-primary">{formatPrice(stats.totalEarnings * 0.87)}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -218,31 +251,55 @@ const PartnerDashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map(i => <Card key={i}>
-                  <CardContent className="p-4">
-                    <div className="aspect-video bg-muted rounded-lg mb-4"></div>
-                    <h3 className="font-semibold mb-2">Elephant Tracking - Maasai Mara</h3>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        Maasai Mara
+              {experiences.length === 0 ? (
+                <div className="col-span-full text-center py-12 text-muted-foreground">
+                  <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p className="text-lg font-medium mb-2">No experiences yet</p>
+                  <p className="text-sm mb-4">Create your first conservation experience to start welcoming travelers</p>
+                  <Button>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create Experience
+                  </Button>
+                </div>
+              ) : (
+                experiences.map(experience => (
+                  <Card key={experience.id}>
+                    <CardContent className="p-4">
+                      <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
+                        {experience.hero_image ? (
+                          <img 
+                            src={experience.hero_image} 
+                            alt={experience.title}
+                            className="w-full h-full object-cover rounded-lg"
+                          />
+                        ) : (
+                          <Camera className="h-8 w-8 text-muted-foreground" />
+                        )}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        3 hours
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-bold">{formatPrice(120)}/person</span>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                      <h3 className="font-semibold mb-2">{experience.title}</h3>
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4" />
+                          {experience.location_text || 'Location not set'}
+                        </div>
+                        <div className="flex items-center gap-1">
                           <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="outline" size="sm">Edit</Button>
+                          {experience.visible_on_marketplace ? 'Live' : 'Draft'}
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>)}
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold">{formatPrice(experience.price_kes_adult)}/person</span>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="sm">Edit</Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
             </div>
           </TabsContent>
 
@@ -327,42 +384,83 @@ const PartnerDashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[1, 2, 3, 4, 5].map(i => <tr key={i} className="border-b">
-                          <td className="p-4">
-                            <div>
-                              <p className="font-medium">John Smith</p>
-                              <p className="text-sm text-muted-foreground">2 guests</p>
-                            </div>
+                      {recentBookings.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="p-8 text-center text-muted-foreground">
+                            <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                            <p>No bookings yet</p>
+                            <p className="text-sm">Bookings will appear here when travelers book your experiences</p>
                           </td>
-                          <td className="p-4">Elephant Tracking</td>
-                          <td className="p-4">March 15, 2024</td>
-                          <td className="p-4 font-medium">{formatPrice(240)}</td>
-                          <td className="p-4">
-                            <Badge variant="outline">Confirmed</Badge>
-                          </td>
-                          <td className="p-4">
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button variant="outline" size="sm">View Details</Button>
-                              </DialogTrigger>
-                              <DialogContent className="max-w-2xl">
-                                <DialogHeader>
-                                  <DialogTitle>Booking Details</DialogTitle>
-                                </DialogHeader>
-                                <div className="space-y-4">
-                                  <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                      <Label>Guest Name</Label>
-                                      <p className="font-medium">John Smith</p>
+                        </tr>
+                      ) : (
+                        recentBookings.map(booking => (
+                          <tr key={booking.id} className="border-b">
+                            <td className="p-4">
+                              <div>
+                                <p className="font-medium">{booking.customer_name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {booking.adults + (booking.children || 0)} guests
+                                </p>
+                              </div>
+                            </td>
+                            <td className="p-4">{booking.experience_title}</td>
+                            <td className="p-4">{new Date(booking.booking_date).toLocaleDateString()}</td>
+                            <td className="p-4 font-medium">{formatPrice(booking.total_kes)}</td>
+                            <td className="p-4">
+                              <Badge variant={booking.status === 'confirmed' ? 'default' : 'outline'}>
+                                {booking.status}
+                              </Badge>
+                            </td>
+                            <td className="p-4">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button variant="outline" size="sm">View Details</Button>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-2xl">
+                                  <DialogHeader>
+                                    <DialogTitle>Booking Details</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4">
+                                      <div>
+                                        <Label>Guest Name</Label>
+                                        <p className="font-medium">{booking.customer_name}</p>
+                                      </div>
+                                      <div>
+                                        <Label>Email</Label>
+                                        <p>{booking.customer_email}</p>
+                                      </div>
+                                      <div>
+                                        <Label>Phone</Label>
+                                        <p>{booking.customer_phone || 'Not provided'}</p>
+                                      </div>
+                                      <div>
+                                        <Label>Booking Date</Label>
+                                        <p>{new Date(booking.booking_date).toLocaleDateString()}</p>
+                                      </div>
+                                      <div>
+                                        <Label>Adults</Label>
+                                        <p>{booking.adults}</p>
+                                      </div>
+                                      <div>
+                                        <Label>Children</Label>
+                                        <p>{booking.children || 0}</p>
+                                      </div>
                                     </div>
                                     <div>
-                                      <Label>Email</Label>
-                                      <p>john.smith@example.com</p>
+                                      <Label>Total Amount</Label>
+                                      <p className="text-2xl font-bold text-primary">
+                                        {formatPrice(booking.total_kes)}
+                                      </p>
                                     </div>
-                                    <div>
-                                      <Label>Phone</Label>
-                                      <p>+254 700 123 456</p>
-                                    </div>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
                                     <div>
                                       <Label>Experience</Label>
                                       <p>Elephant Tracking</p>
@@ -402,6 +500,7 @@ const PartnerDashboard = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
           </TabsContent>
 
           <TabsContent value="earnings" className="space-y-6">

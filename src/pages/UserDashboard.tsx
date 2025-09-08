@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useTravelerDashboard } from '@/hooks/useTravelerDashboard';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { 
   Calendar,
   Download,
@@ -18,26 +20,34 @@ import {
   Settings,
   HelpCircle,
   FileText,
-  Mail
+  Mail,
+  Loader2
 } from 'lucide-react';
 
 const UserDashboard: React.FC = () => {
-  const { user, signOut } = useSimpleAuth();
+  const { user, profile, signOut } = useAuth();
+  const { formatPrice } = useCurrency();
+  const { bookings, wishlist, stats, loading, error } = useTravelerDashboard();
   const [activeTab, setActiveTab] = useState('trips');
 
-  // Mock data
-  const mockBookings = [
-    {
-      id: '1',
-      experienceTitle: 'Nairobi Giraffe Centre Visit',
-      date: '2024-10-15',
-      status: 'confirmed' as const,
-      totalAmount: 2500,
-      adults: 2,
-      children: 1,
-      partnerName: 'AFEW Giraffe Centre'
-    }
-  ];
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-destructive mb-4">Error loading dashboard: {error}</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -46,11 +56,11 @@ const UserDashboard: React.FC = () => {
           <div>
             <h1 className="text-3xl font-bold mb-2">My Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {user?.fullName?.split(' ')[0] || 'Traveler'}!
+              Welcome back, {profile ? `${profile.first_name || 'Traveler'}` : 'Traveler'}!
             </p>
           </div>
           <div className="flex items-center gap-2 mt-4 md:mt-0">
-            <Badge variant="secondary">{user?.role}</Badge>
+            <Badge variant="secondary">{profile?.role || 'traveler'}</Badge>
             <Button onClick={signOut} variant="outline">Sign Out</Button>
           </div>
         </div>
@@ -78,35 +88,49 @@ const UserDashboard: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {mockBookings.map((booking) => (
-                    <Card key={booking.id} className="border-l-4 border-l-primary">
-                      <CardContent className="pt-6">
-                        <div className="flex flex-col lg:flex-row justify-between items-start gap-4">
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-lg">{booking.experienceTitle}</h4>
-                            <p className="text-muted-foreground">{booking.partnerName}</p>
-                            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <Calendar className="h-4 w-4" />
-                                {new Date(booking.date).toLocaleDateString()}
-                              </span>
-                              <span>{booking.adults} adults, {booking.children} children</span>
+                  {bookings.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p>No bookings yet</p>
+                      <p className="text-sm">Start exploring conservation experiences!</p>
+                    </div>
+                  ) : (
+                    bookings.map((booking) => (
+                      <Card key={booking.id} className="border-l-4 border-l-primary">
+                        <CardContent className="pt-6">
+                          <div className="flex flex-col lg:flex-row justify-between items-start gap-4">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-lg">
+                                {booking.experience?.title || 'Experience'}
+                              </h4>
+                              <p className="text-muted-foreground">
+                                {booking.experience?.partner_profiles?.org_name || 'Partner'}
+                              </p>
+                              <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="h-4 w-4" />
+                                  {new Date(booking.booking_date).toLocaleDateString()}
+                                </span>
+                                <span>{booking.adults} adults{booking.children ? `, ${booking.children} children` : ''}</span>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <Badge variant={booking.status === 'confirmed' ? 'default' : 'secondary'}>
+                                {booking.status}
+                              </Badge>
+                              <p className="text-lg font-semibold mt-2">
+                                {formatPrice(booking.total_kes)}
+                              </p>
+                              <Button size="sm" variant="outline" className="mt-2">
+                                <Download className="h-4 w-4 mr-2" />
+                                Receipt
+                              </Button>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <Badge variant="default">{booking.status}</Badge>
-                            <p className="text-lg font-semibold mt-2">
-                              KES {booking.totalAmount.toLocaleString()}
-                            </p>
-                            <Button size="sm" variant="outline" className="mt-2">
-                              <Download className="h-4 w-4 mr-2" />
-                              Receipt
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -122,8 +146,41 @@ const UserDashboard: React.FC = () => {
                 <CardDescription>See the conservation impact of your bookings</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-8 text-muted-foreground">
-                  Complete a booking to see your conservation impact
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <Card>
+                      <CardContent className="pt-6 text-center">
+                        <div className="text-2xl font-bold">{formatPrice(stats.totalSpent)}</div>
+                        <div className="text-sm text-muted-foreground">Total Spent</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-6 text-center">
+                        <div className="text-2xl font-bold">{formatPrice(stats.conservationContribution)}</div>
+                        <div className="text-sm text-muted-foreground">Conservation Impact</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="pt-6 text-center">
+                        <div className="text-2xl font-bold">{stats.totalExperiences}</div>
+                        <div className="text-sm text-muted-foreground">Experiences</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  
+                  {stats.totalBookings === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      Complete a booking to see your conservation impact
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <p className="text-sm text-muted-foreground">
+                        You've contributed <span className="font-semibold text-primary">
+                        {formatPrice(stats.conservationContribution)}</span> directly to conservation efforts 
+                        through your {stats.totalBookings} booking{stats.totalBookings !== 1 ? 's' : ''}.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -139,9 +196,39 @@ const UserDashboard: React.FC = () => {
                 <CardDescription>Your wishlist of conservation experiences to book later</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-8 text-muted-foreground">
-                  No saved experiences yet
-                </div>
+                {wishlist.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    <Heart className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                    <p>No saved experiences yet</p>
+                    <p className="text-sm">Heart experiences you want to book later!</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {wishlist.map((item) => (
+                      <Card key={item.id}>
+                        <CardContent className="pt-6">
+                          <div className="flex justify-between items-start mb-2">
+                            <h4 className="font-semibold">
+                              {item.experiences?.title || 'Experience'}
+                            </h4>
+                            <Button variant="ghost" size="sm" className="text-red-500">
+                              <Heart className="h-4 w-4 fill-current" />
+                            </Button>
+                          </div>
+                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                            {item.experiences?.description || 'No description available'}
+                          </p>
+                          <div className="flex justify-between items-center">
+                            <span className="font-bold">
+                              {formatPrice(item.experiences?.price_kes_adult || 0)}
+                            </span>
+                            <Button size="sm">View Details</Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -174,11 +261,11 @@ const UserDashboard: React.FC = () => {
               <CardContent className="space-y-6">
                 <div className="flex items-center gap-4">
                   <Avatar className="h-20 w-20">
-                    <AvatarImage src={user?.avatarUrl} />
+                    <AvatarImage src={profile?.avatar_url || undefined} />
                     <AvatarFallback className="text-lg">
-                      {user?.fullName ? 
-                        user.fullName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 
-                        user?.email?.[0].toUpperCase()}
+                      {profile?.first_name && profile?.last_name ? 
+                        `${profile.first_name[0]}${profile.last_name[0]}`.toUpperCase() : 
+                        profile?.email?.[0].toUpperCase() || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <Button variant="outline">Change Photo</Button>
@@ -187,11 +274,11 @@ const UserDashboard: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" defaultValue={user?.fullName?.split(' ')[0] || ''} />
+                    <Input id="firstName" defaultValue={profile?.first_name || ''} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" defaultValue={user?.fullName?.split(' ').slice(1).join(' ') || ''} />
+                    <Input id="lastName" defaultValue={profile?.last_name || ''} />
                   </div>
                 </div>
                 

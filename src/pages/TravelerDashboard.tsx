@@ -4,75 +4,33 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { CalendarDays, MapPin, DollarSign, TreePine, Users, Droplets, GraduationCap, Eye, ExternalLink, User, Edit, Save, Heart } from "lucide-react";
-import { mockBookings, mockProjects, mockExperiences } from "@/data/mockData";
+import { CalendarDays, MapPin, DollarSign, TreePine, Users, Droplets, GraduationCap, Eye, ExternalLink, User, Edit, Save, Heart, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useTravelerDashboard } from "@/hooks/useTravelerDashboard";
 const TravelerDashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const {
-    formatPrice
-  } = useCurrency();
+  const { formatPrice } = useCurrency();
+  const { bookings, wishlist, stats, loading, error } = useTravelerDashboard();
 
-  // Mock user bookings with impact allocation data
-  const userBookings = [{
-    id: '1',
-    experience_title: 'Big Five Wildlife Tracking Experience',
-    project_name: 'Maasai Mara Wildlife Conservancy',
-    project_id: '1',
-    booking_date: '2024-01-20',
-    total_amount: 700,
-    project_allocation: 525,
-    // 75% of $700
-    platform_allocation: 175,
-    // 25% of $700
-    impact_verified: true,
-    impact_amount: 263,
-    // Amount actually used for conservation
-    impact_description: 'Successfully tracked 3 lion prides, contributing valuable data to conservation research.',
-    theme: 'Wildlife',
-    status: 'completed'
-  }, {
-    id: '2',
-    experience_title: 'Traditional Beadwork Workshop',
-    project_name: 'Samburu Education Initiative',
-    project_id: '2',
-    booking_date: '2024-01-18',
-    total_amount: 240,
-    project_allocation: 192,
-    // 80% of $240
-    platform_allocation: 48,
-    // 20% of $240
-    impact_verified: true,
-    impact_amount: 96,
-    impact_description: 'Conducted workshop with 8 local women artisans, creating 15 traditional beadwork pieces.',
-    theme: 'Education',
-    status: 'completed'
-  }, {
-    id: '3',
-    experience_title: 'Mangrove Restoration Volunteer Day',
-    project_name: 'Coastal Forest Restoration',
-    project_id: '3',
-    booking_date: '2024-01-16',
-    total_amount: 170,
-    project_allocation: 119,
-    // 70% of $170
-    platform_allocation: 51,
-    // 30% of $170
-    impact_verified: true,
-    impact_amount: 60,
-    impact_description: 'Planted 45 mangrove seedlings and removed 2.3 tons of marine debris.',
-    theme: 'Habitat',
-    status: 'completed'
-  }];
-  const totalSpent = userBookings.reduce((sum, booking) => sum + booking.total_amount, 0);
-  const totalProjectAllocation = userBookings.reduce((sum, booking) => sum + booking.project_allocation, 0);
-  const totalImpactVerified = userBookings.reduce((sum, booking) => sum + booking.impact_amount, 0);
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-destructive mb-4">Error loading dashboard: {error}</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    );
+  }
   const getThemeIcon = (theme: string) => {
     switch (theme) {
       case 'Wildlife':
@@ -112,7 +70,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <DollarSign className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">{formatPrice(totalSpent)}</div>
+                  <div className="text-2xl font-bold text-foreground">{formatPrice(stats.totalSpent)}</div>
                   <div className="text-sm text-muted-foreground">Total spent</div>
                 </CardContent>
               </Card>
@@ -120,7 +78,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <TreePine className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">{formatPrice(totalProjectAllocation)}</div>
+                  <div className="text-2xl font-bold text-foreground">{formatPrice(stats.conservationContribution)}</div>
                   <div className="text-sm text-muted-foreground">To conservation</div>
                 </CardContent>
               </Card>
@@ -128,7 +86,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <Eye className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">{formatPrice(totalImpactVerified)}</div>
+                  <div className="text-2xl font-bold text-foreground">{formatPrice(stats.conservationContribution * 0.8)}</div>
                   <div className="text-sm text-muted-foreground">Impact verified</div>
                 </CardContent>
               </Card>
@@ -136,7 +94,7 @@ const TravelerDashboard = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <Users className="h-8 w-8 text-primary mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-foreground">{userBookings.length}</div>
+                  <div className="text-2xl font-bold text-foreground">{stats.totalExperiences}</div>
                   <div className="text-sm text-muted-foreground">Experiences</div>
                 </CardContent>
               </Card>
@@ -165,86 +123,87 @@ const TravelerDashboard = () => {
                 </div>
 
                 <div className="space-y-4">
-                  {userBookings.map(booking => <Card key={booking.id}>
-                      <CardContent className="p-6">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                          {/* Booking Info */}
-                          <div className="lg:col-span-2">
-                            <div className="flex items-start justify-between mb-4">
-                              <div>
-                                <h3 className="text-lg font-semibold text-foreground mb-2">
-                                  {booking.experience_title}
-                                </h3>
-                                <p className="text-muted-foreground mb-2">
-                                  by {booking.project_name}
-                                </p>
-                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                  <div className="flex items-center gap-1">
-                                    <CalendarDays className="h-4 w-4" />
-                                    {new Date(booking.booking_date).toLocaleDateString()}
+                  {bookings.length === 0 ? (
+                    <div className="text-center py-12 text-muted-foreground">
+                      <CalendarDays className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg font-medium mb-2">No bookings yet</p>
+                      <p className="text-sm mb-4">Start your conservation journey by booking your first experience</p>
+                      <Button asChild>
+                        <Link to="/browse">Explore Experiences</Link>
+                      </Button>
+                    </div>
+                  ) : (
+                    bookings.map(booking => (
+                      <Card key={booking.id}>
+                        <CardContent className="p-6">
+                          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Booking Info */}
+                            <div className="lg:col-span-2">
+                              <div className="flex items-start justify-between mb-4">
+                                <div>
+                                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                                    {booking.experience?.title || 'Experience'}
+                                  </h3>
+                                  <p className="text-muted-foreground mb-2">
+                                    by {booking.experience?.partner_profiles?.org_name || 'Partner'}
+                                  </p>
+                                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                    <div className="flex items-center gap-1">
+                                      <CalendarDays className="h-4 w-4" />
+                                      {new Date(booking.booking_date).toLocaleDateString()}
+                                    </div>
+                                    <Badge variant="outline" className="bg-primary/5 text-primary">
+                                      {booking.status}
+                                    </Badge>
                                   </div>
-                                  <Badge variant="outline" className="bg-primary/5 text-primary">
-                                    {booking.status}
-                                  </Badge>
                                 </div>
                               </div>
-                              <Badge className={getThemeColor(booking.theme)}>
-                                {getThemeIcon(booking.theme)}
-                                {booking.theme}
-                              </Badge>
                             </div>
 
-                            {booking.impact_verified && <div className="bg-muted/30 p-4 rounded-lg">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <Eye className="h-4 w-4 text-primary" />
-                                  <span className="text-sm font-medium text-foreground">Verified impact</span>
-                                </div>
-                                <p className="text-sm text-muted-foreground">
-                                  {booking.impact_description}
-                                </p>
-                              </div>}
-                          </div>
-
-                          {/* Allocation Breakdown */}
-                          <div className="space-y-4">
-                            <div>
-                              <div className="text-lg font-semibold text-foreground mb-2">
-                                {formatPrice(booking.total_amount)} Total
-                              </div>
-                              
-                              <div className="space-y-3">
-                                <div>
-                                  <div className="flex justify-between text-sm mb-1">
-                                    <span className="text-muted-foreground">To Conservation</span>
-                                    <span className="font-medium">{formatPrice(booking.project_allocation)}</span>
-                                  </div>
-                                  <Progress value={booking.project_allocation / booking.total_amount * 100} className="h-2" />
+                            {/* Allocation Breakdown */}
+                            <div className="space-y-4">
+                              <div>
+                                <div className="text-lg font-semibold text-foreground mb-2">
+                                  {formatPrice(booking.total_kes)} Total
                                 </div>
                                 
-                                <div>
-                                  <div className="flex justify-between text-sm mb-1">
-                                    <span className="text-muted-foreground">Platform fee</span>
-                                    <span className="font-medium">{formatPrice(booking.platform_allocation)}</span>
+                                <div className="space-y-3">
+                                  <div>
+                                    <div className="flex justify-between text-sm mb-1">
+                                      <span className="text-muted-foreground">To Conservation</span>
+                                      <span className="font-medium">{formatPrice(booking.total_kes * 0.75)}</span>
+                                    </div>
+                                    <Progress value={75} className="h-2" />
                                   </div>
-                                  <Progress value={booking.platform_allocation / booking.total_amount * 100} className="h-2" />
+                                  
+                                  <div>
+                                    <div className="flex justify-between text-sm mb-1">
+                                      <span className="text-muted-foreground">Platform fee</span>
+                                      <span className="font-medium">{formatPrice(booking.total_kes * 0.25)}</span>
+                                    </div>
+                                    <Progress value={25} className="h-2" />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <div className="flex gap-2">
-                            <Button variant="outline" size="sm" asChild>
-                              <Link to={`/partner/${mockProjects.find(p => p.id === booking.project_id)?.slug || booking.project_id}`}>View partner details</Link>
-                            </Button>
-                              <Button variant="outline" size="sm" asChild>
-                                <Link to="/impact-ledger">
-                                  <ExternalLink className="h-4 w-4" />
-                                </Link>
-                              </Button>
+                              <div className="flex gap-2">
+                                <Button variant="outline" size="sm" asChild>
+                                  <Link to={`/partner/${booking.experience?.partner_profiles?.slug || 'partner'}`}>
+                                    View partner details
+                                  </Link>
+                                </Button>
+                                <Button variant="outline" size="sm" asChild>
+                                  <Link to="/impact-ledger">
+                                    <ExternalLink className="h-4 w-4" />
+                                  </Link>
+                                </Button>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>)}
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
                 </div>
               </TabsContent>
 
@@ -257,26 +216,47 @@ const TravelerDashboard = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {mockExperiences.slice(0, 4).map(experience => <Card key={experience.id}>
-                      <div className="aspect-[4/3] relative">
-                        <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover" />
-                        <Button variant="ghost" size="sm" className="absolute top-4 right-4 bg-white/80 hover:bg-white text-red-500">
-                          <Heart className="h-4 w-4 fill-current" />
-                        </Button>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-2">{experience.title}</h3>
-                        <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                          {experience.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="font-bold text-foreground">{formatPrice(experience.base_price)}</span>
-                          <Link to={`/experience/${experience.slug}`}>
-                            <Button size="sm">View Details</Button>
-                          </Link>
+                  {wishlist.length === 0 ? (
+                    <div className="col-span-full text-center py-12 text-muted-foreground">
+                      <Heart className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg font-medium mb-2">No saved experiences yet</p>
+                      <p className="text-sm mb-4">Heart experiences you want to book later!</p>
+                      <Button asChild>
+                        <Link to="/browse">Browse Experiences</Link>
+                      </Button>
+                    </div>
+                  ) : (
+                    wishlist.map(item => (
+                      <Card key={item.id}>
+                        <div className="aspect-[4/3] relative">
+                          <img 
+                            src={item.experiences?.hero_image || '/placeholder-experience.jpg'} 
+                            alt={item.experiences?.title || 'Experience'} 
+                            className="w-full h-full object-cover" 
+                          />
+                          <Button variant="ghost" size="sm" className="absolute top-4 right-4 bg-white/80 hover:bg-white text-red-500">
+                            <Heart className="h-4 w-4 fill-current" />
+                          </Button>
                         </div>
-                      </CardContent>
-                    </Card>)}
+                        <CardContent className="p-4">
+                          <h3 className="font-semibold text-foreground mb-2">
+                            {item.experiences?.title || 'Experience'}
+                          </h3>
+                          <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                            {item.experiences?.description || 'No description available'}
+                          </p>
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-foreground">
+                              {formatPrice(item.experiences?.price_kes_adult || 0)}
+                            </span>
+                            <Link to={`/experience/${item.experiences?.slug || 'experience'}`}>
+                              <Button size="sm">View Details</Button>
+                            </Link>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
                 </div>
               </TabsContent>
 
