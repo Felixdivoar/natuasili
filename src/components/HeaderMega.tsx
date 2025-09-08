@@ -6,6 +6,7 @@ import CurrencySelector from "@/components/CurrencySelector";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useAuth } from "@/contexts/AuthContext";
 import { AvatarMenu } from "@/components/auth/AvatarMenu";
+import { getDashboardPath } from "@/lib/auth";
 import T from "@/i18n/T";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
@@ -326,7 +327,7 @@ export default function HeaderMega() {
                 {!loading && user && profile && (
                   <>
                     <Link
-                      to={profile.role === 'partner' ? '/dashboard/partner' : '/dashboard/traveler'}
+                      to={getDashboardPath(profile.role)}
                       className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >

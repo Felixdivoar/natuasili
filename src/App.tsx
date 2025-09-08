@@ -113,10 +113,14 @@ const App = () => (
                 <Route path="/profile" element={<AppLayout><Profile /></AppLayout>} />
                 <Route path="/auth" element={<AppLayout><Auth /></AppLayout>} />
                 <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
-                <Route path="/dashboard" element={<AppLayout><TravelerDashboard /></AppLayout>} />
-                <Route path="/dashboard/user" element={
-                  <ProtectedRoute allowedRoles={['traveler']}>
+                <Route path="/dashboard" element={
+                  <ProtectedRoute>
                     <AppLayout><UserDashboard /></AppLayout>
+                  </ProtectedRoute>
+                } />
+                <Route path="/dashboard/admin" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AppLayout><PartnerDashboard /></AppLayout>
                   </ProtectedRoute>
                 } />
                 <Route path="/dashboard/partner" element={
@@ -126,7 +130,12 @@ const App = () => (
                 } />
                 <Route path="/dashboard/traveler" element={
                   <ProtectedRoute allowedRoles={['traveler']}>
-                    <AppLayout><TravelerDashboard /></AppLayout>
+                    <AppLayout><UserDashboard /></AppLayout>
+                  </ProtectedRoute>
+                } />
+                <Route path="/dashboard/user" element={
+                  <ProtectedRoute allowedRoles={['traveler']}>
+                    <AppLayout><UserDashboard /></AppLayout>
                   </ProtectedRoute>
                 } />
                 <Route path="/projects/:projectId" element={<AppLayout><ProjectDetail /></AppLayout>} />
