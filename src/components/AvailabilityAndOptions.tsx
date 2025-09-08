@@ -8,8 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Users, Clock, MapPin, Star, CheckCircle, Minus, Plus } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { saveCart } from "@/lib/cart";
 import { isSameDayBookingCutoffPassed, isTodayInLocal, isValidBookingDate, validateBookingDate } from "@/utils/time";
+import NewAuthModal from "@/components/NewAuthModal";
 
 interface Experience {
   slug?: string;
@@ -46,6 +48,8 @@ const AvailabilityAndOptions = ({
   const navigate = useNavigate();
   const { formatPrice } = useCurrency();
   const { updateCart } = useCart();
+  const { user } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   
   // Initialize state from props or defaults
   const [selectedDate, setSelectedDate] = useState(initialParams?.date || "");
@@ -169,6 +173,12 @@ const AvailabilityAndOptions = ({
   // persist + navigate
   const handleContinue = () => {
     if (participantsError || !selectedDate || !dateValidation.isValid) return;
+
+    // Check authentication first
+    if (!user) {
+      setAuthModalOpen(true);
+      return;
+    }
 
     // Trigger booking start callback
     if (onBookingStart) {
@@ -568,6 +578,11 @@ const AvailabilityAndOptions = ({
 
         </div>
       </div>
+
+      <NewAuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)}
+      />
     </section>
   );
 };
