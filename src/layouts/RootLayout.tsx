@@ -1,24 +1,28 @@
-import { Outlet } from "react-router-dom";
-import HeaderMega from "@/components/HeaderMega";
-import Footer from "@/components/Footer";
-import { I18nProvider } from "@/contexts/I18nContext";
-import { CurrencyProvider } from "@/contexts/CurrencyContext";
-import { SimpleAuthProvider } from "@/contexts/SimpleAuthContext";
+import React from 'react';
+import Header from '@/components/Header';
+import HeaderMega from '@/components/HeaderMega';
+import Footer from '@/components/Footer';
+import { CurrencyProvider } from '@/contexts/CurrencyContext';
+import { I18nProvider } from '@/i18n/I18nProvider';
+import CookieBanner from '@/components/CookieBanner';
 
-export default function RootLayout() {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <SimpleAuthProvider>
+    <CurrencyProvider>
       <I18nProvider>
-        <CurrencyProvider>
-          <div className="min-h-dvh flex flex-col">
-            <HeaderMega />
-            <main className="flex-1 page-content">
-              <Outlet />
-            </main>
-            <Footer />
-          </div>
-        </CurrencyProvider>
+        <div className="min-h-screen bg-background">
+          <HeaderMega />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <CookieBanner />
+        </div>
       </I18nProvider>
-    </SimpleAuthProvider>
+    </CurrencyProvider>
   );
 }
