@@ -416,7 +416,7 @@ const PartnerWithUs: React.FC = () => {
             Join the leading platform for conservation tourism in Kenya and start making a greater impact today.
           </p>
           <Button 
-            onClick={handleApplyAsPartner}
+            onClick={() => window.open('https://2o7bym7r45m.typeform.com/to/OhaBfRVk?utm_source=xxxxx&typeform-source=natuasili.com', '_blank')}
             size="lg" 
             variant="secondary" 
             className="text-lg px-8"
