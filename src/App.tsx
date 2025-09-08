@@ -53,6 +53,7 @@ import ContentStub from "./pages/ContentStub";
 import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import UserDashboard from "./pages/UserDashboard";
+import Profile from "./pages/Profile";
 import PesapalCallback from "./pages/PesapalCallback";
 
 const queryClient = new QueryClient();
@@ -108,6 +109,7 @@ const App = () => (
                 <Route path="/pesapal/callback" element={<AppLayout><PesapalCallback /></AppLayout>} />
                 <Route path="/booking-success" element={<AppLayout><BookingSuccess /></AppLayout>} />
                 <Route path="/impact-ledger" element={<AppLayout><ImpactLedger /></AppLayout>} />
+                <Route path="/profile" element={<AppLayout><Profile /></AppLayout>} />
                 <Route path="/auth" element={<AppLayout><Auth /></AppLayout>} />
                 <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
                 <Route path="/dashboard" element={<AppLayout><TravelerDashboard /></AppLayout>} />
