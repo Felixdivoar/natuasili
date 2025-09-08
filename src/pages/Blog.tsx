@@ -21,6 +21,9 @@ import travelForGood from "@/assets/blog/travel-for-good.webp";
 import hostConservationExpand from "@/assets/blog/host-conservation-expand.jpg";
 import conservationCollaboration from "@/assets/blog/conservation-collaboration.webp";
 import authenticKenyaExperiences from "@/assets/blog/authentic-kenya-experiences.webp";
+import travelGivesBack from "@/assets/blog/travel-gives-back.jpg";
+import tailoredConservationItineraries from "@/assets/blog/tailored-conservation-itineraries.webp";
+import purposefulTravelExperiences from "@/assets/blog/purposeful-travel-experiences.jpg";
 const blogPosts = [{
   id: 1,
   title: "Partner with Natuasili and support conservation impact",
@@ -218,6 +221,38 @@ const blogPosts = [{
   readTime: "6 min read",
   image: authenticKenyaExperiences,
   slug: "authentic-kenya-experiences-natuasili",
+}, {
+  id: 19,
+  title: "Travel that gives back with Natuasili",
+  excerpt: "Travel has an amazing ability to change our lives as well as the environment around us. We are eager to share with you the intangible potential of your travels since we believe your adventures should positively affect the places you visit.",
+  category: "Purposeful Travel",
+  author: "Dr. Sarah Kimani",
+  date: "2024-01-16",
+  readTime: "6 min read",
+  image: travelGivesBack,
+  slug: "travel-gives-back-natuasili",
+  featured: false
+}, {
+  id: 20,
+  title: "Tailored Kenya conservation itineraries by Natuasili",
+  excerpt: "Imagine a travel experience that's tailor-made just for you. A tour that not only takes you to breathtaking destinations but also aligns perfectly with your passions and interests.",
+  category: "Purposeful Travel",
+  author: "James Mwangi",
+  date: "2024-01-17",
+  readTime: "7 min read",
+  image: tailoredConservationItineraries,
+  slug: "tailored-kenya-conservation-itineraries",
+  featured: false
+}, {
+  id: 21,
+  title: "Purposeful travel experiences with Natuasili",
+  excerpt: "Are you looking for travel experiences that leave a lasting impact, not just on your memories but on the world around you? If yes, you're in the right place.",
+  category: "Purposeful Travel",
+  author: "Alice Nyong'o",
+  date: "2024-01-18",
+  readTime: "6 min read",
+  image: purposefulTravelExperiences,
+  slug: "purposeful-travel-experiences-natuasili",
   featured: false
 }];
 const Blog = () => {

@@ -47,6 +47,7 @@ import humanWildlifeConflict from "@/assets/blog/human-wildlife-conflict.webp";
 import partnerGrowImpact from "@/assets/blog/partner-grow-impact.jpg";
 import travelForGood from "@/assets/blog/travel-for-good.webp";
 import hostConservationExpand from "@/assets/blog/host-conservation-expand.jpg";
+import travelGivesBack from "@/assets/blog/travel-gives-back.jpg";
 
 const blogPosts = [
   {
@@ -113,7 +114,17 @@ const blogPosts = [
     date: "2024-01-04", 
     readTime: "6 min read",
     image: hostConservationExpand,
-    slug: "host-conservation-experiences-expand-mission"
+  },
+  {
+    id: 7,
+    title: "Travel that gives back with Natuasili",
+    excerpt: "Travel has an amazing ability to change our lives as well as the environment around us. We are eager to share with you the intangible potential of your travels.",
+    category: "Purposeful Travel",
+    author: "Dr. Sarah Kimani",
+    date: "2024-01-16", 
+    readTime: "6 min read",
+    image: travelGivesBack,
+    slug: "travel-gives-back-natuasili"
   }
 ];
 
