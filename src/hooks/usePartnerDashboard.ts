@@ -52,7 +52,7 @@ export function usePartnerDashboard() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user || !profile || profile.role !== 'partner') return;
+    if (!user || !profile || (profile.role !== 'partner' && profile.role !== 'admin')) return;
 
     async function fetchPartnerData() {
       try {
