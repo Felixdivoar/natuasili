@@ -45,6 +45,8 @@ import digitalConservationSolutions from "@/assets/blog/digital-conservation-sol
 import sustainableLivelihoodsConservation from "@/assets/blog/sustainable-livelihoods-conservation.webp";
 import humanWildlifeConflict from "@/assets/blog/human-wildlife-conflict.webp";
 import partnerGrowImpact from "@/assets/blog/partner-grow-impact.jpg";
+import travelForGood from "@/assets/blog/travel-for-good.webp";
+import hostConservationExpand from "@/assets/blog/host-conservation-expand.jpg";
 
 const blogPosts = [
   {
@@ -71,47 +73,47 @@ const blogPosts = [
   },
   {
     id: 3,
-    title: "Digital conservation solutions; the future wildlife tech",
-    excerpt: "Technology is revolutionizing the way we protect wildlife and manage human-wildlife conflict.",
+    title: "Why does conservation need you? Travel with purpose",
+    excerpt: "Conservation is no longer the sole responsibility of governments and ngos. It is a global call to action, one that requires the participation of individuals, communities, and travelers alike.",
     category: "Conservation and Community Engagement",
-    author: "James Mwangi",
-    date: "2024-01-10",
-    readTime: "5 min read",
-    image: digitalConservationSolutions, 
-    slug: "digital-conservation-solutions-future-wildlife-tech"
+    author: "Dr. Sarah Kimani",
+    date: "2024-01-14",
+    readTime: "8 min read",
+    image: partnerConservationImpact, 
+    slug: "why-conservation-need-you-travel-purpose"
   },
   {
     id: 4,
-    title: "Creating sustainable livelihoods through conservation tourism",
-    excerpt: "For many communities living near wildlife, compensation payouts have been a critical safety net. However, these payouts alone are not enough to build long-term resilience.",
-    category: "Conservation and Community Engagement",
-    author: "Peter Njoroge",
-    date: "2024-01-08",
+    title: "Travel for good: conservation and community impact",
+    excerpt: "In a world where travel has become more accessible than ever, an important question arises: How can we ensure that our adventures leave a positive impact?",
+    category: "Purposeful Travel",
+    author: "Alice Nyong'o",
+    date: "2024-01-09",
     readTime: "7 min read",
-    image: sustainableLivelihoodsConservation,
-    slug: "creating-sustainable-livelihoods-conservation-tourism"
+    image: travelForGood,
+    slug: "travel-for-good-conservation-community-impact"
   },
   {
     id: 5,
-    title: "Reducing human–wildlife conflict: path to coexistence",
-    excerpt: "Human-wildlife conflict is one of the most pressing challenges facing conservation efforts today.",
+    title: "Digital conservation solutions; the future wildlife tech",
+    excerpt: "Technology is revolutionizing the way we protect wildlife and manage human-wildlife conflict.",
     category: "Conservation and Community Engagement",
-    author: "Dr. Grace Wanjiru", 
-    date: "2024-01-05",
-    readTime: "8 min read",
-    image: humanWildlifeConflict,
-    slug: "reducing-human-wildlife-conflict-path-coexistence"
+    author: "James Mwangi", 
+    date: "2024-01-10",
+    readTime: "5 min read",
+    image: digitalConservationSolutions,
+    slug: "digital-conservation-solutions-future-wildlife-tech"
   },
   {
     id: 6,
-    title: "Partner with Natuasili and grow your impact",
-    excerpt: "As a host, lodge owner, conservancy leader, or community initiative, your work is at the heart of Kenya's future.",
-    category: "Host Resources",
+    title: "Host conservation experiences and expand your mission",
+    excerpt: "If you run a community-based business or conservation organization, you are familiar with creating unique experiences that capture your goal for visitors.",
+    category: "Conservation and Community Engagement",
     author: "Michael Kipchoge",
-    date: "2024-01-03", 
-    readTime: "9 min read",
-    image: partnerGrowImpact,
-    slug: "partner-natuasili-grow-your-impact"
+    date: "2024-01-04", 
+    readTime: "6 min read",
+    image: hostConservationExpand,
+    slug: "host-conservation-experiences-expand-mission"
   }
 ];
 

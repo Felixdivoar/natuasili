@@ -17,6 +17,10 @@ import partnerGrowImpact from "@/assets/blog/partner-grow-impact.jpg";
 import beyondSafariPurpose from "@/assets/blog/beyond-safari-purpose.jpg";
 import sustainableTourismBlog from "@/assets/blog/sustainable-tourism-blog.jpg";
 import conservationTechBlog from "@/assets/blog/conservation-tech-blog.jpg";
+import travelForGood from "@/assets/blog/travel-for-good.webp";
+import hostConservationExpand from "@/assets/blog/host-conservation-expand.jpg";
+import conservationCollaboration from "@/assets/blog/conservation-collaboration.webp";
+import authenticKenyaExperiences from "@/assets/blog/authentic-kenya-experiences.webp";
 const blogPosts = [{
   id: 1,
   title: "Partner with Natuasili and support conservation impact",
@@ -41,6 +45,17 @@ const blogPosts = [{
   featured: true
 }, {
   id: 3,
+  title: "Why does conservation need you? Travel with purpose",
+  excerpt: "Conservation is no longer the sole responsibility of governments and ngos. It is a global call to action, one that requires the participation of individuals, communities, and travelers alike.",
+  category: "Conservation and Community Engagement",
+  author: "Dr. Sarah Kimani",
+  date: "2024-01-14",
+  readTime: "8 min read",
+  image: conservationTechBlog,
+  slug: "why-conservation-need-you-travel-purpose",
+  featured: true
+}, {
+  id: 4,
   title: "Digital conservation solutions; the future wildlife tech",
   excerpt: "Technology is revolutionizing the way we protect wildlife and manage human-wildlife conflict. The rollout of a new digital claims system is a game-changer for communities affected by wildlife damage.",
   category: "Conservation and Community Engagement",
@@ -51,7 +66,18 @@ const blogPosts = [{
   slug: "digital-conservation-solutions-future-wildlife-tech",
   featured: false
 }, {
-  id: 4,
+  id: 5,
+  title: "Travel for good: conservation and community impact",
+  excerpt: "In a world where travel has become more accessible than ever, an important question arises: How can we ensure that our adventures leave a positive impact?",
+  category: "Purposeful Travel",
+  author: "Alice Nyong'o",
+  date: "2024-01-09",
+  readTime: "7 min read",
+  image: travelForGood,
+  slug: "travel-for-good-conservation-community-impact",
+  featured: false
+}, {
+  id: 6,
   title: "Creating sustainable livelihoods through conservation tourism",
   excerpt: "For many communities living near wildlife, compensation payouts have been a critical safety net. However, these payouts alone are not enough to build long-term resilience.",
   category: "Conservation and Community Engagement",
@@ -62,7 +88,7 @@ const blogPosts = [{
   slug: "creating-sustainable-livelihoods-conservation-tourism",
   featured: false
 }, {
-  id: 5,
+  id: 7,
   title: "Reducing human–wildlife conflict: path to coexistence",
   excerpt: "Human-wildlife conflict is one of the most pressing challenges facing conservation efforts today. It not only threatens wildlife populations but also impacts the livelihoods of communities living near conservation areas.",
   category: "Conservation and Community Engagement",
@@ -73,18 +99,29 @@ const blogPosts = [{
   slug: "reducing-human-wildlife-conflict-path-coexistence",
   featured: false
 }, {
-  id: 6,
+  id: 8,
+  title: "Host conservation experiences and expand your mission",
+  excerpt: "If you run a community-based business or conservation organization, you are familiar with creating unique experiences that capture your goal for visitors.",
+  category: "Conservation and Community Engagement",
+  author: "Michael Kipchoge",
+  date: "2024-01-04",
+  readTime: "6 min read",
+  image: hostConservationExpand,
+  slug: "host-conservation-experiences-expand-mission",
+  featured: false
+}, {
+  id: 9,
   title: "Partner with Natuasili and grow your impact",
   excerpt: "As a host, lodge owner, conservancy leader, or community initiative, your work is at the heart of Kenya's future. Whether you are protecting endangered wildlife, preserving cultural heritage, or uplifting local communities, your efforts are shaping the landscapes and lives that define this region.",
   category: "Host Resources",
-  author: "Michael Kipchoge",
+  author: "Dr. John Muriuki",
   date: "2024-01-03",
   readTime: "9 min read",
   image: partnerGrowImpact,
   slug: "partner-natuasili-grow-your-impact",
   featured: false
 }, {
-  id: 7,
+  id: 10,
   title: "Beyond the safari: adding purpose to your itinerary",
   excerpt: "Kenya's sweeping savannas, dramatic landscapes, and legendary safaris have long drawn travelers seeking encounters with the big five. But beyond the game drives and golden sunsets lies a deeper, more profound story.",
   category: "Travel Tips and Itineraries",
@@ -95,7 +132,18 @@ const blogPosts = [{
   slug: "beyond-safari-adding-purpose-itinerary",
   featured: false
 }, {
-  id: 8,
+  id: 11,
+  title: "Conservation through collaboration with Natuasili",
+  excerpt: "At Natuasili, we value the amazing effort conservationists and communities living around protected areas undertake to preserve the natural wonders of our earth.",
+  category: "Conservation and Community Engagement",
+  author: "Dr. James Olaka",
+  date: "2023-12-30",
+  readTime: "6 min read",
+  image: conservationCollaboration,
+  slug: "conservation-through-collaboration-natuasili",
+  featured: false
+}, {
+  id: 12,
   title: "Kenyan Coast where conservation meets culture",
   excerpt: "The Kenyan Coast is more than just a picturesque destination of white sandy beaches and turquoise waters. It is a place where history, heritage, and conservation intertwine.",
   category: "Conservation and Community Engagement",
@@ -106,15 +154,70 @@ const blogPosts = [{
   slug: "kenyan-coast-conservation-meets-culture",
   featured: false
 }, {
-  id: 9,
+  id: 13,
+  title: "Hosted conservation and cultural experiences",
+  excerpt: "Are you a community-based or conservation organization looking to enhance the hosting of the experiences you provide? Joining Natuasili means joining a dynamic community of driven travelers.",
+  category: "Conservation and Community Engagement",
+  author: "Peter Mwangi",
+  date: "2023-12-27",
+  readTime: "5 min read",
+  image: partnerConservationImpact,
+  slug: "hosted-conservation-cultural-experiences",
+  featured: false
+}, {
+  id: 14,
+  title: "Embracing sustainability in every travel experience",
+  excerpt: "The concept of sustainability is central to our work at Natuasili; it is more than simply a slogan; it is a fundamental commitment.",
+  category: "Conservation and Community Engagement",
+  author: "Grace Wanjiru",
+  date: "2023-12-26",
+  readTime: "6 min read",
+  image: sustainableTourismBlog,
+  slug: "embracing-sustainability-travel-experience",
+  featured: false
+}, {
+  id: 15,
+  title: "Host with Natuasili and share your impact",
+  excerpt: "Are you a community-based enterprise or conservation organization that is committed to positively making the world a better place through your activities?",
+  category: "Host Resources",
+  author: "Samuel Kiprotich",
+  date: "2023-12-25",
+  readTime: "7 min read",
+  image: partnerGrowImpact,  
+  slug: "host-natuasili-share-your-impact",
+  featured: false
+}, {
+  id: 16,
+  title: "Join Natuasili and make your travels count",
+  excerpt: "One great approach to seeing the world, learning about other cultures, and making lifelong memories is travel. But suppose your travels could serve purposes beyond mere personal experience?",
+  category: "Conservation and Community Engagement",
+  author: "Mary Chepkemoi",
+  date: "2023-12-24",
+  readTime: "6 min read",
+  image: beyondSafariPurpose,
+  slug: "join-natuasili-make-travels-count",
+  featured: false
+}, {
+  id: 17,
   title: "Transforming tourism: The Natuasili approach",
   excerpt: "For decades, tourism has been a gateway to experiencing the wonders of the world, from breathtaking landscapes to diverse cultures and wildlife. But at Natuasili, we believe that travel should be more than just exploration.",
   category: "Purposeful Travel",
   author: "Alice Nyong'o",
-  date: "2023-12-25",
+  date: "2023-12-23",
   readTime: "5 min read",
   image: conservationTechBlog,
   slug: "transforming-tourism-natuasili-approach",
+  featured: false
+}, {
+  id: 18,
+  title: "Authentic Kenya experiences with Natuasili",
+  excerpt: "Natuasili is working to redefine what authenticity means in the travel industry in a world where the word is sometimes overused and under-delivered.",
+  category: "Conservation and Community Engagement",
+  author: "Dr. Sarah Kimani",
+  date: "2023-12-22",
+  readTime: "6 min read",
+  image: authenticKenyaExperiences,
+  slug: "authentic-kenya-experiences-natuasili",
   featured: false
 }];
 const Blog = () => {
