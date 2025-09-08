@@ -3,7 +3,6 @@ import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
@@ -152,8 +151,6 @@ export default function HeaderCompact() {
               <div className="hidden md:block">
                 <CurrencySelector />
               </div>
-              
-              <LanguageSwitcher />
 
               {/* Desktop Search */}
               <div className="hidden md:block relative" ref={searchRef}>

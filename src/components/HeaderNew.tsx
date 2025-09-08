@@ -3,7 +3,6 @@ import { Search, User, Menu, X, ChevronDown, Globe } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import AISearchComponent from "@/components/AISearchComponent";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -185,9 +184,6 @@ export default function HeaderNew() {
               <div className="hidden md:block">
                 <CurrencySelector />
               </div>
-              
-              {/* Language Switcher */}
-              <LanguageSwitcher />
 
               {/* Sign In/Up */}
               <Link to="/auth">
