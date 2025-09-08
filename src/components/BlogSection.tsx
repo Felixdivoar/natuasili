@@ -39,91 +39,89 @@ const CarouselControls = () => {
   );
 };
 
-import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
-import partnerSpotlightBlog from "@/assets/blog/partner-spotlight-blog.jpg";
-import whyPartnerBlog from "@/assets/blog/why-partner-blog.jpg";
-import sustainableTourismBlog from "@/assets/blog/sustainable-tourism-blog.jpg";
-import communityImpactBlog from "@/assets/blog/community-impact-blog.jpg";
-import conservationTechBlog from "@/assets/blog/conservation-tech-blog.jpg";
+import partnerConservationImpact from "@/assets/blog/partner-conservation-impact.jpg";
+import communityResilienceTourism from "@/assets/blog/community-resilience-tourism.webp";
+import digitalConservationSolutions from "@/assets/blog/digital-conservation-solutions.png";
+import sustainableLivelihoodsConservation from "@/assets/blog/sustainable-livelihoods-conservation.webp";
+import humanWildlifeConflict from "@/assets/blog/human-wildlife-conflict.webp";
+import partnerGrowImpact from "@/assets/blog/partner-grow-impact.jpg";
 
 const blogPosts = [
   {
     id: 1,
-    title: "The Real Impact of Conservation Tourism in Kenya",
-    excerpt: "How traveler contributions are transforming wildlife protection efforts across Kenya's most critical habitats.",
-    category: "Impact Stories",
-    author: "Dr. Sarah Kimani",
+    title: "Partner with Natuasili and support conservation impact",
+    excerpt: "We see that a great part of organizations and host communities can contribute to conservation. Along with improving your profile, partnering with us directly supports conservation efforts.",
+    category: "Host Resources",
+    author: "NatuAsili Team",
     date: "2024-01-15",
     readTime: "5 min read",
-    image: impactMetricsBlog,
-    slug: "real-impact-conservation-tourism-kenya"
+    image: partnerConservationImpact,
+    slug: "partner-natuasili-support-conservation-impact"
   },
   {
     id: 2,
-    title: "Partner Spotlight: Maasai Mara Wildlife Conservancy",
-    excerpt: "Meet the team behind one of Kenya's most successful community-led conservation initiatives.",
-    category: "Partner Spotlight",
-    author: "James Mwangi",
+    title: "Community resilience through conservation tourism",
+    excerpt: "Eco-tourism is a powerful tool for conservation, providing communities with sustainable livelihoods while protecting wildlife.",
+    category: "Purposeful Travel",
+    author: "Sarah Kimani",
     date: "2024-01-12",
-    readTime: "4 min read", 
-    image: partnerSpotlightBlog,
-    slug: "partner-spotlight-maasai-mara-conservancy"
+    readTime: "6 min read", 
+    image: communityResilienceTourism,
+    slug: "community-resilience-conservation-tourism"
   },
   {
     id: 3,
-    title: "Why Partner with NatuAsili? A Conservation Organization's Guide",
-    excerpt: "Everything you need to know about joining Kenya's premier conservation impact platform.",
-    category: "Partnership Guide",
-    author: "Alice Nyong'o",
+    title: "Digital conservation solutions; the future wildlife tech",
+    excerpt: "Technology is revolutionizing the way we protect wildlife and manage human-wildlife conflict.",
+    category: "Conservation and Community Engagement",
+    author: "James Mwangi",
     date: "2024-01-10",
-    readTime: "6 min read",
-    image: whyPartnerBlog, 
-    slug: "why-partner-natuasili-guide"
+    readTime: "5 min read",
+    image: digitalConservationSolutions, 
+    slug: "digital-conservation-solutions-future-wildlife-tech"
   },
   {
     id: 4,
-    title: "Building Sustainable Livelihoods Through Conservation",
-    excerpt: "How authentic tourism experiences are creating economic opportunities for local communities.",
-    category: "Community Impact",
+    title: "Creating sustainable livelihoods through conservation tourism",
+    excerpt: "For many communities living near wildlife, compensation payouts have been a critical safety net. However, these payouts alone are not enough to build long-term resilience.",
+    category: "Conservation and Community Engagement",
     author: "Peter Njoroge",
     date: "2024-01-08",
     readTime: "7 min read",
-    image: communityImpactBlog,
-    slug: "sustainable-livelihoods-conservation"
+    image: sustainableLivelihoodsConservation,
+    slug: "creating-sustainable-livelihoods-conservation-tourism"
   },
   {
     id: 5,
-    title: "From Degraded Land to Thriving Habitat: Restoration Success Stories",
-    excerpt: "Witness the transformation of Kenya's ecosystems through community-led restoration efforts.",
-    category: "Restoration",
+    title: "Reducing human–wildlife conflict: path to coexistence",
+    excerpt: "Human-wildlife conflict is one of the most pressing challenges facing conservation efforts today.",
+    category: "Conservation and Community Engagement",
     author: "Dr. Grace Wanjiru", 
     date: "2024-01-05",
     readTime: "8 min read",
-    image: sustainableTourismBlog,
-    slug: "habitat-restoration-success-stories"
+    image: humanWildlifeConflict,
+    slug: "reducing-human-wildlife-conflict-path-coexistence"
   },
   {
     id: 6,
-    title: "The Future of Wildlife Protection: Technology Meets Tradition",
-    excerpt: "How modern technology is enhancing traditional conservation methods in Kenya's protected areas.",
-    category: "Innovation",
+    title: "Partner with Natuasili and grow your impact",
+    excerpt: "As a host, lodge owner, conservancy leader, or community initiative, your work is at the heart of Kenya's future.",
+    category: "Host Resources",
     author: "Michael Kipchoge",
     date: "2024-01-03", 
-    readTime: "5 min read",
-    image: conservationTechBlog,
-    slug: "future-wildlife-protection-technology"
+    readTime: "9 min read",
+    image: partnerGrowImpact,
+    slug: "partner-natuasili-grow-your-impact"
   }
 ];
 
 const BlogSection = () => {
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Impact Stories': return 'bg-conservation/10 text-conservation border-conservation/20';
-      case 'Partner Spotlight': return 'bg-primary/10 text-primary border-primary/20';
-      case 'Partnership Guide': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Community Impact': return 'bg-conservation/10 text-conservation border-conservation/20';
-      case 'Restoration': return 'bg-primary/10 text-primary border-primary/20';
-      case 'Innovation': return 'bg-accent/10 text-accent border-accent/20';
+      case 'Host Resources': return 'bg-conservation/10 text-conservation border-conservation/20';
+      case 'Purposeful Travel': return 'bg-primary/10 text-primary border-primary/20';
+      case 'Conservation and Community Engagement': return 'bg-accent/10 text-accent border-accent/20';
+      case 'Travel Tips and Itineraries': return 'bg-secondary/10 text-secondary border-secondary/20';
       default: return 'bg-muted text-muted-foreground';
     }
   };
