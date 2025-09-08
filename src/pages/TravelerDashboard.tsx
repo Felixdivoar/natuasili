@@ -67,10 +67,6 @@ const TravelerDashboard = () => {
         <div className="relative w-full py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 animate-scale-in">
-                <TreePine className="h-4 w-4 mr-2" />
-                Conservation Impact Dashboard
-              </div>
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
                 Your Conservation
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Impact</span>
