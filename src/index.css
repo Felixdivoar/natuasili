@@ -345,65 +345,6 @@ button, .btn, .button, [role="button"],
   min-height: 42vh; 
 }
 
-/* =========================== MOBILE NAVIGATION =========================== */
-/* Mobile bottom navigation */
-.mobile-bottom-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 64px;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  backdrop-filter: saturate(180%) blur(12px);
-  background: hsl(var(--background) / 0.95);
-  border-top: 1px solid hsl(var(--border));
-  z-index: 1000;
-}
-
-@media (min-width: 992px) {
-  .mobile-bottom-nav {
-    display: none;
-  }
-}
-
-/* Add bottom padding to main content to prevent overlap */
-main {
-  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
-}
-
-@media (min-width: 992px) {
-  main {
-    padding-bottom: 0;
-  }
-}
-
-/* Mobile bottom nav button styling */
-.mobile-bottom-nav .nav-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  padding: 0.5rem;
-  color: hsl(var(--muted-foreground));
-  transition: color 0.2s;
-  font-size: 0.75rem;
-  text-align: center;
-}
-
-.mobile-bottom-nav .nav-button:hover,
-.mobile-bottom-nav .nav-button.active {
-  color: hsl(var(--primary));
-}
-
-.mobile-bottom-nav .nav-button .icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
 /* Compact mobile header */
 @media (max-width: 991px) {
   .header-compact {
@@ -861,64 +802,6 @@ button, .btn, [role="button"], input[type="button"], input[type="submit"] {
 }
 
 @layer utilities {
-  /* Mobile Bottom Navigation */
-  .mobile-bottom-nav {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 64px;
-    padding-bottom: env(safe-area-inset-bottom, 0);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    gap: 4px;
-    backdrop-filter: saturate(180%) blur(12px);
-    background: rgba(255, 255, 255, 0.92);
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    z-index: 1000;
-  }
-
-  .dark .mobile-bottom-nav {
-    background: rgba(0, 0, 0, 0.92);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .mbn-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 64px;
-    gap: 4px;
-    border: none;
-    background: transparent;
-    font-size: 12px;
-    line-height: 1;
-    padding: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    color: hsl(var(--foreground));
-    transition: color 0.2s ease;
-  }
-
-  .mbn-item:hover {
-    color: hsl(var(--primary));
-  }
-
-  .mbn-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  .mbn-label {
-    font-size: 12px;
-    font-weight: 500;
-  }
-
   /* Mobile Header */
   .mobile-header {
     position: sticky;
@@ -1002,16 +885,8 @@ button, .btn, [role="button"], input[type="button"], input[type="submit"] {
 
   /* Hide mobile components on desktop - show on ≤991px */
   @media (min-width: 992px) {
-    .mobile-bottom-nav,
     .mobile-header {
       display: none !important;
-    }
-  }
-
-  /* Universal bottom breathing room - only on mobile/tablet */
-  @media (max-width: 991px) {
-    :is(main, #site-main, .site-main) {
-      padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
     }
   }
 

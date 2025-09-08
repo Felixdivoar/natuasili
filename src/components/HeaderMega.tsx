@@ -159,17 +159,17 @@ const { t } = useI18n();
 
           {/* Right cluster */}
           <div className="flex items-center gap-3">
-            {/* Desktop items only (hidden on mobile/tablet ≤991px) */}
-            <div className="hidden xl:block">
+            {/* Currency - all screen sizes */}
+            <div className="hidden lg:block">
               <CurrencySelector />
             </div>
             
-            <div className="hidden xl:block">
+            <div className="hidden lg:block">
               <LanguageSwitcher />
             </div>
 
-            {/* Search - desktop only (moved to bottom nav on mobile/tablet) */}
-            <div className="relative hidden xl:block" ref={searchRef}>
+            {/* Search - all screen sizes */}
+            <div className="relative" ref={searchRef}>
               <Button
                 variant="ghost"
                 size="sm"
@@ -197,9 +197,9 @@ const { t } = useI18n();
               )}
             </div>
 
-            {/* Profile or Sign In - desktop only (≥1200px) */}
+            {/* Profile or Sign In - all screen sizes */}
             {user ? (
-              <div className="relative hidden xl:block">
+              <div className="relative hidden lg:block">
                 <Button 
                   variant="ghost" 
                   size="sm" 
@@ -254,7 +254,7 @@ const { t } = useI18n();
             ) : (
               <Link 
                 to="/auth"
-                className="hidden xl:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors btn-auth"
+                className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors btn-auth"
               >
                 <User className="w-4 h-4" />
                 {t("nav_signin")}
@@ -263,7 +263,7 @@ const { t } = useI18n();
 
             {/* Partner CTA - always visible */}
             <Link to="/partner-entry">
-              <Button size="sm" className="bg-primary hover:bg-primary-hover hidden xl:block">
+              <Button size="sm" className="bg-primary hover:bg-primary-hover hidden lg:block">
                 {t("nav_partner")}
               </Button>
             </Link>
@@ -336,6 +336,60 @@ const { t } = useI18n();
                     {theme.label}
                   </Link>
                 ))}
+              </div>
+
+              {/* Mobile-only items */}
+              <div className="lg:hidden space-y-2 border-t border-border pt-4 mt-4">
+                <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Settings
+                </div>
+                <div className="px-3 py-2">
+                  <CurrencySelector />
+                </div>
+                <div className="px-3 py-2">
+                  <LanguageSwitcher />
+                </div>
+                {!user && (
+                  <Link 
+                    to="/auth"
+                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User className="w-4 h-4" />
+                    {t("nav_signin")}
+                  </Link>
+                )}
+                {user && (
+                  <>
+                    <Link
+                      to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
+                      className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <img 
+                        src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
+                        alt="" 
+                        className="h-4 w-4 rounded-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
+                        }}
+                      />
+                      Dashboard
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm hover:bg-muted rounded-md"
+                      onClick={() => {
+                        signOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>
