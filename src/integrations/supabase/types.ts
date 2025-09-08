@@ -153,6 +153,42 @@ export type Database = {
           },
         ]
       }
+      impact_metrics: {
+        Row: {
+          created_at: string | null
+          currency: string | null
+          id: string
+          last_calculated: string | null
+          metric_description: string | null
+          metric_key: string
+          metric_label: string
+          metric_value: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          last_calculated?: string | null
+          metric_description?: string | null
+          metric_key: string
+          metric_label: string
+          metric_value?: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          last_calculated?: string | null
+          metric_description?: string | null
+          metric_key?: string
+          metric_label?: string
+          metric_value?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       impact_proofs: {
         Row: {
           booking_id: string
@@ -447,6 +483,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      update_impact_metrics: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {
