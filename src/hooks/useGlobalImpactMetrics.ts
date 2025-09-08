@@ -83,6 +83,14 @@ export function useGlobalImpactMetrics() {
     return getMetricByKey('total_participants')?.metric_value || 0;
   };
 
+  const getTotalDonations = (): number => {
+    return getMetricByKey('total_donations')?.metric_value || 0;
+  };
+
+  const getMonthlyDonations = (): number => {
+    return getMetricByKey('monthly_donations')?.metric_value || 0;
+  };
+
   return {
     metrics,
     loading,
@@ -92,5 +100,7 @@ export function useGlobalImpactMetrics() {
     getTotalExperiences,
     getActivePartners,
     getTotalParticipants,
+    getTotalDonations,
+    getMonthlyDonations,
   };
 }

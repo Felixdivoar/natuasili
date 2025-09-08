@@ -5,10 +5,12 @@ import { useAuth } from '@/contexts/AuthContext';
 interface PartnerStats {
   monthlyBookings: number;
   monthlyRevenue: number;
+  monthlyDonations: number;
   totalTravelers: number;
   averageRating: number;
   totalExperiences: number;
   totalEarnings: number;
+  totalDonations: number;
 }
 
 interface BookingData {
@@ -20,6 +22,7 @@ interface BookingData {
   adults: number;
   children: number;
   total_kes: number;
+  donation_kes: number;
   status: string;
   experience_title: string;
   created_at: string;
@@ -41,10 +44,12 @@ export function usePartnerDashboard() {
   const [stats, setStats] = useState<PartnerStats>({
     monthlyBookings: 0,
     monthlyRevenue: 0,
+    monthlyDonations: 0,
     totalTravelers: 0,
     averageRating: 0,
     totalExperiences: 0,
     totalEarnings: 0,
+    totalDonations: 0,
   });
   const [recentBookings, setRecentBookings] = useState<BookingData[]>([]);
   const [experiences, setExperiences] = useState<ExperienceData[]>([]);
@@ -97,6 +102,7 @@ export function usePartnerDashboard() {
               adults,
               children,
               total_kes,
+              donation_kes,
               status,
               created_at,
               experiences!inner(title)
@@ -126,28 +132,45 @@ export function usePartnerDashboard() {
                    (booking.status === 'confirmed' || booking.status === 'completed');
           }).length || 0;
 
+          // Calculate monthly revenue (excluding donations)
           const monthlyRevenue = bookingsData?.filter(booking => {
             const bookingDate = new Date(booking.created_at);
             return bookingDate.getMonth() === currentMonth && 
                    bookingDate.getFullYear() === currentYear &&
                    (booking.status === 'confirmed' || booking.status === 'completed');
-          }).reduce((sum, booking) => sum + booking.total_kes, 0) || 0;
+          }).reduce((sum, booking) => sum + (booking.total_kes - booking.donation_kes), 0) || 0;
+
+          // Calculate monthly donations separately
+          const monthlyDonations = bookingsData?.filter(booking => {
+            const bookingDate = new Date(booking.created_at);
+            return bookingDate.getMonth() === currentMonth && 
+                   bookingDate.getFullYear() === currentYear &&
+                   (booking.status === 'confirmed' || booking.status === 'completed');
+          }).reduce((sum, booking) => sum + booking.donation_kes, 0) || 0;
 
           const totalTravelers = bookingsData?.filter(booking => 
             booking.status === 'confirmed' || booking.status === 'completed'
           ).reduce((sum, booking) => sum + booking.adults + (booking.children || 0), 0) || 0;
 
+          // Calculate total earnings (excluding donations)
           const totalEarnings = bookingsData?.filter(booking => 
             booking.status === 'confirmed' || booking.status === 'completed'
-          ).reduce((sum, booking) => sum + booking.total_kes, 0) || 0;
+          ).reduce((sum, booking) => sum + (booking.total_kes - booking.donation_kes), 0) || 0;
+
+          // Calculate total donations separately
+          const totalDonations = bookingsData?.filter(booking => 
+            booking.status === 'confirmed' || booking.status === 'completed'
+          ).reduce((sum, booking) => sum + booking.donation_kes, 0) || 0;
 
           setStats({
             monthlyBookings,
             monthlyRevenue,
+            monthlyDonations,
             totalTravelers,
             averageRating: 4.8, // Mock rating for now
             totalExperiences: experiencesData?.length || 0,
             totalEarnings,
+            totalDonations,
           });
         }
 

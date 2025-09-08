@@ -29,6 +29,8 @@ const AdminDashboard = () => {
     getTotalExperiences,
     getActivePartners,
     getTotalParticipants,
+    getTotalDonations,
+    getMonthlyDonations,
     loading: metricsLoading
   } = useGlobalImpactMetrics();
 
@@ -153,6 +155,49 @@ const AdminDashboard = () => {
                         {getTotalParticipants()}
                       </div>
                       <p className="text-sm text-muted-foreground">Total Participants</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Donation Impact Cards - Global Platform Impact */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-emerald-50 to-teal-50 hover:scale-105">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/10 group-hover:scale-110 transition-transform duration-300">
+                          <TreePine className="h-6 w-6 text-emerald-600" />
+                        </div>
+                        <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-200">
+                          Platform Impact
+                        </Badge>
+                      </div>
+                      <div className="text-3xl font-bold text-emerald-700 mb-1">
+                        {formatPrice(getMonthlyDonations())}
+                      </div>
+                      <p className="text-sm text-emerald-600 font-medium">This Month's Donations</p>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Voluntary conservation donations from all travelers
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-emerald-50 to-teal-50 hover:scale-105">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-teal-500/10 group-hover:scale-110 transition-transform duration-300">
+                          <TrendingUp className="h-6 w-6 text-teal-600" />
+                        </div>
+                        <Badge variant="secondary" className="bg-teal-100 text-teal-700 border-teal-200">
+                          NatuAsili Impact
+                        </Badge>
+                      </div>
+                      <div className="text-3xl font-bold text-teal-700 mb-1">
+                        {formatPrice(getTotalDonations())}
+                      </div>
+                      <p className="text-sm text-teal-600 font-medium">Total Platform Donations</p>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        Demonstrates how NatuAsili inspires conservation giving
+                      </p>
                     </CardContent>
                   </Card>
                 </div>
