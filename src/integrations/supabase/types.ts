@@ -304,6 +304,27 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_events: {
+        Row: {
+          created_at: string | null
+          event: Json
+          id: number
+          order_tracking_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          event: Json
+          id?: number
+          order_tracking_id: string
+        }
+        Update: {
+          created_at?: string | null
+          event?: Json
+          id?: number
+          order_tracking_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number

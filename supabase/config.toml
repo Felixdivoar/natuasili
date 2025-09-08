@@ -1,7 +1,16 @@
 project_id = "zeiqetimpspjgppfhbdu"
 
-[functions.create-pesapal-order]
+[functions.pesapal-auth]
+verify_jwt = false
+
+[functions.pesapal-register-ipn]
+verify_jwt = false
+
+[functions.pesapal-create-order]
 verify_jwt = true
 
 [functions.pesapal-ipn]
+verify_jwt = false
+
+[functions.pesapal-status]
 verify_jwt = false

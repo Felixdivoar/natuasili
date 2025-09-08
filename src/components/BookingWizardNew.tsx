@@ -182,13 +182,16 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         throw new Error(`Failed to create booking: ${bookingError.message}`);
       }
 
-      // Create Pesapal payment order
-      const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('create-pesapal-order', {
+      // Create Pesapal payment order using new edge function
+      const callbackUrl = `${window.location.origin}/pesapal-callback`;
+      const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('pesapal-create-order', {
         body: {
           booking_id: booking.id,
           amount: totalAmount,
           currency: cart.currency,
           description: `Booking for ${experience.title} - ${cart.adults + cart.children} people on ${cart.date}${formData.donation ? ` + KES ${formData.donation} donation` : ''}`,
+          reference: `booking_${booking.id}_${Date.now()}`,
+          callback_url: callbackUrl,
           customer: {
             email: formData.email,
             first_name: formData.name.split(' ')[0] || formData.name,

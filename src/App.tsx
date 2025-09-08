@@ -20,6 +20,7 @@ import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
 import Checkout from "./pages/Checkout";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import PesapalCallback from "./pages/PesapalCallback";
 import BookingSuccess from "./pages/BookingSuccess";
 import ImpactLedger from "./pages/ImpactLedger";
 import NotFound from "./pages/NotFound";
@@ -106,6 +107,7 @@ const App = () => (
                 <Route path="/experience/:slug" element={<AppLayout><ExperienceDetail /></AppLayout>} />
                 <Route path="/checkout/:slug" element={<AppLayout><Checkout /></AppLayout>} />
                 <Route path="/confirmation/:slug" element={<AppLayout><ConfirmationPage /></AppLayout>} />
+                <Route path="/pesapal-callback" element={<AppLayout><PesapalCallback /></AppLayout>} />
                 <Route path="/pesapal/callback" element={<AppLayout><PesapalCallback /></AppLayout>} />
                 <Route path="/booking-success" element={<AppLayout><BookingSuccess /></AppLayout>} />
                 <Route path="/impact-ledger" element={<AppLayout><ImpactLedger /></AppLayout>} />
