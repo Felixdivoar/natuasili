@@ -617,6 +617,10 @@ export type Database = {
         Args: { user_email: string }
         Returns: undefined
       }
+      setup_admin_user_post_creation: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       update_impact_metrics: {
         Args: Record<PropertyKey, never>
         Returns: undefined
