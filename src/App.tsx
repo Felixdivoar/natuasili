@@ -33,8 +33,6 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogCategory from "./pages/BlogCategory";
 import PartnerSuccessStory from "./pages/PartnerSuccessStory";
-import PartnerProfile from "./pages/PartnerProfile";
-import PartnerDetail from "./pages/PartnerDetail";
 import SamburuDestination from "./pages/destination/Samburu";
 import MasaiMaraDestination from "./pages/destination/MasaiMara";
 import CoastDestination from "./pages/destination/Coast";
