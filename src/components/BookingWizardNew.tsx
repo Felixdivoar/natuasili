@@ -43,43 +43,18 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     marketingOptIn: false
   });
 
-  // Auto-fill user profile data
+  // Auto-fill user profile data on modal open
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (user?.id) {
-        try {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('first_name, last_name')
-            .eq('id', user.id)
-            .single();
-          
-          if (profile) {
-            setFormData(prev => ({
-              ...prev,
-              name: `${profile.first_name || ''} ${profile.last_name || ''}`.trim(),
-              email: user.email || '',
-            }));
-          } else {
-            // Fallback to user email from auth
-            setFormData(prev => ({
-              ...prev,
-              email: user.email || '',
-            }));
-          }
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
-          // Fallback to user email from auth
-          setFormData(prev => ({
-            ...prev,
-            email: user.email || '',
-          }));
-        }
-      }
-    };
-
     if (isOpen && user) {
-      fetchUserProfile();
+      // Use metadata from auth if available, otherwise keep existing values
+      const fullName = user.user_metadata?.full_name || formData.name;
+      const email = user.email || formData.email;
+      
+      setFormData(prev => ({
+        ...prev,
+        name: fullName,
+        email: email,
+      }));
     }
   }, [isOpen, user]);
 

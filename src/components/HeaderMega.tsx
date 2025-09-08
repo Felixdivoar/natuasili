@@ -209,7 +209,7 @@ const { t } = useI18n();
                     <AvatarImage src={user.user_metadata?.avatar_url} />
                     <AvatarFallback className="text-xs">
                       {user.user_metadata?.full_name ? 
-                        user.user_metadata.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 
+                        user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 
                         user.email?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -226,7 +226,7 @@ const { t } = useI18n();
                     <AvatarImage src={user.user_metadata?.avatar_url} />
                     <AvatarFallback className="text-xs">
                       {user.user_metadata?.full_name ? 
-                        user.user_metadata.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 
+                        user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 
                         user.email?.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
