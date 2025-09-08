@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Headphones } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useI18n } from "@/i18n/I18nProvider";
 import visaLogo from "@/assets/visa-logo.png";
@@ -34,8 +34,9 @@ const Footer = () => {
                 href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-white/80 hover:text-accent transition-colors"
+                className="text-white/80 hover:text-accent transition-colors flex items-center gap-2"
               >
+                <Headphones className="w-4 h-4" />
                 Conservation Voices
               </a></li>
               <li><Link to="/impact-ledger" className="text-white/80 hover:text-accent transition-colors">Impact Tracker</Link></li>

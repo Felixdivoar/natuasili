@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, X, LogOut, Settings } from "lucide-react";
+import { Search, User, Menu, X, LogOut, Settings, Headphones } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
@@ -89,8 +89,9 @@ export default function HeaderMega() {
                 href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="nav-link text-foreground hover:text-primary transition-colors text-sm"
+                className="nav-link text-foreground hover:text-primary transition-colors text-sm flex items-center gap-2"
               >
+                <Headphones className="w-4 h-4" />
                 Conservation Voices
               </a>
 
@@ -316,9 +317,10 @@ export default function HeaderMega() {
                 href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
+                <Headphones className="w-4 h-4" />
                 Conservation Voices
               </a>
               
