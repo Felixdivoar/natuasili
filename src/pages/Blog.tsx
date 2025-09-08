@@ -326,20 +326,6 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                       {post.excerpt}
                     </p>
                     
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <User className="h-3 w-3" />
-                        {post.author}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(post.date).toLocaleDateString()}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {post.readTime}
-                      </div>
-                    </div>
                     
                     <Link to={`/blog/${post.slug}`}>
                       <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">

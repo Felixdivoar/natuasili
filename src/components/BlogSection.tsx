@@ -117,17 +117,6 @@ const BlogSection = () => {
                       {post.excerpt}
                     </p>
                     
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <User className="h-3 w-3" />
-                        {post.author}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(post.date).toLocaleDateString()}
-                      </div>
-                      <span>{post.readTime}</span>
-                    </div>
                     
                     <Link to={`/blog/${post.slug}`} className="read-more">
                       <Button variant="outline" size="sm" className="group/btn w-full">

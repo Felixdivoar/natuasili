@@ -91,16 +91,6 @@ const ImpactStories = () => {
                         </div>)}
                     </div>
                     
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <User className="h-3 w-3" />
-                        {story.author}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(story.date).toLocaleDateString()}
-                      </div>
-                    </div>
                     
                     <Link to={`/blog/${story.slug}`}>
                       <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">

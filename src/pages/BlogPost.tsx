@@ -299,20 +299,6 @@ const BlogPost = () => {
             {post.excerpt}
           </p>
           
-          <div className="flex items-center gap-6 text-sm text-muted-foreground mb-8">
-            <div className="flex items-center gap-1">
-              <User className="h-4 w-4" />
-              {post.author}
-            </div>
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              {new Date(post.date).toLocaleDateString()}
-            </div>
-            <div className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              {post.readTime}
-            </div>
-          </div>
         </div>
         
         <div className="mb-8">
