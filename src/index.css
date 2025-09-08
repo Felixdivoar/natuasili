@@ -444,6 +444,64 @@ button, .btn, .button, [role="button"],
   }
 }
 
+/* =========================== MOBILE BUTTON FIXES =========================== */
+/* Critical mobile/tablet button fixes for all booking CTAs */
+
+/* Ensure all buttons have proper mobile tap targets and touch behavior */
+button, .btn, [role="button"], input[type="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10;
+}
+
+/* Mobile/tablet specific button enhancements */
+@media (max-width: 1024px) {
+  /* All booking buttons - ensure they're always clickable */
+  button[data-action="proceed"],
+  button[id*="continue"],
+  button[id*="book"],
+  .btn-book-now,
+  .btn-continue,
+  button:contains("Continue"),
+  button:contains("Book"),
+  [aria-label*="Book"],
+  [aria-label*="Continue"] {
+    min-height: 48px !important;
+    min-width: 48px !important;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 50 !important;
+    cursor: pointer !important;
+  }
+
+  /* Remove any potential overlay blocking */
+  .overlay, .backdrop {
+    pointer-events: none !important;
+  }
+
+  /* Ensure card buttons are above overlays */
+  .card button, .card-content button, .card-body button {
+    position: relative !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Fix availability section buttons specifically */
+  .availability-section button,
+  #availability button,
+  .availability-section .btn {
+    min-height: 48px !important;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+    z-index: 30 !important;
+    position: relative !important;
+  }
+}
+
 /* Sticky Book Now button (mobile/tablet) */
 .sticky-book-now {
   display: none;
@@ -459,13 +517,16 @@ button, .btn, .button, [role="button"],
     padding: .65rem 1rem calc(.65rem + env(safe-area-inset-bottom));
     border-top: 1px solid hsl(var(--border));
     background: hsl(var(--background));
-    z-index: 40;
+    z-index: 60;
   }
   /* Button styling follows your brand */
   .sticky-book-now .btn {
     border-radius: 9999px;
     padding: .8rem 1.2rem;
     font-weight: 700;
+    min-height: 48px;
+    touch-action: manipulation;
+    pointer-events: auto;
   }
   
   /* Prevent overlap with footer on very short pages */

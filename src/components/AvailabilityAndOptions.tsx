@@ -507,8 +507,9 @@ const AvailabilityAndOptions = ({
                   onClick={handleContinue} 
                   disabled={proceedDisabled} 
                   aria-disabled={proceedDisabled} 
-                  className="w-full" 
+                  className="w-full min-h-[48px] touch-manipulation pointer-events-auto z-20 relative" 
                   size="lg"
+                  style={{ touchAction: 'manipulation' }}
                 >
                   Continue
                 </Button>

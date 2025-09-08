@@ -527,9 +527,10 @@ const ExperienceDetail = () => {
                 </div>
                 <button 
                   onClick={handleBookNowClick} 
-                  className="bg-primary hover:bg-primary-hover text-primary-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-200 pointer-events-auto z-10 relative touch-manipulation"
+                  className="bg-primary hover:bg-primary-hover text-primary-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-200 pointer-events-auto z-50 relative touch-manipulation min-h-[44px]"
                   type="button"
                   aria-label="Book this experience"
+                  style={{ touchAction: 'manipulation' }}
                 >
                   {!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
                 </button>
@@ -546,9 +547,10 @@ const ExperienceDetail = () => {
               </div>
                 <button 
                   onClick={handleBookNowClick} 
-                  className="flex-1 min-h-[44px] touch-manipulation bg-primary hover:bg-primary-hover text-primary-foreground font-semibold rounded-lg transition-all duration-200 pointer-events-auto z-10 relative"
+                  className="flex-1 min-h-[48px] touch-manipulation bg-primary hover:bg-primary-hover text-primary-foreground font-semibold rounded-lg transition-all duration-200 pointer-events-auto z-50 relative"
                   type="button"
                   aria-label="Book this experience"
+                  style={{ touchAction: 'manipulation' }}
                 >
                   {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
                 </button>
