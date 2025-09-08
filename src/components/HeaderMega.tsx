@@ -168,13 +168,13 @@ export default function HeaderMega() {
 
           {/* Right cluster */}
           <div className="flex items-center gap-3">
-            {/* Currency - all screen sizes */}
+            {/* Currency - desktop only */}
             <div className="hidden lg:block">
               <CurrencySelector />
             </div>
 
-            {/* Search - all screen sizes */}
-            <div className="relative" ref={searchRef}>
+            {/* Search - desktop only */}
+            <div className="relative hidden lg:block" ref={searchRef}>
               <Button
                 variant="ghost"
                 size="sm"
@@ -306,56 +306,6 @@ export default function HeaderMega() {
                 ))}
               </div>
 
-              {/* Mobile-only items */}
-              <div className="lg:hidden space-y-2 border-t border-border pt-4 mt-4">
-                <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  Settings
-                </div>
-                <div className="px-3 py-2">
-                  <CurrencySelector />
-                </div>
-                {!loading && !user && (
-                  <Link 
-                    to="/auth"
-                    className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <User className="w-4 h-4" />
-                    {t("nav_signin")}
-                  </Link>
-                )}
-                {!loading && user && profile && (
-                  <>
-                    <Link
-                      to={getDashboardPath(profile.role)}
-                      className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <img 
-                        src={profile.avatar_url || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
-                        alt="" 
-                        className="h-4 w-4 rounded-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
-                        }}
-                      />
-                      Dashboard ({profile.role})
-                    </Link>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => {
-                        signOut();
-                        setIsMobileMenuOpen(false);
-                      }}
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Sign Out
-                    </Button>
-                  </>
-                )}
-              </div>
             </nav>
           </div>
         )}

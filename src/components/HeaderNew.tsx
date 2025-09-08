@@ -174,16 +174,6 @@ export default function HeaderNew() {
                 )}
               </div>
 
-              {/* Mobile Search Button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setMobileSearchOpen(true)}
-                className="md:hidden p-2"
-              >
-                <Search className="h-4 w-4" />
-              </Button>
-
               {/* Currency Selector */}
               <div className="hidden md:block">
                 <CurrencySelector />
@@ -281,51 +271,6 @@ export default function HeaderNew() {
                   ))}
                 </div>
 
-                <div className="md:hidden pt-2 border-t">
-                  <CurrencySelector />
-                </div>
-
-                {/* Mobile Auth Section */}
-                {!loading && (
-                  user && profile ? (
-                    <div className="md:hidden pt-2 border-t space-y-2">
-                      <div className="px-3 py-2 text-sm">
-                        <div className="font-medium">{profile.first_name || 'User'}</div>
-                        <div className="text-xs text-muted-foreground capitalize">{profile.role}</div>
-                      </div>
-                      <Link 
-                        to={getDashboardPath(profile.role)}
-                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Dashboard
-                      </Link>
-                      <Link 
-                        to="/profile"
-                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Profile
-                      </Link>
-                      <button 
-                        onClick={async () => {
-                          await signOut();
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md text-red-600"
-                      >
-                        Sign Out
-                      </button>
-                    </div>
-                  ) : (
-                    <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
-                        <User className="w-4 h-4 mr-2" />
-                        {t("nav_signin")}
-                      </Button>
-                    </Link>
-                  )
-                )}
               </nav>
             </div>
           )}

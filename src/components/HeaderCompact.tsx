@@ -187,16 +187,6 @@ export default function HeaderCompact() {
                 )}
               </div>
 
-              {/* Mobile Search Button */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setMobileSearchOpen(true)}
-                className="md:hidden p-2"
-              >
-                <Search className="h-4 w-4" />
-              </Button>
-
               {/* Sign In/Up */}
               <Button variant="outline" size="sm" className="hidden md:flex">
                 <User className="w-4 h-4 mr-2" />
@@ -281,49 +271,12 @@ export default function HeaderCompact() {
                   ))}
                 </div>
 
-                <div className="md:hidden">
-                  <CurrencySelector />
-                </div>
-
-                <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
-                  <User className="w-4 h-4 mr-2" />
-                  Sign In / Sign Up
-                </Button>
               </nav>
             </div>
           )}
         </div>
       </header>
 
-      {/* Mobile Search Overlay */}
-      {mobileSearchOpen && (
-        <div className="fixed inset-0 bg-background z-50 md:hidden">
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-medium">Search</h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setMobileSearchOpen(false)}
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <form onSubmit={handleSearch} className="space-y-4">
-              <input
-                name="search"
-                type="text"
-                placeholder="Search experiences..."
-                className="w-full px-4 py-3 text-base border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
-                autoFocus
-              />
-              <Button type="submit" className="w-full">
-                Search
-              </Button>
-            </form>
-          </div>
-        </div>
-      )}
     </>
   );
 }
