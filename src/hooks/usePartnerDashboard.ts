@@ -161,42 +161,84 @@ export function usePartnerDashboard() {
 
     fetchPartnerData();
 
-    // Set up real-time subscription for bookings
-    const bookingsChannel = supabase
-      .channel('partner-bookings')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'bookings'
-        },
-        () => {
-          fetchPartnerData(); // Refetch when bookings change
-        }
-      )
-      .subscribe();
+    // Set up real-time subscriptions
+    let cleanup: (() => void) | null = null;
+    
+    // Get partner profile ID for filters and set up subscriptions
+    const setupRealtime = async () => {
+      const { data: partnerProfile } = await supabase
+        .from('partner_profiles')
+        .select('id')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (!partnerProfile?.id) return;
 
-    // Set up real-time subscription for experiences
-    const experiencesChannel = supabase
-      .channel('partner-experiences')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'experiences',
-          filter: `partner_id=eq.${user.id}`
-        },
-        () => {
-          fetchPartnerData(); // Refetch when experiences change
-        }
-      )
-      .subscribe();
+      // Set up real-time subscription for bookings
+      const bookingsChannel = supabase
+        .channel('partner-bookings-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public', 
+            table: 'bookings'
+          },
+          (payload) => {
+            console.log('Booking change detected:', payload);
+            fetchPartnerData(); // Refetch when bookings change
+          }
+        )
+        .subscribe();
 
+      // Set up real-time subscription for experiences
+      const experiencesChannel = supabase
+        .channel('partner-experiences-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'experiences',
+            filter: `partner_id=eq.${partnerProfile.id}`
+          },
+          (payload) => {
+            console.log('Experience change detected:', payload);
+            fetchPartnerData(); // Refetch when experiences change
+          }
+        )
+        .subscribe();
+
+      // Set up real-time subscription for payments
+      const paymentsChannel = supabase
+        .channel('partner-payments-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'payments'
+          },
+          (payload) => {
+            console.log('Payment change detected:', payload);
+            fetchPartnerData(); // Refetch when payments change
+          }
+        )
+        .subscribe();
+
+      // Set cleanup function
+      cleanup = () => {
+        supabase.removeChannel(bookingsChannel);
+        supabase.removeChannel(experiencesChannel);
+        supabase.removeChannel(paymentsChannel);
+      };
+    };
+
+    setupRealtime();
+
+    // Return cleanup function
     return () => {
-      supabase.removeChannel(bookingsChannel);
-      supabase.removeChannel(experiencesChannel);
+      if (cleanup) cleanup();
     };
   }, [user, profile]);
 

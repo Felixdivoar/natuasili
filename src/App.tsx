@@ -52,6 +52,7 @@ import ContentStub from "./pages/ContentStub";
 import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
 import { Navigate } from "react-router-dom";
@@ -120,7 +121,7 @@ const App = () => (
                 } />
                 <Route path="/dashboard/admin" element={
                   <ProtectedRoute allowedRoles={['admin']}>
-                    <AppLayout><PartnerDashboard /></AppLayout>
+                    <AppLayout><AdminDashboard /></AppLayout>
                   </ProtectedRoute>
                 } />
                 <Route path="/dashboard/partner" element={

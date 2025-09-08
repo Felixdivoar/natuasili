@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
+import BookingsOverTimeChart from "@/components/BookingsOverTimeChart";
 
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
@@ -182,36 +183,7 @@ const PartnerDashboard = () => {
 
                 {/* Enhanced Analytics */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <Card className="hover:shadow-lg transition-shadow duration-300">
-                    <CardHeader>
-                      <CardTitle>Bookings over time</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center text-sm">
-                          <span>January 2024</span>
-                          <div className="flex items-center gap-2">
-                            <div className="bg-primary/10 h-2 rounded-full w-16"></div>
-                            <span>8 bookings</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span>February 2024</span>
-                          <div className="flex items-center gap-2">
-                            <div className="bg-primary/30 h-2 rounded-full w-20"></div>
-                            <span>12 bookings</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span>March 2024</span>
-                          <div className="flex items-center gap-2">
-                            <div className="bg-primary h-2 rounded-full w-24"></div>
-                            <span>24 bookings</span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <BookingsOverTimeChart />
 
                   <Card className="hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>

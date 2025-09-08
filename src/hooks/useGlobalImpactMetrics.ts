@@ -16,41 +16,42 @@ export function useGlobalImpactMetrics() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function fetchImpactMetrics() {
-      try {
-        setLoading(true);
-        setError(null);
+  const fetchImpactMetrics = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const { data, error } = await supabase
-          .from('impact_metrics')
-          .select('*')
-          .order('metric_key');
+      const { data, error } = await supabase
+        .from('impact_metrics')
+        .select('*')
+        .order('metric_key');
 
-        if (error) throw error;
-        setMetrics(data || []);
+      if (error) throw error;
+      setMetrics(data || []);
 
-      } catch (err) {
-        console.error('Error fetching impact metrics:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load impact metrics');
-      } finally {
-        setLoading(false);
-      }
+    } catch (err) {
+      console.error('Error fetching impact metrics:', err);
+      setError(err instanceof Error ? err.message : 'Failed to load impact metrics');
+    } finally {
+      setLoading(false);
     }
+  };
 
+  useEffect(() => {
     fetchImpactMetrics();
 
     // Set up real-time subscription for impact metrics
     const channel = supabase
-      .channel('impact-metrics')
+      .channel('impact-metrics-realtime')
       .on(
         'postgres_changes',
         {
-          event: 'UPDATE',
+          event: '*', // Listen to all changes (INSERT, UPDATE, DELETE)
           schema: 'public',
           table: 'impact_metrics'
         },
-        () => {
+        (payload) => {
+          console.log('Impact metrics change detected:', payload);
           fetchImpactMetrics(); // Refetch when metrics are updated
         }
       )
