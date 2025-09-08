@@ -48,7 +48,7 @@ export function ProtectedRoute({
   }
 
   // Check role-based access
-  if (allowedRoles && !allowedRoles.includes(profile.role)) {
+  if (allowedRoles && profile.role && !allowedRoles.includes(profile.role)) {
     // Redirect to user's correct dashboard
     const correctDashboard = getDashboardPath(profile.role);
     return <Navigate to={correctDashboard} replace />;

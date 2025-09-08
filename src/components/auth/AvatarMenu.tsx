@@ -33,14 +33,15 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
 
   const avatarFallback = getAvatarFallback(profile);
   const dashboardPath = getDashboardPath(profile.role);
-  const roleName = profile.role.charAt(0).toUpperCase() + profile.role.slice(1);
+  const roleName = profile.role?.charAt(0).toUpperCase() + profile.role?.slice(1) || 'User';
+  const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={profile.avatar_url || ''} alt={profile.full_name || profile.email} />
+            <AvatarImage src={profile.avatar_url || ''} alt={fullName || profile.email} />
             <AvatarFallback className="bg-primary text-primary-foreground">
               {avatarFallback}
             </AvatarFallback>
@@ -51,7 +52,7 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {profile.full_name || 'User'}
+              {fullName || 'User'}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
               {profile.email}
