@@ -66,7 +66,7 @@ export default function Listings() {
     <main id="site-main">
       {/* Full-width hero */}
       <section className="hero-full bg-gradient-to-r from-foreground/90 to-foreground/70" style={{
-        backgroundImage: "url(/src/assets/hero-conservation.jpg)",
+        backgroundImage: "url(/lovable-uploads/86a97e9c-06e8-4907-baf7-f6cfa229935f.png)",
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}>
