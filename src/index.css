@@ -512,7 +512,7 @@ main {
   scroll-margin-top: 80px;
 }
 
-/* Marketplace - remove Book now buttons */
+/* Marketplace - remove Book now buttons (keep hidden as intended) */
 .marketplace .experience-card .btn-book-now,
 .marketplace .experience-card .price-button,
 .marketplace .experience-card .btn-price,
@@ -521,7 +521,7 @@ main {
   display: none !important;
 }
 
-/* Experience Hub - remove Book now buttons from Featured & New arrivals */
+/* Experience Hub - remove Book now buttons from Featured & New arrivals (keep hidden as intended) */
 .experience-hub .featured .btn-book-now,
 .experience-hub .new-arrivals .btn-book-now,
 .experience-hub .featured button[class*="bg-conservation"],
@@ -562,6 +562,102 @@ main {
 }
 
 /* =========================== MOBILE BUTTON FIXES =========================== */
+/* ===== BOOKING CTA STYLES - UNBREAKABLE CLICKABILITY ===== */
+.book-now-btn {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 1001 !important;
+  min-width: 180px !important;
+  min-height: 44px !important;
+  touch-action: manipulation !important;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Ensure booking CTAs are always above other elements */
+.book-now-btn,
+.btn-book-now,
+[data-booking-cta="true"] {
+  pointer-events: auto !important;
+  z-index: 1001 !important;
+  position: relative !important;
+}
+
+/* Touch target improvements for mobile */
+@media (max-width: 991px) {
+  .book-now-btn {
+    min-height: 48px !important;
+    min-width: 120px !important;
+    padding: 12px 16px !important;
+  }
+}
+
+/* Prevent stacking context issues */
+.sticky-footer,
+.cookie-banner,
+.floating-nav,
+.bottom-nav {
+  pointer-events: auto !important;
+}
+
+/* Mobile layout fixes to prevent CTA blocking */
+@media (max-width: 991px) {
+  .booking-layout,
+  .order-summary,
+  .drawer,
+  .bottom-nav {
+    transform: none !important;
+    will-change: auto !important;
+  }
+  
+  /* Ensure mobile sticky booking bar works */
+  .mobile-sticky-booking {
+    pointer-events: auto !important;
+    z-index: 1000 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  .mobile-sticky-booking .book-now-btn {
+    z-index: 1001 !important;
+  }
+}
+
+/* Prevent modal/overlay interference */
+.modal-backdrop,
+.overlay {
+  pointer-events: auto !important;
+}
+
+.modal-backdrop .book-now-btn,
+.overlay .book-now-btn {
+  pointer-events: auto !important;
+  z-index: 1002 !important;
+}
+
+/* Loading state protection */
+.book-now-btn[aria-disabled="true"] {
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+}
+
+.book-now-btn:not([aria-disabled="true"]) {
+  pointer-events: auto !important;
+}
+
+/* Focus and hover state protection */
+.book-now-btn:focus,
+.book-now-btn:hover {
+  pointer-events: auto !important;
+  z-index: 1001 !important;
+}
+
+/* Prevent transform/animation interference */
+.book-now-btn {
+  backface-visibility: hidden !important;
+}
+
 /* Critical mobile/tablet button fixes for all booking CTAs */
 
 /* Ensure all buttons have proper mobile tap targets and touch behavior */

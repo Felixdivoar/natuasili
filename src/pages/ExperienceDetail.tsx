@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import BookingWizardNew from "@/components/BookingWizardNew";
+import BookingCTA from "@/components/BookingCTA";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import ReviewSection from "@/components/ReviewSection";
 import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
@@ -525,35 +526,32 @@ const ExperienceDetail = () => {
                   <div className="text-sm text-muted-foreground">from</div>
                   <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
                 </div>
-                <button 
-                  onClick={handleBookNowClick} 
-                  className="bg-primary hover:bg-primary-hover text-primary-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-200 pointer-events-auto z-50 relative touch-manipulation min-h-[44px]"
-                  type="button"
-                  aria-label="Book this experience"
-                  style={{ touchAction: 'manipulation' }}
+                <BookingCTA 
+                  onProceed={handleBookNowClick}
+                  ariaLabel="Book this experience"
+                  className="px-6 py-3"
                 >
                   {!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
-                </button>
+                </BookingCTA>
               </div>
             </div>
           </div>
 
           {/* Mobile sticky bar */}
-          <div className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4 safe-area-padding">
+          <div className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4 safe-area-padding mobile-sticky-booking">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
               </div>
-                <button 
-                  onClick={handleBookNowClick} 
-                  className="flex-1 min-h-[48px] touch-manipulation bg-primary hover:bg-primary-hover text-primary-foreground font-semibold rounded-lg transition-all duration-200 pointer-events-auto z-50 relative"
-                  type="button"
-                  aria-label="Book this experience"
-                  style={{ touchAction: 'manipulation' }}
-                >
-                  {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
-                </button>
+              <BookingCTA 
+                onProceed={handleBookNowClick}
+                ariaLabel="Book this experience" 
+                className="flex-1"
+                size="lg"
+              >
+                {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
+              </BookingCTA>
             </div>
           </div>
         </>
