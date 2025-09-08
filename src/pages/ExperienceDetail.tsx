@@ -63,6 +63,7 @@ const ExperienceDetail = () => {
     gallery: experience.gallery?.length || 0,
     id: experience.id
   });
+
   // Update URL with booking selections for persistence
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -613,7 +614,5 @@ const ExperienceDetail = () => {
   </CartProvider>
 );
 };
-
-// Availability and Options Component is now imported from separate file
 
 export default ExperienceDetail;
