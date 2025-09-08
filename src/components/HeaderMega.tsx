@@ -85,6 +85,14 @@ export default function HeaderMega() {
               <Link to="/experiences" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
                 {t("nav_marketplace")}
               </Link>
+              <a 
+                href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="nav-link text-foreground hover:text-primary transition-colors text-sm"
+              >
+                Conservation Voices
+              </a>
 
               {/* Destinations Mega Menu */}
               <div className="relative">
@@ -304,6 +312,15 @@ export default function HeaderMega() {
               >
                 {t("nav_marketplace")}
               </Link>
+              <a 
+                href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Conservation Voices
+              </a>
               
               <div className="space-y-1">
                 <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">

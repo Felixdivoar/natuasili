@@ -30,6 +30,14 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">{t("footer_resources")}</h4>
             <ul className="space-y-2 text-sm footer-links">
               <li><Link to="/blog" className="text-white/80 hover:text-accent transition-colors">Blog & Insights</Link></li>
+              <li><a 
+                href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-accent transition-colors"
+              >
+                Conservation Voices
+              </a></li>
               <li><Link to="/impact-ledger" className="text-white/80 hover:text-accent transition-colors">Impact Tracker</Link></li>
               <li><Link to="/partner-with-us" className="text-white/80 hover:text-accent transition-colors">Partner With Us</Link></li>
               <li><a href="mailto:support@natuasili.com" className="text-white/80 hover:text-accent transition-colors">Support Center</a></li>
