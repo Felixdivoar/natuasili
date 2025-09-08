@@ -648,7 +648,6 @@ const ExperienceDetail = () => {
 
           {/* Explore other options */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('exploreOther', 'Explore other options')}</h2>
             <RelatedExperiences 
               currentExperienceId={parseInt(experience.id.replace('exp-', ''))} 
               theme={experience.themes[0]} 
