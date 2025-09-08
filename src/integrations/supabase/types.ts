@@ -609,6 +609,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      promote_to_admin: {
+        Args: { user_email: string }
+        Returns: undefined
+      }
       update_impact_metrics: {
         Args: Record<PropertyKey, never>
         Returns: undefined
