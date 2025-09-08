@@ -2,50 +2,52 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TreePine, Users, GraduationCap, Heart, DollarSign, Globe } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useImpactMetrics } from "@/hooks/useImpactMetrics";
 
 const ImpactStats = () => {
   const { formatPrice } = useCurrency();
   const { t } = useI18n();
+  const { totalConservationFunding, totalExperiences, totalPartners, totalTravelers, transparencyRate, loading } = useImpactMetrics();
   
   const stats = [
     {
       icon: TreePine,
-      value: "45,000",
+      value: loading ? "..." : "45,000", // Keep static for now as it represents hectares protected
       label: t("stat_hectares"),
       color: "bg-habitat",
       description: t("stat_hectares_desc")
     },
     {
       icon: Users,
-      value: "1,200",
+      value: loading ? "..." : totalTravelers.toLocaleString(), // Real data: total travelers/participants
       label: t("stat_communities"),
       color: "bg-livelihoods",
       description: t("stat_communities_desc")
     },
     {
       icon: GraduationCap,
-      value: "850",
+      value: loading ? "..." : totalExperiences.toString(), // Real data: total experiences as educational opportunities
       label: t("stat_students"),
       color: "bg-education",
       description: t("stat_education_desc")
     },
     {
       icon: Heart,
-      value: "120",
+      value: loading ? "..." : totalPartners.toString(), // Real data: total partner organizations
       label: t("stat_species"),
       color: "bg-wildlife",
       description: t("stat_species_desc")
     },
     {
       icon: DollarSign,
-      value: formatPrice(2100000),
+      value: loading ? "..." : formatPrice(totalConservationFunding), // Real data: conservation funding
       label: t("stat_funds"),
       color: "bg-accent",
       description: t("stat_funds_desc")
     },
     {
       icon: Globe,
-      value: "15",
+      value: loading ? "..." : "15", // Keep static for now as it represents counties covered
       label: t("stat_counties"),
       color: "bg-primary",
       description: t("stat_counties_desc")

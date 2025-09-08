@@ -58,6 +58,9 @@ const About = () => {
   const { totalConservationFunding, totalExperiences, totalPartners, transparencyRate, loading } = useImpactMetrics();
   const { formatPrice } = useCurrency();
 
+  // Add visual debugging
+  console.log('About page rendering with metrics:', { totalConservationFunding, totalExperiences, totalPartners, transparencyRate, loading });
+
   return (
     <div className="bg-background">{/* Page content wrapper */}
       
@@ -203,12 +206,17 @@ const About = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12">
               Our Impact So Far
+              {/* Debug info */}
+              <div className="text-sm text-red-500 mt-2">
+                DEBUG: Experiences: {totalExperiences}, Partners: {totalPartners}, Loading: {loading ? 'YES' : 'NO'}
+              </div>
             </h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  {loading ? "..." : formatPrice(totalConservationFunding)}
+                  {loading ? "Loading..." : formatPrice(totalConservationFunding)}
+                  {!loading && totalExperiences === 0 && <span className="text-red-500 text-sm block">No data</span>}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Funded to Conservation
@@ -217,7 +225,8 @@ const About = () => {
               
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  {loading ? "..." : totalExperiences}
+                  {loading ? "Loading..." : totalExperiences}
+                  {!loading && totalExperiences === 0 && <span className="text-red-500 text-sm block">No data</span>}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Conservation Experiences
@@ -226,7 +235,8 @@ const About = () => {
               
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  {loading ? "..." : totalPartners}
+                  {loading ? "Loading..." : totalPartners}
+                  {!loading && totalPartners === 0 && <span className="text-red-500 text-sm block">No data</span>}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Partner Organizations
@@ -235,7 +245,7 @@ const About = () => {
               
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  {loading ? "..." : `${transparencyRate}%`}
+                  {loading ? "Loading..." : `${transparencyRate}%`}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Transparency Rate
