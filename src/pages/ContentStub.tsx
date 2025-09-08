@@ -43,33 +43,33 @@ const ContentStub = ({
       {/* Content */}
       <div className="container mx-auto px-4 section-padding-lg">
         <div className="max-w-2xl mx-auto text-center">
-          <Card>
+          <Card className="bg-black border-gray-800">
             <CardContent className="p-8">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ExternalLink className="h-8 w-8 text-primary" />
+              <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <ExternalLink className="h-8 w-8 text-white" />
               </div>
               
-              <h2 className="text-2xl font-bold text-foreground mb-4">
+              <h2 className="text-2xl font-bold text-white mb-4">
                 {t("Content Coming Soon", "Content Coming Soon")}
               </h2>
               
-              <p className="text-muted-foreground mb-8">
+              <p className="text-gray-300 mb-8">
                 {t("We're working on expanding this page with comprehensive information. In the meantime, explore these related sections:", "We're working on expanding this page with comprehensive information. In the meantime, explore these related sections:")}
               </p>
 
               <div className="space-y-3">
                 {relatedLinks.map((link, index) => (
                   <Link key={index} to={link.href}>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full border-gray-600 text-white hover:bg-white hover:text-black">
                       {t(link.title, link.title)}
                     </Button>
                   </Link>
                 ))}
               </div>
 
-              <div className="mt-8 pt-6 border-t">
+              <div className="mt-8 pt-6 border-t border-gray-600">
                 <Link to="/">
-                  <Button variant="ghost" className="gap-2">
+                  <Button variant="ghost" className="gap-2 text-gray-300 hover:text-white hover:bg-gray-800">
                     <ArrowLeft className="h-4 w-4" />
                     {t("Back to Home", "Back to Home")}
                   </Button>

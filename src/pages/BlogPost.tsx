@@ -243,11 +243,11 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="bg-background">
+      <div className="bg-black min-h-screen">
         <div className="container mx-auto px-4 section-padding-lg text-center">
-          <h1 className="text-2xl font-bold mb-4">Blog post not found</h1>
+          <h1 className="text-2xl font-bold mb-4 text-white">Blog post not found</h1>
           <Link to="/blog">
-            <Button>Return to Blog</Button>
+            <Button className="bg-white text-black hover:bg-gray-200">Return to Blog</Button>
           </Link>
         </div>
       </div>
