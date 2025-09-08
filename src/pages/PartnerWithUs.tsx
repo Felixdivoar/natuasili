@@ -23,7 +23,7 @@ const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
 
   const handleApplyAsPartner = () => {
-    navigate('/auth');
+    window.open('https://2o7bym7r45m.typeform.com/to/OhaBfRVk?utm_source=xxxxx&typeform-source=natuasili.com', '_blank');
   };
 
   const handleBookDemo = () => {
