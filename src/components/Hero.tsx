@@ -46,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({
         {children ? (
           children
         ) : (
-          <div className="max-w-2xl text-white">
+          <div className="max-w-4xl text-white">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               {heroTitle}
             </h1>
