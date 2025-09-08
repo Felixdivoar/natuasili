@@ -160,8 +160,8 @@ const PartnerWithUs: React.FC = () => {
           </div>
           <div className="relative">
             <img 
-              src="/src/assets/reteti-elephant-orphanage.jpg" 
-              alt="Reteti Elephant Sanctuary - Community-led conservation in Samburu" 
+              src="/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png" 
+              alt="Conservation partnership - Community-led initiatives across Kenya" 
               className="rounded-2xl shadow-2xl w-full h-96 object-cover"
             />
             <p className="text-xs text-muted-foreground mt-2 text-center">
