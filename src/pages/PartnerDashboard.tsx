@@ -16,15 +16,18 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { uploadFile, validateFile } from "@/lib/fileUpload";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
   const { stats, recentBookings, experiences, loading, error } = usePartnerDashboard();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
   const [uploadingDoc, setUploadingDoc] = useState<string | null>(null);
   const [showExperienceForm, setShowExperienceForm] = useState(false);
+  const [editingExperience, setEditingExperience] = useState<any>(null);
 
   const handleFileUpload = async (file: File, category: string) => {
     if (!user?.id) return;
@@ -303,10 +306,20 @@ const PartnerDashboard = () => {
                           <div className="flex justify-between items-center">
                             <span className="font-bold">{formatPrice(experience.price_kes_adult)}/person</span>
                             <div className="flex gap-2">
-                              <Button variant="outline" size="sm">
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => navigate(`/experience/${experience.slug}`)}
+                              >
                                 <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => setEditingExperience(experience)}
+                              >
+                                Edit
+                              </Button>
                             </div>
                           </div>
                         </CardContent>
@@ -539,7 +552,18 @@ const PartnerDashboard = () => {
         isOpen={showExperienceForm}
         onClose={() => setShowExperienceForm(false)}
         onSubmit={() => {
-          // Refresh the experiences list
+          setShowExperienceForm(false);
+          window.location.reload();
+        }}
+      />
+
+      {/* Edit Experience Form */}
+      <ExperienceSubmissionForm
+        isOpen={!!editingExperience}
+        experience={editingExperience}
+        onClose={() => setEditingExperience(null)}
+        onSubmit={() => {
+          setEditingExperience(null);
           window.location.reload();
         }}
       />

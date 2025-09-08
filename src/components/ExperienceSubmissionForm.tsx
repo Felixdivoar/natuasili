@@ -18,6 +18,7 @@ interface ExperienceSubmissionFormProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit?: () => void;
+  experience?: any; // For editing mode
 }
 
 const THEMES = [
@@ -42,23 +43,24 @@ const ACTIVITIES = [
 const ExperienceSubmissionForm: React.FC<ExperienceSubmissionFormProps> = ({
   isOpen,
   onClose,
-  onSubmit
+  onSubmit,
+  experience
 }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [uploadingImages, setUploadingImages] = useState(false);
   
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    location_text: '',
-    price_kes_adult: '',
-    capacity: '15',
-    themes: [] as string[],
-    activities: [] as string[],
-    child_half_price_rule: false,
-    hero_image: '',
-    gallery: [] as string[]
+    title: experience?.title || '',
+    description: experience?.description || '',
+    location_text: experience?.location_text || '',
+    price_kes_adult: experience?.price_kes_adult?.toString() || '',
+    capacity: experience?.capacity?.toString() || '15',
+    themes: experience?.themes || [],
+    activities: experience?.activities || [],
+    child_half_price_rule: experience?.child_half_price_rule || false,
+    hero_image: experience?.hero_image || '',
+    gallery: experience?.gallery || []
   });
 
   const handleInputChange = (field: string, value: any) => {
@@ -174,46 +176,77 @@ const ExperienceSubmissionForm: React.FC<ExperienceSubmissionFormProps> = ({
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '');
 
-      // Submit experience for review
-      const { error } = await supabase
-        .from('experiences')
-        .insert({
-          partner_id: partnerProfile.id,
-          title: formData.title,
-          slug,
-          description: formData.description,
-          location_text: formData.location_text,
-          price_kes_adult: parseInt(formData.price_kes_adult),
-          capacity: parseInt(formData.capacity),
-          themes: formData.themes,
-          activities: formData.activities,
-          child_half_price_rule: formData.child_half_price_rule,
-          hero_image: formData.hero_image,
-          gallery: formData.gallery,
-          visible_on_marketplace: false // Pending approval
-        });
+      if (experience) {
+        // Update existing experience
+        const { error } = await supabase
+          .from('experiences')
+          .update({
+            title: formData.title,
+            slug,
+            description: formData.description,
+            location_text: formData.location_text,
+            price_kes_adult: parseInt(formData.price_kes_adult),
+            capacity: parseInt(formData.capacity),
+            themes: formData.themes,
+            activities: formData.activities,
+            child_half_price_rule: formData.child_half_price_rule,
+            hero_image: formData.hero_image,
+            gallery: formData.gallery,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', experience.id);
 
-      if (error) {
-        console.error('Error submitting experience:', error);
-        toast.error('Failed to submit experience');
-        return;
+        if (error) {
+          console.error('Error updating experience:', error);
+          toast.error('Failed to update experience');
+          return;
+        }
+
+        toast.success('Experience updated successfully!');
+      } else {
+        // Submit new experience for review
+        const { error } = await supabase
+          .from('experiences')
+          .insert({
+            partner_id: partnerProfile.id,
+            title: formData.title,
+            slug,
+            description: formData.description,
+            location_text: formData.location_text,
+            price_kes_adult: parseInt(formData.price_kes_adult),
+            capacity: parseInt(formData.capacity),
+            themes: formData.themes,
+            activities: formData.activities,
+            child_half_price_rule: formData.child_half_price_rule,
+            hero_image: formData.hero_image,
+            gallery: formData.gallery,
+            visible_on_marketplace: false // Pending approval
+          });
+
+        if (error) {
+          console.error('Error submitting experience:', error);
+          toast.error('Failed to submit experience');
+          return;
+        }
+
+        toast.success('Experience submitted for review! Admin will review and approve it shortly.');
       }
-
-      toast.success('Experience submitted for review! Admin will review and approve it shortly.');
       
-      // Reset form
-      setFormData({
-        title: '',
-        description: '',
-        location_text: '',
-        price_kes_adult: '',
-        capacity: '15',
-        themes: [],
-        activities: [],
-        child_half_price_rule: false,
-        hero_image: '',
-        gallery: []
-      });
+      // Only reset form when creating new experience  
+      if (!experience) {
+        setFormData({
+          title: '',
+          description: '',
+          location_text: '',
+          price_kes_adult: '',
+          capacity: '15',
+          themes: [],
+          activities: [],
+          child_half_price_rule: false,
+          hero_image: '',
+          gallery: []
+        });
+      }
 
       onSubmit?.();
       onClose();
@@ -229,9 +262,14 @@ const ExperienceSubmissionForm: React.FC<ExperienceSubmissionFormProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Submit New Experience</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">
+            {experience ? 'Edit Experience' : 'Submit New Experience'}
+          </DialogTitle>
           <p className="text-muted-foreground">
-            Create a new conservation experience for admin review and approval
+            {experience 
+              ? 'Update your conservation experience details'
+              : 'Create a new conservation experience for admin review and approval'
+            }
           </p>
         </DialogHeader>
 
@@ -448,12 +486,12 @@ const ExperienceSubmissionForm: React.FC<ExperienceSubmissionFormProps> = ({
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Submitting...
+                  {experience ? 'Updating...' : 'Submitting...'}
                 </>
               ) : (
                 <>
                   <Upload className="h-4 w-4 mr-2" />
-                  Submit for Review
+                  {experience ? 'Update Experience' : 'Submit for Review'}
                 </>
               )}
             </Button>
