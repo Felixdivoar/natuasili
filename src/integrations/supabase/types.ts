@@ -259,6 +259,41 @@ export type Database = {
           },
         ]
       }
+      partner_media: {
+        Row: {
+          alt: string | null
+          created_at: string | null
+          id: number
+          partner_id: string | null
+          sort: number | null
+          url: string
+        }
+        Insert: {
+          alt?: string | null
+          created_at?: string | null
+          id?: number
+          partner_id?: string | null
+          sort?: number | null
+          url: string
+        }
+        Update: {
+          alt?: string | null
+          created_at?: string | null
+          id?: number
+          partner_id?: string | null
+          sort?: number | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_media_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_profiles: {
         Row: {
           bio: string | null
@@ -301,6 +336,66 @@ export type Database = {
           team?: Json | null
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      partners: {
+        Row: {
+          contact_email: string | null
+          created_at: string | null
+          hero_image_url: string | null
+          id: string
+          lat: number | null
+          lng: number | null
+          location_text: string | null
+          logo_image_url: string | null
+          long_bio: string | null
+          name: string
+          short_bio: string | null
+          slug: string
+          socials: Json | null
+          stats: Json | null
+          tagline: string | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          contact_email?: string | null
+          created_at?: string | null
+          hero_image_url?: string | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          location_text?: string | null
+          logo_image_url?: string | null
+          long_bio?: string | null
+          name: string
+          short_bio?: string | null
+          slug: string
+          socials?: Json | null
+          stats?: Json | null
+          tagline?: string | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          contact_email?: string | null
+          created_at?: string | null
+          hero_image_url?: string | null
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          location_text?: string | null
+          logo_image_url?: string | null
+          long_bio?: string | null
+          name?: string
+          short_bio?: string | null
+          slug?: string
+          socials?: Json | null
+          stats?: Json | null
+          tagline?: string | null
+          updated_at?: string | null
+          website?: string | null
         }
         Relationships: []
       }
