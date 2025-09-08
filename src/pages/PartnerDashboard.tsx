@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2, TreePine } from "lucide-react";
 import MessageCenter from "@/components/MessageCenter";
 import { useCurrency } from "@/contexts/CurrencyContext";
@@ -244,10 +245,20 @@ const PartnerDashboard = () => {
               <TabsContent value="experiences" className="space-y-6 animate-fade-in">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Your Experiences</h2>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add New Experience
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add New Experience
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                      <ExperienceSubmissionForm 
+                        onClose={() => {}} 
+                        onSubmit={() => window.location.reload()} 
+                      />
+                    </DialogContent>
+                  </Dialog>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -256,10 +267,20 @@ const PartnerDashboard = () => {
                       <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p className="text-lg font-medium mb-2">No experiences yet</p>
                       <p className="text-sm mb-4">Create your first conservation experience to start welcoming travelers</p>
-                      <Button>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Create Experience
-                      </Button>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button>
+                            <Plus className="h-4 w-4 mr-2" />
+                            Create Experience
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                          <ExperienceSubmissionForm 
+                            onClose={() => {}} 
+                            onSubmit={() => window.location.reload()} 
+                          />
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   ) : (
                     experiences.map(experience => (
