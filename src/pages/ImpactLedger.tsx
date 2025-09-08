@@ -133,47 +133,6 @@ const SafeChartContainer = ({ children, title, className }: { children: React.Re
   return <div className={className}>{children}</div>;
 };
 
-// Debug panel component
-const DebugPanel = ({ dataState, entries }: { dataState: DataState; entries: ImpactEntry[] }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  if (process.env.NODE_ENV === 'production') return null;
-
-  return (
-    <Card className="mb-6 border-dashed border-orange-200 bg-orange-50/30">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Info className="h-4 w-4 text-orange-600" />
-            <span className="text-sm font-medium text-orange-800">Debug Panel</span>
-          </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-orange-600 hover:text-orange-800"
-          >
-            {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </Button>
-        </div>
-      </CardHeader>
-      {isOpen && (
-        <CardContent className="pt-0">
-          <div className="space-y-2 text-sm">
-            <div><strong>Data Source:</strong> {dataState.source}</div>
-            <div><strong>Last Fetch:</strong> {dataState.lastFetch?.toLocaleString() || 'Never'}</div>
-            <div><strong>Entries Count:</strong> {entries.length}</div>
-            <div><strong>Loading:</strong> {dataState.isLoading ? 'Yes' : 'No'}</div>
-            {dataState.error && (
-              <div className="text-red-600"><strong>Error:</strong> {dataState.error}</div>
-            )}
-          </div>
-        </CardContent>
-      )}
-    </Card>
-  );
-};
-
 // Real data function using Supabase
 const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<ImpactEntry[]> => {
   if (source === 'mock') {
@@ -601,9 +560,6 @@ const ImpactLedger = () => {
               Transparent tracking of conservation impact from every booking
             </p>
           </div>
-
-          {/* Debug Panel (dev only) */}
-          <DebugPanel dataState={dataState} entries={entries} />
 
           {/* Data Source Banner */}
           {dataState.error && (
