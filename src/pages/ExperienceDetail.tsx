@@ -124,6 +124,13 @@ const ExperienceDetail = () => {
   };
 
   const handleBookNowClick = () => {
+    console.log("🔥 BookingCTA clicked!", { 
+      isMobile: window.innerWidth <= 991, 
+      user: !!user, 
+      bookingStarted,
+      userAgent: navigator.userAgent 
+    });
+    
     // Check if user is authenticated first
     if (!user) {
       console.log("User not authenticated, opening auth modal");
@@ -541,7 +548,12 @@ const ExperienceDetail = () => {
           </div>
 
           {/* Mobile sticky bar */}
-          <div className="lg:hidden fixed left-0 right-0 bottom-0 z-50 bg-white/95 backdrop-blur-sm border-t p-4 safe-area-padding mobile-sticky-booking">
+          <div className="lg:hidden fixed left-0 right-0 bottom-0 bg-background border-t p-4 mobile-sticky-booking"
+               style={{ 
+                 zIndex: 1000, 
+                 pointerEvents: 'auto',
+                 paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0))'
+               }}>
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="text-sm text-muted-foreground">from</div>

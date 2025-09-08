@@ -32,11 +32,22 @@ export function BookingCTA({
     setMounted(true);
   }, []);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
+    console.log("🎯 BookingCTA handleClick triggered", {
+      eventType: e.type,
+      isMobile: window.innerWidth <= 991,
+      disabled,
+      isLoading
+    });
+    
     e.preventDefault();
     e.stopPropagation();
+    
     if (!disabled && !isLoading) {
+      console.log("✅ Calling onProceed");
       onProceed();
+    } else {
+      console.log("❌ Button disabled or loading", { disabled, isLoading });
     }
   };
 
@@ -81,6 +92,7 @@ export function BookingCTA({
       type="button"
       className={baseClasses}
       onClick={handleClick}
+      onTouchStart={handleClick}
       onKeyDown={handleKeyDown}
       disabled={disabled || isLoading}
       aria-label={ariaLabel}
@@ -89,7 +101,10 @@ export function BookingCTA({
       style={{ 
         touchAction: 'manipulation',
         pointerEvents: 'auto',
-        zIndex: 1001
+        zIndex: 1001,
+        WebkitTouchCallout: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTapHighlightColor: 'transparent'
       }}
     >
       {isLoading ? (
