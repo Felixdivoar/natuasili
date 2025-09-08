@@ -44,6 +44,7 @@ import ExperienceHub from "./pages/ExperienceHub";
 import Listings from "./pages/Listings";
 import ListingDetail from "./pages/ListingDetail";
 import TermsAndConditions from "./pages/TermsAndConditions";
+import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Search from "./pages/Search";
@@ -142,6 +143,7 @@ const App = () => (
                 <Route path="/themes/:theme" element={<AppLayout><ContentStub title="Theme Page" description="This theme page is being developed. Check back soon for curated experiences and stories." /></AppLayout>} />
                 <Route path="/experience-hub" element={<AppLayout><ExperienceHub /></AppLayout>} />
                 <Route path="/terms" element={<AppLayout><TermsAndConditions /></AppLayout>} />
+                <Route path="/terms-of-service" element={<AppLayout><TermsOfService /></AppLayout>} />
                 <Route path="/privacy-policy" element={<AppLayout><PrivacyPolicy /></AppLayout>} />
                 <Route path="/cookie-policy" element={<AppLayout><CookiePolicy /></AppLayout>} />
                 <Route path="/search" element={<AppLayout><Search /></AppLayout>} />

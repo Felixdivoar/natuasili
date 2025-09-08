@@ -22,6 +22,7 @@ const Footer = () => {
               <li><Link to="/destinations" className="text-white/80 hover:text-accent transition-colors">{t("footer_destinations")}</Link></li>
               <li><Link to="/marketplace" className="text-white/80 hover:text-accent transition-colors">{t("footer_marketplace")}</Link></li>
               <li><Link to="/privacy-policy" className="text-white/80 hover:text-accent transition-colors">{t("footer_privacy")}</Link></li>
+              <li><Link to="/terms-of-service" className="text-white/80 hover:text-accent transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
