@@ -28,11 +28,19 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
   const mapUser = async (supabaseUser: User): Promise<AuthUser> => {
     try {
       // Fetch user role from database
-      const { data: roleData } = await supabase
+      const { data: roleData, error } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', supabaseUser.id)
         .single();
+
+      // If no role exists, create a default 'user' role
+      if (error && error.code === 'PGRST116') {
+        console.log('🔐 No role found, creating default user role');
+        await supabase
+          .from('user_roles')
+          .insert({ user_id: supabaseUser.id, role: 'user' });
+      }
 
       return {
         id: supabaseUser.id,
@@ -46,7 +54,7 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
       return {
         id: supabaseUser.id,
         email: supabaseUser.email || '',
-        fullName: supabaseUser.user_metadata?.full_name,
+        fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name,
         role: 'user',
         avatarUrl: supabaseUser.user_metadata?.avatar_url
       };
@@ -83,23 +91,39 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const signUp = async (email: string, password: string, fullName?: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-        data: fullName ? { full_name: fullName } : undefined
-      }
-    });
-    return { error };
+    console.log('🔐 Starting signup process');
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: fullName ? { full_name: fullName } : undefined
+        }
+      });
+      
+      console.log('🔐 Signup result:', { data: !!data, error: !!error });
+      return { error };
+    } catch (err) {
+      console.error('🔐 Signup error:', err);
+      return { error: err };
+    }
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
+    console.log('🔐 Starting signin process');
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      console.log('🔐 Signin result:', { data: !!data, error: !!error });
+      return { error };
+    } catch (err) {
+      console.error('🔐 Signin error:', err);
+      return { error: err };
+    }
   };
 
   const signOut = async () => {
