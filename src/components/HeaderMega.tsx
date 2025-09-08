@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search, User, Menu, X, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
 import { useI18n } from "@/i18n/I18nProvider";
-import { useAuth } from "@/contexts/AuthContext";
-import AuthModal from "@/components/AuthModal";
+import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
+import NewAuthModal from "@/components/NewAuthModal";
 import T from "@/i18n/T";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
@@ -26,8 +25,8 @@ const THEMES = [
 ];
 
 export default function HeaderMega() {
-const { t } = useI18n();
-  const { user, userRole, signOut, loading } = useAuth();
+  const { t } = useI18n();
+  const { user, signOut, loading } = useSimpleAuth();
   const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -35,8 +34,7 @@ const { t } = useI18n();
   const menuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // Debug auth state
-  console.log("🔐 Header: Auth state", { user: !!user, userRole, loading });
+  console.log("🔐 Header: Clean auth state", { hasUser: !!user, loading });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -394,7 +392,7 @@ const { t } = useI18n();
         )}
       </div>
 
-      <AuthModal 
+      <NewAuthModal 
         isOpen={authModalOpen} 
         onClose={() => setAuthModalOpen(false)} 
       />

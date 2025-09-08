@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
 import { Loader2 } from 'lucide-react';
 
 interface ProtectedRouteProps {
@@ -9,7 +9,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
-  const { user, userRole, loading } = useAuth();
+  const { user, loading } = useSimpleAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,13 +21,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
         return;
       }
 
-      if (requiredRole && userRole !== requiredRole && userRole !== 'admin') {
+      if (requiredRole && user?.role !== requiredRole && user?.role !== 'admin') {
         // User doesn't have required role
         navigate('/');
         return;
       }
     }
-  }, [user, userRole, loading, navigate, location, requiredRole]);
+  }, [user, user?.role, loading, navigate, location, requiredRole]);
 
   if (loading) {
     return (
@@ -40,7 +40,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
     );
   }
 
-  if (!user || (requiredRole && userRole !== requiredRole && userRole !== 'admin')) {
+  if (!user || (requiredRole && user.role !== requiredRole && user.role !== 'admin')) {
     return null;
   }
 

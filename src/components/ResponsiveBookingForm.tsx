@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CalendarIcon, Users, Clock, MapPin, Shield, CheckCircle } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import { useAuth } from "@/contexts/AuthContext";
+import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user } = useAuth();
+  const { user } = useSimpleAuth();
   
   // Form state with auth autofill
   const [formData, setFormData] = useState({

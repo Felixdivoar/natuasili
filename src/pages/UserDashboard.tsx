@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 const UserDashboard: React.FC = () => {
-  const { user, userRole, signOut } = useAuth();
+  const { user, signOut } = useSimpleAuth();
   const [activeTab, setActiveTab] = useState('trips');
 
   // Mock data
@@ -50,7 +50,7 @@ const UserDashboard: React.FC = () => {
             </p>
           </div>
           <div className="flex items-center gap-2 mt-4 md:mt-0">
-            <Badge variant="secondary">{userRole}</Badge>
+            <Badge variant="secondary">{user?.role}</Badge>
             <Button onClick={signOut} variant="outline">Sign Out</Button>
           </div>
         </div>

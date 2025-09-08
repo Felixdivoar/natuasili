@@ -12,7 +12,7 @@ import { CheckCircle, MapPin, Users, Calendar, Mail, Phone, User, ArrowLeft } fr
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCart } from "@/contexts/CartContext";
 import { useI18n } from "@/contexts/I18nContext";
-import { useAuth } from "@/contexts/AuthContext";
+import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { isValidBookingDate, validateBookingDate } from "@/utils/time";
 import { saveReceipt } from "@/lib/receipt";
@@ -30,7 +30,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   const { cart, updateCart } = useCart();
   const { t } = useI18n();
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user } = useSimpleAuth();
   
   const [currentStep, setCurrentStep] = useState(2); // Start at Step 2 (Contact)
   const [formData, setFormData] = useState({

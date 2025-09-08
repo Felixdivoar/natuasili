@@ -9,14 +9,14 @@ import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
+import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import BookingWizardNew from "@/components/BookingWizardNew";
-import BookingCTA from "@/components/BookingCTA";
+import BookingButton from "@/components/BookingButton";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import ReviewSection from "@/components/ReviewSection";
 import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
-import AuthModal from "@/components/AuthModal";
+import NewAuthModal from "@/components/NewAuthModal";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -24,7 +24,7 @@ const ExperienceDetail = () => {
   const navigate = useNavigate();
   const { t } = useI18n();
   const { formatPrice } = useCurrency();
-  const { user } = useAuth();
+  const { user } = useSimpleAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -148,28 +148,22 @@ const ExperienceDetail = () => {
   };
 
   const handleBookNowClick = () => {
-    console.log("🔥 BookingCTA clicked!", { 
-      isMobile: window.innerWidth <= 991, 
-      user: !!user, 
-      bookingStarted,
-      userAgent: navigator.userAgent,
-      timestamp: Date.now()
+    console.log("🎯 Clean booking flow initiated", { 
+      hasUser: !!user, 
+      bookingStarted
     });
     
-    // Check if user is authenticated first
     if (!user) {
-      console.log("🔐 User not authenticated, opening auth modal");
+      console.log("🔐 Opening auth modal");
       setAuthModalOpen(true);
       return;
     }
 
-    // If booking has started (valid selections made), open modal directly
     if (bookingStarted) {
-      console.log("📅 Booking already started, opening booking modal");
+      console.log("📅 Opening booking modal");
       openBookingModal();
     } else {
-      // Otherwise scroll to availability section
-      console.log("📍 Starting new booking, scrolling to availability");
+      console.log("📍 Scrolling to availability");
       scrollToAvailability();
     }
   };
@@ -566,13 +560,12 @@ const ExperienceDetail = () => {
                   <div className="text-sm text-muted-foreground">from</div>
                   <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
                 </div>
-                <BookingCTA 
-                  onProceed={handleBookNowClick}
-                  ariaLabel="Book this experience"
+                <BookingButton 
+                  onClick={handleBookNowClick}
                   className="px-6 py-3"
                 >
                   {!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
-                </BookingCTA>
+                </BookingButton>
               </div>
             </div>
           </div>
@@ -589,33 +582,24 @@ const ExperienceDetail = () => {
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
               </div>
-              <BookingCTA 
-                onProceed={handleBookNowClick}
-                ariaLabel="Book this experience" 
+              <BookingButton 
+                onClick={handleBookNowClick}
                 className="flex-1"
                 size="lg"
               >
                 {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
-              </BookingCTA>
+              </BookingButton>
             </div>
           </div>
         </>
       )}
 
-      {/* Auth Modal */}
-      <AuthModal 
-        isOpen={authModalOpen} 
-        onClose={() => setAuthModalOpen(false)}
-        onAuth={() => {
-          setAuthModalOpen(false);
-          // After successful auth, if booking was started, open booking modal
-          if (bookingStarted) {
-            setTimeout(() => openBookingModal(), 100);
-          }
-        }}
-      />
+       <NewAuthModal 
+         isOpen={authModalOpen} 
+         onClose={() => setAuthModalOpen(false)}
+       />
 
-      {/* Booking Modal */}
+       {/* Booking Modal */}
       {isBookingModalOpen && user && (
         <BookingWizardNew 
           isOpen={isBookingModalOpen}

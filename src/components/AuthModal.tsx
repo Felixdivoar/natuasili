@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { X, Mail, Lock, User } from "lucide-react";
-import { useAuth } from '@/contexts/AuthContext';
+import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 interface AuthModalProps {
@@ -30,7 +30,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   });
   const [errors, setErrors] = useState<string>('');
   
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp } = useSimpleAuth();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,10 +53,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
         const [firstName, ...lastNameParts] = formData.name.trim().split(' ');
         const lastName = lastNameParts.join(' ');
         
-        result = await signUp(formData.email, formData.password, {
-          first_name: firstName,
-          last_name: lastName
-        });
+        result = await signUp(formData.email, formData.password, `${firstName} ${lastName}`);
       }
       
       if (result.error) {

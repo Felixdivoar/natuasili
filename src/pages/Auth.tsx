@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,7 +21,7 @@ const Auth: React.FC = () => {
     role: 'user' as 'user' | 'partner'
   });
   
-  const { signUp, signIn, user } = useAuth();
+  const { signUp, signIn, user } = useSimpleAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
@@ -70,11 +70,7 @@ const Auth: React.FC = () => {
 
     setIsLoading(true);
 
-    const { error } = await signUp(formData.email, formData.password, {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      role: formData.role
-    });
+    const { error } = await signUp(formData.email, formData.password, `${formData.firstName} ${formData.lastName}`);
     
     if (error) {
       if (error.message.includes('already registered')) {
