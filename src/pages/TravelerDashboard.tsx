@@ -134,11 +134,11 @@ const TravelerDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
                   <p className="text-muted-foreground">Manage your conservation journey and track your impact</p>
                 </div>
-                <TabsList className="grid w-full lg:w-auto grid-cols-2 lg:grid-cols-4 gap-1 bg-muted/50 p-1 rounded-xl">
-                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Overview</TabsTrigger>
-                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Bookings</TabsTrigger>
-                  <TabsTrigger value="wishlist" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Wishlist</TabsTrigger>
-                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Impact</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 bg-muted/50 p-1 rounded-xl">
+                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Overview</TabsTrigger>
+                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Bookings</TabsTrigger>
+                  <TabsTrigger value="wishlist" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Wishlist</TabsTrigger>
+                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Impact</TabsTrigger>
                 </TabsList>
               </div>
 

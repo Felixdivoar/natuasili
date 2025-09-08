@@ -107,13 +107,13 @@ const PartnerDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
                   <p className="text-muted-foreground">Monitor your conservation business and impact metrics</p>
                 </div>
-                <TabsList className="grid w-full xl:w-auto grid-cols-3 xl:grid-cols-6 gap-1 bg-muted/50 p-1 rounded-xl">
-                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Overview</TabsTrigger>
-                  <TabsTrigger value="experiences" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Experiences</TabsTrigger>
-                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Bookings</TabsTrigger>
-                  <TabsTrigger value="earnings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Earnings</TabsTrigger>
-                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Impact</TabsTrigger>
-                  <TabsTrigger value="verification" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Verification</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-1 bg-muted/50 p-1 rounded-xl">
+                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Overview</TabsTrigger>
+                  <TabsTrigger value="experiences" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Experiences</TabsTrigger>
+                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Bookings</TabsTrigger>
+                  <TabsTrigger value="earnings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Earnings</TabsTrigger>
+                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Impact</TabsTrigger>
+                  <TabsTrigger value="verification" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Verification</TabsTrigger>
                 </TabsList>
               </div>
 
