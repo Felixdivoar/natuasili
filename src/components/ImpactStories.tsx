@@ -83,13 +83,6 @@ const ImpactStories = () => {
                       <DynamicTranslated text={story.excerpt} />
                     </p>
                     
-                    {/* Impact Metrics */}
-                    <div className="grid grid-cols-3 gap-2 mb-6 p-3 bg-muted/50 rounded-lg">
-                      {Object.entries(story.impact).map(([key, value]) => <div key={key} className="text-center">
-                          <div className="text-lg font-bold text-conservation">{value}</div>
-                          <div className="text-xs text-muted-foreground capitalize">{key}</div>
-                        </div>)}
-                    </div>
                     
                     
                     <Link to={`/blog/${story.slug}`}>
