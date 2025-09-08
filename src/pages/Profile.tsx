@@ -12,11 +12,15 @@ import { User, Mail, Phone, MapPin, Calendar, Save, Upload, ArrowLeft } from "lu
 import { Link } from "react-router-dom";
 import MetaTags from "@/components/MetaTags";
 import { toast } from "sonner";
+import { FileUpload } from "@/components/ui/file-upload";
+import { uploadFile, validateFile } from "@/lib/fileUpload";
+import { supabase } from "@/integrations/supabase/client";
 
 const Profile = () => {
   const { user, profile, refreshProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || '',
     last_name: profile?.last_name || '',
@@ -67,6 +71,41 @@ const Profile = () => {
       toast.error("An error occurred while updating your profile.");
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleAvatarUpload = async (file: File) => {
+    if (!user?.id) return;
+
+    const validation = validateFile(file, 5); // 5MB limit for avatars
+    if (validation) {
+      toast.error(validation);
+      return;
+    }
+
+    setUploadingAvatar(true);
+    try {
+      const result = await uploadFile(file, 'avatars', 'profile', user.id);
+      
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      if (result.url) {
+        const updatedProfile = await updateProfile(user.id, { avatar_url: result.url });
+        if (updatedProfile) {
+          await refreshProfile();
+          toast.success("Profile photo updated successfully!");
+        } else {
+          toast.error("Failed to update profile photo.");
+        }
+      }
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      toast.error("An error occurred while uploading your photo.");
+    } finally {
+      setUploadingAvatar(false);
     }
   };
 
@@ -136,9 +175,18 @@ const Profile = () => {
                         {profile?.first_name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
-                    <Button size="sm" variant="outline" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
-                      <Upload className="h-3 w-3" />
-                    </Button>
+                    <div className="absolute -bottom-2 -right-2">
+                      <FileUpload
+                        variant="avatar"
+                        onFileSelect={handleAvatarUpload}
+                        accept="image/*"
+                        maxSizeMB={5}
+                        loading={uploadingAvatar}
+                        className="h-8 w-8 rounded-full border-2 border-background"
+                      >
+                        <Upload className="h-3 w-3" />
+                      </FileUpload>
+                    </div>
                   </div>
                   
                   <div className="flex-1 space-y-3">

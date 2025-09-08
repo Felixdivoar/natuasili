@@ -34,14 +34,14 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
   const avatarFallback = getAvatarFallback(profile);
   const dashboardPath = getDashboardPath(profile.role);
   const roleName = profile.role?.charAt(0).toUpperCase() + profile.role?.slice(1) || 'User';
-  const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim();
+  const displayName = profile.first_name || 'User';
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={profile.avatar_url || ''} alt={fullName || profile.email} />
+            <AvatarImage src={profile.avatar_url || ''} alt={displayName} />
             <AvatarFallback className="bg-primary text-primary-foreground">
               {avatarFallback}
             </AvatarFallback>
@@ -52,10 +52,7 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {fullName || 'User'}
-            </p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {profile.email}
+              {displayName}
             </p>
             <p className="text-xs leading-none text-muted-foreground capitalize">
               {roleName}
@@ -66,13 +63,13 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
         
         <DropdownMenuItem onClick={handleDashboard} className="cursor-pointer">
           <LayoutDashboard className="mr-2 h-4 w-4" />
-          <span>Open Dashboard</span>
+          <span>Dashboard</span>
         </DropdownMenuItem>
         
         <DropdownMenuItem asChild>
           <Link to="/profile" className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
-            <span>Profile Settings</span>
+            <span>Profile</span>
           </Link>
         </DropdownMenuItem>
         

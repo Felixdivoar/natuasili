@@ -11,10 +11,47 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2 } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { usePartnerDashboard } from "@/hooks/usePartnerDashboard";
+import { FileUpload } from "@/components/ui/file-upload";
+import { uploadFile, validateFile } from "@/lib/fileUpload";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
   const { stats, recentBookings, experiences, loading, error } = usePartnerDashboard();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
+  const [uploadingDoc, setUploadingDoc] = useState<string | null>(null);
+
+  const handleFileUpload = async (file: File, category: string) => {
+    if (!user?.id) return;
+
+    const validation = validateFile(file, 10);
+    if (validation) {
+      toast.error(validation);
+      return;
+    }
+
+    setUploadingDoc(category);
+    try {
+      const result = await uploadFile(file, 'partner-files', category, user.id);
+      
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      if (result.url) {
+        toast.success(`${category} uploaded successfully!`);
+        // Here you would typically save the file URL to the partner profile
+        console.log(`Uploaded ${category}:`, result.url);
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      toast.error("An error occurred while uploading the file.");
+    } finally {
+      setUploadingDoc(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -317,27 +354,45 @@ const PartnerDashboard = () => {
                 <CardContent className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="business-license">Business License/Registration</Label>
-                    <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
-                      <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                      <p className="text-sm text-muted-foreground">Click to upload or drag and drop</p>
-                      <p className="text-xs text-muted-foreground">PDF, JPG, PNG up to 10MB</p>
-                    </div>
+                    <FileUpload
+                      variant="document"
+                      onFileSelect={(file) => handleFileUpload(file, 'business-license')}
+                      accept=".pdf,image/*"
+                      maxSizeMB={10}
+                      loading={uploadingDoc === 'business-license'}
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="permits">Conservation Permits & Certifications</Label>
-                    <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
-                      <FileText className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                      <p className="text-sm text-muted-foreground">Upload multiple documents</p>
-                    </div>
+                    <FileUpload
+                      variant="document"
+                      onFileSelect={(file) => handleFileUpload(file, 'permits')}
+                      accept=".pdf,image/*"
+                      maxSizeMB={10}
+                      loading={uploadingDoc === 'permits'}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <FileText className="h-8 w-8 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">Upload multiple documents</p>
+                      </div>
+                    </FileUpload>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="impact-photos">Impact Documentation Photos</Label>
-                    <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
-                      <Camera className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                      <p className="text-sm text-muted-foreground">Show your conservation work in action</p>
-                    </div>
+                    <FileUpload
+                      variant="document"
+                      onFileSelect={(file) => handleFileUpload(file, 'impact-photos')}
+                      accept="image/*"
+                      maxSizeMB={10}
+                      loading={uploadingDoc === 'impact-photos'}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <Camera className="h-8 w-8 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">Show your conservation work in action</p>
+                      </div>
+                    </FileUpload>
                   </div>
 
                   <div className="space-y-2">
