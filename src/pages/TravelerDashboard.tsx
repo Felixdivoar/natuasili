@@ -187,11 +187,17 @@ const TravelerDashboard = () => {
                               </div>
 
                               <div className="flex gap-2">
-                                <Button variant="outline" size="sm" asChild>
-                                  <Link to={`/partner/${booking.experience?.partner_profiles?.slug || 'partner'}`}>
-                                    View partner details
-                                  </Link>
-                                </Button>
+                                {booking.experience?.partner_profiles?.slug ? (
+                                  <Button variant="outline" size="sm" asChild>
+                                    <Link to={`/partner/${booking.experience.partner_profiles.slug}`}>
+                                      View partner details
+                                    </Link>
+                                  </Button>
+                                ) : (
+                                  <Button variant="outline" size="sm" disabled>
+                                    Partner details unavailable
+                                  </Button>
+                                )}
                                 <Button variant="outline" size="sm" asChild>
                                   <Link to="/impact-ledger">
                                     <ExternalLink className="h-4 w-4" />

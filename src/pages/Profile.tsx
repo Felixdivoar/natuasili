@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,13 +7,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
+import { updateProfile } from "@/lib/auth";
 import { User, Mail, Phone, MapPin, Calendar, Save, Upload, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import MetaTags from "@/components/MetaTags";
+import { toast } from "sonner";
 
 const Profile = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, refreshProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || '',
     last_name: profile?.last_name || '',
@@ -22,14 +25,49 @@ const Profile = () => {
     location: ''
   });
 
+  // Update form data when profile changes
+  useEffect(() => {
+    if (profile) {
+      setFormData({
+        first_name: profile.first_name || '',
+        last_name: profile.last_name || '',
+        phone: profile.phone || '',
+        bio: '',
+        location: ''
+      });
+    }
+  }, [profile]);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    // TODO: Implement profile update functionality
-    console.log('Saving profile:', formData);
-    setIsEditing(false);
+  const handleSave = async () => {
+    if (!user?.id) return;
+    
+    setIsSaving(true);
+    try {
+      const updates = {
+        first_name: formData.first_name || null,
+        last_name: formData.last_name || null,
+        phone: formData.phone || null,
+      };
+
+      const updatedProfile = await updateProfile(user.id, updates);
+      
+      if (updatedProfile) {
+        await refreshProfile();
+        toast.success("Profile updated successfully!");
+        setIsEditing(false);
+      } else {
+        toast.error("Failed to update profile. Please try again.");
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast.error("An error occurred while updating your profile.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const getRoleDisplayName = (role: string) => {
@@ -235,10 +273,10 @@ const Profile = () => {
 
                 {isEditing && (
                   <div className="flex gap-4 pt-4">
-                    <Button onClick={handleSave} className="flex items-center gap-2">
-                      <Save className="h-4 w-4" />
-                      Save Changes
-                    </Button>
+                <Button onClick={handleSave} disabled={isSaving} className="flex items-center gap-2">
+                  <Save className="h-4 w-4" />
+                  {isSaving ? "Saving..." : "Save Changes"}
+                </Button>
                     <Button variant="outline" onClick={() => setIsEditing(false)}>
                       Cancel
                     </Button>
