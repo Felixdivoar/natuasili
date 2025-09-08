@@ -633,6 +633,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      simulate_metric_growth: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       update_impact_metrics: {
         Args: Record<PropertyKey, never>
         Returns: undefined
