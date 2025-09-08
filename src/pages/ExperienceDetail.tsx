@@ -113,10 +113,34 @@ const ExperienceDetail = () => {
   }, [searchParams, setSearchParams]);
 
   const scrollToAvailability = () => {
-    availabilityRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
+    console.log("📍 Attempting to scroll to availability section", {
+      availabilityRef: availabilityRef.current,
+      availabilityRefExists: !!availabilityRef.current,
+      availabilityRefOffsetTop: availabilityRef.current?.offsetTop,
+      availabilityRefClientHeight: availabilityRef.current?.clientHeight
     });
+    
+    if (availabilityRef.current) {
+      // Force scroll with both methods for maximum compatibility
+      availabilityRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+      
+      // Backup method for browsers that don't support smooth scroll
+      setTimeout(() => {
+        const rect = availabilityRef.current?.getBoundingClientRect();
+        const top = (rect?.top || 0) + window.pageYOffset - 100; // 100px offset from top
+        window.scrollTo({
+          top: top,
+          behavior: 'smooth'
+        });
+        console.log("📍 Backup scroll executed", { rect, top, pageYOffset: window.pageYOffset });
+      }, 100);
+    } else {
+      console.error("❌ Availability ref not found!");
+    }
   };
 
   const openBookingModal = () => {
@@ -344,29 +368,41 @@ const ExperienceDetail = () => {
       </section>
 
       {/* Availability & Options */}
-      <div className="max-w-[1150px] mx-auto px-4 py-8">
-        <div ref={availabilityRef}>
-            <AvailabilityAndOptions 
-              experience={{
-                ...experience,
-                base_price: experience.priceKESAdult,
-                capacity: (experience as any).capacity || 15, // Default capacity
-                childHalfPriceRule: experience.childHalfPriceRule || false
-              }} 
-              onBookingStart={() => {
-                setBookingStarted(true);
-              }}
-              onBookingModalOpen={openBookingModal}
-              onUpdateParams={updateBookingParams}
-              initialParams={{
-                date: searchParams.get('date') || '',
-                adults: parseInt(searchParams.get('adults') || '1'),
-                children: parseInt(searchParams.get('children') || '0'),
-                option: (searchParams.get('option') as 'standard' | 'premium') || 'standard'
-              }}
-            />
+      <section className="max-w-[1150px] mx-auto px-4 py-8">
+        <div 
+          ref={availabilityRef}
+          id="availability-section"
+          className="scroll-mt-20"
+          style={{ 
+            minHeight: '200px',
+            border: '2px solid red',
+            backgroundColor: 'rgba(255,0,0,0.1)',
+            padding: '16px'
+          }}
+        >
+          <h2 className="text-2xl font-bold mb-4 text-red-600">🎯 AVAILABILITY SECTION - SCROLL TARGET</h2>
+          <AvailabilityAndOptions 
+            experience={{
+              ...experience,
+              base_price: experience.priceKESAdult,
+              capacity: (experience as any).capacity || 15, // Default capacity
+              childHalfPriceRule: experience.childHalfPriceRule || false
+            }} 
+            onBookingStart={() => {
+              console.log("🚀 Booking started callback triggered");
+              setBookingStarted(true);
+            }}
+            onBookingModalOpen={openBookingModal}
+            onUpdateParams={updateBookingParams}
+            initialParams={{
+              date: searchParams.get('date') || '',
+              adults: parseInt(searchParams.get('adults') || '1'),
+              children: parseInt(searchParams.get('children') || '0'),
+              option: (searchParams.get('option') as 'standard' | 'premium') || 'standard'
+            }}
+          />
         </div>
-      </div>
+      </section>
 
       {/* Main Content */}
       <div className="max-w-[1150px] mx-auto px-4 py-8">
