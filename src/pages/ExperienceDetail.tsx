@@ -280,8 +280,8 @@ const ExperienceDetail = () => {
                 <span className="text-muted-foreground text-sm">(42 reviews)</span>
               </div>
               <span className="text-muted-foreground">•</span>
-              <Link 
-                to={`/partners/${getPartnerSlug(experience.partner)}`} 
+                <Link 
+                to={`/partner/${getPartnerSlug(experience.partner)}`} 
                 className="text-primary hover:underline"
               >
                 {experience.partner}

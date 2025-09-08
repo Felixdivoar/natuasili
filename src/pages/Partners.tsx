@@ -288,7 +288,7 @@ export default function Partners() {
                       
                       <div className="flex gap-2">
                         <Button asChild className="flex-1" size="sm">
-                          <Link to={`/partners/${partner.slug}`}>
+                          <Link to={`/partner/${partner.slug}`}>
                             {t("view_partner")}
                           </Link>
                         </Button>

@@ -54,7 +54,9 @@ import ContentStub from "./pages/ContentStub";
 import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import UserDashboard from "./pages/UserDashboard";
+import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
+import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -133,8 +135,8 @@ const App = () => (
                 <Route path="/partner-dashboard" element={<AppLayout><PartnerDashboard /></AppLayout>} />
                 <Route path="/about" element={<AppLayout><About /></AppLayout>} />
                 <Route path="/partners" element={<AppLayout><Partners /></AppLayout>} />
-                <Route path="/partners/:slug" element={<AppLayout><PartnerDetail /></AppLayout>} />
-                <Route path="/partner/:slug" element={<AppLayout><PartnerProfile /></AppLayout>} />
+                <Route path="/partners/:slug" element={<Navigate to="/partner/:slug" replace />} />
+                <Route path="/partner/:slug" element={<AppLayout><PartnerDynamic /></AppLayout>} />
                 <Route path="/blog" element={<AppLayout><Blog /></AppLayout>} />
                 <Route path="/blog/:slug" element={<AppLayout><BlogPost /></AppLayout>} />
                 <Route path="/blog/category/:category" element={<AppLayout><BlogCategory /></AppLayout>} />

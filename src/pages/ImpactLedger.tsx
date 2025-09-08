@@ -846,7 +846,7 @@ const ImpactLedger = () => {
                             </TableCell>
                             <TableCell>
                               <Link 
-                                to={`/partners/${entry.project_id}`}
+                                to={`/partner/${entry.project_id}`}
                                 className="text-primary hover:underline"
                               >
                                 {entry.project_name}
@@ -971,7 +971,7 @@ const ImpactLedger = () => {
                           </div>
                           
                           <Link 
-                            to={`/partners/${entry.project_id}`}
+                            to={`/partner/${entry.project_id}`}
                             className="text-primary hover:underline text-sm"
                           >
                             View Partner →

@@ -49,13 +49,13 @@ export const useInteractiveBookingForm = (options: InteractiveBookingHookOptions
             const a = document.createElement('a');
             a.className = element.className ? element.className + ' partner-link' : 'partner-link';
             a.textContent = text;
-            a.href = `/partners/${slug}`;
+            a.href = `/partner/${slug}`;
             a.setAttribute('aria-label', `View ${text} partner page`);
             element.replaceWith(a);
           } else {
             const linkElement = element as HTMLAnchorElement;
             if (!linkElement.getAttribute('href') || linkElement.getAttribute('href') === '#') {
-              linkElement.href = `/partners/${slug}`;
+              linkElement.href = `/partner/${slug}`;
             }
             linkElement.setAttribute('aria-label', `View ${text} partner page`);
           }

@@ -154,7 +154,7 @@ const CoastDestination = () => {
                     {partner.description}
                   </p>
                   <Button size="sm" asChild className="w-full">
-                    <Link to={`/partners/${partner.slug}`}>
+                    <Link to={`/partner/${partner.slug}`}>
                       View Partner
                     </Link>
                   </Button>

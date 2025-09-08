@@ -140,7 +140,7 @@ const NairobiDestination = () => {
                 <CardContent>
                   <DynamicTranslated text={partner.description} className="text-sm text-muted-foreground mb-4 line-clamp-3" />
                   <Button size="sm" asChild className="w-full">
-                    <Link to={`/partners/${partner.slug}`}>
+                    <Link to={`/partner/${partner.slug}`}>
                       <T k="dest_view_partner" />
                     </Link>
                   </Button>

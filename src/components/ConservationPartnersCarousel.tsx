@@ -96,7 +96,7 @@ const ConservationPartnersCarousel = () => {
                     </div>
                     
                     <div className="space-y-2">
-                      <Link to={`/partners/${partner.slug}`}>
+                      <Link to={`/partner/${partner.slug}`}>
                         <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
                           <Heart className="w-4 h-4 mr-2" />
                           <T k="btn_view_partner" />
