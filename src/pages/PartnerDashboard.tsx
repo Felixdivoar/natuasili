@@ -8,13 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2 } from "lucide-react";
+import { Calendar, DollarSign, Users, TrendingUp, Eye, Star, Upload, FileText, Camera, MapPin, Clock, Plus, Loader2, TreePine } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { usePartnerDashboard } from "@/hooks/usePartnerDashboard";
 import { FileUpload } from "@/components/ui/file-upload";
 import { uploadFile, validateFile } from "@/lib/fileUpload";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
   const { stats, recentBookings, experiences, loading, error } = usePartnerDashboard();
@@ -71,546 +72,450 @@ const PartnerDashboard = () => {
       </div>
     );
   }
-  return <div className="min-h-screen bg-background">
-      <section className="hero-full section-padding-lg bg-primary/5">
-        <div className="hero-inner">
-          <div className="max-w-2xl">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Partner dashboard</h1>
-            <p className="text-muted-foreground">Manage your conservation experiences and track impact</p>
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+      {/* Modern Full-Width Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.2),transparent)] animate-fade-in"></div>
+        <div className="relative w-full py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 animate-scale-in">
+                <TreePine className="h-4 w-4 mr-2" />
+                Conservation Partner Portal
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
+                Partner
+                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Dashboard</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl animate-fade-in">
+                Manage your conservation experiences, track bookings, and measure your impact on wildlife and communities.
+              </p>
+            </div>
           </div>
         </div>
       </section>
-      <div className="container mx-auto px-4 py-8 section">
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="experiences">Experiences</TabsTrigger>
-            <TabsTrigger value="bookings">Bookings</TabsTrigger>
-            <TabsTrigger value="earnings">Earnings</TabsTrigger>
-            <TabsTrigger value="impact">Impact</TabsTrigger>
-            <TabsTrigger value="verification">Verification</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview" className="space-y-6">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">This month</span>
-                  </div>
-                  <div className="mt-2">
-                    <div className="text-2xl font-bold">{stats.monthlyBookings}</div>
-                    <p className="text-sm text-muted-foreground">Bookings</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">Revenue</span>
-                  </div>
-                  <div className="mt-2">
-                    <div className="text-2xl font-bold">{formatPrice(stats.monthlyRevenue)}</div>
-                    <p className="text-sm text-muted-foreground">This month</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">Travelers</span>
-                  </div>
-                  <div className="mt-2">
-                    <div className="text-2xl font-bold">{stats.totalTravelers}</div>
-                    <p className="text-sm text-muted-foreground">Total served</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2">
-                    <Star className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">Rating</span>
-                  </div>
-                  <div className="mt-2">
-                    <div className="text-2xl font-bold">{stats.averageRating}</div>
-                    <p className="text-sm text-muted-foreground">Average rating</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Enhanced Analytics */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Bookings over time</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center text-sm">
-                      <span>January 2024</span>
-                      <div className="flex items-center gap-2">
-                        <div className="bg-primary/10 h-2 rounded-full w-16"></div>
-                        <span>8 bookings</span>
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span>February 2024</span>
-                      <div className="flex items-center gap-2">
-                        <div className="bg-primary/30 h-2 rounded-full w-20"></div>
-                        <span>12 bookings</span>
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span>March 2024</span>
-                      <div className="flex items-center gap-2">
-                        <div className="bg-primary h-2 rounded-full w-24"></div>
-                        <span>24 bookings</span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Key performance metrics</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Conversion rate</span>
-                        <span className="font-semibold">12.4%</span>
-                      </div>
-                      <Progress value={12.4} className="h-2" />
-                      <p className="text-xs text-muted-foreground mt-1">Visitors to bookings</p>
-                    </div>
-                    <div>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span>Average booking value</span>
-                      <span className="font-semibold">{stats.totalEarnings > 0 && stats.monthlyBookings > 0 ? formatPrice(Math.round(stats.totalEarnings / stats.monthlyBookings)) : formatPrice(0)}</span>
-                    </div>
-                      <Progress value={75} className="h-2" />
-                      <p className="text-xs text-muted-foreground mt-1">Per experience booking</p>
-                    </div>
-                    <div>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span>Return visitor rate</span>
-                        <span className="font-semibold">28%</span>
-                      </div>
-                      <Progress value={28} className="h-2" />
-                      <p className="text-xs text-muted-foreground mt-1">Repeat bookings</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Recent Activity */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent bookings</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {recentBookings.length === 0 ? (
-                      <div className="text-center py-8 text-muted-foreground">
-                        <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                        <p>No recent bookings</p>
-                        <p className="text-sm">Bookings will appear here when travelers book your experiences</p>
-                      </div>
-                    ) : (
-                      recentBookings.slice(0, 3).map(booking => (
-                        <div key={booking.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                          <div>
-                            <p className="font-medium">{booking.experience_title}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {booking.adults + (booking.children || 0)} guests • {new Date(booking.booking_date).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <Badge variant={booking.status === 'confirmed' ? 'default' : 'outline'}>
-                            {booking.status}
-                          </Badge>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Monthly revenue breakdown</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Total earnings</span>
-                      <span className="font-semibold">{formatPrice(stats.totalEarnings)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Platform fee (10%)</span>
-                      <span className="text-muted-foreground">-{formatPrice(stats.totalEarnings * 0.1)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Processing fees (est.)</span>
-                      <span className="text-muted-foreground">-{formatPrice(stats.totalEarnings * 0.03)}</span>
-                    </div>
-                    <hr />
-                    <div className="flex justify-between items-center font-semibold">
-                      <span>Net revenue (est.)</span>
-                      <span className="text-primary">{formatPrice(stats.totalEarnings * 0.87)}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="experiences" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Your Experiences</h2>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add New Experience
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {experiences.length === 0 ? (
-                <div className="col-span-full text-center py-12 text-muted-foreground">
-                  <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p className="text-lg font-medium mb-2">No experiences yet</p>
-                  <p className="text-sm mb-4">Create your first conservation experience to start welcoming travelers</p>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Experience
-                  </Button>
+      {/* Modern Content Section */}
+      <div className="w-full py-12 lg:py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between mb-8 gap-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
+                  <p className="text-muted-foreground">Monitor your conservation business and impact metrics</p>
                 </div>
-              ) : (
-                experiences.map(experience => (
-                  <Card key={experience.id}>
-                    <CardContent className="p-4">
-                      <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
-                        {experience.hero_image ? (
-                          <img 
-                            src={experience.hero_image} 
-                            alt={experience.title}
-                            className="w-full h-full object-cover rounded-lg"
-                          />
-                        ) : (
-                          <Camera className="h-8 w-8 text-muted-foreground" />
-                        )}
-                      </div>
-                      <h3 className="font-semibold mb-2">{experience.title}</h3>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                        <div className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4" />
-                          {experience.location_text || 'Location not set'}
+                <TabsList className="grid w-full xl:w-auto grid-cols-3 xl:grid-cols-6 gap-1 bg-muted/50 p-1 rounded-xl">
+                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Overview</TabsTrigger>
+                  <TabsTrigger value="experiences" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Experiences</TabsTrigger>
+                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Bookings</TabsTrigger>
+                  <TabsTrigger value="earnings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Earnings</TabsTrigger>
+                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Impact</TabsTrigger>
+                  <TabsTrigger value="verification" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm">Verification</TabsTrigger>
+                </TabsList>
+              </div>
+
+              <TabsContent value="overview" className="space-y-8 animate-fade-in">
+                {/* Enhanced Stats Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:scale-105">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-500/10 group-hover:scale-110 transition-transform duration-300">
+                          <Calendar className="h-6 w-6 text-blue-600" />
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Eye className="h-4 w-4" />
-                          {experience.visible_on_marketplace ? 'Live' : 'Draft'}
-                        </div>
+                        <span className="text-sm font-medium text-muted-foreground">This Month</span>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="font-bold">{formatPrice(experience.price_kes_adult)}/person</span>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button variant="outline" size="sm">Edit</Button>
+                      <div className="text-3xl font-bold text-foreground mb-1">{stats.monthlyBookings}</div>
+                      <p className="text-sm text-muted-foreground">Bookings</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:scale-105">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500/20 to-green-500/10 group-hover:scale-110 transition-transform duration-300">
+                          <DollarSign className="h-6 w-6 text-green-600" />
+                        </div>
+                        <span className="text-sm font-medium text-muted-foreground">Revenue</span>
+                      </div>
+                      <div className="text-3xl font-bold text-foreground mb-1">{formatPrice(stats.monthlyRevenue)}</div>
+                      <p className="text-sm text-muted-foreground">This Month</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:scale-105">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-500/10 group-hover:scale-110 transition-transform duration-300">
+                          <Users className="h-6 w-6 text-purple-600" />
+                        </div>
+                        <span className="text-sm font-medium text-muted-foreground">Travelers</span>
+                      </div>
+                      <div className="text-3xl font-bold text-foreground mb-1">{stats.totalTravelers}</div>
+                      <p className="text-sm text-muted-foreground">Total Served</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:scale-105">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500/20 to-yellow-500/10 group-hover:scale-110 transition-transform duration-300">
+                          <Star className="h-6 w-6 text-yellow-600" />
+                        </div>
+                        <span className="text-sm font-medium text-muted-foreground">Rating</span>
+                      </div>
+                      <div className="text-3xl font-bold text-foreground mb-1">{stats.averageRating}</div>
+                      <p className="text-sm text-muted-foreground">Average Rating</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Enhanced Analytics */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle>Bookings over time</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center text-sm">
+                          <span>January 2024</span>
+                          <div className="flex items-center gap-2">
+                            <div className="bg-primary/10 h-2 rounded-full w-16"></div>
+                            <span>8 bookings</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span>February 2024</span>
+                          <div className="flex items-center gap-2">
+                            <div className="bg-primary/30 h-2 rounded-full w-20"></div>
+                            <span>12 bookings</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span>March 2024</span>
+                          <div className="flex items-center gap-2">
+                            <div className="bg-primary h-2 rounded-full w-24"></div>
+                            <span>24 bookings</span>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
-                ))
-              )}
-            </div>
-          </TabsContent>
 
-          <TabsContent value="verification" className="space-y-6">
-            <div className="max-w-2xl">
-              <h2 className="text-2xl font-bold mb-6">Verification & Documentation</h2>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle>Upload Verification Documents</CardTitle>
-                  <p className="text-muted-foreground">
-                    Help us verify your conservation project and build trust with travelers
-                  </p>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="business-license">Business License/Registration</Label>
-                    <FileUpload
-                      variant="document"
-                      onFileSelect={(file) => handleFileUpload(file, 'business-license')}
-                      accept=".pdf,image/*"
-                      maxSizeMB={10}
-                      loading={uploadingDoc === 'business-license'}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="permits">Conservation Permits & Certifications</Label>
-                    <FileUpload
-                      variant="document"
-                      onFileSelect={(file) => handleFileUpload(file, 'permits')}
-                      accept=".pdf,image/*"
-                      maxSizeMB={10}
-                      loading={uploadingDoc === 'permits'}
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <FileText className="h-8 w-8 text-muted-foreground" />
-                        <p className="text-sm text-muted-foreground">Upload multiple documents</p>
-                      </div>
-                    </FileUpload>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="impact-photos">Impact Documentation Photos</Label>
-                    <FileUpload
-                      variant="document"
-                      onFileSelect={(file) => handleFileUpload(file, 'impact-photos')}
-                      accept="image/*"
-                      maxSizeMB={10}
-                      loading={uploadingDoc === 'impact-photos'}
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <Camera className="h-8 w-8 text-muted-foreground" />
-                        <p className="text-sm text-muted-foreground">Show your conservation work in action</p>
-                      </div>
-                    </FileUpload>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="testimonials">Community Testimonials</Label>
-                    <Textarea id="testimonials" placeholder="Share testimonials from local community members about your impact..." className="min-h-[100px]" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="partnerships">Partnership Agreements</Label>
-                    <Textarea id="partnerships" placeholder="List official partnerships with conservation organizations, government agencies, etc..." className="min-h-[80px]" />
-                  </div>
-
-                  <Button className="w-full">Submit for Review</Button>
-                  
-                  <div className="p-4 bg-muted/50 rounded-lg">
-                    <h4 className="font-medium mb-2">Verification Status</h4>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline">Pending Review</Badge>
-                      <span className="text-sm text-muted-foreground">
-                        Review typically takes 3-5 business days
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="bookings" className="space-y-6">
-            <h2 className="text-2xl font-bold">Booking Management</h2>
-            
-            <Card>
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="border-b">
-                      <tr className="text-left">
-                        <th className="p-4 font-medium">Guest</th>
-                        <th className="p-4 font-medium">Experience</th>
-                        <th className="p-4 font-medium">Date</th>
-                        <th className="p-4 font-medium">Amount</th>
-                        <th className="p-4 font-medium">Status</th>
-                        <th className="p-4 font-medium">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {recentBookings.length === 0 ? (
-                        <tr>
-                          <td colSpan={6} className="p-8 text-center text-muted-foreground">
+                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle>Recent bookings</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {recentBookings.length === 0 ? (
+                          <div className="text-center py-8 text-muted-foreground">
                             <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                            <p>No bookings yet</p>
+                            <p>No recent bookings</p>
                             <p className="text-sm">Bookings will appear here when travelers book your experiences</p>
-                          </td>
-                        </tr>
-                      ) : (
-                        recentBookings.map(booking => (
-                          <tr key={booking.id} className="border-b">
-                            <td className="p-4">
+                          </div>
+                        ) : (
+                          recentBookings.slice(0, 3).map(booking => (
+                            <div key={booking.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                               <div>
-                                <p className="font-medium">{booking.customer_name}</p>
+                                <p className="font-medium">{booking.experience_title}</p>
                                 <p className="text-sm text-muted-foreground">
-                                  {booking.adults + (booking.children || 0)} guests
+                                  {booking.adults + (booking.children || 0)} guests • {new Date(booking.booking_date).toLocaleDateString()}
                                 </p>
                               </div>
-                            </td>
-                            <td className="p-4">{booking.experience_title}</td>
-                            <td className="p-4">{new Date(booking.booking_date).toLocaleDateString()}</td>
-                            <td className="p-4 font-medium">{formatPrice(booking.total_kes)}</td>
-                            <td className="p-4">
                               <Badge variant={booking.status === 'confirmed' ? 'default' : 'outline'}>
                                 {booking.status}
                               </Badge>
-                            </td>
-                            <td className="p-4">
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button variant="outline" size="sm">View Details</Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-2xl">
-                                  <DialogHeader>
-                                    <DialogTitle>Booking Details</DialogTitle>
-                                  </DialogHeader>
-                                  <div className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4">
-                                      <div>
-                                        <Label>Guest Name</Label>
-                                        <p className="font-medium">{booking.customer_name}</p>
-                                      </div>
-                                      <div>
-                                        <Label>Email</Label>
-                                        <p>{booking.customer_email}</p>
-                                      </div>
-                                      <div>
-                                        <Label>Phone</Label>
-                                        <p>{booking.customer_phone || 'Not provided'}</p>
-                                      </div>
-                                      <div>
-                                        <Label>Booking Date</Label>
-                                        <p>{new Date(booking.booking_date).toLocaleDateString()}</p>
-                                      </div>
-                                      <div>
-                                        <Label>Adults</Label>
-                                        <p>{booking.adults}</p>
-                                      </div>
-                                      <div>
-                                        <Label>Children</Label>
-                                        <p>{booking.children || 0}</p>
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <Label>Total Amount</Label>
-                                      <p className="text-2xl font-bold text-primary">
-                                        {formatPrice(booking.total_kes)}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </DialogContent>
-                              </Dialog>
-                            </td>
-                          </tr>
-                        ))
-                      )}
-                     </tbody>
-                  </table>
-                 </div>
-               </CardContent>
-             </Card>
-           </TabsContent>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
 
-          <TabsContent value="earnings" className="space-y-6">
-            <h2 className="text-2xl font-bold">Earnings Overview</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">Total Earnings</span>
-                  </div>
-                  <div className="text-3xl font-bold">{formatPrice(12450)}</div>
-                  <p className="text-sm text-muted-foreground">+18% from last month</p>
-                </CardContent>
-              </Card>
+              <TabsContent value="experiences" className="space-y-6 animate-fade-in">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold">Your Experiences</h2>
+                  <Button>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add New Experience
+                  </Button>
+                </div>
 
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">This Month</span>
-                  </div>
-                  <div className="text-3xl font-bold">{formatPrice(4890)}</div>
-                  <p className="text-sm text-muted-foreground">From 24 bookings</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <DollarSign className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-muted-foreground">Pending</span>
-                  </div>
-                  <div className="text-3xl font-bold">{formatPrice(1240)}</div>
-                  <p className="text-sm text-muted-foreground">Available in 3 days</p>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="impact" className="space-y-6">
-            <h2 className="text-2xl font-bold">Conservation Impact</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Your Impact Metrics</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span>Trees Planted</span>
-                      <span className="text-2xl font-bold text-primary">1,240</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {experiences.length === 0 ? (
+                    <div className="col-span-full text-center py-12 text-muted-foreground">
+                      <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg font-medium mb-2">No experiences yet</p>
+                      <p className="text-sm mb-4">Create your first conservation experience to start welcoming travelers</p>
+                      <Button>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Experience
+                      </Button>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span>Wildlife Monitored</span>
-                      <span className="text-2xl font-bold text-primary">89</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Local Jobs Supported</span>
-                      <span className="text-2xl font-bold text-primary">15</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Hectares Protected</span>
-                      <span className="text-2xl font-bold text-primary">450</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  ) : (
+                    experiences.map(experience => (
+                      <Card key={experience.id} className="hover:shadow-lg transition-shadow duration-300">
+                        <CardContent className="p-4">
+                          <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center">
+                            {experience.hero_image ? (
+                              <img 
+                                src={experience.hero_image} 
+                                alt={experience.title}
+                                className="w-full h-full object-cover rounded-lg"
+                              />
+                            ) : (
+                              <Camera className="h-8 w-8 text-muted-foreground" />
+                            )}
+                          </div>
+                          <h3 className="font-semibold mb-2">{experience.title}</h3>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-4 w-4" />
+                              {experience.location_text || 'Location not set'}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Eye className="h-4 w-4" />
+                              {experience.visible_on_marketplace ? 'Live' : 'Draft'}
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="font-bold">{formatPrice(experience.price_kes_adult)}/person</span>
+                            <div className="flex gap-2">
+                              <Button variant="outline" size="sm">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button variant="outline" size="sm">Edit</Button>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
+                </div>
+              </TabsContent>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Impact Updates</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {[1, 2, 3].map(i => <div key={i} className="border-l-4 border-primary pl-4">
-                        <p className="font-medium">Tree planting completed</p>
-                        <p className="text-sm text-muted-foreground">
-                          50 indigenous trees planted in degraded habitat
-                        </p>
-                        <p className="text-xs text-muted-foreground">2 days ago</p>
-                      </div>)}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-        </Tabs>
+              <TabsContent value="verification" className="space-y-6 animate-fade-in">
+                <div className="max-w-2xl">
+                  <h2 className="text-2xl font-bold mb-6">Verification & Documentation</h2>
+                  
+                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle>Upload Verification Documents</CardTitle>
+                      <p className="text-muted-foreground">
+                        Help us verify your conservation project and build trust with travelers
+                      </p>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="business-license">Business License/Registration</Label>
+                        <FileUpload
+                          variant="document"
+                          onFileSelect={(file) => handleFileUpload(file, 'business-license')}
+                          accept=".pdf,image/*"
+                          maxSizeMB={10}
+                          loading={uploadingDoc === 'business-license'}
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="permits">Conservation Permits & Certifications</Label>
+                        <FileUpload
+                          variant="document"
+                          onFileSelect={(file) => handleFileUpload(file, 'permits')}
+                          accept=".pdf,image/*"
+                          maxSizeMB={10}
+                          loading={uploadingDoc === 'permits'}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <FileText className="h-8 w-8 text-muted-foreground" />
+                            <p className="text-sm text-muted-foreground">Upload multiple documents</p>
+                          </div>
+                        </FileUpload>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="impact-photos">Impact Documentation Photos</Label>
+                        <FileUpload
+                          variant="document"
+                          onFileSelect={(file) => handleFileUpload(file, 'impact-photos')}
+                          accept="image/*"
+                          maxSizeMB={10}
+                          loading={uploadingDoc === 'impact-photos'}
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            <Camera className="h-8 w-8 text-muted-foreground" />
+                            <p className="text-sm text-muted-foreground">Show your conservation work in action</p>
+                          </div>
+                        </FileUpload>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="testimonials">Community Testimonials</Label>
+                        <Textarea id="testimonials" placeholder="Share testimonials from local community members about your impact..." className="min-h-[100px]" />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="partnerships">Partnership Agreements</Label>
+                        <Textarea id="partnerships" placeholder="List official partnerships with conservation organizations, government agencies, etc..." className="min-h-[80px]" />
+                      </div>
+
+                      <Button className="w-full">Submit for Review</Button>
+                      
+                      <div className="p-4 bg-muted/50 rounded-lg">
+                        <h4 className="font-medium mb-2">Verification Status</h4>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline">Pending Review</Badge>
+                          <span className="text-sm text-muted-foreground">
+                            Review typically takes 3-5 business days
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="bookings" className="space-y-6 animate-fade-in">
+                <h2 className="text-2xl font-bold">Bookings Management</h2>
+                
+                <div className="grid gap-6">
+                  {recentBookings.length === 0 ? (
+                    <Card>
+                      <CardContent className="text-center py-12">
+                        <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                        <h3 className="text-lg font-semibold mb-2">No bookings yet</h3>
+                        <p className="text-muted-foreground mb-4">Bookings will appear here when travelers book your experiences</p>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    recentBookings.map(booking => (
+                      <Card key={booking.id} className="hover:shadow-lg transition-shadow duration-300">
+                        <CardContent className="p-6">
+                          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                            <div className="flex-1">
+                              <h4 className="text-lg font-semibold text-foreground mb-2">
+                                {booking.experience_title}
+                              </h4>
+                              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                                <div className="flex items-center gap-1">
+                                  <Calendar className="h-4 w-4" />
+                                  {new Date(booking.booking_date).toLocaleDateString()}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Users className="h-4 w-4" />
+                                  {booking.adults + (booking.children || 0)} guests
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <DollarSign className="h-4 w-4" />
+                                  {formatPrice(booking.total_kes)}
+                                </div>
+                              </div>
+                            </div>
+                            <Badge variant={booking.status === 'confirmed' ? 'default' : 'outline'}>
+                              {booking.status}
+                            </Badge>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  )}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="earnings" className="space-y-6 animate-fade-in">
+                <h2 className="text-2xl font-bold">Earnings Overview</h2>
+                
+                <Card className="hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <CardTitle>Monthly revenue breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Total earnings</span>
+                        <span className="font-semibold">{formatPrice(stats.totalEarnings)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Platform fee (10%)</span>
+                        <span className="text-muted-foreground">-{formatPrice(stats.totalEarnings * 0.1)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Processing fees (est.)</span>
+                        <span className="text-muted-foreground">-{formatPrice(stats.totalEarnings * 0.03)}</span>
+                      </div>
+                      <hr />
+                      <div className="flex justify-between items-center font-semibold">
+                        <span>Net revenue (est.)</span>
+                        <span className="text-primary">{formatPrice(stats.totalEarnings * 0.87)}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="impact" className="space-y-6 animate-fade-in">
+                <h2 className="text-2xl font-bold">Conservation Impact</h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <TreePine className="h-5 w-5 text-green-600" />
+                        Conservation Fund
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold text-foreground mb-2">
+                        {formatPrice(stats.totalEarnings * 0.1)}
+                      </div>
+                      <p className="text-sm text-muted-foreground">Generated for conservation</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Users className="h-5 w-5 text-blue-600" />
+                        Travelers Served
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold text-foreground mb-2">
+                        {stats.totalTravelers}
+                      </div>
+                      <p className="text-sm text-muted-foreground">Conservation advocates</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Star className="h-5 w-5 text-yellow-600" />
+                        Impact Rating
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold text-foreground mb-2">
+                        {stats.averageRating}
+                      </div>
+                      <p className="text-sm text-muted-foreground">Average experience rating</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default PartnerDashboard;
