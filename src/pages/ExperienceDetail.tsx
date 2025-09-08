@@ -380,6 +380,7 @@ const ExperienceDetail = () => {
             onBookingStart={() => {
               console.log("🚀 Booking started callback triggered");
               setBookingStarted(true);
+              openBookingModal();
             }}
             onBookingModalOpen={openBookingModal}
             onUpdateParams={updateBookingParams}
