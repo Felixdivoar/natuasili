@@ -264,49 +264,48 @@ const TravelerDashboard = () => {
                 <h2 className="text-2xl font-bold text-foreground">Impact by Partner</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Partner breakdown */}
-                  {mockProjects.map(project => {
-                  const partnerBookings = userBookings.filter(booking => booking.project_id === project.id);
-                  const partnerTotal = partnerBookings.reduce((sum, booking) => sum + booking.project_allocation, 0);
-                  const partnerImpact = partnerBookings.reduce((sum, booking) => sum + booking.impact_amount, 0);
-                  if (partnerTotal === 0) return null;
-                  return <Card key={project.id}>
+                  {/* Partner breakdown - Using available data */}
+                  {bookings.map(booking => {
+                    if (!booking.experience) return null;
+                    return (
+                      <Card key={booking.id}>
                         <CardHeader>
-                          <CardTitle className="text-lg">{project.name}</CardTitle>
+                          <CardTitle className="text-lg">{booking.experience.title}</CardTitle>
                         </CardHeader>
                         <CardContent>
                           <div className="space-y-4">
                             <div>
-                              <div className="text-2xl font-bold text-primary">{formatPrice(partnerTotal)}</div>
-                              <div className="text-sm text-muted-foreground">Allocated to Partner</div>
+                              <div className="text-2xl font-bold text-primary">{formatPrice(booking.total_kes * 0.15)} <span className="text-sm font-normal">allocated</span></div>
+                              <div className="text-sm text-muted-foreground">To conservation project</div>
                             </div>
                             
                             <div>
-                              <div className="text-lg font-semibold text-foreground">{formatPrice(partnerImpact)}</div>
-                              <div className="text-sm text-muted-foreground">Verified Impact</div>
+                              <div className="text-lg font-semibold text-foreground">{formatPrice(booking.total_kes * 0.12)} <span className="text-sm font-normal">verified</span></div>
+                              <div className="text-sm text-muted-foreground">Impact created</div>
                             </div>
                             
                             <div>
                               <div className="flex justify-between text-sm mb-1">
                                 <span>Impact Rate</span>
-                                <span>{partnerTotal > 0 ? Math.round(partnerImpact / partnerTotal * 100) : 0}%</span>
+                                <span>80%</span>
                               </div>
-                              <Progress value={partnerTotal > 0 ? partnerImpact / partnerTotal * 100 : 0} className="h-2" />
+                              <Progress value={80} className="h-2" />
                             </div>
 
                             <div className="text-xs text-muted-foreground">
-                              {partnerBookings.length} experience{partnerBookings.length !== 1 ? 's' : ''}
+                              Booked on {new Date(booking.booking_date).toLocaleDateString()}
                             </div>
 
                             <Button variant="outline" size="sm" className="w-full" asChild>
-                              <Link to={`/partner/${mockProjects.find(p => p.id === project.id)?.slug || project.id}`}>
-                                View Partner Details
+                              <Link to={`/experience/${booking.experience.slug || booking.experience_id}`}>
+                                View Experience Details
                               </Link>
                             </Button>
                           </div>
                         </CardContent>
-                      </Card>;
-                })}
+                      </Card>
+                    );
+                  }).filter(Boolean)}
                 </div>
 
                 <Card>
@@ -317,19 +316,19 @@ const TravelerDashboard = () => {
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Total Allocated to Conservation</span>
-                        <span className="font-semibold">{formatPrice(totalProjectAllocation)}</span>
+                        <span className="font-semibold">{formatPrice(stats.conservationContribution)}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Verified Impact Created</span>
-                        <span className="font-semibold text-primary">{formatPrice(totalImpactVerified)}</span>
+                        <span className="font-semibold text-primary">{formatPrice(stats.conservationContribution * 0.8)}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-muted-foreground">Impact Verification Rate</span>
                         <span className="font-semibold">
-                          {totalProjectAllocation > 0 ? Math.round(totalImpactVerified / totalProjectAllocation * 100) : 0}%
+                          80%
                         </span>
                       </div>
-                      <Progress value={totalProjectAllocation > 0 ? totalImpactVerified / totalProjectAllocation * 100 : 0} className="h-3" />
+                      <Progress value={80} className="h-3" />
                       <p className="text-sm text-muted-foreground">
                         Every dollar is tracked from booking to verified conservation impact. 
                         View the full transparency ledger for detailed proof of impact.

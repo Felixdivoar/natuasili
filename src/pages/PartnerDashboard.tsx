@@ -460,48 +460,12 @@ const PartnerDashboard = () => {
                           </tr>
                         ))
                       )}
-                    </tbody>
-                                    <div>
-                                      <Label>Experience</Label>
-                                      <p>Elephant Tracking</p>
-                                    </div>
-                                    <div>
-                                      <Label>Date & Time</Label>
-                                      <p>March 15, 2024 at 9:00 AM</p>
-                                    </div>
-                                    <div>
-                                      <Label>Participants</Label>
-                                      <p>2 guests</p>
-                                    </div>
-                                    <div>
-                                      <Label>Amount</Label>
-                                      <p className="font-semibold">{formatPrice(240)}</p>
-                                    </div>
-                                    <div>
-                                      <Label>Status</Label>
-                                      <Badge variant="outline">Confirmed</Badge>
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <Label>Special Requests</Label>
-                                    <p className="text-muted-foreground">Dietary restrictions: Vegetarian meals preferred</p>
-                                  </div>
-                                  <div>
-                                    <Label>Emergency Contact</Label>
-                                    <p>Jane Smith: +254 700 654 321</p>
-                                  </div>
-                                </div>
-                              </DialogContent>
-                            </Dialog>
-                          </td>
-                        </tr>)}
-                    </tbody>
+                     </tbody>
                   </table>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          </TabsContent>
+                 </div>
+               </CardContent>
+             </Card>
+           </TabsContent>
 
           <TabsContent value="earnings" className="space-y-6">
             <h2 className="text-2xl font-bold">Earnings Overview</h2>
