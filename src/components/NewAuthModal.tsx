@@ -28,28 +28,38 @@ export default function NewAuthModal({ isOpen, onClose }: NewAuthModalProps) {
     setLoading(true);
     setError('');
 
+    console.log('🔐 Form submitted', { isSignUp, email });
+
     try {
       let result;
       if (isSignUp) {
+        console.log('🔐 Attempting signup...');
         result = await signUp(email, password, fullName);
       } else {
+        console.log('🔐 Attempting signin...');
         result = await signIn(email, password);
       }
 
       if (result.error) {
+        console.error('🔐 Auth error:', result.error);
         setError(result.error.message);
+        setLoading(false);
       } else {
-        console.log('🔐 Auth success');
-        onClose();
-        // Reset form
-        setEmail('');
-        setPassword('');
-        setFullName('');
-        setError('');
+        console.log('🔐 Auth success, waiting for user state...');
+        // Wait a bit for auth state to update, then close
+        setTimeout(() => {
+          console.log('🔐 Closing modal');
+          onClose();
+          setEmail('');
+          setPassword('');
+          setFullName('');
+          setError('');
+          setLoading(false);
+        }, 1000);
       }
     } catch (err: any) {
+      console.error('🔐 Auth exception:', err);
       setError(err.message || 'An error occurred');
-    } finally {
       setLoading(false);
     }
   };

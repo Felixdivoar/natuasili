@@ -26,38 +26,40 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
 
   // Convert Supabase user to our AuthUser format
   const mapUser = async (supabaseUser: User): Promise<AuthUser> => {
-    try {
-      // Fetch user role from database
-      const { data: roleData, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', supabaseUser.id)
-        .single();
+    console.log('🔐 Mapping user:', supabaseUser.id);
+    
+    // Return user immediately with default role to prevent hanging
+    const defaultUser: AuthUser = {
+      id: supabaseUser.id,
+      email: supabaseUser.email || '',
+      fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name,
+      role: 'user',
+      avatarUrl: supabaseUser.user_metadata?.avatar_url
+    };
 
-      // If no role exists, create a default 'user' role
-      if (error && error.code === 'PGRST116') {
-        console.log('🔐 No role found, creating default user role');
-        await supabase
+    try {
+      // Fetch user role from database with timeout
+      const { data: roleData, error } = await Promise.race([
+        supabase
           .from('user_roles')
-          .insert({ user_id: supabaseUser.id, role: 'user' });
+          .select('role')
+          .eq('user_id', supabaseUser.id)
+          .maybeSingle(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Role fetch timeout')), 3000)
+        )
+      ]) as any;
+
+      if (roleData?.role) {
+        console.log('🔐 Found user role:', roleData.role);
+        return { ...defaultUser, role: roleData.role };
       }
 
-      return {
-        id: supabaseUser.id,
-        email: supabaseUser.email || '',
-        fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name,
-        role: roleData?.role || 'user',
-        avatarUrl: supabaseUser.user_metadata?.avatar_url
-      };
+      console.log('🔐 No role found, using default');
+      return defaultUser;
     } catch (error) {
-      console.error('Error fetching user role:', error);
-      return {
-        id: supabaseUser.id,
-        email: supabaseUser.email || '',
-        fullName: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name,
-        role: 'user',
-        avatarUrl: supabaseUser.user_metadata?.avatar_url
-      };
+      console.error('🔐 Error fetching user role, using default:', error);
+      return defaultUser;
     }
   };
 
@@ -66,10 +68,15 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
 
     // Check for existing session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log('🔐 Initial session check:', !!session);
       if (session?.user) {
         console.log('🔐 SimpleAuth: Found existing session');
-        const authUser = await mapUser(session.user);
-        setUser(authUser);
+        try {
+          const authUser = await mapUser(session.user);
+          setUser(authUser);
+        } catch (error) {
+          console.error('🔐 Error mapping existing user:', error);
+        }
       }
       setLoading(false);
     });
@@ -79,10 +86,16 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
       console.log('🔐 SimpleAuth: Auth state changed', { event, hasSession: !!session });
       
       if (session?.user) {
-        const authUser = await mapUser(session.user);
-        setUser(authUser);
+        try {
+          const authUser = await mapUser(session.user);
+          setUser(authUser);
+          console.log('🔐 User set successfully:', authUser.email);
+        } catch (error) {
+          console.error('🔐 Error mapping user on auth change:', error);
+        }
       } else {
         setUser(null);
+        console.log('🔐 User cleared');
       }
       setLoading(false);
     });
