@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { MapPin, Users, Clock, Star, Heart, Share, ChevronLeft, ChevronRight, CheckCircle, XCircle, Info } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/contexts/I18nContext";
@@ -201,13 +202,90 @@ const ExperienceDetail = () => {
     }
   };
 
-  const highlights = [
-    "Immersive conservation experience with expert guides",
-    "Direct contribution to wildlife and community protection",
-    "Traditional and modern conservation techniques",
-    "Authentic cultural exchange with local communities",
-    "90% of proceeds support partner initiatives"
-  ];
+  // Parse content sections from experience description for structured display
+  const parseExperienceContent = (description: string) => {
+    const sections = {
+      overview: "",
+      highlights: [] as string[],
+      included: [] as string[],
+      notIncluded: [] as string[],
+      itinerary: [] as {title: string, description: string}[],
+      cancellation: "",
+      duration: "",
+      languages: "",
+      faqs: [] as {question: string, answer: string}[]
+    };
+
+    // For Giraffe Centre experience, use the structured content
+    if (experience.slug === "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew") {
+      sections.overview = "The African Fund for Endangered Wildlife (AFEW) is a non-profit dedicated to the breeding and preservation of the threatened Rothschild giraffe; it is situated just outside Nairobi National Park. It presents the Giraffe Center experience, which is the main tourist attraction. Here, you will learn about these amazing animals by visiting on a guided tour or self-guided walk; you can even hand-feed them from a raised platform!";
+      
+      sections.highlights = [
+        "Learn about the East African native vulnerable species called the Rothschild giraffe.",
+        "From a dedicated viewing deck, observe giraffes up close and even feed them.",
+        "Learn about AFEW's giraffe breeding program and efforts at conservation."
+      ];
+
+      sections.included = ["A friendly professional guide"];
+      sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+
+      sections.itinerary = [
+        {
+          title: "Meet the giraffes",
+          description: "Arrive at the Giraffe Centre and proceed to the giraffe feeding platform. Observe and interact with the Rothschild giraffes, learning about their unique characteristics and ecological importance. Take photos while feeding the giraffes pellets from a raised platform. Browse the gift shop for educational souvenirs (optional)."
+        }
+      ];
+
+      sections.cancellation = "Cancel up to 24 hours in advance to receive a full refund. Cancellations made less than 24 hours before the tour start are non-refundable.";
+      sections.duration = "0 - 2 hours";
+      sections.languages = "English";
+
+      sections.faqs = [
+        {
+          question: "What can I expect on a visit to the Giraffe Centre?",
+          answer: "You can expect to learn about giraffes, observe them from a viewing platform, and even feed them a special pellet treat. You may also see other animals and explore the nature sanctuary."
+        },
+        {
+          question: "How long should one factor to spend at the centre?",
+          answer: "For a fulfilling experience, we recommend you plan for a 1.5 to two hour visit. This gives you enough time to feed and interact with the giraffes, attend an informative lecture on the giraffe and other wildlife, take a walk in our serene Nature Conservancy and even have a snack at our Tea House."
+        },
+        {
+          question: "Is this a good activity for children?",
+          answer: "Absolutely! Children will love getting up close to the giraffes and learning about their conservation."
+        },
+        {
+          question: "What time is the centre open?",
+          answer: "The centre is open from 9:00 AM to 5:00 PM every day including weekends and all public holidays."
+        },
+        {
+          question: "How can I support AFEW's conservation efforts?",
+          answer: "90 percent of funds collected from the entrance fees and sales in our gift shop and Tea House go towards conservation work. By visiting and/or making a purchase from the souvenir shop and the Teahouse, you contribute towards educating school children and teachers across Kenya. We encourage you to consider a tip for your guide. All our guides are Environmental Studies students who volunteer as Educators. If you wish to give towards a school trip or any other efforts, their Donation Page will give you more information. The entrance fee for the Giraffe Centre directly supports AFEW's work. You can also make a donation or purchase souvenirs from the gift shop."
+        },
+        {
+          question: "Can I purchase a gift card or gift certificate?",
+          answer: "Sure you can. Ask for any of these at the gift shop and an attendant will assist you."
+        }
+      ];
+    } else {
+      // Default content for other experiences
+      sections.overview = description;
+      sections.highlights = [
+        "Immersive conservation experience with expert guides",
+        "Direct contribution to wildlife and community protection",
+        "Traditional and modern conservation techniques",
+        "Authentic cultural exchange with local communities",
+        "90% of proceeds support partner initiatives"
+      ];
+      sections.included = ["Expert guide", "Conservation activities", "Local community interaction"];
+      sections.notIncluded = ["Transportation", "Personal expenses", "Gratuities"];
+      sections.duration = "6 hours";
+      sections.languages = "English, Swahili";
+    }
+
+    return sections;
+  };
+
+  const contentSections = parseExperienceContent(experience.description);
 
   const itinerary = [
     {
@@ -398,19 +476,19 @@ const ExperienceDetail = () => {
       <div className="max-w-[1150px] mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-12">
           
-          {/* About this activity */}
+          {/* Overview */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('aboutActivity', 'About this activity')}</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Overview</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
-              <p>{experience.description}</p>
+              <p>{contentSections.overview}</p>
             </div>
           </section>
 
           {/* Highlights */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('highlights', 'Highlights')}</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Highlights</h2>
             <ul className="space-y-3">
-              {highlights.map((highlight, index) => (
+              {contentSections.highlights.map((highlight, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">{highlight}</span>
@@ -419,23 +497,100 @@ const ExperienceDetail = () => {
             </ul>
           </section>
 
-          {/* What to expect */}
+          {/* What's Included/Not Included */}
           <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('whatToExpect', 'What to expect')}</h2>
-            <div className="space-y-6">
-              {itinerary.map((item, index) => (
-                <div key={index} className="flex gap-4">
-                  <div className="flex-shrink-0 w-20 text-sm font-medium text-primary">
-                    {item.time}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+            <h2 className="text-2xl font-bold text-foreground mb-6">What's Included</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600" />
+                  Included
+                </h3>
+                <ul className="space-y-2">
+                  {contentSections.included.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <XCircle className="h-5 w-5 text-red-600" />
+                  Not Included
+                </h3>
+                <ul className="space-y-2">
+                  {contentSections.notIncluded.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <XCircle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </section>
+
+          {/* What to expect */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">What to expect</h2>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="itinerary">
+                <AccordionTrigger>Itinerary</AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4">
+                    {contentSections.itinerary.map((item, index) => (
+                      <div key={index}>
+                        <h4 className="font-semibold text-foreground mb-2">{item.title}</h4>
+                        <p className="text-muted-foreground">{item.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+              {contentSections.cancellation && (
+                <AccordionItem value="cancellation">
+                  <AccordionTrigger>Cancellation Policy</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-muted-foreground">{contentSections.cancellation}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+            </Accordion>
+          </section>
+
+          {/* Duration */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Duration</h2>
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-primary" />
+              <span className="text-muted-foreground">{contentSections.duration}</span>
+            </div>
+          </section>
+
+          {/* Languages */}
+          <section>
+            <h2 className="text-2xl font-bold text-foreground mb-6">Languages</h2>
+            <p className="text-muted-foreground">{contentSections.languages}</p>
+          </section>
+
+          {/* Frequently Asked Questions */}
+          {contentSections.faqs.length > 0 && (
+            <section>
+              <h2 className="text-2xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
+              <Accordion type="single" collapsible className="w-full">
+                {contentSections.faqs.map((faq, index) => (
+                  <AccordionItem key={index} value={`faq-${index}`}>
+                    <AccordionTrigger>{faq.question}</AccordionTrigger>
+                    <AccordionContent>
+                      <p className="text-muted-foreground">{faq.answer}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </section>
+          )}
 
           {/* Where you'll be */}
           <section>
