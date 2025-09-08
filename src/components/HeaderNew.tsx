@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
 import AISearchComponent from "@/components/AISearchComponent";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useAuth } from "@/contexts/AuthContext";
+import { AvatarMenu } from "@/components/auth/AvatarMenu";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
@@ -24,6 +26,7 @@ const THEMES = [
 
 export default function HeaderNew() {
   const { t } = useI18n();
+  const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState<null | "marketplace">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -185,13 +188,19 @@ export default function HeaderNew() {
                 <CurrencySelector />
               </div>
 
-              {/* Sign In/Up */}
-              <Link to="/auth">
-                <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  <span>{t("nav_signin")}</span>
-                </Button>
-              </Link>
+              {/* Sign In/Up or Avatar */}
+              {!loading && (
+                user && profile ? (
+                  <AvatarMenu profile={profile} />
+                ) : (
+                  <Link to="/auth">
+                    <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      <span>{t("nav_signin")}</span>
+                    </Button>
+                  </Link>
+                )
+              )}
 
               {/* Partner CTA */}
               <Link to="/partner-with-us">

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
 import { useI18n } from "@/i18n/I18nProvider";
-import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
-import NewAuthModal from "@/components/NewAuthModal";
+import { useAuth } from "@/contexts/AuthContext";
+import { AvatarMenu } from "@/components/auth/AvatarMenu";
 import T from "@/i18n/T";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
@@ -26,15 +26,14 @@ const THEMES = [
 
 export default function HeaderMega() {
   const { t } = useI18n();
-  const { user, signOut, loading } = useSimpleAuth();
+  const { user, profile, signOut, loading } = useAuth();
   const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  console.log("🔐 Header: Clean auth state", { hasUser: !!user, loading });
+  console.log("🔐 Header: Clean auth state", { hasUser: !!user, hasProfile: !!profile, loading });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -204,59 +203,9 @@ export default function HeaderMega() {
 
             {/* Profile or Sign In - all screen sizes */}
             {!loading && (
-              user ? (
-                <div className="relative hidden lg:block">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="flex items-center gap-2 p-2 profile-chip"
-                    onMouseEnter={() => setOpenMenu("profile")}
-                    onFocus={() => setOpenMenu("profile")}
-                    aria-label="Open your dashboard"
-                    onClick={() => {
-                      console.log("🎯 Profile clicked", { role: user.role });
-                      const dashboardUrl = user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user';
-                      window.location.href = dashboardUrl;
-                    }}
-                  >
-                    <img 
-                      src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
-                      alt="" 
-                      className="h-7 w-7 rounded-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
-                      }}
-                    />
-                    <span className="text-sm">Profile</span>
-                  </Button>
-                  {openMenu === "profile" && (
-                    <div 
-                      className="absolute right-0 mt-2 w-48 rounded-lg border bg-background p-2 shadow-xl z-50"
-                      onMouseEnter={() => setOpenMenu("profile")}
-                      onMouseLeave={() => setOpenMenu(null)}
-                    >
-                  <Link
-                    to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
-                    className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setOpenMenu(null)}
-                  >
-                    <Settings className="h-4 w-4" />
-                    Dashboard
-                  </Link>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm hover:bg-muted rounded-md"
-                        onClick={() => {
-                          signOut();
-                          setOpenMenu(null);
-                        }}
-                      >
-                        <LogOut className="h-4 w-4" />
-                        Sign Out
-                      </Button>
-                    </div>
-                  )}
+              user && profile ? (
+                <div className="hidden lg:block">
+                  <AvatarMenu profile={profile} />
                 </div>
               ) : (
                 <Link 
@@ -374,22 +323,22 @@ export default function HeaderMega() {
                     {t("nav_signin")}
                   </Link>
                 )}
-                {!loading && user && (
+                {!loading && user && profile && (
                   <>
                     <Link
-                      to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
+                      to={profile.role === 'partner' ? '/dashboard/partner' : '/dashboard/traveler'}
                       className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <img 
-                        src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
+                        src={profile.avatar_url || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
                         alt="" 
                         className="h-4 w-4 rounded-full object-cover"
                         onError={(e) => {
                           e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
                         }}
                       />
-                      Dashboard ({user.role})
+                      Dashboard ({profile.role})
                     </Link>
                     <Button
                       variant="ghost"
@@ -411,10 +360,6 @@ export default function HeaderMega() {
         )}
       </div>
 
-      <NewAuthModal 
-        isOpen={authModalOpen} 
-        onClose={() => setAuthModalOpen(false)} 
-      />
     </header>
   );
 }

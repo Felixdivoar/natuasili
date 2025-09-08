@@ -1,37 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { getDashboardPath } from '@/lib/auth';
 
 const Auth: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     firstName: '',
     lastName: '',
-    role: 'user' as 'user' | 'partner'
+    role: 'traveler' as 'traveler' | 'partner'
   });
   
-  const { signUp, signIn, user } = useSimpleAuth();
+  const { signUp, signIn, user, profile } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const returnUrl = searchParams.get('returnUrl') || '/';
 
   useEffect(() => {
-    if (user) {
-      navigate(returnUrl);
+    if (user && profile) {
+      const dashboardPath = getDashboardPath(profile.role);
+      navigate(dashboardPath);
     }
-  }, [user, navigate, returnUrl]);
+  }, [user, profile, navigate]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,12 +72,21 @@ const Auth: React.FC = () => {
       return;
     }
 
+    if (formData.password.length < 6) {
+      toast({
+        title: "Password too short",
+        description: "Password must be at least 6 characters long",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
-    const { error } = await signUp(formData.email, formData.password, `${formData.firstName} ${formData.lastName}`);
+    const { error } = await signUp(formData.email, formData.password, formData.role);
     
     if (error) {
-      if (error.message.includes('already registered')) {
+      if (error.message?.includes('already registered')) {
         toast({
           title: "Account exists",
           description: "This email is already registered. Try signing in instead.",
@@ -82,14 +95,14 @@ const Auth: React.FC = () => {
       } else {
         toast({
           title: "Sign up failed",
-          description: error.message,
+          description: error.message || "Failed to create account. Please try again.",
           variant: "destructive",
         });
       }
     } else {
       toast({
         title: "Account created!",
-        description: "Please check your email to verify your account.",
+        description: "Welcome to NatuAsili! Redirecting to your dashboard...",
       });
     }
     
@@ -206,29 +219,40 @@ const Auth: React.FC = () => {
                   />
                 </div>
                 
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input
-                    id="confirmPassword"
-                    type={showPassword ? "text" : "password"}
-                    value={formData.confirmPassword}
-                    onChange={(e) => updateFormData('confirmPassword', e.target.value)}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="role">Account Type</Label>
-                  <select
-                    id="role"
-                    className="w-full px-3 py-2 border border-input rounded-md bg-background"
-                    value={formData.role}
-                    onChange={(e) => updateFormData('role', e.target.value as 'user' | 'partner')}
-                  >
-                    <option value="user">Traveler</option>
-                    <option value="partner">Conservation Partner</option>
-                  </select>
-                </div>
+                 <div className="space-y-2">
+                   <Label htmlFor="confirmPassword">Confirm Password</Label>
+                   <div className="relative">
+                     <Input
+                       id="confirmPassword"
+                       type={showConfirmPassword ? "text" : "password"}
+                       value={formData.confirmPassword}
+                       onChange={(e) => updateFormData('confirmPassword', e.target.value)}
+                       required
+                     />
+                     <Button
+                       type="button"
+                       variant="ghost"
+                       size="sm"
+                       className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                     >
+                       {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                     </Button>
+                   </div>
+                 </div>
+                 
+                 <div className="space-y-2">
+                   <Label htmlFor="role">Account Type</Label>
+                   <Select value={formData.role} onValueChange={(value: 'traveler' | 'partner') => updateFormData('role', value)}>
+                     <SelectTrigger>
+                       <SelectValue placeholder="Select account type" />
+                     </SelectTrigger>
+                     <SelectContent>
+                       <SelectItem value="traveler">Traveler - Book conservation experiences</SelectItem>
+                       <SelectItem value="partner">Partner - Offer conservation experiences</SelectItem>
+                     </SelectContent>
+                   </Select>
+                 </div>
                 
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
