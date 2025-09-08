@@ -159,15 +159,15 @@ const { t } = useI18n();
 
           {/* Right cluster */}
           <div className="flex items-center gap-3">
-            {/* Desktop/tablet items that should be hidden on mobile */}
-            <div className="hidden md:block">
+            {/* Desktop items only (hidden on mobile/tablet ≤991px) */}
+            <div className="hidden xl:block">
               <CurrencySelector />
             </div>
             
             <LanguageSwitcher />
 
-            {/* AI Search - hidden on mobile (in bottom nav instead) */}
-            <div className="relative hidden lg:block" ref={searchRef}>
+            {/* AI Search - desktop only (moved to bottom nav on mobile/tablet) */}
+            <div className="relative hidden xl:block" ref={searchRef}>
               <Button
                 variant="ghost"
                 size="sm"
@@ -195,13 +195,13 @@ const { t } = useI18n();
               )}
             </div>
 
-            {/* Profile or Sign In */}
+            {/* Profile or Sign In - desktop only */}
             {user ? (
               <div className="relative">
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="hidden md:flex items-center gap-2 p-2"
+                  className="hidden xl:flex items-center gap-2 p-2"
                   onMouseEnter={() => setOpenMenu("profile")}
                   onFocus={() => setOpenMenu("profile")}
                   aria-label="Open your dashboard"
@@ -215,22 +215,6 @@ const { t } = useI18n();
                     </AvatarFallback>
                   </Avatar>
                   <span className="text-sm">Profile</span>
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="md:hidden p-2"
-                  onClick={() => setOpenMenu(openMenu === "profile" ? null : "profile")}
-                  aria-label="Open your dashboard"
-                >
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src={user.user_metadata?.avatar_url} />
-                    <AvatarFallback className="text-xs">
-                      {user.user_metadata?.full_name ? 
-                        user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 
-                        user.email?.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
                 </Button>
                 {openMenu === "profile" && (
                   <div 
@@ -262,25 +246,15 @@ const { t } = useI18n();
                 )}
               </div>
             ) : (
-              <>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="hidden md:flex"
-                  onClick={() => setAuthModalOpen(true)}
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  {t("nav_signin")}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="md:hidden p-2"
-                  onClick={() => setAuthModalOpen(true)}
-                >
-                  <User className="w-4 h-4" />
-                </Button>
-              </>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="hidden xl:flex"
+                onClick={() => setAuthModalOpen(true)}
+              >
+                <User className="w-4 h-4 mr-2" />
+                {t("nav_signin")}
+              </Button>
             )}
 
             {/* Partner CTA - keep visible but smaller on mobile */}

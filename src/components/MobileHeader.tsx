@@ -12,7 +12,7 @@ export default function MobileHeader() {
   const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
   return (
-    <header className="mobile-header lg:hidden" aria-label="Mobile header">
+    <header className="mobile-header md:max-xl:block lg:hidden" aria-label="Mobile header">
       <Link to="/" aria-label="Home" className="mh-logo">
         <img 
           src={logoImage} 
