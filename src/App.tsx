@@ -55,7 +55,6 @@ import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import UserDashboard from "./pages/UserDashboard";
 import Profile from "./pages/Profile";
-import PesapalCallback from "./pages/PesapalCallback";
 
 const queryClient = new QueryClient();
 
