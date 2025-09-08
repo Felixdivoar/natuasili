@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Target, Users, Leaf, Heart, Globe, Linkedin, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useImpactMetrics } from "@/hooks/useImpactMetrics";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 const teamMembers = [
   {
@@ -53,6 +55,9 @@ const teamMembers = [
 ];
 
 const About = () => {
+  const { totalConservationFunding, totalExperiences, totalPartners, transparencyRate, loading } = useImpactMetrics();
+  const { formatPrice } = useCurrency();
+
   return (
     <div className="bg-background">{/* Page content wrapper */}
       
@@ -203,7 +208,7 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  $647K
+                  {loading ? "..." : formatPrice(totalConservationFunding)}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Funded to Conservation
@@ -212,7 +217,7 @@ const About = () => {
               
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  189
+                  {loading ? "..." : totalExperiences}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Conservation Experiences
@@ -221,7 +226,7 @@ const About = () => {
               
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  8
+                  {loading ? "..." : totalPartners}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Partner Organizations
@@ -230,7 +235,7 @@ const About = () => {
               
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                  95%
+                  {loading ? "..." : `${transparencyRate}%`}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Transparency Rate

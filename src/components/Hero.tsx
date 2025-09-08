@@ -4,6 +4,7 @@ import { ArrowRight, Users, TreePine, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
+import { useImpactMetrics } from "@/hooks/useImpactMetrics";
 
 interface HeroProps {
   title?: string;
@@ -26,6 +27,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   const { formatPrice } = useCurrency();
   const { t } = useI18n();
+  const { totalConservationFunding, totalExperiences, totalTravelers, loading } = useImpactMetrics();
   
   const heroTitle = title || t("hero_title");
   const heroSubtitle = subtitle || t("hero_sub");
@@ -55,39 +57,45 @@ const Hero: React.FC<HeroProps> = ({
               {heroSubtitle}
             </p>
 
-            {showStats && (
-              <div className="flex flex-wrap gap-6 lg:gap-8">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-wildlife rounded-full flex items-center justify-center">
-                    <TreePine className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+              {showStats && (
+                <div className="flex flex-wrap gap-6 lg:gap-8">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 lg:w-10 lg:h-10 bg-wildlife rounded-full flex items-center justify-center">
+                      <TreePine className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-xl lg:text-2xl font-bold">
+                        {loading ? "..." : `${totalExperiences}+`}
+                      </div>
+                      <div className="text-xs lg:text-sm text-white/80">{t("hero_stat_conservation")}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-xl lg:text-2xl font-bold">150+</div>
-                    <div className="text-xs lg:text-sm text-white/80">{t("hero_stat_conservation")}</div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 lg:w-10 lg:h-10 bg-livelihoods rounded-full flex items-center justify-center">
+                      <Users className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-xl lg:text-2xl font-bold">
+                        {loading ? "..." : `${totalTravelers}+`}
+                      </div>
+                      <div className="text-xs lg:text-sm text-white/80">{t("hero_stat_travelers")}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 lg:w-10 lg:h-10 bg-education rounded-full flex items-center justify-center">
+                      <Award className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-xl lg:text-2xl font-bold whitespace-nowrap price">
+                        {loading ? "..." : formatPrice(totalConservationFunding)}
+                      </div>
+                      <div className="text-xs lg:text-sm text-white/80">{t("hero_stat_impact")}</div>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-livelihoods rounded-full flex items-center justify-center">
-                    <Users className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-xl lg:text-2xl font-bold">2,500+</div>
-                    <div className="text-xs lg:text-sm text-white/80">{t("hero_stat_travelers")}</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-education rounded-full flex items-center justify-center">
-                    <Award className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-xl lg:text-2xl font-bold whitespace-nowrap price">{formatPrice(580000)}</div>
-                    <div className="text-xs lg:text-sm text-white/80">{t("hero_stat_impact")}</div>
-                  </div>
-                </div>
-              </div>
-            )}
+              )}
           </div>
         )}
       </div>
