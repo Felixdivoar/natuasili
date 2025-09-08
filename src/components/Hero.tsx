@@ -19,7 +19,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({
   title,
   subtitle,
-  backgroundImage = "/lovable-uploads/86a97e9c-06e8-4907-baf7-f6cfa229935f.png",
+  backgroundImage = "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png",
   overlay = true,
   compact = false,
   showStats = true,
