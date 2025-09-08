@@ -34,8 +34,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   
   const [currentStep, setCurrentStep] = useState(2); // Start at Step 2 (Contact)
   const [formData, setFormData] = useState({
-    name: user?.user_metadata?.full_name || '',
-    email: user?.email || '',
+    name: '', // Will be auto-filled from auth 
+    email: '', // Will be auto-filled from auth
     phone: '',
     mobility: '',
     specialRequests: '',
@@ -46,8 +46,8 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   // Auto-fill user profile data on modal open
   useEffect(() => {
     if (isOpen && user) {
-      // Use metadata from auth if available, otherwise keep existing values
-      const fullName = user.user_metadata?.full_name || formData.name;
+      // Use simplified user object properties
+      const fullName = user.fullName || formData.name;
       const email = user.email || formData.email;
       
       setFormData(prev => ({

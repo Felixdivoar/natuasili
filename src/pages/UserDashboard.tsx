@@ -46,7 +46,7 @@ const UserDashboard: React.FC = () => {
           <div>
             <h1 className="text-3xl font-bold mb-2">My Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {user?.user_metadata?.first_name || 'Traveler'}!
+              Welcome back, {user?.fullName?.split(' ')[0] || 'Traveler'}!
             </p>
           </div>
           <div className="flex items-center gap-2 mt-4 md:mt-0">
@@ -174,9 +174,11 @@ const UserDashboard: React.FC = () => {
               <CardContent className="space-y-6">
                 <div className="flex items-center gap-4">
                   <Avatar className="h-20 w-20">
-                    <AvatarImage src="" />
+                    <AvatarImage src={user?.avatarUrl} />
                     <AvatarFallback className="text-lg">
-                      {user?.user_metadata?.first_name?.[0]}{user?.user_metadata?.last_name?.[0]}
+                      {user?.fullName ? 
+                        user.fullName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 
+                        user?.email?.[0].toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <Button variant="outline">Change Photo</Button>
@@ -185,11 +187,11 @@ const UserDashboard: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" defaultValue={user?.user_metadata?.first_name || ''} />
+                    <Input id="firstName" defaultValue={user?.fullName?.split(' ')[0] || ''} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" defaultValue={user?.user_metadata?.last_name || ''} />
+                    <Input id="lastName" defaultValue={user?.fullName?.split(' ').slice(1).join(' ') || ''} />
                   </div>
                 </div>
                 

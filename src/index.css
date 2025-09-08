@@ -658,7 +658,35 @@ main {
   backface-visibility: hidden !important;
 }
 
-/* Critical mobile/tablet button fixes for all booking CTAs */
+/* Profile chip styling for desktop header */
+.profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.profile-chip:hover {
+  background-color: hsl(var(--muted));
+}
+
+.profile-chip img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Auth button styling */
+.btn-auth {
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-auth:hover {
+  background-color: hsl(var(--muted));
+}
 
 /* Ensure all buttons have proper mobile tap targets and touch behavior */
 button, .btn, [role="button"], input[type="button"], input[type="submit"] {

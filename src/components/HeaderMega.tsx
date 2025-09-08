@@ -203,19 +203,23 @@ const { t } = useI18n();
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="flex items-center gap-2 p-2"
+                  className="flex items-center gap-2 p-2 profile-chip"
                   onMouseEnter={() => setOpenMenu("profile")}
                   onFocus={() => setOpenMenu("profile")}
                   aria-label="Open your dashboard"
+                  onClick={() => {
+                    const dashboardUrl = user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user';
+                    window.location.href = dashboardUrl;
+                  }}
                 >
-                  <Avatar className="h-7 w-7">
-                    <AvatarImage src={user.user_metadata?.avatar_url} />
-                    <AvatarFallback className="text-xs">
-                      {user.user_metadata?.full_name ? 
-                        user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 
-                        user.email?.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <img 
+                    src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
+                    alt="" 
+                    className="h-7 w-7 rounded-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
+                    }}
+                  />
                   <span className="text-sm">Profile</span>
                 </Button>
                 {openMenu === "profile" && (
@@ -224,14 +228,14 @@ const { t } = useI18n();
                     onMouseEnter={() => setOpenMenu("profile")}
                     onMouseLeave={() => setOpenMenu(null)}
                   >
-                    <Link
-                      to={userRole === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
-                      className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => setOpenMenu(null)}
-                    >
-                      <Settings className="h-4 w-4" />
-                      Dashboard
-                    </Link>
+                <Link
+                  to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
+                  className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setOpenMenu(null)}
+                >
+                  <Settings className="h-4 w-4" />
+                  Dashboard
+                </Link>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -248,15 +252,13 @@ const { t } = useI18n();
                 )}
               </div>
             ) : (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="hidden xl:flex"
-                onClick={() => setAuthModalOpen(true)}
+              <Link 
+                to="/auth"
+                className="hidden xl:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors btn-auth"
               >
-                <User className="w-4 h-4 mr-2" />
+                <User className="w-4 h-4" />
                 {t("nav_signin")}
-              </Button>
+              </Link>
             )}
 
             {/* Partner CTA - always visible */}

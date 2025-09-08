@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { CalendarIcon, Users, Clock, MapPin, Shield, CheckCircle } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -23,13 +24,14 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { user } = useAuth();
   
-  // Form state
+  // Form state with auth autofill
   const [formData, setFormData] = useState({
     date: searchParams.get('date') || '',
     people: parseInt(searchParams.get('people') || '1'),
-    name: '',
-    email: '',
+    name: '', // Will be filled from auth in useEffect
+    email: '', // Will be filled from auth in useEffect  
     phone: '',
     dietary: '',
     mobility: '',
@@ -41,6 +43,17 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  // Auto-fill form from authenticated user
+  useEffect(() => {
+    if (user && (!formData.name || !formData.email)) {
+      setFormData(prev => ({
+        ...prev,
+        name: prev.name || user.fullName || '',
+        email: prev.email || user.email || ''
+      }));
+    }
+  }, [user]);
 
   // Price calculations
   const subtotal = experience.base_price * formData.people;

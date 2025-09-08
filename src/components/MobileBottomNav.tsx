@@ -73,7 +73,7 @@ export default function MobileBottomNav() {
 
   const handleProfile = () => {
     if (user) {
-      const dashboardUrl = userRole === 'partner' ? '/dashboard/partner' : '/dashboard/user';
+      const dashboardUrl = user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user';
       navigate(dashboardUrl);
     } else {
       setAuthModalOpen(true);
@@ -131,14 +131,14 @@ export default function MobileBottomNav() {
             >
               {user ? (
                 <>
-                  <Avatar className="h-5 w-5" aria-hidden="true">
-                    <AvatarImage src={user.user_metadata?.avatar_url} />
-                    <AvatarFallback className="text-xs">
-                      {user.user_metadata?.full_name ? 
-                        user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 
-                        user.email?.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+                  <img 
+                    src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
+                    alt=""
+                    className="h-5 w-5 rounded-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
+                    }}
+                  />
                   <span className="text-[11px] leading-none font-medium">Profile</span>
                 </>
               ) : (
