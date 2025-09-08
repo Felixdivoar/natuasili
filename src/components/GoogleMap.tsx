@@ -33,16 +33,13 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 
   // Open directions to the location
   const openDirections = () => {
-    if (googleMapsUrl) {
-      window.open(googleMapsUrl, '_blank');
-      return;
-    }
-    
     const [lat, lng] = coordinates;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    // Always use directions URL to get route from current location to destination
     const url = isMobile 
-      ? `maps://maps.google.com/maps?daddr=${lat},${lng}`
-      : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+      ? `maps://maps.google.com/maps?daddr=${lat},${lng}&dirflg=d`
+      : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
     
     window.open(url, '_blank');
   };
