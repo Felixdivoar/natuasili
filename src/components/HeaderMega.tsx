@@ -4,7 +4,6 @@ import { Search, User, Menu, X, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useAuth } from "@/contexts/AuthContext";
 import AuthModal from "@/components/AuthModal";
@@ -162,10 +161,6 @@ const { t } = useI18n();
             {/* Currency - all screen sizes */}
             <div className="hidden lg:block">
               <CurrencySelector />
-            </div>
-            
-            <div className="hidden lg:block">
-              <LanguageSwitcher />
             </div>
 
             {/* Search - all screen sizes */}
@@ -345,9 +340,6 @@ const { t } = useI18n();
                 </div>
                 <div className="px-3 py-2">
                   <CurrencySelector />
-                </div>
-                <div className="px-3 py-2">
-                  <LanguageSwitcher />
                 </div>
                 {!user && (
                   <Link 
