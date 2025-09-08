@@ -376,7 +376,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/reteti-community-elephant-experience/",
   },
   {
-    title: "Ol Pejeta – Bush Bird Walks",
+    title: "Guided bush and bird walks at Ol Pejeta Conservancy",
     id: "exp-olp-bird-walks",
     slug: P("Ol Pejeta Bush Bird Walks"),
     partner: "Ol Pejeta Conservancy",
@@ -395,7 +395,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/ol-pejeta-bush-bird-walks/",
   },
   {
-    title: "Night Game Drive – Ol Pejeta",
+    title: "Night game drive at Ol Pejeta Conservancy",
     id: "exp-olp-night-drive",
     slug: P("Night Game Drive Ol Pejeta"),
     partner: "Ol Pejeta Conservancy",
