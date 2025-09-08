@@ -110,7 +110,7 @@ export default function Partners() {
       <Hero 
         title={t("partners_title")}
         subtitle={t("partners_subtitle")}
-        backgroundImage="/src/assets/coastal-forest.jpg"
+        backgroundImage="/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"
         showStats={false}
       />
 
