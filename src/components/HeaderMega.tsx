@@ -27,13 +27,16 @@ const THEMES = [
 
 export default function HeaderMega() {
 const { t } = useI18n();
-  const { user, userRole, signOut } = useAuth();
+  const { user, userRole, signOut, loading } = useAuth();
   const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+
+  // Debug auth state
+  console.log("🔐 Header: Auth state", { user: !!user, userRole, loading });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -193,67 +196,70 @@ const { t } = useI18n();
             </div>
 
             {/* Profile or Sign In - all screen sizes */}
-            {user ? (
-              <div className="relative hidden lg:block">
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="flex items-center gap-2 p-2 profile-chip"
-                  onMouseEnter={() => setOpenMenu("profile")}
-                  onFocus={() => setOpenMenu("profile")}
-                  aria-label="Open your dashboard"
-                  onClick={() => {
-                    const dashboardUrl = user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user';
-                    window.location.href = dashboardUrl;
-                  }}
-                >
-                  <img 
-                    src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
-                    alt="" 
-                    className="h-7 w-7 rounded-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
-                    }}
-                  />
-                  <span className="text-sm">Profile</span>
-                </Button>
-                {openMenu === "profile" && (
-                  <div 
-                    className="absolute right-0 mt-2 w-48 rounded-lg border bg-background p-2 shadow-xl z-50"
+            {!loading && (
+              user ? (
+                <div className="relative hidden lg:block">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="flex items-center gap-2 p-2 profile-chip"
                     onMouseEnter={() => setOpenMenu("profile")}
-                    onMouseLeave={() => setOpenMenu(null)}
+                    onFocus={() => setOpenMenu("profile")}
+                    aria-label="Open your dashboard"
+                    onClick={() => {
+                      console.log("🎯 Profile clicked", { role: user.role });
+                      const dashboardUrl = user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user';
+                      window.location.href = dashboardUrl;
+                    }}
                   >
-                <Link
-                  to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
-                  className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setOpenMenu(null)}
-                >
-                  <Settings className="h-4 w-4" />
-                  Dashboard
-                </Link>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => {
-                        signOut();
-                        setOpenMenu(null);
+                    <img 
+                      src={user.avatarUrl || "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png"} 
+                      alt="" 
+                      className="h-7 w-7 rounded-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
                       }}
+                    />
+                    <span className="text-sm">Profile</span>
+                  </Button>
+                  {openMenu === "profile" && (
+                    <div 
+                      className="absolute right-0 mt-2 w-48 rounded-lg border bg-background p-2 shadow-xl z-50"
+                      onMouseEnter={() => setOpenMenu("profile")}
+                      onMouseLeave={() => setOpenMenu(null)}
                     >
-                      <LogOut className="h-4 w-4" />
-                      Sign Out
-                    </Button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link 
-                to="/auth"
-                className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors btn-auth"
-              >
-                <User className="w-4 h-4" />
-                {t("nav_signin")}
-              </Link>
+                  <Link
+                    to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
+                    className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setOpenMenu(null)}
+                  >
+                    <Settings className="h-4 w-4" />
+                    Dashboard
+                  </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => {
+                          signOut();
+                          setOpenMenu(null);
+                        }}
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link 
+                  to="/auth"
+                  className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors btn-auth"
+                >
+                  <User className="w-4 h-4" />
+                  {t("nav_signin")}
+                </Link>
+              )
             )}
 
             {/* Partner CTA - always visible */}
@@ -341,7 +347,7 @@ const { t } = useI18n();
                 <div className="px-3 py-2">
                   <CurrencySelector />
                 </div>
-                {!user && (
+                {!loading && !user && (
                   <Link 
                     to="/auth"
                     className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
@@ -351,7 +357,7 @@ const { t } = useI18n();
                     {t("nav_signin")}
                   </Link>
                 )}
-                {user && (
+                {!loading && user && (
                   <>
                     <Link
                       to={user.role === 'partner' ? '/dashboard/partner' : '/dashboard/user'}
@@ -366,7 +372,7 @@ const { t } = useI18n();
                           e.currentTarget.src = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
                         }}
                       />
-                      Dashboard
+                      Dashboard ({user.role})
                     </Link>
                     <Button
                       variant="ghost"

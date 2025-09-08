@@ -33,21 +33,22 @@ export function BookingCTA({
   }, []);
 
   const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
-    console.log("🎯 BookingCTA handleClick triggered", {
+    console.log("🎯 BookingCTA clicked successfully", {
       eventType: e.type,
       isMobile: window.innerWidth <= 991,
       disabled,
-      isLoading
+      isLoading,
+      timestamp: Date.now()
     });
     
     e.preventDefault();
     e.stopPropagation();
     
     if (!disabled && !isLoading) {
-      console.log("✅ Calling onProceed");
+      console.log("✅ Executing booking action");
       onProceed();
     } else {
-      console.log("❌ Button disabled or loading", { disabled, isLoading });
+      console.log("❌ Button blocked", { disabled, isLoading });
     }
   };
 

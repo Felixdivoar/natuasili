@@ -41,85 +41,69 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [userRole, setUserRole] = useState<'admin' | 'partner' | 'user' | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Helper function to update user with role
+  const updateUserWithRole = async (session: Session | null) => {
+    if (!session?.user) {
+      setUser(null);
+      setUserRole(null);
+      setLoading(false);
+      return;
+    }
+
+    const appUser = mapUser(session);
+    console.log("🔐 Auth: Processing user session", { userId: session.user.id, email: session.user.email });
+    
+    try {
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .single();
+      
+      const role = roles?.role || 'user';
+      console.log("🔐 Auth: Role fetched", { role });
+      
+      setUserRole(role);
+      if (appUser) {
+        const userWithRole = { ...appUser, role };
+        setUser(userWithRole);
+        console.log("🔐 Auth: User state updated", userWithRole);
+      }
+    } catch (error) {
+      console.error('🔐 Auth: Error fetching user role, defaulting to user', error);
+      setUserRole('user');
+      if (appUser) {
+        const userWithRole = { ...appUser, role: 'user' as const };
+        setUser(userWithRole);
+      }
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    // Set up auth state listener
+    console.log("🔐 Auth: Initializing auth context");
+    
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log("🔐 Auth: State change event", { event, hasSession: !!session });
         setSession(session);
-        const appUser = mapUser(session);
-        setUser(appUser);
-        
-        if (session?.user) {
-          // Fetch user role
-          setTimeout(async () => {
-            try {
-              const { data: roles } = await supabase
-                .from('user_roles')
-                .select('role')
-                .eq('user_id', session.user.id)
-                .single();
-              
-              const role = roles?.role || 'user';
-              setUserRole(role);
-              
-              // Update user object with role
-              if (appUser) {
-                setUser({ ...appUser, role });
-              }
-            } catch (error) {
-              console.error('Error fetching user role:', error);
-              setUserRole('user');
-              if (appUser) {
-                setUser({ ...appUser, role: 'user' });
-              }
-            }
-          }, 0);
-        } else {
-          setUserRole(null);
-        }
-        
-        setLoading(false);
+        // Don't use setTimeout here - update immediately
+        updateUserWithRole(session);
       }
     );
 
-    // Check for existing session
+    // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("🔐 Auth: Initial session check", { hasSession: !!session });
       setSession(session);
-      const appUser = mapUser(session);
-      setUser(appUser);
-      
-      if (session?.user) {
-        // Fetch user role for existing session
-        setTimeout(async () => {
-          try {
-            const { data: roles } = await supabase
-              .from('user_roles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .single();
-            
-            const role = roles?.role || 'user';
-            setUserRole(role);
-            
-            // Update user object with role
-            if (appUser) {
-              setUser({ ...appUser, role });
-            }
-          } catch (error) {
-            console.error('Error fetching user role:', error);
-            setUserRole('user');
-            if (appUser) {
-              setUser({ ...appUser, role: 'user' });
-            }
-          }
-          setLoading(false);
-        }, 0);
-      } else {
-        setLoading(false);
-      }
+      updateUserWithRole(session);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      console.log("🔐 Auth: Cleanup subscription");
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signUp = async (email: string, password: string, metadata?: any) => {

@@ -152,23 +152,24 @@ const ExperienceDetail = () => {
       isMobile: window.innerWidth <= 991, 
       user: !!user, 
       bookingStarted,
-      userAgent: navigator.userAgent 
+      userAgent: navigator.userAgent,
+      timestamp: Date.now()
     });
     
     // Check if user is authenticated first
     if (!user) {
-      console.log("User not authenticated, opening auth modal");
+      console.log("🔐 User not authenticated, opening auth modal");
       setAuthModalOpen(true);
       return;
     }
 
     // If booking has started (valid selections made), open modal directly
     if (bookingStarted) {
-      console.log("Booking already started, opening booking modal");
+      console.log("📅 Booking already started, opening booking modal");
       openBookingModal();
     } else {
       // Otherwise scroll to availability section
-      console.log("Starting new booking, scrolling to availability");
+      console.log("📍 Starting new booking, scrolling to availability");
       scrollToAvailability();
     }
   };
@@ -373,14 +374,7 @@ const ExperienceDetail = () => {
           ref={availabilityRef}
           id="availability-section"
           className="scroll-mt-20"
-          style={{ 
-            minHeight: '200px',
-            border: '2px solid red',
-            backgroundColor: 'rgba(255,0,0,0.1)',
-            padding: '16px'
-          }}
         >
-          <h2 className="text-2xl font-bold mb-4 text-red-600">🎯 AVAILABILITY SECTION - SCROLL TARGET</h2>
           <AvailabilityAndOptions 
             experience={{
               ...experience,
