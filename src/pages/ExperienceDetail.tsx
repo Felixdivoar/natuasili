@@ -126,15 +126,18 @@ const ExperienceDetail = () => {
   const handleBookNowClick = () => {
     // Check if user is authenticated first
     if (!user) {
+      console.log("User not authenticated, opening auth modal");
       setAuthModalOpen(true);
       return;
     }
 
     // If booking has started (valid selections made), open modal directly
     if (bookingStarted) {
+      console.log("Booking already started, opening booking modal");
       openBookingModal();
     } else {
       // Otherwise scroll to availability section
+      console.log("Starting new booking, scrolling to availability");
       scrollToAvailability();
     }
   };
