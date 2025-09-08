@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { useI18n } from "@/i18n/I18nProvider";
 import T from "@/i18n/T";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
+import { impactStories } from "@/data/blogData";
+
 const CarouselControls = () => {
   const {
     scrollPrev,
@@ -23,94 +25,6 @@ const CarouselControls = () => {
       </Button>
     </div>;
 };
-import maasaiMaraProject from "@/assets/maasai-mara-project.jpg";
-import sambururEducation from "@/assets/samburu-education.jpg";
-import karuraForestPlanting from "@/assets/karura-forest-planting.jpg";
-const impactStories = [{
-  id: 1,
-  title: "Protecting the Great Migration Corridor",
-  excerpt: "How community conservancies are securing wildlife corridors critical for the annual wildebeest migration, ensuring this natural wonder continues for future generations.",
-  content: `
-      <p>The Great Migration is one of the world's most spectacular wildlife events, with over 2 million wildebeest, zebras, and gazelles crossing between Kenya and Tanzania. However, rapid human development threatens this ancient pathway.</p>
-      
-      <p>Through our partnership with local Maasai conservancies, we've helped establish protected corridors that allow wildlife to move freely between protected areas. These corridors are managed by communities who receive direct benefits from conservation tourism.</p>
-      
-      <h3>Key Achievements:</h3>
-      <ul>
-        <li>15,000 hectares of corridor land under community protection</li>
-        <li>85% reduction in human-wildlife conflict incidents</li>
-        <li>200 community members employed as conservancy rangers</li>
-        <li>$400,000 annually in community conservation payments</li>
-      </ul>
-      
-      <p>The success of this model demonstrates that conservation and community development can work hand in hand. Local families who once viewed wildlife as competition now see them as partners in their economic future.</p>
-    `,
-  category: "Wildlife Protection",
-  author: "Dr. Sarah Kimani",
-  date: "2024-01-15",
-  image: maasaiMaraProject,
-  impact: {
-    hectares: "15,000",
-    communities: "12",
-    species: "45"
-  }
-}, {
-  id: 2,
-  title: "Empowering the Next Generation of Conservationists",
-  excerpt: "Educational programs in Samburu County are inspiring young people to become conservation leaders, combining traditional knowledge with modern conservation science.",
-  content: `
-      <p>In Samburu County, a new generation of conservation leaders is emerging through innovative educational programs that blend traditional ecological knowledge with modern conservation science.</p>
-      
-      <p>Our Junior Conservationist Program works with local schools to provide hands-on environmental education. Students learn about wildlife tracking, habitat restoration, and sustainable resource management from both community elders and trained conservationists.</p>
-      
-      <h3>Program Impact:</h3>
-      <ul>
-        <li>500 students enrolled across 15 schools</li>
-        <li>12 community-based learning centers established</li>
-        <li>90% of graduates pursuing conservation-related careers</li>
-        <li>Traditional ecological knowledge documented and preserved</li>
-      </ul>
-      
-      <p>The program has also created employment opportunities for community members as environmental educators and mentors, ensuring that traditional knowledge is passed on while introducing modern conservation techniques.</p>
-    `,
-  category: "Education",
-  author: "James Mwangi",
-  date: "2024-01-10",
-  image: sambururEducation,
-  impact: {
-    students: "500",
-    schools: "15",
-    mentors: "25"
-  }
-}, {
-  id: 3,
-  title: "Urban Forest Restoration: Karura's Renaissance",
-  excerpt: "The transformation of Karura Forest from a degraded urban space to a thriving ecosystem showcases the power of community-led restoration efforts in Nairobi.",
-  content: `
-      <p>Karura Forest, once facing severe degradation from encroachment and pollution, has become a model for urban forest restoration through community engagement and sustainable tourism.</p>
-      
-      <p>Our restoration program combines scientific forest management with community participation. Volunteers from local schools, businesses, and visitor groups have planted over 50,000 indigenous trees while learning about forest ecology.</p>
-      
-      <h3>Restoration Results:</h3>
-      <ul>
-        <li>200 hectares of forest successfully restored</li>
-        <li>50,000 indigenous trees planted</li>
-        <li>35 bird species returned to the forest</li>
-        <li>1,200 community volunteers trained</li>
-      </ul>
-      
-      <p>The forest now serves as an outdoor classroom and recreation space for Nairobi residents while providing essential ecosystem services like air purification and watershed protection.</p>
-    `,
-  category: "Restoration",
-  author: "Dr. Grace Wanjiru",
-  date: "2024-01-05",
-  image: karuraForestPlanting,
-  impact: {
-    trees: "50,000",
-    hectares: "200",
-    volunteers: "1,200"
-  }
-}];
 const ImpactStories = () => {
   const { t } = useI18n();
   const getCategoryColor = (category: string) => {
@@ -188,7 +102,7 @@ const ImpactStories = () => {
                       </div>
                     </div>
                     
-                    <Link to={`/blog/${story.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+                    <Link to={`/blog/${story.slug}`}>
                       <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">
                         <T k="btn_read_full_story" />
                         <ArrowRight className="ml-2 h-4 w-4" />
