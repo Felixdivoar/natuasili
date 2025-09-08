@@ -285,7 +285,7 @@ const BlogPost = () => {
               to={`/blog/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`}
               className="inline-block"
             >
-              <Badge className={`${getCategoryColor(post.category)} post-category hover:opacity-80 transition-opacity cursor-pointer`}>
+              <Badge className="bg-black text-white border-black cursor-pointer">
                 {post.category}
               </Badge>
             </Link>

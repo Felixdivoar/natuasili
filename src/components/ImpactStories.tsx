@@ -65,7 +65,7 @@ const ImpactStories = () => {
                   <div className="relative aspect-[16/10]">
                     <img src={story.image} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute top-4 left-4">
-                      <Badge className={getCategoryColor(story.category)}>
+                      <Badge className="bg-black text-white border-black cursor-pointer">
                         <DynamicTranslated text={story.category} />
                       </Badge>
                     </div>

@@ -266,6 +266,13 @@ const Blog = () => {
   });
   const featuredPosts = blogPosts.filter(post => post.featured);
   const regularPosts = filteredPosts.filter(post => !post.featured);
+  const slugify = (text: string) => {
+    return text.toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-');
+  };
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Host Resources':
@@ -304,9 +311,14 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                   <div className="relative aspect-[16/10]">
                     <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute top-4 left-4">
-                      <Badge className={getCategoryColor(post.category)}>
-                        {post.category}
-                      </Badge>
+                      <Link 
+                        to={`/blog/category/${slugify(post.category)}`}
+                        className="inline-block"
+                      >
+                        <Badge className="bg-black text-white border-black cursor-pointer">
+                          {post.category}
+                        </Badge>
+                      </Link>
                     </div>
                     <div className="absolute top-4 right-4">
                       <Badge variant="secondary" className="bg-conservation text-white">
@@ -325,7 +337,6 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                     <p className="text-muted-foreground mb-4 line-clamp-3">
                       {post.excerpt}
                     </p>
-                    
                     
                     <Link to={`/blog/${post.slug}`}>
                       <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
@@ -379,9 +390,14 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                   <div className="relative aspect-[16/10]">
                     <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     <div className="absolute top-4 left-4">
-                      <Badge className={getCategoryColor(post.category)}>
-                        {post.category}
-                      </Badge>
+                      <Link 
+                        to={`/blog/category/${slugify(post.category)}`}
+                        className="inline-block"
+                      >
+                        <Badge className="bg-black text-white border-black cursor-pointer">
+                          {post.category}
+                        </Badge>
+                      </Link>
                     </div>
                   </div>
                   
@@ -395,17 +411,6 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                     <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
                       {post.excerpt}
                     </p>
-                    
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <User className="h-3 w-3" />
-                        {post.author}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {new Date(post.date).toLocaleDateString()}
-                      </div>
-                    </div>
                     
                     <Link to={`/blog/${post.slug}`}>
                       <Button variant="outline" className="w-full">

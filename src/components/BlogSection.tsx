@@ -92,15 +92,16 @@ const BlogSection = () => {
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute top-4 left-4">
-                        <Link
-                          to={`/blog/category/${slugify(post.category)}`}
-                          className={`post-category ${getCategoryColor(post.category)}`}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {post.category}
-                        </Link>
-                      </div>
+                        <div className="absolute top-4 left-4">
+                          <Link
+                            to={`/blog/category/${slugify(post.category)}`}
+                            className="inline-block"
+                          >
+                            <Badge className="bg-black text-white border-black cursor-pointer">
+                              {post.category}
+                            </Badge>
+                          </Link>
+                        </div>
                     </div>
                   </Link>
                   
