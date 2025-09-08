@@ -54,7 +54,7 @@ const Auth: React.FC = () => {
         title: "Welcome back!",
         description: "You've been signed in successfully.",
       });
-      navigate(returnUrl);
+      // Don't navigate here immediately - let the useEffect handle redirection based on role
     }
     
     setIsLoading(false);
@@ -83,7 +83,7 @@ const Auth: React.FC = () => {
 
     setIsLoading(true);
 
-    const { error } = await signUp(formData.email, formData.password, formData.role);
+    const { error } = await signUp(formData.email, formData.password, formData.role, formData.firstName, formData.lastName);
     
     if (error) {
       if (error.message?.includes('already registered')) {

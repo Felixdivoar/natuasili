@@ -7,6 +7,7 @@ import AISearchComponent from "@/components/AISearchComponent";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useAuth } from "@/contexts/AuthContext";
 import { AvatarMenu } from "@/components/auth/AvatarMenu";
+import { getDashboardPath } from "@/lib/auth";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
@@ -26,7 +27,7 @@ const THEMES = [
 
 export default function HeaderNew() {
   const { t } = useI18n();
-  const { user, profile, loading } = useAuth();
+  const { user, profile, loading, signOut } = useAuth();
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState<null | "marketplace">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -284,12 +285,47 @@ export default function HeaderNew() {
                   <CurrencySelector />
                 </div>
 
-                <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
-                    <User className="w-4 h-4 mr-2" />
-                    {t("nav_signin")}
-                  </Button>
-                </Link>
+                {/* Mobile Auth Section */}
+                {!loading && (
+                  user && profile ? (
+                    <div className="md:hidden pt-2 border-t space-y-2">
+                      <div className="px-3 py-2 text-sm">
+                        <div className="font-medium">{profile.first_name || 'User'}</div>
+                        <div className="text-xs text-muted-foreground capitalize">{profile.role}</div>
+                      </div>
+                      <Link 
+                        to={getDashboardPath(profile.role)}
+                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <Link 
+                        to="/profile"
+                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                      <button 
+                        onClick={async () => {
+                          await signOut();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md text-red-600"
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  ) : (
+                    <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="outline" size="sm" className="md:hidden w-full justify-start">
+                        <User className="w-4 h-4 mr-2" />
+                        {t("nav_signin")}
+                      </Button>
+                    </Link>
+                  )
+                )}
               </nav>
             </div>
           )}

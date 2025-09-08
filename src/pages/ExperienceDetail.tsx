@@ -9,7 +9,7 @@ import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/contexts/I18nContext";
 import { useToast } from "@/hooks/use-toast";
-import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import BookingWizardNew from "@/components/BookingWizardNew";
 import BookNowButton from "@/components/BookNowButton";
@@ -24,7 +24,7 @@ const ExperienceDetail = () => {
   const navigate = useNavigate();
   const { t } = useI18n();
   const { formatPrice } = useCurrency();
-  const { user } = useSimpleAuth();
+  const { user } = useAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);

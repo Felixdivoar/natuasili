@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useSimpleAuth } from '@/contexts/SimpleAuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 
 interface NewAuthModalProps {
@@ -16,12 +16,13 @@ export default function NewAuthModal({ isOpen, onClose }: NewAuthModalProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { signIn, signUp } = useSimpleAuth();
+  const { signIn, signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +35,7 @@ export default function NewAuthModal({ isOpen, onClose }: NewAuthModalProps) {
       let result;
       if (isSignUp) {
         console.log('🔐 Attempting signup...');
-        result = await signUp(email, password, fullName);
+        result = await signUp(email, password, 'traveler', firstName, lastName);
       } else {
         console.log('🔐 Attempting signin...');
         result = await signIn(email, password);
@@ -52,7 +53,8 @@ export default function NewAuthModal({ isOpen, onClose }: NewAuthModalProps) {
           onClose();
           setEmail('');
           setPassword('');
-          setFullName('');
+          setFirstName('');
+          setLastName('');
           setError('');
           setLoading(false);
         }, 1000);
@@ -80,20 +82,36 @@ export default function NewAuthModal({ isOpen, onClose }: NewAuthModalProps) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {isSignUp && (
-            <div className="space-y-2">
-              <Label htmlFor="fullName" className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Full Name
-              </Label>
-              <Input
-                id="fullName"
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Enter your full name"
-                required
-              />
-            </div>
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="firstName" className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  First Name
+                </Label>
+                <Input
+                  id="firstName"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="Enter your first name"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName" className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Last Name
+                </Label>
+                <Input
+                  id="lastName"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Enter your last name"
+                  required
+                />
+              </div>
+            </>
           )}
 
           <div className="space-y-2">

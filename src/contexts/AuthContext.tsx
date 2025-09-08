@@ -9,7 +9,7 @@ interface AuthContextType {
   profile: Profile | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, role?: 'traveler' | 'partner') => Promise<{ error: any }>;
+  signUp: (email: string, password: string, role?: 'traveler' | 'partner', firstName?: string, lastName?: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string, role: 'traveler' | 'partner' = 'traveler') => {
+  const signUp = async (email: string, password: string, role: 'traveler' | 'partner' = 'traveler', firstName?: string, lastName?: string) => {
     try {
       setLoading(true);
       const redirectUrl = `${window.location.origin}/`;
@@ -95,7 +95,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         options: {
           emailRedirectTo: redirectUrl,
           data: {
-            role: role // Store role in user metadata as fallback
+            role: role,
+            first_name: firstName,
+            last_name: lastName
           }
         }
       });
