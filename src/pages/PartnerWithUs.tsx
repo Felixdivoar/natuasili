@@ -160,7 +160,7 @@ const PartnerWithUs: React.FC = () => {
           </div>
           <div className="relative">
             <img 
-              src="/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png" 
+              src="/lovable-uploads/86a97e9c-06e8-4907-baf7-f6cfa229935f.png" 
               alt="Conservation partnership - Community-led initiatives across Kenya" 
               className="rounded-2xl shadow-2xl w-full h-96 object-cover"
             />
