@@ -60,7 +60,7 @@ const { t } = useI18n();
   };
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact hidden lg:block">
+    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact hidden xl:block">
       <div className="nav-inner">
         <div className="flex items-center justify-between h-14">
           {/* Left cluster */}
@@ -164,9 +164,11 @@ const { t } = useI18n();
               <CurrencySelector />
             </div>
             
-            <LanguageSwitcher />
+            <div className="hidden xl:block">
+              <LanguageSwitcher />
+            </div>
 
-            {/* AI Search - desktop only (moved to bottom nav on mobile/tablet) */}
+            {/* Search - desktop only (moved to bottom nav on mobile/tablet) */}
             <div className="relative hidden xl:block" ref={searchRef}>
               <Button
                 variant="ghost"
@@ -195,13 +197,13 @@ const { t } = useI18n();
               )}
             </div>
 
-            {/* Profile or Sign In - desktop only */}
+            {/* Profile or Sign In - desktop only (≥1200px) */}
             {user ? (
-              <div className="relative">
+              <div className="relative hidden xl:block">
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="hidden xl:flex items-center gap-2 p-2"
+                  className="flex items-center gap-2 p-2"
                   onMouseEnter={() => setOpenMenu("profile")}
                   onFocus={() => setOpenMenu("profile")}
                   aria-label="Open your dashboard"
@@ -257,11 +259,10 @@ const { t } = useI18n();
               </Button>
             )}
 
-            {/* Partner CTA - keep visible but smaller on mobile */}
+            {/* Partner CTA - always visible */}
             <Link to="/partner-entry">
-              <Button size="sm" className="bg-primary hover:bg-primary-hover">
-                <span className="hidden sm:inline">{t("nav_partner")}</span>
-                <span className="sm:hidden text-xs">Partner</span>
+              <Button size="sm" className="bg-primary hover:bg-primary-hover hidden xl:block">
+                {t("nav_partner")}
               </Button>
             </Link>
 

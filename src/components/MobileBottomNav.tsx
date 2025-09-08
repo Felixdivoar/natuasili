@@ -2,24 +2,22 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useCurrency } from "@/contexts/CurrencyContext";
 import { Button } from "@/components/ui/button";
-import { Sparkles, User, DollarSign, LogIn } from "lucide-react";
+import { Search, User, DollarSign, LogIn } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CurrencySelector from "@/components/CurrencySelector";
 import AuthModal from "@/components/AuthModal";
 import { useI18n } from "@/i18n/I18nProvider";
-import { SUPPORTED, SYMBOL, type Currency } from "@/lib/currency";
 
 export default function MobileBottomNav() {
   const { user, userRole } = useAuth();
-  const { currency, setCurrency } = useCurrency();
   const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
-  const [aiSearchOpen, setAiSearchOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const aiSearchRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
   const currencyRef = useRef<HTMLDivElement>(null);
 
   // Add bottom padding for safe area and nav height
@@ -47,8 +45,8 @@ export default function MobileBottomNav() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (aiSearchRef.current && !aiSearchRef.current.contains(event.target as Node)) {
-        setAiSearchOpen(false);
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setSearchOpen(false);
       }
       if (currencyRef.current && !currencyRef.current.contains(event.target as Node)) {
         setCurrencyOpen(false);
@@ -63,13 +61,13 @@ export default function MobileBottomNav() {
   const hideOn = ["/checkout", "/auth"];
   if (hideOn.some(p => location.pathname?.startsWith(p))) return null;
 
-  const handleAiSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
     const query = formData.get("search") as string;
     if (query?.trim()) {
       navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-      setAiSearchOpen(false);
+      setSearchOpen(false);
     }
   };
 
@@ -94,21 +92,21 @@ export default function MobileBottomNav() {
         <div className="mx-auto max-w-screen-lg">
           <div className="grid grid-cols-3 h-16">
             
-            {/* AI Search */}
-            <div className="relative" ref={aiSearchRef}>
+            {/* Search */}
+            <div className="relative" ref={searchRef}>
               <button
                 type="button"
                 className="flex flex-col items-center justify-center gap-1 w-full h-full select-none active:opacity-80 focus:outline-none focus-visible:ring focus-visible:ring-primary"
-                onClick={() => setAiSearchOpen(!aiSearchOpen)}
-                aria-label="AI Search"
+                onClick={() => setSearchOpen(!searchOpen)}
+                aria-label="Search experiences"
               >
-                <Sparkles className="h-5 w-5" aria-hidden="true" />
-                <span className="text-[11px] leading-none font-medium">AI Search</span>
+                <Search className="h-5 w-5" aria-hidden="true" />
+                <span className="text-[11px] leading-none font-medium">Search</span>
               </button>
               
-              {aiSearchOpen && (
+              {searchOpen && (
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 max-w-[90vw] bg-background border border-border rounded-xl shadow-xl p-4 z-50">
-                  <form onSubmit={handleAiSearch} className="space-y-3">
+                  <form onSubmit={handleSearch} className="space-y-3">
                     <input
                       name="search"
                       type="text"
@@ -160,35 +158,12 @@ export default function MobileBottomNav() {
                 aria-label="Currency selector"
               >
                 <DollarSign className="h-5 w-5" aria-hidden="true" />
-                <span className="text-[11px] leading-none font-medium">Currency: {currency}</span>
+                <span className="text-[11px] leading-none font-medium">Currency</span>
               </button>
               
               {currencyOpen && (
-                <div
-                  role="menu"
-                  aria-label="Choose currency"
-                  className="absolute bottom-full right-2 left-2 mx-auto max-w-xs mb-2 rounded-xl border border-border bg-background shadow-xl p-1 z-50"
-                >
-                  {SUPPORTED.map((currencyCode) => (
-                    <button
-                      key={currencyCode}
-                      className={[
-                        "w-full text-left px-3 py-2 rounded-lg text-sm transition-colors",
-                        currencyCode === currency
-                          ? "bg-primary/10 text-primary font-medium"
-                          : "hover:bg-muted",
-                      ].join(" ")}
-                      onClick={() => {
-                        setCurrency(currencyCode);
-                        setCurrencyOpen(false);
-                      }}
-                      role="menuitemradio"
-                      aria-checked={currencyCode === currency}
-                    >
-                      <span className="font-medium">{SYMBOL[currencyCode]}</span>
-                      <span className="ml-2">{currencyCode}</span>
-                    </button>
-                  ))}
+                <div className="absolute bottom-full right-2 mb-2 bg-background border border-border rounded-xl shadow-xl p-2 z-50">
+                  <CurrencySelector />
                 </div>
               )}
             </div>
