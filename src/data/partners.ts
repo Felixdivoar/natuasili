@@ -310,9 +310,9 @@ export const EXPERIENCES: Experience[] = [
     sourceUrl: "https://natuasili.com/st_tour/dudu-walk-insect-exploration/",
   },
   {
-    title: "Nairobi Giraffe Centre (AFEW)",
+    title: "Meet Rothschild Giraffes at Giraffe Nairobi Centre with AFEW",
     id: "exp-giraffe-centre",
-    slug: P("Nairobi Giraffe Centre AFEW"),
+    slug: P("Meet Rothschild Giraffes at Giraffe Nairobi Centre with AFEW"),
     partner: "Giraffe Centre (AFEW)",
     destination: "nairobi",
     themes: ["Wildlife conservation"],
@@ -320,7 +320,33 @@ export const EXPERIENCES: Experience[] = [
     images: ["/lovable-uploads/68c0cf79-0a97-4ec1-82b4-1f5f443b3d20.png", "/lovable-uploads/2998745d-d343-4471-b0b6-6a66d49fce09.png", "/lovable-uploads/b9271c14-14e1-4d4e-956a-65b84bc47384.png", "/lovable-uploads/dc7c3a6d-f388-459c-bebf-84538882e02a.png", "/lovable-uploads/f8177d2e-f86e-4cac-b403-4c5257ea45f7.png", "/lovable-uploads/f70c6376-9514-4edb-aebd-e2a4fea9aa97.png", "/lovable-uploads/ff1b4417-ca70-4004-bf82-d19fcb1c5cec.png", "/lovable-uploads/d198406f-4a55-437a-a6bf-b5181cd64707.png"],
     heroImage: "/lovable-uploads/68c0cf79-0a97-4ec1-82b4-1f5f443b3d20.png",
     gallery: ["/lovable-uploads/68c0cf79-0a97-4ec1-82b4-1f5f443b3d20.png", "/lovable-uploads/2998745d-d343-4471-b0b6-6a66d49fce09.png", "/lovable-uploads/b9271c14-14e1-4d4e-956a-65b84bc47384.png", "/lovable-uploads/dc7c3a6d-f388-459c-bebf-84538882e02a.png", "/lovable-uploads/f8177d2e-f86e-4cac-b403-4c5257ea45f7.png", "/lovable-uploads/f70c6376-9514-4edb-aebd-e2a4fea9aa97.png", "/lovable-uploads/ff1b4417-ca70-4004-bf82-d19fcb1c5cec.png", "/lovable-uploads/d198406f-4a55-437a-a6bf-b5181cd64707.png"],
-    description: "Visit the famous Giraffe Centre and get up close with endangered Rothschild's giraffes. Learn about conservation efforts, feed the giraffes, and support AFEW's mission to protect Kenya's wildlife through education and conservation programs.",
+    description: `Overview: The African Fund for Endangered Wildlife (AFEW) is a non-profit dedicated to the breeding and preservation of the threatened Rothschild giraffe; it is situated just outside Nairobi National Park. It presents the Giraffe Center experience, which is the main tourist attraction. Here, you will learn about these amazing animals by visiting on a guided tour or self-guided walk; you can even hand-feed them from a raised platform!
+
+Highlights:
+• Learn about the East African native vulnerable species called the Rothschild giraffe.
+• From a dedicated viewing deck, observe giraffes up close and even feed them.
+• Learn about AFEW's giraffe breeding program and efforts at conservation.
+
+Included/Excluded:
+• A friendly professional guide
+• Personal expenses
+• Insurance  
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect - Meet the giraffes:
+• Arrive at the Giraffe Centre and proceed to the giraffe feeding platform.
+• Observe and interact with the Rothschild giraffes, learning about their unique characteristics and ecological importance.
+• Take photos while feeding the giraffes pellets from a raised platform.
+• Browse the gift shop for educational souvenirs (optional).
+
+Cancellation policy: Cancel up to 24 hours in advance to receive a full refund. Cancellations made less than 24 hours before the tour start are non-refundable.
+
+Duration: 0 - 2 hours
+Languages: English
+Location: Giraffe Centre, Duma Road, Nairobi, Kenya
+
+The centre is open from 9:00 AM to 5:00 PM every day including weekends and all public holidays. 90 percent of funds collected from the entrance fees and sales in our gift shop and Tea House go towards conservation work. By visiting and/or making a purchase from the souvenir shop and the Teahouse, you contribute towards educating school children and teachers across Kenya.`,
     priceKESAdult: 1500,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
