@@ -57,6 +57,7 @@ export type Experience = {
   visibleOnMarketplace: boolean;
   locationText?: string;
   partnerSlug?: string;
+  googleMapsUrl?: string;
 };
 
 export type Partner = {
@@ -317,6 +318,7 @@ export const EXPERIENCES: Experience[] = [
     destination: "nairobi",
     themes: ["Wildlife conservation"],
     activities: ["giraffe", "education"],
+    googleMapsUrl: "https://share.google/bpCzrKmIhe9lWEXoR",
     images: ["/lovable-uploads/68c0cf79-0a97-4ec1-82b4-1f5f443b3d20.png", "/lovable-uploads/2998745d-d343-4471-b0b6-6a66d49fce09.png", "/lovable-uploads/b9271c14-14e1-4d4e-956a-65b84bc47384.png", "/lovable-uploads/dc7c3a6d-f388-459c-bebf-84538882e02a.png", "/lovable-uploads/f8177d2e-f86e-4cac-b403-4c5257ea45f7.png", "/lovable-uploads/f70c6376-9514-4edb-aebd-e2a4fea9aa97.png", "/lovable-uploads/ff1b4417-ca70-4004-bf82-d19fcb1c5cec.png", "/lovable-uploads/d198406f-4a55-437a-a6bf-b5181cd64707.png"],
     heroImage: "/lovable-uploads/68c0cf79-0a97-4ec1-82b4-1f5f443b3d20.png",
     gallery: ["/lovable-uploads/68c0cf79-0a97-4ec1-82b4-1f5f443b3d20.png", "/lovable-uploads/2998745d-d343-4471-b0b6-6a66d49fce09.png", "/lovable-uploads/b9271c14-14e1-4d4e-956a-65b84bc47384.png", "/lovable-uploads/dc7c3a6d-f388-459c-bebf-84538882e02a.png", "/lovable-uploads/f8177d2e-f86e-4cac-b403-4c5257ea45f7.png", "/lovable-uploads/f70c6376-9514-4edb-aebd-e2a4fea9aa97.png", "/lovable-uploads/ff1b4417-ca70-4004-bf82-d19fcb1c5cec.png", "/lovable-uploads/d198406f-4a55-437a-a6bf-b5181cd64707.png"],
@@ -590,6 +592,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["citizen science"],
+    googleMapsUrl: "https://share.google/anCALLiWy42IfyTp7",
     images: ["/lovable-uploads/2e803ede-092c-4c9f-ab95-2dbda73dadbe.png", "/lovable-uploads/12f78b3b-4c70-4ca5-baab-42b4cc16aac3.png", "/lovable-uploads/ec33572a-f2cb-4977-94fe-3f2b3904e893.png", "/lovable-uploads/47746d17-ae01-4f6c-8466-af9250b9be6b.png", "/lovable-uploads/d927ebb0-9058-4e4e-b664-2d7801f54e19.png"],
     heroImage: "/lovable-uploads/2e803ede-092c-4c9f-ab95-2dbda73dadbe.png",
     gallery: ["/lovable-uploads/2e803ede-092c-4c9f-ab95-2dbda73dadbe.png", "/lovable-uploads/12f78b3b-4c70-4ca5-baab-42b4cc16aac3.png", "/lovable-uploads/ec33572a-f2cb-4977-94fe-3f2b3904e893.png", "/lovable-uploads/47746d17-ae01-4f6c-8466-af9250b9be6b.png", "/lovable-uploads/d927ebb0-9058-4e4e-b664-2d7801f54e19.png"],
@@ -609,6 +612,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["forest", "eco-tour"],
+    googleMapsUrl: "https://maps.app.goo.gl/bDdP2AwLKi4MgfHF7",
     images: ["/lovable-uploads/7e07f04b-82b6-432c-9064-326ef04a1844.png", "/lovable-uploads/5247eabe-c5d5-44a7-ae67-cfa37f3aa62f.png", "/lovable-uploads/00e92f2f-4b8c-498a-a8c6-7b0ee78c1594.png", "/lovable-uploads/6865f1ee-887a-4b31-a1d1-12b7c3bcc646.png", "/lovable-uploads/06fc22ae-5161-4e52-9d11-5a49e5c06ebc.png", "/lovable-uploads/d08b85ed-f51e-4592-ad65-0a280d4f2869.png", "/lovable-uploads/31b1949f-2cd7-459e-8774-60616e5e685a.png"],
     heroImage: "/lovable-uploads/7e07f04b-82b6-432c-9064-326ef04a1844.png",
     gallery: ["/lovable-uploads/7e07f04b-82b6-432c-9064-326ef04a1844.png", "/lovable-uploads/5247eabe-c5d5-44a7-ae67-cfa37f3aa62f.png", "/lovable-uploads/00e92f2f-4b8c-498a-a8c6-7b0ee78c1594.png", "/lovable-uploads/6865f1ee-887a-4b31-a1d1-12b7c3bcc646.png", "/lovable-uploads/06fc22ae-5161-4e52-9d11-5a49e5c06ebc.png", "/lovable-uploads/d08b85ed-f51e-4592-ad65-0a280d4f2869.png", "/lovable-uploads/31b1949f-2cd7-459e-8774-60616e5e685a.png"],

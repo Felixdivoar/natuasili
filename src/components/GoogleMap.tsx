@@ -7,6 +7,7 @@ interface GoogleMapProps {
   location: string;
   coordinates?: [number, number]; // [lat, lng] - note: Google Maps uses lat,lng order
   height?: string;
+  googleMapsUrl?: string;
 }
 
 declare global {
@@ -20,7 +21,8 @@ declare global {
 const GoogleMap: React.FC<GoogleMapProps> = ({ 
   location, 
   coordinates = [-1.2921, 36.7378], // Default to Nairobi coordinates [lat, lng]
-  height = "h-64"
+  height = "h-64",
+  googleMapsUrl
 }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<any>(null);
@@ -31,6 +33,11 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 
   // Open directions to the location
   const openDirections = () => {
+    if (googleMapsUrl) {
+      window.open(googleMapsUrl, '_blank');
+      return;
+    }
+    
     const [lat, lng] = coordinates;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const url = isMobile 

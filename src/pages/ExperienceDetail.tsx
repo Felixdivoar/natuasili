@@ -605,6 +605,7 @@ const ExperienceDetail = () => {
                 location={experience.locationText || "Giraffe Centre, Duma Road, Nairobi, Kenya"}
                 coordinates={experience.slug === "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew" ? [-1.2921, 36.7378] : [-1.2921, 36.8219]}
                 height="h-64"
+                googleMapsUrl={experience.googleMapsUrl}
               />
             </div>
           </section>
