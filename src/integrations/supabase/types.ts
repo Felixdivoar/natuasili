@@ -194,24 +194,36 @@ export type Database = {
       }
       impact_proofs: {
         Row: {
+          admin_notes: string | null
           booking_id: string
           caption: string | null
           created_at: string | null
           id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string | null
           url: string
         }
         Insert: {
+          admin_notes?: string | null
           booking_id: string
           caption?: string | null
           created_at?: string | null
           id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
           url: string
         }
         Update: {
+          admin_notes?: string | null
           booking_id?: string
           caption?: string | null
           created_at?: string | null
           id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
           url?: string
         }
         Relationships: [

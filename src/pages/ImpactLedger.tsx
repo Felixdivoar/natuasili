@@ -181,8 +181,15 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
             slug,
             location
           )
+        ),
+        impact_proofs!inner (
+          id,
+          url,
+          caption,
+          status
         )
       `)
+      .eq('impact_proofs.status', 'approved')
       .order('booking_date', { ascending: false });
 
     if (bookingsError) {
@@ -201,6 +208,7 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
       const primaryTheme = Array.isArray(themes) && themes.length > 0 ? themes[0] : 'Wildlife';
       
       const allocationAmount = Math.round(booking.total_kes * 0.1);
+      const impactProofs = booking.impact_proofs || [];
       
       return {
         id: booking.id,
@@ -211,10 +219,11 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
         theme: primaryTheme,
         allocation_amount: allocationAmount,
         currency: 'KES',
-        status: booking.status === 'pending' ? 'pending' : 'verified',
-        proof_images: [],
-        proof_description: `Conservation allocation from ${experience?.title || 'experience'} booking. Funds support ${partner?.org_name || 'conservation'} activities.`,
-        verified_date: booking.status === 'pending' ? '' : booking.booking_date,
+        status: 'verified', // Only approved proofs are included
+        proof_images: impactProofs.map((proof: any) => proof.url),
+        proof_description: impactProofs.map((proof: any) => proof.caption).filter(Boolean).join(' ') ||
+          `Conservation allocation from ${experience?.title || 'experience'} booking. Funds support ${partner?.org_name || 'conservation'} activities.`,
+        verified_date: booking.booking_date,
         participants: (booking.adults || 0) + (booking.children || 0),
         impact_score: Math.round((Math.random() * 30) + 70),
         location: experience?.location_text || partner?.location || 'Kenya'
@@ -250,7 +259,7 @@ const ImpactLedger = () => {
   const { currency, formatPrice, convert } = useCurrency();
   const { toast } = useToast();
 
-  // Load data on component mount
+  // Load data on component mount with real-time updates
   useEffect(() => {
     const loadData = async () => {
       setDataState(prev => ({ ...prev, isLoading: true, error: null }));
@@ -287,6 +296,46 @@ const ImpactLedger = () => {
     };
 
     loadData();
+
+    // Set up real-time subscriptions for impact proofs and bookings
+    const impactProofChannel = supabase
+      .channel('impact-ledger-proofs')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'impact_proofs'
+        },
+        (payload) => {
+          console.log('Impact proof change detected:', payload);
+          if ((payload.new as any)?.status === 'approved' || (payload.old as any)?.status === 'approved') {
+            loadData(); // Refetch when proofs are approved/unapproved
+          }
+        }
+      )
+      .subscribe();
+
+    const bookingChannel = supabase
+      .channel('impact-ledger-bookings')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'bookings'
+        },
+        (payload) => {
+          console.log('Booking change detected for ledger:', payload);
+          loadData(); // Refetch when bookings change
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(impactProofChannel);
+      supabase.removeChannel(bookingChannel);
+    };
   }, []);
 
   // Core computed values in proper dependency order

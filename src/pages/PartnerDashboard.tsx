@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 import BookingsOverTimeChart from "@/components/BookingsOverTimeChart";
+import PartnerImpactProofSubmission from "@/components/PartnerImpactProofSubmission";
 
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
@@ -509,6 +510,8 @@ const PartnerDashboard = () => {
                     </CardContent>
                   </Card>
                 </div>
+                
+                <PartnerImpactProofSubmission />
               </TabsContent>
 
               <TabsContent value="messages" className="space-y-6 animate-fade-in">

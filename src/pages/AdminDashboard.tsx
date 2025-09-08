@@ -13,6 +13,7 @@ import { useGlobalImpactMetrics } from "@/hooks/useGlobalImpactMetrics";
 import { usePartnerDashboard } from "@/hooks/usePartnerDashboard";
 import BookingsOverTimeChart from "@/components/BookingsOverTimeChart";
 import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
+import ImpactProofAdmin from "@/components/ImpactProofAdmin";
 
 const AdminDashboard = () => {
   const { formatPrice } = useCurrency();
@@ -308,12 +309,8 @@ const AdminDashboard = () => {
                     <CardTitle>Admin Settings</CardTitle>
                     <p className="text-muted-foreground">Platform configuration and management tools</p>
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-center py-12 text-muted-foreground">
-                      <Settings className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                      <p>Admin settings panel coming soon</p>
-                      <p className="text-sm">Partner approval, content moderation, and system configuration</p>
-                    </div>
+                  <CardContent className="space-y-6">
+                    <ImpactProofAdmin />
                   </CardContent>
                 </Card>
               </TabsContent>
