@@ -1,21 +1,35 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Search, User, DollarSign, Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+"use client";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Search, User, DollarSign } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CurrencySelector from "@/components/CurrencySelector";
 import AuthModal from "@/components/AuthModal";
 import { useI18n } from "@/i18n/I18nProvider";
 
-const MobileBottomNav: React.FC = () => {
-  const { t } = useI18n();
+export default function MobileBottomNav() {
   const { user, userRole } = useAuth();
+  const { t } = useI18n();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const currencyRef = useRef<HTMLDivElement>(null);
+
+  // Hide on desktop and add main padding for safe area
+  useEffect(() => {
+    const main = document.querySelector("main");
+    if (main) {
+      main.setAttribute("style", "padding-bottom: max(80px, env(safe-area-inset-bottom));");
+    }
+    return () => {
+      if (main) main.style.removeProperty("padding-bottom");
+    };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,20 +45,24 @@ const MobileBottomNav: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Optionally hide on certain routes
+  const hideOn = ["/checkout", "/auth"];
+  if (hideOn.some(p => location.pathname?.startsWith(p))) return null;
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
     const query = formData.get("search") as string;
     if (query?.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(query.trim())}`;
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
       setSearchOpen(false);
     }
   };
 
-  const handleProfileClick = () => {
+  const goDashboard = () => {
     if (user) {
       const dashboardUrl = userRole === 'partner' ? '/dashboard/partner' : '/dashboard/user';
-      window.location.href = dashboardUrl;
+      navigate(dashboardUrl);
     } else {
       setAuthModalOpen(true);
     }
@@ -52,16 +70,22 @@ const MobileBottomNav: React.FC = () => {
 
   return (
     <>
-      <nav className="mobile-bottom-nav lg:hidden">
+      <nav
+        className="mobile-bottom-nav"
+        role="navigation"
+        aria-label="Mobile bottom navigation"
+        data-na="mobile-bottom-nav"
+      >
         {/* Search */}
         <div className="relative" ref={searchRef}>
           <button
-            className="nav-button w-full"
+            type="button"
+            className="mbn-item"
             onClick={() => setSearchOpen(!searchOpen)}
             aria-label="Search experiences"
           >
-            <Search className="icon" />
-            <span>Search</span>
+            <Search className="mbn-icon" />
+            <span className="mbn-label">Search</span>
           </button>
           
           {searchOpen && (
@@ -84,13 +108,14 @@ const MobileBottomNav: React.FC = () => {
 
         {/* Profile / Sign In */}
         <button
-          className="nav-button w-full"
-          onClick={handleProfileClick}
+          type="button"
+          className="mbn-item"
+          onClick={goDashboard}
           aria-label={user ? "Open your dashboard" : "Sign in"}
         >
           {user ? (
             <>
-              <Avatar className="w-5 h-5">
+              <Avatar className="mbn-icon w-5 h-5">
                 <AvatarImage src={user.user_metadata?.avatar_url} />
                 <AvatarFallback className="text-xs">
                   {user.user_metadata?.full_name ? 
@@ -98,12 +123,12 @@ const MobileBottomNav: React.FC = () => {
                     user.email?.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <span>Profile</span>
+              <span className="mbn-label">Profile</span>
             </>
           ) : (
             <>
-              <User className="icon" />
-              <span>Sign In</span>
+              <User className="mbn-icon" />
+              <span className="mbn-label">Sign In</span>
             </>
           )}
         </button>
@@ -111,12 +136,13 @@ const MobileBottomNav: React.FC = () => {
         {/* Currency */}
         <div className="relative" ref={currencyRef}>
           <button
-            className="nav-button w-full"
+            type="button"
+            className="mbn-item"
             onClick={() => setCurrencyOpen(!currencyOpen)}
             aria-label="Change currency"
           >
-            <DollarSign className="icon" />
-            <span>Currency</span>
+            <DollarSign className="mbn-icon" />
+            <span className="mbn-label">Currency</span>
           </button>
           
           {currencyOpen && (
@@ -133,6 +159,5 @@ const MobileBottomNav: React.FC = () => {
       />
     </>
   );
-};
+}
 
-export default MobileBottomNav;

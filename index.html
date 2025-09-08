@@ -27,6 +27,55 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
+    <!-- Mobile Bottom Nav Fallback -->
+    <script>
+(function(){
+  const isMobile = () => window.matchMedia("(max-width: 1024px)").matches;
+  function ensureBottomNav(){
+    if(!isMobile()) return;
+    if(document.querySelector('[data-na="mobile-bottom-nav"]')) return;
+
+    // Minimal HTML fallback if React component didn't mount
+    const nav = document.createElement('nav');
+    nav.className = 'mobile-bottom-nav';
+    nav.setAttribute('data-na','mobile-bottom-nav');
+    nav.innerHTML = `
+      <button class="mbn-item" data-action="open-search" aria-label="Open search"><span class="mbn-icon">🔎</span><span class="mbn-label">Search</span></button>
+      <button class="mbn-item" data-action="auth" aria-label="Open account"><span class="mbn-icon">👤</span><span class="mbn-label">Account</span></button>
+      <button class="mbn-item" data-action="currency" aria-label="Change currency"><span class="mbn-icon">💱</span><span class="mbn-label">Currency</span></button>
+    `;
+    document.body.appendChild(nav);
+
+    // Add bottom padding so nav doesn't cover CTAs
+    const main = document.querySelector('main');
+    if(main) main.style.paddingBottom = "calc(64px + env(safe-area-inset-bottom,0))";
+
+    // Event delegation (works without framework)
+    nav.addEventListener('click', (e) => {
+      const t = e.target.closest('.mbn-item');
+      if(!t) return;
+      e.preventDefault();
+      if(t.dataset.action === 'open-search'){ location.href = '/search'; }
+      if(t.dataset.action === 'auth'){
+        // If your app exposes auth state globally, swap destination accordingly:
+        const isAuthed = !!window.__NA__?.user; // optional global
+        if(isAuthed){
+          const role = window.__NA__?.user?.role || 'user';
+          location.href = role === 'partner' ? '/dashboard/partner' : '/dashboard/user';
+        } else {
+          location.href = '/auth/sign-in';
+        }
+      }
+      if(t.dataset.action === 'currency'){
+        document.documentElement.setAttribute('data-open-currency','1');
+      }
+    }, { passive:false });
+  }
+  window.addEventListener('DOMContentLoaded', ensureBottomNav);
+  window.addEventListener('resize', ensureBottomNav);
+})();
+    </script>
+
     <!-- Quick Reserve Drawer (for listings & mobile) -->
     <div id="bk-drawer" class="bk-drawer" aria-hidden="true" role="dialog" aria-labelledby="bk-title">
       <div class="bk-overlay" data-bk-close></div>

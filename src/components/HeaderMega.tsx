@@ -60,7 +60,7 @@ const { t } = useI18n();
   };
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact">
+    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact hidden lg:block">
       <div className="nav-inner">
         <div className="flex items-center justify-between h-14">
           {/* Left cluster */}
