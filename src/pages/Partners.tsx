@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { MapPin, Users, Calendar, Filter } from "lucide-react";
 import { PARTNERS, EXPERIENCES, type Destination, type Theme } from "@/data/partners";
 import { useI18n } from "@/i18n/I18nProvider";
+import Hero from "@/components/Hero";
 
 const DESTINATIONS: { label: string; value: Destination }[] = [
   { label: "Nairobi", value: "nairobi" },
@@ -105,19 +106,13 @@ export default function Partners() {
   });
   return (
     <main id="site-main">
-      {/* Full-width hero */}
-      <section className="hero-full bg-gradient-to-r from-foreground/90 to-foreground/70" style={{
-        backgroundImage: "url(/src/assets/coastal-forest.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-      }}>
-        <div className="hero-inner text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("partners_title")}</h1>
-          <p className="text-xl text-white/90 max-w-3xl">
-            {t("partners_subtitle")}
-          </p>
-        </div>
-      </section>
+      {/* Use shared Hero component */}
+      <Hero 
+        title={t("partners_title")}
+        subtitle={t("partners_subtitle")}
+        backgroundImage="/src/assets/coastal-forest.jpg"
+        showStats={false}
+      />
 
       <div className="max-w-7xl mx-auto px-4 py-10">
         {/* Search and filters header */}

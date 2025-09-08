@@ -289,6 +289,9 @@ button, .btn, .button, [role="button"],
   font-weight: bold;
   transition: background-color 0.2s;
 }
+/* =========================== HERO SECTIONS =========================== */
+/* Responsive hero sections with proper sizing */
+
 /* Full-bleed hero wrapper - CRITICAL for all pages */
 .hero-full {
   width: 100vw !important;
@@ -297,10 +300,124 @@ button, .btn, .button, [role="button"],
   padding: 0 !important;
   position: relative;
 }
-.hero-full .hero-inner {   /* text/content remains aligned to site container */
+
+/* Base hero styling */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 62vh; /* desktop default */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.hero-inner {   
   max-width: 1150px;
   margin: 0 auto;
-  padding: 12vh 24px;      /* Reduced responsive top/bottom padding with side padding */
+  padding: 4rem 1.5rem; /* More consistent padding */
+  position: relative;
+  z-index: 10;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .hero { 
+    min-height: 58vh; 
+  }
+  .hero-inner {
+    padding: 3rem 1.5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero { 
+    min-height: 48vh; /* shrink mobile height */
+  }
+  .hero-inner {
+    padding: 2.5rem 1rem;
+  }
+}
+
+/* Optional: per-page tweak via data-attr */
+[data-hero="compact"] .hero { 
+  min-height: 42vh; 
+}
+
+/* =========================== MOBILE NAVIGATION =========================== */
+/* Mobile bottom navigation */
+.mobile-bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  backdrop-filter: saturate(180%) blur(12px);
+  background: hsl(var(--background) / 0.95);
+  border-top: 1px solid hsl(var(--border));
+  z-index: 1000;
+}
+
+@media (min-width: 1025px) {
+  .mobile-bottom-nav {
+    display: none;
+  }
+}
+
+/* Add bottom padding to main content to prevent overlap */
+main {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
+}
+
+@media (min-width: 1025px) {
+  main {
+    padding-bottom: 0;
+  }
+}
+
+/* Mobile bottom nav button styling */
+.mobile-bottom-nav .nav-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  color: hsl(var(--muted-foreground));
+  transition: color 0.2s;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.mobile-bottom-nav .nav-button:hover,
+.mobile-bottom-nav .nav-button.active {
+  color: hsl(var(--primary));
+}
+
+.mobile-bottom-nav .nav-button .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Compact mobile header */
+@media (max-width: 1024px) {
+  .header-compact {
+    height: 56px;
+  }
+  
+  .header-compact .nav-inner {
+    padding: 0 1rem;
+  }
+  
+  /* Hide secondary navigation items on mobile */
+  .header-compact .nav-secondary {
+    display: none;
+  }
 }
 
 /* Responsive section padding utilities */

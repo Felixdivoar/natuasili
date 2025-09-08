@@ -159,14 +159,15 @@ const { t } = useI18n();
 
           {/* Right cluster */}
           <div className="flex items-center gap-3">
+            {/* Desktop/tablet items that should be hidden on mobile */}
             <div className="hidden md:block">
               <CurrencySelector />
             </div>
             
             <LanguageSwitcher />
 
-            {/* AI Search */}
-            <div className="relative" ref={searchRef}>
+            {/* AI Search - hidden on mobile (in bottom nav instead) */}
+            <div className="relative hidden lg:block" ref={searchRef}>
               <Button
                 variant="ghost"
                 size="sm"
@@ -282,20 +283,20 @@ const { t } = useI18n();
               </>
             )}
 
-            {/* Partner CTA */}
+            {/* Partner CTA - keep visible but smaller on mobile */}
             <Link to="/partner-entry">
               <Button size="sm" className="bg-primary hover:bg-primary-hover">
                 <span className="hidden sm:inline">{t("nav_partner")}</span>
-                <span className="sm:hidden">Partner</span>
+                <span className="sm:hidden text-xs">Partner</span>
               </Button>
             </Link>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle - only for nav menu, not bottom nav items */}
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2"
+              className="lg:hidden p-2 ml-2"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>

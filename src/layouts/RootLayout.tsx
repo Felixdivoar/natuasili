@@ -1,17 +1,19 @@
 import { Outlet } from "react-router-dom";
-import Header from "@/components/Header";
+import HeaderMega from "@/components/HeaderMega";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { I18nProvider } from "@/contexts/I18nContext";
 
 export default function RootLayout() {
   return (
     <I18nProvider>
       <div className="min-h-dvh flex flex-col">
-        <Header />
+        <HeaderMega />
         <main className="flex-1 page-content">
           <Outlet />
         </main>
         <Footer />
+        <MobileBottomNav />
       </div>
     </I18nProvider>
   );
