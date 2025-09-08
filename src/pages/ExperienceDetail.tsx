@@ -18,6 +18,7 @@ import RelatedExperiences from "@/components/RelatedExperiences";
 import ReviewSection from "@/components/ReviewSection";
 import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
 import NewAuthModal from "@/components/NewAuthModal";
+import InteractiveMap from "@/components/InteractiveMap";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -600,12 +601,11 @@ const ExperienceDetail = () => {
                 <MapPin className="h-5 w-5 text-primary" />
                 <span className="font-medium">{experience.locationText}</span>
               </div>
-              <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-                <div className="text-center text-muted-foreground">
-                  <MapPin className="h-8 w-8 mx-auto mb-2" />
-                  <p>{t('mapComingSoon', 'Interactive map coming soon')}</p>
-                </div>
-              </div>
+              <InteractiveMap 
+                location={experience.locationText || "Giraffe Centre, Duma Road, Nairobi, Kenya"}
+                coordinates={experience.slug === "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew" ? [36.7378, -1.2921] : [36.8219, -1.2921]}
+                height="h-64"
+              />
             </div>
           </section>
 
