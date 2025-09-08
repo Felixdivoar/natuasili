@@ -12,7 +12,7 @@ import { CheckCircle, MapPin, Users, Calendar, Mail, Phone, User, ArrowLeft } fr
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCart } from "@/contexts/CartContext";
 import { useI18n } from "@/contexts/I18nContext";
-import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { isValidBookingDate, validateBookingDate } from "@/utils/time";
 import { saveReceipt } from "@/lib/receipt";
@@ -30,7 +30,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   const { cart, updateCart } = useCart();
   const { t } = useI18n();
   const { toast } = useToast();
-  const { user } = useSimpleAuth();
+  const { user, profile } = useAuth();
   
   const [currentStep, setCurrentStep] = useState(2); // Start at Step 2 (Contact)
   const [formData, setFormData] = useState({
@@ -46,18 +46,28 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
   // Auto-fill user profile data on modal open
   useEffect(() => {
-    if (isOpen && user) {
-      // Use simplified user object properties
-      const fullName = user.fullName || formData.name;
-      const email = user.email || formData.email;
+    if (isOpen && user && profile) {
+      console.log('🔄 Auto-filling user data:', { user: !!user, profile: !!profile });
+      
+      // Extract full name from profile
+      const fullName = profile.first_name && profile.last_name 
+        ? `${profile.first_name} ${profile.last_name}`.trim()
+        : profile.first_name || profile.last_name || '';
       
       setFormData(prev => ({
         ...prev,
-        name: fullName,
-        email: email,
+        name: fullName || prev.name,
+        email: profile.email || prev.email,
+        phone: profile.phone || prev.phone,
       }));
+      
+      console.log('🔄 Form data updated with:', { 
+        name: fullName, 
+        email: profile.email, 
+        phone: profile.phone 
+      });
     }
-  }, [isOpen, user]);
+  }, [isOpen, user, profile]);
 
   const updateFormData = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -249,409 +259,276 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden">
-        <DialogHeader>
+      <DialogContent className="max-w-4xl w-full mx-4 max-h-[95vh] overflow-hidden flex flex-col">
+        <DialogHeader className="flex-shrink-0 pb-4">
           <DialogTitle className="text-xl font-bold">
             {t('bookYourExperience', 'Book Your Experience')}
           </DialogTitle>
         </DialogHeader>
         
-        <div className="grid lg:grid-cols-3 gap-6 overflow-y-auto">
-          {/* Left side - Steps */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Progress Steps */}
-            <div className="flex items-center justify-center gap-4 mb-6">
-              {steps.map((step, index) => (
-                <React.Fragment key={step.number}>
-                  <div className="flex items-center gap-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                      step.completed || currentStep === step.number
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-muted-foreground'
-                    }`}>
-                      {step.completed ? <CheckCircle className="h-4 w-4" /> : step.number}
+        <div className="flex-1 overflow-y-auto">
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* Left side - Steps */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Progress Steps */}
+              <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
+                {steps.map((step, index) => (
+                  <React.Fragment key={step.number}>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 ${
+                        step.completed || currentStep === step.number
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground'
+                      }`}>
+                        {step.completed ? <CheckCircle className="h-4 w-4" /> : step.number}
+                      </div>
+                      <span className={`text-sm font-medium truncate ${
+                        step.completed || currentStep === step.number 
+                          ? 'text-foreground' 
+                          : 'text-muted-foreground'
+                      }`}>
+                        {step.title}
+                      </span>
                     </div>
-                    <span className={`text-sm font-medium ${
-                      step.completed || currentStep === step.number 
-                        ? 'text-foreground' 
-                        : 'text-muted-foreground'
-                    }`}>
-                      {step.title}
-                    </span>
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className={`h-px w-8 ${
-                      step.completed ? 'bg-primary' : 'bg-muted'
-                    }`} />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            {/* Step 2: Contact */}
-            {currentStep === 2 && (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold">{t('contactInformation', 'Contact Information')}</h3>
-                  <p className="text-sm text-muted-foreground">We'll use this to send your booking confirmation and updates.</p>
-                </div>
-                
-                {/* Selected details summary with edit option */}
-                <Card className="bg-muted/50">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-medium">Selected details</h4>
-                      <Button variant="outline" size="sm" onClick={handleEditDetails}>
-                        <ArrowLeft className="h-4 w-4 mr-1" />
-                        Edit
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <span>{cart.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                        <span>{cart.adults + cart.children} people</span>
-                      </div>
-                      <div className="col-span-2">
-                        <Badge variant="secondary">{cart.optionId === 'premium' ? 'Premium Experience' : 'Standard Experience'}</Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name">{t('fullName', 'Full Name')} *</Label>
-                    <Input 
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => updateFormData('name', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="email">{t('email', 'Email')} *</Label>
-                    <Input 
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => updateFormData('email', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="phone">{t('phone', 'Phone Number')} *</Label>
-                    <Input 
-                      id="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => updateFormData('phone', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="mobility">{t('mobilityAssistance', 'Mobility Assistance')}</Label>
-                    <Select value={formData.mobility} onValueChange={(value) => updateFormData('mobility', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t('selectOption', 'Select option')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">{t('noAssistance', 'No assistance needed')}</SelectItem>
-                        <SelectItem value="walking">{t('walkingAid', 'Walking aid')}</SelectItem>
-                        <SelectItem value="wheelchair">{t('wheelchair', 'Wheelchair')}</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="requests">{t('specialRequests', 'Special Requests')}</Label>
-                  <Textarea 
-                    id="requests"
-                    value={formData.specialRequests}
-                    onChange={(e) => updateFormData('specialRequests', e.target.value)}
-                    placeholder={t('specialRequestsPlaceholder', 'Any special requirements or requests...')}
-                    rows={3}
-                  />
-                </div>
-
-                {/* Optional Donation Section */}
-                <Card className="bg-gradient-to-r from-green-50/50 to-emerald-50/50 border-green-200/50">
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">+</span>
-                        </div>
-                        <h4 className="font-medium text-green-800">{t('addDonation', 'Add a donation (optional)')}</h4>
-                      </div>
-                      <p className="text-xs text-green-700">
-                        {t('donationDescription', '100% of your donation goes directly to conservation initiatives (minus transfer charges).')}
-                      </p>
-                      <div className="flex items-center gap-2">
-                        <Label htmlFor="donation" className="text-sm font-medium text-green-800">KES</Label>
-                        <Input
-                          id="donation"
-                          type="number"
-                          min="0"
-                          step="50"
-                          value={formData.donation || ''}
-                          onChange={(e) => updateFormData('donation', parseInt(e.target.value) || 0)}
-                          placeholder="0"
-                          className="w-24 border-green-200 focus:border-green-400"
-                        />
-                        <span className="text-xs text-green-600">Optional</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="flex justify-end">
-                  <Button onClick={handleNextStep} disabled={!validateStep2()}>
-                    {t('continue', 'Continue')}
-                  </Button>
-                </div>
+                    {index < steps.length - 1 && (
+                      <div className={`h-px w-4 sm:w-8 flex-shrink-0 ${
+                        step.completed ? 'bg-primary' : 'bg-muted'
+                      }`} />
+                    )}
+                  </React.Fragment>
+                ))}
               </div>
-            )}
 
-            {/* Step 3: Confirm (inline confirmation) */}
-            {currentStep === 3 && (
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">{t('confirmBooking', 'Confirm your booking')}</h3>
-                
-                {/* Booking Summary */}
-                <Card>
-                  <CardContent className="p-6 space-y-4">
-                    <h4 className="font-medium text-lg">{t('bookingSummary', 'Booking Summary')}</h4>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <h5 className="font-medium text-base">{experience.title}</h5>
-                        <div className="grid grid-cols-2 gap-4 text-sm mt-2">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="h-4 w-4 text-muted-foreground" />
-                            <span>{cart.date}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Users className="h-4 w-4 text-muted-foreground" />
-                            <span>{cart.adults + cart.children} people</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <User className="h-4 w-4 text-muted-foreground" />
-                            <span>{formData.name}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Mail className="h-4 w-4 text-muted-foreground" />
-                            <span>{formData.email}</span>
-                          </div>
+              {/* Step 2: Contact */}
+              {currentStep === 2 && (
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold">{t('contactInformation', 'Contact Information')}</h3>
+                    <p className="text-sm text-muted-foreground">We'll use this to send your booking confirmation and updates.</p>
+                  </div>
+                  
+                  {/* Selected details summary with edit option */}
+                  <Card className="bg-muted/50">
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-medium">Selected details</h4>
+                        <Button variant="outline" size="sm" onClick={handleEditDetails}>
+                          <ArrowLeft className="h-4 w-4 mr-1" />
+                          Edit
+                        </Button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <span>{cart.date}</span>
                         </div>
-                        <div className="mt-2">
-                          <Badge variant="secondary">
-                            {cart.optionId === 'premium' ? 'Premium Experience' : 'Standard Experience'}
-                          </Badge>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-muted-foreground" />
+                          <span>{cart.adults + cart.children} people</span>
+                        </div>
+                        <div className="col-span-2">
+                          <Badge variant="secondary">{cart.optionId === 'premium' ? 'Premium Experience' : 'Standard Experience'}</Badge>
                         </div>
                       </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="name">{t('fullName', 'Full Name')} *</Label>
+                      <Input 
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => updateFormData('name', e.target.value)}
+                        required
+                        className="mt-1"
+                      />
+                    </div>
 
-                      {/* Price Summary */}
-                      <div className="border-t pt-4 space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>
-                            {cart.adults > 0 && `${formatPrice(cart.unitPrice)} × ${cart.adults} adults`}
-                            {cart.adults > 0 && cart.children > 0 && " + "}
-                            {cart.children > 0 && `${formatPrice(cart.childPrice)} × ${cart.children} children`}
-                          </span>
-                          <span>{formatPrice(cart.subtotal)}</span>
-                        </div>
-                        {formData.donation > 0 && (
-                          <div className="flex justify-between text-sm text-green-600">
-                            <span>Optional donation</span>
-                            <span>{formatPrice(formData.donation)}</span>
+                    <div>
+                      <Label htmlFor="email">{t('email', 'Email')} *</Label>
+                      <Input 
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => updateFormData('email', e.target.value)}
+                        required
+                        className="mt-1"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="phone">{t('phone', 'Phone Number')} *</Label>
+                      <Input 
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => updateFormData('phone', e.target.value)}
+                        required
+                        className="mt-1"
+                        placeholder="+254 700 000 000"
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="mobility">{t('mobilityAssistance', 'Mobility Assistance')}</Label>
+                      <Select value={formData.mobility} onValueChange={(value) => updateFormData('mobility', value)}>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder={t('selectOption', 'Select option')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">{t('noAssistance', 'No assistance needed')}</SelectItem>
+                          <SelectItem value="walking">{t('walkingAid', 'Walking aid')}</SelectItem>
+                          <SelectItem value="wheelchair">{t('wheelchair', 'Wheelchair')}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="requests">{t('specialRequests', 'Special Requests')}</Label>
+                    <Textarea 
+                      id="requests"
+                      value={formData.specialRequests}
+                      onChange={(e) => updateFormData('specialRequests', e.target.value)}
+                      placeholder={t('specialRequestsPlaceholder', 'Any special requirements or requests...')}
+                      rows={3}
+                      className="mt-1"
+                    />
+                  </div>
+
+                  {/* Optional Donation Section */}
+                  <Card className="bg-gradient-to-r from-green-50/50 to-emerald-50/50 border-green-200/50">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">+</span>
                           </div>
-                        )}
-                        <div className="space-y-1 text-xs text-muted-foreground">
+                          <h4 className="font-medium text-green-800">{t('addDonation', 'Add a donation (optional)')}</h4>
+                        </div>
+                        <p className="text-xs text-green-700">
+                          {t('donationDescription', '100% of your donation goes directly to conservation initiatives (minus transfer charges).')}
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="donation" className="text-sm font-medium text-green-800">KES</Label>
+                          <Input
+                            id="donation"
+                            type="number"
+                            min="0"
+                            step="50"
+                            value={formData.donation || ''}
+                            onChange={(e) => updateFormData('donation', parseInt(e.target.value) || 0)}
+                            placeholder="0"
+                            className="w-24 border-green-200 focus:border-green-400"
+                          />
+                          <span className="text-xs text-green-600">Optional</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <div className="flex justify-end">
+                    <Button onClick={handleNextStep} disabled={!validateStep2()}>
+                      {t('continue', 'Continue')}
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3: Confirm */}
+              {currentStep === 3 && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">{t('confirmBooking', 'Confirm your booking')}</h3>
+                  
+                  {/* Terms and Conditions */}
+                  <Card>
+                    <CardContent className="p-6 space-y-4">
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="terms"
+                          checked={formData.agreeTerms}
+                          onCheckedChange={(checked) => updateFormData('agreeTerms', checked)}
+                        />
+                        <Label htmlFor="terms" className="text-sm leading-relaxed">
+                          I agree to the{' '}
+                          <a href="/terms" target="_blank" className="text-primary hover:underline">
+                            terms and conditions
+                          </a>{' '}
+                          and{' '}
+                          <a href="/privacy-policy" target="_blank" className="text-primary hover:underline">
+                            privacy policy
+                          </a>
+                        </Label>
+                      </div>
+                      
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="marketing"
+                          checked={formData.marketingOptIn}
+                          onCheckedChange={(checked) => updateFormData('marketingOptIn', checked)}
+                        />
+                        <Label htmlFor="marketing" className="text-sm leading-relaxed">
+                          {t('marketingOptIn', 'I would like to receive updates about conservation impact and future experiences (optional)')}
+                        </Label>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {impactSummary && (
+                    <Card className="bg-gradient-to-r from-green-50/50 to-emerald-50/50 border-green-200/50">
+                      <CardContent className="p-6">
+                        <h4 className="font-semibold text-green-800 mb-3">{t('yourImpact', 'Your conservation impact')}</h4>
+                        <div className="space-y-2 text-sm text-green-700">
                           <div className="flex justify-between">
                             <span>Partner initiatives (90% + donations)</span>
-                            <span>{formatPrice(cart.split.partner90 + (formData.donation || 0))}</span>
+                            <span className="font-medium">{formatPrice(impactSummary.numbers.partner)}</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Platform & operations (10%)</span>
-                            <span>{formatPrice(cart.split.platform10)}</span>
+                            <span className="font-medium">{formatPrice(impactSummary.numbers.platform)}</span>
                           </div>
                         </div>
-                        <div className="flex justify-between font-semibold text-lg pt-2 border-t">
-                          <span>Total</span>
-                          <span>{formatPrice(cart.subtotal + (formData.donation || 0))}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                      </CardContent>
+                    </Card>
+                  )}
 
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="terms"
-                      checked={formData.agreeTerms}
-                      onCheckedChange={(checked) => updateFormData('agreeTerms', checked)}
-                    />
-                    <Label htmlFor="terms" className="text-sm">
-                      {t('agreeTerms', 'I agree to the')}{' '}
-                      <a href="/terms" className="text-primary hover:underline">
-                        {t('termsConditions', 'Terms & Conditions')}
-                      </a>{' '}
-                      {t('and', 'and')}{' '}
-                      <a href="/privacy-policy" className="text-primary hover:underline">
-                        {t('privacyPolicy', 'Privacy Policy')}
-                      </a>
-                    </Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="marketing"
-                      checked={formData.marketingOptIn}
-                      onCheckedChange={(checked) => updateFormData('marketingOptIn', checked)}
-                    />
-                    <Label htmlFor="marketing" className="text-sm text-muted-foreground">
-                      {t('marketingOptIn', 'I would like to receive updates and special offers')}
-                    </Label>
+                  <div className="flex justify-end gap-3">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setCurrentStep(2)}
+                      disabled={isProcessingPayment}
+                    >
+                      {t('back', 'Back')}
+                    </Button>
+                    <Button 
+                      onClick={handleConfirmBooking} 
+                      disabled={!validateStep3() || isProcessingPayment}
+                      className="min-w-[120px]"
+                    >
+                      {isProcessingPayment ? t('processing', 'Processing...') : t('confirmAndPay', 'Confirm & Pay')}
+                    </Button>
                   </div>
                 </div>
+              )}
+            </div>
 
-                <div className="flex justify-between">
-                  <Button variant="outline" onClick={() => setCurrentStep(2)}>
-                    {t('back', 'Back')}
-                  </Button>
-                  <Button 
-                    onClick={handleConfirmBooking} 
-                    disabled={!validateStep3() || isProcessingPayment || !validateBookingData().isValid}
-                  >
-                    {isProcessingPayment ? 'Processing...' : t('payWithPesapal', 'Pay with Pesapal')}
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Success (inline) */}
-            {currentStep === 4 && (
-              <div className="space-y-6 text-center">
-                <div className="space-y-4">
-                  <CheckCircle className="h-16 w-16 text-green-600 mx-auto" />
-                  <h3 className="text-2xl font-bold text-green-600">
-                    {t('bookingConfirmed', 'Booking Confirmed!')}
-                  </h3>
-                </div>
-
-                <Card>
-                  <CardContent className="p-6 space-y-4">
-                    <h4 className="font-medium text-lg">What you booked</h4>
-                    <div className="text-left space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span>Experience:</span>
-                        <span className="font-medium">{experience.title}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Date:</span>
-                        <span>{cart.date}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Participants:</span>
-                        <span>{cart.adults + cart.children} {cart.adults + cart.children === 1 ? 'person' : 'people'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Option:</span>
-                        <span>{cart.optionId === 'premium' ? 'Premium' : 'Standard'}</span>
-                      </div>
-                      <div className="flex justify-between border-t pt-2 font-semibold">
-                        <span>Total paid:</span>
-                        <span>{formatPrice(cart.subtotal + (formData.donation || 0))}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg text-left">
-                  <h4 className="font-medium mb-2">What to expect next:</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• You'll receive a confirmation email with your booking details, meeting point/pickup info, and contact numbers.</li>
-                    <li>• A second email will include your impact receipt after the experience.</li>
-                    <li>• Our partner will contact you 24 hours before your experience with final details.</li>
-                  </ul>
-                </div>
-
-                {impactSummary && (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-left">
-                    <h4 className="font-medium mb-2">Your impact:</h4>
-                    <div className="text-sm text-muted-foreground space-y-1">
-                      {impactSummary.lines.map((line, index) => (
-                        <p key={index}>{line}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex gap-3 justify-center">
-                  <Button variant="outline" onClick={onClose}>
-                    Close
-                  </Button>
-                  <Button onClick={() => window.location.href = '/traveler-dashboard'}>
-                    View Booking
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Right side - Price Summary & Experience Card */}
-          <div className="space-y-4">
-            {/* Experience Card */}
-            <Card>
-              <CardContent className="p-4">
-                <div className="aspect-video bg-muted rounded-lg mb-3 overflow-hidden">
-                  <img 
-                    src={experience.heroImage || experience.images?.[0] || experience.gallery?.[0] || '/images/placeholder-1.jpg'} 
-                    alt={experience.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h4 className="font-semibold text-sm">{experience.title}</h4>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                  <MapPin className="h-3 w-3" />
-                  <span>{experience.location || 'Kenya'}</span>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Badge variant="outline" className="text-xs mt-2">
-                    {experience.theme || 'Conservation'}
-                  </Badge>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Price Summary */}
-            <Card>
-              <CardContent className="p-4 space-y-3">
-                <h4 className="font-semibold">Price Summary</h4>
+            {/* Right side - Summary */}
+            <Card className="lg:col-span-1 h-fit sticky top-0">
+              <CardContent className="p-4 space-y-4">
+                <h4 className="font-medium text-lg">{t('pricingSummary', 'Your booking')}</h4>
                 
-                <div className="space-y-2 text-sm">
-                  {cart.adults > 0 && (
-                    <div className="flex justify-between">
-                      <span>{formatPrice(cart.unitPrice)} × {cart.adults} adults</span>
-                      <span>{formatPrice(cart.unitPrice * cart.adults)}</span>
-                    </div>
-                  )}
-                  {cart.children > 0 && (
-                    <div className="flex justify-between">
-                      <span>{formatPrice(cart.childPrice)} × {cart.children} children</span>
-                      <span>{formatPrice(cart.childPrice * cart.children)}</span>
-                    </div>
-                  )}
-                  {formData.donation > 0 && (
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span>{cart.adults + cart.children} people × {cart.date}</span>
+                  </div>
+                  
+                  <div className="flex justify-between">
+                    <span>Experience fee</span>
+                    <span>{formatPrice(cart.subtotal)}</span>
+                  </div>
+                  
+                  {(formData.donation && formData.donation > 0) && (
                     <div className="flex justify-between text-green-600">
                       <span>Optional donation</span>
                       <span>{formatPrice(formData.donation)}</span>
