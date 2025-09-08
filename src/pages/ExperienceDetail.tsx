@@ -609,41 +609,6 @@ const ExperienceDetail = () => {
             </div>
           </section>
 
-          {/* What's included */}
-          <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('whatsIncluded', 'What\'s included')}</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
-                  {t('included', 'Included')}
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>• Expert local guide and conservationist</li>
-                  <li>• All necessary equipment and materials</li>
-                  <li>• Transportation to/from location</li>
-                  <li>• Local community lunch</li>
-                  <li>• Conservation education materials</li>
-                  <li>• Certificate of participation</li>
-                  <li>• Direct conservation contribution</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <XCircle className="h-5 w-5 text-red-600" />
-                  {t('notIncluded', 'Not included')}
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li>• Personal travel insurance</li>
-                  <li>• Additional meals and drinks</li>
-                  <li>• Personal items and souvenirs</li>
-                  <li>• Tips for guides (optional)</li>
-                  <li>• Photography equipment</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
           {/* Important information */}
           <section>
             <h2 className="text-2xl font-bold text-foreground mb-6">{t('importantInfo', 'Important information')}</h2>
