@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import BookingWizardNew from "@/components/BookingWizardNew";
-import BookingButton from "@/components/BookingButton";
+import BookNowButton from "@/components/BookNowButton";
 import RelatedExperiences from "@/components/RelatedExperiences";
 import ReviewSection from "@/components/ReviewSection";
 import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
@@ -560,12 +560,12 @@ const ExperienceDetail = () => {
                   <div className="text-sm text-muted-foreground">from</div>
                   <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
                 </div>
-                <BookingButton 
-                  onClick={handleBookNowClick}
+                <BookNowButton 
+                  href={user ? "#booking" : "#auth"}
+                  label={!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
+                  onTap={handleBookNowClick}
                   className="px-6 py-3"
-                >
-                  {!user ? 'Sign in to Book' : t('bookNow', 'Book Now')}
-                </BookingButton>
+                />
               </div>
             </div>
           </div>
@@ -582,13 +582,12 @@ const ExperienceDetail = () => {
                 <div className="text-sm text-muted-foreground">from</div>
                 <div className="text-xl font-bold">{formatPrice(experience.priceKESAdult)}</div>
               </div>
-              <BookingButton 
-                onClick={handleBookNowClick}
+              <BookNowButton 
+                href={user ? "#booking" : "#auth"}
+                label={!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
+                onTap={handleBookNowClick}
                 className="flex-1"
-                size="lg"
-              >
-                {!user ? 'Sign in to Book' : bookingStarted ? 'Continue Booking' : t('bookNow', 'Book Now')}
-              </BookingButton>
+              />
             </div>
           </div>
         </>

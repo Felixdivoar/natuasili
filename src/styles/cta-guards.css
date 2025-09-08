@@ -1,0 +1,137 @@
+/* CTA Guards - Prevent overlays from blocking Book Now buttons */
+
+/* Never let overlays block CTA taps */
+.book-now { 
+  position: relative; 
+  z-index: 50 !important;
+  pointer-events: auto !important;
+}
+
+/* Typical blockers: sticky headers, hero masks, carousels, cookie bars */
+.header-overlay,
+.hero-mask,
+.carousel-shield,
+.cookie-bar,
+.backdrop,
+.overlay {
+  /* allow clicks to pass through by default */
+  pointer-events: none;
+}
+
+/* Re-enable pointer events on their actual controls only */
+.cookie-bar .btn,
+.cookie-bar button,
+.header-overlay [role="button"],
+.header-overlay button,
+.header-overlay a { 
+  pointer-events: auto; 
+}
+
+/* Kill problematic display:contents (breaks links on Safari) on key wrappers */
+@media (max-width: 1024px) {
+  .cta-wrapper[style*="display: contents"],
+  .cta-wrapper.contents,
+  .book-now:where(*) { 
+    display: inline-flex !important; 
+  }
+}
+
+/* Avoid transform stacking contexts above the CTA */
+@media (max-width: 1024px) {
+  .header-overlay, 
+  .hero-mask, 
+  .carousel-shield {
+    transform: none !important;
+  }
+}
+
+/* Ensure tap targets are big enough for mobile */
+.book-now { 
+  min-height: 44px; 
+  min-width: 44px; 
+}
+
+/* Mobile/tablet specific enhancements */
+@media (max-width: 1024px) {
+  /* All booking buttons - ensure they're always clickable */
+  .book-now,
+  button[data-action="proceed"],
+  button[id*="continue"],
+  button[id*="book"],
+  .btn-book-now,
+  .btn-continue,
+  button:has-text("Continue"),
+  button:has-text("Book"),
+  [aria-label*="Book"],
+  [aria-label*="Continue"] {
+    min-height: 48px !important;
+    min-width: 48px !important;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 50 !important;
+    cursor: pointer !important;
+  }
+
+  /* Remove any potential overlay blocking */
+  .overlay, 
+  .backdrop,
+  .modal-backdrop {
+    pointer-events: none !important;
+  }
+
+  /* Ensure card buttons are above overlays */
+  .card button, 
+  .card-content button, 
+  .card-body button {
+    position: relative !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Fix availability section buttons specifically */
+  .availability-section button,
+  #availability button,
+  .availability-section .btn {
+    min-height: 48px !important;
+    touch-action: manipulation !important;
+    pointer-events: auto !important;
+    z-index: 30 !important;
+    position: relative !important;
+  }
+
+  /* Sticky booking bars should always be above everything */
+  .mobile-sticky-booking,
+  .sticky-book-now {
+    z-index: 100 !important;
+    pointer-events: auto !important;
+  }
+
+  .mobile-sticky-booking .book-now,
+  .sticky-book-now .book-now {
+    z-index: 101 !important;
+  }
+}
+
+/* Prevent nested interactive elements that break iOS Safari */
+.book-now button,
+.book-now a,
+button .book-now,
+a .book-now {
+  /* If there are nested interactive elements, flatten them */
+  display: contents;
+}
+
+/* Ensure proper stacking context */
+.book-now {
+  /* Create a new stacking context */
+  isolation: isolate;
+}
+
+/* Debug mode - uncomment to highlight tap areas */
+/*
+.book-now {
+  outline: 2px solid rgba(255, 0, 0, 0.5) !important;
+  background-color: rgba(255, 0, 0, 0.1) !important;
+}
+*/

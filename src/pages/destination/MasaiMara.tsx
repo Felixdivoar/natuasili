@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PARTNERS, EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import BookNowButton from "@/components/BookNowButton";
 
 const masaiMaraDestination = "/lovable-uploads/e6151cde-ba00-40f3-9644-e9e41db45d3c.png";
 
@@ -205,11 +206,10 @@ const MasaiMaraDestination = () => {
                       <Users className="h-4 w-4 mr-1" />
                       8 max
                     </div>
-                    <Button size="sm" asChild>
-                      <Link to={`/experience/${experience.slug}`}>
-                        Book Now
-                      </Link>
-                    </Button>
+                    <BookNowButton 
+                      href={`/experience/${experience.slug}`}
+                      label="Book Now"
+                    />
                   </div>
                 </CardContent>
               </Card>
