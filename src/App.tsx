@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SimpleAuthProvider } from "@/contexts/SimpleAuthContext";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { useEffect } from "react";
 import CookieBanner from "@/components/CookieBanner";
@@ -89,13 +90,14 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <CurrencyProvider>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <CookieBanner />
-              <ScrollToTop />
+          <AuthProvider>
+            <SimpleAuthProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <CookieBanner />
+                  <ScrollToTop />
               <Routes>
                 <Route path="/" element={<AppLayout><Index /></AppLayout>} />
                 <Route path="/marketplace" element={<AppLayout><Browse /></AppLayout>} />
@@ -161,10 +163,11 @@ const App = () => (
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
-        </AuthProvider>
-      </CurrencyProvider>
-    </I18nProvider>
-  </QueryClientProvider>
+        </SimpleAuthProvider>
+      </AuthProvider>
+    </CurrencyProvider>
+  </I18nProvider>
+</QueryClientProvider>
 </ErrorBoundary>
 );
 
