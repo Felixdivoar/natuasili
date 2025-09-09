@@ -471,6 +471,70 @@ JXFP+M4 Watamu`,
     sourceUrl: "https://natuasili.com/st_tour/ocean-conservation-day-watamu/",
   },
   {
+    title: "Dive into coral conservation with REEFolution",
+    id: "exp-reefolution-coral",
+    slug: P("Dive into coral conservation with REEFolution"),
+    partner: "Reefolution",
+    destination: "coastal-kenya",
+    themes: ["Wildlife conservation"],
+    activities: ["diving", "coral", "conservation"],
+    images: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png"],
+    heroImage: "/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png",
+    gallery: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png"],
+    description: `Overview
+REEFolution is dedicated to coral reef restoration and marine conservation along Kenya's coast. Join our immersive coral conservation experience to learn about reef ecosystems, participate in restoration activities, and discover how local communities are working to protect these vital marine habitats.
+
+Through hands-on activities including coral planting, reef monitoring, and marine debris cleanup, participants gain deep insights into coral ecology while contributing directly to conservation efforts. This experience combines education with action, making it perfect for divers and non-divers alike who want to make a tangible impact on marine conservation.
+
+Highlights
+• Learn about coral reef ecosystems and their critical role in marine biodiversity
+• Participate in hands-on coral restoration activities
+• Experience sustainable marine conservation practices in action
+• Support community-based marine conservation initiatives
+
+Included/Excluded
+• Professional marine conservation guide
+• All necessary equipment for conservation activities
+• Educational materials and reef identification guides
+• Personal expenses
+• Diving certification (for advanced activities)
+• Accommodation and meals
+• Transportation to/from site
+
+What to expect
+Coral Conservation Experience
+o Begin with an educational briefing about coral reef ecosystems, threats facing reefs, and restoration techniques
+o Participate in hands-on coral planting or reef monitoring activities under expert guidance
+o Learn to identify different coral species and marine life while snorkeling in protected reef areas
+o Engage with local community members involved in marine conservation efforts
+o Contribute to data collection for ongoing reef health monitoring programs
+
+Durations
+4 hours
+
+Languages
+English, Kiswahili
+
+Frequently asked questions
+Do I need diving experience?
+Basic swimming skills are required, but diving certification is not necessary for most activities. Snorkeling equipment is provided.
+
+What is the best time to visit?
+Year-round, but visibility is typically best during dry seasons (December-March, June-October).
+
+How does my participation help conservation?
+Your participation directly supports coral restoration efforts and provides funding for ongoing marine conservation programs.
+
+Where you'll be
+Coastal Kenya, Diani Beach area`,
+    priceKESAdult: 4500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Coastal Kenya, Diani Beach",
+    partnerSlug: "reefolution",
+    sourceUrl: "https://natuasili.com/st_tour/dive-into-coral-conservation-with-reefolution/",
+  },
+  {
     title: "Tree Walk: Discover Kenya's forest heritage",
     id: "exp-tree-walk-heritage",
     slug: P("Tree Walk Kenya Forest Heritage"),
