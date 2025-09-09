@@ -133,11 +133,11 @@ const TravelerDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
                   <p className="text-muted-foreground">Manage your conservation journey and track your impact</p>
                 </div>
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 bg-muted/50 p-1 rounded-xl">
-                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Overview</TabsTrigger>
-                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Bookings</TabsTrigger>
-                  <TabsTrigger value="wishlist" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Wishlist</TabsTrigger>
-                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Impact</TabsTrigger>
+                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 sm:grid sm:grid-cols-4">
+                  <TabsTrigger value="overview" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Overview</TabsTrigger>
+                  <TabsTrigger value="bookings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Bookings</TabsTrigger>
+                  <TabsTrigger value="wishlist" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Wishlist</TabsTrigger>
+                  <TabsTrigger value="impact" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Impact</TabsTrigger>
                 </TabsList>
               </div>
 

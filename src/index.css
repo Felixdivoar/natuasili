@@ -3251,3 +3251,14 @@ button[disabled] {
 @media (max-width:1024px){ .bk-inline{ display:none; } }
 
 /* ===== End Global Spacing & Responsive Improvements ===== */
+
+/* Scrollbar hide utility for horizontal tabs */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}

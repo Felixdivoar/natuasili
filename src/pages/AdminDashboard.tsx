@@ -86,12 +86,12 @@ const AdminDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Global Overview</h2>
                   <p className="text-muted-foreground">Real-time platform metrics and conservation impact</p>
                 </div>
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 gap-1 bg-muted/50 p-1 rounded-xl">
-                  <TabsTrigger value="overview" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Overview</TabsTrigger>
-                  <TabsTrigger value="experiences" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Experiences</TabsTrigger>
-                  <TabsTrigger value="bookings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Bookings</TabsTrigger>
-                  <TabsTrigger value="impact" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Impact</TabsTrigger>
-                  <TabsTrigger value="settings" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm">Settings</TabsTrigger>
+                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 sm:grid sm:grid-cols-3 lg:grid-cols-5">
+                  <TabsTrigger value="overview" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Overview</TabsTrigger>
+                  <TabsTrigger value="experiences" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Experiences</TabsTrigger>
+                  <TabsTrigger value="bookings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Bookings</TabsTrigger>
+                  <TabsTrigger value="impact" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Impact</TabsTrigger>
+                  <TabsTrigger value="settings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Settings</TabsTrigger>
                 </TabsList>
               </div>
 
