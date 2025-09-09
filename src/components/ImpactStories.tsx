@@ -72,7 +72,7 @@ const ImpactStories = () => {
                   </div>
                   
                   <CardHeader>
-                    <CardTitle className="text-xl text-black">
+                    <CardTitle className="text-lg text-black">
                       <DynamicTranslated text={story.title} />
                     </CardTitle>
                   </CardHeader>
