@@ -16,10 +16,10 @@ const CarouselControls = () => {
     canScrollNext
   } = useCarousel();
   return <div className="flex justify-center gap-2 mt-8">
-      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollPrev} disabled={!canScrollPrev}>
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-foreground/20 hover:bg-foreground hover:text-background" onClick={scrollPrev} disabled={!canScrollPrev}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollNext} disabled={!canScrollNext}>
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-foreground/20 hover:bg-foreground hover:text-background" onClick={scrollNext} disabled={!canScrollNext}>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>;
@@ -97,7 +97,7 @@ const ConservationPartnersCarousel = () => {
                     
                     <div className="space-y-2">
                       <Link to={`/partner/${partner.slug}`}>
-                        <Button className="w-full bg-conservation hover:bg-conservation/90 text-white">
+                        <Button className="w-full bg-foreground hover:bg-foreground/90 text-background">
                           <Heart className="w-4 h-4 mr-2" />
                           <T k="btn_view_partner" />
                         </Button>
@@ -109,8 +109,8 @@ const ConservationPartnersCarousel = () => {
             ))}
           </CarouselContent>
           <div className="hidden md:block">
-            <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
-            <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
+            <CarouselPrevious className="-left-6 bg-background border-2 border-foreground/20 hover:bg-foreground hover:text-background rounded-full w-12 h-12" />
+            <CarouselNext className="-right-6 bg-background border-2 border-foreground/20 hover:bg-foreground hover:text-background rounded-full w-12 h-12" />
           </div>
           <div className="md:hidden">
             <CarouselControls />
@@ -119,7 +119,7 @@ const ConservationPartnersCarousel = () => {
 
         <div className="text-center mt-8">
           <Link to="/partners">
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="border-foreground/20 hover:bg-foreground hover:text-background">
               <T k="btn_view_all_partners" />
             </Button>
           </Link>
