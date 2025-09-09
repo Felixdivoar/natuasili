@@ -17,10 +17,10 @@ const CarouselControls = () => {
     canScrollNext
   } = useCarousel();
   return <div className="flex justify-center gap-2 mt-8">
-      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollPrev} disabled={!canScrollPrev}>
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 bg-black text-white border-black" onClick={scrollPrev} disabled={!canScrollPrev}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollNext} disabled={!canScrollNext}>
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 bg-black text-white border-black" onClick={scrollNext} disabled={!canScrollNext}>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>;
@@ -49,7 +49,7 @@ const ImpactStories = () => {
             </p>
           </div>
           <Link to="/blog">
-            <Button variant="outline" className="hidden md:block">
+            <Button variant="outline" className="hidden md:block bg-black text-white border-black">
               <T k="btn_view_all_stories" />
             </Button>
           </Link>
@@ -61,19 +61,18 @@ const ImpactStories = () => {
       }} className="w-full">
           <CarouselContent className="-ml-2 md:-ml-4">
             {impactStories.map(story => <CarouselItem key={story.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden h-full">
+                <Card className="group shadow-lg overflow-hidden h-full">
                   <div className="relative aspect-[16/10]">
-                    <img src={story.image} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <img src={story.image} alt={story.title} className="w-full h-full object-cover transition-transform duration-300" />
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-black text-white border-black cursor-pointer">
                         <DynamicTranslated text={story.category} />
                       </Badge>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
                   <CardHeader>
-                    <CardTitle className="text-xl group-hover:text-conservation transition-colors line-clamp-2">
+                    <CardTitle className="text-xl text-black">
                       <DynamicTranslated text={story.title} />
                     </CardTitle>
                   </CardHeader>
@@ -86,7 +85,7 @@ const ImpactStories = () => {
                     
                     
                     <Link to={`/blog/${story.slug}`}>
-                      <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">
+                      <Button variant="outline" className="w-full bg-black text-white border-black">
                         <T k="btn_read_full_story" />
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
@@ -103,7 +102,7 @@ const ImpactStories = () => {
         {/* Mobile View All Button */}
         <div className="text-center mt-8 md:hidden">
           <Link to="/blog">
-            <Button className="bg-conservation hover:bg-conservation/90 text-white">
+            <Button className="bg-black text-white">
               <T k="btn_view_all_impact_stories" />
             </Button>
           </Link>
