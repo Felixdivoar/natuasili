@@ -134,7 +134,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Users className="w-4 h-4 mr-1" />
-            {experience.capacity ? `${t("exp_up_to")} ${experience.capacity} ${t("exp_people")}` : t("exp_no_limit")}
+            {t("exp_up_to")} {experience.capacity} {t("exp_people")}
           </div>
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-1" />

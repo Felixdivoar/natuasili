@@ -55,7 +55,7 @@ export interface Experience {
   currency: string;
   allocation_pct_project: number;
   allocation_pct_platform: number;
-  capacity: number | null;
+  capacity: number;
   visible_on_marketplace: boolean;
   search_text: string;
   created_at: string;
