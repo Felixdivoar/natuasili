@@ -714,14 +714,6 @@ const ExperienceDetail = () => {
             </Accordion>
           </section>
 
-          {/* Duration */}
-          <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Duration</h2>
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-primary" />
-              <span className="text-muted-foreground">{contentSections.duration}</span>
-            </div>
-          </section>
 
           {/* Languages */}
           <section>
