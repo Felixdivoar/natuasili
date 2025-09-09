@@ -27,7 +27,7 @@ interface BookingParams {
   date: string;
   adults: number;
   children: number;
-  option: 'standard' | 'premium';
+  option: 'standard';
 }
 
 interface AvailabilityAndOptionsProps {
@@ -55,7 +55,7 @@ const AvailabilityAndOptions = ({
   const [selectedDate, setSelectedDate] = useState(initialParams?.date || "");
   const [selectedAdults, setSelectedAdults] = useState(initialParams?.adults || 1);
   const [selectedChildren, setSelectedChildren] = useState(initialParams?.children || 0);
-  const [selectedOption, setSelectedOption] = useState<"standard" | "premium">(initialParams?.option || "standard");
+  const [selectedOption, setSelectedOption] = useState<"standard">(initialParams?.option || "standard");
   const [participantsError, setParticipantsError] = useState("");
 
   const basePrice = experience.base_price || experience.priceKESAdult || 350;
@@ -137,8 +137,6 @@ const AvailabilityAndOptions = ({
     const experienceBasePrice = experience.priceKESAdult || experience.base_price || 350;
     const standardAdultPrice = experienceBasePrice;
     const standardChildPrice = experience.childHalfPriceRule ? Math.round(experienceBasePrice * 0.5) : experienceBasePrice;
-    const premiumAdultPrice = Math.round(experienceBasePrice * 1.3); // 30% premium
-    const premiumChildPrice = experience.childHalfPriceRule ? Math.round(premiumAdultPrice * 0.5) : premiumAdultPrice;
 
     return [
       {
@@ -151,19 +149,6 @@ const AvailabilityAndOptions = ({
         startTimes: ["9:00 AM", "2:00 PM"],
         adultPrice: standardAdultPrice,
         childPrice: standardChildPrice,
-        cancellation: "Free cancellation up to 24 hours",
-        payLater: "Reserve now, pay later"
-      },
-      {
-        id: "premium",
-        name: "Premium Experience",
-        description: "Enhanced experience with extended time and exclusive access.",
-        duration: (experience.duration_hours || 3) + 1,
-        language: "English, Swahili",
-        pickup: "Private pickup included",
-        startTimes: ["9:00 AM", "1:00 PM"],
-        adultPrice: premiumAdultPrice,
-        childPrice: premiumChildPrice,
         cancellation: "Free cancellation up to 24 hours",
         payLater: "Reserve now, pay later"
       }
@@ -367,7 +352,7 @@ const AvailabilityAndOptions = ({
                 <Card 
                   key={option.id} 
                   className={`cursor-pointer transition-colors ${selectedOption === option.id ? "ring-2 ring-primary" : ""}`} 
-                  onClick={() => setSelectedOption(option.id as "standard" | "premium")}
+                  onClick={() => setSelectedOption(option.id as "standard")}
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -378,12 +363,11 @@ const AvailabilityAndOptions = ({
                             name="option" 
                             value={option.id} 
                             checked={selectedOption === option.id} 
-                            onChange={() => setSelectedOption(option.id as "standard" | "premium")}
+                            onChange={() => setSelectedOption(option.id as "standard")}
                             className="w-4 h-4" 
                             aria-label={option.name} 
                           />
                           <h4 className="font-semibold text-lg">{option.name}</h4>
-                          {option.id === "premium" && <Badge variant="secondary">Most Popular</Badge>}
                         </div>
 
                         <p className="text-muted-foreground mb-3">{option.description}</p>

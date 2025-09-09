@@ -8,7 +8,7 @@ export interface CartState {
   date: string;
   adults: number;
   children: number;
-  optionId: 'standard' | 'premium';
+  optionId: 'standard';
   unitPrice: number;
   childPrice: number;
   subtotal: number;
@@ -50,9 +50,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({
     const urlDate = formatDateForBooking(rawUrlDate) || '';
     const urlAdults = parseInt(searchParams.get('adults') || searchParams.get('people') || '1');
     const urlChildren = parseInt(searchParams.get('children') || '0');
-    const urlOption = (searchParams.get('option') as 'standard' | 'premium') || 'standard';
+    const urlOption = (searchParams.get('option') as 'standard') || 'standard';
     
-    const optionMultiplier = urlOption === 'premium' ? 1.3 : 1;
+    const optionMultiplier = 1;  // Only standard option available
     const unitPrice = Math.round(basePrice * optionMultiplier);
     const childPrice = childHalfPriceRule ? Math.round(unitPrice * 0.5) : unitPrice;
     const subtotal = (unitPrice * urlAdults) + (childPrice * urlChildren);
@@ -95,7 +95,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       
       // Recalculate pricing if option, adults, or children changed
       if (updates.optionId || updates.adults !== undefined || updates.children !== undefined) {
-        const optionMultiplier = updated.optionId === 'premium' ? 1.3 : 1;
+        const optionMultiplier = 1;  // Only standard option available
         updated.unitPrice = Math.round(basePrice * optionMultiplier);
         updated.childPrice = childHalfPriceRule ? Math.round(updated.unitPrice * 0.5) : updated.unitPrice;
         updated.subtotal = (updated.unitPrice * updated.adults) + (updated.childPrice * updated.children);

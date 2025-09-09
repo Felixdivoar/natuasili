@@ -467,7 +467,7 @@ const ExperienceDetail = () => {
               date: searchParams.get('date') || '',
               adults: parseInt(searchParams.get('adults') || '1'),
               children: parseInt(searchParams.get('children') || '0'),
-              option: (searchParams.get('option') as 'standard' | 'premium') || 'standard'
+              option: (searchParams.get('option') as 'standard') || 'standard'
             }}
           />
         </div>

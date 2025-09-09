@@ -330,7 +330,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                           <span>{cart.adults + cart.children} people</span>
                         </div>
                         <div className="col-span-2">
-                          <Badge variant="secondary">{cart.optionId === 'premium' ? 'Premium Experience' : 'Standard Experience'}</Badge>
+                          <Badge variant="secondary">Standard Experience</Badge>
                         </div>
                       </div>
                     </CardContent>

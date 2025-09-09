@@ -34,7 +34,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
     date: '',
     adults: 1,
     children: 0,
-    option: 'standard' as 'standard' | 'premium',
+    option: 'standard' as 'standard',
     name: '',
     email: '',
     phone: '',
@@ -46,7 +46,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
 
   const adultPrice = experience.priceKESAdult;
   const childPrice = experience.childHalfPriceRule ? Math.round(adultPrice / 2) : adultPrice;
-  const optionMultiplier = formData.option === 'premium' ? 1.3 : 1;
+  const optionMultiplier = 1;  // Only standard option available
   const unitPrice = Math.round(adultPrice * optionMultiplier);
   const childUnitPrice = Math.round(childPrice * optionMultiplier);
   
@@ -232,43 +232,22 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
 
                   <div>
                     <Label>{t('experienceOption', 'Experience Option')}</Label>
-                    <div className="grid gap-3 mt-2">
-                      <Card 
-                        className={`cursor-pointer ${formData.option === 'standard' ? 'ring-2 ring-primary' : ''}`}
-                        onClick={() => updateFormData('option', 'standard')}
-                      >
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-medium">{t('standard', 'Standard')}</h4>
-                              <p className="text-sm text-muted-foreground">{t('standardDesc', 'Full experience')}</p>
-                            </div>
-                            <div className="text-right">
-                              <div className="font-semibold">{formatPrice(adultPrice)}</div>
-                              <div className="text-xs text-muted-foreground">{t('perPerson', 'per person')}</div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card 
-                        className={`cursor-pointer ${formData.option === 'premium' ? 'ring-2 ring-primary' : ''}`}
-                        onClick={() => updateFormData('option', 'premium')}
-                      >
-                        <CardContent className="p-3">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-medium">{t('premium', 'Premium')}</h4>
-                              <p className="text-sm text-muted-foreground">{t('premiumDesc', 'Enhanced experience')}</p>
-                            </div>
-                            <div className="text-right">
-                              <div className="font-semibold">{formatPrice(Math.round(adultPrice * 1.3))}</div>
-                              <div className="text-xs text-muted-foreground">{t('perPerson', 'per person')}</div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
+                     <div className="grid gap-3 mt-2">
+                       <Card className="ring-2 ring-primary">
+                         <CardContent className="p-3">
+                           <div className="flex items-center justify-between">
+                             <div>
+                               <h4 className="font-medium">{t('standard', 'Standard')}</h4>
+                               <p className="text-sm text-muted-foreground">{t('standardDesc', 'Full experience')}</p>
+                             </div>
+                             <div className="text-right">
+                               <div className="font-semibold">{formatPrice(adultPrice)}</div>
+                               <div className="text-xs text-muted-foreground">{t('perPerson', 'per person')}</div>
+                             </div>
+                           </div>
+                         </CardContent>
+                       </Card>
+                     </div>
                   </div>
                 </div>
 
