@@ -13,9 +13,10 @@
 
 @layer base {
   :root {
-    /* Black and white theme with green conservation accents */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    /* Strict black and white theme - NO COLORS except donations */
+    --background: 0 0% 100%; /* Pure white #FFFFFF */
+    --background-alt: 0 0% 97%; /* Light grey #F7F7F7 */
+    --foreground: 0 0% 0%; /* Pure black #000000 */
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
@@ -23,32 +24,33 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    /* Black primary with green conservation accent */
+    /* Pure black primary */
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 0 0% 20%;
+    --primary-hover: 0 0% 15%;
 
-    /* Light gray secondary */
+    /* Light grey secondary */
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 0%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 0%;
+    --muted-foreground: 0 0% 20%;
 
-    /* Grayscale accent for general UI elements */
+    /* Pure greyscale accent */
     --accent: 0 0% 96%;
     --accent-foreground: 0 0% 0%;
 
     /* Conservation green - ONLY for donations and conservation actions */
     --conservation: 142 71% 45%;
+    --conservation-foreground: 0 0% 100%;
     --conservation-light: 142 71% 90%;
 
-    /* Status colors using grayscale */
-    --success: 0 0% 20%;
+    /* Black and white status colors */
+    --success: 0 0% 0%;
     --success-foreground: 0 0% 100%;
-    --warning: 0 0% 40%;
+    --warning: 0 0% 30%;
     --warning-foreground: 0 0% 100%;
-    --info: 0 0% 30%;
+    --info: 0 0% 20%;
     --info-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -2568,19 +2570,27 @@ html, body {
   --pad-mobile: 15px;
   --maxw: 1150px;               /* your site width */
   --header-bg: hsl(var(--background));
-  --footer-bg: hsl(var(--foreground));
+  --footer-bg: 0 0% 0%;         /* Pure black footer #000000 */
   --header-height: 64px;
 }
 
-/* ---------- Containers (keep your 1150 width) ---------- */
+/* ---------- Containers with responsive max-width constraints ---------- */
 .site-container, .container, .page-content, .section, .main-content {
   max-width: var(--maxw);
   margin-inline: auto;
   padding-inline: var(--pad-desktop);
   box-sizing: border-box;
 }
+
+/* Enhanced content constraints for better readability */
+.content-max-width {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 @media (max-width: 768px) {
-  .site-container, .container, .page-content, .section, .main-content {
+  .site-container, .container, .page-content, .section, .main-content, .content-max-width {
     padding-inline: var(--pad-mobile);
   }
 }
@@ -2624,8 +2634,8 @@ body.sticky .page-after-hero {
 
 /* ---------- FOOTER ---------- */
 .site-footer {
-  background: var(--footer-bg);
-  color: hsl(var(--background));
+  background: hsl(var(--footer-bg)) !important; /* Pure black #000000 */
+  color: hsl(var(--background)) !important; /* White text */
   /* padding must be on the element with the visible background */
   display: flow-root;                  /* prevents margin collapse */
   padding-top: 18px !important;        /* top spacing */
@@ -3137,10 +3147,40 @@ button[disabled] {
   box-sizing: border-box;
 }
 
+/* Enhanced content constraints for better readability */
+.content-max-width {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Content wrapper for better UX */
+.content-wrapper {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
 @media (max-width: 768px) {
-  .page-content, .section, .main-content, .container, .site-container { 
+  .page-content, .section, .main-content, .container, .site-container, .content-max-width, .content-wrapper { 
     padding: 0 15px; 
   }
+}
+
+/* Page backgrounds - strict white or light grey */
+.page-background-white {
+  background-color: #FFFFFF !important;
+}
+
+.page-background-grey {
+  background-color: #F7F7F7 !important;
+}
+
+/* Force specific background colors */
+.bg-background-alt {
+  background-color: #F7F7F7 !important;
 }
 
 /* Partner stories carousel improvements */
@@ -3287,5 +3327,49 @@ button[disabled] {
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Chrome, Safari and Opera */
+/* ===== ADDITIONAL RESPONSIVE LAYOUT AND THEME ENFORCEMENT ===== */
+
+/* Content max-width and responsive layout utilities */
+.content-wrapper {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 0 15px;
   }
+}
+
+/* Page backgrounds - strict white or light grey enforcement */
+.page-background-white {
+  background-color: #FFFFFF !important;
+}
+
+.page-background-grey {
+  background-color: #F7F7F7 !important;
+}
+
+/* Force specific background colors for semantic usage */
+.bg-background-alt {
+  background-color: #F7F7F7 !important;
+}
+
+/* Ensure all page backgrounds follow the theme */
+.min-h-screen.bg-background {
+  background-color: #FFFFFF !important;
+}
+
+/* Force footer to always be black */
+.site-footer {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+/* Ensure no unwanted colors leak through */
+* {
+  transition: none !important;
+}
 }

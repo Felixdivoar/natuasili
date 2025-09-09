@@ -43,13 +43,8 @@ import { blogPosts } from "@/data/blogData";
 
 const BlogSection = () => {
   const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Host Resources': return 'bg-conservation/10 text-conservation border-conservation/20';
-      case 'Purposeful Travel': return 'bg-primary/10 text-primary border-primary/20';
-      case 'Conservation and Community Engagement': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Travel Tips and Itineraries': return 'bg-secondary/10 text-secondary border-secondary/20';
-      default: return 'bg-muted text-muted-foreground';
-    }
+    // Black and white theme - all categories use same styling
+    return 'bg-primary text-primary-foreground border-primary';
   };
 
   const slugify = (text: string) => {
@@ -63,8 +58,8 @@ const BlogSection = () => {
   const displayPosts = blogPosts.slice(0, 6);
 
   return (
-    <section className="section-padding-lg bg-muted/30 home-blog">
-      <div className="container mx-auto px-4">
+    <section className="section-padding-lg bg-background-alt home-blog">
+      <div className="content-max-width">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Conservation Stories & Insights
@@ -137,7 +132,7 @@ const BlogSection = () => {
 
         <div className="text-center">
           <Link to="/blog" className="view-all-stories">
-            <Button size="lg" className="bg-conservation hover:bg-conservation/90 text-white">
+            <Button size="lg">
               View All Stories
             </Button>
           </Link>
