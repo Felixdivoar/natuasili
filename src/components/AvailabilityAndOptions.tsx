@@ -257,7 +257,7 @@ const AvailabilityAndOptions = ({
                       className={`w-full ${dateError ? "border-red-500" : ""}`} 
                     />
                     {dateError && (
-                      <div className="text-red-600 text-sm mt-1" role="alert">
+                      <div className="text-destructive text-sm mt-1" role="alert">
                         {dateError}
                       </div>
                     )}
@@ -352,7 +352,7 @@ const AvailabilityAndOptions = ({
                   </div>
                   
                   {participantsError && (
-                    <div id="participants-error" role="alert" aria-live="assertive" className="text-red-600 text-sm">
+                    <div id="participants-error" role="alert" aria-live="assertive" className="text-destructive text-sm">
                       {participantsError}
                     </div>
                   )}
@@ -412,11 +412,11 @@ const AvailabilityAndOptions = ({
                         </div>
 
                         <div className="flex gap-4 text-sm">
-                          <div className="flex items-center gap-1 text-green-600">
+                          <div className="flex items-center gap-1 text-success">
                             <CheckCircle className="h-4 w-4" />
                             <span>{option.cancellation}</span>
                           </div>
-                          <div className="flex items-center gap-1 text-blue-600">
+                          <div className="flex items-center gap-1 text-info">
                             <CheckCircle className="h-4 w-4" />
                             <span>{option.payLater}</span>
                           </div>
@@ -526,7 +526,7 @@ const AvailabilityAndOptions = ({
 
                 <div className="text-xs text-muted-foreground text-center">
                   <div className="flex items-center justify-center gap-1 mb-1">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                     <Star className="h-3 w-3 fill-foreground text-foreground" />
                     <span>Free cancellation</span>
                   </div>
                   <div>You won't be charged yet</div>
@@ -567,7 +567,7 @@ const AvailabilityAndOptions = ({
 
                 <div className="text-xs text-muted-foreground text-center mt-2">
                   <div className="flex items-center justify-center gap-1 mb-1">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    <Star className="h-3 w-3 fill-foreground text-foreground" />
                     <span>Free cancellation</span>
                   </div>
                   <div>You won't be charged yet</div>

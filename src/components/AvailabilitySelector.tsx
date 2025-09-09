@@ -132,7 +132,7 @@ const AvailabilitySelector = ({
                       Select date
                     </Label>
                     <Input id="date" type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} min={new Date().toISOString().split("T")[0]} className={`w-full ${cutoffHit ? "border-red-500" : ""}`} />
-                    {cutoffHit && <div className="text-red-600 text-sm mt-1" role="alert">
+                    {cutoffHit && <div className="text-destructive text-sm mt-1" role="alert">
                         {cutoffMessage}
                       </div>}
                   </div>
@@ -152,7 +152,7 @@ const AvailabilitySelector = ({
                       </Button>
                       <span className="text-sm text-muted-foreground ml-2">(max {experience.capacity})</span>
                     </div>
-                    {participantsError && <div id="participants-error" role="alert" aria-live="assertive" className="text-red-600 text-sm mt-2">
+                    {participantsError && <div id="participants-error" role="alert" aria-live="assertive" className="text-destructive text-sm mt-2">
                         {participantsError}
                       </div>}
                   </div>
@@ -273,7 +273,7 @@ const AvailabilitySelector = ({
 
                 <div className="text-xs text-muted-foreground text-center">
                   <div className="flex items-center justify-center gap-1 mb-1">
-                    <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    <Star className="h-3 w-3 fill-foreground text-foreground" />
                     <span>Free cancellation</span>
                   </div>
                   <div>You won't be charged yet</div>

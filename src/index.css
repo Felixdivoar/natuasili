@@ -35,13 +35,21 @@
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 0%;
 
-    /* Conservation green accent */
-    --accent: 142 71% 45%;
-    --accent-foreground: 0 0% 100%;
+    /* Grayscale accent for general UI elements */
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 0%;
 
-    /* Conservation green theme color */
+    /* Conservation green - ONLY for donations and conservation actions */
     --conservation: 142 71% 45%;
     --conservation-light: 142 71% 90%;
+
+    /* Status colors using grayscale */
+    --success: 0 0% 20%;
+    --success-foreground: 0 0% 100%;
+    --warning: 0 0% 40%;
+    --warning-foreground: 0 0% 100%;
+    --info: 0 0% 30%;
+    --info-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -102,6 +110,14 @@
     --accent: 0 0% 20%;
     --accent-foreground: 0 0% 100%;
 
+    /* Dark mode status colors */
+    --success: 0 0% 80%;
+    --success-foreground: 0 0% 0%;
+    --warning: 0 0% 60%;
+    --warning-foreground: 0 0% 0%;
+    --info: 0 0% 70%;
+    --info-foreground: 0 0% 0%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
@@ -141,6 +157,17 @@
 .text-muted-foreground {
   color: hsl(var(--foreground)) !important;
 }
+
+/* Status color utilities */
+.text-success { color: hsl(var(--success)) !important; }
+.text-warning { color: hsl(var(--warning)) !important; }
+.text-info { color: hsl(var(--info)) !important; }
+.bg-success { background-color: hsl(var(--success)) !important; }
+.bg-warning { background-color: hsl(var(--warning)) !important; }
+.bg-info { background-color: hsl(var(--info)) !important; }
+.border-success { border-color: hsl(var(--success)) !important; }
+.border-warning { border-color: hsl(var(--warning)) !important; }
+.border-info { border-color: hsl(var(--info)) !important; }
 
 /* Global typography - transform all fonts to normal and sentence case */
 * {

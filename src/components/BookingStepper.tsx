@@ -453,7 +453,7 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
                 </div>
               )}
               {paymentStatus === 'error' && (
-                <div className="text-red-600">
+                <div className="text-destructive">
                   <p>Payment failed. Please try again.</p>
                 </div>
               )}
@@ -492,8 +492,8 @@ const BookingStepper = ({ experience, project }: BookingStepperProps) => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="text-center py-8">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>

@@ -430,12 +430,12 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
             {/* Step 4: Success */}
             {currentStep === 4 && (
               <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+                <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle className="h-8 w-8 text-success" />
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-semibold text-green-600 mb-2">
+                  <h3 className="text-xl font-semibold text-success mb-2">
                     {t('bookingConfirmed', 'Booking Confirmed!')}
                   </h3>
                   <p className="text-muted-foreground">

@@ -100,7 +100,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {errors && (
-          <div className="mb-4 p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+          <div className="mb-4 p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
             {errors}
           </div>
         )}

@@ -139,11 +139,11 @@ const ImpactProofAdmin: React.FC = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'approved':
-        return <Badge className="bg-green-100 text-green-800"><CheckCircle className="h-3 w-3 mr-1" />Approved</Badge>;
+        return <Badge className="bg-success/10 text-success border-success/20"><CheckCircle className="h-3 w-3 mr-1" />Approved</Badge>;
       case 'rejected':
-        return <Badge className="bg-red-100 text-red-800"><XCircle className="h-3 w-3 mr-1" />Rejected</Badge>;
+        return <Badge className="bg-destructive/10 text-destructive border-destructive/20"><XCircle className="h-3 w-3 mr-1" />Rejected</Badge>;
       default:
-        return <Badge className="bg-yellow-100 text-yellow-800"><Clock className="h-3 w-3 mr-1" />Pending</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20"><Clock className="h-3 w-3 mr-1" />Pending</Badge>;
     }
   };
 
@@ -230,9 +230,9 @@ const ImpactProofAdmin: React.FC = () => {
                             )}
                             
                             {proof.admin_notes && (
-                              <div className="mt-2 p-2 bg-blue-50 rounded">
-                                <p className="text-xs font-medium text-blue-900 mb-1">Admin Notes:</p>
-                                <p className="text-sm text-blue-800">{proof.admin_notes}</p>
+                                <div className="mt-2 p-2 bg-muted rounded">
+                                  <p className="text-xs font-medium text-foreground mb-1">Admin Notes:</p>
+                                  <p className="text-sm text-muted-foreground">{proof.admin_notes}</p>
                               </div>
                             )}
                           </div>

@@ -86,7 +86,7 @@ export default function DestinationExperienceCarousel({
                             {experience.theme}
                           </Badge>
                           <div className="flex items-center gap-1 text-xs">
-                            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            <Star className="h-3 w-3 fill-foreground text-foreground" />
                             <span className="font-medium">4.8</span>
                           </div>
                         </div>

@@ -190,8 +190,8 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     return (
       <div className={`${height} bg-muted rounded-lg flex items-center justify-center p-6`}>
         <div className="text-center space-y-2">
-          <MapPin className="h-8 w-8 mx-auto text-red-500 mb-2" />
-          <p className="text-sm text-red-600">{error}</p>
+          <MapPin className="h-8 w-8 mx-auto text-foreground mb-2" />
+          <p className="text-sm text-muted-foreground">{error}</p>
           <p className="text-xs text-muted-foreground">Please check your Google Maps API configuration</p>
         </div>
       </div>
