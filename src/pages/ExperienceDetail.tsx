@@ -715,11 +715,6 @@ const ExperienceDetail = () => {
           </section>
 
 
-          {/* Languages */}
-          <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">Languages</h2>
-            <p className="text-muted-foreground">{contentSections.languages}</p>
-          </section>
 
           {/* Frequently Asked Questions */}
           {contentSections.faqs.length > 0 && (
