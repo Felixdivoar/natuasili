@@ -66,7 +66,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
   
   return (
     <Card 
-      className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group experience-card"
+      className="overflow-hidden shadow-lg duration-300 group experience-card"
       data-destination={getDestination()}
       data-theme={experience.theme.toLowerCase().replace(' ', '-')}
       data-activity-impact={experience.activity_type.toLowerCase().replace(' ', '-')}
@@ -77,7 +77,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           <img 
             src={experience.images[0]} 
             alt={experience.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover transition-transform duration-300"
           />
         )}
         <div className="absolute top-3 left-3 flex gap-2 experience-theme">
@@ -150,7 +150,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
             <Link to={`/experience/${experience.slug}`} className="flex-1">
               <Button 
                 variant="outline"
-                className="w-full" 
+                className="w-full bg-black text-white border-black" 
                 size="sm"
               >
                 {t("exp_view_details")}
@@ -159,7 +159,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
           </div>
           <div className="flex gap-2">
             <Button 
-              className="btn-reserve flex-1" 
+              className="btn-reserve flex-1 bg-black text-white" 
               data-action="reserve"
               size="sm"
             >
@@ -173,7 +173,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
             <Button 
               variant="outline" 
               size="sm"
-              className="px-3"
+              className="px-3 bg-black text-white border-black"
             >
               ♡
             </Button>

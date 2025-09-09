@@ -91,7 +91,7 @@ export default function DestinationExperienceCarousel({
                           </div>
                         </div>
 
-                        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                        <h3 className="font-semibold text-foreground line-clamp-2">
                           {experience.title}
                         </h3>
 

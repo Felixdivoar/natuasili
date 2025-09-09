@@ -47,12 +47,12 @@ const ConservationPartnersCarousel = () => {
           <CarouselContent className="-ml-2 md:-ml-4">
             {displayPartners.map(partner => (
               <CarouselItem key={partner.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <Card className="group hover:shadow-lg transition-shadow overflow-hidden h-full">
+                <Card className="group shadow-lg overflow-hidden h-full">
                   <div className="relative aspect-[4/3]">
                     <img 
                       src={partner.image} 
                       alt={`${partner.name} conservation partner - ${partner.themes.join(', ')} work in ${partner.location}`} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                      className="w-full h-full object-cover transition-transform duration-300" 
                       onError={(e) => {
                         const target = e.currentTarget;
                         target.src = '/img/ph1.jpg';
@@ -70,7 +70,7 @@ const ConservationPartnersCarousel = () => {
                   </div>
                   
                   <CardHeader>
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                    <CardTitle className="text-xl text-foreground">
                       {partner.name}
                     </CardTitle>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">

@@ -52,10 +52,10 @@ const CarouselControls = () => {
     canScrollNext
   } = useCarousel();
   return <div className="flex justify-center gap-2 mt-8">
-      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollPrev} disabled={!canScrollPrev}>
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 bg-black text-white border-black" onClick={scrollPrev} disabled={!canScrollPrev}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground" onClick={scrollNext} disabled={!canScrollNext}>
+      <Button variant="outline" size="icon" className="rounded-full w-10 h-10 bg-black text-white border-black" onClick={scrollNext} disabled={!canScrollNext}>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>;
@@ -71,7 +71,7 @@ const DestinationCarousel = () => {
             </p>
           </div>
           <Link to="/destinations">
-            <Button variant="outline" className="hidden md:block">
+            <Button variant="outline" className="hidden md:block bg-black text-white border-black">
               View All Destinations
             </Button>
           </Link>
@@ -84,9 +84,9 @@ const DestinationCarousel = () => {
           <CarouselContent className="-ml-2 md:-ml-4">
             {destinations.map(destination => <CarouselItem key={destination.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Link to={`/destinations#${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                  <Card className="overflow-hidden group hover:shadow-lg transition-shadow cursor-pointer">
+                  <Card className="overflow-hidden shadow-lg cursor-pointer">
                     <div className="relative aspect-[4/3]">
-                      <img src={destination.image} alt={destination.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <img src={destination.image} alt={destination.name} className="w-full h-full object-cover transition-transform duration-300" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       <div className="absolute bottom-4 left-4 text-white">
                         <h3 className="text-xl font-bold mb-1">{destination.name}</h3>
@@ -105,8 +105,8 @@ const DestinationCarousel = () => {
               </CarouselItem>)}
           </CarouselContent>
           <div className="hidden md:block">
-            <CarouselPrevious className="-left-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
-            <CarouselNext className="-right-6 bg-background border-2 border-primary/20 hover:bg-primary hover:text-primary-foreground rounded-full w-12 h-12" />
+            <CarouselPrevious className="-left-6 bg-black text-white border-black rounded-full w-12 h-12" />
+            <CarouselNext className="-right-6 bg-black text-white border-black rounded-full w-12 h-12" />
           </div>
           <div className="md:hidden">
             <CarouselControls />
