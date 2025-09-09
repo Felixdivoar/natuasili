@@ -653,6 +653,580 @@ JPFV+FP Nairobi`,
     partnerSlug: "afew-giraffe-centre",
     sourceUrl: "https://natuasili.com/st_tour/nairobi-giraffe-centre-afew/",
   },
+  {
+    title: "Community-led elephant experience at Reteti",
+    id: "exp-reteti-elephant",
+    slug: P("Reteti Community Elephant Experience"),
+    partner: "Reteti Elephant Sanctuary",
+    destination: "samburu",
+    themes: ["Wildlife conservation"],
+    activities: ["elephant", "rehabilitation"],
+    images: [retetiMainImg, retetiFeedingImg, retetiCareOutdoorImg, retetiCareFacilityImg, retetiHerdImg, retetiBottleFeedingImg],
+    heroImage: retetiMainImg,
+    gallery: [retetiMainImg, retetiFeedingImg, retetiCareOutdoorImg, retetiCareFacilityImg, retetiHerdImg, retetiBottleFeedingImg],
+    description: `Overview
+The Reteti Elephant Sanctuary is a groundbreaking elephant sanctuary situated in the Namunyak Wildlife Conservancy in Northern Kenya. Particularly, it is the first community-owned and run elephant sanctuary in Africa, totally committed to rescuing abandoned and orphaned elephant calves. Their aim is to rehabilitate and reintroduce these young elephants back into wild herds close by Reteti. Through educational tours supporting the goal of the sanctuary, visitors can learn more about the challenges that elephants face and help to further their mission.
+
+Highlights
+• Participate in an educational tour guided by informed keepers of Reteti and discover their vital efforts in elephant protection.
+• Learn about the challenges that elephants experience as well as the dangers to their population.
+• From a dedicated viewing platform, observe the rescued elephants' feeding schedule and mud hole playfulness.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+Go Behind the Scenes: Elephant Care Unveiled
+o Arrive at the Reteti Elephant Sanctuary and join an educational tour led by Reteti's keepers, where you'll learn about their elephant rescue and rehabilitation mission.
+o Observe the rescued elephants from a dedicated viewing platform, where you can witness feeding time and mud hole playtime.
+o Take part in a behind-the-scenes tour of the sanctuary to gain a deeper understanding of Reteti's exceptional elephant care.
+
+Cancellation policy
+o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 72 hours before the start time, you can also cancel within 48 hours of booking for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect on a typical visit?
+Tours typically include an educational talk, observation time at the viewing platform, and a behind-the-scenes look at the sanctuary's operations. 
+
+Is it possible to touch and interact with the elephants?
+No, for the well-being of the elephants, visitors are not allowed to interact with them directly. However, you will get to observe them from a safe distance. Reteti's mission is to rescue, rewild and release the elephants, and to prepare them for their release. The keepers are the ones only allowed to interact with the elephants in order to minimise human interaction.
+
+Is this a good activity for children?
+Absolutely! Learning about elephants and witnessing their heartwarming behaviors is a great experience for all ages.
+
+How can I help Reteti's conservation efforts?
+In addition to booking a tour, consider making a donation to the sanctuary or purchasing handmade crafts from their gift shop, which directly supports the sanctuary and the local community.
+
+What should I wear?
+Please wear dark green if possible, otherwise shades of brown or khaki. 
+
+Important information
+The duration of the experience can vary, but tours typically last around 1.5 hours. Reteti has 4 time slots for visits that coincide with the elephants' feeding times.
+The Sunrise Feed
+Sarara & Reteti House guests only
+5.30 am - 7.00 am (feeding is at 6.00 am)
+The Morning Feed
+Exclusive Group only
+8.30 am - 10.00 am (feeding is at 9.00 am)
+Other visitors are welcome when no exclusive group booked.
+The Midday Feed
+Public viewing
+11.30 am - 13.00 pm (feeding is at 12.00 pm)
+No more than 3 groups. Max 15 - 20 people.
+The Evening Feed
+Sarara & Reteti House guests only
+17.30 pm - 19.00 pm (feeding is at 18.00 pm)
+
+Where you'll be
+4F76+V3 Sereolipi`,
+    priceKESAdult: 3000,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Samburu County, Kenya",
+    partnerSlug: "reteti-elephant-sanctuary",
+    sourceUrl: "https://natuasili.com/st_tour/reteti-community-elephant-experience/",
+  },
+  {
+    title: "Become a K-9 handler for a day at Ol Pejeta Conservancy",
+    id: "exp-k9-handler-ol-pejeta",
+    slug: P("K9 Handler Day Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy", 
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["k9", "anti-poaching", "dogs"],
+    images: [k9HandlerTraining, olPejetaImg, "/images/placeholder-4.jpg"],
+    heroImage: k9HandlerTraining,
+    gallery: [k9HandlerTraining, olPejetaImg, "/images/placeholder-4.jpg"],
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help conserve wildlife. Apart from the last two northern white rhinos and the Big Five, it supports communities nearby with education and health programs.
+See Ol Pejeta's anti-poaching dog squad. Talk to the dog keepers to find out how to look after our specially trained canine team. Try to hide from the sniffer dogs during the kennel tour. To see whether the bloodhounds can locate you, run, jump, twist, turn, and hide within the Morani Information Center area. This is not only a lot of fun, but it also gives the dogs great training.
+Your safari at Ol Pejeta offers an opportunity to assist wildlife. Here, you will be involved in actual conservation efforts and help to create lasting change even after you depart.
+
+Highlights
+• Discover why the K-9 unit is so important for anti-poaching campaigns.
+• See other dog specialties including suspect apprehension, scent tracking, and ammunition detection.
+• Join a bloodhound in an interactive dog-tracking exercise. Watch it track a modeled poacher's scent or run and hide for the dog to find.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+Meet Ol Pejeta's K9 Heroes
+o Arrive at the Morani Information Centre at 8:30 AM (the designated starting point).
+o Meet the Ol Pejeta rangers and receive a briefing about the K9 unit's role in conservation.
+o Learn about the different specializations of the K9 dogs.
+o Gain valuable insights into anti-poaching efforts and the importance of K9 units.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect during the activity?
+You'll learn about the K-9 unit, participate in a tracking exercise with a bloodhound (both hiding and observing), and gain insights into their training.
+
+Is this activity safe?
+Yes, the activity is conducted in a controlled environment with experienced handlers.
+
+What should I wear?
+Closed shoes, sunscreen, and a hat are recommended. Opt for neutral-colored clothing.
+
+Can I bring children?
+This activity is not recommended for children under 12 years old.
+
+Important information
+o Physical interaction with the dogs will be relatively restricted.
+o This activity is not suitable for children under the age of 12.
+o If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
+    priceKESAdult: 2500,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/k9-handler-day-ol-pejeta/",
+  },
+  {
+    title: "Drones for conservation with Mara Elephant Project",
+    id: "exp-drone-conservation-mep",
+    slug: P("Drone Conservation Mara Elephant"),
+    partner: "Mara Elephant Project",
+    destination: "masai-mara",
+    themes: ["Wildlife conservation"],
+    activities: ["drone", "technology", "elephant"],
+    images: ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"],
+    heroImage: "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png",
+    gallery: ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"],
+    description: `Overview
+The Mara Elephant Project (MEP) is a conservation organization to protect elephants in the Mara-Serengeti ecosystem. This two-hour expedition is to discover the new world of drone conservation! MEP has pioneered the use of drones to transform its approach to elephant protection since in 2011. Experience personally the difference this innovative technology is bringing about.
+
+Highlights
+• Discover MEP's creative drone initiative, which comprises nine Mavic drones with thermal imaging capacity.
+• Meet and engage with the 18 rangers and researchers on the skilled team flying the drones.
+• Learn how different conservation projects—conflict avoidance, elephant monitoring, and reconnaissance among other things—use drones.
+
+Included/Excluded
+• Refreshments; drinking water, coffee or juice.
+• Personal expenses
+• Insurance
+• Meals
+
+What to expect
+Exploring Drone Conservation with MEP
+o Arrive at the designated meeting point (transportation likely not included).
+o Receive a briefing from a knowledgeable MEP staff member on the importance of elephant conservation and the groundbreaking use of drones in their efforts.
+o Witness a live demonstration of the various drones used by MEP. Learn about their specific features and functionalities for diverse conservation applications.
+o Engage in a Q&A session with the MEP staff member, addressing any questions you may have about drone conservation and MEP's overall efforts.
+
+Cancellation policy
+o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect to do on this program?
+You'll gain exclusive insights into MEP's drone program through presentations, demonstrations, and potentially observing live drone operations (weather dependent).
+
+Is there an age restriction?
+This program might be more suitable for older children and adults due to the technical nature of the content.
+
+Can I participate in flying the drones?
+Piloting the drones is done by trained MEP personnel.
+
+Important information
+o The $500 all - inclusive donation paid to MEP
+o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our
+headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and
+no minimum donation is required.
+o Mara Elephant Project can provide bespoke experiences for interested donors. This can include a visit to camp for tea and
+coffee and a presentation from a key MEP staff member, which would give guests private access to learn more about our
+work. We would ask for a minimum donation of $1,000 per group for this experience.
+
+Where you'll be
+6GCQR5P4+24`,
+    priceKESAdult: 26000,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Masai Mara",
+    partnerSlug: "mara-elephant-project",
+    sourceUrl: "https://natuasili.com/st_tour/drone-conservation-mara-elephant/",
+  },
+  {
+    title: "Elephant researcher experience with Mara Elephant Project", 
+    id: "exp-elephant-researcher-mep",
+    slug: P("Elephant Researcher Mara Elephant Project"),
+    partner: "Mara Elephant Project",
+    destination: "masai-mara",
+    themes: ["Wildlife conservation"],
+    activities: ["elephant", "research", "data"],
+    images: [maraElephantTracking, "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png"],
+    heroImage: maraElephantTracking,
+    gallery: [maraElephantTracking, "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png"],
+    description: `Overview
+The Mara Elephant Project (MEP) is a conservation organization established to protect the elephants in the Mara-Serengeti ecosystem.
+Along with MEP's Long-Term Monitoring (LTM) team, the 3-hour program Elephant Researcher invites you to engage in actual elephant data collection.
+Start a thrilling adventure—a behind-the-scenes view of elephant research conducted with MEP. This special 3-hour experience provides a rare chance to join MEP's Long-Term Monitoring (LTM) team in gathering important information on the magnificent Maasai Mara elephants.
+
+Highlights
+• Actively participate in elephant data collection efforts.
+• Discover how to identify particular elephants and their behavior.
+• Along with the research team, photograph valuable data.
+
+Included/Excluded
+• Refreshments; drinking water, coffee or juice.
+• Personal expenses
+• Insurance
+• Meals
+
+What to expect
+A Research Expedition with the Mara Elephant Project
+o Arrive at the designated meeting point at MEP headquarters in Lemek Conservancy
+o Meet the MEP staff and receive a comprehensive briefing on the program, elephant research methods, and safety protocols.
+o Embark on a research expedition alongside the LTM team. Learn to identify individual elephants and assist with data collection through photography and observation.
+o Depart with a newfound appreciation for the dedication of the MEP team and the importance of elephant conservation. You'll also leave with the satisfaction of making a direct contribution through your participation and donation.
+
+Cancellation policy
+o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What will I do during the program?
+You'll assist the LTM team in data collection, learn elephant identification techniques, capture photos, and hear from a Maasai scientist.
+
+What kind of data collection will I be involved in?
+You might assist with tasks like elephant identification, behavior observation, and photographic documentation.
+
+Is any prior experience required?
+No prior experience is necessary. However, a passion for elephants and an interest in conservation are essential.
+
+Can I participate if I have no prior research experience?
+Absolutely! This program is designed for anyone passionate about elephants and conservation, regardless of scientific background. The MEP team will provide all necessary training and guidance throughout the experience.
+
+Important information
+o The $500 all - inclusive donation paid to MEP
+o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our
+headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and
+no minimum donation is required.
+o Mara Elephant Project can provide bespoke experiences for interested donors. This can include a visit to camp for tea and
+coffee and a presentation from a key MEP staff member, which would give guests private access to learn more about our
+work. We would ask for a minimum donation of $1,000 per group for this experience.
+
+Where you'll be
+6GCQR5P4+24`,
+    priceKESAdult: 26000,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Masai Mara",
+    partnerSlug: "mara-elephant-project",  
+    sourceUrl: "https://natuasili.com/st_tour/elephant-researcher-mara-elephant-project/",
+  },
+  {
+    title: "A sustainable farm experience at Adventure Farm Karen",
+    id: "exp-sustainable-farm-karen",
+    slug: P("Sustainable Farm Experience Karen"),
+    partner: "Adventure Farm Karen",
+    destination: "nairobi",
+    themes: ["Conservation education"],
+    activities: ["farm", "sustainability", "food"],
+    images: ["/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    heroImage: "/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png",
+    gallery: ["/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Overview
+Adventure Farm Karen offers a unique opportunity to connect with nature, learn about sustainable practices, and create lasting memories!
+A day at Adventure Farm Karen starts with a tour of their sustainable practices and interacting with farm animals. This is followed by a delicious farm-to-fork meal and homemade gelato. You can then get hands-on with activities like pizza making, cheese making, cow milking, and salad making using the farm's fresh produce. The day concludes with a chance to plant a tree and contribute to a greener future.
+
+Highlights
+• Scenic farm tour with knowledgeable guides
+• Learn about eco-friendly farming practices
+• Interact with farm animals and discover their diets
+• Create your own pizza with farm-fresh toppings
+• Contribute to a greener future through tree planting
+• Suitable for all ages!
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+Adventure farm fun & learning
+o Arrive at Adventure Farm Karen and embark on a guided farm tour, learning about sustainable practices and interacting with farm animals.
+o After lunch, enjoy a delicious farm-to-fork meal with refreshing beverages and homemade gelato.
+o In the afternoon, participate in a pizza-making session using farm-fresh toppings. Learn the secrets of cheese making and try your hand at making mozzarella. Feeling adventurous? Test your skills at milking a cow!
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+2 - 3 hours
+Full day (+5hours)
+
+Languages
+English
+
+Frequently asked questions
+What's included in the all-inclusive package?
+The all-inclusive package covers your entire day at Adventure Farm Karen, including:
+o Guided farm tour
+o Delicious farm-to-fork meal with refreshments
+o Pizza-making and cheese-making workshops (participation optional)
+o Tree-planting initiative
+
+What will I learn on the farm tour?
+The knowledgeable guides will lead you on a scenic exploration, highlighting Adventure Farm's commitment to sustainable practices. You'll learn about organic farming techniques, interact with various farm animals, and gain insights into the farm's interconnected ecosystem.
+
+Is this a good activity for children?
+Absolutely! Adventure Farm Karen offers a fun and educational experience perfect for families with children of all ages.
+
+Are there any dietary restrictions catered to?
+When booking, please inform us in advance about any dietary restrictions you may have when making your reservation. Adventure Farm will do their best to accommodate your needs.
+
+What should I wear?
+This is a full-day experience with outdoor activities. We recommend comfortable shoes and clothing suitable for walking, bending, and potentially getting a little messy during the workshops.
+
+Where you'll be
+PM2P+HR Nairobi`,
+    priceKESAdult: 2500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Karen, Nairobi",
+    partnerSlug: "adventure-farm-karen",
+    sourceUrl: "https://natuasili.com/st_tour/sustainable-farm-experience-karen/",
+  },
+  {
+    title: "Morning bird walk with Nature Kenya",
+    id: "exp-morning-bird-walk",
+    slug: P("Morning Bird Walk Nature Kenya"),
+    partner: "Nature Kenya",
+    destination: "nairobi",
+    themes: ["Conservation education"],
+    activities: ["birds", "walk", "education"],
+    images: [natureKenyaBirdwatching, natureKenyaImg, "/images/placeholder-4.jpg"],
+    heroImage: natureKenyaBirdwatching,
+    gallery: [natureKenyaBirdwatching, natureKenyaImg, "/images/placeholder-4.jpg"],
+    description: `Overview
+The East Africa Natural History Society, better known as Nature Kenya, is a non-profit committed to promoting East African environmental research and conservation. It offers weekly guided bird walks across diverse ecosystems in Nairobi, Malindi, and the 3rd Saturday of every month in Mombasa.
+Explore Nairobi's varied birdlife every Wednesday morning and start an adventure of discovery. In Malindi and Mombasa, experience coastal birding, where unique shorebirds and migratory species thrive. With an expert guide leading the way, you'll uncover hidden birding hotspots and spot an incredible variety of feathered friends.
+Learning to recognize birds by sight and sound, using their calls and distinctive features, will help you develop your birding techniques. Gain insights into their behavior, habitat preferences, and their critical role in Kenya's diverse ecosystems.
+
+Highlights
+• Explore Nairobi's secret birding hotspots.
+• Pick tips from seasoned birding guides to improve your own.
+• By sight and sound, list several bird species.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+Connect with fellow bird enthusiasts
+o Every Wednesday morning, meet at the designated location (check the Nature Kenya website for details) at 8:00 AM.
+o Join a guided walk through different Nairobi birding hotspots each week.
+o Learn about Nairobi's diverse birdlife with experienced guides.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+2 - 3 hours
+
+Languages
+English
+
+Frequently asked questions
+Is this walk for beginners?
+Yes, this walk is perfect for both seasoned birders and curious newcomers interested in exploring Nairobi's birdlife.
+
+Do I need to be a member?
+Membership is preferred but not mandatory. Temporary day memberships are available for those interested in trying it out. Visit the Nature Kenya website or contact them for details.
+
+When and where does the tour meet?
+The walk will take place every Wednesday at 8:30 AM at a designated location, which will be communicated prior to every walk.
+
+What should I wear and bring?
+Comfortable walking shoes, binoculars (if possible), a reusable water bottle, and sun protection are recommended.
+
+Where you'll be
+PRG7+CQ Nairobi`,
+    priceKESAdult: 500,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Nairobi",
+    partnerSlug: "nature-kenya",
+    sourceUrl: "https://natuasili.com/st_tour/morning-bird-walk-nature-kenya/",
+  },
+  {
+    title: "Citizen scientist experience at Nairobi Park",
+    id: "exp-citizen-scientist-nairobi",
+    slug: P("Citizen Scientist Nairobi Park"),
+    partner: "Friends of Nairobi National Park",
+    destination: "nairobi",
+    themes: ["Wildlife conservation"],
+    activities: ["citizen science", "wildlife", "data"],
+    images: ["/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    heroImage: "/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png",
+    gallery: ["/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    description: `Overview
+Established in 1995, Friends of Nairobi National Park (FoNNaP) has been committed to assisting Kenya Wildlife Service (KWS) in conserving and improving the biodiversity inside Nairobi National Park and its larger surroundings.
+All nature lovers and supporters of conservation should join FoNNaP's special citizen science program. This program allows participants to be citizen scientists and combines social activities with wildlife preservation, so providing unique insights. Through bi-monthly game counts, volunteers assist in tracking wildlife numbers and trend monitoring, so contributing important information for study and conservation.
+Apart from that, frequent clean-up events try to eliminate plastic waste and other trash, so preserving the biodiversity of the park and providing a safer surrounding for its species. Join FONNAP to help with important conservation initiatives and directly help Nairobi National Park to be preserved.
+
+Highlights
+• Support Kenya Wildlife Service (KWS) and FoNNaP in bi-monthly game counts.
+• Through animal identification and data collection, you can provide valuable information for the conservation of wildlife.
+• See professionals for instruction to improve your citizen science abilities.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional services are not mentioned
+
+What to expect
+Join FoNNaP's Citizen Science Initiative!
+o Register for a bi-monthly game count or clean-up activity on the FoNNaP website. Attend a briefing by FoNNaP on data collection or clean-up procedures (if applicable). Participate in the citizen science activity alongside FoNNaP and KWS staff. Contribute to wildlife research and conservation efforts. Enjoy a day in the park surrounded by nature (may vary depending on the program).
+o Note: This is a citizen science program with recurring activities happening bi-monthly. The specific itinerary will vary depending on whether you participate in a game count or a clean-up activity.
+
+Cancellation policy
+o You can cancel and get a full refund if you do it at least 7 days before the experience starts.
+
+Durations
+2 - 3 hours
+
+Languages
+English
+
+Frequently asked questions
+Do I need prior experience?
+No prior experience is necessary! The program is open to anyone passionate about conservation.
+
+What will I be doing?
+You'll participate in game counts to track wildlife and assist with clean-up activities to remove litter. FoNNaP will train you on wildlife identification and data collection techniques.
+
+Who can participate?
+The program is open to anyone passionate about conservation.
+
+Where you'll be
+JV96+2C Nairobi`,
+    priceKESAdult: 1000,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Nairobi National Park",
+    partnerSlug: "friends-of-nairobi-national-park",
+    sourceUrl: "https://natuasili.com/st_tour/citizen-scientist-nairobi-park/",
+  },
+  {
+    title: "Karura Forest specialized eco‑tours",
+    id: "exp-karura-forest-tours",
+    slug: P("Karura Forest Specialized Eco Tours"),
+    partner: "Friends of Karura Forest",
+    destination: "nairobi",
+    themes: ["Conservation education"],
+    activities: ["forest", "eco-tour", "nature"],
+    images: [karuraForestPlanting, "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/images/placeholder-3.jpg"],
+    heroImage: karuraForestPlanting,
+    gallery: [karuraForestPlanting, "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/images/placeholder-3.jpg"],
+    description: `Overview
+Friends of Karura Forest is a non-profit dedicated to the preservation and administration of Karura Forest Reserve, a crucial green area in Nairobi. Friends of Karura Forest caters to your particular interests by providing a range of guided tours headed by enthusiastic and informed guides. Whether your interests are in the rich history and ecology of the forest, you are a budding botanist, a passionate birder, or just curious about Karura Forest. There is a tour meant to inspire you.
+
+Highlights
+• Explore Karura Forest Reserve, Nairobi's essential green lung, alongside a passionate and informed guide.
+• Choose a theme that interests you from the rich history and cultural relevance of the forest to its ecology and amazing animals.
+• Discover the unique flora and fauna of Karura Forest, including varied birdlife, primates, and other flora. Depending on your theme, you might incorporate bird watching and primate tracking.
+• Spend time in the natural surroundings to help you to value the need for preservation.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+Exploring Karura with an expert guide
+o Arrive at the designated meeting point at the Friends of Karura Forest visitor center
+o Meet your guide and discuss your chosen tour theme (ecology, birdwatching, primates, history & culture, etc.).
+o Embark on your guided forest exploration. Depending on your chosen focus, your guide will tailor the experience to your interests, highlighting:
+o Spotting various bird species (birdwatching tour)
+o Learning about plant identification and ecological processes (ecology tour)
+o Tracking primates like colobus monkeys (primate tracking tour)
+o Wrap up your tour at the Visitors Center. Learn more about Friends of Karura Forest's ongoing conservation efforts and how you can get involved.
+o Enjoy some leisure time exploring the forest further on your own (be sure to stay on designated trails).
+
+Cancellation policy
+o You can cancel up to 24 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What should I wear on the tour?
+Comfortable walking clothes and sturdy shoes are essential. Long pants and sleeves are recommended for sun protection and to avoid insect bites. Dress according to the weather conditions; a hat and rain jacket are good options to bring along.
+
+What is the difficulty level of the walks?
+The terrain in Karura Forest can vary from flat paths to gentle slopes. Friends of Karura Forest will work with you to choose a tour that suits your fitness level.
+
+Are there any restrictions in the forest?
+Yes, for the protection of the forest and wildlife, there are some restrictions. Smoking, littering, and loud noises are not permitted. You should also stay on designated trails and avoid going off-road.
+
+What should I bring on the tour?
+o A refillable water bottle to stay hydrated.
+o Sunscreen and insect repellent.
+o A camera to capture your forest adventure (optional).
+Most importantly, bring your spirit of nature and adventure!
+
+What can I expect on a Friends of Karura Forest tour?
+The tours are designed to be immersive experiences tailored to your interests. You can expect to explore the diverse plant and animal life of Karura Forest, led by a knowledgeable guide who will share fascinating insights about the forest's ecology, history, and cultural significance.
+Friends of Karura Forest offers a variety of tours tailored to suit different interests. Whether you like studying plants, watching birds, learning history, or just exploring the forest, there is a tour for you. When booking your tour, kindly share your interests to create a personalized experience.
+
+Where you'll be
+QR38+3V Nairobi`,
+    priceKESAdult: 1500,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Karura Forest, Nairobi",
+    partnerSlug: "friends-of-karura-forest",
+    sourceUrl: "https://natuasili.com/st_tour/karura-forest-specialized-eco-tours/",
+  },
   // Additional experiences would continue here with their full details...
 ];
 
