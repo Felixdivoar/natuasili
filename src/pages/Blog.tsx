@@ -345,7 +345,7 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                     </p>
                     
                     <Link to={`/blog/${post.slug}`}>
-                      <Button className="w-full">
+                      <Button className="w-full bg-black text-white">
                         Read more
                       </Button>
                     </Link>
