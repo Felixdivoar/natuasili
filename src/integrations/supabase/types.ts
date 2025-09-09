@@ -559,6 +559,66 @@ export type Database = {
         }
         Relationships: []
       }
+      review_helpful_votes: {
+        Row: {
+          created_at: string
+          id: string
+          review_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          review_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          review_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          booking_id: string
+          comment: string
+          created_at: string
+          experience_id: string
+          helpful_count: number
+          id: string
+          rating: number
+          updated_at: string
+          user_id: string
+          verified: boolean
+        }
+        Insert: {
+          booking_id: string
+          comment: string
+          created_at?: string
+          experience_id: string
+          helpful_count?: number
+          id?: string
+          rating: number
+          updated_at?: string
+          user_id: string
+          verified?: boolean
+        }
+        Update: {
+          booking_id?: string
+          comment?: string
+          created_at?: string
+          experience_id?: string
+          helpful_count?: number
+          id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+          verified?: boolean
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
