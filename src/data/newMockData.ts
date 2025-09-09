@@ -85,7 +85,7 @@ export const mockProjects: Project[] = uniquePartners.map((partner, index) => {
 // Convert partner experiences to mock experiences with consistent specs
 export const mockExperiences: Experience[] = EXPERIENCES.map((partnerExp, index) => {
   const project = mockProjects.find(p => p.name === partnerExp.partner);
-  const specs = EXPERIENCE_SPECS[partnerExp.slug] || { duration_hours: 3, capacity: 12 };
+  const specs = EXPERIENCE_SPECS[partnerExp.slug] || { duration_hours: 3, capacity: null };
   const themes = EXPERIENCE_THEMES[partnerExp.slug] || partnerExp.themes;
   
   return {

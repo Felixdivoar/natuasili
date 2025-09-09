@@ -64,6 +64,7 @@ export const DICT = {
     exp_hour: "hour",
     exp_hours: "hours",
     exp_conservation_partner: "Conservation Partner",
+    exp_no_limit: "No limit",
     
     // Destination Carousels
     dest_experiences_in: "Experiences in",
@@ -369,6 +370,7 @@ export const DICT = {
     exp_hour: "heure",
     exp_hours: "heures",
     exp_conservation_partner: "Partenaire de Conservation",
+    exp_no_limit: "Aucune limite",
     
     // Destination Carousels
     dest_experiences_in: "Expériences à",
@@ -674,6 +676,7 @@ export const DICT = {
     exp_hour: "Stunde",
     exp_hours: "Stunden",
     exp_conservation_partner: "Naturschutz-Partner",
+    exp_no_limit: "Unbegrenzt",
     
     // Destination Carousels
     dest_experiences_in: "Erfahrungen in",
@@ -979,6 +982,7 @@ export const DICT = {
     exp_hour: "hora",
     exp_hours: "horas",
     exp_conservation_partner: "Socio de Conservación",
+    exp_no_limit: "Sin límite",
     
     // Destination Carousels
     dest_experiences_in: "Experiencias en",
