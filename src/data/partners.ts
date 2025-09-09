@@ -922,7 +922,7 @@ Can I participate in flying the drones?
 Piloting the drones is done by trained MEP personnel.
 
 Important information
-o The $500 all - inclusive donation paid to MEP
+o KES 66,000 per group (minimum 2 people) - all-inclusive donation paid to MEP
 o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our
 headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and
 no minimum donation is required.
@@ -932,7 +932,7 @@ work. We would ask for a minimum donation of $1,000 per group for this experienc
 
 Where you'll be
 6GCQR5P4+24`,
-    priceKESAdult: 26000,
+    priceKESAdult: 66000,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Masai Mara",
@@ -996,7 +996,7 @@ Can I participate if I have no prior research experience?
 Absolutely! This program is designed for anyone passionate about elephants and conservation, regardless of scientific background. The MEP team will provide all necessary training and guidance throughout the experience.
 
 Important information
-o The $500 all - inclusive donation paid to MEP
+o KES 66,000 per group (minimum 2 people) - all-inclusive donation paid to MEP
 o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our
 headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and
 no minimum donation is required.
@@ -1006,7 +1006,7 @@ work. We would ask for a minimum donation of $1,000 per group for this experienc
 
 Where you'll be
 6GCQR5P4+24`,
-    priceKESAdult: 26000,
+    priceKESAdult: 66000,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Masai Mara",
