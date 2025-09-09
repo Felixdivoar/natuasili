@@ -214,73 +214,226 @@ const ExperienceDetail = () => {
       cancellation: "",
       duration: "",
       languages: "",
-      faqs: [] as {question: string, answer: string}[]
+      faqs: [] as {question: string, answer: string}[],
+      importantInfo: [] as string[]
     };
 
-    // For Giraffe Centre experience, use the structured content
-    if (experience.slug === "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew") {
-      sections.overview = "The African Fund for Endangered Wildlife (AFEW) is a non-profit dedicated to the breeding and preservation of the threatened Rothschild giraffe; it is situated just outside Nairobi National Park. It presents the Giraffe Center experience, which is the main tourist attraction. Here, you will learn about these amazing animals by visiting on a guided tour or self-guided walk; you can even hand-feed them from a raised platform!";
-      
-      sections.highlights = [
-        "Learn about the East African native vulnerable species called the Rothschild giraffe.",
-        "From a dedicated viewing deck, observe giraffes up close and even feed them.",
-        "Learn about AFEW's giraffe breeding program and efforts at conservation."
-      ];
+    // Experience-specific content based on slug
+    switch (experience.slug) {
+      case "colobus-monkey-eco-tour-in-diani-kenya":
+        sections.overview = "Founded in Diani, Kenya, Colobus Conservation is a non-profit committed to the protection of primates, especially the threatened Angolan black and white colobus monkeys. Through habitat protection, educational campaigns, rescue, and rehabilitation projects, it seeks to safeguard primates. The only primate eco-tour in the nation, it presents a special chance to see a colonized troop of colobus monkeys in their natural environment.";
+        sections.highlights = [
+          "Guided nature walk through a scenic trail",
+          "Depending on sightings, encounter variety of colobus monkeys, vervet monkeys, Sykes's monkeys, and baboons among other primates.",
+          "Discover the critical contribution Colobus Conservation makes to primate research and protection."
+        ];
+        sections.included = ["A friendly professional guide"];
+        sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+        sections.itinerary = [
+          {
+            title: "Encountering colobus monkeys and other primates",
+            description: "Arrive at Colobus Conservation and meet your guide and embark on a guided walk along the trail. Observe a habituated troop of colobus monkeys and other primates. Attend a talk at the information center to learn about Colobus Conservation's activities."
+          }
+        ];
+        sections.cancellation = "You can cancel up to 24 hours before the experience starts for a full refund.";
+        sections.duration = "0 - 2 hours";
+        sections.languages = "English";
+        sections.faqs = [
+          {
+            question: "What primates can I expect to see?",
+            answer: "You are most likely to see colobus monkeys, but vervet monkeys, Sykes' monkeys, and baboons are also frequent visitors to the area."
+          },
+          {
+            question: "What are the opening hours?",
+            answer: "Guided eco-tours are offered Monday to Saturday from 8:30 AM to 4:00 PM. The center is closed for eco-tours on Sundays."
+          },
+          {
+            question: "Is this a good tour for children?",
+            answer: "Yes, this tour is perfect for families with children who are interested in learning about monkeys."
+          }
+        ];
+        break;
 
-      sections.included = ["A friendly professional guide"];
-      sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+      case "coral-conservation-experience-with-reefolution":
+        sections.overview = "As the leading coral restoration project in Africa, REEFolution is focused on safeguarding Kenyan coral reefs. To equip people to be champions of coral preservation, they provide a range of events combining education, scientific inquiry, and practical activities.";
+        sections.highlights = [
+          "Discover the inspirational path REEFolution is on and how it will impact the restoration of coral reefs.",
+          "Attend an interactive workshop to learn about the value of coral reefs and their challenges.",
+          "Discover the creative coral restoration methods developed by REEFolution, ranging from outplanting to underwater nurseries."
+        ];
+        sections.included = ["A friendly professional guide"];
+        sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+        sections.itinerary = [
+          {
+            title: "Dive into REEFolution!",
+            description: "Arrive at the REEFolution center. Participate in an interactive workshop led by REEFolution scientists. Learn about REEFolution's story, coral reef science, and restoration techniques. Leave empowered to become an advocate for coral reef conservation."
+          }
+        ];
+        sections.cancellation = "You can cancel up to 48 hours before the experience starts for a full refund.";
+        sections.duration = "2 - 3 hours";
+        sections.languages = "English";
+        sections.faqs = [
+          {
+            question: "What are the different program options?",
+            answer: "Land-based program: Ideal for families and those who prefer to stay dry. Snorkel and Learn: Combines a workshop with a guided snorkeling tour. Dive and restore: Designed for certified divers who want to participate in coral planting actively; includes a workshop and guided dive."
+          },
+          {
+            question: "How long are the programs?",
+            answer: "Land-based is half-day, snorkel & learn and dive & restore are full-day."
+          },
+          {
+            question: "What will I learn in the workshop?",
+            answer: "You'll learn about the vital role coral reefs play in the ecosystem, the threats they face, and REEFolution's restoration techniques."
+          },
+          {
+            question: "Can I contribute to coral restoration?",
+            answer: "Depending on the program, you might have the opportunity to plant coral fragments and directly aid in reef restoration."
+          },
+          {
+            question: "How can I contribute?",
+            answer: "All programs raise awareness and support REEFolution's efforts. You are welcome to donate to restore more reefs, intensify our research, train new rangers and activate more locals."
+          }
+        ];
+        break;
 
-      sections.itinerary = [
-        {
-          title: "Meet the giraffes",
-          description: "Arrive at the Giraffe Centre and proceed to the giraffe feeding platform. Observe and interact with the Rothschild giraffes, learning about their unique characteristics and ecological importance. Take photos while feeding the giraffes pellets from a raised platform. Browse the gift shop for educational souvenirs (optional)."
-        }
-      ];
+      case "ocean-wonders-learn-conserve-with-local-ocean-conservation-kenya":
+        sections.overview = "With an eye toward sea turtles, Local Ocean Conservation is a non-profit committed to safeguarding Kenya's marine habitat. They provide an interesting day trip meant to educate visitors about the ocean and motivate behavior in favor of conservation. Families, outdoor enthusiasts, and everyone else interested in the marine environment will find ideal use for this informative day trip.";
+        sections.highlights = [
+          "Learn about the various sea turtle species, their life cycle, and the threats that they encounter.",
+          "See LOC's work toward sea turtle protection and rehabilitation.",
+          "Learn the value of the marine ecosystem and the need of its preservation."
+        ];
+        sections.included = ["A friendly professional guide"];
+        sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+        sections.itinerary = [
+          {
+            title: "LOC: Protecting the Ocean Through Action",
+            description: "Arrive at the Local Ocean Conservation center. Join a guided tour about sea turtles, their life cycle, and the challenges they face. Learn about the marine ecosystem and the importance of its conservation. Consider making a donation to further support LOC's vital work (optional)."
+          }
+        ];
+        sections.cancellation = "You can cancel up to 48 hours before the experience starts for a full refund.";
+        sections.duration = "0 - 2 hours";
+        sections.languages = "English";
+        sections.faqs = [
+          {
+            question: "What can I expect on the tour?",
+            answer: "The tour includes guided talks about sea turtles and the marine ecosystem, showcasing LOC's conservation efforts."
+          },
+          {
+            question: "Is this tour suitable for children?",
+            answer: "Yes, this educational day trip is perfect for families!"
+          },
+          {
+            question: "What can I do to contribute further?",
+            answer: "Consider making a donation or spreading awareness about ocean conservation after your visit."
+          }
+        ];
+        sections.importantInfo = [
+          "The goal is to get healthy sea turtles back into the ocean as soon as possible, so you might not always see them here during your visit.",
+          "Tours are offered hourly for your convenience. The specific details may vary slightly depending on the tour guide and available resources.",
+          "Please note that LOC is closed on Saturday afternoon, Sundays and all Public Holidays."
+        ];
+        break;
 
-      sections.cancellation = "Cancel up to 24 hours in advance to receive a full refund. Cancellations made less than 24 hours before the tour start are non-refundable.";
-      sections.duration = "0 - 2 hours";
-      sections.languages = "English";
+      case "tree-walk-kenya-forest-heritage":
+        sections.overview = "Trees are the lifeline of our planet, providing oxygen, shelter, and vital ecosystems for wildlife. The Tree walk, organized by Nature Kenya's Plant Committee, offers a unique opportunity to explore Kenya's diverse forests, learn about indigenous and exotic tree species, and understand the crucial role trees play in conservation and climate resilience. Whether in forests, botanical gardens, or urban green spaces, this guided walk helps participants connect with nature while deepening their knowledge of Kenya's rich plant biodiversity.";
+        sections.highlights = [
+          "Discover Kenya's rich tree heritage by exploring its indigenous and exotic species.",
+          "Engage in conservation by understanding the importance of reforestation and sustainable land use.",
+          "Experience nature up close with expert-led walks through forests and parks"
+        ];
+        sections.included = ["A friendly professional guide"];
+        sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+        sections.itinerary = [
+          {
+            title: "Explore Kenya's forest heritage",
+            description: "Start the day at 8:30 AM with a warm welcome and introduction at the designated meeting point. Get an insightful overview of Kenya's tree diversity, the significance of conservation, and a briefing on the walk, including safety guidelines and key highlights. Embark on a guided forest exploration, identifying diverse tree species while learning about their medicinal, indigenous, and exotic origins. Discover their ecological significance and observe how trees support wildlife, soil stability, and water conservation. Engage in interactive learning as you explore the challenges facing forests, from deforestation and climate change to urbanization. Gain hands-on insights into tree planting and care for reforestation efforts while uncovering the cultural and historical significance of various tree species."
+          }
+        ];
+        sections.cancellation = "You can cancel up to 48 hours before the experience starts for a full refund.";
+        sections.duration = "0 - 2 hours, 2 - 3 hours, 3 - 5 hours";
+        sections.languages = "English";
+        sections.faqs = [
+          {
+            question: "What should I bring?",
+            answer: "Bring comfortable walking shoes, a hat and sunscreen for protection, a water bottle to stay hydrated, and optionally, a notebook or field guide for a more immersive experience."
+          },
+          {
+            question: "Do I need prior knowledge of trees?",
+            answer: "No! The walk is open to everyone, and guides will help with identification and learning."
+          },
+          {
+            question: "Is the walk suitable for children?",
+            answer: "Yes! The Tree Walk is a great educational experience for all ages."
+          },
+          {
+            question: "How often do Tree Walks take place?",
+            answer: "They are held once a month at different locations."
+          }
+        ];
+        break;
 
-      sections.faqs = [
-        {
-          question: "What can I expect on a visit to the Giraffe Centre?",
-          answer: "You can expect to learn about giraffes, observe them from a viewing platform, and even feed them a special pellet treat. You may also see other animals and explore the nature sanctuary."
-        },
-        {
-          question: "How long should one factor to spend at the centre?",
-          answer: "For a fulfilling experience, we recommend you plan for a 1.5 to two hour visit. This gives you enough time to feed and interact with the giraffes, attend an informative lecture on the giraffe and other wildlife, take a walk in our serene Nature Conservancy and even have a snack at our Tea House."
-        },
-        {
-          question: "Is this a good activity for children?",
-          answer: "Absolutely! Children will love getting up close to the giraffes and learning about their conservation."
-        },
-        {
-          question: "What time is the centre open?",
-          answer: "The centre is open from 9:00 AM to 5:00 PM every day including weekends and all public holidays."
-        },
-        {
-          question: "How can I support AFEW's conservation efforts?",
-          answer: "90 percent of funds collected from the entrance fees and sales in our gift shop and Tea House go towards conservation work. By visiting and/or making a purchase from the souvenir shop and the Teahouse, you contribute towards educating school children and teachers across Kenya. We encourage you to consider a tip for your guide. All our guides are Environmental Studies students who volunteer as Educators. If you wish to give towards a school trip or any other efforts, their Donation Page will give you more information. The entrance fee for the Giraffe Centre directly supports AFEW's work. You can also make a donation or purchase souvenirs from the gift shop."
-        },
-        {
-          question: "Can I purchase a gift card or gift certificate?",
-          answer: "Sure you can. Ask for any of these at the gift shop and an attendant will assist you."
-        }
-      ];
-    } else {
-      // Default content for other experiences
-      sections.overview = description;
-      sections.highlights = [
-        "Immersive conservation experience with expert guides",
-        "Direct contribution to wildlife and community protection",
-        "Traditional and modern conservation techniques",
-        "Authentic cultural exchange with local communities",
-        "90% of proceeds support partner initiatives"
-      ];
-      sections.included = ["Expert guide", "Conservation activities", "Local community interaction"];
-      sections.notIncluded = ["Transportation", "Personal expenses", "Gratuities"];
-      sections.duration = "6 hours";
-      sections.languages = "English, Swahili";
+      case "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew":
+        sections.overview = "The African Fund for Endangered Wildlife (AFEW) is a non-profit dedicated to the breeding and preservation of the threatened Rothschild giraffe; it is situated just outside Nairobi National Park. It presents the Giraffe Center experience, which is the main tourist attraction. Here, you will learn about these amazing animals by visiting on a guided tour or self-guided walk; you can even hand-feed them from a raised platform!";
+        sections.highlights = [
+          "Learn about the East African native vulnerable species called the Rothschild giraffe.",
+          "From a dedicated viewing deck, observe giraffes up close and even feed them.",
+          "Learn about AFEW's giraffe breeding program and efforts at conservation."
+        ];
+        sections.included = ["A friendly professional guide"];
+        sections.notIncluded = ["Personal expenses", "Insurance", "Drinks and meals", "Additional Services not mentioned"];
+        sections.itinerary = [
+          {
+            title: "Meet the giraffes",
+            description: "Arrive at the Giraffe Centre and proceed to the giraffe feeding platform. Observe and interact with the Rothschild giraffes, learning about their unique characteristics and ecological importance. Take photos while feeding the giraffes pellets from a raised platform. Browse the gift shop for educational souvenirs (optional)."
+          }
+        ];
+        sections.cancellation = "Cancel up to 24 hours in advance to receive a full refund. Cancellations made less than 24 hours before the tour start are non-refundable.";
+        sections.duration = "0 - 2 hours";
+        sections.languages = "English";
+        sections.faqs = [
+          {
+            question: "What can I expect on a visit to the Giraffe Centre?",
+            answer: "You can expect to learn about giraffes, observe them from a viewing platform, and even feed them a special pellet treat. You may also see other animals and explore the nature sanctuary."
+          },
+          {
+            question: "How long should one factor to spend at the centre?",
+            answer: "For a fulfilling experience, we recommend you plan for a 1.5 to two hour visit. This gives you enough time to feed and interact with the giraffes, attend an informative lecture on the giraffe and other wildlife, take a walk in our serene Nature Conservancy and even have a snack at our Tea House."
+          },
+          {
+            question: "Is this a good activity for children?",
+            answer: "Absolutely! Children will love getting up close to the giraffes and learning about their conservation."
+          },
+          {
+            question: "What time is the centre open?",
+            answer: "The centre is open from 9:00 AM to 5:00 PM every day including weekends and all public holidays."
+          },
+          {
+            question: "How can I support AFEW's conservation efforts?",
+            answer: "90 percent of funds collected from the entrance fees and sales in our gift shop and Tea House go towards conservation work. By visiting and/or making a purchase from the souvenir shop and the Teahouse, you contribute towards educating school children and teachers across Kenya. We encourage you to consider a tip for your guide. All our guides are Environmental Studies students who volunteer as Educators. If you wish to give towards a school trip or any other efforts, their Donation Page will give you more information. The entrance fee for the Giraffe Centre directly supports AFEW's work. You can also make a donation or purchase souvenirs from the gift shop."
+          },
+          {
+            question: "Can I purchase a gift card or gift certificate?",
+            answer: "Sure you can. Ask for any of these at the gift shop and an attendant will assist you."
+          }
+        ];
+        break;
+
+      default:
+        // Default content for other experiences
+        sections.overview = description;
+        sections.highlights = [
+          "Immersive conservation experience with expert guides",
+          "Direct contribution to wildlife and community protection",
+          "Traditional and modern conservation techniques",
+          "Authentic cultural exchange with local communities",
+          "90% of proceeds support partner initiatives"
+        ];
+        sections.included = ["Expert guide", "Conservation activities", "Local community interaction"];
+        sections.notIncluded = ["Transportation", "Personal expenses", "Gratuities"];
+        sections.duration = "6 hours";
+        sections.languages = "English, Swahili";
+        break;
     }
 
     return sections;
@@ -536,7 +689,7 @@ const ExperienceDetail = () => {
           {/* What to expect */}
           <section>
             <h2 className="text-2xl font-bold text-foreground mb-6">What to expect</h2>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible defaultValue="itinerary" className="w-full">
               <AccordionItem value="itinerary">
                 <AccordionTrigger>Itinerary</AccordionTrigger>
                 <AccordionContent>
@@ -580,7 +733,7 @@ const ExperienceDetail = () => {
           {contentSections.faqs.length > 0 && (
             <section>
               <h2 className="text-2xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
-              <Accordion type="single" collapsible className="w-full">
+              <Accordion type="single" collapsible defaultValue="faq-0" className="w-full">
                 {contentSections.faqs.map((faq, index) => (
                   <AccordionItem key={index} value={`faq-${index}`}>
                     <AccordionTrigger>{faq.question}</AccordionTrigger>
@@ -590,6 +743,25 @@ const ExperienceDetail = () => {
                   </AccordionItem>
                 ))}
               </Accordion>
+            </section>
+          )}
+
+          {/* Important information */}
+          {contentSections.importantInfo && contentSections.importantInfo.length > 0 && (
+            <section>
+              <h2 className="text-2xl font-bold text-foreground mb-6">Important information</h2>
+              <Card>
+                <CardContent className="p-6">
+                  <ul className="space-y-2">
+                    {contentSections.importantInfo.map((info, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <Info className="h-4 w-4 text-info mt-0.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{info}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
             </section>
           )}
 
@@ -608,43 +780,6 @@ const ExperienceDetail = () => {
                 googleMapsUrl={experience.googleMapsUrl}
               />
             </div>
-          </section>
-
-          {/* Important information */}
-          <section>
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('importantInfo', 'Important information')}</h2>
-            <Card>
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold mb-2 flex items-center gap-2">
-                      <Info className="h-4 w-4 text-info" />
-                      {t('whatToBring', 'What to bring')}
-                    </h3>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Comfortable walking shoes</li>
-                      <li>• Sun hat and sunscreen</li>
-                      <li>• Water bottle</li>
-                      <li>• Camera (optional)</li>
-                      <li>• Light jacket for early morning</li>
-                    </ul>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div>
-                    <h3 className="font-semibold mb-2">{t('knowBeforeGo', 'Know before you go')}</h3>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                      <li>• Activity involves moderate physical activity</li>
-                      <li>• Wildlife sightings cannot be guaranteed</li>
-                      <li>• Minimum age: 12 years</li>
-                      <li>• Not suitable for pregnant women</li>
-                      <li>• Subject to weather conditions</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </section>
 
           {/* Explore other options */}
