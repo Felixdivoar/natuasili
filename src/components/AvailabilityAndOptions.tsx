@@ -357,17 +357,6 @@ const AvailabilityAndOptions = ({
                   <CardContent className="p-6">
                      <div className="flex items-start justify-between mb-4">
                        <div className="flex-1">
-                         <div className="flex items-center gap-3 mb-2">
-                           <input 
-                             type="radio" 
-                             name="option" 
-                             value={option.id} 
-                             checked={selectedOption === option.id} 
-                             onChange={() => setSelectedOption(option.id as "standard")}
-                             className="w-4 h-4" 
-                             aria-label={option.name} 
-                           />
-                         </div>
 
                          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
                            <div className="flex items-center gap-1">
