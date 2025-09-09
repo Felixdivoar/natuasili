@@ -63,8 +63,8 @@ const ConservationPartnersCarousel = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4">
-                      <Badge className="bg-foreground text-background">
-                        <DynamicTranslated text={partner.themes[0]} />
+                      <Badge className="bg-foreground text-background hover:bg-foreground/90 transition-colors">
+                        <DynamicTranslated text={partner.themes[0]} asThemeLink className="text-background hover:text-background" />
                       </Badge>
                     </div>
                   </div>
