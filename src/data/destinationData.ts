@@ -1,40 +1,40 @@
 import { Destination, Experience, Theme } from './partners';
 
 // Experience duration and capacity mapping for consistency across the site
-export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity: number }> = {
-  // Nairobi experiences
-  "morning-bird-walk-with-nature-kenya": { duration_hours: 3, capacity: 12 },
-  "tree-walk-kenya-forest-heritage": { duration_hours: 2, capacity: 15 },
-  "dudu-walk-explore-the-world-of-insects": { duration_hours: 2, capacity: 10 },
-  "specialized-eco-tours-at-karura-forest": { duration_hours: 4, capacity: 20 },
-  "citizen-scientist-experience-at-nairobi-national-park": { duration_hours: 5, capacity: 8 },
-  "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew": { duration_hours: 2, capacity: 25 },
-  "sustainable-farm-experience-at-adventure-farm-karen": { duration_hours: 6, capacity: 15 },
+export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity: number | null }> = {
+  // Nairobi experiences - 7 total
+  "morning-bird-walk-with-nature-kenya": { duration_hours: 2, capacity: null },
+  "tree-walk-kenya-forest-heritage": { duration_hours: 2, capacity: null },
+  "dudu-walk-insect-exploration": { duration_hours: 2, capacity: null },
+  "specialized-eco-tours-at-karura-forest": { duration_hours: 2, capacity: null },
+  "citizen-scientist-experience-at-nairobi-national-park": { duration_hours: 4, capacity: null },
+  "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew": { duration_hours: 1, capacity: null },
+  "sustainable-farm-experience-at-adventure-farm-karen": { duration_hours: 3, capacity: null }, // 2-5 hours range, using middle
 
-  // Laikipia experiences  
-  "meet-the-last-northern-white-rhinos-at-ol-pejeta": { duration_hours: 3, capacity: 12 },
-  "night-game-drive-at-ol-pejeta-conservancy": { duration_hours: 4, capacity: 8 },
-  "become-a-k-9-handler-for-a-day-at-ol-pejeta": { duration_hours: 6, capacity: 6 },
-  "guided-bush-and-bird-walks-at-ol-pejeta": { duration_hours: 3, capacity: 10 },
-  "behind-the-scenes-ol-pejeta-chimpanzee-sanctuary": { duration_hours: 2, capacity: 15 },
-  "track-lions-and-aid-conservation-at-ol-pejeta": { duration_hours: 5, capacity: 8 },
+  // Laikipia experiences - 6 total  
+  "meet-the-last-northern-white-rhinos-at-ol-pejeta": { duration_hours: 1, capacity: null },
+  "night-game-drive-at-ol-pejeta-conservancy": { duration_hours: 2, capacity: 6 }, // min 2, max 6
+  "become-a-k-9-handler-for-a-day-at-ol-pejeta": { duration_hours: 2, capacity: 6 },
+  "guided-bush-and-bird-walks-at-ol-pejeta": { duration_hours: 2, capacity: null },
+  "behind-the-scenes-ol-pejeta-chimpanzee-sanctuary": { duration_hours: 1, capacity: 6 }, // min 2, max 6
+  "track-lions-and-aid-conservation-at-ol-pejeta": { duration_hours: 2, capacity: null }, // min 2, no max
 
-  // Samburu/Northern Kenya experiences
-  "sera-on-foot-rhino-tracking": { duration_hours: 3, capacity: 8 },
-  "community-led-elephant-experience-at-reteti": { duration_hours: 4, capacity: 12 },
-  "koija-cultural-village": { duration_hours: 3, capacity: 20 },
+  // Samburu/Northern Kenya experiences - 3 total
+  "sera-on-foot-rhino-tracking": { duration_hours: 2, capacity: null },
+  "community-led-elephant-experience-at-reteti": { duration_hours: 2, capacity: null },
+  "koija-cultural-village": { duration_hours: 2, capacity: null },
 
-  // Maasai Mara experiences
-  "drones-for-conservation-with-mara-elephant-project": { duration_hours: 4, capacity: 6 },
-  "elephant-researcher-experience-with-mara-elephant-project": { duration_hours: 6, capacity: 8 },
+  // Maasai Mara experiences - 2 total
+  "drones-for-conservation-with-mara-elephant-project": { duration_hours: 3, capacity: null }, // 2+ people, no max specified
+  "elephant-researcher-experience-with-mara-elephant-project": { duration_hours: 2, capacity: null }, // 2+ people, no max specified
 
-  // Baringo experiences
-  "giraffe-at-ruko-sanctuary": { duration_hours: 2, capacity: 15 },
+  // Baringo experiences - 1 total
+  "giraffe-at-ruko-sanctuary": { duration_hours: 2, capacity: null },
 
-  // Kenyan Coast experiences
-  "dive-into-coral-conservation-with-reefolution": { duration_hours: 4, capacity: 10 },
-  "colobus-conservation-guided-primate-eco-tours": { duration_hours: 3, capacity: 12 },
-  "ocean-wonders-learn-conserve-with-local-ocean-conservation-kenya": { duration_hours: 5, capacity: 15 },
+  // Kenyan Coast experiences - 3 total
+  "dive-into-coral-conservation-with-reefolution": { duration_hours: 2, capacity: null },
+  "colobus-conservation-guided-primate-eco-tours": { duration_hours: 1, capacity: null },
+  "ocean-wonders-learn-conserve-with-local-ocean-conservation-kenya": { duration_hours: 2, capacity: null },
 };
 
 // Destination-based experience groupings

@@ -871,6 +871,396 @@ Where you'll be
     sourceUrl: "https://natuasili.com/st_tour/k9-handler-day-ol-pejeta/",
   },
   {
+    title: "Meet the last northern white rhinos at Ol Pejeta Conservancy",
+    id: "exp-northern-white-rhinos",
+    slug: P("Meet Northern White Rhinos Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy",
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["rhino", "conservation", "wildlife"],
+    images: [northernWhiteRhinos, olPejeteRhino, olPejetaImg],
+    heroImage: northernWhiteRhinos,
+    gallery: [northernWhiteRhinos, olPejeteRhino, olPejetaImg],
+    description: `Overview
+Meet the last two northern white rhinos on Earth - Najin and Fatu - at Ol Pejeta Conservancy. This exclusive experience offers visitors the chance to observe these critically endangered animals and learn about the groundbreaking conservation efforts to save their species from extinction.
+
+Under 24-hour armed guard protection, these remarkable animals live in a specially designed enclosure where they can roam freely while being kept safe from poachers. This visit provides insight into the challenges facing rhino conservation and the innovative scientific approaches being used to preserve this subspecies.
+
+Operational Details
+• Duration: 1 hour
+• No maximum number of travelers
+• Available only to visitors with their own vehicles
+• Times: 8:30–9:30 AM and 3:00–4:00 PM
+• Meeting point: Morani Information Centre
+
+Highlights
+• Observe the last two northern white rhinos in existence
+• Learn about cutting-edge conservation science and reproductive technologies
+• Understand the challenges and successes of rhino protection efforts
+• Meet the dedicated rangers who protect these precious animals
+
+Included/Excluded
+• Professional guide and ranger escort
+• Educational briefing about northern white rhino conservation
+• Personal expenses
+• Vehicle (must bring your own)
+• Photography fees
+• Additional services not mentioned
+
+What to expect
+Northern White Rhino Experience
+o Arrive at Morani Information Centre at scheduled time (8:30 AM or 3:00 PM)
+o Meet your guide and receive briefing about the northern white rhinos and conservation efforts
+o Drive to the specially protected enclosure (own vehicle required)
+o Observe Najin and Fatu in their protected habitat with armed ranger escorts
+o Learn about the scientific efforts to save the subspecies through assisted reproduction
+o Photography opportunity with appropriate distance maintained
+
+Important information
+o Available only to visitors with their own vehicles
+o Two daily sessions: 8:30-9:30 AM and 3:00-4:00 PM
+o Meeting point is Morani Information Centre
+o No maximum group size but vehicle capacity applies
+o Photography allowed but flash photography prohibited
+
+Durations
+1 hour
+
+Languages
+English
+
+Frequently asked questions
+Can I touch or get close to the rhinos?
+No, for the safety of both visitors and the rhinos, a safe distance must be maintained at all times.
+
+Do I need my own vehicle?
+Yes, this experience is only available to visitors with their own vehicles.
+
+Are there specific times for visits?
+Yes, visits are scheduled twice daily: 8:30-9:30 AM and 3:00-4:00 PM.
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia`,
+    priceKESAdult: 3000,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/northern-white-rhinos-ol-pejeta/",
+  },
+  {
+    title: "Night game drive at Ol Pejeta Conservancy",
+    id: "exp-night-game-drive-ol-pejeta",
+    slug: P("Night Game Drive Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy",
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["night drive", "wildlife", "safari"],
+    images: [nightGameDrive, bigFiveTracking, olPejetaImg],
+    heroImage: nightGameDrive,
+    gallery: [nightGameDrive, bigFiveTracking, olPejetaImg],
+    description: `Overview
+Experience the African bush after dark on this thrilling night game drive at Ol Pejeta Conservancy. As the sun sets, a different world awakens - nocturnal predators begin their hunt, and the sounds of the African night come alive.
+
+Using powerful spotlights, your experienced guide will help you spot elusive nocturnal species that are rarely seen during daytime game drives. This is your chance to witness the natural behaviors of Africa's night hunters in their element.
+
+Operational Details
+• Duration: 2 hours
+• Minimum 2, maximum 6 travelers
+• Start time: 9:00 PM
+• Night vision equipment provided
+
+Highlights
+• Experience the African bush in complete darkness
+• Spot nocturnal predators including leopards, hyenas, and aardvarks
+• Listen to the symphony of African night sounds
+• Learn about nocturnal animal behaviors and adaptations
+
+Included/Excluded
+• Professional night guide
+• Spotlights and night vision equipment
+• Shared conservancy vehicle
+• Personal expenses
+• Photography equipment
+• Additional services not mentioned
+
+What to expect
+Night Safari Adventure
+o Meet at designated point at 9:00 PM for departure
+o Board the specially equipped night game drive vehicle with powerful spotlights
+o Drive through Ol Pejeta's diverse habitats searching for nocturnal wildlife
+o Use spotlights to observe animals in their natural nighttime behaviors
+o Learn about nocturnal adaptations and conservation challenges
+o Return approximately 2 hours after departure
+
+Important information
+o Minimum 2 travelers required for this experience
+o Maximum 6 travelers per vehicle
+o Starts promptly at 9:00 PM
+o Warm clothing recommended as temperatures drop at night
+o Camera with good low-light performance recommended
+
+Durations
+2 hours
+
+Languages
+English
+
+Frequently asked questions
+What animals might we see?
+Nocturnal species including leopards, hyenas, genets, aardvarks, and various owl species are commonly spotted.
+
+Is it safe to drive at night?
+Yes, all night drives are conducted with experienced guides in specially equipped vehicles with safety equipment.
+
+What should I bring?
+Warm clothing, camera with good low-light capability, and a sense of adventure!
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia`,
+    priceKESAdult: 4500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/night-game-drive-ol-pejeta/",
+  },
+  {
+    title: "Guided bush and bird walks at Ol Pejeta Conservancy",
+    id: "exp-bush-bird-walks-ol-pejeta",
+    slug: P("Bush Bird Walks Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy",
+    destination: "laikipia",
+    themes: ["Conservation education"],
+    activities: ["walking", "birds", "nature"],
+    images: [natureKenyaBirdwatching, olPejetaImg, "/images/placeholder-3.jpg"],
+    heroImage: natureKenyaBirdwatching,
+    gallery: [natureKenyaBirdwatching, olPejetaImg, "/images/placeholder-3.jpg"],
+    description: `Overview
+Explore Ol Pejeta Conservancy on foot during this early morning guided bush and bird walk. Led by experienced local guides, this walking safari offers an intimate experience with nature that's impossible to achieve from a vehicle.
+
+As you walk through different habitats, you'll learn to identify various bird species, track animal signs, and understand the intricate relationships within the ecosystem. The early morning timing ensures optimal wildlife activity and comfortable walking conditions.
+
+Operational Details
+• Duration: 2 hours
+• No maximum number of travelers
+• Start time: 6:30 AM
+• Walking safari with experienced guide
+
+Highlights
+• Explore Ol Pejeta on foot with expert local guides
+• Identify numerous bird species and their calls
+• Learn animal tracking and sign reading skills
+• Experience the conservancy's diverse ecosystems up close
+
+Included/Excluded
+• Professional walking guide
+• Bird identification materials
+• Safety briefing and equipment
+• Personal expenses
+• Binoculars (recommended to bring your own)
+• Additional services not mentioned
+
+What to expect
+Early Morning Bush Walk
+o Meet at designated point at 6:30 AM when wildlife is most active
+o Receive safety briefing and introduction to walking safari protocols
+o Begin guided walk through various habitats including grasslands and riverine areas
+o Learn bird identification techniques and animal tracking skills
+o Observe wildlife behavior patterns and ecosystem interactions
+o Return after approximately 2 hours of walking
+
+Important information
+o Early start at 6:30 AM for optimal wildlife viewing
+o No maximum group size but comfortable walking pace maintained
+o Suitable for most fitness levels
+o Closed shoes and long pants recommended
+o Bring water bottle and sun protection
+
+Durations
+2 hours
+
+Languages
+English
+
+Frequently asked questions
+How difficult is the walking?
+The walks are suitable for most fitness levels with moderate terrain and regular rest stops.
+
+What wildlife might we encounter?
+Various antelope species, possibly elephants at a distance, numerous bird species, and smaller mammals.
+
+Is it safe to walk in a wildlife area?
+Yes, all walks are conducted by experienced guides trained in wildlife safety protocols.
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia`,
+    priceKESAdult: 2000,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/bush-bird-walks-ol-pejeta/",
+  },
+  {
+    title: "Behind the Scenes – Ol Pejeta Sweetwaters Chimpanzee",
+    id: "exp-chimpanzee-sanctuary-ol-pejeta",
+    slug: P("Chimpanzee Sanctuary Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy",
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["chimpanzee", "sanctuary", "conservation"],
+    images: [chimpanzeeSanctuary, olPejetaImg, "/images/placeholder-3.jpg"],
+    heroImage: chimpanzeeSanctuary,
+    gallery: [chimpanzeeSanctuary, olPejetaImg, "/images/placeholder-3.jpg"],
+    description: `Overview
+Visit the Sweetwaters Chimpanzee Sanctuary, the only place in Kenya where you can observe chimpanzees. This behind-the-scenes experience provides insight into the care and rehabilitation of orphaned and abused chimpanzees rescued from across Africa.
+
+Established in 1993, the sanctuary is home to a group of chimpanzees living in a large, natural enclosure. Learn about their individual stories, complex social structures, and the dedicated care they receive from the sanctuary team.
+
+Operational Details
+• Duration: 1 hour
+• Minimum 2, maximum 6 travelers
+• Time: 11:45 AM – 12:45 PM
+• Behind-the-scenes access with sanctuary staff
+
+Highlights
+• Observe chimpanzees in their sanctuary habitat
+• Learn about individual chimpanzee stories and rehabilitation
+• Understand chimpanzee behavior and social structures
+• Meet the dedicated sanctuary care team
+
+Included/Excluded
+• Professional sanctuary guide
+• Behind-the-scenes access
+• Educational materials about chimpanzee conservation
+• Personal expenses
+• Photography fees
+• Additional services not mentioned
+
+What to expect
+Chimpanzee Sanctuary Experience
+o Arrive at Sweetwaters Chimpanzee Sanctuary at 11:45 AM
+o Meet sanctuary staff and receive briefing about the chimpanzees and their care
+o Observe the chimpanzee group in their large natural enclosure
+o Learn about individual chimpanzee stories and rehabilitation journey
+o Behind-the-scenes tour of sanctuary facilities and feeding areas
+o Q&A session with sanctuary caregivers about chimpanzee conservation
+
+Important information
+o Minimum 2 travelers required
+o Maximum 6 travelers per group
+o Fixed time slot: 11:45 AM – 12:45 PM daily
+o No direct contact with chimpanzees for safety reasons
+o Photography allowed but no flash photography
+
+Durations
+1 hour
+
+Languages
+English
+
+Frequently asked questions
+Can we interact directly with the chimpanzees?
+No, for the safety of both visitors and chimpanzees, no direct contact is allowed.
+
+Are these chimpanzees wild?
+These are rescued chimpanzees from various situations, now living in a semi-natural sanctuary environment.
+
+How many chimpanzees live here?
+The sanctuary is home to a group of chimpanzees, with numbers varying based on rescues and care needs.
+
+Where you'll be
+Sweetwaters Chimpanzee Sanctuary, Ol Pejeta Conservancy`,
+    priceKESAdult: 3500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/chimpanzee-sanctuary-ol-pejeta/",
+  },
+  {
+    title: "Track lions and aid conservation at Ol Pejeta Conservancy",
+    id: "exp-lion-tracking-ol-pejeta",
+    slug: P("Lion Tracking Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy",
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["lion", "tracking", "research"],
+    images: [lionTracking, bigFiveTracking, olPejetaImg],
+    heroImage: lionTracking,
+    gallery: [lionTracking, bigFiveTracking, olPejetaImg],
+    description: `Overview
+Join Ol Pejeta's lion research team for an authentic conservation experience. Participate in real lion tracking and data collection that contributes directly to the conservancy's lion conservation program.
+
+Using radio telemetry and traditional tracking methods, you'll help locate and monitor lions while learning about their behavior, challenges they face, and conservation strategies being implemented to protect them.
+
+Operational Details
+• Duration: 2 hours
+• Minimum 2 travelers, no maximum limit
+• Pick-up: 6:30 AM in shared conservancy vehicle
+• Tracking finishes around 8:30 AM
+• Guests must remain in vehicle at all times
+
+Highlights
+• Participate in real lion research and tracking
+• Use radio telemetry equipment to locate lions
+• Learn about lion behavior and conservation challenges
+• Contribute to ongoing lion monitoring efforts
+
+Included/Excluded
+• Professional research guide
+• Radio telemetry equipment
+• Shared conservancy vehicle with pick-up service
+• Data recording materials
+• Personal expenses
+• Photography equipment
+• Additional services not mentioned
+
+What to expect
+Lion Research Experience
+o Pick-up at 6:30 AM in shared conservancy vehicle
+o Brief on lion research methods and use of telemetry equipment
+o Drive to areas where lions are known to frequent
+o Use radio collars and traditional tracking to locate lions
+o Observe and record lion behavior data for research purposes
+o Learn about challenges facing lion conservation in Kenya
+o Return around 8:30 AM after completing tracking session
+
+Important information
+o Early pick-up at 6:30 AM in shared conservancy vehicle
+o Minimum 2 travelers required
+o No maximum group size but vehicle capacity applies
+o Guests must remain in vehicle at all times for safety
+o Weather dependent activity
+o Contribute to real conservation research
+
+Durations
+2 hours
+
+Languages
+English
+
+Frequently asked questions
+Will we definitely see lions?
+While lion sightings are likely due to radio tracking, wildlife encounters cannot be guaranteed.
+
+Can we get out of the vehicle?
+No, for safety reasons guests must remain in the vehicle at all times.
+
+Is this suitable for children?
+Yes, but children must be supervised and follow safety protocols.
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia`,
+    priceKESAdult: 4000,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/lion-tracking-ol-pejeta/",
+  },
+  {
     title: "Drones for conservation with Mara Elephant Project",
     id: "exp-drone-conservation-mep",
     slug: P("Drone Conservation Mara Elephant"),
