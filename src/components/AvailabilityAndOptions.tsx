@@ -144,8 +144,8 @@ const AvailabilityAndOptions = ({
         name: "Standard Experience",
         description: "Join our regular conservation experience with expert guides.",
         duration: experience.duration_hours || 3,
-        language: "English, Swahili",
-        pickup: "Hotel pickup available",
+        language: "English",
+        pickup: "Available on request",
         startTimes: ["9:00 AM", "2:00 PM"],
         adultPrice: standardAdultPrice,
         childPrice: standardChildPrice,
@@ -355,57 +355,50 @@ const AvailabilityAndOptions = ({
                   onClick={() => setSelectedOption(option.id as "standard")}
                 >
                   <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <input 
-                            type="radio" 
-                            name="option" 
-                            value={option.id} 
-                            checked={selectedOption === option.id} 
-                            onChange={() => setSelectedOption(option.id as "standard")}
-                            className="w-4 h-4" 
-                            aria-label={option.name} 
-                          />
-                          <h4 className="font-semibold text-lg">{option.name}</h4>
-                        </div>
+                     <div className="flex items-start justify-between mb-4">
+                       <div className="flex-1">
+                         <div className="flex items-center gap-3 mb-2">
+                           <input 
+                             type="radio" 
+                             name="option" 
+                             value={option.id} 
+                             checked={selectedOption === option.id} 
+                             onChange={() => setSelectedOption(option.id as "standard")}
+                             className="w-4 h-4" 
+                             aria-label={option.name} 
+                           />
+                         </div>
 
-                        <p className="text-muted-foreground mb-3">{option.description}</p>
+                         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
+                           <div className="flex items-center gap-1">
+                             <Clock className="h-4 w-4" />
+                             <span>{option.duration} hours</span>
+                           </div>
+                           <div className="flex items-center gap-1">
+                             <span role="img" aria-label="Languages">🗣️</span>
+                             <span>English</span>
+                           </div>
+                         </div>
 
-                        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{option.duration} hours</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span role="img" aria-label="Languages">🗣️</span>
-                            <span>{option.language}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            <span>{option.pickup}</span>
-                          </div>
-                        </div>
+                         <div className="flex flex-wrap gap-2 mb-3">
+                           {option.startTimes.map(time => (
+                             <Badge key={time} variant="outline" className="text-xs">
+                               {time}
+                             </Badge>
+                           ))}
+                         </div>
 
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          {option.startTimes.map(time => (
-                            <Badge key={time} variant="outline" className="text-xs">
-                              {time}
-                            </Badge>
-                          ))}
-                        </div>
-
-                        <div className="flex gap-4 text-sm">
-                          <div className="flex items-center gap-1 text-success">
-                            <CheckCircle className="h-4 w-4" />
-                            <span>{option.cancellation}</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-info">
-                            <CheckCircle className="h-4 w-4" />
-                            <span>{option.payLater}</span>
-                          </div>
-                        </div>
-                      </div>
+                         <div className="flex gap-4 text-sm">
+                           <div className="flex items-center gap-1 text-success">
+                             <CheckCircle className="h-4 w-4" />
+                             <span>{option.cancellation}</span>
+                           </div>
+                           <div className="flex items-center gap-1 text-info">
+                             <CheckCircle className="h-4 w-4" />
+                             <span>{option.payLater}</span>
+                           </div>
+                         </div>
+                       </div>
 
                       <div className="text-right ml-4">
                         <div className="space-y-1">
