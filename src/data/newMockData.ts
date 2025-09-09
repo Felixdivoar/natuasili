@@ -1,6 +1,7 @@
 // New mock data based on partners.ts experiences
 import { Project, Experience, User, Booking, ImpactProof, ProjectCategory, ActivityType } from '@/types';
 import { EXPERIENCES, Destination, Theme } from './partners';
+import { EXPERIENCE_SPECS, EXPERIENCE_THEMES } from './destinationData';
 import koijaCommunityImg from "@/assets/partner-koija-community.jpg";
 import seraConservancyImg from "@/assets/partner-sera-conservancy.jpg";
 import rukoConservancyImg from "@/assets/partner-ruko-conservancy.jpg";
@@ -81,9 +82,11 @@ export const mockProjects: Project[] = uniquePartners.map((partner, index) => {
   };
 });
 
-// Convert partner experiences to mock experiences
+// Convert partner experiences to mock experiences with consistent specs
 export const mockExperiences: Experience[] = EXPERIENCES.map((partnerExp, index) => {
   const project = mockProjects.find(p => p.name === partnerExp.partner);
+  const specs = EXPERIENCE_SPECS[partnerExp.slug] || { duration_hours: 3, capacity: 12 };
+  const themes = EXPERIENCE_THEMES[partnerExp.slug] || partnerExp.themes;
   
   return {
     id: (index + 1).toString(),
@@ -93,16 +96,16 @@ export const mockExperiences: Experience[] = EXPERIENCES.map((partnerExp, index)
     description: partnerExp.description,
     images: partnerExp.images,
     location_text: getLocationText(partnerExp.destination),
-    theme: convertTheme(partnerExp.themes),
+    theme: convertTheme(themes),
     activity_type: convertActivityType(partnerExp.activities),
-    duration_hours: Math.floor(Math.random() * 6) + 2, // 2-8 hours
-    base_price: partnerExp.priceKESAdult, // Use correct KES pricing
+    duration_hours: specs.duration_hours,
+    base_price: partnerExp.priceKESAdult,
     currency: 'KES',
     allocation_pct_project: 90,
     allocation_pct_platform: 10,
-    capacity: Math.floor(Math.random() * 15) + 5, // 5-20 people
+    capacity: specs.capacity,
     visible_on_marketplace: partnerExp.visibleOnMarketplace,
-    search_text: `${partnerExp.title.toLowerCase()} ${partnerExp.activities.join(' ')} ${partnerExp.destination} ${partnerExp.themes.join(' ')}`,
+    search_text: `${partnerExp.title.toLowerCase()} ${partnerExp.activities.join(' ')} ${partnerExp.destination} ${themes.join(' ')}`,
     created_at: '2023-04-01T10:00:00Z'
   };
 });

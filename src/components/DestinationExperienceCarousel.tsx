@@ -8,23 +8,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { mockExperiences } from "@/data/newMockData";
 import { Destination } from "@/data/partners";
 import ExperienceRatingDisplay from "./ExperienceRatingDisplay";
+import { filterExperiencesByDestination, formatDestinationName, getDestinationPath } from "@/utils/destinationUtils";
 interface DestinationExperienceCarouselProps {
   destination: Destination;
 }
-const destinationLabels: Record<Destination, string> = {
-  "nairobi": "Nairobi",
-  "coastal-kenya": "Coastal Kenya",
-  "samburu": "Samburu",
-  "masai-mara": "Masai Mara",
-  "laikipia": "Laikipia"
-};
-const destinationPaths: Record<Destination, string> = {
-  "nairobi": "nairobi",
-  "coastal-kenya": "coast",
-  "samburu": "samburu",
-  "masai-mara": "masai-mara",
-  "laikipia": "laikipia"
-};
+
 const getThemeColor = (theme: string) => {
   switch (theme) {
     case 'Wildlife Conservation':
@@ -40,45 +28,49 @@ const getThemeColor = (theme: string) => {
 export default function DestinationExperienceCarousel({
   destination
 }: DestinationExperienceCarouselProps) {
-  const {
-    formatPrice
-  } = useCurrency();
-  const {
-    t
-  } = useI18n();
+  const { formatPrice } = useCurrency();
+  const { t } = useI18n();
 
-  // Filter experiences by destination (need to convert from location_text to destination)
-  const destinationExperiences = mockExperiences.filter(exp => {
-    const locationMapping: Record<string, Destination> = {
-      'Nairobi, Kenya': 'nairobi',
-      'Coast Province, Kenya': 'coastal-kenya',
-      'Samburu County, Kenya': 'samburu',
-      'Maasai Mara, Kenya': 'masai-mara',
-      'Laikipia County, Kenya': 'laikipia'
-    };
-    return locationMapping[exp.location_text] === destination;
-  });
+  // Filter experiences by destination using the new utility function
+  const destinationExperiences = filterExperiencesByDestination(mockExperiences, destination);
+  
   if (destinationExperiences.length === 0) return null;
-  return <section className="bg-background py-[10px]">
-        <div className="max-w-[1150px] mx-auto px-[15px]">
+
+  const destinationName = formatDestinationName(destination);
+  const destinationPath = getDestinationPath(destination);
+
+  return (
+    <section className="bg-background py-[10px]">
+      <div className="max-w-[1150px] mx-auto px-[15px]">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-            <Link to={`/destinations/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
-              {t("dest_experiences_in")} {destinationLabels[destination]}
+            <Link 
+              to={`/destinations/${destinationPath}`} 
+              className="hover:text-primary transition-colors"
+            >
+              {t("dest_experiences_in")} {destinationName}
             </Link>
           </h2>
-          <Link to={`/destinations/${destinationPaths[destination]}`} className="text-primary hover:underline">
+          <Link 
+            to={`/destinations/${destinationPath}`} 
+            className="text-primary hover:underline"
+          >
             {t("dest_view_all")}
           </Link>
         </div>
 
         <Carousel className="w-full">
           <CarouselContent className="-ml-2 md:-ml-4">
-            {destinationExperiences.map(experience => <CarouselItem key={experience.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+            {destinationExperiences.map(experience => (
+              <CarouselItem key={experience.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Link to={`/experience/${experience.slug}`} className="group block">
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[4/3] overflow-hidden bg-muted">
-                      <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <img 
+                        src={experience.images[0]} 
+                        alt={experience.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                      />
                     </div>
                     <CardContent className="p-4">
                       <div className="space-y-3">
@@ -111,23 +103,25 @@ export default function DestinationExperienceCarousel({
                           </div>
                         </div>
 
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1">
-                              <span className="text-xs text-muted-foreground">{t("dest_from")}</span>
-                              <span className="text-foreground text-base font-extrabold">
-                                {formatPrice(experience.base_price)}
-                              </span>
-                            </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            <span className="text-xs text-muted-foreground">{t("dest_from")}</span>
+                            <span className="text-foreground text-base font-extrabold">
+                              {formatPrice(experience.base_price)}
+                            </span>
                           </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
                 </Link>
-              </CarouselItem>)}
+              </CarouselItem>
+            ))}
           </CarouselContent>
           <CarouselPrevious className="-left-4" />
           <CarouselNext className="-right-4" />
         </Carousel>
       </div>
-    </section>;
+    </section>
+  );
 }
