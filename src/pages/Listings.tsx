@@ -8,6 +8,8 @@ import { MapPin, Calendar, Clock } from "lucide-react";
 import { EXPERIENCES } from "@/data/partners";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { getDestinationFromCoordinates } from "@/utils/destinationUtils";
+import { Destination } from "@/data/partners";
 import T from "@/i18n/T";
 
 export default function Listings() {
@@ -17,11 +19,34 @@ export default function Listings() {
   const { formatPrice } = useCurrency();
   const [searchParams] = useSearchParams();
   const themeFilter = searchParams.get('theme');
+  const destinationFilter = searchParams.get('destination');
 
   // Hide any global booking overlay if it was left open
   useEffect(() => {
     document.querySelectorAll<HTMLElement>(".na-cta-bar,.na-btn-book-fab,.booking-modal").forEach(el => el.style.display = "");
   }, []);
+
+  // Helper function to convert location text to destination
+  const getDestinationFromLocation = (locationText: string): Destination => {
+    if (locationText.includes('Nairobi')) return 'nairobi';
+    if (locationText.includes('Coast') || locationText.includes('Coastal')) return 'coastal-kenya';
+    if (locationText.includes('Samburu')) return 'samburu';
+    if (locationText.includes('Maasai Mara') || locationText.includes('Mara')) return 'masai-mara';
+    if (locationText.includes('Laikipia')) return 'laikipia';
+    return 'nairobi'; // default
+  };
+
+  // Helper function to map URL destination params to internal destination IDs
+  const mapDestinationParam = (param: string): Destination | null => {
+    switch (param) {
+      case 'nairobi': return 'nairobi';
+      case 'coast': return 'coastal-kenya';
+      case 'samburu': return 'samburu';
+      case 'masai-mara': return 'masai-mara';
+      case 'laikipia': return 'laikipia';
+      default: return null;
+    }
+  };
 
   const filteredExperiences = EXPERIENCES.filter(experience => {
     const matchesSearch = experience.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -32,8 +57,17 @@ export default function Listings() {
       theme.toLowerCase().includes(themeFilter.toLowerCase()) ||
       themeFilter.toLowerCase().includes(theme.toLowerCase())
     );
+
+    // Check destination filter
+    const matchesDestination = !destinationFilter || (() => {
+      const expectedDestination = mapDestinationParam(destinationFilter);
+      if (!expectedDestination) return true; // If invalid param, show all
+      
+      const experienceDestination = getDestinationFromLocation(experience.locationText || '');
+      return experienceDestination === expectedDestination;
+    })();
     
-    return matchesSearch && matchesTheme;
+    return matchesSearch && matchesTheme && matchesDestination;
   });
 
   const sortedExperiences = [...filteredExperiences].sort((a, b) => {
