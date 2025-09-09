@@ -19,6 +19,7 @@ import ReviewSection from "@/components/ReviewSection";
 import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
 import NewAuthModal from "@/components/NewAuthModal";
 import GoogleMap from "@/components/GoogleMap";
+import { getExperienceCoordinates } from "@/utils/locationUtils";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -761,8 +762,8 @@ const ExperienceDetail = () => {
                 <span className="font-medium">{experience.locationText}</span>
               </div>
               <GoogleMap 
-                location={experience.locationText || "Giraffe Centre, Duma Road, Nairobi, Kenya"}
-                coordinates={experience.slug === "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew" ? [-1.2921, 36.7378] : [-1.2921, 36.8219]}
+                location={experience.locationText || "Experience Location"}
+                coordinates={getExperienceCoordinates(experience.description)}
                 height="h-64"
                 googleMapsUrl={experience.googleMapsUrl}
               />
