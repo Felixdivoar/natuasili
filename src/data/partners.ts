@@ -235,7 +235,7 @@ export const EXPERIENCES: Experience[] = [
     sourceUrl: "https://natuasili.com/st_tour/giraffe-at-ruko-sanctuary/",
   },
   {
-    title: "Colobus Conservation Guided Eco Tours",
+    title: "Colobus monkey eco-tour in Diani, Kenya",
     id: "exp-colobus-eco-tours",
     slug: P("Colobus Conservation Guided Eco Tours"),
     partner: "Colobus Conservation",
@@ -245,7 +245,49 @@ export const EXPERIENCES: Experience[] = [
     images: ["/lovable-uploads/1cbd1d3d-c30b-45be-a09e-8c9cc6f1f87b.png", "/lovable-uploads/1cbd3f9c-ed73-43d0-97e2-61830c34802f.png", "/lovable-uploads/a3c50985-66b9-4e12-a7dd-bb047e06a3e7.png", "/lovable-uploads/cb06fcce-173f-46a9-a2bc-f4a80c8711d0.png", "/lovable-uploads/0a4207e5-714a-4879-bbac-a99a5d456692.png", "/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/lovable-uploads/14b36cde-b5f2-4f18-a1de-85d5fa95baa7.png"],
     heroImage: "/lovable-uploads/1cbd1d3d-c30b-45be-a09e-8c9cc6f1f87b.png",
     gallery: ["/lovable-uploads/1cbd1d3d-c30b-45be-a09e-8c9cc6f1f87b.png", "/lovable-uploads/1cbd3f9c-ed73-43d0-97e2-61830c34802f.png", "/lovable-uploads/a3c50985-66b9-4e12-a7dd-bb047e06a3e7.png", "/lovable-uploads/cb06fcce-173f-46a9-a2bc-f4a80c8711d0.png", "/lovable-uploads/0a4207e5-714a-4879-bbac-a99a5d456692.png", "/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/lovable-uploads/14b36cde-b5f2-4f18-a1de-85d5fa95baa7.png"],
-    description: "Discover the fascinating world of Colobus monkeys and other primates along Kenya's coast. This guided eco-tour showcases conservation efforts to protect endangered primates while supporting local communities through sustainable tourism.",
+    description: `Overview
+Founded in Diani, Kenya, Colobus Conservation is a non-profit committed to the protection of primates, especially the threatened Angolan black and white colobus monkeys. Through habitat protection, educational campaigns, rescue, and rehabilitation projects, it seeks to safeguard primates.
+The only primate eco-tour in the nation, it presents a special chance to see a colonized troop of colobus monkeys in their natural environment.
+
+Highlights
+• Guided nature walk through a scenic trail
+• Depending on sightings, encounter variety of colobus monkeys, vervet monkeys, Sykes's monkeys, and baboons among other primates.
+• Discover the critical contribution Colobus Conservation makes to primate research and protection.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+Encountering colobus monkeys and other primates
+o Arrive at Colobus Conservation and meet your guide and embark on a guided walk along the trail.
+o Observe a habituated troop of colobus monkeys and other primates.
+o Attend a talk at the information center to learn about Colobus Conservation's activities.
+
+Cancellation policy
+o You can cancel up to 24 hours before the experience starts for a full refund.
+
+Durations 
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What primates can I expect to see?
+You are most likely to see colobus monkeys, but vervet monkeys, Sykes' monkeys, and baboons are also frequent visitors to the area.
+
+What are the opening hours?
+Guided eco-tours are offered Monday to Saturday from 8:30 AM to 4:00 PM. The center is closed for eco-tours on Sundays.
+
+Is this a good tour for children?
+Yes, this tour is perfect for families with children who are interested in learning about monkeys.
+
+Where you'll be
+MH47+6WQ`,
     priceKESAdult: 1500,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
@@ -254,7 +296,7 @@ export const EXPERIENCES: Experience[] = [
     sourceUrl: "https://natuasili.com/st_tour/colobus-conservation-guided-eco-tours/",
   },
   {
-    title: "Ocean Conservation Day – Watamu",
+    title: "Ocean Wonders: Learn & conserve with Local Ocean Conservation Kenya",
     id: "exp-ocean-day-watamu",
     slug: P("Ocean Conservation Day Watamu"),
     partner: "Local Ocean (Watamu)",
@@ -264,7 +306,54 @@ export const EXPERIENCES: Experience[] = [
     images: ["/lovable-uploads/a6c0b2b9-fd77-4472-a600-d2f163add078.png", "/lovable-uploads/145c30f9-65a9-4b28-87ad-97dac17376b7.png", "/lovable-uploads/33d3848b-2807-4161-b7b0-b1748f7e09b7.png", "/lovable-uploads/f93e78f2-5726-41ad-9f61-9a2f4ee5b1c4.png", "/lovable-uploads/c4575d2e-e1f6-4292-990c-760879abf32a.png", "/lovable-uploads/40debeaf-566e-4f53-9fd0-6b1103b26c65.png"],
     heroImage: "/lovable-uploads/a6c0b2b9-fd77-4472-a600-d2f163add078.png",
     gallery: ["/lovable-uploads/a6c0b2b9-fd77-4472-a600-d2f163add078.png", "/lovable-uploads/145c30f9-65a9-4b28-87ad-97dac17376b7.png", "/lovable-uploads/33d3848b-2807-4161-b7b0-b1748f7e09b7.png", "/lovable-uploads/f93e78f2-5726-41ad-9f61-9a2f4ee5b1c4.png", "/lovable-uploads/c4575d2e-e1f6-4292-990c-760879abf32a.png", "/lovable-uploads/40debeaf-566e-4f53-9fd0-6b1103b26c65.png"],
-    description: "Join a hands-on ocean conservation workshop in Watamu. Learn about marine ecosystems, participate in beach cleanups, and discover how local communities are protecting coral reefs and marine life along Kenya's coast.",
+    description: `Overview
+With an eye toward sea turtles, Local Ocean Conservation is a non-profit committed to safeguarding Kenya's marine habitat. They provide an interesting day trip meant to educate visitors about the ocean and motivate behavior in favor of conservation. Families, outdoor enthusiasts, and everyone else interested in the marine environment will find ideal use for this informative day trip.
+
+Highlights
+• Learn about the various sea turtle species, their life cycle, and the threats that they encounter.
+• See LOC's work toward sea turtle protection and rehabilitation.
+• Learn the value of the marine ecosystem and the need of its preservation.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+LOC: Protecting the Ocean Through Action
+o Arrive at the Local Ocean Conservation center.
+o Join a guided tour about sea turtles, their life cycle, and the challenges they face.
+o Learn about the marine ecosystem and the importance of its conservation.
+o Consider making a donation to further support LOC's vital work (optional).
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect on the tour?
+The tour includes guided talks about sea turtles and the marine ecosystem, showcasing LOC's conservation efforts.
+
+Is this tour suitable for children?
+Yes, this educational day trip is perfect for families!
+
+What can I do to contribute further?
+Consider making a donation or spreading awareness about ocean conservation after your visit.
+
+Important information
+o The goal is to get healthy sea turtles back into the ocean as soon as possible, so you might not always see them here during your visit.
+o Tours are offered hourly for your convenience. The specific details may vary slightly depending on the tour guide and available resources.
+o Please note that LOC is closed on Saturday afternoon, Sundays and all Public Holidays.
+
+Where you'll be
+JXFP+M4 Watamu`,
     priceKESAdult: 1000,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
@@ -377,16 +466,56 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
   },
   {
     title: "Guided bush and bird walks at Ol Pejeta Conservancy",
-    id: "exp-olp-bird-walks",
-    slug: P("Ol Pejeta Bush Bird Walks"),
-    partner: "Ol Pejeta Conservancy",
-    destination: "laikipia",
-    themes: ["Wildlife conservation"],
-    activities: ["birds", "walk"],
-    images: ["/lovable-uploads/4fcd9e54-4c77-4a54-88fe-56c8ddc0b495.png", "/lovable-uploads/6b43509e-3f29-49fc-9ca7-51d7eb537cc4.png", "/lovable-uploads/2b49cd5c-bbc6-4855-9d59-e470f0a468c3.png", "/lovable-uploads/7a00b231-76f0-474c-be46-287be6fabd2f.png", "/lovable-uploads/0780b556-7c56-434b-a8f3-4ce4736e1f6e.png", "/lovable-uploads/a78c368c-5b4a-4f2c-ad1e-5b0b6574dc59.png"],
-    heroImage: "/lovable-uploads/4fcd9e54-4c77-4a54-88fe-56c8ddc0b495.png",
-    gallery: ["/lovable-uploads/4fcd9e54-4c77-4a54-88fe-56c8ddc0b495.png", "/lovable-uploads/6b43509e-3f29-49fc-9ca7-51d7eb537cc4.png", "/lovable-uploads/2b49cd5c-bbc6-4855-9d59-e470f0a468c3.png", "/lovable-uploads/7a00b231-76f0-474c-be46-287be6fabd2f.png", "/lovable-uploads/0780b556-7c56-434b-a8f3-4ce4736e1f6e.png", "/lovable-uploads/a78c368c-5b4a-4f2c-ad1e-5b0b6574dc59.png"],
-    description: "Explore the diverse birdlife of Ol Pejeta Conservancy on guided bush walks. Spot endemic species, learn about bird behavior and habitats, and discover how conservation efforts protect avian biodiversity in this renowned wildlife sanctuary.",
+...
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help preserve wildlife. Apart from the last two northern white rhinos and the Big Five, it helps communities nearby with health and education initiatives.
+This informative walk brings you up close and personal with the sights, smells, and sounds of the African bush accompanied by one of the seasoned armed rangers. There is no better way to start the day! Beginning at the Morani Information Center at 6:30 am, this walk provides guests with an opportunity to learn about game routes, spoor identification, and Ol Pejeta's insects, birds, and smaller mammals. Although the walk is not difficult, given you will be walking for roughly 3 hours, a reasonable degree of fitness is needed. Visitors must make their way to the starting point.
+Your safari at Ol Pejeta offers an opportunity to help wildlife, rather than just a tour. Here, you will be involved in actual conservation efforts and help to create lasting change even after you depart.
+
+Highlights
+• Explore the African bush under a professional guide's direction.
+• View wildlife in their natural surroundings and learn their behaviors.
+• Let the sights, sounds, and smells of the African wilderness sink in.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+Wildlife Encounters Up Close
+o Arrive at Ol Pejeta Conservancy between 6:30 AM - 8:30 AM or 3:30 PM - 5:30 PM depending on your chosen time slot.
+o Meet your experienced ranger guide.
+o Embark on a guided walking tour through the African bush.
+o Immerse yourself in the sights, sounds, and smells of the African wilderness.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect on the walk?
+You'll be guided by experienced rangers who will share their knowledge of the wildlife, plants, and ecosystem. Expect to see various animals in their natural habitat and learn about their behaviors.
+
+How difficult is the walk?
+The terrain can vary, but the walks are generally designed to be accessible for most fitness levels.
+
+What should I wear?
+Comfortable clothing and shoes suitable for walking on uneven terrain are recommended. Carry sun cream and a hat.
+
+Important information
+o This activity is not suitable for children under the age of 12.
+o If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
@@ -396,16 +525,56 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
   },
   {
     title: "Night game drive at Ol Pejeta Conservancy",
-    id: "exp-olp-night-drive",
-    slug: P("Night Game Drive Ol Pejeta"),
-    partner: "Ol Pejeta Conservancy",
-    destination: "laikipia",
-    themes: ["Wildlife conservation"],
-    activities: ["game drive", "night"],
-    images: ["/lovable-uploads/fe11b3d0-bbb8-421a-a54a-c2343a14ec50.png", "/lovable-uploads/184835e0-a9f6-4d05-b918-916122306cde.png", "/lovable-uploads/de01b48a-1d89-4361-965c-8a19635529fb.png", "/lovable-uploads/0085ecb3-5101-4f26-a7e8-17cc6132e939.png"],
-    heroImage: "/lovable-uploads/fe11b3d0-bbb8-421a-a54a-c2343a14ec50.png",
-    gallery: ["/lovable-uploads/fe11b3d0-bbb8-421a-a54a-c2343a14ec50.png", "/lovable-uploads/184835e0-a9f6-4d05-b918-916122306cde.png", "/lovable-uploads/de01b48a-1d89-4361-965c-8a19635529fb.png", "/lovable-uploads/0085ecb3-5101-4f26-a7e8-17cc6132e939.png"],
-    description: "Experience the thrill of a night game drive in Ol Pejeta Conservancy. Discover nocturnal wildlife behavior, spot elusive predators, and learn about the unique challenges and opportunities of nighttime conservation work.",
+...
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help preserve wildlife. In addition to the last two northern white rhinos and the Big Five, it helps communities nearby with health and education initiatives.
+Being private, Ol Pejeta Conservancy permits night game drives—a rare activity in most Kenyan parks and reserves. These drives let visitors explore the conservancy past dark. Under a spotlight, you might find nocturnal creatures including bat-eared foxes, white-tailed mongooses, zorillas, and aardvarks. Usually daytime sleepers, lions are active at night, and you might even find a leopard. Dress for these drives in warm clothing.
+Guests staying in the conservancy pay for night game drives; pick-up from their camp or lodge comes from a shared vehicle. You'll have to remain in the car at all times; the drive takes two hours. Your safari at Ol Pejeta offers an opportunity to help wildlife, rather than just a tour. Here, you will be involved in actual conservation efforts and help to create lasting change even after you depart.
+
+Highlights
+• Discover the conservancy under the Kenyan night sky starry.
+• Search for unusual animals including aardvark, zorillas, bat-eared foxes, and maybe leopards or lions.
+• With a knowledgeable guide, explore the nocturnal side of the African wilderness.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+Unveiling Ol Pejeta after dark
+o Arrive at Ol Pejeta Conservancy in the late afternoon (depending on your chosen departure time).
+o Dress warmly in neutral-colored clothing.
+o Meet your expert guide and embark on a night game drive through the conservancy.
+o While sightings are not guaranteed, enjoy the thrill of exploring the African wilderness at night.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What animals can I expect to see?
+You might encounter aardvark, zorillas, bat-eared foxes, leopards, or even lions hunting.
+
+How many people can participate?
+The minimum is two people, and the vehicle can seat up to 6 people (not exclusive use).
+
+When are the night game drives offered?
+Daily between 7:00 PM - 9:00 PM EAT or 9:00 PM - 11:00 PM EAT.
+
+Important information
+o A minimum of 2 people is required. Single travelers will be charged the price for 2 people.
+o If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
@@ -414,7 +583,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/night-game-drive-ol-pejeta/",
   },
   {
-    title: "Northern White Rhinos – Ol Pejeta",
+    title: "Meet the last northern white rhinos at Ol Pejeta Conservancy",
     id: "exp-olp-white-rhinos",
     slug: P("Northern White Rhinos Ol Pejeta"),
     partner: "Ol Pejeta Conservancy",
@@ -424,7 +593,59 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     images: ["/lovable-uploads/ddffabed-5ad6-4675-9022-54618ae8d95c.png", "/lovable-uploads/e0c2d6be-e7b9-46ff-8698-69f4c3ac5482.png", "/lovable-uploads/23ba4555-4d41-4d60-8860-0473d504a374.png", "/lovable-uploads/2e44a99c-8c2a-4fec-bbac-16bd1b583a7c.png", "/lovable-uploads/f1cab140-4967-4cb8-b969-bc6cb5f7e5a2.png", "/lovable-uploads/7a7f3e4d-7620-47da-9471-f4c8e8d23021.png", "/lovable-uploads/b9acb433-0891-4a7b-993c-8faaedea607e.png", "/lovable-uploads/44794adc-45a9-4e30-b44a-39acc76a92ef.png"],
     heroImage: "/lovable-uploads/ddffabed-5ad6-4675-9022-54618ae8d95c.png",
     gallery: ["/lovable-uploads/ddffabed-5ad6-4675-9022-54618ae8d95c.png", "/lovable-uploads/e0c2d6be-e7b9-46ff-8698-69f4c3ac5482.png", "/lovable-uploads/23ba4555-4d41-4d60-8860-0473d504a374.png", "/lovable-uploads/2e44a99c-8c2a-4fec-bbac-16bd1b583a7c.png", "/lovable-uploads/f1cab140-4967-4cb8-b969-bc6cb5f7e5a2.png", "/lovable-uploads/7a7f3e4d-7620-47da-9471-f4c8e8d23021.png", "/lovable-uploads/b9acb433-0891-4a7b-993c-8faaedea607e.png", "/lovable-uploads/44794adc-45a9-4e30-b44a-39acc76a92ef.png"],
-    description: "Visit the last two northern white rhinos on Earth at Ol Pejeta Conservancy. Learn about groundbreaking conservation science, assisted reproduction efforts, and the race to save this species from extinction through innovative technology.",
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help preserve wildlife. Apart from the last two northern white rhinos and the Big Five, it helps communities nearby with health and education initiatives.
+Get a rare opportunity to meet Najin and Fatu, the last two northern white rhinos, from the Czech Republic, and learn how they got to Kenya. This encounter with these majestic creatures is more than just a tour; it's a close-up view to value their beauty and understand their background. It's an invitation to join the fight for years to come for a world rich in wildlife.
+Your safari at Ol Pejeta offers an opportunity to help wildlife, rather than just a tour. Here, you will be involved in actual conservation efforts and help to create lasting change even after you depart.
+
+Highlights
+• Observe the critically endangered northern white rhinos up close in a once-in-a-lifetime opportunity.
+• Learn about the incredible creatures from the committed keepers who care for them.
+• Contribute to conservation efforts with proceeds from the experience funding rhino preservation.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+Meet the Last Two Northern White Rhinos
+o Arrive at the Ol Pejeta Conservancy's Morani Information Centre.
+o Join a guided tour (offered daily at specific times) to meet Najin and Fatu.
+o Observe the northern white rhinos in their enclosure and learn about their story from the keepers.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+How rare are these rhinos?
+The northern white rhino subspecies is classified as critically endangered, with only Najin and Fatu remaining worldwide.
+
+What is included in the experience?
+The experience includes meeting the rhinos, hearing their story from the keepers, and contributing to conservation efforts.
+
+What should I wear?
+Wear closed shoes, sun protection, a hat, and neutral-colored clothing.
+
+Is this a rare opportunity?
+Absolutely! This is a chance to see the very last of their kind.
+
+What will I learn?
+Dedicated keepers will share their knowledge about the northern white rhinos and the fight for their survival.
+
+Important information
+o If you don't have transport to the starting point, we can pick you up within the conservancy for an extra fee.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
@@ -433,7 +654,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/northern-white-rhinos-ol-pejeta/",
   },
   {
-    title: "Sweetwaters Chimpanzee Conservation Tour",
+    title: "Behind the scenes – Ol Pejeta Sweetwaters Chimpanzee",
     id: "exp-olp-chimps",
     slug: P("Sweetwaters Chimpanzee Conservation Tour"),
     partner: "Ol Pejeta Conservancy",
@@ -443,7 +664,61 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     images: ["/lovable-uploads/e28a2b5d-1600-4e1d-8326-9d5d2bb9ce2a.png", "/lovable-uploads/dab51ea2-808e-4595-b1eb-a8c642771ee8.png", "/lovable-uploads/f7624043-059b-4465-b4eb-7c3889b13836.png", "/lovable-uploads/ba99b4d7-3625-469d-94d3-1f5fc368a7f4.png", "/lovable-uploads/4a267b87-b505-436d-998f-209ea2f328cd.png", "/lovable-uploads/78998175-ed38-4681-b7f8-ed4c03a3a517.png"],
     heroImage: "/lovable-uploads/e28a2b5d-1600-4e1d-8326-9d5d2bb9ce2a.png",
     gallery: ["/lovable-uploads/e28a2b5d-1600-4e1d-8326-9d5d2bb9ce2a.png", "/lovable-uploads/dab51ea2-808e-4595-b1eb-a8c642771ee8.png", "/lovable-uploads/f7624043-059b-4465-b4eb-7c3889b13836.png", "/lovable-uploads/ba99b4d7-3625-469d-94d3-1f5fc368a7f4.png", "/lovable-uploads/4a267b87-b505-436d-998f-209ea2f328cd.png", "/lovable-uploads/78998175-ed38-4681-b7f8-ed4c03a3a517.png"],
-    description: "Visit the only chimpanzee sanctuary in Kenya at Sweetwaters in Ol Pejeta Conservancy. Meet rescued chimpanzees, learn about their rehabilitation, and discover the important role of sanctuaries in primate conservation.",
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help preserve wildlife. Apart from the last two northern white rhinos and the Big Five, it helps communities nearby with health and education initiatives.
+At Ol Pejeta, find a rare chance to view chimpanzees behind the scenes and learn about their everyday care. Though not native to Kenya, chimpanzees face significant threats in the wild, mostly from habitat loss and commercial hunting for bushmeat. This encounter provides an exclusive glimpse into the efforts toward protection and care for these incredible animals.
+Your safari at Ol Pejeta offers an opportunity to help wildlife, rather than just a tour. Here, you will be involved in actual conservation efforts and help to create lasting change even after you depart.
+
+Highlights
+• Observe chimpanzees in their habitat and learn more about their daily lives.
+• Learn about the difficulties wild chimpanzees experience, including habitat loss and poaching.
+• See the commitment of those who take necessary care for the chimpanzees.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+A Unique Look at Chimpanzee Life
+o Arrive at the Sweetwaters Chimpanzee Sanctuary (transportation not included).
+o Check-in and participate in a brief orientation with a sanctuary staff member. Learn about the sanctuary's mission, the chimpanzees' history, and important safety protocols. Pass through a footbath to disinfect your shoes as a biosecurity measure.
+o Enter the designated viewing area for a unique behind-the-scenes look at the chimpanzees in their enclosures. Observe their social interactions, playful behaviors, and feeding time (conducted by caregivers only).
+o Depart from the chimpanzee sanctuary with a newfound appreciation for these remarkable primates.
+(Optional):
+o Explore the wider Ol Pejeta Conservancy on a game drive (not included in the behind-the-scenes tour) and see a variety of wildlife, including rhinos, lions, and zebras.
+o Visit the Equator marker located within the conservancy and snap a photo straddling two hemispheres!
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What role do sanctuaries play in protecting chimpanzee populations?
+Protecting threatened chimpanzee populations depends critically on sanctuaries such as Ol Pejeta. While they raise public awareness and education about conservation, they offer a safe refuge from threats including habitat destruction and illegal wildlife trade.
+
+How does this tour contribute to chimpanzee conservation?
+By taking part in this tour, you directly help the sanctuary to care for chimpanzees and increase awareness about the threats they endure.
+
+How can I get involved in chimpanzee conservation beyond this tour?
+You can donate to sanctuaries like the one at Ol Pejeta Conservancy or support groups striving to safeguard wild chimpanzees.
+
+Important information
+o Group Size: Limited to a minimum of 2 and a maximum of 8 people, subject to the welfare of the animals at the time of your visit.
+o No Physical Contact: Absolutely no physical contact is allowed between visitors and chimpanzees.
+o Feeding Restrictions: Visitors are not allowed to feed the chimpanzees; feeding is done exclusively by caregivers.
+o Health Requirements: If you are sick with a cold, flu, or any other contagious illness, a behind-the-scenes visit to the Chimpanzee Sanctuary will not be possible.
+o Photography: Photography is only allowed outside the chimps' houses.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
@@ -452,7 +727,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/sweetwaters-chimpanzee-conservation-tour/",
   },
   {
-    title: "Ol Pejeta Lion Tracking Tour",
+    title: "Track lions and aid conservation at Ol Pejeta Conservancy",
     id: "exp-olp-lion-tracking",
     slug: P("Ol Pejeta Lion Tracking Tour"),
     partner: "Ol Pejeta Conservancy",
@@ -462,7 +737,64 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     images: ["/lovable-uploads/467b343a-afeb-4589-b353-0cf3d27770a0.png", "/lovable-uploads/c007cec4-d0cc-4fb1-b485-3eeb6775a94c.png", "/lovable-uploads/70b7eda0-d99e-446c-8578-c9319f4a51dd.png", "/lovable-uploads/3dd9320f-34e0-4c8d-b544-4f37f422baed.png", "/lovable-uploads/47ac3560-325a-4ada-938e-9bd3fe01a740.png", "/lovable-uploads/c0fcad11-f3bd-46d5-824d-c9a22bf3dddf.png", "/lovable-uploads/31864571-d540-4db2-9138-efd52294f908.png"],
     heroImage: "/lovable-uploads/467b343a-afeb-4589-b353-0cf3d27770a0.png",
     gallery: ["/lovable-uploads/467b343a-afeb-4589-b353-0cf3d27770a0.png", "/lovable-uploads/c007cec4-d0cc-4fb1-b485-3eeb6775a94c.png", "/lovable-uploads/70b7eda0-d99e-446c-8578-c9319f4a51dd.png", "/lovable-uploads/3dd9320f-34e0-4c8d-b544-4f37f422baed.png", "/lovable-uploads/47ac3560-325a-4ada-938e-9bd3fe01a740.png", "/lovable-uploads/c0fcad11-f3bd-46d5-824d-c9a22bf3dddf.png", "/lovable-uploads/31864571-d540-4db2-9138-efd52294f908.png"],
-    description: "Track lions with expert guides and researchers at Ol Pejeta Conservancy. Learn about lion behavior, conservation challenges, and the latest tracking technology used to protect these apex predators in their natural habitat.",
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help preserve wildlife. Apart from the last two northern white rhinos and the Big Five, it helps communities nearby with health and education initiatives.
+Visit the conservancy for a unique experience, where visitors may actively help gather important research data by tracking collared lions. Should the collared lions go missing, you will record sightings of other lions, noting unique traits including nose spots, ear tears, and whisker spots. This practical knowledge is a great chance to learn about lions and provide the Ol Pejeta Ecological Monitoring Department with useful information. Have a wonderful experience while supporting the research and protection of these magnificent creatures.
+Guests are picked up in a shared conservancy vehicle either in morning tracking at 6:30 am or in afternoon tracking at 3:30 pm. Tracking ends at 5:30 pm and 8:30 am, respectively. You have to remain in the vehicle. You will be provided pens, lion ID sheets, and drinking water. We suggest packing binoculars and cameras.
+Your safari at Ol Pejeta offers an opportunity to help wildlife, rather than being only a tour. Here, you will be involved in actual conservation efforts and help to create lasting change even long after you depart.
+
+Highlights
+• Track lions with seasoned guides using radio collars.
+• To support conservation research, compile useful information on lion prides.
+• Find out about the challenges that Laikipia's lion population faces.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+Track and observe lions in their habitat
+o Arrive at Ol Pejeta Conservancy between 6:30 AM - 8:30 AM or 3:30 PM - 5:30 PM (tour times).
+o Meet your experienced guide and receive a briefing on the activity.
+o Participate in lion tracking using radio collars to locate prides.
+o Learn about lion conservation efforts at Ol Pejeta Conservancy.
+o Meet your guide and receive a briefing on safety procedures and data collection.
+o Participate in lion tracking using a receiver to locate collared lions.
+o Observe lion behavior and contribute data on the pride's activities.
+o Learn about lion conservation efforts at Ol Pejeta from your expert guide.
+o Enjoy this unique opportunity to be a part of lion conservation.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+Do I get to see lions up close?
+While sightings are not guaranteed, tracking collared lions increases your chances of encountering them. You'll observe from the vehicle for safety reasons.
+
+How does my participation help conservation?
+The data you collect aids research on lion behavior and helps find solutions to conservation challenges.
+
+Do I need to be an experienced tracker?
+No, prior experience is not required. Guides will assist with tracking.
+
+Can I get out of the vehicle?
+No, guests must remain in the vehicle for safety reasons.
+
+Important information
+o A minimum of 2 people is required. Single travelers will be charged the price for 2 people.
+o If you don't have transport to the starting point, we can pick you up within the conservancy for an extra fee.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
@@ -471,7 +803,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/ol-pejeta-lion-tracking-tour/",
   },
   {
-    title: "K9 Handler Day – Ol Pejeta",
+    title: "Become a K-9 handler for a day at Ol Pejeta Conservancy",
     id: "exp-olp-k9",
     slug: P("K9 Handler Day Ol Pejeta"),
     partner: "Ol Pejeta Conservancy",
@@ -481,7 +813,59 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     images: ["/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png", "/lovable-uploads/c74fc7f6-c650-4d6c-9b2c-7123506ef925.png", "/lovable-uploads/2770739e-51a9-4f26-9767-5be84bd9f971.png", "/lovable-uploads/9d7593b5-9eb0-4389-9d50-61779f55049b.png", "/lovable-uploads/a09a6ee9-42d5-4ce0-afe3-0e327f0bd89f.png", "/lovable-uploads/96953002-003d-4d4b-99dc-ef18a544f01f.png"],
     heroImage: "/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png",
     gallery: ["/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png", "/lovable-uploads/c74fc7f6-c650-4d6c-9b2c-7123506ef925.png", "/lovable-uploads/2770739e-51a9-4f26-9767-5be84bd9f971.png", "/lovable-uploads/9d7593b5-9eb0-4389-9d50-61779f55049b.png", "/lovable-uploads/a09a6ee9-42d5-4ce0-afe3-0e327f0bd89f.png", "/lovable-uploads/96953002-003d-4d4b-99dc-ef18a544f01f.png"],
-    description: "Spend a day with K9 anti-poaching units at Ol Pejeta Conservancy. Learn about the crucial role of detection dogs in wildlife protection, meet the handlers, and discover how these teams work to combat poaching and wildlife crime.",
+    description: `Overview
+Visitors to the unique protected area of Ol Pejeta Conservancy can directly help conserve wildlife. Apart from the last two northern white rhinos and the Big Five, it supports communities nearby with education and health programs.
+See Ol Pejeta's anti-poaching dog squad. Talk to the dog keepers to find out how to look after our specially trained canine team. Try to hide from the sniffer dogs during the kennel tour. To see whether the bloodhounds can locate you, run, jump, twist, turn, and hide within the Morani Information Center area. This is not only a lot of fun, but it also gives the dogs great training.
+Your safari at Ol Pejeta offers an opportunity to assist wildlife. Here, you will be involved in actual conservation efforts and help to create lasting change even after you depart.
+
+Highlights
+• Discover why the K-9 unit is so important for anti-poaching campaigns.
+• See other dog specialties including suspect apprehension, scent tracking, and ammunition detection.
+• Join a bloodhound in an interactive dog-tracking exercise. Watch it track a modeled poacher's scent or run and hide for the dog to find.
+
+Included/Excluded
+• A friendly professional guide
+• Conservancy entry fees
+• Personal expenses
+• Insurance
+• Donations towards supporting the organization
+
+What to expect
+Meet Ol Pejeta's K9 Heroes
+o Arrive at the Morani Information Centre at 8:30 AM (the designated starting point).
+o Meet the Ol Pejeta rangers and receive a briefing about the K9 unit's role in conservation.
+o Learn about the different specializations of the K9 dogs.
+o Gain valuable insights into anti-poaching efforts and the importance of K9 units.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect during the activity?
+You'll learn about the K-9 unit, participate in a tracking exercise with a bloodhound (both hiding and observing), and gain insights into their training.
+
+Is this activity safe?
+Yes, the activity is conducted in a controlled environment with experienced handlers.
+
+What should I wear?
+Closed shoes, sunscreen, and a hat are recommended. Opt for neutral-colored clothing.
+
+Can I bring children?
+This activity is not recommended for children under 12 years old.
+
+Important information
+o Physical interaction with the dogs will be relatively restricted.
+o This activity is not suitable for children under the age of 12.
+o If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
+
+Where you'll be
+2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     childHalfPriceRule: true,
     visibleOnMarketplace: true,
@@ -490,7 +874,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/k9-handler-day-ol-pejeta/",
   },
   {
-    title: "Dive into Coral Conservation (Reefolution)",
+    title: "Coral conservation experience with REEFolution",
     id: "exp-reef-coral",
     slug: P("Dive into Coral Conservation Reefolution"),
     partner: "Reefolution",
@@ -500,7 +884,57 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     images: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png", "/lovable-uploads/34e27ffd-1e7e-4e27-b73c-8c4a32dfaf96.png", "/lovable-uploads/e6f4a974-f663-48e0-8aa7-dcecd15fb88a.png", "/lovable-uploads/22d0e577-d64d-4381-a819-432a4c010611.png", "/lovable-uploads/6116148a-eaef-4942-b31a-feacddf7129c.png", "/lovable-uploads/75c0a6d6-4ca2-43a5-adcc-0734f2ac5e95.png"],
     heroImage: "/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png",
     gallery: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png", "/lovable-uploads/34e27ffd-1e7e-4e27-b73c-8c4a32dfaf96.png", "/lovable-uploads/e6f4a974-f663-48e0-8aa7-dcecd15fb88a.png", "/lovable-uploads/22d0e577-d64d-4381-a819-432a4c010611.png", "/lovable-uploads/6116148a-eaef-4942-b31a-feacddf7129c.png", "/lovable-uploads/75c0a6d6-4ca2-43a5-adcc-0734f2ac5e95.png"],
-    description: "Dive into marine conservation with Reefolution's coral restoration program. Participate in coral planting, learn about reef ecosystems, and contribute to groundbreaking efforts to restore Kenya's threatened coral reefs through innovative techniques.",
+    description: `Overview
+As the leading coral restoration project in Africa, REEFolution is focused on safeguarding Kenyan coral reefs. To equip people to be champions of coral preservation, they provide a range of events combining education, scientific inquiry, and practical activities.
+
+Highlights
+• Discover the inspirational path REEFolution is on and how it will impact the restoration of coral reefs.
+• Attend an interactive workshop to learn about the value of coral reefs and their challenges.
+• Discover the creative coral restoration methods developed by REEFolution, ranging from outplanting to underwater nurseries.
+
+Included/Excluded
+• A friendly professional guide
+• Personal expenses
+• Insurance
+• Drinks and meals
+• Additional Services not mentioned
+
+What to expect
+Dive into REEFolution!
+o Arrive at the REEFolution center.
+o Participate in an interactive workshop led by REEFolution scientists.
+o Learn about REEFolution's story, coral reef science, and restoration techniques.
+o Leave empowered to become an advocate for coral reef conservation.
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Durations
+2 - 3 hours
+
+Languages
+English
+
+Frequently asked questions
+What are the different program options?
+o Land-based program: Ideal for families and those who prefer to stay dry.
+o Snorkel and Learn: Combines a workshop with a guided snorkeling tour.
+o Dive and restore: Designed for certified divers who want to participate in coral planting actively; includes a workshop and guided dive.
+
+How long are the programs?
+Land-based is half-day, snorkel & learn and dive & restore are full-day.
+
+What will I learn in the workshop?
+You'll learn about the vital role coral reefs play in the ecosystem, the threats they face, and REEFolution's restoration techniques.
+
+Can I contribute to coral restoration?
+Depending on the program, you might have the opportunity to plant coral fragments and directly aid in reef restoration.
+
+How can I contribute?
+All programs raise awareness and support REEFolution's efforts. You are welcome to donate to restore more reefs, intensify our research, train new rangers and activate more locals.
+
+Where you'll be
+PH6P+RRR, Ukunda, Diani Beach Road, Diani Beach`,
     priceKESAdult: 10000,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
@@ -509,7 +943,7 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     sourceUrl: "https://natuasili.com/st_tour/dive-into-coral-conservation-with-reefolution/",
   },
   {
-    title: "Drone Conservation – Mara Elephant",
+    title: "Drones for conservation with Mara Elephant Project",
     id: "exp-drone-mara",
     slug: P("Drone Conservation Mara Elephant"),
     partner: "Mara Elephant Project",
@@ -519,7 +953,53 @@ The centre is open from 9:00 AM to 5:00 PM every day including weekends and all 
     images: ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"],
     heroImage: "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png",
     gallery: ["/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png", "/lovable-uploads/388b370f-647e-471b-92c2-addc918cb81b.png", "/lovable-uploads/2e0b1e5d-9156-4ef6-9b42-0927ce47af9a.png"],
-    description: "Experience cutting-edge conservation technology with the Mara Elephant Project's drone program. Learn how aerial surveillance protects elephants, prevents human-wildlife conflict, and supports community-based conservation efforts in the Maasai Mara ecosystem.",
+    description: `Overview
+The Mara Elephant Project (MEP) is a conservation organization to protect elephants in the Mara-Serengeti ecosystem. This two-hour expedition is to discover the new world of drone conservation! MEP has pioneered the use of drones to transform its approach to elephant protection since in 2011. Experience personally the difference this innovative technology is bringing about.
+
+Highlights
+• Discover MEP's creative drone initiative, which comprises nine Mavic drones with thermal imaging capacity.
+• Meet and engage with the 18 rangers and researchers on the skilled team flying the drones.
+• Learn how different conservation projects—conflict avoidance, elephant monitoring, and reconnaissance among other things—use drones.
+
+Included/Excluded
+• Refreshments; drinking water, coffee or juice.
+• Personal expenses
+• Insurance
+• Meals
+
+What to expect
+Exploring Drone Conservation with MEP
+o Arrive at the designated meeting point (transportation likely not included).
+o Receive a briefing from a knowledgeable MEP staff member on the importance of elephant conservation and the groundbreaking use of drones in their efforts.
+o Witness a live demonstration of the various drones used by MEP. Learn about their specific features and functionalities for diverse conservation applications.
+o Engage in a Q&A session with the MEP staff member, addressing any questions you may have about drone conservation and MEP's overall efforts.
+
+Cancellation policy
+o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a full refund.
+
+Durations
+0 - 2 hours
+
+Languages
+English
+
+Frequently asked questions
+What can I expect to do on this program?
+You'll gain exclusive insights into MEP's drone program through presentations, demonstrations, and potentially observing live drone operations (weather dependent).
+
+Is there an age restriction?
+This program might be more suitable for older children and adults due to the technical nature of the content.
+
+Can I participate in flying the drones?
+Piloting the drones is done by trained MEP personnel.
+
+Important information
+o The $500 all - inclusive donation paid to MEP
+o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and no minimum donation is required.
+o Mara Elephant Project can provide bespoke experiences for interested donors. This can include a visit to camp for tea and coffee and a presentation from a key MEP staff member, which would give guests private access to learn more about our work. We would ask for a minimum donation of $1,000 per group for this experience.
+
+Where you'll be
+6GCQR5P4+24`,
     priceKESAdult: 10000,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
