@@ -244,7 +244,6 @@ https://maps.app.goo.gl/VzMtfuRWv9rbpWt76`,
     gallery: ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"],
     description: `Overview
 Embark on a unique and thrilling adventure at the Sera Rhino Sanctuary, nestled within the Sera Community Conservancy in Kenya's Samburu region. As the first and only community-managed black rhino sanctuary in East Africa, and the only location in Northern Kenya where visitors can track both black and white rhinos on foot, Sera represents a groundbreaking model of community-led conservation. Established in 2015, the sanctuary marked the return of black rhinos to the area after a 30-year absence caused by poaching, and in 2024, it expanded its conservation efforts by introducing southern white rhinos.
-
 Visitors can experience the thrill of tracking rhinos on foot, guided by skilled Samburu trackers and armed rangers, while exploring the sanctuary's vast 26,000-acre wilderness—home to the 'Samburu Special Five': reticulated giraffe, Grevy's zebra, Beisa oryx, Somali ostrich, and gerenuk. The experience also offers meaningful cultural immersion, with opportunities to engage with the Samburu community and learn about their traditions and vital role in protecting wildlife.
 
 Highlights
