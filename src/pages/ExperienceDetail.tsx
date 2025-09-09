@@ -20,6 +20,7 @@ import AvailabilityAndOptions from "@/components/AvailabilityAndOptions";
 import NewAuthModal from "@/components/NewAuthModal";
 import GoogleMap from "@/components/GoogleMap";
 import { getExperienceCoordinates } from "@/utils/locationUtils";
+import ExperienceRatingWithCount from "@/components/ExperienceRatingWithCount";
 
 const ExperienceDetail = () => {
   const { slug } = useParams();
@@ -503,15 +504,7 @@ const ExperienceDetail = () => {
 
             {/* Meta line */}
             <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-warning text-warning" />
-                  ))}
-                </div>
-                <span className="font-medium">4.8</span>
-                <span className="text-muted-foreground text-sm">(42 reviews)</span>
-              </div>
+              <ExperienceRatingWithCount experienceId={experience.id} />
               <span className="text-muted-foreground">•</span>
                 <Link 
                 to={`/partner/${getPartnerSlug(experience.partner)}`} 
