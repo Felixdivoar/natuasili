@@ -102,7 +102,7 @@ const AdminDashboard = () => {
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500/20 to-green-500/10 group-hover:scale-110 transition-transform duration-300">
-                          <DollarSign className="h-6 w-6 text-green-600" />
+                          <DollarSign className="h-6 w-6 text-foreground" />
                         </div>
                         <span className="text-sm font-medium text-muted-foreground">Global</span>
                       </div>
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-500/10 group-hover:scale-110 transition-transform duration-300">
-                          <TreePine className="h-6 w-6 text-blue-600" />
+                          <TreePine className="h-6 w-6 text-foreground" />
                         </div>
                         <span className="text-sm font-medium text-muted-foreground">Platform</span>
                       </div>
@@ -132,7 +132,7 @@ const AdminDashboard = () => {
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-500/10 group-hover:scale-110 transition-transform duration-300">
-                          <Users className="h-6 w-6 text-purple-600" />
+                          <Users className="h-6 w-6 text-foreground" />
                         </div>
                         <span className="text-sm font-medium text-muted-foreground">Partners</span>
                       </div>
@@ -147,7 +147,7 @@ const AdminDashboard = () => {
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500/20 to-yellow-500/10 group-hover:scale-110 transition-transform duration-300">
-                          <Star className="h-6 w-6 text-yellow-600" />
+                          <Star className="h-6 w-6 text-foreground" />
                         </div>
                         <span className="text-sm font-medium text-muted-foreground">Travelers</span>
                       </div>

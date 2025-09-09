@@ -131,7 +131,7 @@ const AvailabilitySelector = ({
                       <Calendar className="h-4 w-4" />
                       Select date
                     </Label>
-                    <Input id="date" type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} min={new Date().toISOString().split("T")[0]} className={`w-full ${cutoffHit ? "border-red-500" : ""}`} />
+                    <Input id="date" type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} min={new Date().toISOString().split("T")[0]} className={`w-full ${cutoffHit ? "border-destructive" : ""}`} />
                     {cutoffHit && <div className="text-destructive text-sm mt-1" role="alert">
                         {cutoffMessage}
                       </div>}
@@ -146,7 +146,7 @@ const AvailabilitySelector = ({
                       <Button type="button" variant="outline" size="icon" onClick={() => handleParticipantsChange(selectedPeople - 1)} disabled={selectedPeople <= 1} aria-label="Decrease participants">
                         -
                       </Button>
-                      <Input id="people" type="number" min={1} max={experience.capacity} value={selectedPeople} onChange={e => handleParticipantsChange(parseInt(e.target.value) || 1)} className={`w-20 text-center ${participantsError ? "border-red-500" : ""}`} inputMode="numeric" />
+                      <Input id="people" type="number" min={1} max={experience.capacity} value={selectedPeople} onChange={e => handleParticipantsChange(parseInt(e.target.value) || 1)} className={`w-20 text-center ${participantsError ? "border-destructive" : ""}`} inputMode="numeric" />
                       <Button type="button" variant="outline" size="icon" onClick={() => handleParticipantsChange(selectedPeople + 1)} disabled={selectedPeople >= experience.capacity} aria-label="Increase participants">
                         +
                       </Button>
@@ -197,11 +197,11 @@ const AvailabilitySelector = ({
                         </div>
 
                         <div className="flex gap-4 text-sm">
-                          <div className="flex items-center gap-1 text-green-600">
-                            <CheckCircle className="h-4 w-4" />
-                            <span>{option.cancellation}</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-blue-600">
+                           <div className="flex items-center gap-1 text-success">
+                             <CheckCircle className="h-4 w-4" />
+                             <span>{option.cancellation}</span>
+                           </div>
+                           <div className="flex items-center gap-1 text-info">
                             <CheckCircle className="h-4 w-4" />
                             <span>{option.payLater}</span>
                           </div>

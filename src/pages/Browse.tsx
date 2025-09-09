@@ -135,8 +135,8 @@ const Browse = () => {
               Book authentic experiences that create lasting impact for wildlife, communities, and habitats across Kenya.
             </p>
             {partnerFilter && (
-              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
-                <p className="text-sm text-blue-800">
+               <div className="mt-4 p-3 bg-info/10 border border-border rounded-md">
+                 <p className="text-sm text-info-foreground">
                   <strong>Partner Filter:</strong> Currently showing experiences from all partners. 
                   Partner-specific filtering is available on the <Link to="/partners" className="underline">Partners page</Link>.
                 </p>

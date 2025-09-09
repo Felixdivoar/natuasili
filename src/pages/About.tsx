@@ -207,7 +207,7 @@ const About = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-12">
               Our Impact So Far
               {/* Debug info */}
-              <div className="text-sm text-red-500 mt-2">
+              <div className="text-sm text-destructive mt-2">
                 DEBUG: Experiences: {totalExperiences}, Partners: {totalPartners}, Loading: {loading ? 'YES' : 'NO'}
               </div>
             </h2>
@@ -216,7 +216,7 @@ const About = () => {
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {loading ? "Loading..." : formatPrice(totalConservationFunding)}
-                  {!loading && totalExperiences === 0 && <span className="text-red-500 text-sm block">No data</span>}
+                   {!loading && totalExperiences === 0 && <span className="text-destructive text-sm block">No data</span>}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Funded to Conservation
@@ -226,7 +226,7 @@ const About = () => {
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {loading ? "Loading..." : totalExperiences}
-                  {!loading && totalExperiences === 0 && <span className="text-red-500 text-sm block">No data</span>}
+                  {!loading && totalExperiences === 0 && <span className="text-destructive text-sm block">No data</span>}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Conservation Experiences
@@ -236,7 +236,7 @@ const About = () => {
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {loading ? "Loading..." : totalPartners}
-                  {!loading && totalPartners === 0 && <span className="text-red-500 text-sm block">No data</span>}
+                  {!loading && totalPartners === 0 && <span className="text-destructive text-sm block">No data</span>}
                 </div>
                 <div className="text-sm text-muted-foreground">
                   Partner Organizations

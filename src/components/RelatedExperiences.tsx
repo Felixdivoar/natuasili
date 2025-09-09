@@ -184,7 +184,7 @@ const RelatedExperiences: React.FC<RelatedExperiencesProps> = ({
       case 'community':
         return 'bg-muted text-muted-foreground border-border';
       case 'culture':
-        return 'bg-purple-100 text-purple-800 border-purple-200';
+        return 'bg-accent text-accent-foreground border-border';
       default:
         return 'bg-muted text-muted-foreground';
     }

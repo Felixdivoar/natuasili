@@ -68,7 +68,7 @@ export default function ConfirmationPage() {
             </div>
           </div>
 
-          <div className="bg-green-50 border border-green-200 p-4 rounded-md text-sm">
+          <div className="bg-success/10 border border-success p-4 rounded-md text-sm">
             🌍 {t("confirm_impact_message").replace("{amount}", formatPrice(partner))}
           </div>
           {/* What to expect */}

@@ -55,7 +55,7 @@ const BookingSuccess = () => {
         <div className="max-w-2xl mx-auto">
           {/* Success Header */}
           <div className="text-center mb-8">
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+            <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Booking Confirmed!
             </h1>

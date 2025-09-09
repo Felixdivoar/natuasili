@@ -254,7 +254,7 @@ const AvailabilityAndOptions = ({
                       value={selectedDate} 
                       onChange={e => setSelectedDate(e.target.value)} 
                       min={new Date().toISOString().split("T")[0]} 
-                      className={`w-full ${dateError ? "border-red-500" : ""}`} 
+                      className={`w-full ${dateError ? "border-destructive" : ""}`} 
                     />
                     {dateError && (
                       <div className="text-destructive text-sm mt-1" role="alert">

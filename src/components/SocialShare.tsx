@@ -76,7 +76,7 @@ const SocialShare = ({ title, description, url, className = "" }: SocialSharePro
                 onClick={shareOnWhatsApp}
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start gap-2 text-green-600 hover:bg-green-50"
+                className="w-full justify-start gap-2 hover:bg-accent hover:text-accent-foreground"
               >
                 <MessageCircle className="h-4 w-4" />
                 WhatsApp
@@ -86,7 +86,7 @@ const SocialShare = ({ title, description, url, className = "" }: SocialSharePro
                 onClick={shareOnFacebook}
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start gap-2 text-blue-600 hover:bg-blue-50"
+                className="w-full justify-start gap-2 hover:bg-accent hover:text-accent-foreground"
               >
                 <Facebook className="h-4 w-4" />
                 Facebook
@@ -96,7 +96,7 @@ const SocialShare = ({ title, description, url, className = "" }: SocialSharePro
                 onClick={shareOnTwitter}
                 variant="ghost"
                 size="sm"
-                className="w-full justify-start gap-2 text-blue-400 hover:bg-blue-50"
+                className="w-full justify-start gap-2 hover:bg-accent hover:text-accent-foreground"
               >
                 <Twitter className="h-4 w-4" />
                 Twitter

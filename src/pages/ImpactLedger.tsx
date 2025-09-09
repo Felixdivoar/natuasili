@@ -647,9 +647,9 @@ const ImpactLedger = () => {
                           {kpi.title}
                         </CardTitle>
                         <div className="flex items-center gap-1 text-sm">
-                          {kpi.trend === "up" && <ArrowUpRight className="h-4 w-4 text-green-600" />}
-                          {kpi.trend === "down" && <ArrowDownRight className="h-4 w-4 text-red-600" />}
-                          {kpi.trend === "neutral" && <Minus className="h-4 w-4 text-gray-600" />}
+                           {kpi.trend === "up" && <ArrowUpRight className="h-4 w-4 text-success" />}
+                           {kpi.trend === "down" && <ArrowDownRight className="h-4 w-4 text-destructive" />}
+                           {kpi.trend === "neutral" && <Minus className="h-4 w-4 text-muted-foreground" />}
                           {kpi.percentage && (
                             <span className={kpi.trend === "up" ? "text-green-600" : "text-red-600"}>
                               {kpi.percentage}%

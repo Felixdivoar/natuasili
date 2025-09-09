@@ -227,10 +227,10 @@ const Checkout = () => {
                         value={date} 
                         onChange={(e) => setDate(e.target.value)} 
                         type="date" 
-                        className={cutoffHit ? "border-red-500" : ""}
+                        className={cutoffHit ? "border-destructive" : ""}
                       />
                       {cutoffHit && (
-                        <div className="text-red-600 text-sm mt-1" role="alert">
+                        <div className="text-destructive text-sm mt-1" role="alert">
                           {cutoffMessage}
                         </div>
                       )}
@@ -244,7 +244,7 @@ const Checkout = () => {
                         min={1}
                         max={experience?.capacity || undefined}
                       />
-                      {paxError && <div role="alert" className="text-red-600 text-sm mt-1">{paxError}</div>}
+                      {paxError && <div role="alert" className="text-destructive text-sm mt-1">{paxError}</div>}
                     </div>
                     <div>
                       <Label>Option</Label>
@@ -269,12 +269,12 @@ const Checkout = () => {
                   <div>
                     <Label htmlFor="fullName">Full name</Label>
                     <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" required />
-                    {contactErrors.fullName && <div role="alert" className="text-red-600 text-sm mt-1">{contactErrors.fullName}</div>}
+                    {contactErrors.fullName && <div role="alert" className="text-destructive text-sm mt-1">{contactErrors.fullName}</div>}
                   </div>
                   <div>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
-                    {contactErrors.email && <div role="alert" className="text-red-600 text-sm mt-1">{contactErrors.email}</div>}
+                    {contactErrors.email && <div role="alert" className="text-destructive text-sm mt-1">{contactErrors.email}</div>}
                   </div>
                   <div className="sm:col-span-2">
                     <Label>Phone</Label>

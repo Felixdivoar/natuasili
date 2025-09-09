@@ -77,7 +77,7 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
         
         <DropdownMenuItem 
           onClick={handleSignOut}
-          className="cursor-pointer text-red-600 focus:text-red-600"
+          className="cursor-pointer hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sign out</span>

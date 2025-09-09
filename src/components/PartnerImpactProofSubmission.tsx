@@ -196,7 +196,7 @@ const PartnerImpactProofSubmission: React.FC = () => {
       case 'rejected':
         return <Badge className="bg-destructive/10 text-destructive border-destructive/20"><XCircle className="h-3 w-3 mr-1" />Rejected</Badge>;
       default:
-        return <Badge className="bg-yellow-100 text-yellow-800"><Clock className="h-3 w-3 mr-1" />Pending Review</Badge>;
+        return <Badge className="bg-warning text-warning-foreground"><Clock className="h-3 w-3 mr-1" />Pending Review</Badge>;
     }
   };
 
@@ -346,8 +346,8 @@ const PartnerImpactProofSubmission: React.FC = () => {
                 )}
               </div>
 
-              <div className="bg-blue-50 p-3 rounded">
-                <p className="text-sm text-blue-800">
+               <div className="bg-info/10 p-3 rounded">
+                 <p className="text-sm text-info-foreground">
                   <strong>Note:</strong> Your submission will be reviewed by our admin team. 
                   Once approved, it will automatically appear in the public Impact Ledger 
                   to showcase your conservation work.

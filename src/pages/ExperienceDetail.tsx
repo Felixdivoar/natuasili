@@ -191,13 +191,13 @@ const ExperienceDetail = () => {
   const getThemeColor = (theme: string) => {
     switch (theme.toLowerCase()) {
       case 'wildlife':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return 'bg-success/20 text-success-foreground border-success/30';
       case 'marine':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-info/20 text-info-foreground border-info/30';
       case 'community':
         return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'culture':
-        return 'bg-purple-100 text-purple-800 border-purple-200';
+        return 'bg-accent text-accent-foreground border-border';
       default:
         return 'bg-muted text-muted-foreground';
     }
@@ -352,7 +352,7 @@ const ExperienceDetail = () => {
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="h-4 w-4 fill-warning text-warning" />
                   ))}
                 </div>
                 <span className="font-medium">4.8</span>
@@ -491,7 +491,7 @@ const ExperienceDetail = () => {
             <ul className="space-y-3">
               {contentSections.highlights.map((highlight, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">{highlight}</span>
                 </li>
               ))}
@@ -504,13 +504,13 @@ const ExperienceDetail = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
+                  <CheckCircle className="h-5 w-5 text-success" />
                   Included
                 </h3>
                 <ul className="space-y-2">
                   {contentSections.included.map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
@@ -518,13 +518,13 @@ const ExperienceDetail = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <XCircle className="h-5 w-5 text-red-600" />
+                  <XCircle className="h-5 w-5 text-destructive" />
                   Not Included
                 </h3>
                 <ul className="space-y-2">
                   {contentSections.notIncluded.map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <XCircle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
+                      <XCircle className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
@@ -618,7 +618,7 @@ const ExperienceDetail = () => {
                 <div className="space-y-4">
                   <div>
                     <h3 className="font-semibold mb-2 flex items-center gap-2">
-                      <Info className="h-4 w-4 text-blue-600" />
+                      <Info className="h-4 w-4 text-info" />
                       {t('whatToBring', 'What to bring')}
                     </h3>
                     <ul className="text-sm text-muted-foreground space-y-1">
@@ -673,7 +673,7 @@ const ExperienceDetail = () => {
               <div className="flex items-center gap-4">
                 <h3 className="font-semibold text-foreground">{experience.title}</h3>
                 <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <Star className="h-4 w-4 fill-warning text-warning" />
                   <span className="text-sm font-medium">4.8</span>
                 </div>
               </div>
