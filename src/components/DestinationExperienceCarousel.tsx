@@ -62,11 +62,11 @@ export default function DestinationExperienceCarousel({
         <div className="max-w-[1150px] mx-auto px-[15px]">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-            <Link to={`/destinations/${destinationPaths[destination]}`} className="hover:text-primary transition-colors">
+            <Link to={`/destinations/${destinationPaths[destination]}`}>
               {t("dest_experiences_in")} {destinationLabels[destination]}
             </Link>
           </h2>
-          <Link to={`/destinations/${destinationPaths[destination]}`} className="text-primary hover:underline">
+          <Link to={`/destinations/${destinationPaths[destination]}`} className="text-primary">
             {t("dest_view_all")}
           </Link>
         </div>
@@ -75,9 +75,9 @@ export default function DestinationExperienceCarousel({
           <CarouselContent className="-ml-2 md:-ml-4">
             {destinationExperiences.map(experience => <CarouselItem key={experience.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Link to={`/experience/${experience.slug}`} className="group block">
-                  <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <Card className="overflow-hidden">
                     <div className="aspect-[4/3] overflow-hidden bg-muted">
-                      <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover" />
                     </div>
                     <CardContent className="p-4">
                       <div className="space-y-3">
