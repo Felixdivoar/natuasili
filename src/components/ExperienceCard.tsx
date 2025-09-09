@@ -53,7 +53,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
     currency: "KES",
     unitPrice: experience.base_price,
     minGuests: 1,
-    maxGuests: experience.capacity || 999, // Use 999 for unlimited capacity
+    maxGuests: experience.capacity,
     hasTimeSlots: false,
     timeSlots: [],
     addOns: [
@@ -134,10 +134,7 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
         <div className="flex items-center justify-between mb-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Users className="w-4 h-4 mr-1" />
-            {experience.capacity 
-              ? `${t("exp_up_to")} ${experience.capacity} ${t("exp_people")}`
-              : "No maximum limit"
-            }
+            {t("exp_up_to")} {experience.capacity} {t("exp_people")}
           </div>
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-1" />

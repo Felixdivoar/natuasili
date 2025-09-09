@@ -99,9 +99,7 @@ export default function DestinationExperienceCarousel({
                           </div>
                           <div className="flex items-center gap-1">
                             <Users className="h-3 w-3" />
-                            <span>
-                              {experience.capacity ? `${t("exp_up_to")} ${experience.capacity}` : "No limit"}
-                            </span>
+                            <span>{t("exp_up_to")} {experience.capacity}</span>
                           </div>
                         </div>
 

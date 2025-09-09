@@ -59,7 +59,7 @@ export const getAllDestinations = () => {
 };
 
 // Get duration and capacity for an experience by slug
-export const getExperienceSpecs = (slug: string): { duration_hours: number; capacity: number | null } => {
+export const getExperienceSpecs = (slug: string): { duration_hours: number; capacity: number } => {
   const specs = EXPERIENCE_SPECS[slug];
   if (specs) {
     return specs;
@@ -68,7 +68,7 @@ export const getExperienceSpecs = (slug: string): { duration_hours: number; capa
   // Fallback to default values if not found
   return {
     duration_hours: 3,
-    capacity: null
+    capacity: 12
   };
 };
 
