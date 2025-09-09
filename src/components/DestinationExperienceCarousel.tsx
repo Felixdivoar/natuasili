@@ -7,6 +7,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { mockExperiences } from "@/data/newMockData";
 import { Destination } from "@/data/partners";
+import ExperienceRatingDisplay from "./ExperienceRatingDisplay";
 interface DestinationExperienceCarouselProps {
   destination: Destination;
 }
@@ -85,10 +86,7 @@ export default function DestinationExperienceCarousel({
                           <Badge className={`text-xs ${getThemeColor(experience.theme)}`}>
                             {experience.theme}
                           </Badge>
-                          <div className="flex items-center gap-1 text-xs">
-                            <Star className="h-3 w-3 fill-foreground text-foreground" />
-                            <span className="font-medium">4.8</span>
-                          </div>
+                          <ExperienceRatingDisplay experienceId={experience.id} />
                         </div>
 
                         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
