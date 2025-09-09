@@ -3327,6 +3327,9 @@ button[disabled] {
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Chrome, Safari and Opera */
+  }
+}
+
 /* ===== ADDITIONAL RESPONSIVE LAYOUT AND THEME ENFORCEMENT ===== */
 
 /* Content max-width and responsive layout utilities */
@@ -3371,5 +3374,4 @@ button[disabled] {
 /* Ensure no unwanted colors leak through */
 * {
   transition: none !important;
-}
 }
