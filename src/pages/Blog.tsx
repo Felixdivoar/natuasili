@@ -327,7 +327,7 @@ Welcome to MILA — stories of people, places, wildlife, and the partners making
                       </Link>
                     </div>
                     <div className="absolute top-4 right-4">
-                      <Badge variant="secondary" className="bg-primary text-primary-foreground">
+                      <Badge variant="secondary" className="bg-foreground text-background">
                         Featured
                       </Badge>
                     </div>

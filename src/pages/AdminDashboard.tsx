@@ -167,7 +167,7 @@ const AdminDashboard = () => {
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-emerald-500/10 group-hover:scale-110 transition-transform duration-300">
                           <TreePine className="h-6 w-6 text-emerald-600" />
                         </div>
-                        <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-200">
+                        <Badge variant="secondary" className="bg-foreground text-background">
                           Platform Impact
                         </Badge>
                       </div>
@@ -187,7 +187,7 @@ const AdminDashboard = () => {
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-teal-500/10 group-hover:scale-110 transition-transform duration-300">
                           <TrendingUp className="h-6 w-6 text-teal-600" />
                         </div>
-                        <Badge variant="secondary" className="bg-teal-100 text-teal-700 border-teal-200">
+                        <Badge variant="secondary" className="bg-foreground text-background">
                           NatuAsili Impact
                         </Badge>
                       </div>

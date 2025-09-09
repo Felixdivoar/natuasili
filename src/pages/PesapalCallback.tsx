@@ -209,7 +209,7 @@ export default function PesapalCallback() {
                   </div>
                   <div className="flex justify-between">
                     <span>Status:</span>
-                    <Badge variant="default" className="bg-green-100 text-green-800">
+                    <Badge variant="default" className="bg-foreground text-background">
                       Confirmed
                     </Badge>
                   </div>

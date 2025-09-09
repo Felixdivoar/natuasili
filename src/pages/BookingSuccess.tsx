@@ -79,7 +79,7 @@ const BookingSuccess = () => {
                   <MapPin className="w-4 h-4 mr-1" />
                   {experience.location_text}
                 </div>
-                <Badge className="bg-primary text-primary-foreground">
+                <Badge className="bg-foreground text-background">
                   {experience.theme}
                 </Badge>
               </div>

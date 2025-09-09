@@ -139,11 +139,11 @@ const ImpactProofAdmin: React.FC = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'approved':
-        return <Badge className="bg-success/10 text-success border-success/20"><CheckCircle className="h-3 w-3 mr-1" />Approved</Badge>;
+        return <Badge className="bg-foreground text-background"><CheckCircle className="h-3 w-3 mr-1" />Approved</Badge>;
       case 'rejected':
-        return <Badge className="bg-destructive/10 text-destructive border-destructive/20"><XCircle className="h-3 w-3 mr-1" />Rejected</Badge>;
+        return <Badge className="bg-foreground text-background"><XCircle className="h-3 w-3 mr-1" />Rejected</Badge>;
       default:
-        return <Badge className="bg-warning/10 text-warning border-warning/20"><Clock className="h-3 w-3 mr-1" />Pending</Badge>;
+        return <Badge className="bg-foreground text-background"><Clock className="h-3 w-3 mr-1" />Pending</Badge>;
     }
   };
 

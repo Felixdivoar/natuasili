@@ -43,7 +43,7 @@ const CoastDestination = () => {
               Marine and coastal ecosystem protection including mangrove restoration and community-based fisheries management.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" asChild className="bg-conservation hover:bg-conservation/90">
+              <Button size="lg" asChild className="bg-foreground text-background">
                 <Link to="/listings?destination=coast">
                   Explore Experiences
                 </Link>
@@ -137,7 +137,7 @@ const CoastDestination = () => {
                     className="w-full h-full object-cover rounded-t-lg"
                   />
                   <div className="absolute top-3 left-3">
-                    <Badge className="bg-conservation/90 text-white">
+                    <Badge className="bg-foreground text-background">
                       {partner.themes[0]}
                     </Badge>
                   </div>

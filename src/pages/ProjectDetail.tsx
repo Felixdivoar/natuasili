@@ -144,7 +144,7 @@ const ProjectDetail = () => {
                 <Badge className={getCategoryColor(project.category)}>
                   {project.category}
                 </Badge>
-                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
+                <Badge variant="outline" className="bg-foreground text-background">
                   Active Partner
                 </Badge>
               </div>

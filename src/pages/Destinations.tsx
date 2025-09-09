@@ -142,14 +142,14 @@ const Destinations = () => {
                   <div>
                     <h4 className="font-semibold text-foreground mb-2">Key species</h4>
                     <div className="flex flex-wrap gap-2">
-                      {destination.keySpecies.map((species, index) => <Badge key={index} className="text-xs bg-conservation/10 text-conservation border-conservation/20">
+                      {destination.keySpecies.map((species, index) => <Badge key={index} className="text-xs bg-foreground text-background">
                           {species}
                         </Badge>)}
                     </div>
                   </div>
                   
                   <div className="flex gap-3 pt-4">
-                    <Button className="w-full bg-conservation hover:bg-conservation/90 text-white" asChild>
+                    <Button className="w-full bg-foreground text-background" asChild>
                       <Link to={`/destinations/${destination.name.toLowerCase().replace(/\s+/g, '-').replace('conservation-area', '').replace('ecosystem', '').replace('zone', '').replace('plateau', '').trim()}`}>Explore partners</Link>
                     </Button>
                     <Button variant="outline" className="w-full" asChild>
