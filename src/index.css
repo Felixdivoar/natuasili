@@ -2960,8 +2960,16 @@ button[disabled] {
   }
 }
 
-/* Section rhythm (optional polish) */
-.section-hero{ padding-top:24px; }
+/* Mobile sticky reserve button spacing */
+.main-content {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    padding-bottom: 0;
+  }
+}
 .section-overview{ margin-top:32px; }
 .section-reviews{ margin-bottom:40px; }
 
@@ -3334,4 +3342,15 @@ button[disabled] {
 /* Ensure no unwanted colors leak through */
 * {
   transition: none !important;
+}
+
+/* Mobile sticky reserve button spacing */
+.main-content {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    padding-bottom: 0;
+  }
 }

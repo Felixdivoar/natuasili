@@ -15,6 +15,8 @@ import HeaderMega from "@/components/HeaderMega";
 import HeaderNew from "@/components/HeaderNew";
 import Footer from "@/components/Footer";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
+import { BookingProvider, useBooking } from "@/contexts/BookingContext";
+import StickyReserveButton from "@/components/StickyReserveButton";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
 import ExperienceDetail from "./pages/ExperienceDetail";
@@ -77,11 +79,29 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
       <HeaderNew />
-      <main className="flex-1">
+      <main className="flex-1 main-content">
         {children}
       </main>
       <Footer />
+      
+      {/* Global Sticky Reserve Button - shows when there's an active booking */}
+      <GlobalStickyReserveButton />
     </div>
+  );
+}
+
+// Global component that shows the sticky button based on booking context
+function GlobalStickyReserveButton() {
+  const { bookingState, hasActiveBooking } = useBooking();
+  
+  if (!hasActiveBooking || !bookingState) return null;
+  
+  return (
+    <StickyReserveButton
+      experienceSlug={bookingState.experienceSlug}
+      experienceName="Your Experience" // We could enhance this with experience data lookup
+      basePrice={bookingState.totalPrice}
+    />
   );
 }
 
@@ -91,7 +111,8 @@ const App = () => (
       <I18nProvider>
         <CurrencyProvider>
           <AuthProvider>
-            <TooltipProvider>
+            <BookingProvider>
+              <TooltipProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -170,8 +191,9 @@ const App = () => (
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
                 <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
               </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
+              </BrowserRouter>
+            </TooltipProvider>
+          </BookingProvider>
         </AuthProvider>
       </CurrencyProvider>
     </I18nProvider>

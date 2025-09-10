@@ -1,3 +1,4 @@
+import { useBooking } from "@/contexts/BookingContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -49,13 +50,26 @@ const AvailabilityAndOptions = ({
   const { formatPrice } = useCurrency();
   const { updateCart } = useCart();
   const { user } = useAuth();
+  const { bookingState, setBookingState, updateBookingState } = useBooking();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   
-  // Initialize state from props or defaults
-  const [selectedDate, setSelectedDate] = useState(initialParams?.date || "");
-  const [selectedAdults, setSelectedAdults] = useState(initialParams?.adults || 1);
-  const [selectedChildren, setSelectedChildren] = useState(initialParams?.children || 0);
-  const [selectedOption, setSelectedOption] = useState<"standard">(initialParams?.option || "standard");
+  // Initialize state from props, booking context, or defaults
+  const initializeFromBooking = bookingState?.experienceSlug === experience.slug;
+  const [selectedDate, setSelectedDate] = useState(
+    initialParams?.date || 
+    (initializeFromBooking ? bookingState.date || "" : "")
+  );
+  const [selectedAdults, setSelectedAdults] = useState(
+    initialParams?.adults || 
+    (initializeFromBooking ? bookingState.adults : 1)
+  );
+  const [selectedChildren, setSelectedChildren] = useState(
+    initialParams?.children || 
+    (initializeFromBooking ? bookingState.children : 0)
+  );
+  const [selectedOption, setSelectedOption] = useState<"standard">(
+    initialParams?.option || "standard"
+  );
   const [participantsError, setParticipantsError] = useState("");
 
   const basePrice = experience.base_price || experience.priceKESAdult || 350;
@@ -82,6 +96,22 @@ const AvailabilityAndOptions = ({
       });
     }
   }, [selectedDate, selectedAdults, selectedChildren, selectedOption, onUpdateParams]);
+
+  // Update booking context whenever selections change
+  useEffect(() => {
+    const totalPrice = (selectedAdults * basePrice) + (selectedChildren * childPrice);
+    
+    if (selectedDate && experience.slug) {
+      setBookingState({
+        experienceSlug: experience.slug,
+        date: selectedDate,
+        adults: selectedAdults,
+        children: selectedChildren,
+        selectedOption: selectedOption,
+        totalPrice: totalPrice
+      });
+    }
+  }, [selectedDate, selectedAdults, selectedChildren, selectedOption, basePrice, childPrice, experience.slug, setBookingState]);
 
   // --- helpers ---
   const totalParticipants = selectedAdults + selectedChildren;

@@ -1,3 +1,5 @@
+import StickyReserveButton from "@/components/StickyReserveButton";
+import { useBooking } from "@/contexts/BookingContext";
 import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
@@ -813,9 +815,22 @@ const ExperienceDetail = () => {
             {/* Book Now button hidden on mobile - availability selector handles booking flow */}
           </div>
         </>
-      )}
+       )}
 
-       <NewAuthModal 
+       {/* Sticky Reserve Button */}
+       <StickyReserveButton
+         experienceSlug={experience.slug}
+         experienceName={experience.title}
+         basePrice={experience.priceKESAdult}
+         onReserveClick={() => {
+           const availabilitySection = document.getElementById('availability');
+           if (availabilitySection) {
+             availabilitySection.scrollIntoView({ behavior: 'smooth' });
+           }
+         }}
+       />
+
+        <NewAuthModal
          isOpen={authModalOpen} 
          onClose={() => setAuthModalOpen(false)}
        />
