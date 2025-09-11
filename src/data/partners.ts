@@ -800,6 +800,308 @@ Where you'll be
     sourceUrl: "https://natuasili.com/st_tour/reteti-community-elephant-experience/",
   },
   {
+    title: "Meet the last northern white rhinos at Ol Pejeta Conservancy",
+    id: "exp-northern-white-rhinos-ol-pejeta",
+    slug: P("Meet Northern White Rhinos Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy", 
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["rhino", "wildlife", "conservation"],
+    images: [northernWhiteRhinos, olPejeteRhino, olPejetaImg],
+    heroImage: northernWhiteRhinos,
+    gallery: [northernWhiteRhinos, olPejeteRhino, olPejetaImg],
+    description: `Overview
+At Ol Pejeta Conservancy, witness one of conservation's most critical moments by meeting the last two northern white rhinos on Earth - Najin and Fatu, both female. This experience offers an intimate look at cutting-edge conservation science as researchers work tirelessly to save this subspecies through advanced reproductive technology.
+
+Your visit directly supports the revolutionary conservation efforts using IVF, genetic rescue, and surrogate motherhood programs. Learn about the challenges facing these magnificent creatures and the groundbreaking science being used to prevent their extinction.
+
+Highlights
+• Meet Najin and Fatu, the last two northern white rhinos in the world
+• Learn about innovative reproductive technologies being used for species recovery
+• Understand the broader conservation challenges facing rhino populations
+• Support critical research and protection efforts through your visit
+
+Included/Excluded
+• Conservancy entry fees
+• Professional wildlife guide
+• Educational materials
+• Personal expenses
+• Insurance
+• Transport to conservancy
+
+What to expect
+A Unique Conservation Experience
+o Arrive at Ol Pejeta Conservancy's northern white rhino enclosure
+o Meet the dedicated veterinary and conservation team
+o Observe Najin and Fatu in their protected environment
+o Learn about the advanced reproductive technologies being employed
+o Understand the global significance of this conservation effort
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Duration
+2-3 hours
+
+Languages
+English
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia County`,
+    priceKESAdult: 3500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/northern-white-rhinos-ol-pejeta/",
+  },
+  {
+    title: "Night game drive at Ol Pejeta Conservancy",
+    id: "exp-night-game-drive-ol-pejeta",
+    slug: P("Night Game Drive Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy", 
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["night safari", "wildlife", "nocturnal"],
+    images: [nightGameDrive, bigFiveTracking, olPejetaImg],
+    heroImage: nightGameDrive,
+    gallery: [nightGameDrive, bigFiveTracking, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    description: `Overview
+Experience the African wilderness after dark on this thrilling night game drive at Ol Pejeta Conservancy. As the sun sets over the Laikipia plateau, a different world awakens. Nocturnal animals emerge from their daytime hiding places, offering visitors a unique perspective on wildlife behavior and ecosystem dynamics.
+
+Using specialized spotlights and expert guidance, you'll search for elusive nocturnal species including leopards, serval cats, genets, bush babies, and hyenas. The conservancy's diverse habitats support an incredible variety of nighttime wildlife, making every drive a unique adventure.
+
+Highlights
+• Search for elusive nocturnal predators like leopards and serval cats
+• Observe the unique behaviors of animals active after dark
+• Experience the sounds and atmosphere of the African night
+• Learn about nocturnal ecosystem dynamics from expert guides
+
+Included/Excluded
+• Professional night guide with spotlight equipment
+• Conservancy night drive permits
+• Safety briefing and equipment
+• Personal expenses
+• Insurance
+• Transport to conservancy
+
+What to expect
+Into the African Night
+o Depart from the conservancy at sunset for optimal wildlife viewing
+o Use spotlights to locate nocturnal animals and observe their behaviors
+o Listen to the symphony of night sounds across the savanna
+o Learn about predator-prey relationships and nocturnal adaptations
+o Return under the starlit African sky
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Duration
+3-4 hours
+
+Languages
+English
+
+Important Notes
+o Warm clothing recommended as temperatures drop after sunset
+o Flash photography not permitted to avoid disturbing wildlife
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia County`,
+    priceKESAdult: 4500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/night-game-drive-ol-pejeta/",
+  },
+  {
+    title: "Guided bush and bird walks at Ol Pejeta Conservancy",
+    id: "exp-bush-bird-walks-ol-pejeta",
+    slug: P("Bush Bird Walks Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy", 
+    destination: "laikipia",
+    themes: ["Conservation education"],
+    activities: ["walking", "birds", "nature"],
+    images: ["/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png", natureKenyaBirdwatching, olPejetaImg],
+    heroImage: "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png",
+    gallery: ["/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png", natureKenyaBirdwatching, olPejetaImg],
+    description: `Overview
+Explore Ol Pejeta Conservancy on foot with expert guides who will introduce you to the intricate ecosystems of the Laikipia plateau. These walking safaris offer an intimate connection with nature, allowing you to experience wildlife and landscapes from a completely different perspective than traditional game drives.
+
+The conservancy's diverse habitats - from riverine forests to open grasslands - support over 300 bird species and countless smaller wildlife often missed from vehicles. Your experienced guide will help you identify tracks, interpret animal behavior, and understand the complex relationships that make this ecosystem thrive.
+
+Highlights
+• Experience wildlife on foot with expert naturalist guides
+• Identify diverse bird species across different habitats
+• Learn to read animal tracks and signs in the wild
+• Gain intimate knowledge of ecosystem relationships and plant life
+
+Included/Excluded
+• Expert walking guide and naturalist
+• Bird identification materials
+• Safety briefing and radio communication
+• Personal expenses
+• Insurance
+• Transport to conservancy
+
+What to expect
+Walking Safari Adventure
+o Begin with a comprehensive safety briefing about walking in wildlife areas
+o Set out on guided walks through diverse conservancy habitats
+o Learn to identify bird calls, animal tracks, and botanical specimens
+o Discover the smaller details of the ecosystem often missed on game drives
+o End with discussions about conservation challenges and successes
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Duration
+2-3 hours
+
+Languages
+English
+
+Important Notes
+o Comfortable walking shoes and sun protection essential
+o Walks adapted to participant fitness levels
+o Minimum age 12 years for safety reasons
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia County`,
+    priceKESAdult: 2000,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/bush-bird-walks-ol-pejeta/",
+  },
+  {
+    title: "Behind the scenes – Ol Pejeta Sweetwaters Chimpanzee Sanctuary",
+    id: "exp-chimpanzee-sanctuary-ol-pejeta",
+    slug: P("Chimpanzee Sanctuary Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy", 
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["chimpanzee", "sanctuary", "primates"],
+    images: [chimpanzeeSanctuary, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    heroImage: chimpanzeeSanctuary,
+    gallery: [chimpanzeeSanctuary, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    description: `Overview
+Visit the Sweetwaters Chimpanzee Sanctuary, the only chimpanzee sanctuary in Kenya and a haven for rescued and orphaned chimpanzees. This unique facility within Ol Pejeta Conservancy provides a safe home for chimpanzees that cannot be returned to the wild, while offering visitors insights into primate behavior, conservation, and the challenges facing our closest living relatives.
+
+The sanctuary houses chimpanzees rescued from the bushmeat and pet trades, along with those orphaned by habitat destruction. Through this behind-the-scenes experience, you'll learn about chimpanzee intelligence, social structures, and the dedicated care required to maintain their wellbeing in a protected environment.
+
+Highlights
+• Observe rescued chimpanzees in naturalistic island habitats
+• Learn about chimpanzee intelligence, behavior, and social dynamics
+• Understand the challenges facing wild chimpanzee populations
+• Meet the dedicated caregivers and veterinary team
+• Support vital primate conservation and rescue efforts
+
+Included/Excluded
+• Sanctuary entry and guided tour
+• Educational materials about chimpanzee conservation
+• Access to viewing platforms and observation areas
+• Personal expenses
+• Insurance
+• Transport to conservancy
+
+What to expect
+Chimpanzee Conservation Up Close
+o Arrive at the Sweetwaters Chimpanzee Sanctuary within Ol Pejeta
+o Meet sanctuary staff and learn about the facility's history and mission
+o Observe chimpanzees from designated viewing areas and platforms
+o Learn about individual chimpanzee stories and rehabilitation journeys
+o Understand broader conservation challenges facing wild populations
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Duration
+1.5-2 hours
+
+Languages
+English
+
+Important Notes
+o No direct contact with chimpanzees for safety and health reasons
+o Photography allowed from designated viewing areas only
+o Educational focus on conservation and animal welfare
+
+Where you'll be
+Sweetwaters Chimpanzee Sanctuary, Ol Pejeta Conservancy`,
+    priceKESAdult: 2500,
+    childHalfPriceRule: true,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/chimpanzee-sanctuary-ol-pejeta/",
+  },
+  {
+    title: "Track lions and aid conservation at Ol Pejeta Conservancy",
+    id: "exp-lion-tracking-ol-pejeta",
+    slug: P("Lion Tracking Conservation Ol Pejeta"),
+    partner: "Ol Pejeta Conservancy", 
+    destination: "laikipia",
+    themes: ["Wildlife conservation"],
+    activities: ["lions", "tracking", "research"],
+    images: [lionTracking, bigFiveTracking, olPejetaImg],
+    heroImage: lionTracking,
+    gallery: [lionTracking, bigFiveTracking, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    description: `Overview
+Join Ol Pejeta's lion research team in active conservation work by participating in lion tracking and monitoring activities. This hands-on experience puts you at the forefront of predator conservation, using radio telemetry and field observation techniques to collect vital data about the conservancy's lion population.
+
+Ol Pejeta is home to one of Kenya's most important lion populations, and your participation directly contributes to ongoing research on lion behavior, territory usage, and human-wildlife conflict mitigation. This is real conservation work that makes a tangible difference to lion survival in East Africa.
+
+Highlights
+• Use professional radio telemetry equipment to track collared lions
+• Learn field research techniques from experienced wildlife biologists
+• Contribute to vital data collection for lion conservation science
+• Understand human-wildlife conflict and mitigation strategies
+• Experience hands-on conservation work with measurable impact
+
+Included/Excluded
+• Professional research guide and equipment
+• Radio telemetry training and usage
+• Data collection materials and protocols
+• Research vehicle and fuel
+• Personal expenses
+• Insurance
+• Transport to conservancy
+
+What to expect
+Active Conservation Research
+o Begin with briefing on lion ecology and research methodology
+o Learn to use radio telemetry equipment to locate collared lions
+o Track lions using GPS coordinates and behavioral observation
+o Record data on lion movement, behavior, and pride dynamics
+o Contribute findings to ongoing conservation database
+
+Cancellation policy
+o You can cancel up to 48 hours before the experience starts for a full refund.
+
+Duration
+4-5 hours
+
+Languages
+English
+
+Important Notes
+o Physical fitness required for field work conditions
+o Weather-dependent activity - may be rescheduled for safety
+o Minimum age 16 years due to research protocol requirements
+
+Where you'll be
+Ol Pejeta Conservancy, Laikipia County`,
+    priceKESAdult: 5500,
+    childHalfPriceRule: false,
+    visibleOnMarketplace: true,
+    locationText: "Ol Pejeta Conservancy, Laikipia",
+    partnerSlug: "ol-pejeta-conservancy",
+    sourceUrl: "https://natuasili.com/st_tour/lion-tracking-ol-pejeta/",
+  },
+  {
     title: "Become a K-9 handler for a day at Ol Pejeta Conservancy",
     id: "exp-k9-handler-ol-pejeta",
     slug: P("K9 Handler Day Ol Pejeta"),
