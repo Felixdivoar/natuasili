@@ -76,7 +76,7 @@ export default function StickyReserveButton({
   };
 
   const getButtonText = () => {
-    if (hasActiveBooking && bookingState?.date) {
+    if (hasActiveBooking && bookingState?.date && bookingState?.experienceSlug === experienceSlug) {
       return 'Continue Booking';
     }
     return 'Reserve';
