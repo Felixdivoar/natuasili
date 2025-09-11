@@ -79,7 +79,7 @@ export default function StickyReserveButton({
     if (hasActiveBooking && bookingState?.date) {
       return 'Continue Booking';
     }
-    return 'Reserve Experience';
+    return 'Reserve';
   };
 
   const getDisplayPrice = () => {
