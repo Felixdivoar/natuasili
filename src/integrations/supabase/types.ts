@@ -98,10 +98,12 @@ export type Database = {
           child_half_price_rule: boolean | null
           created_at: string | null
           description: string | null
+          duration_hours: number | null
           gallery: Json | null
           hero_image: string | null
           id: string
           location_text: string | null
+          min_capacity: number | null
           partner_id: string
           price_kes_adult: number
           slug: string
@@ -116,10 +118,12 @@ export type Database = {
           child_half_price_rule?: boolean | null
           created_at?: string | null
           description?: string | null
+          duration_hours?: number | null
           gallery?: Json | null
           hero_image?: string | null
           id?: string
           location_text?: string | null
+          min_capacity?: number | null
           partner_id: string
           price_kes_adult: number
           slug: string
@@ -134,10 +138,12 @@ export type Database = {
           child_half_price_rule?: boolean | null
           created_at?: string | null
           description?: string | null
+          duration_hours?: number | null
           gallery?: Json | null
           hero_image?: string | null
           id?: string
           location_text?: string | null
+          min_capacity?: number | null
           partner_id?: string
           price_kes_adult?: number
           slug?: string
