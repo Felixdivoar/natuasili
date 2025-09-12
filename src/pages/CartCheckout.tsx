@@ -37,7 +37,9 @@ const CartCheckout = () => {
   };
 
   const contactValid = !contactErrors.fullName && !contactErrors.email;
-  const total = items.reduce((sum, item) => sum + item.subtotal, 0);
+  const [donations, setDonations] = useState<Record<string, number>>({});
+  
+  const total = items.reduce((sum, item) => sum + item.subtotal + (donations[item.id] || 0), 0);
   const canProceed = contactValid && items.length > 0;
 
   const getThemeColor = (theme: string) => {
@@ -71,6 +73,8 @@ const CartCheckout = () => {
           throw new Error(`Experience not found: ${item.experienceSlug}`);
         }
 
+        const donationAmount = donations[item.id] || 0;
+        
         // Create booking
         const { data: booking, error } = await supabase
           .from('bookings')
@@ -80,9 +84,10 @@ const CartCheckout = () => {
             booking_date: item.date,
             adults: item.adults,
             children: item.children,
-            total_kes: Math.round(item.subtotal),
+            total_kes: Math.round(item.subtotal + donationAmount),
             unit_price_kes: item.unitPrice,
             subtotal_kes: item.subtotal,
+            donation_kes: donationAmount,
             customer_name: fullName,
             customer_email: email,
             customer_phone: phone,
@@ -221,40 +226,81 @@ const CartCheckout = () => {
                 <CardHeader>
                   <CardTitle>Booking Summary ({items.length} experiences)</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  {items.map((item) => (
-                    <div key={item.id} className="border-b pb-4 last:border-b-0">
-                      <div className="flex gap-3">
-                        {item.image && (
-                          <img 
-                            src={item.image} 
-                            alt={item.title} 
-                            className="w-16 h-16 object-cover rounded" 
-                          />
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-medium text-sm leading-tight">{item.title}</h3>
-                          <div className="text-xs text-muted-foreground mt-1">
-                            {item.date} • {item.adults + item.children} people
-                            {item.isGroupPricing ? ' (group)' : ''}
-                          </div>
-                          <div className="font-semibold text-sm mt-1">
-                            {formatPrice(item.subtotal)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                 <CardContent className="space-y-6">
+                   {items.map((item) => (
+                     <div key={item.id} className="border-b pb-4 last:border-b-0 space-y-3">
+                       <div className="flex gap-3">
+                         {item.image && (
+                           <img 
+                             src={item.image} 
+                             alt={item.title} 
+                             className="w-16 h-16 object-cover rounded" 
+                           />
+                         )}
+                         <div className="flex-1 min-w-0">
+                           <h3 className="font-medium text-sm leading-tight">{item.title}</h3>
+                           <div className="text-xs text-muted-foreground mt-1">
+                             {item.date} • {item.adults + item.children} people
+                             {item.isGroupPricing ? ' (group)' : ''}
+                           </div>
+                           <div className="font-semibold text-sm mt-1">
+                             {formatPrice(item.subtotal)}
+                           </div>
+                         </div>
+                       </div>
+                       
+                       {/* Optional Donation Section */}
+                       <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                         <div className="flex items-center justify-between mb-2">
+                           <h4 className="font-medium text-green-800 text-sm">Add donation (optional)</h4>
+                         </div>
+                         <p className="text-xs text-green-600 mb-3">
+                           100% of your donation supports conservation initiatives directly.
+                         </p>
+                         <div className="flex items-center gap-2">
+                           <Label htmlFor={`donation-${item.id}`} className="text-sm font-medium text-green-800">KES</Label>
+                           <Input
+                             id={`donation-${item.id}`}
+                             type="number"
+                             min="0"
+                             step="100"
+                             className="flex-1"
+                             value={donations[item.id] || ''}
+                             onChange={(e) => setDonations(prev => ({
+                               ...prev,
+                               [item.id]: parseInt(e.target.value) || 0
+                             }))}
+                             placeholder="0"
+                           />
+                         </div>
+                         {(donations[item.id] && donations[item.id] > 0) && (
+                           <div className="text-xs text-green-600 mt-2">
+                             Donation: {formatPrice(donations[item.id])}
+                           </div>
+                         )}
+                       </div>
+                     </div>
+                   ))}
 
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between font-semibold text-lg">
-                      <span>Total</span>
-                      <span>{formatPrice(total)}</span>
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-2">
-                      Includes partner initiatives (90%) and platform operations (10%)
-                    </div>
-                  </div>
+                   <div className="border-t pt-4 space-y-2">
+                     <div className="flex justify-between text-sm">
+                       <span>Experiences subtotal</span>
+                       <span>{formatPrice(items.reduce((sum, item) => sum + item.subtotal, 0))}</span>
+                     </div>
+                     {Object.values(donations).some(d => d > 0) && (
+                       <div className="flex justify-between text-sm text-green-600">
+                         <span>Total donations</span>
+                         <span>{formatPrice(Object.values(donations).reduce((sum, d) => sum + d, 0))}</span>
+                       </div>
+                     )}
+                     <div className="flex justify-between font-semibold text-lg border-t pt-2">
+                       <span>Total</span>
+                       <span>{formatPrice(total)}</span>
+                     </div>
+                     <div className="text-xs text-muted-foreground">
+                       Partner initiatives (90% + donations) • Platform operations (10%)
+                     </div>
+                   </div>
                 </CardContent>
               </Card>
             </div>

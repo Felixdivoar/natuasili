@@ -44,7 +44,14 @@ export default function CartDrawer() {
                 <div className="text-sm text-muted-foreground">
                   {item.date || 'No date selected'} • {item.adults + item.children} people{item.isGroupPricing ? ' (group)' : ''}
                 </div>
-                <div className="font-semibold mt-1">{formatPrice(item.subtotal)}</div>
+                 <div className="font-semibold mt-1">
+                   {formatPrice(item.subtotal)}
+                   {item.donation > 0 && (
+                     <div className="text-xs text-green-600">
+                       + {formatPrice(item.donation)} donation
+                     </div>
+                   )}
+                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 <Button

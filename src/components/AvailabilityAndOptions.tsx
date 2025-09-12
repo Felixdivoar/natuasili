@@ -537,21 +537,22 @@ const AvailabilityAndOptions = ({
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => {
-                      if (participantsError || !selectedDate || !dateValidation.isValid) return;
-                      addCartItem({
-                        experienceSlug: (experience as any).slug || '',
-                        title: (experience as any).title || 'Experience',
-                        image: (experience as any).heroImage,
-                        date: selectedDate,
-                        adults: selectedAdults,
-                        children: selectedChildren,
-                        optionId: selectedOption,
-                        unitPrice: basePrice,
-                        isGroupPricing,
-                      });
-                      openCart(true);
-                    }}
+                     onClick={() => {
+                       if (participantsError || !selectedDate || !dateValidation.isValid) return;
+                       addCartItem({
+                         experienceSlug: (experience as any).slug || '',
+                         title: (experience as any).title || 'Experience',
+                         image: (experience as any).heroImage,
+                         date: selectedDate,
+                         adults: selectedAdults,
+                         children: selectedChildren,
+                         optionId: selectedOption,
+                         unitPrice: basePrice,
+                         donation: 0,
+                         isGroupPricing,
+                       });
+                       openCart(true);
+                     }}
                   >
                     Add to cart
                   </Button>
@@ -602,17 +603,18 @@ const AvailabilityAndOptions = ({
                     variant="outline"
                     onClick={() => {
                       if (participantsError || !selectedDate || !dateValidation.isValid) return;
-                      addCartItem({
-                        experienceSlug: (experience as any).slug || '',
-                        title: (experience as any).title || 'Experience',
-                        image: (experience as any).heroImage,
-                        date: selectedDate,
-                        adults: selectedAdults,
-                        children: selectedChildren,
-                        optionId: selectedOption,
-                        unitPrice: basePrice,
-                        isGroupPricing,
-                      });
+                       addCartItem({
+                         experienceSlug: (experience as any).slug || '',
+                         title: (experience as any).title || 'Experience',
+                         image: (experience as any).heroImage,
+                         date: selectedDate,
+                         adults: selectedAdults,
+                         children: selectedChildren,
+                         optionId: selectedOption,
+                         unitPrice: basePrice,
+                         donation: 0,
+                         isGroupPricing,
+                       });
                       openCart(true);
                     }}
                   >

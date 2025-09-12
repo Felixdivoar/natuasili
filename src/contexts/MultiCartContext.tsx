@@ -14,6 +14,7 @@ export type MultiCartItem = {
   optionId: "standard";
   unitPrice: number; // priceKESAdult or group price
   subtotal: number;  // computed at add time
+  donation: number;  // optional donation amount
   currency: string;
   isGroupPricing?: boolean;
 };
@@ -24,7 +25,7 @@ interface MultiCartContextType {
   total: number;
   open: boolean;
   setOpen: (v: boolean) => void;
-  addItem: (item: Omit<MultiCartItem, "id" | "subtotal" | "currency"> & { currency?: string }) => void;
+  addItem: (item: Omit<MultiCartItem, "id" | "subtotal" | "donation" | "currency"> & { currency?: string, donation?: number }) => void;
   removeItem: (id: string) => void;
   clear: () => void;
   sync: () => Promise<void>;
@@ -76,6 +77,7 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       optionId: item.optionId,
       unitPrice,
       subtotal,
+      donation: item.donation || 0,
       currency: item.currency || currency,
       isGroupPricing: item.isGroupPricing
     }]);
@@ -93,7 +95,7 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const itemCount = items.length;
-  const total = useMemo(() => items.reduce((sum, i) => sum + i.subtotal, 0), [items]);
+  const total = useMemo(() => items.reduce((sum, i) => sum + i.subtotal + i.donation, 0), [items]);
 
   // Ensure there is an active cart, then replace items on server with local snapshot
   const sync = useCallback(async () => {
