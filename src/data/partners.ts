@@ -53,6 +53,7 @@ export type Experience = {
   gallery: string[];
   description: string;
   priceKESAdult: number;
+  priceKESChild?: number;
   childHalfPriceRule?: boolean;
   isGroupPricing?: boolean;
   minCapacity?: number;
@@ -851,8 +852,9 @@ English
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
-    priceKESAdult: 3500,
-    childHalfPriceRule: true,
+    priceKESAdult: 9075,
+    priceKESChild: 4538,
+    childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
     partnerSlug: "ol-pejeta-conservancy",
@@ -911,8 +913,9 @@ o Flash photography not permitted to avoid disturbing wildlife
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
-    priceKESAdult: 4500,
-    childHalfPriceRule: true,
+    priceKESAdult: 9075,
+    priceKESChild: 4538,
+    childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
     partnerSlug: "ol-pejeta-conservancy",
@@ -972,8 +975,9 @@ o Minimum age 12 years for safety reasons
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
-    priceKESAdult: 2000,
-    childHalfPriceRule: true,
+    priceKESAdult: 9075,
+    priceKESChild: 4538,
+    childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
     partnerSlug: "ol-pejeta-conservancy",
@@ -1034,8 +1038,9 @@ o Educational focus on conservation and animal welfare
 
 Where you'll be
 Sweetwaters Chimpanzee Sanctuary, Ol Pejeta Conservancy`,
-    priceKESAdult: 2500,
-    childHalfPriceRule: true,
+    priceKESAdult: 9075,
+    priceKESChild: 4538,
+    childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
     partnerSlug: "ol-pejeta-conservancy",
@@ -1097,7 +1102,8 @@ o Minimum age 16 years due to research protocol requirements
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
-    priceKESAdult: 5500,
+    priceKESAdult: 9075,
+    priceKESChild: 4538,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
@@ -1168,7 +1174,8 @@ o If you don't have transport to the starting point, the conservancy can arrange
 
 Where you'll be
 2VC5+X9 Nanyuki`,
-    priceKESAdult: 2500,
+    priceKESAdult: 9075,
+    priceKESChild: 4538,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
