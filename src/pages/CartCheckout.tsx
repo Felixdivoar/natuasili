@@ -16,13 +16,24 @@ const CartCheckout = () => {
   const navigate = useNavigate();
   const { items, clear } = useMultiCart();
   const { formatPrice } = useCurrency();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+
+  // Auto-fill contact information from user profile
+  useEffect(() => {
+    if (profile) {
+      setFullName(`${profile.first_name || ''} ${profile.last_name || ''}`.trim() || fullName);
+      setEmail(profile.email || email);
+      setPhone(profile.phone || phone);
+    } else if (user?.email) {
+      setEmail(user.email);
+    }
+  }, [user, profile]);
 
   useEffect(() => {
     if (items.length === 0) {

@@ -44,6 +44,7 @@ import { Link } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { supabase } from "@/integrations/supabase/client";
 import { EXPERIENCES } from "@/data/partners";
+import { useGlobalImpactMetrics } from "@/hooks/useGlobalImpactMetrics";
 
 // Types and interfaces - moved to top
 type Theme =
@@ -238,6 +239,9 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
 };
 
 const ImpactLedger = () => {
+  // Use global impact metrics hook for real-time updates
+  const globalMetrics = useGlobalImpactMetrics();
+  
   // State variables first
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
@@ -412,39 +416,53 @@ const ImpactLedger = () => {
   }, [filteredEntries]);
 
   const kpis: KPIMetric[] = useMemo(() => {
+    // Use live global metrics if available, fallback to calculated values
     const totalBookings = filteredEntries.length;
-    const totalAllocated = filteredEntries.reduce((sum, entry) => sum + entry.allocation_amount, 0);
+    const calculatedTotalAllocated = filteredEntries.reduce((sum, entry) => sum + entry.allocation_amount, 0);
     const uniquePartners = new Set(filteredEntries.map(entry => entry.project_name)).size;
-    const averageAllocation = totalAllocated / Math.max(totalBookings, 1);
+    const averageAllocation = calculatedTotalAllocated / Math.max(totalBookings, 1);
     const averageImpactScore = filteredEntries.reduce((sum, entry) => sum + entry.impact_score, 0) / Math.max(totalBookings, 1);
-    const totalParticipants = filteredEntries.reduce((sum, entry) => sum + entry.participants, 0);
+    const calculatedParticipants = filteredEntries.reduce((sum, entry) => sum + entry.participants, 0);
+
+    // Use global metrics for live data when available
+    const liveConservationFunding = globalMetrics.getTotalConservationFunding() || calculatedTotalAllocated;
+    const liveActivePartners = globalMetrics.getActivePartners() || uniquePartners;
+    const liveParticipants = globalMetrics.getTotalParticipants() || calculatedParticipants;
+    const liveTotalExperiences = globalMetrics.getTotalExperiences() || totalBookings;
 
     return [
       {
-        title: "Total Impact Allocated",
-        value: `${currency} ${convert(totalAllocated, 'KES', currency).toLocaleString()}`,
-        description: "Total funds allocated to conservation projects",
+        title: "Total Conservation Funding",
+        value: `${currency} ${convert(liveConservationFunding, 'KES', currency).toLocaleString()}`,
+        description: "Total funds allocated to conservation projects (live)",
         trend: "up",
         percentage: 15
       },
       {
-        title: "Active Bookings",
-        value: totalBookings,
-        description: "Number of experiences with conservation impact",
+        title: "Total Experiences", 
+        value: liveTotalExperiences,
+        description: "Active conservation experiences available (live)",
         trend: "up",
         percentage: 8
       },
       {
-        title: "Conservation Partners",
-        value: uniquePartners,
-        description: "Organizations receiving conservation funding",
-        trend: "up",
+        title: "Active Partners",
+        value: liveActivePartners,
+        description: "Organizations delivering conservation experiences (live)",
+        trend: "up", 
         percentage: 12
       },
       {
-        title: "Average Impact per Booking",
+        title: "Total Participants",
+        value: liveParticipants,
+        description: "People engaged in conservation experiences (live)",
+        trend: "up",
+        percentage: 22
+      },
+      {
+        title: "Average Allocation per Booking",
         value: `${currency} ${convert(averageAllocation, 'KES', currency).toLocaleString()}`,
-        description: "Mean conservation allocation per experience",
+        description: "Mean conservation funding per experience",
         trend: "up",
         percentage: 5
       },
@@ -454,16 +472,9 @@ const ImpactLedger = () => {
         description: "Mean effectiveness rating of conservation projects",
         trend: "up",
         percentage: 3
-      },
-      {
-        title: "Total Participants",
-        value: totalParticipants,
-        description: "People involved in conservation experiences",
-        trend: "up",
-        percentage: 22
       }
     ];
-  }, [filteredEntries, currency, convert]);
+  }, [filteredEntries, currency, convert, globalMetrics]);
 
   // Static filter options from seed data - always available
   const seedPartners = useMemo(() => 
