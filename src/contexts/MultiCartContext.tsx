@@ -42,8 +42,11 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [items, setItems] = useState<MultiCartItem[]>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? (JSON.parse(raw) as MultiCartItem[]) : [];
-    } catch {
+      const parsed = raw ? (JSON.parse(raw) as MultiCartItem[]) : [];
+      console.log('Loaded cart from localStorage:', parsed.length, 'items', parsed.map(i => ({ id: i.id, title: i.title })));
+      return parsed;
+    } catch (e) {
+      console.error('Failed to load cart from localStorage:', e);
       return [];
     }
   });
@@ -51,36 +54,117 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [isSynced, setIsSynced] = useState(false);
 
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
+    try { 
+      console.log('Saving cart to localStorage:', items.length, 'items');
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); 
+    } catch (e) {
+      console.error('Failed to save cart to localStorage:', e);
+    }
   }, [items]);
 
-  // Auto sync cart when user logs in
+  // Load cart from database when user logs in
   useEffect(() => {
-    if (user) {
-      void sync();
+    if (user && items.length === 0) {
+      // Only load from database if local cart is empty
+      loadCartFromDatabase();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
+
+  const loadCartFromDatabase = useCallback(async () => {
+    if (!user) return;
+
+    const { data: cart, error: cartErr } = await supabase
+      .from("carts")
+      .select(`
+        id,
+        cart_items (
+          id,
+          experience_slug,
+          date,
+          adults,
+          children,
+          option_id,
+          unit_price_kes,
+          subtotal_kes
+        )
+      `)
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .maybeSingle();
+
+    if (cartErr) {
+      console.warn("Failed to load cart from database:", cartErr);
+      return;
+    }
+
+    if (cart && cart.cart_items && cart.cart_items.length > 0) {
+      // Convert database items to local format
+      const dbItems: MultiCartItem[] = cart.cart_items.map((item: any) => ({
+        id: `db_${item.id}`,
+        experienceSlug: item.experience_slug,
+        title: item.experience_slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), // Basic title from slug
+        date: item.date || '',
+        adults: item.adults,
+        children: item.children,
+        optionId: item.option_id as "standard",
+        unitPrice: Number(item.unit_price_kes),
+        subtotal: Number(item.subtotal_kes),
+        donation: 0,
+        currency: currency,
+        isGroupPricing: false
+      }));
+
+      console.log('Loading cart from database:', dbItems.length, 'items');
+      
+      // Merge with local items (avoid duplicates)
+      setItems(prev => {
+        const combined = [...prev];
+        dbItems.forEach(dbItem => {
+          const exists = combined.some(localItem => 
+            localItem.experienceSlug === dbItem.experienceSlug &&
+            localItem.date === dbItem.date &&
+            localItem.adults === dbItem.adults &&
+            localItem.children === dbItem.children
+          );
+          if (!exists) {
+            combined.push(dbItem);
+          }
+        });
+        console.log('Cart after merge:', combined.length, 'items');
+        return combined;
+      });
+      setIsSynced(true);
+    }
+  }, [user, currency]);
 
   const addItem: MultiCartContextType["addItem"] = (item) => {
     const unitPrice = item.unitPrice;
     const subtotal = item.isGroupPricing ? unitPrice : (unitPrice * item.adults) + (unitPrice * (item.children));
     const id = `${item.experienceSlug}_${item.date}_${Date.now()}`;
-    setItems(prev => [...prev, {
-      id,
-      experienceSlug: item.experienceSlug,
-      title: item.title,
-      image: item.image,
-      date: item.date,
-      adults: item.adults,
-      children: item.children,
-      optionId: item.optionId,
-      unitPrice,
-      subtotal,
-      donation: item.donation || 0,
-      currency: item.currency || currency,
-      isGroupPricing: item.isGroupPricing
-    }]);
+    
+    console.log('Adding item to cart:', { id, title: item.title, experienceSlug: item.experienceSlug });
+    
+    setItems(prev => {
+      const newItems = [...prev, {
+        id,
+        experienceSlug: item.experienceSlug,
+        title: item.title,
+        image: item.image,
+        date: item.date,
+        adults: item.adults,
+        children: item.children,
+        optionId: item.optionId,
+        unitPrice,
+        subtotal,
+        donation: item.donation || 0,
+        currency: item.currency || currency,
+        isGroupPricing: item.isGroupPricing
+      }];
+      
+      console.log('Cart items after adding:', newItems.length, newItems.map(i => ({ id: i.id, title: i.title })));
+      return newItems;
+    });
     setIsSynced(false);
     setOpen(true);
   };
@@ -131,36 +215,47 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (!cartId) return;
 
     // 2) Replace items on server
-    // Simplest approach: delete and re-insert snapshot
-    const { error: delErr } = await supabase
-      .from("cart_items")
-      .delete()
-      .eq("cart_id", cartId);
-    if (delErr) {
-      console.warn("cart items delete error", delErr);
-      // continue anyway
-    }
+    // Only delete and re-insert if we have items to sync
+    if (items.length > 0) {
+      const { error: delErr } = await supabase
+        .from("cart_items")
+        .delete()
+        .eq("cart_id", cartId);
+      if (delErr) {
+        console.warn("cart items delete error", delErr);
+        // continue anyway
+      }
 
-    if (items.length === 0) return;
+      const payload = items.map(i => ({
+        cart_id: cartId,
+        experience_slug: i.experienceSlug,
+        date: i.date || null,
+        adults: i.adults,
+        children: i.children,
+        option_id: i.optionId,
+        unit_price_kes: i.unitPrice,
+        subtotal_kes: i.subtotal,
+      }));
 
-    const payload = items.map(i => ({
-      cart_id: cartId,
-      experience_slug: i.experienceSlug,
-      date: i.date || null,
-      adults: i.adults,
-      children: i.children,
-      option_id: i.optionId,
-      unit_price_kes: i.unitPrice,
-      subtotal_kes: i.subtotal,
-    }));
-
-    const { error: insItemsErr } = await supabase
-      .from("cart_items")
-      .insert(payload);
-    if (insItemsErr) {
-      console.warn("cart items insert error", insItemsErr);
+      const { error: insItemsErr } = await supabase
+        .from("cart_items")
+        .insert(payload);
+      if (insItemsErr) {
+        console.warn("cart items insert error", insItemsErr);
+      } else {
+        setIsSynced(true);
+      }
     } else {
-      setIsSynced(true);
+      // Clear cart items if local cart is empty
+      const { error: delErr } = await supabase
+        .from("cart_items")
+        .delete()
+        .eq("cart_id", cartId);
+      if (delErr) {
+        console.warn("cart items delete error", delErr);
+      } else {
+        setIsSynced(true);
+      }
     }
   }, [user, items, currency]);
 
