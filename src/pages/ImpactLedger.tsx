@@ -169,6 +169,7 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
         adults,
         children,
         total_kes,
+        donation_kes,
         status,
         customer_name,
         experiences (
@@ -183,14 +184,14 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
             location
           )
         ),
-        impact_proofs!inner (
+        impact_proofs (
           id,
           url,
           caption,
           status
         )
       `)
-      .eq('impact_proofs.status', 'approved')
+      .in('status', ['confirmed','completed'])
       .order('booking_date', { ascending: false });
 
     if (bookingsError) {
@@ -208,7 +209,7 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
       const themes = experience?.themes || [];
       const primaryTheme = Array.isArray(themes) && themes.length > 0 ? themes[0] : 'Wildlife';
       
-      const allocationAmount = Math.round(booking.total_kes * 0.1);
+      const allocationAmount = Math.round(((booking.total_kes || 0) - (booking.donation_kes || 0)) * 0.1);
       const impactProofs = booking.impact_proofs || [];
       
       return {
