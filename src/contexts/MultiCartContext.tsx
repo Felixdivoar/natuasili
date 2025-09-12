@@ -28,6 +28,7 @@ interface MultiCartContextType {
   removeItem: (id: string) => void;
   clear: () => void;
   sync: () => Promise<void>;
+  isSynced: boolean;
 }
 
 const MultiCartContext = createContext<MultiCartContextType | undefined>(undefined);
@@ -46,6 +47,7 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   });
   const [open, setOpen] = useState(false);
+  const [isSynced, setIsSynced] = useState(false);
 
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
@@ -77,11 +79,18 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       currency: item.currency || currency,
       isGroupPricing: item.isGroupPricing
     }]);
+    setIsSynced(false);
     setOpen(true);
   };
 
-  const removeItem = (id: string) => setItems(prev => prev.filter(i => i.id !== id));
-  const clear = () => setItems([]);
+  const removeItem = (id: string) => {
+    setItems(prev => prev.filter(i => i.id !== id));
+    setIsSynced(false);
+  };
+  const clear = () => {
+    setItems([]);
+    setIsSynced(false);
+  };
 
   const itemCount = items.length;
   const total = useMemo(() => items.reduce((sum, i) => sum + i.subtotal, 0), [items]);
@@ -148,6 +157,8 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       .insert(payload);
     if (insItemsErr) {
       console.warn("cart items insert error", insItemsErr);
+    } else {
+      setIsSynced(true);
     }
   }, [user, items, currency]);
 
@@ -161,6 +172,7 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     removeItem,
     clear,
     sync,
+    isSynced,
   };
 
   return (

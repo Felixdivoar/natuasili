@@ -58,6 +58,7 @@ import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
+import CartCheckout from "./pages/CartCheckout";
 import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
@@ -129,6 +130,7 @@ const App = () => (
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
                 <Route path="/experience/:slug" element={<AppLayout><ExperienceDetail /></AppLayout>} />
                 <Route path="/checkout/:slug" element={<AppLayout><Checkout /></AppLayout>} />
+                <Route path="/cart/checkout" element={<AppLayout><CartCheckout /></AppLayout>} />
                 <Route path="/confirmation/:slug" element={<AppLayout><ConfirmationPage /></AppLayout>} />
                 <Route path="/pesapal-callback" element={<AppLayout><PesapalCallback /></AppLayout>} />
                 <Route path="/pesapal/callback" element={<AppLayout><PesapalCallback /></AppLayout>} />

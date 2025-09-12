@@ -7,7 +7,7 @@ import { X, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function CartDrawer() {
-  const { open, setOpen, items, removeItem, total, sync } = useMultiCart();
+  const { open, setOpen, items, removeItem, total, sync, isSynced } = useMultiCart();
   const { formatPrice } = useCurrency();
   const navigate = useNavigate();
 
@@ -75,10 +75,25 @@ export default function CartDrawer() {
             </div>
           )}
 
-          {hasItems && (
+          {hasItems && !isSynced && (
             <div className="flex justify-end">
               <Button onClick={() => { void sync(); }}>
                 Save Cart
+              </Button>
+            </div>
+          )}
+
+          {hasItems && (
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                className="flex-1"
+                onClick={() => {
+                  setOpen(false);
+                  navigate('/cart/checkout');
+                }}
+              >
+                Checkout All ({items.length} items)
               </Button>
             </div>
           )}
