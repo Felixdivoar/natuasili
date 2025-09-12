@@ -73,6 +73,7 @@ const AvailabilityAndOptions = ({
   const [participantsError, setParticipantsError] = useState("");
 
   const basePrice = experience.base_price || experience.priceKESAdult || 350;
+  const isGroupPricing = (experience as any).isGroupPricing || false;
   const childPrice = experience.childHalfPriceRule ? Math.round(basePrice * 0.5) : basePrice;
 
   // Update cart whenever selections change
@@ -99,7 +100,7 @@ const AvailabilityAndOptions = ({
 
   // Update booking context whenever selections change
   useEffect(() => {
-    const totalPrice = (selectedAdults * basePrice) + (selectedChildren * childPrice);
+    const totalPrice = isGroupPricing ? basePrice : ((selectedAdults * basePrice) + (selectedChildren * childPrice));
     
     if (selectedDate && experience.slug) {
       setBookingState({

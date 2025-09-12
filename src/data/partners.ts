@@ -54,6 +54,9 @@ export type Experience = {
   description: string;
   priceKESAdult: number;
   childHalfPriceRule?: boolean;
+  isGroupPricing?: boolean;
+  minCapacity?: number;
+  capacity?: number;
   visibleOnMarketplace: boolean;
   locationText?: string;
   partnerSlug?: string;
@@ -1236,6 +1239,9 @@ Where you'll be
 6GCQR5P4+24`,
     priceKESAdult: 66000,
     childHalfPriceRule: false,
+    isGroupPricing: true,
+    minCapacity: 2,
+    capacity: 8,
     visibleOnMarketplace: true,
     locationText: "Masai Mara",
     partnerSlug: "mara-elephant-project",
@@ -1258,35 +1264,38 @@ Along with MEP's Long-Term Monitoring (LTM) team, the 3-hour program Elephant Re
 Start a thrilling adventure—a behind-the-scenes view of elephant research conducted with MEP. This special 3-hour experience provides a rare chance to join MEP's Long-Term Monitoring (LTM) team in gathering important information on the magnificent Maasai Mara elephants.
 
 Highlights
-• Actively participate in elephant data collection efforts.
-• Discover how to identify particular elephants and their behavior.
-• Along with the research team, photograph valuable data.
+• Engage in real elephant research with MEP's Long-Term Monitoring team
+• Learn about elephant behavior and conservation challenges
+• Contribute to valuable data collection for elephant protection
+• Gain insider knowledge from experienced researchers and field guides
+• Experience the behind-the-scenes world of elephant conservation
 
 Included/Excluded
-• Refreshments; drinking water, coffee or juice.
+• Refreshments and drinking water
+• Research materials and equipment
+• Expert guidance from MEP team
 • Personal expenses
 • Insurance
-• Meals
+• Transportation to/from the meeting point
 
 What to expect
 A Research Expedition with the Mara Elephant Project
-o Arrive at the designated meeting point at MEP headquarters in Lemek Conservancy
-o Meet the MEP staff and receive a comprehensive briefing on the program, elephant research methods, and safety protocols.
-o Embark on a research expedition alongside the LTM team. Learn to identify individual elephants and assist with data collection through photography and observation.
-o Depart with a newfound appreciation for the dedication of the MEP team and the importance of elephant conservation. You'll also leave with the satisfaction of making a direct contribution through your participation and donation.
+o Meet at the designated location (transportation arrangements may vary)
+o Receive comprehensive briefing on elephant research methodologies and conservation challenges
+o Join the MEP Long-Term Monitoring team in active data collection activities
+o Learn to identify individual elephants and observe behavioral patterns
+o Participate in photographic documentation and data recording
+o Engage in discussions about elephant conservation strategies and challenges
 
-Cancellation policy
-o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a full refund.
-
-Durations
-0 - 2 hours
+Duration
+3 hours
 
 Languages
 English
 
 Frequently asked questions
-What will I do during the program?
-You'll assist the LTM team in data collection, learn elephant identification techniques, capture photos, and hear from a Maasai scientist.
+What type of research will I be involved in?
+You'll participate in active elephant monitoring, including identification, behavior observation, and data collection alongside MEP's research team.
 
 What kind of data collection will I be involved in?
 You might assist with tasks like elephant identification, behavior observation, and photographic documentation.
@@ -1310,6 +1319,9 @@ Where you'll be
 6GCQR5P4+24`,
     priceKESAdult: 66000,
     childHalfPriceRule: false,
+    isGroupPricing: true,
+    minCapacity: 2,
+    capacity: 8,
     visibleOnMarketplace: true,
     locationText: "Masai Mara",
     partnerSlug: "mara-elephant-project",  

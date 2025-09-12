@@ -38,11 +38,13 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // Calculate pricing
+  const isGroupPricing = experience.isGroupPricing || false;
   const adultPrice = experience.priceKESAdult;
   const childPrice = experience.childHalfPriceRule ? Math.round(adultPrice * 0.5) : adultPrice;
   
-  const subtotalAdults = bookingData.adults * adultPrice;
-  const subtotalChildren = bookingData.children * childPrice;
+  // For group pricing, total stays constant regardless of participant count
+  const subtotalAdults = isGroupPricing ? adultPrice : (bookingData.adults * adultPrice);
+  const subtotalChildren = isGroupPricing ? 0 : (bookingData.children * childPrice);
   const totalPrice = subtotalAdults + subtotalChildren;
 
   // Format KES currency
@@ -51,21 +53,58 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
   };
 
   const updateAdults = (change: number) => {
-    setBookingData(prev => ({
-      ...prev,
-      adults: Math.max(0, prev.adults + change)
-    }));
+    const minParticipants = experience.minCapacity || 1;
+    const maxParticipants = experience.capacity || 50;
+    const currentTotal = bookingData.adults + bookingData.children;
+    
+    setBookingData(prev => {
+      const newAdults = Math.max(0, prev.adults + change);
+      const newTotal = newAdults + prev.children;
+      
+      // For group pricing experiences, enforce minimum participants
+      if (experience.isGroupPricing && newTotal < minParticipants && change < 0) {
+        return prev; // Don't allow reducing below minimum
+      }
+      
+      // Don't exceed maximum capacity
+      if (newTotal > maxParticipants && change > 0) {
+        return prev;
+      }
+      
+      return {
+        ...prev,
+        adults: newAdults
+      };
+    });
   };
 
   const updateChildren = (change: number) => {
-    setBookingData(prev => ({
-      ...prev,
-      children: Math.max(0, prev.children + change)
-    }));
+    const minParticipants = experience.minCapacity || 1;
+    const maxParticipants = experience.capacity || 50;
+    
+    setBookingData(prev => {
+      const newChildren = Math.max(0, prev.children + change);
+      const newTotal = prev.adults + newChildren;
+      
+      // For group pricing experiences, enforce minimum participants
+      if (experience.isGroupPricing && newTotal < minParticipants && change < 0) {
+        return prev; // Don't allow reducing below minimum
+      }
+      
+      // Don't exceed maximum capacity
+      if (newTotal > maxParticipants && change > 0) {
+        return prev;
+      }
+      
+      return {
+        ...prev,
+        children: newChildren
+      };
+    });
   };
 
   const isValid = 
-    (bookingData.adults > 0 || bookingData.children > 0) && 
+    (bookingData.adults + bookingData.children >= (experience.minCapacity || 1)) && 
     bookingData.date && 
     bookingData.contactName.trim() && 
     bookingData.contactEmail.trim() && 
@@ -97,9 +136,16 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
         <CardTitle className="text-lg">Book This Experience</CardTitle>
         <div className="text-2xl font-bold text-primary">
           {formatKES(adultPrice)}
-          <span className="text-sm font-normal text-muted-foreground ml-1">per adult</span>
+          <span className="text-sm font-normal text-muted-foreground ml-1">
+            {isGroupPricing ? 'per group' : 'per adult'}
+          </span>
         </div>
-        {experience.childHalfPriceRule && (
+        {isGroupPricing && (
+          <div className="text-sm text-muted-foreground">
+            Group experience (min {experience.minCapacity || 2}, max {experience.capacity || 8} participants)
+          </div>
+        )}
+        {!isGroupPricing && experience.childHalfPriceRule && (
           <div className="text-sm text-muted-foreground">
             Children: {formatKES(childPrice)} (50% off)
           </div>
@@ -249,18 +295,27 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
             <div className="space-y-2 pt-4 border-t">
               <div className="text-sm font-medium">Pricing Summary</div>
               
-              {bookingData.adults > 0 && (
+              {isGroupPricing ? (
                 <div className="flex justify-between text-sm">
-                  <span>{bookingData.adults} Adult{bookingData.adults > 1 ? 's' : ''}</span>
-                  <span>{formatKES(subtotalAdults)}</span>
+                  <span>Group Experience ({bookingData.adults + bookingData.children} participants)</span>
+                  <span>{formatKES(totalPrice)}</span>
                 </div>
-              )}
-              
-              {bookingData.children > 0 && (
-                <div className="flex justify-between text-sm">
-                  <span>{bookingData.children} Child{bookingData.children > 1 ? 'ren' : ''}</span>
-                  <span>{formatKES(subtotalChildren)}</span>
-                </div>
+              ) : (
+                <>
+                  {bookingData.adults > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span>{bookingData.adults} Adult{bookingData.adults > 1 ? 's' : ''}</span>
+                      <span>{formatKES(subtotalAdults)}</span>
+                    </div>
+                  )}
+                  
+                  {bookingData.children > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span>{bookingData.children} Child{bookingData.children > 1 ? 'ren' : ''}</span>
+                      <span>{formatKES(subtotalChildren)}</span>
+                    </div>
+                  )}
+                </>
               )}
               
               <Separator />
@@ -284,8 +339,8 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
           
           {!isValid && (
             <div className="text-xs text-muted-foreground text-center">
-              {(bookingData.adults === 0 && bookingData.children === 0) 
-                ? "Please select at least one traveler"
+              {(bookingData.adults + bookingData.children) < (experience.minCapacity || 1)
+                ? `Minimum ${experience.minCapacity || 1} participants required${isGroupPricing ? ' for group experience' : ''}`
                 : !bookingData.date 
                 ? "Please select a date"
                 : "Please fill in all contact details"
