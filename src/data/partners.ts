@@ -195,37 +195,34 @@ export const EXPERIENCES: Experience[] = [
     heroImage: "/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png",
     gallery: ["/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png", "/lovable-uploads/3a4d487a-fe3a-40ce-aa28-18adf4191e69.png", "/lovable-uploads/396bdd72-dc8d-4727-8fd8-e73dba015ec2.png", "/lovable-uploads/cc847573-d3b5-4aa6-8d5c-26b81ce2b693.png", "/lovable-uploads/a4b8d107-90cf-4f50-9401-95350c393f65.png", "/lovable-uploads/c6c43dc7-52c0-4f45-baf7-4093fc59cf98.png"],
     description: `Overview
-Engage with the vibrant cultural heritage of Northern Kenya through immersive, community-led experiences. These journeys allow visitors to connect with indigenous communities, participate in traditional practices, and gain a deeper appreciation for ways of life that have been preserved for generations. From hands-on activities like beadwork and cooking to captivating storytelling sessions, travelers are invited to experience daily life as lived by the region's diverse communities. Visits to local villages offer meaningful interactions and insights into customs and traditions, while cultural festivals such as the Tobong'u Lore bring together communities in colorful celebrations of heritage. Through educational tours and guided discussions, visitors also learn about the historical, social, and environmental dimensions of indigenous cultures. These experiences not only foster cultural exchange but also support sustainable development and the preservation of Northern Kenya's rich cultural identity.
+Immerse yourself in community-led cultural experiences—hands-on activities, storytelling, and festivals that sustain heritage and support livelihoods.
 
 Highlights
-• Engage in genuine cultural exchanges that go beyond typical tourist activities, fostering mutual respect and understanding.
-• Stay in community-run lodges or homestays that provide comfort while ensuring that tourism benefits the local population.
-• Be accompanied by knowledgeable local guides who offer personal insights and facilitate meaningful interactions.
+• Authentic cultural exchange
+• Community-run stays and local guides
+• Educational tours on history and stewardship
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-Cultural Immersions in Northern Kenya
-o Spend time in local villages learning about daily life, customs, and traditions directly from community members.
-o If your visit coincides with local events such as the Tobong'u Lore Festival, join the celebrations showcasing music, dance, fashion, and ancestral heritage.
-o Join local guides for educational tours focusing on indigenous history, clan structures, and environmental stewardship practices.
+What to Expect (Itinerary & Cancellation)
+• Village Visits: Daily life, customs, traditions
+• Festivals: Join events like Tobong'u Lore (if dates align)
+• Learning: Indigenous history and environmental practices
+• Cancellation: Use listing policy
 
-Durations
-2 - 3 hours
+Duration
+2 hours (fallback)
 
-Frequently asked questions
-Are these experiences suitable for families with children?
-Yes, cultural immersion activities are designed to be educational and engaging for all age groups, making them suitable for families.
+Language
+English
 
-How do these experiences benefit local communities?
-A significant portion of the proceeds from cultural immersion experiences goes directly to the communities, supporting local economies, education, and cultural preservation efforts.
+Frequently Asked Questions
+• Family-friendly? Yes.
+• Community benefit? Proceeds support local development and preservation.
 
-Where you'll be
+Where You'll Be
 https://maps.app.goo.gl/VzMtfuRWv9rbpWt76`,
     priceKESAdult: 2000,
     childHalfPriceRule: false,
@@ -247,51 +244,42 @@ https://maps.app.goo.gl/VzMtfuRWv9rbpWt76`,
     heroImage: "/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png",
     gallery: ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"],
     description: `Overview
-Embark on a unique and thrilling adventure at the Sera Rhino Sanctuary, nestled within the Sera Community Conservancy in Kenya's Samburu region. As the first and only community-managed black rhino sanctuary in East Africa, and the only location in Northern Kenya where visitors can track both black and white rhinos on foot, Sera represents a groundbreaking model of community-led conservation. Established in 2015, the sanctuary marked the return of black rhinos to the area after a 30-year absence caused by poaching, and in 2024, it expanded its conservation efforts by introducing southern white rhinos.
-Visitors can experience the thrill of tracking rhinos on foot, guided by skilled Samburu trackers and armed rangers, while exploring the sanctuary's vast 26,000-acre wilderness—home to the 'Samburu Special Five': reticulated giraffe, Grevy's zebra, Beisa oryx, Somali ostrich, and gerenuk. The experience also offers meaningful cultural immersion, with opportunities to engage with the Samburu community and learn about their traditions and vital role in protecting wildlife.
+Embark on a unique, community-led adventure at the Sera Rhino Sanctuary in Samburu, the first and only community-managed black rhino sanctuary in East Africa—and the only place in Northern Kenya where visitors can track both black and white rhinos on foot. Established in 2015 after a 30-year absence caused by poaching, Sera reintroduced black rhinos and, in 2024, expanded conservation efforts by introducing southern white rhinos. Guided by expert Samburu trackers and armed rangers, explore 26,000 acres of wilderness—home to the "Samburu Special Five": reticulated giraffe, Grevy's zebra, Beisa oryx, Somali ostrich, and gerenuk—and engage meaningfully with local communities safeguarding wildlife.
 
 Highlights
-• Join expert Samburu guides and armed rangers as you track rhinos in their natural habitat using traditional methods.
-• Discover how local communities are protecting wildlife and earning sustainable livelihoods through tourism.
-• Spot other iconic species including the reticulated giraffe, Grevy's zebra, Somali ostrich, Beisa oryx, and the long-necked gerenuk.
+• Track rhinos on foot with Samburu guides and armed rangers using traditional methods.
+• Learn how community stewardship drives wildlife protection and sustainable livelihoods.
+• Spot iconic species including reticulated giraffe, Grevy's zebra, Somali ostrich, Beisa oryx, and gerenuk.
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-On-foot rhino tracking
-o Start with an informative session led by conservancy rangers outlining safety protocols, the sanctuary's history, and how your visit supports conservation.
-o Head out with expert guides using traditional tracking methods to follow signs of rhinos. Once a rhino is found, you'll observe from a safe yet intimate distance—often just meters away—while learning about their behaviors and threats.
-o Along the walk or during optional game drives, spot species such as Grevy's zebra, reticulated giraffe, and Beisa oryx.
+What to Expect (Itinerary & Cancellation)
+• Briefing: Safety protocols, sanctuary history, and conservation impact
+• Tracking: Follow signs to locate rhinos; observe from a safe, intimate distance
+• Wildlife: Optional game viewing; chance to see Grevy's zebra, reticulated giraffe, Beisa oryx
+• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
 
-Durations
-2 - 3 hours
+Duration
+2 hours (fallback)
 
-Languages
+Language
 English
 
-Frequently asked questions
-Do I need prior experience?
-Not at all. All tracking is done under the guidance of experienced Samburu trackers and conservancy rangers.
+Frequently Asked Questions
+• Do I need prior experience? No—experienced trackers and rangers guide the entire walk.
+• How does my visit help? Revenue supports rhino protection, ranger patrols, and community programs.
+• Is it safe? Yes—walks are led by trained, armed rangers under strict protocols.
 
-How does this tour support conservation?
-A significant portion of your visit goes directly into rhino protection, ranger patrols, and community development programs.
-
-Is this safe?
-Absolutely. All walking safaris are led by trained, armed rangers following strict safety protocols.
-
-Where you'll be
-95W5+QGR, Dol Dol`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=95W5%2BQGR%2C%20Dol%20Dol%2C%20Kenya`,
     priceKESAdult: 4000,
     childHalfPriceRule: false,
     visibleOnMarketplace: true,
     locationText: "Sera Conservancy, Samburu",
     partnerSlug: "sera-conservancy",
-    sourceUrl: "https://natuasili.com/st_tour/sera-on-foot-rhino-tracking/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=95W5%2BQGR%2C%20Dol%20Dol%2C%20Kenya",
   },
   {
     title: "Ruko giraffe encounter; rare Rothschild's in the wild",
@@ -345,7 +333,7 @@ J4RF+P9M, Nosuguro`,
     visibleOnMarketplace: true,
     locationText: "Ruko Conservancy, Samburu",
     partnerSlug: "ruko-community-conservancy",
-    sourceUrl: "https://natuasili.com/st_tour/giraffe-at-ruko-sanctuary/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=J4RF%2BP9M%2C%20Nosuguro%2C%20Kenya",
   },
   {
     title: "Colobus monkey eco-tour in Diani, Kenya",

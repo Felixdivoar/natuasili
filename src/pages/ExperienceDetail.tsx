@@ -207,8 +207,7 @@ const ExperienceDetail = () => {
     }
   };
 
-  // Parse content sections from experience description for structured display
-  const parseExperienceContent = (description: string) => {
+  const contentSections = parseExperienceContent(experience.description);
     const sections = {
       overview: "",
       highlights: [] as string[],
@@ -222,9 +221,168 @@ const ExperienceDetail = () => {
       importantInfo: [] as string[]
     };
 
-    // Experience-specific content based on slug
-    switch (experience.slug) {
-      case "colobus-monkey-eco-tour-in-diani-kenya":
+    // Split description by sections
+    const lines = description.split('\n');
+    let currentSection = '';
+    let currentContent: string[] = [];
+
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      
+      if (trimmedLine === 'Overview') {
+        currentSection = 'overview';
+        currentContent = [];
+      } else if (trimmedLine === 'Highlights') {
+        currentSection = 'highlights';
+        currentContent = [];
+      } else if (trimmedLine === 'Included/Excluded') {
+        currentSection = 'included_excluded';
+        currentContent = [];
+      } else if (trimmedLine.includes('What to Expect') || trimmedLine === 'What to expect') {
+        currentSection = 'itinerary';
+        currentContent = [];
+      } else if (trimmedLine === 'Duration') {
+        currentSection = 'duration';
+        currentContent = [];
+      } else if (trimmedLine === 'Language') {
+        currentSection = 'languages';
+        currentContent = [];
+      } else if (trimmedLine.includes('Frequently Asked Questions') || trimmedLine === 'FAQ') {
+        currentSection = 'faqs';
+        currentContent = [];
+      } else if (trimmedLine === 'Important Information') {
+        currentSection = 'important';
+        currentContent = [];
+      } else if (trimmedLine && !trimmedLine.startsWith('Where You\'ll Be')) {
+        if (currentSection) {
+          currentContent.push(trimmedLine);
+        }
+      }
+
+      // Process content when section changes or at end
+      if ((trimmedLine && (
+          trimmedLine === 'Overview' || 
+          trimmedLine === 'Highlights' || 
+          trimmedLine === 'Included/Excluded' ||
+          trimmedLine.includes('What to Expect') ||
+          trimmedLine === 'Duration' ||
+          trimmedLine === 'Language' ||
+          trimmedLine.includes('Frequently Asked Questions') ||
+          trimmedLine === 'Important Information'
+        )) && currentContent.length > 0) {
+        
+        // Process previous section
+        processSectionContent(sections, currentSection, currentContent);
+        currentContent = [];
+      }
+    }
+
+    // Process final section
+    if (currentContent.length > 0) {
+      processSectionContent(sections, currentSection, currentContent);
+    }
+
+    return sections;
+  };
+
+  const processSectionContent = (sections: any, section: string, content: string[]) => {
+    switch (section) {
+      case 'overview':
+        sections.overview = content.join(' ').trim();
+        break;
+      case 'highlights':
+        sections.highlights = content
+          .filter(line => line.startsWith('•'))
+          .map(line => line.replace('•', '').trim());
+        break;
+      case 'included_excluded':
+        const includedItems: string[] = [];
+        const excludedItems: string[] = [];
+        let isExcluded = false;
+        
+        for (const line of content) {
+          if (line.toLowerCase().includes('included:')) {
+            isExcluded = false;
+            const item = line.replace(/•?\s*included:\s*/i, '').trim();
+            if (item) includedItems.push(item);
+          } else if (line.toLowerCase().includes('excluded:')) {
+            isExcluded = true;
+            const item = line.replace(/•?\s*excluded:\s*/i, '').trim();
+            if (item) excludedItems.push(item);
+          } else if (line.startsWith('•')) {
+            const item = line.replace('•', '').trim();
+            if (isExcluded) {
+              excludedItems.push(item);
+            } else {
+              includedItems.push(item);
+            }
+          }
+        }
+        
+        sections.included = includedItems;
+        sections.notIncluded = excludedItems;
+        break;
+      case 'itinerary':
+        const itineraryItems: {title: string, description: string}[] = [];
+        let cancellationPolicy = '';
+        
+        for (const line of content) {
+          if (line.toLowerCase().includes('cancellation')) {
+            cancellationPolicy = line.replace(/•?\s*cancellation:\s*/i, '').trim();
+          } else if (line.startsWith('•')) {
+            const item = line.replace('•', '').trim();
+            const parts = item.split(':');
+            if (parts.length >= 2) {
+              itineraryItems.push({
+                title: parts[0].trim(),
+                description: parts.slice(1).join(':').trim()
+              });
+            }
+          }
+        }
+        
+        sections.itinerary = itineraryItems.length > 0 ? itineraryItems : [{
+          title: "Experience Activities",
+          description: content.filter(line => !line.toLowerCase().includes('cancellation')).join(' ')
+        }];
+        sections.cancellation = cancellationPolicy;
+        break;
+      case 'duration':
+        sections.duration = content.join(' ').replace(/\(fallback\)/i, '').trim();
+        break;
+      case 'languages':
+        sections.languages = content.join(' ').trim();
+        break;
+      case 'faqs':
+        const faqItems: {question: string, answer: string}[] = [];
+        let currentQuestion = '';
+        
+        for (const line of content) {
+          if (line.startsWith('•')) {
+            const parts = line.replace('•', '').trim().split('?');
+            if (parts.length >= 2) {
+              currentQuestion = parts[0].trim() + '?';
+              const answer = parts.slice(1).join('?').trim();
+              faqItems.push({ question: currentQuestion, answer });
+            }
+          } else if (currentQuestion && line.trim()) {
+            // Continue answer from previous line
+            if (faqItems.length > 0) {
+              faqItems[faqItems.length - 1].answer += ' ' + line.trim();
+            }
+          }
+        }
+        
+        sections.faqs = faqItems;
+        break;
+      case 'important':
+        sections.importantInfo = content
+          .filter(line => line.startsWith('•') || line.trim())
+          .map(line => line.replace('•', '').trim());
+        break;
+    }
+  };
+  const contentSections = parseExperienceContent(experience.description);
         sections.overview = "Founded in Diani, Kenya, Colobus Conservation is a non-profit committed to the protection of primates, especially the threatened Angolan black and white colobus monkeys. Through habitat protection, educational campaigns, rescue, and rehabilitation projects, it seeks to safeguard primates. The only primate eco-tour in the nation, it presents a special chance to see a colonized troop of colobus monkeys in their natural environment.";
         sections.highlights = [
           "Guided nature walk through a scenic trail",
@@ -258,7 +416,39 @@ const ExperienceDetail = () => {
         ];
         break;
 
-      case "coral-conservation-experience-with-reefolution":
+  
+  const itinerary = [
+    {
+      time: "6:00 AM",
+      title: "Early Morning Departure", 
+      description: "Pick up from your accommodation and journey to the location with expert briefing."
+    },
+    {
+      time: "8:00 AM",
+      title: "Experience Begins",
+      description: "Begin your conservation experience with local guides and community members."
+    },
+    {
+      time: "10:30 AM", 
+      title: "Hands-On Activities",
+      description: "Participate in conservation activities and learn traditional techniques."
+    },
+    {
+      time: "12:30 PM",
+      title: "Community Lunch",
+      description: "Enjoy locally prepared meals while discussing conservation impact."
+    },
+    {
+      time: "2:00 PM",
+      title: "Continued Learning", 
+      description: "Deepen your understanding through additional activities and exploration."
+    },
+    {
+      time: "4:30 PM",
+      title: "Return Journey",
+      description: "Reflect on the day's experiences and return to your accommodation."
+    }
+  ];
         sections.overview = "As the leading coral restoration project in Africa, REEFolution is focused on safeguarding Kenyan coral reefs. To equip people to be champions of coral preservation, they provide a range of events combining education, scientific inquiry, and practical activities.";
         sections.highlights = [
           "Discover the inspirational path REEFolution is on and how it will impact the restoration of coral reefs.",
@@ -423,21 +613,18 @@ const ExperienceDetail = () => {
         ];
         break;
 
-      default:
-        // Default content for other experiences
-        sections.overview = description;
-        sections.highlights = [
-          "Immersive conservation experience with expert guides",
-          "Direct contribution to wildlife and community protection",
-          "Traditional and modern conservation techniques",
-          "Authentic cultural exchange with local communities",
-          "90% of proceeds support partner initiatives"
-        ];
-        sections.included = ["Expert guide", "Conservation activities", "Local community interaction"];
-        sections.notIncluded = ["Transportation", "Personal expenses", "Gratuities"];
-        sections.duration = "6 hours";
-        sections.languages = "English, Swahili";
-        break;
+    // Default fallback parsing if no specific experience slug matches
+    if (!sections.overview) {
+      sections.overview = description.split('\n')[0] || experience.description || "Discover this unique conservation experience";
+      sections.highlights = [
+        "Immersive conservation experience with expert guides",
+        "Direct contribution to wildlife and community protection", 
+        "Authentic cultural exchange with local communities"
+      ];
+      sections.included = ["Professional guide", "Conservation activities"];
+      sections.notIncluded = ["Transportation", "Personal expenses", "Insurance"];
+      sections.duration = experience.duration?.toString() || "2-3 hours";
+      sections.languages = "English";
     }
 
     return sections;
