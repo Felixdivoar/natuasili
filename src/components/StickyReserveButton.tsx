@@ -50,6 +50,14 @@ export default function StickyReserveButton({
     bookingState?.experienceSlug === experienceSlug
   ) || location.pathname.includes(`/experience/${experienceSlug}`);
 
+  // Only show active booking info if we're on the same experience page
+  const isOnSameExperiencePage = location.pathname.includes(`/experience/${experienceSlug}`) || 
+                                location.pathname.includes(`/listings/${experienceSlug}`);
+  
+  const showActiveBooking = hasActiveBooking && bookingState?.date && 
+                           bookingState?.experienceSlug === experienceSlug &&
+                           isOnSameExperiencePage;
+
   if (!shouldShow) return null;
 
   const handleReserveClick = () => {
@@ -76,14 +84,14 @@ export default function StickyReserveButton({
   };
 
   const getButtonText = () => {
-    if (hasActiveBooking && bookingState?.date && bookingState?.experienceSlug === experienceSlug) {
+    if (showActiveBooking) {
       return 'Continue Booking';
     }
     return 'Reserve';
   };
 
   const getDisplayPrice = () => {
-    if (hasActiveBooking && bookingState?.totalPrice) {
+    if (showActiveBooking && bookingState?.totalPrice) {
       return formatPrice(bookingState.totalPrice);
     }
     return `from ${formatPrice(basePrice)}`;
@@ -104,8 +112,8 @@ export default function StickyReserveButton({
         }}
       >
         <div className="p-4">
-          {/* Booking Summary (if active) */}
-          {hasActiveBooking && bookingState?.date && (
+          {/* Booking Summary (if active and on same experience page) */}
+          {showActiveBooking && (
             <div className="mb-3 p-3 bg-muted/50 rounded-lg">
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-4">

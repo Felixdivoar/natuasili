@@ -56,9 +56,11 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   }, [user]);
 
   // Price calculations
-  const subtotal = experience.base_price * formData.people;
-  const partnerAmount = (subtotal * experience.allocation_pct_project) / 100;
-  const platformAmount = (subtotal * experience.allocation_pct_platform) / 100;
+  const adultPrice = experience.priceKESAdult || experience.base_price || 350;
+  const isGroupPricing = experience.isGroupPricing || false;
+  const subtotal = isGroupPricing ? adultPrice : (adultPrice * formData.people);
+  const partnerAmount = (subtotal * (experience.allocation_pct_project || 90)) / 100;
+  const platformAmount = (subtotal * (experience.allocation_pct_platform || 10)) / 100;
 
   const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));

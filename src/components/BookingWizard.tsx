@@ -46,11 +46,12 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
 
   const adultPrice = experience.priceKESAdult;
   const childPrice = experience.childHalfPriceRule ? Math.round(adultPrice / 2) : adultPrice;
+  const isGroupPricing = experience.isGroupPricing || false;
   const optionMultiplier = 1;  // Only standard option available
   const unitPrice = Math.round(adultPrice * optionMultiplier);
   const childUnitPrice = Math.round(childPrice * optionMultiplier);
   
-  const subtotal = (formData.adults * unitPrice) + (formData.children * childUnitPrice);
+  const subtotal = isGroupPricing ? adultPrice : ((formData.adults * unitPrice) + (formData.children * childUnitPrice));
   const partnerAmount = Math.round(subtotal * 0.9);
   const platformAmount = subtotal - partnerAmount;
   const totalPeople = formData.adults + formData.children;
@@ -241,8 +242,12 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
                                <p className="text-sm text-muted-foreground">{t('standardDesc', 'Full experience')}</p>
                              </div>
                              <div className="text-right">
-                               <div className="font-semibold">{formatPrice(adultPrice)}</div>
-                               <div className="text-xs text-muted-foreground">{t('perPerson', 'per person')}</div>
+                                <div className="font-semibold">
+                                  {isGroupPricing ? `${formatPrice(adultPrice)} per group` : formatPrice(adultPrice)}
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  {isGroupPricing ? 'for group' : t('perPerson', 'per person')}
+                                </div>
                              </div>
                            </div>
                          </CardContent>
@@ -495,18 +500,27 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose, experien
 
                     <Separator />
 
-                    {formData.adults > 0 && (
+                    {isGroupPricing ? (
                       <div className="flex justify-between">
-                        <span>{formData.adults} × {t('adults', 'Adults')}</span>
-                        <span>{formatPrice(formData.adults * unitPrice)}</span>
+                        <span>Group Experience ({formData.adults + formData.children} participants)</span>
+                        <span>{formatPrice(subtotal)}</span>
                       </div>
-                    )}
-                    
-                    {formData.children > 0 && experience.childHalfPriceRule && (
-                      <div className="flex justify-between">
-                        <span>{formData.children} × {t('children', 'Children')}</span>
-                        <span>{formatPrice(formData.children * childUnitPrice)}</span>
-                      </div>
+                    ) : (
+                      <>
+                        {formData.adults > 0 && (
+                          <div className="flex justify-between">
+                            <span>{formData.adults} × {t('adults', 'Adults')}</span>
+                            <span>{formatPrice(formData.adults * unitPrice)}</span>
+                          </div>
+                        )}
+                        
+                        {formData.children > 0 && experience.childHalfPriceRule && (
+                          <div className="flex justify-between">
+                            <span>{formData.children} × {t('children', 'Children')}</span>
+                            <span>{formatPrice(formData.children * childUnitPrice)}</span>
+                          </div>
+                        )}
+                      </>
                     )}
 
                     <Separator />
