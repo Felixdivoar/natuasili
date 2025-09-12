@@ -13,15 +13,20 @@ import { useAuth } from "@/contexts/AuthContext";
 import { saveCart } from "@/lib/cart";
 import { isSameDayBookingCutoffPassed, isTodayInLocal, isValidBookingDate, validateBookingDate } from "@/utils/time";
 import NewAuthModal from "@/components/NewAuthModal";
+import { useMultiCart } from "@/contexts/MultiCartContext";
 
 interface Experience {
   slug?: string;
   base_price?: number;
   priceKESAdult: number;
   childHalfPriceRule?: boolean;
+  isGroupPricing?: boolean;
+  minCapacity?: number;
   capacity: number;
   duration_hours?: number;
   partner?: string;
+  title?: string;
+  heroImage?: string;
 }
 
 interface BookingParams {
@@ -51,6 +56,7 @@ const AvailabilityAndOptions = ({
   const { updateCart } = useCart();
   const { user } = useAuth();
   const { bookingState, setBookingState, updateBookingState } = useBooking();
+  const { addItem: addCartItem, setOpen: openCart } = useMultiCart();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   
   // Initialize state from props, booking context, or defaults
@@ -119,11 +125,18 @@ const AvailabilityAndOptions = ({
   
   const validateParticipants = (adults: number, children: number) => {
     const total = adults + children;
-    if (total > experience.capacity) {
-      setParticipantsError(`Maximum group size is ${experience.capacity}. Please reduce the number of people.`);
+    const minCap = (experience as any).minCapacity || 1;
+    const maxCap = experience.capacity;
+    if (total > maxCap) {
+      setParticipantsError(`Maximum group size is ${maxCap}. Please reduce the number of people.`);
       return false;
     }
-    if (adults < 1) {
+    if ((experience as any).isGroupPricing) {
+      if (total < minCap) {
+        setParticipantsError(`Minimum ${minCap} participants required for this group experience.`);
+        return false;
+      }
+    } else if (adults < 1) {
       setParticipantsError("At least 1 adult is required.");
       return false;
     }
@@ -149,8 +162,8 @@ const AvailabilityAndOptions = ({
     const options = getOptions();
     const option = options.find(opt => opt.id === optionId) || options[0];
     
-    const adultTotal = option.adultPrice * adults;
-    const childTotal = option.childPrice * children;
+    const adultTotal = isGroupPricing ? option.adultPrice : option.adultPrice * adults;
+    const childTotal = isGroupPricing ? 0 : option.childPrice * children;
     const subtotal = roundMoney(adultTotal + childTotal);
     const partner = roundMoney(subtotal * 0.9);
     const platform = roundMoney(subtotal - partner);
@@ -167,7 +180,7 @@ const AvailabilityAndOptions = ({
   const getOptions = () => {
     const experienceBasePrice = experience.priceKESAdult || experience.base_price || 350;
     const standardAdultPrice = experienceBasePrice;
-    const standardChildPrice = experience.childHalfPriceRule ? Math.round(experienceBasePrice * 0.5) : experienceBasePrice;
+    const standardChildPrice = isGroupPricing ? 0 : (experience.childHalfPriceRule ? Math.round(experienceBasePrice * 0.5) : experienceBasePrice);
 
     return [
       {
@@ -422,18 +435,20 @@ const AvailabilityAndOptions = ({
 
                       <div className="text-right ml-4">
                         <div className="space-y-1">
-                          {selectedAdults > 0 && (
-                            <div className="text-sm">
-                              <span className="text-muted-foreground">Adults:</span> {formatPrice(option.adultPrice)} × {selectedAdults}
-                            </div>
-                          )}
-                          {selectedChildren > 0 && (
+                          <div className="text-sm">
+                            {isGroupPricing
+                              ? <span className="text-muted-foreground">Group price</span>
+                              : <span className="text-muted-foreground">Adults:</span>
+                            }
+                            {!isGroupPricing && ` ${formatPrice(option.adultPrice)} × ${selectedAdults}`}
+                          </div>
+                          {!isGroupPricing && selectedChildren > 0 && (
                             <div className="text-sm">
                               <span className="text-muted-foreground">Children:</span> {formatPrice(option.childPrice)} × {selectedChildren}
                             </div>
                           )}
                           <div className="text-2xl font-bold">
-                            {formatPrice(option.adultPrice * selectedAdults + option.childPrice * selectedChildren)}
+                            {formatPrice(option.adultPrice * (isGroupPricing ? 1 : selectedAdults) + (isGroupPricing ? 0 : option.childPrice * selectedChildren))}
                           </div>
                           <div className="text-sm text-muted-foreground">total</div>
                         </div>
@@ -475,13 +490,11 @@ const AvailabilityAndOptions = ({
 
                 {/* Pricing */}
                 <div className="border-t pt-4 space-y-2">
-                  {selectedAdults > 0 && (
-                    <div className="flex justify-between text-sm">
-                      <span>{formatPrice(selectedOptionData.adultPrice)} × {selectedAdults} adults</span>
-                      <span>{formatPrice(totals.adultSubtotal)}</span>
-                    </div>
-                  )}
-                  {selectedChildren > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span>{isGroupPricing ? 'Group price' : `${formatPrice(selectedOptionData.adultPrice)} × ${selectedAdults} adults`}</span>
+                    <span>{formatPrice(totals.adultSubtotal)}</span>
+                  </div>
+                  {(!isGroupPricing && selectedChildren > 0) && (
                     <div className="flex justify-between text-sm">
                       <span>{formatPrice(selectedOptionData.childPrice)} × {selectedChildren} children</span>
                       <span>{formatPrice(totals.childSubtotal)}</span>
@@ -508,18 +521,41 @@ const AvailabilityAndOptions = ({
                   </div>
                 </div>
 
-                <Button 
-                  id="btn-continue" 
-                  data-action="proceed" 
-                  onClick={handleContinue} 
-                  disabled={proceedDisabled} 
-                  aria-disabled={proceedDisabled} 
-                  className="w-full min-h-[48px] touch-manipulation pointer-events-auto z-20 relative" 
-                  size="lg"
-                  style={{ touchAction: 'manipulation' }}
-                >
-                  Next
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    id="btn-continue" 
+                    data-action="proceed" 
+                    onClick={handleContinue} 
+                    disabled={proceedDisabled} 
+                    aria-disabled={proceedDisabled} 
+                    className="w-full min-h-[48px] touch-manipulation pointer-events-auto z-20 relative" 
+                    size="lg"
+                    style={{ touchAction: 'manipulation' }}
+                  >
+                    Next
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      if (participantsError || !selectedDate || !dateValidation.isValid) return;
+                      addCartItem({
+                        experienceSlug: (experience as any).slug || '',
+                        title: (experience as any).title || 'Experience',
+                        image: (experience as any).heroImage,
+                        date: selectedDate,
+                        adults: selectedAdults,
+                        children: selectedChildren,
+                        optionId: selectedOption,
+                        unitPrice: basePrice,
+                        isGroupPricing,
+                      });
+                      openCart(true);
+                    }}
+                  >
+                    Add to cart
+                  </Button>
+                </div>
 
                 <div className="text-xs text-muted-foreground text-center">
                   <div className="flex items-center justify-center gap-1 mb-1">
@@ -552,15 +588,37 @@ const AvailabilityAndOptions = ({
                   </div>
                 </div>
                 
-                <Button 
-                  onClick={handleContinue} 
-                  disabled={proceedDisabled} 
-                  className="w-full min-h-[48px] touch-manipulation pointer-events-auto relative" 
-                  size="lg"
-                  style={{ touchAction: 'manipulation' }}
-                >
-                  Start Booking
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={handleContinue} 
+                    disabled={proceedDisabled} 
+                    className="w-full min-h-[48px] touch-manipulation pointer-events-auto relative" 
+                    size="lg"
+                    style={{ touchAction: 'manipulation' }}
+                  >
+                    Start Booking
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      if (participantsError || !selectedDate || !dateValidation.isValid) return;
+                      addCartItem({
+                        experienceSlug: (experience as any).slug || '',
+                        title: (experience as any).title || 'Experience',
+                        image: (experience as any).heroImage,
+                        date: selectedDate,
+                        adults: selectedAdults,
+                        children: selectedChildren,
+                        optionId: selectedOption,
+                        unitPrice: basePrice,
+                        isGroupPricing,
+                      });
+                      openCart(true);
+                    }}
+                  >
+                    Add to cart
+                  </Button>
+                </div>
 
                 <div className="text-xs text-muted-foreground text-center mt-2">
                   <div className="flex items-center justify-center gap-1 mb-1">

@@ -481,8 +481,10 @@ const ExperienceDetail = () => {
   return (
     <CartProvider 
       experienceSlug={experience.slug} 
-      basePrice={experience.priceKESAdult}
+      basePrice={experience.priceKESAdult || (experience as any).base_price || 350}
       childHalfPriceRule={experience.childHalfPriceRule || false}
+      isGroupPricing={(experience as any).isGroupPricing || false}
+      minCapacity={(experience as any).minCapacity || 1}
     >
       <div className="min-h-screen bg-background">
         {/* Hero Section */}

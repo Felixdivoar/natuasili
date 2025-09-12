@@ -44,15 +44,10 @@ export default function StickyReserveButton({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Only show if we have an active booking for this experience or if we're on the experience page
-  const shouldShow = (
-    hasActiveBooking && 
-    bookingState?.experienceSlug === experienceSlug
-  ) || location.pathname.includes(`/experience/${experienceSlug}`);
-
-  // Only show active booking info if we're on the same experience page
+  // Only show on the specific experience/listing page
   const isOnSameExperiencePage = location.pathname.includes(`/experience/${experienceSlug}`) || 
                                 location.pathname.includes(`/listings/${experienceSlug}`);
+  const shouldShow = isOnSameExperiencePage;
   
   const showActiveBooking = hasActiveBooking && bookingState?.date && 
                            bookingState?.experienceSlug === experienceSlug &&

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, X, ChevronDown, Globe } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown, Globe, ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
@@ -8,6 +8,8 @@ import { useI18n } from "@/i18n/I18nProvider";
 import { useAuth } from "@/contexts/AuthContext";
 import { AvatarMenu } from "@/components/auth/AvatarMenu";
 import { getDashboardPath } from "@/lib/auth";
+import { useMultiCart } from "@/contexts/MultiCartContext";
+import CartDrawer from "@/components/CartDrawer";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
@@ -28,6 +30,7 @@ const THEMES = [
 export default function HeaderNew() {
   const { t } = useI18n();
   const { user, profile, loading, signOut } = useAuth();
+  const { itemCount, setOpen } = useMultiCart();
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState<null | "marketplace">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -193,6 +196,21 @@ export default function HeaderNew() {
                 )
               )}
 
+              {/* Cart Button */}
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border hover:bg-muted"
+                aria-label="Open cart"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 inline-flex items-center justify-center text-[10px] font-medium rounded-full px-1.5 py-0.5 bg-primary text-primary-foreground">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
+
               {/* Partner CTA */}
               <Link to="/partner-with-us">
                 <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
@@ -283,6 +301,7 @@ export default function HeaderNew() {
         isOpen={mobileSearchOpen}
         onClose={() => setMobileSearchOpen(false)}
       />
+      <CartDrawer />
     </>
   );
 }

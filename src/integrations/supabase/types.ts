@@ -91,6 +91,80 @@ export type Database = {
           },
         ]
       }
+      cart_items: {
+        Row: {
+          adults: number
+          cart_id: string
+          children: number
+          created_at: string
+          date: string | null
+          experience_slug: string
+          id: string
+          option_id: string
+          subtotal_kes: number
+          unit_price_kes: number
+        }
+        Insert: {
+          adults?: number
+          cart_id: string
+          children?: number
+          created_at?: string
+          date?: string | null
+          experience_slug: string
+          id?: string
+          option_id?: string
+          subtotal_kes?: number
+          unit_price_kes?: number
+        }
+        Update: {
+          adults?: number
+          cart_id?: string
+          children?: number
+          created_at?: string
+          date?: string | null
+          experience_slug?: string
+          id?: string
+          option_id?: string
+          subtotal_kes?: number
+          unit_price_kes?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_cart_id_fkey"
+            columns: ["cart_id"]
+            isOneToOne: false
+            referencedRelation: "carts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      carts: {
+        Row: {
+          created_at: string
+          currency: string
+          id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       experiences: {
         Row: {
           activities: Json | null

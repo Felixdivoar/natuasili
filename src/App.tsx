@@ -16,6 +16,7 @@ import HeaderNew from "@/components/HeaderNew";
 import Footer from "@/components/Footer";
 import { useHtmlLang } from "@/hooks/useHtmlLang";
 import { BookingProvider, useBooking } from "@/contexts/BookingContext";
+import { MultiCartProvider } from "@/contexts/MultiCartContext";
 import StickyReserveButton from "@/components/StickyReserveButton";
 import Index from "./pages/Index";
 import Browse from "./pages/Browse";
@@ -111,10 +112,11 @@ const App = () => (
       <I18nProvider>
         <CurrencyProvider>
           <AuthProvider>
-            <BookingProvider>
-              <TooltipProvider>
-              <Toaster />
-              <Sonner />
+            <MultiCartProvider>
+              <BookingProvider>
+                <TooltipProvider>
+                <Toaster />
+                <Sonner />
               <BrowserRouter>
                 <CookieBanner />
                 <ScrollToTop />
@@ -194,7 +196,8 @@ const App = () => (
               </BrowserRouter>
             </TooltipProvider>
           </BookingProvider>
-        </AuthProvider>
+        </MultiCartProvider>
+      </AuthProvider>
       </CurrencyProvider>
     </I18nProvider>
   </QueryClientProvider>

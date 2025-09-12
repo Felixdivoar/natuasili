@@ -17,6 +17,8 @@ export interface CartState {
     platform10: number;
   };
   currency: string;
+  isGroupPricing?: boolean;
+  minCapacity?: number;
 }
 
 interface CartContextType {
@@ -33,13 +35,17 @@ interface CartProviderProps {
   experienceSlug: string;
   basePrice: number;
   childHalfPriceRule?: boolean;
+  isGroupPricing?: boolean;
+  minCapacity?: number;
 }
 
 export const CartProvider: React.FC<CartProviderProps> = ({ 
   children, 
   experienceSlug, 
   basePrice,
-  childHalfPriceRule = false
+  childHalfPriceRule = false,
+  isGroupPricing = false,
+  minCapacity = 1
 }) => {
   const [searchParams] = useSearchParams();
   const { currency } = useCurrency();
@@ -54,8 +60,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({
     
     const optionMultiplier = 1;  // Only standard option available
     const unitPrice = Math.round(basePrice * optionMultiplier);
-    const childPrice = childHalfPriceRule ? Math.round(unitPrice * 0.5) : unitPrice;
-    const subtotal = (unitPrice * urlAdults) + (childPrice * urlChildren);
+    const isGroup = isGroupPricing;
+    const childPrice = isGroup ? 0 : (childHalfPriceRule ? Math.round(unitPrice * 0.5) : unitPrice);
+    const subtotal = isGroup ? unitPrice : (unitPrice * urlAdults) + (childPrice * urlChildren);
     const partner90 = Math.round(subtotal * 0.9);
     const platform10 = subtotal - partner90;
 
@@ -69,7 +76,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       childPrice,
       subtotal,
       split: { partner90, platform10 },
-      currency
+      currency,
+      isGroupPricing: isGroup,
+      minCapacity
     };
   };
 
@@ -97,8 +106,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       if (updates.optionId || updates.adults !== undefined || updates.children !== undefined) {
         const optionMultiplier = 1;  // Only standard option available
         updated.unitPrice = Math.round(basePrice * optionMultiplier);
-        updated.childPrice = childHalfPriceRule ? Math.round(updated.unitPrice * 0.5) : updated.unitPrice;
-        updated.subtotal = (updated.unitPrice * updated.adults) + (updated.childPrice * updated.children);
+        const isGroup = isGroupPricing;
+        updated.childPrice = isGroup ? 0 : (childHalfPriceRule ? Math.round(updated.unitPrice * 0.5) : updated.unitPrice);
+        updated.subtotal = isGroup ? updated.unitPrice : (updated.unitPrice * updated.adults) + (updated.childPrice * updated.children);
         updated.split.partner90 = Math.round(updated.subtotal * 0.9);
         updated.split.platform10 = updated.subtotal - updated.split.partner90;
       }
@@ -115,12 +125,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({
     cart?.date && 
     isValidBookingDate(cart.date) && 
     validateBookingDate(cart.date).isValid &&
-    cart?.adults > 0
+    ((isGroupPricing ? ((cart?.adults || 0) + (cart?.children || 0)) >= (minCapacity || 1) : (cart?.adults || 0) > 0))
   );
 
   // Update currency when it changes
   useEffect(() => {
-    setCart(prev => ({ ...prev, currency }));
+    setCart(prev => (prev ? { ...prev, currency } : prev));
   }, [currency]);
 
   return (

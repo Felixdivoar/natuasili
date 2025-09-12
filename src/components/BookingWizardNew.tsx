@@ -165,7 +165,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           booking_date: cart.date,
           adults: cart.adults,
           children: cart.children,
-          total_kes: cart.subtotal,
+          total_kes: totalAmount,
           donation_kes: formData.donation || 0,
           option_id: cart.optionId || 'standard',
           unit_price_kes: cart.unitPrice,
