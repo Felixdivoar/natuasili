@@ -14,6 +14,7 @@ import { usePartnerDashboard } from "@/hooks/usePartnerDashboard";
 import BookingsOverTimeChart from "@/components/BookingsOverTimeChart";
 import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 import ImpactProofAdmin from "@/components/ImpactProofAdmin";
+import AdminWithdrawalsTab from "@/components/AdminWithdrawalsTab";
 
 const AdminDashboard = () => {
   const { formatPrice } = useCurrency();
@@ -86,10 +87,11 @@ const AdminDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Global Overview</h2>
                   <p className="text-muted-foreground">Real-time platform metrics and conservation impact</p>
                 </div>
-                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 sm:grid sm:grid-cols-3 lg:grid-cols-5">
+                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 sm:grid sm:grid-cols-3 lg:grid-cols-6">
                   <TabsTrigger value="overview" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Overview</TabsTrigger>
                   <TabsTrigger value="experiences" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Experiences</TabsTrigger>
                   <TabsTrigger value="bookings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Bookings</TabsTrigger>
+                  <TabsTrigger value="withdrawals" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Withdrawals</TabsTrigger>
                   <TabsTrigger value="impact" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Impact</TabsTrigger>
                   <TabsTrigger value="settings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Settings</TabsTrigger>
                 </TabsList>
@@ -346,6 +348,10 @@ const AdminDashboard = () => {
                     </div>
                   </CardContent>
                 </Card>
+              </TabsContent>
+
+              <TabsContent value="withdrawals" className="space-y-6 animate-fade-in">
+                <AdminWithdrawalsTab />
               </TabsContent>
 
               <TabsContent value="settings" className="space-y-6 animate-fade-in">

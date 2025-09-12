@@ -10,6 +10,7 @@ import { AvatarMenu } from "@/components/auth/AvatarMenu";
 import { getDashboardPath } from "@/lib/auth";
 import { useMultiCart } from "@/contexts/MultiCartContext";
 import CartDrawer from "@/components/CartDrawer";
+import NotificationBell from "@/components/NotificationBell";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
@@ -194,6 +195,11 @@ export default function HeaderNew() {
                     </Button>
                   </Link>
                 )
+              )}
+
+              {/* Notifications Bell - Only show for authenticated users */}
+              {!loading && user && (
+                <NotificationBell />
               )}
 
               {/* Cart Button */}

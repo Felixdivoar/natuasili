@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import ExperienceSubmissionForm from "@/components/ExperienceSubmissionForm";
 import BookingsOverTimeChart from "@/components/BookingsOverTimeChart";
 import PartnerImpactProofSubmission from "@/components/PartnerImpactProofSubmission";
+import WithdrawalsTab from "@/components/WithdrawalsTab";
 
 const PartnerDashboard = () => {
   const { formatPrice } = useCurrency();
@@ -115,11 +116,12 @@ const PartnerDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
                   <p className="text-muted-foreground">Monitor your conservation business and impact metrics</p>
                 </div>
-                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 md:grid md:grid-cols-4 xl:grid-cols-7">
+                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 md:grid md:grid-cols-4 xl:grid-cols-8">
                   <TabsTrigger value="overview" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Overview</TabsTrigger>
                   <TabsTrigger value="experiences" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Experiences</TabsTrigger>
                   <TabsTrigger value="bookings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Bookings</TabsTrigger>
                   <TabsTrigger value="earnings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Earnings</TabsTrigger>
+                  <TabsTrigger value="withdrawals" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Withdrawals</TabsTrigger>
                   <TabsTrigger value="impact" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Impact</TabsTrigger>
                   <TabsTrigger value="verification" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Verification</TabsTrigger>
                   <TabsTrigger value="messages" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Messages</TabsTrigger>
@@ -562,6 +564,10 @@ const PartnerDashboard = () => {
                 </div>
                 
                 <PartnerImpactProofSubmission />
+              </TabsContent>
+
+              <TabsContent value="withdrawals" className="space-y-6 animate-fade-in">
+                <WithdrawalsTab />
               </TabsContent>
 
               <TabsContent value="messages" className="space-y-6 animate-fade-in">
