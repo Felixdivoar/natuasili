@@ -1233,9 +1233,9 @@ Ol Pejeta Conservancy, Laikipia County`,
     destination: "laikipia",
     themes: ["Wildlife conservation"],
     activities: ["k9", "anti-poaching", "dogs"],
-    images: [k9HandlerTraining, olPejetaImg, "/images/placeholder-4.jpg"],
-    heroImage: k9HandlerTraining,
-    gallery: [k9HandlerTraining, olPejetaImg, "/images/placeholder-4.jpg"],
+    images: ["/lovable-uploads/k9-handler-hero.jpg", "/lovable-uploads/k9-handler-training-1.jpeg", "/lovable-uploads/k9-handler-scent-work.jpeg", "/lovable-uploads/k9-handler-vehicle.jpg", "/lovable-uploads/k9-handler-action.jpg", "/lovable-uploads/k9-handler-facility.jpg"],
+    heroImage: "/lovable-uploads/k9-handler-hero.jpg",
+    gallery: ["/lovable-uploads/k9-handler-hero.jpg", "/lovable-uploads/k9-handler-training-1.jpeg", "/lovable-uploads/k9-handler-scent-work.jpeg", "/lovable-uploads/k9-handler-vehicle.jpg", "/lovable-uploads/k9-handler-action.jpg", "/lovable-uploads/k9-handler-facility.jpg"],
     description: `Overview
 Visitors to the unique protected area of Ol Pejeta Conservancy can directly help conserve wildlife. Apart from the last two northern white rhinos and the Big Five, it supports communities nearby with education and health programs.
 See Ol Pejeta's anti-poaching dog squad. Talk to the dog keepers to find out how to look after our specially trained canine team. Try to hide from the sniffer dogs during the kennel tour. To see whether the bloodhounds can locate you, run, jump, twist, turn, and hide within the Morani Information Center area. This is not only a lot of fun, but it also gives the dogs great training.
