@@ -208,21 +208,24 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Village Visits: Daily life, customs, traditions
-• Festivals: Join events like Tobong'u Lore (if dates align)
-• Learning: Indigenous history and environmental practices
-• Cancellation: Use listing policy
+What to Expect
+Itinerary
+• Spend time in local villages learning about daily life, customs, and traditions directly from community members.
+• If your visit coincides with local events such as the Tobong'u Lore Festival, join the celebrations showcasing music, dance, fashion, and ancestral heritage.
+• Join local guides for educational tours focusing on indigenous history, clan structures, and environmental stewardship practices.
 
 Duration
-2 hours (fallback)
+2 hours
 
 Language
 English
 
 Frequently Asked Questions
-• Family-friendly? Yes.
-• Community benefit? Proceeds support local development and preservation.
+Are these experiences suitable for families with children?
+Yes, cultural immersion activities are designed to be educational and engaging for all age groups, making them suitable for families.
+
+How do these experiences benefit local communities?
+A significant portion of the proceeds from cultural immersion experiences goes directly to the communities, supporting local economies, education, and cultural preservation efforts.
 
 Where You'll Be
 https://maps.app.goo.gl/VzMtfuRWv9rbpWt76`,
@@ -357,20 +360,30 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Trail Walk: With a guide; observe a habituated troop
-• Info Session: Centre talk on programs and impact
-• Cancellation: Full refund up to 24 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Arrive at Colobus Conservation and meet your guide and embark on a guided walk along the trail.
+• Observe a habituated troop of colobus monkeys and other primates.
+• Attend a talk at the information center to learn about Colobus Conservation's activities.
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-1 hour (fallback)
+1 hour
 
 Language
 English
 
 Frequently Asked Questions
-• Hours: Monday–Saturday, 8:30 AM–4:00 PM (closed Sundays).
-• For children? Yes—great for families.
+What primates can I expect to see?
+You are most likely to see colobus monkeys, but vervet monkeys, Sykes' monkeys, and baboons are also frequent visitors to the area.
+
+What are the opening hours?
+Guided eco-tours are offered Monday to Saturday from 8:30 AM to 4:00 PM. The center is closed for eco-tours on Sundays.
+
+Is this a good tour for children?
+Yes, this tour is perfect for families with children who are interested in learning about monkeys.
 
 Where You'll Be
 https://www.google.com/maps/search/?api=1&query=MH47%2B6WQ%2C%20Diani%20Beach%2C%20Kenya`,
@@ -406,23 +419,36 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Tour: Guided talks on turtles and the marine ecosystem
-• Support: Optional donations welcome
-• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Arrive at the Local Ocean Conservation center.
+• Join a guided tour about sea turtles, their life cycle, and the challenges they face.
+• Learn about the marine ecosystem and the importance of its conservation.
+• Consider making a donation to further support LOC's vital work (optional).
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-~2 hours; tours hourly (fallback)
+~2 hours; tours hourly
 
 Language
 English
 
 Frequently Asked Questions
-• For children? Yes—great for families.
-• Will I see turtles? Not guaranteed; rehabilitation aims for quick release.
+What can I expect on the tour?
+The tour includes guided talks about sea turtles and the marine ecosystem, showcasing LOC's conservation efforts.
+
+Is this tour suitable for children?
+Yes, this educational day trip is perfect for families!
+
+What can I do to contribute further?
+Consider making a donation or spreading awareness about ocean conservation after your visit.
 
 Important Information
-Closed Saturday afternoon, Sundays, and Public Holidays.
+• The goal is to get healthy sea turtles back into the ocean as soon as possible, so you might not always see them here during your visit.
+• Tours are offered hourly for your convenience. The specific details may vary slightly depending on the tour guide and available resources.
+• Please note that LOC is closed on Saturday afternoon, Sundays and all Public Holidays.
 
 Where You'll Be
 https://www.google.com/maps/search/?api=1&query=JXFP%2BM4%2C%20Watamu%2C%20Kenya`,
@@ -459,10 +485,15 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Centre Visit: Workshop with scientists
-• Learn: Coral ecology, threats, restoration methods
-• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Arrive at the REEFolution center.
+• Participate in an interactive workshop led by REEFolution scientists.
+• Learn about REEFolution's story, coral reef science, and restoration techniques.
+• Leave empowered to become an advocate for coral reef conservation.
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
 Half- or full-day (fallback by program)
@@ -471,8 +502,22 @@ Language
 English
 
 Frequently Asked Questions
-• Programs: Land-based; Snorkel & Learn; Dive & Restore (certified divers).
-• Contribute? Donations and, in some programs, coral planting.
+What are the different program options?
+• Land-based program: Ideal for families and those who prefer to stay dry.
+• Snorkel and Learn: Combines a workshop with a guided snorkeling tour.
+• Dive and restore: Designed for certified divers who want to participate in coral planting actively; includes a workshop and guided dive.
+
+How long are the programs?
+Land-based is half-day, snorkel & learn and dive & restore are full-day.
+
+What will I learn in the workshop?
+You'll learn about the vital role coral reefs play in the ecosystem, the threats they face, and REEFolution's restoration techniques.
+
+Can I contribute to coral restoration?
+Depending on the program, you might have the opportunity to plant coral fragments and directly aid in reef restoration.
+
+How can I contribute?
+All programs raise awareness and support REEFolution's efforts. You are welcome to donate to restore more reefs, intensify our research, train new rangers and activate more locals.
 
 Where You'll Be
 https://www.google.com/maps/search/?api=1&query=PH6P%2BRRR%2C%20Ukunda%2C%20Diani%20Beach%20Road%2C%20Diani%20Beach%2C%20Kenya`,
@@ -825,22 +870,39 @@ Included/Excluded
 • Insurance
 • Transport to conservancy
 
-What to expect
-A Unique Conservation Experience
-o Arrive at Ol Pejeta Conservancy's northern white rhino enclosure
-o Meet the dedicated veterinary and conservation team
-o Observe Najin and Fatu in their protected environment
-o Learn about the advanced reproductive technologies being employed
-o Understand the global significance of this conservation effort
+What to Expect
+Itinerary
+• Arrive at the Ol Pejeta Conservancy's Morani Information Centre.
+• Join a guided tour (offered daily at specific times) to meet Najin and Fatu.
+• Observe the northern white rhinos in their enclosure and learn about their story from the keepers.
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-2-3 hours
+1 hour
 
-Languages
+Language
 English
+
+Frequently Asked Questions
+How rare are these rhinos?
+The northern white rhino subspecies is classified as critically endangered, with only Najin and Fatu remaining worldwide.
+
+What is included in the experience?
+The experience includes meeting the rhinos, hearing their story from the keepers, and contributing to conservation efforts.
+
+What should I wear?
+Wear closed shoes, sun protection, a hat, and neutral-colored clothing.
+
+Is this a rare opportunity?
+Absolutely! This is a chance to see the very last of their kind.
+
+What will I learn?
+Dedicated keepers will share their knowledge about the northern white rhinos and the fight for their survival.
+
+Important Information
+• If you don't have transport to the starting point, we can pick you up within the conservancy for an extra fee.
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
@@ -883,26 +945,35 @@ Included/Excluded
 • Insurance
 • Transport to conservancy
 
-What to expect
-Into the African Night
-o Depart from the conservancy at sunset for optimal wildlife viewing
-o Use spotlights to locate nocturnal animals and observe their behaviors
-o Listen to the symphony of night sounds across the savanna
-o Learn about predator-prey relationships and nocturnal adaptations
-o Return under the starlit African sky
+What to Expect
+Itinerary
+• Arrive at Ol Pejeta Conservancy in the late afternoon (depending on your chosen departure time).
+• Dress warmly in neutral-colored clothing.
+• Meet your expert guide and embark on a night game drive through the conservancy.
+• While sightings are not guaranteed, enjoy the thrill of exploring the African wilderness at night.
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-3-4 hours
+2 hours
 
-Languages
+Language
 English
 
-Important Notes
-o Warm clothing recommended as temperatures drop after sunset
-o Flash photography not permitted to avoid disturbing wildlife
+Frequently Asked Questions
+What animals can I expect to see?
+You might encounter aardvark, zorillas, bat-eared foxes, leopards, or even lions hunting.
+
+How many people can participate?
+The minimum is two people, and the vehicle can seat up to 6 people (not exclusive use).
+
+When are the night game drives offered?
+Daily between 7:00 PM - 9:00 PM EAT or 9:00 PM - 11:00 PM EAT.
+
+Important Information
+• A minimum of 2 people is required. Single travelers will be charged the price for 2 people.
+• If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
@@ -945,27 +1016,35 @@ Included/Excluded
 • Insurance
 • Transport to conservancy
 
-What to expect
-Walking Safari Adventure
-o Begin with a comprehensive safety briefing about walking in wildlife areas
-o Set out on guided walks through diverse conservancy habitats
-o Learn to identify bird calls, animal tracks, and botanical specimens
-o Discover the smaller details of the ecosystem often missed on game drives
-o End with discussions about conservation challenges and successes
+What to Expect
+Itinerary
+• Arrive at Ol Pejeta Conservancy between 6:30 AM - 8:30 AM or 3:30 PM - 5:30 PM depending on your chosen time slot.
+• Meet your experienced ranger guide.
+• Embark on a guided walking tour through the African bush.
+• Immerse yourself in the sights, sounds, and smells of the African wilderness.
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-2-3 hours
+2 hours
 
-Languages
+Language
 English
 
-Important Notes
-o Comfortable walking shoes and sun protection essential
-o Walks adapted to participant fitness levels
-o Minimum age 12 years for safety reasons
+Frequently Asked Questions
+What can I expect on the walk?
+You'll be guided by experienced rangers who will share their knowledge of the wildlife, plants, and ecosystem. Expect to see various animals in their natural habitat and learn about their behaviors.
+
+How difficult is the walk?
+The terrain can vary, but the walks are generally designed to be accessible for most fitness levels.
+
+What should I wear?
+Comfortable clothing and shoes suitable for walking on uneven terrain are recommended. Carry sun cream and a hat.
+
+Important Information
+• This activity is not suitable for children under the age of 12.
+• If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
@@ -1009,27 +1088,40 @@ Included/Excluded
 • Insurance
 • Transport to conservancy
 
-What to expect
-Chimpanzee Conservation Up Close
-o Arrive at the Sweetwaters Chimpanzee Sanctuary within Ol Pejeta
-o Meet sanctuary staff and learn about the facility's history and mission
-o Observe chimpanzees from designated viewing areas and platforms
-o Learn about individual chimpanzee stories and rehabilitation journeys
-o Understand broader conservation challenges facing wild populations
+What to Expect
+Itinerary
+• Arrive at the Sweetwaters Chimpanzee Sanctuary (transportation not included).
+• Check-in and participate in a brief orientation with a sanctuary staff member. Learn about the sanctuary's mission, the chimpanzees' history, and important safety protocols. Pass through a footbath to disinfect your shoes as a biosecurity measure.
+• Enter the designated viewing area for a unique behind-the-scenes look at the chimpanzees in their enclosures. Observe their social interactions, playful behaviors, and feeding time (conducted by caregivers only).
+• Depart from the chimpanzee sanctuary with a newfound appreciation for these remarkable primates.
+• (Optional): Explore the wider Ol Pejeta Conservancy on a game drive (not included in the behind-the-scenes tour) and see a variety of wildlife, including rhinos, lions, and zebras.
+• (Optional): Visit the Equator marker located within the conservancy and snap a photo straddling two hemispheres!
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-1.5-2 hours
+1 hour
 
-Languages
+Language
 English
 
-Important Notes
-o No direct contact with chimpanzees for safety and health reasons
-o Photography allowed from designated viewing areas only
-o Educational focus on conservation and animal welfare
+Frequently Asked Questions
+What role do sanctuaries play in protecting chimpanzee populations?
+Protecting threatened chimpanzee populations depends critically on sanctuaries such as Ol Pejeta. While they raise public awareness and education about conservation, they offer a safe refuge from threats including habitat destruction and illegal wildlife trade.
+
+How does this tour contribute to chimpanzee conservation?
+By taking part in this tour, you directly help the sanctuary to care for chimpanzees and increase awareness about the threats they endure.
+
+How can I get involved in chimpanzee conservation beyond this tour?
+You can donate to sanctuaries like the one at Ol Pejeta Conservancy or support groups striving to safeguard wild chimpanzees.
+
+Important Information
+• Group Size: Limited to a minimum of 2 and a maximum of 8 people, subject to the welfare of the animals at the time of your visit.
+• No Physical Contact: Absolutely no physical contact is allowed between visitors and chimpanzees.
+• Feeding Restrictions: Visitors are not allowed to feed the chimpanzees; feeding is done exclusively by caregivers.
+• Health Requirements: If you are sick with a cold, flu, or any other contagious illness, a behind-the-scenes visit to the Chimpanzee Sanctuary will not be possible.
+• Photography: Photography is only allowed outside the chimps' houses.
 
 Where you'll be
 Sweetwaters Chimpanzee Sanctuary, Ol Pejeta Conservancy`,
@@ -1074,27 +1166,43 @@ Included/Excluded
 • Insurance
 • Transport to conservancy
 
-What to expect
-Active Conservation Research
-o Begin with briefing on lion ecology and research methodology
-o Learn to use radio telemetry equipment to locate collared lions
-o Track lions using GPS coordinates and behavioral observation
-o Record data on lion movement, behavior, and pride dynamics
-o Contribute findings to ongoing conservation database
+What to Expect
+Itinerary
+• Arrive at Ol Pejeta Conservancy between 6:30 AM - 8:30 AM or 3:30 PM - 5:30 PM (tour times).
+• Meet your experienced guide and receive a briefing on the activity.
+• Participate in lion tracking using radio collars to locate prides.
+• Learn about lion conservation efforts at Ol Pejeta Conservancy.
+• Meet your guide and receive a briefing on safety procedures and data collection.
+• Participate in lion tracking using a receiver to locate collared lions.
+• Observe lion behavior and contribute data on the pride's activities.
+• Learn about lion conservation efforts at Ol Pejeta from your expert guide.
+• Enjoy this unique opportunity to be a part of lion conservation.
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-4-5 hours
+2 hours
 
-Languages
+Language
 English
 
-Important Notes
-o Physical fitness required for field work conditions
-o Weather-dependent activity - may be rescheduled for safety
-o Minimum age 16 years due to research protocol requirements
+Frequently Asked Questions
+Do I get to see lions up close?
+While sightings are not guaranteed, tracking collared lions increases your chances of encountering them. You'll observe from the vehicle for safety reasons.
+
+How does my participation help conservation?
+The data you collect aids research on lion behavior and helps find solutions to conservation challenges.
+
+Do I need to be an experienced tracker?
+No, prior experience is not required. Guides will assist with tracking.
+
+Can I get out of the vehicle?
+No, guests must remain in the vehicle for safety reasons.
+
+Important Information
+• A minimum of 2 people is required. Single travelers will be charged the price for 2 people.
+• If you don't have transport to the starting point, we can pick you up within the conservancy for an extra fee.
 
 Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
