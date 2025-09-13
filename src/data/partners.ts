@@ -508,21 +508,33 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Start: 8:30 AM welcome and briefing
-• Walk: Identification, ecology, and conservation themes
-• Interactive: Practical insights into planting and care
-• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Start the day at 8:30 AM with a warm welcome and introduction at the designated meeting point. Get an insightful overview of Kenya's tree diversity, the significance of conservation, and a briefing on the walk, including safety guidelines and key highlights.
+• Embark on a guided forest exploration, identifying diverse tree species while learning about their medicinal, indigenous, and exotic origins. Discover their ecological significance and observe how trees support wildlife, soil stability, and water conservation.
+• Engage in interactive learning as you explore the challenges facing forests, from deforestation and climate change to urbanization. Gain hands-on insights into tree planting and care for reforestation efforts while uncovering the cultural and historical significance of various tree species.
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-2 hours (fallback)
+2 hours
 
 Language
 English
 
 Frequently Asked Questions
-• What to bring? Walking shoes, hat, sunscreen, water; optional notebook/field guide.
-• How often? Monthly, at rotating locations.
+What should I bring?
+Bring comfortable walking shoes, a hat and sunscreen for protection, a water bottle to stay hydrated, and optionally, a notebook or field guide for a more immersive experience.
+
+Do I need prior knowledge of trees?
+No! The walk is open to everyone, and guides will help with identification and learning.
+
+Is the walk suitable for children?
+Yes! The Tree Walk is a great educational experience for all ages.
+
+How often do Tree Walks take place?
+They are held once a month at different locations.
 
 Where You'll Be
 https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Kenya`,
@@ -558,21 +570,36 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Intro: Safety and overview
-• Walk: Observe butterflies, dragonflies, beetles, ants, and more
-• Learn: Insects' ecological roles and minimal-disturbance ethics
-• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Gather at the designated starting point for a warm welcome and a brief introduction to the vital role insects play in ecosystems. Get an overview of the walk, including safety guidelines and key highlights of what to expect.
+• Embark on a guided walk through the habitat, searching for diverse insect species. Observe butterflies, dragonflies, beetles, ants, and more in their natural environment while learning insect identification techniques using sight, behavior, and habitat clues.
+• Engage in a discussion on the vital roles of insects as pollinators, decomposers, and food chain contributors while participating in hands-on activities like catching insects with nets, listening to their sounds, and observing their interactions with the environment.
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
-2 hours (fallback)
+2 hours
 
 Language
 English
 
 Frequently Asked Questions
-• Beginner-friendly? Yes.
-• For children? Yes—great for all ages.
+What should I bring?
+Wear comfortable walking shoes, bring a hat and sunscreen for protection, stay hydrated with a water bottle, and optionally carry a notebook or field guide for a more immersive experience.
+
+Do I need prior insect knowledge?
+No! The walk is beginner-friendly, and guides will help you learn along the way.
+
+Is the walk suitable for children?
+Yes! The Dudu Walk is great for all ages, offering an exciting way for kids to explore nature.
+
+Will we handle insects?
+Some insects may be observed up close, but we encourage minimal disturbance to their habitat.
+
+How often do Dudu Walks happen?
+They occur once a month at different locations.
 
 Where You'll Be
 https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Kenya`,
@@ -611,19 +638,40 @@ Included/Excluded:
 • Drinks and meals
 • Additional Services not mentioned
 
-What to expect - Meet the giraffes:
+What to Expect
+Itinerary
 • Arrive at the Giraffe Centre and proceed to the giraffe feeding platform.
 • Observe and interact with the Rothschild giraffes, learning about their unique characteristics and ecological importance.
 • Take photos while feeding the giraffes pellets from a raised platform.
 • Browse the gift shop for educational souvenirs (optional).
 
-Cancellation policy: Cancel up to 24 hours in advance to receive a full refund. Cancellations made less than 24 hours before the tour start are non-refundable.
+Cancellation policy
+• Cancel up to 24 hours in advance to receive a refund. Cancellations made less than 24 hours before the tour start are non-refundable.
 
-Duration: 0 - 2 hours
-Languages: English
-Location: Giraffe Centre, Duma Road, Nairobi, Kenya
+Duration
+1 hour
 
-The centre is open from 9:00 AM to 5:00 PM every day including weekends and all public holidays. 90 percent of funds collected from the entrance fees and sales in our gift shop and Tea House go towards conservation work. By visiting and/or making a purchase from the souvenir shop and the Teahouse, you contribute towards educating school children and teachers across Kenya.
+Language
+English
+
+Frequently Asked Questions
+What can I expect on a visit to the Giraffe Centre?
+You can expect to learn about giraffes, observe them from a viewing platform, and even feed them a special pellet treat. You may also see other animals and explore the nature sanctuary.
+
+How long should one factor to spend at the centre?
+For a fulfilling experience, we recommend you plan for a 1.5 to two hour visit. This gives you enough time to feed and interact with the giraffes, attend an informative lecture on the giraffe and other wildlife, take a walk in our serene Nature Conservancy and even have a snack at our Tea House.
+
+Is this a good activity for children?
+Absolutely! Children will love getting up close to the giraffes and learning about their conservation.
+
+What time is the centre open?
+The centre is open from 9:00 AM to 5:00 PM every day including weekends and all public holidays.
+
+How can I support AFEW's conservation efforts?
+90 percent of funds collected from the entrance fees and sales in our gift shop and Tea House go towards conservation work. By visiting and/or making a purchase from the souvenir shop and the Teahouse, you contribute towards educating school children and teachers across Kenya. We encourage you to consider a tip for your guide. All our guides are Environmental Studies students who volunteer as Educators.
+
+Can I purchase a gift card or gift certificate?
+Sure you can. Ask for any of these at the gift shop and an attendant will assist you.
 
 Where you'll be
 JPFV+FP Nairobi`,
@@ -677,8 +725,24 @@ Languages
 English
 
 Frequently asked questions
+What to Expect
+Itinerary
+• Arrive at the Reteti Elephant Sanctuary and join an educational tour led by Reteti's keepers, where you'll learn about their elephant rescue and rehabilitation mission.
+• Observe the rescued elephants from a dedicated viewing platform, where you can witness feeding time and mud hole playtime.
+• Take part in a behind-the-scenes tour of the sanctuary to gain a deeper understanding of Reteti's exceptional elephant care.
+
+Cancellation policy
+• You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 72 hours before the start time, you can also cancel within 48 hours of booking for a refund.
+
+Duration
+~1.5–2 hours; 4 time slots
+
+Language
+English
+
+Frequently Asked Questions
 What can I expect on a typical visit?
-Tours typically include an educational talk, observation time at the viewing platform, and a behind-the-scenes look at the sanctuary's operations. 
+Tours typically include an educational talk, observation time at the viewing platform, and a behind-the-scenes look at the sanctuary's operations.
 
 Is it possible to touch and interact with the elephants?
 No, for the well-being of the elephants, visitors are not allowed to interact with them directly. However, you will get to observe them from a safe distance. Reteti's mission is to rescue, rewild and release the elephants, and to prepare them for their release. The keepers are the ones only allowed to interact with the elephants in order to minimise human interaction.
@@ -688,6 +752,16 @@ Absolutely! Learning about elephants and witnessing their heartwarming behaviors
 
 How can I help Reteti's conservation efforts?
 In addition to booking a tour, consider making a donation to the sanctuary or purchasing handmade crafts from their gift shop, which directly supports the sanctuary and the local community.
+
+What should I wear?
+Please wear dark green if possible, otherwise shades of brown or khaki.
+
+Important Information
+• The duration of the experience can vary, but tours typically last around 1.5 hours. Reteti has 4 time slots for visits that coincide with the elephants' feeding times.
+• The Sunrise Feed - Sarara & Reteti House guests only - 5.30 am - 7.00 am (feeding is at 6.00 am)
+• The Morning Feed - Exclusive Group only - 8.30 am - 10.00 am (feeding is at 9.00 am) - Other visitors are welcome when no exclusive group booked.
+• The Midday Feed - Public viewing - 11.30 am - 13.00 pm (feeding is at 12.00 pm) - No more than 3 groups. Max 15 - 20 people.
+• The Evening Feed - Sarara & Reteti House guests only - 17.30 pm - 19.00 pm (feeding is at 18.00 pm)
 
 What should I wear?
 Please wear dark green if possible, otherwise shades of brown or khaki. 
@@ -1061,27 +1135,39 @@ Included/Excluded
 • Insurance
 • Donations towards supporting the organization
 
-What to expect
-Meet Ol Pejeta's K9 Heroes
-o Arrive at the Morani Information Centre at 8:30 AM (the designated starting point).
-o Meet the Ol Pejeta rangers and receive a briefing about the K9 unit's role in conservation.
-o Learn about the different specializations of the K9 dogs.
-o Gain valuable insights into anti-poaching efforts and the importance of K9 units.
+What to Expect
+Itinerary
+• Arrive at the Morani Information Centre at 8:30 AM (the designated starting point).
+• Meet the Ol Pejeta rangers and receive a briefing about the K9 unit's role in conservation.
+• Learn about the different specializations of the K9 dogs.
+• Gain valuable insights into anti-poaching efforts and the importance of K9 units.
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
-Durations
-0 - 2 hours
+Duration
+2 hours
 
-Languages
+Language
 English
 
-Frequently asked questions
+Frequently Asked Questions
 What can I expect during the activity?
 You'll learn about the K-9 unit, participate in a tracking exercise with a bloodhound (both hiding and observing), and gain insights into their training.
 
 Is this activity safe?
+Yes, the activity is conducted in a controlled environment with experienced handlers.
+
+What should I wear?
+Closed shoes, sunscreen, and a hat are recommended. Opt for neutral-colored clothing.
+
+Can I bring children?
+This activity is not recommended for children under 12 years old.
+
+Important Information
+• Physical interaction with the dogs will be relatively restricted.
+• This activity is not suitable for children under the age of 12.
+• If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
 Yes, the activity is conducted in a controlled environment with experienced handlers.
 
 What should I wear?
@@ -1131,27 +1217,36 @@ Included/Excluded
 • Insurance
 • Meals
 
-What to expect
-Exploring Drone Conservation with MEP
-o Arrive at the designated meeting point (transportation likely not included).
-o Receive a briefing from a knowledgeable MEP staff member on the importance of elephant conservation and the groundbreaking use of drones in their efforts.
-o Witness a live demonstration of the various drones used by MEP. Learn about their specific features and functionalities for diverse conservation applications.
-o Engage in a Q&A session with the MEP staff member, addressing any questions you may have about drone conservation and MEP's overall efforts.
+What to Expect
+Itinerary
+• Arrive at the designated meeting point (transportation likely not included).
+• Receive a briefing from a knowledgeable MEP staff member on the importance of elephant conservation and the groundbreaking use of drones in their efforts.
+• Witness a live demonstration of the various drones used by MEP. Learn about their specific features and functionalities for diverse conservation applications.
+• Engage in a Q&A session with the MEP staff member, addressing any questions you may have about drone conservation and MEP's overall efforts.
 
 Cancellation policy
-o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a full refund.
+• You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a refund.
 
-Durations
-0 - 2 hours
+Duration
+3 hours
 
-Languages
+Language
 English
 
-Frequently asked questions
+Frequently Asked Questions
 What can I expect to do on this program?
 You'll gain exclusive insights into MEP's drone program through presentations, demonstrations, and potentially observing live drone operations (weather dependent).
 
 Is there an age restriction?
+This program might be more suitable for older children and adults due to the technical nature of the content.
+
+Can I participate in flying the drones?
+Piloting the drones is done by trained MEP personnel.
+
+Important Information
+• The $500 all-inclusive donation paid to MEP
+• Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and no minimum donation is required.
+• Mara Elephant Project can provide bespoke experiences for interested donors. This can include a visit to camp for tea and coffee and a presentation from a key MEP staff member, which would give guests private access to learn more about our work. We would ask for a minimum donation of $1,000 per group for this experience.
 This program might be more suitable for older children and adults due to the technical nature of the content.
 
 Can I participate in flying the drones?
@@ -1290,35 +1385,40 @@ Included/Excluded
 • Drinks and meals
 • Additional Services not mentioned
 
-What to expect
-Adventure farm fun & learning
-o Arrive at Adventure Farm Karen and embark on a guided farm tour, learning about sustainable practices and interacting with farm animals.
-o After lunch, enjoy a delicious farm-to-fork meal with refreshing beverages and homemade gelato.
-o In the afternoon, participate in a pizza-making session using farm-fresh toppings. Learn the secrets of cheese making and try your hand at making mozzarella. Feeling adventurous? Test your skills at milking a cow!
+What to Expect
+Itinerary
+• Arrive at Adventure Farm Karen and embark on a guided farm tour, learning about sustainable practices and interacting with farm animals.
+• After lunch, enjoy a delicious farm-to-fork meal with refreshing beverages and homemade gelato.
+• In the afternoon, participate in a pizza-making session using farm-fresh toppings. Learn the secrets of cheese making and try your hand at making mozzarella. Feeling adventurous? Test your skills at milking a cow!
 
 Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+• You can cancel up to 48 hours before the experience starts for a refund.
 
-Durations
-2 - 3 hours
-Full day (+5hours)
+Duration
+2-5 hours
 
-Languages
+Language
 English
 
-Frequently asked questions
+Frequently Asked Questions
 What's included in the all-inclusive package?
 The all-inclusive package covers your entire day at Adventure Farm Karen, including:
-o Guided farm tour
-o Delicious farm-to-fork meal with refreshments
-o Pizza-making and cheese-making workshops (participation optional)
-o Tree-planting initiative
+• Guided farm tour
+• Delicious farm-to-fork meal with refreshments
+• Pizza-making and cheese-making workshops (participation optional)
+• Tree-planting initiative
 
 What will I learn on the farm tour?
 The knowledgeable guides will lead you on a scenic exploration, highlighting Adventure Farm's commitment to sustainable practices. You'll learn about organic farming techniques, interact with various farm animals, and gain insights into the farm's interconnected ecosystem.
 
 Is this a good activity for children?
 Absolutely! Adventure Farm Karen offers a fun and educational experience perfect for families with children of all ages.
+
+Are there any dietary restrictions catered to?
+When booking, please inform us in advance about any dietary restrictions you may have when making your reservation. Adventure Farm will do their best to accommodate your needs.
+
+What should I wear?
+This is a full-day experience with outdoor activities. We recommend comfortable shoes and clothing suitable for walking, bending, and potentially getting a little messy during the workshops.
 
 Are there any dietary restrictions catered to?
 When booking, please inform us in advance about any dietary restrictions you may have when making your reservation. Adventure Farm will do their best to accommodate your needs.

@@ -5,7 +5,7 @@ export const parseExperienceContent = (description: string) => {
     highlights: [] as string[],
     included: [] as string[],
     notIncluded: [] as string[],
-    itinerary: [] as {title: string, description: string}[],
+    itinerary: [] as string[],
     cancellation: "",
     duration: "",
     languages: "",
@@ -51,30 +51,28 @@ export const parseExperienceContent = (description: string) => {
         sections.included = includedItems;
         sections.notIncluded = excludedItems;
         break;
-      case 'itinerary':
-        const itineraryItems: {title: string, description: string}[] = [];
+      case 'what_to_expect':
+        let currentSubsection = '';
+        const itineraryItems: string[] = [];
         let cancellationPolicy = '';
         
         for (const line of content) {
-          if (line.toLowerCase().includes('cancellation')) {
-            cancellationPolicy = line.replace(/•?\s*cancellation:\s*/i, '').trim();
+          if (line.toLowerCase().includes('itinerary')) {
+            currentSubsection = 'itinerary';
+          } else if (line.toLowerCase().includes('cancellation')) {
+            currentSubsection = 'cancellation';
           } else if (line.startsWith('•')) {
             const item = line.replace('•', '').trim();
-            const parts = item.split(':');
-            if (parts.length >= 2) {
-              itineraryItems.push({
-                title: parts[0].trim(),
-                description: parts.slice(1).join(':').trim()
-              });
+            if (currentSubsection === 'itinerary') {
+              itineraryItems.push(item);
+            } else if (currentSubsection === 'cancellation') {
+              cancellationPolicy += item + ' ';
             }
           }
         }
         
-        sections.itinerary = itineraryItems.length > 0 ? itineraryItems : [{
-          title: "Experience Activities",
-          description: content.filter(line => !line.toLowerCase().includes('cancellation')).join(' ')
-        }];
-        sections.cancellation = cancellationPolicy;
+        sections.itinerary = itineraryItems;
+        sections.cancellation = cancellationPolicy.trim();
         break;
       case 'duration':
         sections.duration = content.join(' ').replace(/\(fallback\)/i, '').trim();
@@ -84,16 +82,25 @@ export const parseExperienceContent = (description: string) => {
         break;
       case 'faqs':
         const faqItems: {question: string, answer: string}[] = [];
+        let currentQuestion = '';
+        let currentAnswer = '';
         
         for (const line of content) {
-          if (line.startsWith('•')) {
-            const parts = line.replace('•', '').trim().split('?');
-            if (parts.length >= 2) {
-              const question = parts[0].trim() + '?';
-              const answer = parts.slice(1).join('?').trim();
-              faqItems.push({ question, answer });
+          if (line.endsWith('?')) {
+            // If we have a previous Q&A pair, save it
+            if (currentQuestion && currentAnswer) {
+              faqItems.push({ question: currentQuestion, answer: currentAnswer.trim() });
             }
+            currentQuestion = line;
+            currentAnswer = '';
+          } else if (currentQuestion && line.trim()) {
+            currentAnswer += line + ' ';
           }
+        }
+        
+        // Don't forget the last Q&A pair
+        if (currentQuestion && currentAnswer) {
+          faqItems.push({ question: currentQuestion, answer: currentAnswer.trim() });
         }
         
         sections.faqs = faqItems;
@@ -132,11 +139,11 @@ export const parseExperienceContent = (description: string) => {
       }
       currentSection = 'included_excluded';
       currentContent = [];
-    } else if (trimmedLine.includes('What to Expect') || trimmedLine === 'What to expect') {
+    } else if (trimmedLine.includes('What to Expect')) {
       if (currentSection && currentContent.length > 0) {
         processSectionContent(currentSection, currentContent);
       }
-      currentSection = 'itinerary';
+      currentSection = 'what_to_expect';
       currentContent = [];
     } else if (trimmedLine === 'Duration') {
       if (currentSection && currentContent.length > 0) {
@@ -150,7 +157,7 @@ export const parseExperienceContent = (description: string) => {
       }
       currentSection = 'languages';
       currentContent = [];
-    } else if (trimmedLine.includes('Frequently Asked Questions') || trimmedLine === 'FAQ') {
+    } else if (trimmedLine.includes('Frequently Asked Questions')) {
       if (currentSection && currentContent.length > 0) {
         processSectionContent(currentSection, currentContent);
       }
