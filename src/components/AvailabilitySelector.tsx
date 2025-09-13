@@ -177,14 +177,6 @@ const AvailabilitySelector = ({
 
                         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
                           <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{option.duration} hours</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span role="img" aria-label="Languages">🗣️</span>
-                            <span>{option.language}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
                             <MapPin className="h-4 w-4" />
                             <span>{option.pickup}</span>
                           </div>

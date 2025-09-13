@@ -261,11 +261,14 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Briefing: Safety protocols, sanctuary history, and conservation impact
-• Tracking: Follow signs to locate rhinos; observe from a safe, intimate distance
-• Wildlife: Optional game viewing; chance to see Grevy's zebra, reticulated giraffe, Beisa oryx
-• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Start with an informative session led by conservancy rangers outlining safety protocols, the sanctuary's history, and how your visit supports conservation.
+• Head out with expert guides using traditional tracking methods to follow signs of rhinos. Once a rhino is found, you'll observe from a safe yet intimate distance—often just meters away—while learning about their behaviors and threats.
+• Along the walk or during optional game drives, spot species such as Grevy's zebra, reticulated giraffe, and Beisa oryx.
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
 2 hours (fallback)
@@ -311,11 +314,14 @@ Included/Excluded
 • Included: A friendly, professional guide
 • Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to Expect (Itinerary & Cancellation)
-• Orientation: Sanctuary history and conservation briefing
-• Nature Walk: Observe Rothschild's giraffes; learn about rescue and rewilding
-• Community Interaction: Engage with local representatives
-• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
+What to Expect
+Itinerary
+• Begin with a warm introduction by local guides and a briefing on the sanctuary's history and conservation work.
+• Embark on a nature walk through the sanctuary to observe Rothschild's giraffes and learn about their rescue and rewilding.
+• Visit nearby communities to engage with Il Chamus and Pokot representatives, hearing their stories and role in conservation.
+
+Cancellation policy
+• You can cancel up to 48 hours before the experience starts for a refund.
 
 Duration
 2 hours (fallback)
@@ -754,22 +760,6 @@ Included/Excluded
 • Drinks and meals
 • Additional Services not mentioned
 
-What to expect
-Go Behind the Scenes: Elephant Care Unveiled
-o Arrive at the Reteti Elephant Sanctuary and join an educational tour led by Reteti's keepers, where you'll learn about their elephant rescue and rehabilitation mission.
-o Observe the rescued elephants from a dedicated viewing platform, where you can witness feeding time and mud hole playtime.
-o Take part in a behind-the-scenes tour of the sanctuary to gain a deeper understanding of Reteti's exceptional elephant care.
-
-Cancellation policy
-o You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 72 hours before the start time, you can also cancel within 48 hours of booking for a full refund.
-
-Durations
-0 - 2 hours
-
-Languages
-English
-
-Frequently asked questions
 What to Expect
 Itinerary
 • Arrive at the Reteti Elephant Sanctuary and join an educational tour led by Reteti's keepers, where you'll learn about their elephant rescue and rehabilitation mission.
@@ -779,18 +769,38 @@ Itinerary
 Cancellation policy
 • You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 72 hours before the start time, you can also cancel within 48 hours of booking for a refund.
 
-Duration
-~1.5–2 hours; 4 time slots
-
-Language
-English
-
 Frequently Asked Questions
 What can I expect on a typical visit?
 Tours typically include an educational talk, observation time at the viewing platform, and a behind-the-scenes look at the sanctuary's operations.
 
 Is it possible to touch and interact with the elephants?
 No, for the well-being of the elephants, visitors are not allowed to interact with them directly. However, you will get to observe them from a safe distance. Reteti's mission is to rescue, rewild and release the elephants, and to prepare them for their release. The keepers are the ones only allowed to interact with the elephants in order to minimise human interaction.
+
+Is this a good activity for children?
+Absolutely! Learning about elephants and witnessing their heartwarming behaviors is a great experience for all ages.
+
+How can I help Reteti's conservation efforts?
+In addition to booking a tour, consider making a donation to the sanctuary or purchasing handmade crafts from their gift shop, which directly supports the sanctuary and the local community.
+
+What should I wear?
+Please wear dark green if possible, otherwise shades of brown or khaki.
+
+Important Information
+The duration of the experience can vary, but tours typically last around 1.5 hours. Reteti has 4 time slots for visits that coincide with the elephants' feeding times.
+The Sunrise Feed
+Sarara & Reteti House guests only
+5.30 am - 7.00 am (feeding is at 6.00 am)
+The Morning Feed
+Exclusive Group only
+8.30 am - 10.00 am (feeding is at 9.00 am)
+Other visitors are welcome when no exclusive group booked.
+The Midday Feed
+Public viewing
+11.30 am - 13.00 pm (feeding is at 12.00 pm)
+No more than 3 groups. Max 15 - 20 people.
+The Evening Feed
+Sarara & Reteti House guests only
+17.30 pm - 19.00 pm (feeding is at 18.00 pm)
 
 Is this a good activity for children?
 Absolutely! Learning about elephants and witnessing their heartwarming behaviors is a great experience for all ages.
@@ -1253,12 +1263,6 @@ Itinerary
 Cancellation policy
 • You can cancel up to 48 hours before the experience starts for a refund.
 
-Duration
-2 hours
-
-Language
-English
-
 Frequently Asked Questions
 What can I expect during the activity?
 You'll learn about the K-9 unit, participate in a tracking exercise with a bloodhound (both hiding and observing), and gain insights into their training.
@@ -1276,12 +1280,6 @@ Important Information
 • Physical interaction with the dogs will be relatively restricted.
 • This activity is not suitable for children under the age of 12.
 • If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
-Yes, the activity is conducted in a controlled environment with experienced handlers.
-
-What should I wear?
-Closed shoes, sunscreen, and a hat are recommended. Opt for neutral-colored clothing.
-
-Can I bring children?
 This activity is not recommended for children under 12 years old.
 
 Important information
@@ -1335,12 +1333,6 @@ Itinerary
 Cancellation policy
 • You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a refund.
 
-Duration
-3 hours
-
-Language
-English
-
 Frequently Asked Questions
 What can I expect to do on this program?
 You'll gain exclusive insights into MEP's drone program through presentations, demonstrations, and potentially observing live drone operations (weather dependent).
@@ -1352,16 +1344,9 @@ Can I participate in flying the drones?
 Piloting the drones is done by trained MEP personnel.
 
 Important Information
-• The $500 all-inclusive donation paid to MEP
+• The $500 all - inclusive donation paid to MEP
 • Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and no minimum donation is required.
 • Mara Elephant Project can provide bespoke experiences for interested donors. This can include a visit to camp for tea and coffee and a presentation from a key MEP staff member, which would give guests private access to learn more about our work. We would ask for a minimum donation of $1,000 per group for this experience.
-This program might be more suitable for older children and adults due to the technical nature of the content.
-
-Can I participate in flying the drones?
-Piloting the drones is done by trained MEP personnel.
-
-Important information
-o KES 66,000 per group (minimum 2 people) - all-inclusive donation paid to MEP
 o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our
 headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and
 no minimum donation is required.
@@ -1413,24 +1398,19 @@ Included/Excluded
 • Insurance
 • Transportation to/from the meeting point
 
-What to expect
-A Research Expedition with the Mara Elephant Project
-o Meet at the designated location (transportation arrangements may vary)
-o Receive comprehensive briefing on elephant research methodologies and conservation challenges
-o Join the MEP Long-Term Monitoring team in active data collection activities
-o Learn to identify individual elephants and observe behavioral patterns
-o Participate in photographic documentation and data recording
-o Engage in discussions about elephant conservation strategies and challenges
+What to Expect
+Itinerary
+• Arrive at the designated meeting point at MEP headquarters in Lemek Conservancy
+• Meet the MEP staff and receive a comprehensive briefing on the program, elephant research methods, and safety protocols.
+• Embark on a research expedition alongside the LTM team. Learn to identify individual elephants and assist with data collection through photography and observation.
+• Depart with a newfound appreciation for the dedication of the MEP team and the importance of elephant conservation. You'll also leave with the satisfaction of making a direct contribution through your participation and donation.
 
-Duration
-3 hours
+Cancellation policy
+• You can cancel and get a full refund if you do it at least 7 days before the experience starts. If you book more than 48 hours before the start time, you can also cancel within 24 hours of booking for a refund.
 
-Languages
-English
-
-Frequently asked questions
-What type of research will I be involved in?
-You'll participate in active elephant monitoring, including identification, behavior observation, and data collection alongside MEP's research team.
+Frequently Asked Questions
+What will I do during the program?
+You'll assist the LTM team in data collection, learn elephant identification techniques, capture photos, and hear from a Maasai scientist.
 
 What kind of data collection will I be involved in?
 You might assist with tasks like elephant identification, behavior observation, and photographic documentation.
@@ -1441,7 +1421,10 @@ No prior experience is necessary. However, a passion for elephants and an intere
 Can I participate if I have no prior research experience?
 Absolutely! This program is designed for anyone passionate about elephants and conservation, regardless of scientific background. The MEP team will provide all necessary training and guidance throughout the experience.
 
-Important information
+Important Information
+• The $500 all - inclusive donation paid to MEP
+• Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and no minimum donation is required.
+• Mara Elephant Project can provide bespoke experiences for interested donors. This can include a visit to camp for tea and coffee and a presentation from a key MEP staff member, which would give guests private access to learn more about our work. We would ask for a minimum donation of $1,000 per group for this experience.
 o KES 66,000 per group (minimum 2 people) - all-inclusive donation paid to MEP
 o Mara Elephant Project has an educational mandate, which aligns with our core mission that allows for guests to visit our
 headquarters to see MEP's presentation and meet MEP staff. These experiences will be available at 10 a.m. on a weekday and

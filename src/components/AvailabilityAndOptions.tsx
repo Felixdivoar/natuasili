@@ -402,22 +402,11 @@ const AvailabilityAndOptions = ({
                      <div className="flex items-start justify-between mb-4">
                        <div className="flex-1">
 
-                         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
-                           <div className="flex items-center gap-1">
-                             <Clock className="h-4 w-4" />
-                             <span>{option.duration} hours</span>
-                           </div>
-                           <div className="flex items-center gap-1">
-                             <span role="img" aria-label="Languages">🗣️</span>
-                             <span>English</span>
-                           </div>
-                         </div>
-
                          <div className="flex flex-wrap gap-2 mb-3">
-                           {option.startTimes.map(time => (
-                             <Badge key={time} variant="outline" className="text-xs">
-                               {time}
-                             </Badge>
+                            {option.startTimes.map(time => (
+                              <Badge key={time} variant="outline" className="text-xs">
+                                {time}
+                              </Badge>
                            ))}
                          </div>
 

@@ -346,20 +346,6 @@ export default function ExperienceDetail() {
               </Accordion>
             </section>
 
-            {/* Duration */}
-            <section>
-              <div className="flex items-center gap-4 text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-5 w-5" />
-                  <span className="font-medium">Duration:</span>
-                  <span>{contentSections.duration || "2-3 hours"}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Language:</span>
-                  <span>{contentSections.languages || "English"}</span>
-                </div>
-              </div>
-            </section>
 
             {/* Frequently Asked Questions */}
             {contentSections.faqs.length > 0 && (

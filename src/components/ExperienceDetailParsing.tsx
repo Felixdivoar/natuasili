@@ -7,8 +7,8 @@ export const parseExperienceContent = (description: string) => {
     notIncluded: [] as string[],
     itinerary: [] as {title: string, description: string}[],
     cancellation: "",
-    duration: "",
-    languages: "",
+      duration: "",
+      languages: "",
     faqs: [] as {question: string, answer: string}[],
     importantInfo: [] as string[]
   };
@@ -76,9 +76,6 @@ export const parseExperienceContent = (description: string) => {
         
         sections.itinerary = itineraryItems;
         sections.cancellation = cancellationPolicy;
-        break;
-      case 'duration':
-        sections.duration = content.join(' ').replace(/\(fallback\)/i, '').trim();
         break;
       case 'languages':
         sections.languages = content.join(' ').trim();
@@ -148,12 +145,6 @@ export const parseExperienceContent = (description: string) => {
       }
       currentSection = 'what_to_expect';
       currentContent = [];
-    } else if (trimmedLine === 'Duration') {
-      if (currentSection && currentContent.length > 0) {
-        processSectionContent(currentSection, currentContent);
-      }
-      currentSection = 'duration';
-      currentContent = [];
     } else if (trimmedLine === 'Language') {
       if (currentSection && currentContent.length > 0) {
         processSectionContent(currentSection, currentContent);
@@ -194,7 +185,6 @@ export const parseExperienceContent = (description: string) => {
     ];
     sections.included = ["Professional guide", "Conservation activities"];
     sections.notIncluded = ["Transportation", "Personal expenses", "Insurance"];
-    sections.duration = "2-3 hours";
     sections.languages = "English";
   }
 

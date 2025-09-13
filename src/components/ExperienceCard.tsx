@@ -136,13 +136,6 @@ const ExperienceCard = ({ experience }: ExperienceCardProps) => {
             <Users className="w-4 h-4 mr-1" />
             {t("exp_up_to")} {experience.capacity} {t("exp_people")}
           </div>
-          <div className="flex items-center">
-            <Clock className="w-4 h-4 mr-1" />
-            {experience.duration_hours % 1 === 0 
-              ? `${experience.duration_hours} ${experience.duration_hours > 1 ? t("exp_hours") : t("exp_hour")}`
-              : `${experience.duration_hours} ${t("exp_hours")}`
-            }
-          </div>
         </div>
         
         <div className="flex flex-col gap-2">
