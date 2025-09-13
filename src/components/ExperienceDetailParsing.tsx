@@ -5,7 +5,7 @@ export const parseExperienceContent = (description: string) => {
     highlights: [] as string[],
     included: [] as string[],
     notIncluded: [] as string[],
-    itinerary: [] as string[],
+    itinerary: [] as {title: string, description: string}[],
     cancellation: "",
     duration: "",
     languages: "",
@@ -53,26 +53,29 @@ export const parseExperienceContent = (description: string) => {
         break;
       case 'what_to_expect':
         let currentSubsection = '';
-        const itineraryItems: string[] = [];
+        const itineraryItems: {title: string, description: string}[] = [];
         let cancellationPolicy = '';
         
         for (const line of content) {
-          if (line.toLowerCase().includes('itinerary')) {
+          if (line.toLowerCase() === 'itinerary') {
             currentSubsection = 'itinerary';
-          } else if (line.toLowerCase().includes('cancellation')) {
+          } else if (line.toLowerCase().includes('cancellation policy')) {
             currentSubsection = 'cancellation';
-          } else if (line.startsWith('•')) {
+          } else if (line.startsWith('•') && currentSubsection === 'itinerary') {
             const item = line.replace('•', '').trim();
-            if (currentSubsection === 'itinerary') {
-              itineraryItems.push(item);
-            } else if (currentSubsection === 'cancellation') {
-              cancellationPolicy += item + ' ';
-            }
+            // Create a structured itinerary item
+            itineraryItems.push({
+              title: `Step ${itineraryItems.length + 1}`,
+              description: item
+            });
+          } else if (line.startsWith('•') && currentSubsection === 'cancellation') {
+            const item = line.replace('•', '').trim();
+            cancellationPolicy = item;
           }
         }
         
         sections.itinerary = itineraryItems;
-        sections.cancellation = cancellationPolicy.trim();
+        sections.cancellation = cancellationPolicy;
         break;
       case 'duration':
         sections.duration = content.join(' ').replace(/\(fallback\)/i, '').trim();
