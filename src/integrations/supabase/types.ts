@@ -165,13 +165,51 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_logs: {
+        Row: {
+          id: string
+          query: string
+          response: string
+          species_id: string | null
+          timestamp: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          query: string
+          response: string
+          species_id?: string | null
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          query?: string
+          response?: string
+          species_id?: string | null
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_logs_species_id_fkey"
+            columns: ["species_id"]
+            isOneToOne: false
+            referencedRelation: "species_data"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       experiences: {
         Row: {
           activities: Json | null
+          best_seasons: number[] | null
           capacity: number | null
+          categories: string[] | null
           child_half_price_rule: boolean | null
           created_at: string | null
           description: string | null
+          donation_options: Json | null
           duration_hours: number | null
           gallery: Json | null
           hero_image: string | null
@@ -181,17 +219,22 @@ export type Database = {
           partner_id: string
           price_kes_adult: number
           slug: string
+          species_likely: string[] | null
           themes: Json | null
           title: string
+          unsuitable_weather: string[] | null
           updated_at: string | null
           visible_on_marketplace: boolean | null
         }
         Insert: {
           activities?: Json | null
+          best_seasons?: number[] | null
           capacity?: number | null
+          categories?: string[] | null
           child_half_price_rule?: boolean | null
           created_at?: string | null
           description?: string | null
+          donation_options?: Json | null
           duration_hours?: number | null
           gallery?: Json | null
           hero_image?: string | null
@@ -201,17 +244,22 @@ export type Database = {
           partner_id: string
           price_kes_adult: number
           slug: string
+          species_likely?: string[] | null
           themes?: Json | null
           title: string
+          unsuitable_weather?: string[] | null
           updated_at?: string | null
           visible_on_marketplace?: boolean | null
         }
         Update: {
           activities?: Json | null
+          best_seasons?: number[] | null
           capacity?: number | null
+          categories?: string[] | null
           child_half_price_rule?: boolean | null
           created_at?: string | null
           description?: string | null
+          donation_options?: Json | null
           duration_hours?: number | null
           gallery?: Json | null
           hero_image?: string | null
@@ -221,14 +269,104 @@ export type Database = {
           partner_id?: string
           price_kes_adult?: number
           slug?: string
+          species_likely?: string[] | null
           themes?: Json | null
           title?: string
+          unsuitable_weather?: string[] | null
           updated_at?: string | null
           visible_on_marketplace?: boolean | null
         }
         Relationships: [
           {
             foreignKeyName: "experiences_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      extracted_metrics: {
+        Row: {
+          confidence: number | null
+          created_at: string | null
+          id: string
+          metric_type: string
+          notes: string | null
+          quantity: number
+          unit: string
+          upload_id: string
+          verified: boolean | null
+          verified_by: string | null
+        }
+        Insert: {
+          confidence?: number | null
+          created_at?: string | null
+          id?: string
+          metric_type: string
+          notes?: string | null
+          quantity: number
+          unit: string
+          upload_id: string
+          verified?: boolean | null
+          verified_by?: string | null
+        }
+        Update: {
+          confidence?: number | null
+          created_at?: string | null
+          id?: string
+          metric_type?: string
+          notes?: string | null
+          quantity?: number
+          unit?: string
+          upload_id?: string
+          verified?: boolean | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "extracted_metrics_upload_id_fkey"
+            columns: ["upload_id"]
+            isOneToOne: false
+            referencedRelation: "partner_uploads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      impact_dashboard: {
+        Row: {
+          created_at: string | null
+          id: string
+          metrics_json: Json | null
+          narrative: string | null
+          partner_id: string
+          period_end: string
+          period_start: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          metrics_json?: Json | null
+          narrative?: string | null
+          partner_id: string
+          period_end: string
+          period_start: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          metrics_json?: Json | null
+          narrative?: string | null
+          partner_id?: string
+          period_end?: string
+          period_start?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "impact_dashboard_partner_id_fkey"
             columns: ["partner_id"]
             isOneToOne: false
             referencedRelation: "partner_profiles"
@@ -469,6 +607,44 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      partner_uploads: {
+        Row: {
+          file_type: string
+          file_url: string
+          id: string
+          partner_id: string
+          processed_at: string | null
+          status: string | null
+          uploaded_at: string | null
+        }
+        Insert: {
+          file_type: string
+          file_url: string
+          id?: string
+          partner_id: string
+          processed_at?: string | null
+          status?: string | null
+          uploaded_at?: string | null
+        }
+        Update: {
+          file_type?: string
+          file_url?: string
+          id?: string
+          partner_id?: string
+          processed_at?: string | null
+          status?: string | null
+          uploaded_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_uploads_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partner_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       partners: {
         Row: {
@@ -738,6 +914,90 @@ export type Database = {
         }
         Relationships: []
       }
+      species_data: {
+        Row: {
+          classification: Json | null
+          common_name: string
+          created_at: string | null
+          description: string | null
+          distribution: string | null
+          habitat: string | null
+          id: string
+          last_updated: string | null
+          population_status: string | null
+          scientific_name: string
+          source: string
+          threats: string[] | null
+        }
+        Insert: {
+          classification?: Json | null
+          common_name: string
+          created_at?: string | null
+          description?: string | null
+          distribution?: string | null
+          habitat?: string | null
+          id?: string
+          last_updated?: string | null
+          population_status?: string | null
+          scientific_name: string
+          source?: string
+          threats?: string[] | null
+        }
+        Update: {
+          classification?: Json | null
+          common_name?: string
+          created_at?: string | null
+          description?: string | null
+          distribution?: string | null
+          habitat?: string | null
+          id?: string
+          last_updated?: string | null
+          population_status?: string | null
+          scientific_name?: string
+          source?: string
+          threats?: string[] | null
+        }
+        Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          adventure_level: string | null
+          created_at: string | null
+          donation_interest: boolean | null
+          group_type: string | null
+          id: string
+          preferences_json: Json | null
+          preferred_quiz_time: string | null
+          timezone: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          adventure_level?: string | null
+          created_at?: string | null
+          donation_interest?: boolean | null
+          group_type?: string | null
+          id?: string
+          preferences_json?: Json | null
+          preferred_quiz_time?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          adventure_level?: string | null
+          created_at?: string | null
+          donation_interest?: boolean | null
+          group_type?: string | null
+          id?: string
+          preferences_json?: Json | null
+          preferred_quiz_time?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -755,6 +1015,74 @@ export type Database = {
           created_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wildlife_activity: {
+        Row: {
+          activity_level: number | null
+          created_at: string | null
+          id: string
+          location: string
+          month: number
+          species_id: string
+        }
+        Insert: {
+          activity_level?: number | null
+          created_at?: string | null
+          id?: string
+          location: string
+          month: number
+          species_id: string
+        }
+        Update: {
+          activity_level?: number | null
+          created_at?: string | null
+          id?: string
+          location?: string
+          month?: number
+          species_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wildlife_activity_species_id_fkey"
+            columns: ["species_id"]
+            isOneToOne: false
+            referencedRelation: "species_data"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wildlife_quiz_log: {
+        Row: {
+          ai_species: string[] | null
+          correct_count: number | null
+          created_at: string | null
+          date: string
+          id: string
+          photos_uploaded: string[] | null
+          species_spotted: string[] | null
+          user_id: string
+        }
+        Insert: {
+          ai_species?: string[] | null
+          correct_count?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          photos_uploaded?: string[] | null
+          species_spotted?: string[] | null
+          user_id: string
+        }
+        Update: {
+          ai_species?: string[] | null
+          correct_count?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          photos_uploaded?: string[] | null
+          species_spotted?: string[] | null
           user_id?: string
         }
         Relationships: []
