@@ -30,6 +30,7 @@ const convertToPartnersFormat = (mockExp: MockExperience): PartnersExperience =>
     description: mockExp.description,
     priceKESAdult: mockExp.base_price,
     childHalfPriceRule: true,
+    durationHours: mockExp.duration_hours || 2, // Add fallback duration
     visibleOnMarketplace: mockExp.visible_on_marketplace,
     locationText: mockExp.location_text,
   };
