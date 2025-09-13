@@ -58,10 +58,12 @@ export type Experience = {
   isGroupPricing?: boolean;
   minCapacity?: number;
   capacity?: number;
+  durationHours: number;
   visibleOnMarketplace: boolean;
   locationText?: string;
   partnerSlug?: string;
   googleMapsUrl?: string;
+  timings?: string[];
 };
 
 export type Partner = {
@@ -226,6 +228,7 @@ Where You'll Be
 https://maps.app.goo.gl/VzMtfuRWv9rbpWt76`,
     priceKESAdult: 2000,
     childHalfPriceRule: false,
+    durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Samburu County, Kenya",
     partnerSlug: "koija-community",
@@ -276,6 +279,7 @@ Where You'll Be
 https://www.google.com/maps/search/?api=1&query=95W5%2BQGR%2C%20Dol%20Dol%2C%20Kenya`,
     priceKESAdult: 4000,
     childHalfPriceRule: false,
+    durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Sera Conservancy, Samburu",
     partnerSlug: "sera-conservancy",
@@ -293,43 +297,38 @@ https://www.google.com/maps/search/?api=1&query=95W5%2BQGR%2C%20Dol%20Dol%2C%20K
     heroImage: "/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png",
     gallery: ["/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png", "/lovable-uploads/235266ed-14bb-4381-9304-a9f8e2934776.png", "/lovable-uploads/34b44d9c-3c11-44ee-9f21-bbf1e8c51a5c.png", "/lovable-uploads/d41fd5bc-a9e9-44de-a975-dc5ae1f2eb29.png"],
     description: `Overview
-Located on the eastern shores of Lake Baringo in Kenya's Great Rift Valley, the Ruko Giraffe Sanctuary is a community-led conservation initiative dedicated to protecting the endangered Rothschild's giraffe. Established through a collaboration between the Il Chamus and Pokot communities—historically rival groups—the sanctuary is a powerful example of how conservation can foster peace and unity. In 2020, a dramatic rescue operation saw nine stranded giraffes relocated from a flooded island to the mainland sanctuary using a custom-built barge. Since then, the population has flourished, with successful breeding and plans to reintroduce them to their ancestral habitats. Visitors to the sanctuary can enjoy the rare opportunity to observe Rothschild's giraffes in their natural environment, experience the inspiring story of community cooperation, and take in the scenic landscapes of Lake Baringo. Guided tours and interactions with local rangers also provide valuable educational insights into the challenges and successes of wildlife conservation in Kenya.
+On Lake Baringo's eastern shores, the Ruko Giraffe Sanctuary unites the Il Chamus and Pokot communities in a powerful conservation effort. In 2020, nine stranded Rothschild's giraffes were rescued from a flooded island via a custom-built barge and relocated to the mainland sanctuary. The population has since flourished, with successful breeding and future reintroduction plans.
 
 Highlights
-• Explore the sanctuary with knowledgeable guides who share insights into giraffe behavior, conservation efforts, and the sanctuary's history.
-• In addition to giraffes, visitors may encounter other wildlife species native to the region.
-• Engage with local communities to learn about their traditions and the role they play in conservation.
+• Guided sanctuary tour with insights into behavior, conservation, and history
+• Potential sightings of other regional wildlife
+• Community engagement and cultural learning
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-Ruko giraffe sanctuary experience
-o Begin with a warm introduction by local guides and a briefing on the sanctuary's history and conservation work.
-o Embark on a nature walk through the sanctuary to observe Rothschild's giraffes and learn about their rescue and rewilding.
-o Visit nearby communities to engage with Il Chamus and Pokot representatives, hearing their stories and role in conservation.
+What to Expect (Itinerary & Cancellation)
+• Orientation: Sanctuary history and conservation briefing
+• Nature Walk: Observe Rothschild's giraffes; learn about rescue and rewilding
+• Community Interaction: Engage with local representatives
+• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
 
-Durations
-3 - 5 hours
+Duration
+2 hours (fallback)
 
-Languages
+Language
 English
 
-Frequently asked questions
-How can I visit the Ruko Giraffe Sanctuary?
-Visits can be arranged through local tour operators or by contacting the sanctuary directly. It's advisable to plan ahead and confirm accessibility, especially during the rainy season.
+Frequently Asked Questions
+• How do I visit? Book via a local operator or the sanctuary; confirm access in rainy seasons.
+• How does my visit help? Tourism revenue funds operations and community projects.
 
-How does my visit support conservation efforts?
-Tourism revenue supports the sanctuary's operations, community development projects, and ongoing conservation initiatives.
-
-Where you'll be
-J4RF+P9M, Nosuguro`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=J4RF%2BP9M%2C%20Nosuguro%2C%20Kenya`,
     priceKESAdult: 2000,
     childHalfPriceRule: false,
+    durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Ruko Conservancy, Samburu",
     partnerSlug: "ruko-community-conservancy",
@@ -347,54 +346,42 @@ J4RF+P9M, Nosuguro`,
     heroImage: "/lovable-uploads/1cbd1d3d-c30b-45be-a09e-8c9cc6f1f87b.png",
     gallery: ["/lovable-uploads/1cbd1d3d-c30b-45be-a09e-8c9cc6f1f87b.png", "/lovable-uploads/1cbd3f9c-ed73-43d0-97e2-61830c34802f.png", "/lovable-uploads/a3c50985-66b9-4e12-a7dd-bb047e06a3e7.png", "/lovable-uploads/cb06fcce-173f-46a9-a2bc-f4a80c8711d0.png", "/lovable-uploads/0a4207e5-714a-4879-bbac-a99a5d456692.png", "/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/lovable-uploads/14b36cde-b5f2-4f18-a1de-85d5fa95baa7.png"],
     description: `Overview
-Founded in Diani, Kenya, Colobus Conservation is a non-profit committed to the protection of primates, especially the threatened Angolan black and white colobus monkeys. Through habitat protection, educational campaigns, rescue, and rehabilitation projects, it seeks to safeguard primates.
-The only primate eco-tour in the nation, it presents a special chance to see a colonized troop of colobus monkeys in their natural environment.
+Colobus Conservation protects primates through habitat protection, education, rescue, and rehabilitation. This guided eco-tour offers Kenya's only habituated-troop primate experience.
 
 Highlights
-• Guided nature walk through a scenic trail
-• Depending on sightings, encounter variety of colobus monkeys, vervet monkeys, Sykes's monkeys, and baboons among other primates.
-• Discover the critical contribution Colobus Conservation makes to primate research and protection.
+• Guided nature walk
+• Possible sightings: colobus, vervet, Sykes', baboons
+• Learn about research and protection work
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-Encountering colobus monkeys and other primates
-o Arrive at Colobus Conservation and meet your guide and embark on a guided walk along the trail.
-o Observe a habituated troop of colobus monkeys and other primates.
-o Attend a talk at the information center to learn about Colobus Conservation's activities.
+What to Expect (Itinerary & Cancellation)
+• Trail Walk: With a guide; observe a habituated troop
+• Info Session: Centre talk on programs and impact
+• Cancellation: Full refund up to 24 hours before start (use listing policy if present)
 
-Cancellation policy
-o You can cancel up to 24 hours before the experience starts for a full refund.
+Duration
+1 hour (fallback)
 
-Durations 
-0 - 2 hours
-
-Languages
+Language
 English
 
-Frequently asked questions
-What primates can I expect to see?
-You are most likely to see colobus monkeys, but vervet monkeys, Sykes' monkeys, and baboons are also frequent visitors to the area.
+Frequently Asked Questions
+• Hours: Monday–Saturday, 8:30 AM–4:00 PM (closed Sundays).
+• For children? Yes—great for families.
 
-What are the opening hours?
-Guided eco-tours are offered Monday to Saturday from 8:30 AM to 4:00 PM. The center is closed for eco-tours on Sundays.
-
-Is this a good tour for children?
-Yes, this tour is perfect for families with children who are interested in learning about monkeys.
-
-Where you'll be
-MH47+6WQ`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=MH47%2B6WQ%2C%20Diani%20Beach%2C%20Kenya`,
     priceKESAdult: 1500,
     childHalfPriceRule: false,
+    durationHours: 1,
     visibleOnMarketplace: true,
     locationText: "Coastal Kenya",
     partnerSlug: "colobus-conservation",
     sourceUrl: "https://natuasili.com/st_tour/colobus-conservation-guided-eco-tours/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=MH47%2B6WQ%2C%20Diani%20Beach%2C%20Kenya",
   },
   {
     title: "Ocean Wonders: Learn & conserve with Local Ocean Conservation Kenya",
@@ -408,59 +395,46 @@ MH47+6WQ`,
     heroImage: "/lovable-uploads/a6c0b2b9-fd77-4472-a600-d2f163add078.png",
     gallery: ["/lovable-uploads/a6c0b2b9-fd77-4472-a600-d2f163add078.png", "/lovable-uploads/145c30f9-65a9-4b28-87ad-97dac17376b7.png", "/lovable-uploads/33d3848b-2807-4161-b7b0-b1748f7e09b7.png", "/lovable-uploads/f93e78f2-5726-41ad-9f61-9a2f4ee5b1c4.png", "/lovable-uploads/c4575d2e-e1f6-4292-990c-760879abf32a.png", "/lovable-uploads/40debeaf-566e-4f53-9fd0-6b1103b26c65.png"],
     description: `Overview
-With an eye toward sea turtles, Local Ocean Conservation is a non-profit committed to safeguarding Kenya's marine habitat. They provide an interesting day trip meant to educate visitors about the ocean and motivate behavior in favor of conservation. Families, outdoor enthusiasts, and everyone else interested in the marine environment will find ideal use for this informative day trip.
+LOC focuses on sea turtles and marine habitat protection. This educational day trip inspires ocean stewardship.
 
 Highlights
-• Learn about the various sea turtle species, their life cycle, and the threats that they encounter.
-• See LOC's work toward sea turtle protection and rehabilitation.
-• Learn the value of the marine ecosystem and the need of its preservation.
+• Sea turtle biology and threats
+• Rehabilitation and protection work
+• Marine ecosystem education
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-LOC: Protecting the Ocean Through Action
-o Arrive at the Local Ocean Conservation center.
-o Join a guided tour about sea turtles, their life cycle, and the challenges they face.
-o Learn about the marine ecosystem and the importance of its conservation.
-o Consider making a donation to further support LOC's vital work (optional).
+What to Expect (Itinerary & Cancellation)
+• Tour: Guided talks on turtles and the marine ecosystem
+• Support: Optional donations welcome
+• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
 
-Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+Duration
+~2 hours; tours hourly (fallback)
 
-Durations
-0 - 2 hours
-
-Languages
+Language
 English
 
-Frequently asked questions
-What can I expect on the tour?
-The tour includes guided talks about sea turtles and the marine ecosystem, showcasing LOC's conservation efforts.
+Frequently Asked Questions
+• For children? Yes—great for families.
+• Will I see turtles? Not guaranteed; rehabilitation aims for quick release.
 
-Is this tour suitable for children?
-Yes, this educational day trip is perfect for families!
+Important Information
+Closed Saturday afternoon, Sundays, and Public Holidays.
 
-What can I do to contribute further?
-Consider making a donation or spreading awareness about ocean conservation after your visit.
-
-Important information
-o The goal is to get healthy sea turtles back into the ocean as soon as possible, so you might not always see them here during your visit.
-o Tours are offered hourly for your convenience. The specific details may vary slightly depending on the tour guide and available resources.
-o Please note that LOC is closed on Saturday afternoon, Sundays and all Public Holidays.
-
-Where you'll be
-JXFP+M4 Watamu`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=JXFP%2BM4%2C%20Watamu%2C%20Kenya`,
     priceKESAdult: 1000,
     childHalfPriceRule: false,
+    durationHours: 2,
+    timings: ["Mon 14:00-15:00", "Mon 15:00-16:00", "Tue-Fri 09:00-10:00", "Tue-Fri 10:00-11:00", "Tue-Fri 11:00-12:00", "Tue-Fri 14:00-15:00", "Tue-Fri 15:00-16:00", "Sat 09:00-10:00", "Sat 10:00-11:00", "Sat 11:00-12:00"],
     visibleOnMarketplace: true,
     locationText: "Watamu, Coastal Kenya",
     partnerSlug: "local-ocean-watamu",
     sourceUrl: "https://natuasili.com/st_tour/ocean-conservation-day-watamu/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=JXFP%2BM4%2C%20Watamu%2C%20Kenya",
   },
   {
     title: "Dive into coral conservation with REEFolution",
@@ -474,57 +448,42 @@ JXFP+M4 Watamu`,
     heroImage: "/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png",
     gallery: ["/lovable-uploads/d4888a5b-c6ad-4983-8c53-e2364f663bd4.png", "/lovable-uploads/8236db6a-4c2e-4c06-864a-bfcdd270ad52.png", "/lovable-uploads/f39fee39-a385-4e10-a818-084c4d1811fd.png", "/lovable-uploads/3247620c-45d9-4bf0-ad1c-677d2a49f122.png", "/lovable-uploads/55949b1a-fc87-4134-896a-da6c9c730a99.png"],
     description: `Overview
-REEFolution is dedicated to coral reef restoration and marine conservation along Kenya's coast. Join our immersive coral conservation experience to learn about reef ecosystems, participate in restoration activities, and discover how local communities are working to protect these vital marine habitats.
-
-Through hands-on activities including coral planting, reef monitoring, and marine debris cleanup, participants gain deep insights into coral ecology while contributing directly to conservation efforts. This experience combines education with action, making it perfect for divers and non-divers alike who want to make a tangible impact on marine conservation.
+Africa's leading coral restoration project offers education, science, and hands-on activities to empower ocean stewards.
 
 Highlights
-• Learn about coral reef ecosystems and their critical role in marine biodiversity
-• Participate in hands-on coral restoration activities
-• Experience sustainable marine conservation practices in action
-• Support community-based marine conservation initiatives
+• REEFolution's story and impact
+• Interactive workshop
+• Restoration techniques (nurseries, out-planting)
 
 Included/Excluded
-• Professional marine conservation guide
-• All necessary equipment for conservation activities
-• Educational materials and reef identification guides
-• Personal expenses
-• Diving certification (for advanced activities)
-• Accommodation and meals
-• Transportation to/from site
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-Coral Conservation Experience
-o Begin with an educational briefing about coral reef ecosystems, threats facing reefs, and restoration techniques
-o Participate in hands-on coral planting or reef monitoring activities under expert guidance
-o Learn to identify different coral species and marine life while snorkeling in protected reef areas
-o Engage with local community members involved in marine conservation efforts
-o Contribute to data collection for ongoing reef health monitoring programs
+What to Expect (Itinerary & Cancellation)
+• Centre Visit: Workshop with scientists
+• Learn: Coral ecology, threats, restoration methods
+• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
 
-Durations
-4 hours
+Duration
+Half- or full-day (fallback by program)
 
-Languages
-English, Kiswahili
+Language
+English
 
-Frequently asked questions
-Do I need diving experience?
-Basic swimming skills are required, but diving certification is not necessary for most activities. Snorkeling equipment is provided.
+Frequently Asked Questions
+• Programs: Land-based; Snorkel & Learn; Dive & Restore (certified divers).
+• Contribute? Donations and, in some programs, coral planting.
 
-What is the best time to visit?
-Year-round, but visibility is typically best during dry seasons (December-March, June-October).
-
-How does my participation help conservation?
-Your participation directly supports coral restoration efforts and provides funding for ongoing marine conservation programs.
-
-Where you'll be
-Coastal Kenya, Diani Beach area`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=PH6P%2BRRR%2C%20Ukunda%2C%20Diani%20Beach%20Road%2C%20Diani%20Beach%2C%20Kenya`,
     priceKESAdult: 4500,
     childHalfPriceRule: true,
+    durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Coastal Kenya, Diani Beach",
     partnerSlug: "reefolution",
     sourceUrl: "https://natuasili.com/st_tour/dive-into-coral-conservation-with-reefolution/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=PH6P%2BRRR%2C%20Ukunda%2C%20Diani%20Beach%20Road%2C%20Diani%20Beach%2C%20Kenya",
   },
   {
     title: "Tree Walk: Discover Kenya's forest heritage",
@@ -538,59 +497,43 @@ Coastal Kenya, Diani Beach area`,
     heroImage: "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png",
     gallery: ["/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/lovable-uploads/7ecd7176-f5b7-48b1-ae30-b697e0501c03.png", "/lovable-uploads/caa3fd6e-7c09-4774-91b1-9f5c0d61c57f.png", "/lovable-uploads/5dff9e8b-0607-44a7-88c3-525c96ba6fd4.png", "/lovable-uploads/4125d657-63a3-40bd-9a41-21d7bd0c3129.png"],
     description: `Overview
-Trees are the lifeline of our planet, providing oxygen, shelter, and vital ecosystems for wildlife. The Tree walk, organized by Nature Kenya's Plant Committee, offers a unique opportunity to explore Kenya's diverse forests, learn about indigenous and exotic tree species, and understand the crucial role trees play in conservation and climate resilience.
-Whether in forests, botanical gardens, or urban green spaces, this guided walk helps participants connect with nature while deepening their knowledge of Kenya's rich plant biodiversity.
+Join Nature Kenya's Plant Committee for guided walks through forests, gardens, and urban green spaces. Learn to identify indigenous and exotic species and understand trees' role in conservation and climate resilience.
 
 Highlights
-• Discover Kenya's rich tree heritage by exploring its indigenous and exotic species.
-• Engage in conservation by understanding the importance of reforestation and sustainable land use.
-• Experience nature up close with expert-led walks through forests and parks
+• Discover Kenya's tree heritage
+• Learn about reforestation and sustainable land use
+• Expert-led nature immersion
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-Explore Kenya's forest heritage
-o Start the day at 8:30 AM with a warm welcome and introduction at the designated meeting point. Get an insightful overview of Kenya's tree diversity, the significance of conservation, and a briefing on the walk, including safety guidelines and key highlights.
-o Embark on a guided forest exploration, identifying diverse tree species while learning about their medicinal, indigenous, and exotic origins. Discover their ecological significance and observe how trees support wildlife, soil stability, and water conservation.
-o Engage in **interactive learning** as you explore the challenges facing forests, from deforestation and climate change to urbanization. Gain hands-on insights into tree planting and care for reforestation efforts while uncovering the cultural and historical significance of various tree species.
+What to Expect (Itinerary & Cancellation)
+• Start: 8:30 AM welcome and briefing
+• Walk: Identification, ecology, and conservation themes
+• Interactive: Practical insights into planting and care
+• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
 
-Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+Duration
+2 hours (fallback)
 
-Durations
-0 - 2 hours
-2 - 3 hours
-3 - 5 hours
-
-Languages
+Language
 English
 
-Frequently asked questions
-What should I bring?
-Bring comfortable walking shoes, a hat and sunscreen for protection, a water bottle to stay hydrated, and optionally, a notebook or field guide for a more immersive experience.
+Frequently Asked Questions
+• What to bring? Walking shoes, hat, sunscreen, water; optional notebook/field guide.
+• How often? Monthly, at rotating locations.
 
-Do I need prior knowledge of trees?
-No! The walk is open to everyone, and guides will help with identification and learning.
-
-Is the walk suitable for children?
-Yes! The Tree Walk is a great educational experience for all ages.
-
-How often do Tree Walks take place?
-They are held once a month at different locations.
-
-Where you'll be
-PRG7+CQ Nairobi`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Kenya`,
     priceKESAdult: 500,
     childHalfPriceRule: false,
+    durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Nairobi and surroundings",
     partnerSlug: "kenya-forest-heritage",
     sourceUrl: "https://natuasili.com/st_tour/tree-walk-kenya-forest-heritage/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Kenya",
   },
   {
     title: "Dudu walk: Explore the world of insects with Nature Kenya",
@@ -604,60 +547,43 @@ PRG7+CQ Nairobi`,
     heroImage: "/lovable-uploads/755bb09b-50ae-4b81-8ee4-ed16c5874e40.png",
     gallery: ["/lovable-uploads/755bb09b-50ae-4b81-8ee4-ed16c5874e40.png", "/lovable-uploads/b8fd9d98-7dde-4ace-93a4-7f45b5858549.png", "/lovable-uploads/466be868-0698-4cd5-a6b8-0cee85fb22cf.png", "/lovable-uploads/536eb7bc-8b3e-4790-8bcc-86223f5a585f.png"],
     description: `Overview
-Dudu is the Swahili word for insect, and these tiny creatures play a crucial role in maintaining ecosystems. The Dudu Walk, organized by Nature Kenya's Insect Committee, offers a unique opportunity to explore, identify, and learn about insects in various natural habitats across Kenya. Whether in forests, wetlands, or grasslands, participants will discover the vital role of insects in pollination, decomposition, and biodiversity conservation.
+A hands-on exploration of insects' roles in pollination, decomposition, and biodiversity—ideal for beginners and families.
 
 Highlights
-• Engage in hands-on insect spotting to observe insects in action and learn about their behaviors.
-• Discover the vital role of insects in ecosystems through interactive experiences using nets, magnifiers, and guides.
-• Engage in expert-led discussions on conservation and identification.
+• Field identification and observation
+• Interactive tools (nets, magnifiers)
+• Conservation discussions
 
 Included/Excluded
-• A friendly professional guide
-• Personal expenses
-• Insurance
-• Drinks and meals
-• Additional Services not mentioned
+• Included: A friendly, professional guide
+• Excluded: Personal expenses; insurance; drinks and meals; additional services not mentioned
 
-What to expect
-Explore the world of insects
-o Gather at the designated starting point for a warm welcome and a brief introduction to the vital role insects play in ecosystems. Get an overview of the walk, including safety guidelines and key highlights of what to expect.
-o Embark on a guided walk through the habitat, searching for diverse insect species. Observe butterflies, dragonflies, beetles, ants, and more in their natural environment while learning insect identification techniques using sight, behavior, and habitat clues.
-o Engage in a discussion on the vital roles of insects as pollinators, decomposers, and food chain contributors while participating in hands-on activities like catching insects with nets, listening to their sounds, and observing their interactions with the environment.
+What to Expect (Itinerary & Cancellation)
+• Intro: Safety and overview
+• Walk: Observe butterflies, dragonflies, beetles, ants, and more
+• Learn: Insects' ecological roles and minimal-disturbance ethics
+• Cancellation: Full refund up to 48 hours before start (use listing policy if present)
 
-Cancellation policy
-o You can cancel up to 48 hours before the experience starts for a full refund.
+Duration
+2 hours (fallback)
 
-Durations
-0 - 2 hours
-2 - 3 hours
-
-Languages
+Language
 English
 
-Frequently asked questions
-What should I bring?
-Wear comfortable walking shoes, bring a hat and sunscreen for protection, stay hydrated with a water bottle, and optionally carry a notebook or field guide for a more immersive experience.
+Frequently Asked Questions
+• Beginner-friendly? Yes.
+• For children? Yes—great for all ages.
 
-Do I need prior insect knowledge?
-No! The walk is beginner-friendly, and guides will help you learn along the way.
-
-Is the walk suitable for children?
-Yes! The Dudu Walk is great for all ages, offering an exciting way for kids to explore nature
-
-Will we handle insects?
-Some insects may be observed up close, but we encourage minimal disturbance to their habitat.
-
-How often do Dudu Walks happen?
-They occur once a month at different locations.
-
-Where you'll be
-PRG7+CQ Nairobi`,
+Where You'll Be
+https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Kenya`,
     priceKESAdult: 500,
     childHalfPriceRule: false,
+    durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Nairobi",
     partnerSlug: "nature-kenya",
     sourceUrl: "https://natuasili.com/st_tour/dudu-walk-insect-exploration/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Kenya",
   },
   {
     title: "Meet Rothschild Giraffes at Giraffe Nairobi Centre with AFEW",
@@ -703,10 +629,12 @@ Where you'll be
 JPFV+FP Nairobi`,
     priceKESAdult: 1500,
     childHalfPriceRule: true,
+    durationHours: 1,
     visibleOnMarketplace: true,
     locationText: "Nairobi",
     partnerSlug: "afew-giraffe-centre",
     sourceUrl: "https://natuasili.com/st_tour/nairobi-giraffe-centre-afew/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=JPFV%2BFP%2C%20Nairobi%2C%20Kenya",
   },
   {
     title: "Community-led elephant experience at Reteti",
@@ -786,10 +714,13 @@ Where you'll be
 4F76+V3 Sereolipi`,
     priceKESAdult: 3000,
     childHalfPriceRule: false,
+    durationHours: 2,
+    timings: ["5:30-7:00 AM (Sunrise)", "8:30-10:00 AM (Morning)", "11:30-13:00 PM (Midday)", "17:30-19:00 PM (Evening)"],
     visibleOnMarketplace: true,
     locationText: "Samburu County, Kenya",
     partnerSlug: "reteti-elephant-sanctuary",
     sourceUrl: "https://natuasili.com/st_tour/reteti-community-elephant-experience/",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=4F76%2BV3%2C%20Sereolipi%2C%20Kenya",
   },
   {
     title: "Meet the last northern white rhinos at Ol Pejeta Conservancy",
