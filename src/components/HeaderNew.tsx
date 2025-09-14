@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, X, ChevronDown, Globe, ShoppingCart } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown, Globe, ShoppingCart, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
@@ -237,67 +237,132 @@ export default function HeaderNew() {
             </div>
           </div>
 
-          {/* Mobile Menu */}
-          {isMobileMenuOpen && (
-            <div className="lg:hidden border-t border-border bg-background">
-              <nav className="p-4 space-y-2">
-                <Link 
-                  to="/impact-ledger" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("nav_impact")}
-                </Link>
-                <Link 
-                  to="/partners" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("nav_partners")}
-                </Link>
-                <Link 
-                  to="/marketplace" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("nav_marketplace")}
-                </Link>
-                
-                <div className="space-y-1">
-                  <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    {t("nav_destinations")}
-                  </div>
-                  {DESTINATIONS.map((dest) => (
-                    <Link
-                      key={dest.slug}
-                      to={`/destinations/${dest.slug}`}
-                      className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {dest.label}
-                    </Link>
-                  ))}
-                </div>
+              {/* Mobile Menu */}
+           {isMobileMenuOpen && (
+             <div className="lg:hidden border-t border-border bg-background">
+               <nav className="p-4 space-y-2">
+                 <Link 
+                   to="/impact-ledger" 
+                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                   onClick={() => setIsMobileMenuOpen(false)}
+                 >
+                   {t("nav_impact")}
+                 </Link>
+                 <Link 
+                   to="/partners" 
+                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                   onClick={() => setIsMobileMenuOpen(false)}
+                 >
+                   {t("nav_partners")}
+                 </Link>
+                 <Link 
+                   to="/marketplace" 
+                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                   onClick={() => setIsMobileMenuOpen(false)}
+                 >
+                   {t("nav_marketplace")}
+                 </Link>
+                 
+                 <div className="space-y-1">
+                   <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                     {t("nav_destinations")}
+                   </div>
+                   {DESTINATIONS.map((dest) => (
+                     <Link
+                       key={dest.slug}
+                       to={`/destinations/${dest.slug}`}
+                       className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
+                       onClick={() => setIsMobileMenuOpen(false)}
+                     >
+                       {dest.label}
+                     </Link>
+                   ))}
+                 </div>
 
-                <div className="space-y-1">
-                  <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    {t("nav_themes")}
-                  </div>
-                  {THEMES.map((theme) => (
-                    <Link
-                      key={theme.slug}
-                      to={`/listings?theme=${encodeURIComponent(theme.label)}`}
-                      className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {theme.label}
-                    </Link>
-                  ))}
-                </div>
+                 <div className="space-y-1">
+                   <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                     {t("nav_themes")}
+                   </div>
+                   {THEMES.map((theme) => (
+                     <Link
+                       key={theme.slug}
+                       to={`/listings?theme=${encodeURIComponent(theme.label)}`}
+                       className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
+                       onClick={() => setIsMobileMenuOpen(false)}
+                     >
+                       {theme.label}
+                     </Link>
+                   ))}
+                 </div>
 
-              </nav>
-            </div>
-          )}
+                 {/* Mobile Auth Actions */}
+                 <div className="pt-4 border-t border-border">
+                   {!loading && (
+                     user && profile ? (
+                       <div className="space-y-2">
+                         <Link 
+                           to="/dashboard" 
+                           className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
+                           onClick={() => setIsMobileMenuOpen(false)}
+                         >
+                           <User className="w-4 h-4" />
+                           Dashboard
+                         </Link>
+                         <button
+                           onClick={() => {
+                             signOut();
+                             setIsMobileMenuOpen(false);
+                           }}
+                           className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left text-destructive"
+                         >
+                           Sign Out
+                         </button>
+                       </div>
+                     ) : (
+                       <div className="space-y-2">
+                         <Link 
+                           to="/auth" 
+                           className="flex items-center gap-2 px-3 py-2 text-sm bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
+                           onClick={() => setIsMobileMenuOpen(false)}
+                         >
+                           <User className="w-4 h-4" />
+                           Sign In
+                         </Link>
+                         <Link 
+                           to="/auth" 
+                           className="flex items-center gap-2 px-3 py-2 text-sm border border-border hover:bg-muted rounded-md"
+                           onClick={() => setIsMobileMenuOpen(false)}
+                         >
+                           <User className="w-4 h-4" />
+                           Sign Up
+                         </Link>
+                       </div>
+                     )
+                   )}
+                 </div>
+
+                 {/* Mobile Currency & Search */}
+                 <div className="pt-4 border-t border-border md:hidden">
+                   <div className="space-y-2">
+                     <button
+                       onClick={() => {
+                         setMobileSearchOpen(true);
+                         setIsMobileMenuOpen(false);
+                       }}
+                       className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left"
+                     >
+                       <Search className="w-4 h-4" />
+                       Search
+                     </button>
+                     <div className="px-3 py-2">
+                       <CurrencySelector />
+                     </div>
+                   </div>
+                 </div>
+
+               </nav>
+             </div>
+           )}
         </div>
       </header>
 

@@ -32,8 +32,14 @@ const Auth: React.FC = () => {
 
   useEffect(() => {
     if (user && profile) {
-      const dashboardPath = getDashboardPath(profile.role);
-      navigate(dashboardPath);
+      const checkoutRedirect = sessionStorage.getItem('checkoutRedirect');
+      if (checkoutRedirect) {
+        sessionStorage.removeItem('checkoutRedirect');
+        navigate('/cart/checkout');
+      } else {
+        const dashboardPath = getDashboardPath(profile.role);
+        navigate(dashboardPath);
+      }
     }
   }, [user, profile, navigate]);
 

@@ -130,7 +130,11 @@ const App = () => (
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
                 <Route path="/experience/:slug" element={<AppLayout><ExperienceDetail /></AppLayout>} />
                 <Route path="/checkout/:slug" element={<AppLayout><Checkout /></AppLayout>} />
-                <Route path="/cart/checkout" element={<AppLayout><CartCheckout /></AppLayout>} />
+                <Route path="/cart/checkout" element={
+                  <ProtectedRoute>
+                    <AppLayout><CartCheckout /></AppLayout>
+                  </ProtectedRoute>
+                } />
                 <Route path="/confirmation/:slug" element={<AppLayout><ConfirmationPage /></AppLayout>} />
                 <Route path="/pesapal-callback" element={<AppLayout><PesapalCallback /></AppLayout>} />
                 <Route path="/pesapal/callback" element={<AppLayout><PesapalCallback /></AppLayout>} />

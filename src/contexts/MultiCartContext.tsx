@@ -39,9 +39,16 @@ const STORAGE_KEY = "na_multi_cart_items";
 export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currency } = useCurrency();
   const { user } = useAuth();
+  
+  // Get user-specific storage key
+  const getUserStorageKey = () => {
+    return user ? `${STORAGE_KEY}_${user.id}` : STORAGE_KEY;
+  };
+  
   const [items, setItems] = useState<MultiCartItem[]>(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const storageKey = user ? `${STORAGE_KEY}_${user.id}` : STORAGE_KEY;
+      const raw = localStorage.getItem(storageKey);
       const parsed = raw ? (JSON.parse(raw) as MultiCartItem[]) : [];
       console.log('Loaded cart from localStorage:', parsed.length, 'items', parsed.map(i => ({ id: i.id, title: i.title })));
       return parsed;
@@ -56,17 +63,48 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   useEffect(() => {
     try { 
       console.log('Saving cart to localStorage:', items.length, 'items');
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); 
+      const storageKey = getUserStorageKey();
+      localStorage.setItem(storageKey, JSON.stringify(items)); 
     } catch (e) {
       console.error('Failed to save cart to localStorage:', e);
     }
-  }, [items]);
+  }, [items, user]);
 
-  // Load cart from database when user logs in
+  // Handle user sign in/out - load user-specific cart
   useEffect(() => {
-    if (user && items.length === 0) {
-      // Only load from database if local cart is empty
-      loadCartFromDatabase();
+    if (user) {
+      // User signed in - load their cart from localStorage first, then from database if empty
+      const userStorageKey = getUserStorageKey();
+      try {
+        const raw = localStorage.getItem(userStorageKey);
+        const userItems = raw ? (JSON.parse(raw) as MultiCartItem[]) : [];
+        console.log('Loading user-specific cart:', userItems.length, 'items');
+        setItems(userItems);
+        
+        // Load from database if local cart is empty
+        if (userItems.length === 0) {
+          loadCartFromDatabase();
+        }
+      } catch (e) {
+        console.error('Failed to load user cart from localStorage:', e);
+        setItems([]);
+        loadCartFromDatabase();
+      }
+    } else {
+      // User signed out - clear cart and load guest cart
+      console.log('User signed out - clearing cart');
+      setItems([]);
+      setIsSynced(false);
+      
+      // Load guest cart from localStorage
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const guestItems = raw ? (JSON.parse(raw) as MultiCartItem[]) : [];
+        console.log('Loading guest cart:', guestItems.length, 'items');
+        setItems(guestItems);
+      } catch (e) {
+        console.error('Failed to load guest cart:', e);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);

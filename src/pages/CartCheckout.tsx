@@ -16,7 +16,7 @@ const CartCheckout = () => {
   const navigate = useNavigate();
   const { items, clear } = useMultiCart();
   const { formatPrice } = useCurrency();
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState("");
@@ -35,11 +35,20 @@ const CartCheckout = () => {
     }
   }, [user, profile]);
 
+  // Check authentication and redirect if needed
   useEffect(() => {
-    if (items.length === 0) {
+    if (!authLoading && !user) {
+      // Save current cart state in session storage before redirect
+      sessionStorage.setItem('checkoutRedirect', 'true');
+      navigate("/auth");
+    }
+  }, [user, authLoading, navigate]);
+
+  useEffect(() => {
+    if (items.length === 0 && user) {
       navigate("/browse");
     }
-  }, [items, navigate]);
+  }, [items, navigate, user]);
 
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   const contactErrors = {
@@ -130,7 +139,7 @@ const CartCheckout = () => {
     }
   };
 
-  if (items.length === 0) return null;
+  if (authLoading || !user) return null;
 
   return (
     <div className="min-h-screen bg-background">
