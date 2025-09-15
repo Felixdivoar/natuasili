@@ -266,12 +266,6 @@ export default function HeaderNew() {
                         </Button>
                       </Link>
                       
-                      <Link to="/partner-with-us" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          Partner with Us
-                        </Button>
-                      </Link>
-                      
                       <Button 
                         variant="ghost" 
                         size="sm" 
@@ -386,14 +380,6 @@ export default function HeaderNew() {
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Partners
-                      </Link>
-                      
-                      <Link 
-                        to="/partner-with-us" 
-                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Partner with Us
                       </Link>
                       
                       <button

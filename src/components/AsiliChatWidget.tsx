@@ -154,23 +154,6 @@ const AsiliChatWidget: React.FC = () => {
 
   return (
     <>
-      {/* Floating Launcher Button */}
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 z-50 rounded-full shadow-lg px-4 py-3 h-auto bg-primary hover:bg-primary/90 text-primary-foreground"
-        aria-expanded={isOpen}
-        aria-controls="asili-chat-panel"
-      >
-        {isOpen ? (
-          <X className="h-5 w-5" />
-        ) : (
-          <>
-            <MessageCircle className="h-5 w-5 mr-2" />
-            <span className="text-sm font-medium">AsiliChat</span>
-          </>
-        )}
-      </Button>
-
       {/* Chat Panel */}
       {isOpen && (
         <Card
