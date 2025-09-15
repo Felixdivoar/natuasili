@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Eye, Edit, Trash2, Search, Plus, MapPin, Clock, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
-
+import { EXPERIENCES as CURATED_EXPERIENCES } from '@/data/partners';
 interface Experience {
   id: string;
   partner_id: string;
@@ -31,6 +31,8 @@ const AdminExperiences = () => {
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [importing, setImporting] = useState(false);
+  const [importAttempted, setImportAttempted] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -60,6 +62,84 @@ const AdminExperiences = () => {
       setLoading(false);
     }
   };
+
+  // Import curated experiences into DB if missing
+  const importCuratedExperiences = async () => {
+    try {
+      setImporting(true);
+      // Find curated partner profile
+      const { data: partnerRow, error: partnerErr } = await supabase
+        .from('partner_profiles')
+        .select('id, slug')
+        .eq('slug', 'curated-by-natuasili')
+        .maybeSingle();
+
+      if (partnerErr) throw partnerErr;
+      if (!partnerRow) {
+        toast({
+          title: 'Partner profile not found',
+          description: 'Please ensure "Curated by Natuasili" exists',
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      const curatedPartnerId = partnerRow.id as string;
+
+      // Fetch existing slugs to avoid duplicates
+      const { data: existing, error: existingErr } = await supabase
+        .from('experiences')
+        .select('slug');
+
+      if (existingErr) throw existingErr;
+
+      const existingSlugs = new Set((existing || []).map((e: any) => e.slug));
+
+      const toInsert = (CURATED_EXPERIENCES as any[])
+        .map((ex: any) => ({
+          partner_id: curatedPartnerId,
+          slug: ex.slug,
+          title: ex.title,
+          hero_image: ex.heroImage,
+          description: ex.description,
+          location_text: ex.locationText || null,
+          price_kes_adult: ex.priceKESAdult,
+          duration_hours: ex.durationHours,
+          child_half_price_rule: !!ex.childHalfPriceRule,
+          capacity: ex.capacity ?? null,
+          min_capacity: ex.minCapacity ?? null,
+          visible_on_marketplace: ex.visibleOnMarketplace !== false,
+          gallery: (ex.gallery && ex.gallery.length ? ex.gallery : (ex.images || [])),
+          themes: ex.themes || [],
+          activities: ex.activities || []
+        }))
+        .filter((row: any) => row.slug && !existingSlugs.has(row.slug));
+
+      if (toInsert.length === 0) {
+        setImportAttempted(true);
+        toast({ title: 'No new experiences', description: 'All curated experiences are already in the database.' });
+        return;
+      }
+
+      const { error: insertErr } = await supabase.from('experiences').insert(toInsert);
+      if (insertErr) throw insertErr;
+
+      toast({ title: 'Imported curated experiences', description: `Added ${toInsert.length} experiences under Natuasili.` });
+      await fetchExperiences();
+    } catch (e: any) {
+      console.error('Import error', e);
+      toast({ title: 'Import failed', description: e?.message ?? 'Could not import curated experiences.', variant: 'destructive' });
+    } finally {
+      setImporting(false);
+      setImportAttempted(true);
+    }
+  };
+
+  useEffect(() => {
+    if (!loading && experiences.length === 0 && !importAttempted) {
+      importCuratedExperiences();
+    }
+  }, [loading, experiences.length, importAttempted]);
 
   const toggleVisibility = async (experienceId: string, currentVisibility: boolean) => {
     try {
