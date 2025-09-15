@@ -56,7 +56,7 @@ const AvailabilityAndOptions = ({
   const { updateCart } = useCart();
   const { user } = useAuth();
   const { bookingState, setBookingState, updateBookingState } = useBooking();
-  const { addItem: addCartItem, setOpen: openCart } = useMultiCart();
+  const { addItem: addCartItem, setOpen: openCart, items } = useMultiCart();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   
   // Initialize state from props, booking context, or defaults
@@ -207,9 +207,25 @@ const AvailabilityAndOptions = ({
     ] as const;
   };
 
+  // Check if this experience is already in cart with same details
+  const isInCart = items.some(cartItem => 
+    cartItem.experienceSlug === experience.slug &&
+    cartItem.date === selectedDate &&
+    cartItem.adults === selectedAdults &&
+    cartItem.children === selectedChildren &&
+    cartItem.optionId === selectedOption
+  );
+
   // persist + navigate
   const handleContinue = () => {
     if (participantsError || !selectedDate || !dateValidation.isValid) return;
+
+    // Check if experience is already in cart
+    if (isInCart) {
+      // Experience is in cart, redirect to checkout
+      openCart(true);
+      return;
+    }
 
     // Check authentication first
     if (!user) {
@@ -262,7 +278,7 @@ const AvailabilityAndOptions = ({
   const isDateValid = !selectedDate || dateValidation.isValid;
   const dateError = selectedDate && !dateValidation.isValid ? dateValidation.error : null;
 
-  // Updated proceed condition to use comprehensive validation
+  // Updated proceed condition to use comprehensive validation and cart state
   const proceedDisabled = !selectedDate || !dateValidation.isValid || !!participantsError;
 
   return (
@@ -529,12 +545,19 @@ const AvailabilityAndOptions = ({
                     size="lg"
                     style={{ touchAction: 'manipulation' }}
                   >
-                    <span className="block md:hidden">Book now</span>
-                    <span className="hidden md:block">Book now</span>
+                    {isInCart ? (
+                      <>Go to Cart</>
+                    ) : (
+                      <>
+                        <span className="block md:hidden">Book now</span>
+                        <span className="hidden md:block">Book now</span>
+                      </>
+                    )}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
+                    disabled={isInCart || !!participantsError || !selectedDate || !dateValidation.isValid}
                      onClick={() => {
                        if (participantsError || !selectedDate || !dateValidation.isValid) return;
                        addCartItem({
@@ -552,7 +575,7 @@ const AvailabilityAndOptions = ({
                        openCart(true);
                      }}
                   >
-                    Add to cart
+                    {isInCart ? "In Cart" : "Add to cart"}
                   </Button>
                 </div>
 
@@ -595,7 +618,30 @@ const AvailabilityAndOptions = ({
                     size="lg"
                     style={{ touchAction: 'manipulation' }}
                   >
-                    Book now
+                    {isInCart ? "Go to Cart" : "Book now"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isInCart || !!participantsError || !selectedDate || !dateValidation.isValid}
+                     onClick={() => {
+                       if (participantsError || !selectedDate || !dateValidation.isValid || isInCart) return;
+                       addCartItem({
+                         experienceSlug: (experience as any).slug || '',
+                         title: (experience as any).title || 'Experience',
+                         image: (experience as any).heroImage,
+                         date: selectedDate,
+                         adults: selectedAdults,
+                         children: selectedChildren,
+                         optionId: selectedOption,
+                         unitPrice: basePrice,
+                         donation: 0,
+                         isGroupPricing,
+                       });
+                       openCart(true);
+                     }}
+                  >
+                    {isInCart ? "In Cart" : "Add to Cart"}
                   </Button>
                   <Button 
                     variant="outline"

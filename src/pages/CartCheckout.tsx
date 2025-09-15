@@ -142,12 +142,16 @@ const CartCheckout = () => {
         });
 
         if (paymentError) {
-          console.error('Payment error:', paymentError);
-          throw new Error(`Payment setup failed: ${paymentError.message}`);
+          throw new Error(`Payment setup failed. Edge Function returned: ${paymentError.message}`);
         }
 
-        if (!paymentResponse?.success || !paymentResponse?.redirect_url) {
-          throw new Error('Failed to create payment session');
+        if (!paymentResponse || !paymentResponse.success) {
+          const errorMsg = paymentResponse?.error || 'Unknown error occurred';
+          throw new Error(`Payment initialization failed: ${errorMsg}`);
+        }
+
+        if (!paymentResponse.redirect_url) {
+          throw new Error('No payment redirect URL received from Pesapal');
         }
 
         // For multi-item bookings, process first item payment and redirect

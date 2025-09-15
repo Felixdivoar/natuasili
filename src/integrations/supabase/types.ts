@@ -784,36 +784,45 @@ export type Database = {
         Row: {
           amount: number
           booking_id: string
+          channel: string | null
           created_at: string
           currency: string
           id: string
           order_tracking_id: string
           payment_data: Json | null
           pesapal_transaction_id: string | null
+          raw: Json | null
+          reference: string | null
           status: string
           updated_at: string
         }
         Insert: {
           amount: number
           booking_id: string
+          channel?: string | null
           created_at?: string
           currency?: string
           id?: string
           order_tracking_id: string
           payment_data?: Json | null
           pesapal_transaction_id?: string | null
+          raw?: Json | null
+          reference?: string | null
           status?: string
           updated_at?: string
         }
         Update: {
           amount?: number
           booking_id?: string
+          channel?: string | null
           created_at?: string
           currency?: string
           id?: string
           order_tracking_id?: string
           payment_data?: Json | null
           pesapal_transaction_id?: string | null
+          raw?: Json | null
+          reference?: string | null
           status?: string
           updated_at?: string
         }
