@@ -160,10 +160,41 @@ async function generateResponse(userMessage: string, tools: ToolResult[]): Promi
     
   } catch (error) {
     console.error('OpenAI API error:', error);
-    return { 
-      answer: "I'm experiencing some technical difficulties, but I'm still here to help with Kenya conservation questions!",
-      suggestions: ["Ask about elephants", "Learn about conservancies", "Travel season advice"]
-    };
+    // Contextual fallback using available tool data instead of a generic error
+    const messageLower = userMessage.toLowerCase();
+    let answer = "";
+
+    const speciesData = tools.find(t => t.name === "speciesLookup")?.data;
+    const partnerData = tools.find(t => t.name === "partnerFacts")?.data;
+    const carbonData = tools.find(t => t.name === "tripCarbon")?.data;
+
+    if (speciesData && speciesData.length > 0) {
+      const species = speciesData[0];
+      answer = `I found information about ${species.common_name} (${species.scientific_name}). ${species.notes} They're found in: ${species.regions.join(", ")}.`;
+    } else if (partnerData && partnerData.length > 0) {
+      const partner = partnerData[0];
+      answer = `I found ${partner.org_name} in ${partner.location}. ${partner.bio}`;
+    } else if (carbonData) {
+      answer = `For travel carbon impact: ${carbonData.advice}. Estimated factor: ${carbonData.factor} tCO2e per 100km.`;
+    } else {
+      if (messageLower.includes('park') || messageLower.includes('reserve')) {
+        answer = "Kenya has amazing national parks like Maasai Mara, Amboseli, and Tsavo. Each offers unique wildlife experiences and supports local communities through conservation tourism.";
+      } else if (messageLower.includes('season') || messageLower.includes('when')) {
+        answer = "The dry seasons (January-March and June-October) are generally best for wildlife viewing. The Great Migration in Maasai Mara typically occurs July-October.";
+      } else if (messageLower.includes('community') || messageLower.includes('conservancy')) {
+        answer = "Community conservancies like Ol Kinyei, Kimana, and Amboseli ecosystem conservancies work with local Maasai communities to protect wildlife while providing sustainable livelihoods.";
+      } else {
+        answer = "I can help you learn about Kenyan wildlife, conservation areas, sustainable travel tips, and community conservation projects. What specific topic interests you?";
+      }
+    }
+
+    const suggestions = [
+      speciesData?.length > 0 ? "More about this species" : "Tell me about elephants",
+      carbonData ? "Eco-friendly travel tips" : "Best parks to visit",
+      partnerData?.length > 0 ? "Other conservation partners" : "Community conservation projects"
+    ];
+
+    return { answer, suggestions };
   }
 }
 

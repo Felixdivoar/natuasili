@@ -37,7 +37,8 @@ export default function HeaderNew() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [desktopSearchOpen, setDesktopSearchOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [desktopHamburgerOpen, setDesktopHamburgerOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -87,12 +88,6 @@ export default function HeaderNew() {
                   {t("nav_impact")}
                 </Link>
                 
-                <Link 
-                  to="/conservation-chatbot" 
-                  className="text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
-                >
-                  Conservation Chat
-                </Link>
                 
                 {/* Marketplace Mega Menu */}
                 <div className="relative">
@@ -248,13 +243,6 @@ export default function HeaderNew() {
                  >
                    {t("nav_impact")}
                  </Link>
-                  <Link 
-                    to="/conservation-chatbot" 
-                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Conservation Chat
-                  </Link>
                  <Link 
                    to="/marketplace" 
                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"

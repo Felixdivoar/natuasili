@@ -39,6 +39,21 @@ const AsiliChatWidget: React.FC = () => {
   const { user } = useAuth();
   const { toast } = useToast();
 
+  // External open/hide events
+  useEffect(() => {
+    const openHandler = () => setIsOpen(true);
+    const toggleHandler = () => setIsOpen(prev => !prev);
+    const hideHandler = () => setIsOpen(false);
+    document.addEventListener('asili-chat:open', openHandler as EventListener);
+    document.addEventListener('asili-chat:toggle', toggleHandler as EventListener);
+    document.addEventListener('asili-chat:hide', hideHandler as EventListener);
+    return () => {
+      document.removeEventListener('asili-chat:open', openHandler as EventListener);
+      document.removeEventListener('asili-chat:toggle', toggleHandler as EventListener);
+      document.removeEventListener('asili-chat:hide', hideHandler as EventListener);
+    };
+  }, []);
+
   // Auto-scroll management
   useEffect(() => {
     if (stickToBottom && scrollAreaRef.current) {
@@ -106,15 +121,21 @@ const AsiliChatWidget: React.FC = () => {
         variant: 'destructive'
       });
       
-      // Add error message
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: 'I\'m experiencing some technical difficulties. Please try asking your question again!',
-        timestamp: new Date(),
-        suggestions: ['Ask about elephants', 'Learn about conservancies', 'Travel season advice']
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      // Add a single fallback message (avoid duplicates)
+      setMessages(prev => {
+        const last = prev[prev.length - 1];
+        if (last && last.role === 'assistant' && last.content.includes('Please try')) {
+          return prev; // prevent repeating the same technical message
+        }
+        const fallback: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: 'I couldn\'t reach our AI right now. You can still ask about parks, seasons, species, or partners — I\'ll try again on your next message.',
+          timestamp: new Date(),
+          suggestions: ['Best parks to visit', 'Best season for wildlife', 'Tell me about elephants']
+        };
+        return [...prev, fallback];
+      });
     } finally {
       setIsLoading(false);
     }
@@ -169,6 +190,11 @@ const AsiliChatWidget: React.FC = () => {
                 <h3 className="font-semibold text-sm">AsiliChat</h3>
                 <p className="text-xs text-muted-foreground">Conservation in Kenya</p>
               </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" onClick={() => setIsOpen(false)} aria-label="Hide AsiliChat">
+                Hide
+              </Button>
             </div>
           </div>
 
