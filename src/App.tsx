@@ -202,6 +202,7 @@ const App = () => (
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
                 <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
               </Routes>
+              <AsiliChatWidget />
               </BrowserRouter>
             </TooltipProvider>
           </BookingProvider>
@@ -211,8 +212,6 @@ const App = () => (
     </I18nProvider>
   </QueryClientProvider>
   
-  {/* Global AsiliChat Widget */}
-  <AsiliChatWidget />
 </ErrorBoundary>
 );
 
