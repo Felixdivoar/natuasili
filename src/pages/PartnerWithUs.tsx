@@ -21,6 +21,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import PartnerOnboardingDemo from '@/components/PartnerOnboardingDemo';
 
 const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
@@ -173,6 +174,9 @@ const PartnerWithUs: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Partner Onboarding Demo */}
+      <PartnerOnboardingDemo />
 
       {/* Trusted Partners Carousel */}
       <section className="section-padding-lg bg-muted/30">
