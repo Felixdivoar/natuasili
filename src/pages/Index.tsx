@@ -28,7 +28,7 @@ const Index = () => {
         </div>
       </section>
       
-      <ConservationPartnersCarousel />
+      {/* Conservation Partners section is now hidden by default */}
       <ImpactStats />
       <ImpactStories />
     </div>
