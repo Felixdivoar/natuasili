@@ -51,6 +51,13 @@ import bushBirdWalks5 from "@/assets/bush-bird-walks-5.jpeg";
 import bushBirdWalks6 from "@/assets/bush-bird-walks-6.jpeg";
 import bushBirdWalks7 from "@/assets/bush-bird-walks-7.jpeg";
 
+// New chimpanzee sanctuary images
+import chimpanzeeHero from "@/assets/chimpanzee-hero.jpg";
+import chimpanzee2 from "@/assets/chimpanzee-2.jpeg";
+import chimpanzee3 from "@/assets/chimpanzee-3.jpeg";
+import chimpanzee4 from "@/assets/chimpanzee-4.jpeg";
+import chimpanzee5 from "@/assets/chimpanzee-5.jpeg";
+
 // New Ol Pejeta northern white rhinos images
 import olPejetaRhinoHero from "@/assets/ol-pejeta-rhino-hero.jpg";
 import olPejetaRhino2 from "@/assets/ol-pejeta-rhino-2.jpg";
@@ -168,6 +175,9 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
   }
   if (titleLower.includes("elephant") && titleLower.includes("reteti")) {
     return [maraElephantTracking, retetiSanctuaryImg, "/images/placeholder-2.jpg"];
+  }
+  if (titleLower.includes("chimpanzee") || titleLower.includes("sweetwaters")) {
+    return [chimpanzeeHero, chimpanzee2, chimpanzee3, chimpanzee4, chimpanzee5];
   }
   if (titleLower.includes("guided bush and bird") || titleLower.includes("bush and bird walks")) {
     return [bushBirdWalksHero, bushBirdWalks2, bushBirdWalks3, bushBirdWalks4, bushBirdWalks5, bushBirdWalks6, bushBirdWalks7];
@@ -1108,9 +1118,9 @@ Ol Pejeta Conservancy, Laikipia County`,
     destination: "laikipia",
     themes: ["Wildlife conservation"],
     activities: ["chimpanzee", "sanctuary", "primates"],
-    images: [chimpanzeeSanctuary, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
-    heroImage: chimpanzeeSanctuary,
-    gallery: [chimpanzeeSanctuary, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    images: [chimpanzeeHero, chimpanzee2, chimpanzee3, chimpanzee4, chimpanzee5],
+    heroImage: chimpanzeeHero,
+    gallery: [chimpanzeeHero, chimpanzee2, chimpanzee3, chimpanzee4, chimpanzee5],
     description: `Overview
 Visit the Sweetwaters Chimpanzee Sanctuary, the only chimpanzee sanctuary in Kenya and a haven for rescued and orphaned chimpanzees. This unique facility within Ol Pejeta Conservancy provides a safe home for chimpanzees that cannot be returned to the wild, while offering visitors insights into primate behavior, conservation, and the challenges facing our closest living relatives.
 

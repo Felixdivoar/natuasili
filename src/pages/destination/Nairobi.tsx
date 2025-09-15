@@ -29,19 +29,19 @@ const NairobiDestination = () => {
   return <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative h-[60vh] bg-gray-900">
+      {/* Hero Section - Full Width & Responsive */}
+      <section className="relative min-h-[100vh] lg:min-h-[80vh] xl:min-h-[60vh] w-full bg-gray-900">
         <img src={nairobiDestination} alt={t("dest_nairobi_title")} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white max-w-4xl mx-auto px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <div className="text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6">
               <T k="dest_nairobi_title" />
             </h1>
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 sm:mb-8">
               <T k="dest_nairobi_subtitle" />
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button size="lg" asChild className="bg-foreground text-background">
                 <Link to="/listings?destination=nairobi">
                   <T k="dest_explore_experiences" />
