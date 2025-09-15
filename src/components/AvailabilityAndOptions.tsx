@@ -82,14 +82,18 @@ const AvailabilityAndOptions = ({
   const isGroupPricing = (experience as any).isGroupPricing || false;
   const childPrice = experience.childHalfPriceRule ? Math.round(basePrice * 0.5) : basePrice;
 
-  // Update cart whenever selections change
+  // Update cart whenever selections change (debounced to prevent loops)
   useEffect(() => {
-    updateCart({
-      date: selectedDate,
-      adults: selectedAdults,
-      children: selectedChildren,
-      optionId: selectedOption
-    });
+    const timeoutId = setTimeout(() => {
+      updateCart({
+        date: selectedDate,
+        adults: selectedAdults,
+        children: selectedChildren,
+        optionId: selectedOption
+      });
+    }, 100); // Debounce to prevent infinite loops
+
+    return () => clearTimeout(timeoutId);
   }, [selectedDate, selectedAdults, selectedChildren, selectedOption, updateCart]);
 
   // Update parent component when selections change
@@ -104,20 +108,24 @@ const AvailabilityAndOptions = ({
     }
   }, [selectedDate, selectedAdults, selectedChildren, selectedOption, onUpdateParams]);
 
-  // Update booking context whenever selections change
+  // Update booking context whenever selections change (debounced)
   useEffect(() => {
-    const totalPrice = isGroupPricing ? basePrice : ((selectedAdults * basePrice) + (selectedChildren * childPrice));
-    
-    if (selectedDate && experience.slug) {
-      setBookingState({
-        experienceSlug: experience.slug,
-        date: selectedDate,
-        adults: selectedAdults,
-        children: selectedChildren,
-        selectedOption: selectedOption,
-        totalPrice: totalPrice
-      });
-    }
+    const timeoutId = setTimeout(() => {
+      const totalPrice = isGroupPricing ? basePrice : ((selectedAdults * basePrice) + (selectedChildren * childPrice));
+      
+      if (selectedDate && experience.slug) {
+        setBookingState({
+          experienceSlug: experience.slug,
+          date: selectedDate,
+          adults: selectedAdults,
+          children: selectedChildren,
+          selectedOption: selectedOption,
+          totalPrice: totalPrice
+        });
+      }
+    }, 100); // Debounce to prevent infinite loops
+
+    return () => clearTimeout(timeoutId);
   }, [selectedDate, selectedAdults, selectedChildren, selectedOption, basePrice, childPrice, experience.slug, setBookingState]);
 
   // --- helpers ---
@@ -521,7 +529,7 @@ const AvailabilityAndOptions = ({
                     size="lg"
                     style={{ touchAction: 'manipulation' }}
                   >
-                    <span className="block md:hidden">Next</span>
+                    <span className="block md:hidden">Book now</span>
                     <span className="hidden md:block">Book now</span>
                   </Button>
                   <Button

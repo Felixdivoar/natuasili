@@ -84,7 +84,11 @@ export default function CartDrawer() {
 
           {hasItems && !isSynced && (
             <div className="flex justify-end">
-              <Button onClick={() => { void sync(); }}>
+              <Button onClick={() => { 
+                void sync().then(() => {
+                  setOpen(false); // Auto-hide cart drawer after saving
+                }); 
+              }}>
                 Save Cart
               </Button>
             </div>

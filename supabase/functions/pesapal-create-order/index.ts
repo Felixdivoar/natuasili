@@ -56,9 +56,13 @@ serve(async (req) => {
       ? "https://pay.pesapal.com/v3" 
       : "https://cybqa.pesapal.com/pesapalv3";
 
-    // Get auth token
-    const authResponse = await fetch(`${req.headers.get("origin")}/functions/v1/pesapal-auth`, {
-      method: "POST"
+    // Get auth token from Pesapal auth function
+    const authResponse = await fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/pesapal-auth`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
+        "Content-Type": "application/json",
+      }
     });
     
     if (!authResponse.ok) {
