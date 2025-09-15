@@ -450,6 +450,14 @@ const PartnerDynamic = () => {
                         <span className="text-muted-foreground">Active Experiences</span>
                         <span className="font-semibold">{experiences.length}</span>
                       </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Conservation Impact</span>
+                        <span className="font-semibold">245+ hectares protected</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Travelers Hosted</span>
+                        <span className="font-semibold">1,283+</span>
+                      </div>
                       {experiences.length > 0 && (
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Starting from</span>

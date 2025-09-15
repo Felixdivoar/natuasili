@@ -44,6 +44,13 @@ import olPejetaRhino4 from "@/assets/ol-pejeta-rhino-4.jpg";
 import olPejetaRhino5 from "@/assets/ol-pejeta-rhino-5.jpg";
 import olPejetaRhino6 from "@/assets/ol-pejeta-rhino-6.jpg";
 
+// Mara Elephant Project researcher experience images
+import maraElephantHero from "@/assets/mara-elephant-hero.jpg";
+import maraElephant2 from "@/assets/mara-elephant-2.jpg";
+import maraElephant3 from "@/assets/mara-elephant-3.jpg";
+import maraElephant4 from "@/assets/mara-elephant-4.jpg";
+import maraElephant5 from "@/assets/mara-elephant-5.jpg";
+
 export type Destination = "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
 export type Theme = "Wildlife conservation" | "Conservation education" | "Community & cultural exploration";
 
@@ -1383,9 +1390,9 @@ Where you'll be
     destination: "masai-mara",
     themes: ["Wildlife conservation"],
     activities: ["elephant", "research", "data"],
-    images: [maraElephantTracking, "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png"],
-    heroImage: maraElephantTracking,
-    gallery: [maraElephantTracking, "/lovable-uploads/a9fc8078-1eb7-433f-8ea8-cc504ca5b048.png", "/lovable-uploads/bd06defe-f511-409f-88b1-decacb2392df.png"],
+    images: [maraElephantHero, maraElephant2, maraElephant3, maraElephant4, maraElephant5],
+    heroImage: maraElephantHero,
+    gallery: [maraElephantHero, maraElephant2, maraElephant3, maraElephant4, maraElephant5],
     description: `Overview
 The Mara Elephant Project (MEP) is a conservation organization established to protect the elephants in the Mara-Serengeti ecosystem.
 Along with MEP's Long-Term Monitoring (LTM) team, the 3-hour program Elephant Researcher invites you to engage in actual elephant data collection.

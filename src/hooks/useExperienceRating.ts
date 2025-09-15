@@ -15,6 +15,14 @@ export const useExperienceRating = (experienceId: string): ExperienceRating => {
   useEffect(() => {
     const fetchRating = async () => {
       try {
+        // Skip database query if experienceId is not a UUID format
+        if (!isValidUUID(experienceId)) {
+          setAverageRating(0);
+          setTotalReviews(0);
+          setLoading(false);
+          return;
+        }
+
         const { data: reviews, error } = await supabase
           .from('reviews')
           .select('rating')
@@ -47,6 +55,11 @@ export const useExperienceRating = (experienceId: string): ExperienceRating => {
 
     fetchRating();
 
+    // Skip real-time subscription for non-UUID IDs
+    if (!isValidUUID(experienceId)) {
+      return;
+    }
+
     // Set up real-time subscription for rating updates
     const ratingsSubscription = supabase
       .channel('ratings-changes')
@@ -73,3 +86,9 @@ export const useExperienceRating = (experienceId: string): ExperienceRating => {
     loading
   };
 };
+
+// Helper function to validate UUID format
+function isValidUUID(str: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+}

@@ -21,6 +21,12 @@ interface UserBooking {
   created_at: string;
 }
 
+// Helper function to validate UUID format
+function isValidUUID(str: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+}
+
 export const useReviews = (experienceId: string) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [userBooking, setUserBooking] = useState<UserBooking | null>(null);
@@ -30,6 +36,14 @@ export const useReviews = (experienceId: string) => {
 
   const fetchReviews = async () => {
     try {
+      // Skip database query if experienceId is not a UUID format
+      if (!isValidUUID(experienceId)) {
+        setReviews([]);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('reviews')
         .select('*')
@@ -65,7 +79,7 @@ export const useReviews = (experienceId: string) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
-      if (!user) {
+      if (!user || !isValidUUID(experienceId)) {
         setLoading(false);
         return;
       }
@@ -143,6 +157,11 @@ export const useReviews = (experienceId: string) => {
   useEffect(() => {
     fetchReviews();
     checkUserBookingAndReview();
+
+    // Skip real-time subscription for non-UUID IDs
+    if (!isValidUUID(experienceId)) {
+      return;
+    }
 
     // Set up real-time subscription for reviews
     const reviewsSubscription = supabase
