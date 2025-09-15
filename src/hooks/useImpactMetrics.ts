@@ -27,6 +27,12 @@ export const useImpactMetrics = () => {
       console.log('🚀 Fetching real-time impact metrics from database...');
       setMetrics(prev => ({ ...prev, loading: true, error: null }));
 
+      // Recalculate metrics on-demand to ensure fresh values
+      const { error: recalcError } = await supabase.rpc('update_impact_metrics');
+      if (recalcError) {
+        console.warn('⚠️ update_impact_metrics RPC warning:', recalcError);
+      }
+
       // Fetch all impact metrics from the database
       const { data: impactMetrics, error: metricsError } = await supabase
         .from('impact_metrics')
