@@ -20,6 +20,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { getExperienceCoordinates } from "@/utils/locationUtils";
 import { useI18n } from "@/i18n/I18nProvider";
 import T from "@/i18n/T";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ExperienceDetail() {
   const { slug } = useParams();
@@ -29,11 +30,77 @@ export default function ExperienceDetail() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [bookingStarted, setBookingStarted] = useState(false);
+  const [reviewStats, setReviewStats] = useState({ averageRating: 0, totalReviews: 0 });
   const heroRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const { t } = useI18n();
 
   const experience = EXPERIENCES.find(exp => exp.slug === slug);
+
+  // Helper function to validate UUID format
+  const isValidUUID = (str: string): boolean => {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(str);
+  };
+
+  // Fetch real-time review stats for header
+  const fetchReviewStats = async (experienceId: string) => {
+    try {
+      if (!isValidUUID(experienceId)) {
+        setReviewStats({ averageRating: 0, totalReviews: 0 });
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('rating')
+        .eq('experience_id', experienceId);
+
+      if (error) throw error;
+      
+      const totalReviews = data?.length || 0;
+      const averageRating = totalReviews > 0 
+        ? data.reduce((sum, review) => sum + review.rating, 0) / totalReviews 
+        : 0;
+
+      setReviewStats({ averageRating, totalReviews });
+    } catch (err) {
+      console.error('Error fetching review stats:', err);
+      setReviewStats({ averageRating: 0, totalReviews: 0 });
+    }
+  };
+
+  // Set up real-time subscription for review stats
+  useEffect(() => {
+    if (!experience?.id) return;
+
+    // Initial fetch
+    fetchReviewStats(experience.id);
+
+    // Skip real-time subscription for non-UUID IDs
+    if (!isValidUUID(experience.id)) {
+      return;
+    }
+
+    // Set up real-time subscription
+    const statsSubscription = supabase
+      .channel('review-stats-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'reviews',
+          filter: `experience_id=eq.${experience.id}`,
+        },
+        () => fetchReviewStats(experience.id)
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(statsSubscription);
+    };
+  }, [experience?.id]);
 
   if (!experience) {
     return (
@@ -180,8 +247,12 @@ export default function ExperienceDetail() {
                   </div>
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 fill-warning text-warning" />
-                    <span className="text-sm font-medium">4.8</span>
-                    <span className="text-sm">(127 reviews)</span>
+                    <span className="text-sm font-medium">
+                      {reviewStats.averageRating > 0 ? reviewStats.averageRating.toFixed(1) : 'New'}
+                    </span>
+                    <span className="text-sm">
+                      ({reviewStats.totalReviews} {reviewStats.totalReviews === 1 ? 'review' : 'reviews'})
+                    </span>
                   </div>
                 </div>
               </div>
