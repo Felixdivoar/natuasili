@@ -36,6 +36,14 @@ import mangroveRestoration from "@/assets/mangrove-restoration.jpg";
 import nightGameDrive from "@/assets/night-game-drive.jpg";
 import beadworkWorkshop from "@/assets/beadwork-workshop.jpg";
 
+// New Ol Pejeta northern white rhinos images
+import olPejetaRhinoHero from "@/assets/ol-pejeta-rhino-hero.jpg";
+import olPejetaRhino2 from "@/assets/ol-pejeta-rhino-2.jpg";
+import olPejetaRhino3 from "@/assets/ol-pejeta-rhino-3.jpg";
+import olPejetaRhino4 from "@/assets/ol-pejeta-rhino-4.jpg";
+import olPejetaRhino5 from "@/assets/ol-pejeta-rhino-5.jpg";
+import olPejetaRhino6 from "@/assets/ol-pejeta-rhino-6.jpg";
+
 export type Destination = "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
 export type Theme = "Wildlife conservation" | "Conservation education" | "Community & cultural exploration";
 
@@ -858,9 +866,9 @@ Where you'll be
     destination: "laikipia",
     themes: ["Wildlife conservation"],
     activities: ["rhino", "wildlife", "conservation"],
-    images: [northernWhiteRhinos, olPejeteRhino, olPejetaImg],
-    heroImage: northernWhiteRhinos,
-    gallery: [northernWhiteRhinos, olPejeteRhino, olPejetaImg],
+    images: [olPejetaRhinoHero, olPejetaRhino2, olPejetaRhino3, olPejetaRhino4, olPejetaRhino5, olPejetaRhino6],
+    heroImage: olPejetaRhinoHero,
+    gallery: [olPejetaRhinoHero, olPejetaRhino2, olPejetaRhino3, olPejetaRhino4, olPejetaRhino5, olPejetaRhino6],
     description: `Overview
 At Ol Pejeta Conservancy, witness one of conservation's most critical moments by meeting the last two northern white rhinos on Earth - Najin and Fatu, both female. This experience offers an intimate look at cutting-edge conservation science as researchers work tirelessly to save this subspecies through advanced reproductive technology.
 
@@ -918,7 +926,7 @@ Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
     priceKESAdult: 9075,
     priceKESChild: 4538,
-    childHalfPriceRule: false,
+    childHalfPriceRule: true,
     durationHours: 1,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
@@ -989,7 +997,7 @@ Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
     priceKESAdult: 9075,
     priceKESChild: 4538,
-    childHalfPriceRule: false,
+    childHalfPriceRule: true,
     durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
@@ -1060,7 +1068,7 @@ Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
     priceKESAdult: 9075,
     priceKESChild: 4538,
-    childHalfPriceRule: false,
+    childHalfPriceRule: true,
     durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
@@ -1137,7 +1145,7 @@ Where you'll be
 Sweetwaters Chimpanzee Sanctuary, Ol Pejeta Conservancy`,
     priceKESAdult: 9075,
     priceKESChild: 4538,
-    childHalfPriceRule: false,
+    childHalfPriceRule: true,
     durationHours: 1,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
@@ -1218,7 +1226,7 @@ Where you'll be
 Ol Pejeta Conservancy, Laikipia County`,
     priceKESAdult: 9075,
     priceKESChild: 4538,
-    childHalfPriceRule: false,
+    childHalfPriceRule: true,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
     durationHours: 2,
@@ -1291,7 +1299,7 @@ Where you'll be
 2VC5+X9 Nanyuki`,
     priceKESAdult: 9075,
     priceKESChild: 4538,
-    childHalfPriceRule: false,
+    childHalfPriceRule: true,
     durationHours: 2,
     visibleOnMarketplace: true,
     locationText: "Ol Pejeta Conservancy, Laikipia",
