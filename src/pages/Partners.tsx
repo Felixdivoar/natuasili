@@ -5,12 +5,31 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MapPin, Users, Calendar, Filter } from "lucide-react";
-import { PARTNERS, EXPERIENCES, type Destination, type Theme } from "@/data/partners";
+import { MapPin, Users, Calendar, Filter, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/i18n/I18nProvider";
 import Hero from "@/components/Hero";
 
-const DESTINATIONS: { label: string; value: Destination }[] = [
+interface Partner {
+  id: string;
+  slug: string;
+  name: string;
+  tagline: string;
+  short_bio: string;
+  location_text: string;
+  logo_image_url: string;
+  created_at: string;
+  experience_count?: number;
+}
+
+interface Experience {
+  id: string;
+  partner_id: string;
+  themes: string[] | null;
+  activities: string[] | null;
+}
+
+const DESTINATIONS = [
   { label: "Nairobi", value: "nairobi" },
   { label: "Coastal Kenya", value: "coastal-kenya" },
   { label: "Samburu", value: "samburu" },
@@ -18,49 +37,117 @@ const DESTINATIONS: { label: string; value: Destination }[] = [
   { label: "Laikipia", value: "laikipia" }
 ];
 
-const THEMES: { label: string; value: Theme }[] = [
-  { label: "Wildlife Conservation", value: "Wildlife conservation" },
-  { label: "Conservation Education", value: "Conservation education" },
-  { label: "Community & Cultural Exploration", value: "Community & cultural exploration" },
+const THEMES = [
+  { label: "Wildlife Conservation", value: "Wildlife Conservation" },
+  { label: "Conservation Education", value: "Conservation Education" },
+  { label: "Community & Cultural Exploration", value: "Community & Cultural Exploration" },
 ];
-
-// Extract unique activities from experiences
-const ALL_ACTIVITIES = [...new Set(EXPERIENCES.flatMap(exp => exp.activities))].sort();
 
 export default function Partners() {
   const { t } = useI18n();
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDestinations, setSelectedDestinations] = useState<Destination[]>([]);
-  const [selectedThemes, setSelectedThemes] = useState<Theme[]>([]);
+  const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
+  const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("relevance");
   const [showFilters, setShowFilters] = useState(false);
+  const [allActivities, setAllActivities] = useState<string[]>([]);
 
-  // Hide any global booking overlay if it was left open
   useEffect(() => {
-    document.querySelectorAll<HTMLElement>(".na-cta-bar,.na-btn-book-fab,.booking-modal").forEach(el => el.style.display = "");
+    loadPartnersData();
   }, []);
 
-  const getThemeColor = (theme: Theme) => {
-    switch (theme) {
-      case 'Wildlife conservation':
-        return 'bg-primary/10 text-primary border-primary/20';
-      case 'Conservation education':
-        return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'Community & cultural exploration':
-        return 'bg-accent/10 text-accent border-accent/20';
-      default:
-        return 'bg-muted text-muted-foreground border-muted/20';
+  const loadPartnersData = async () => {
+    try {
+      setLoading(true);
+      
+      // Load partners with approved profiles only
+      const { data: partnersData, error: partnersError } = await supabase
+        .from('partners')
+        .select(`
+          id,
+          slug, 
+          name,
+          tagline,
+          short_bio,
+          location_text,
+          logo_image_url,
+          created_at
+        `)
+        .order('name');
+
+      if (partnersError) {
+        console.error('Partners error:', partnersError);
+        setError('Failed to load partners');
+        return;
+      }
+
+      // Load experiences to get themes and activities, and count per partner
+      const { data: experiencesData, error: experiencesError } = await supabase
+        .from('experiences')
+        .select('id, partner_id, themes, activities')
+        .eq('visible_on_marketplace', true);
+
+      if (!experiencesError && experiencesData) {
+        // Cast and set experiences data properly
+        const typedExperiences: Experience[] = experiencesData.map(exp => ({
+          id: exp.id,
+          partner_id: exp.partner_id,
+          themes: Array.isArray(exp.themes) ? exp.themes as string[] : null,
+          activities: Array.isArray(exp.activities) ? exp.activities as string[] : null
+        }));
+        
+        setExperiences(typedExperiences);
+        
+        // Extract unique activities from all experiences
+        const activities = new Set<string>();
+        typedExperiences.forEach(exp => {
+          if (exp.activities && Array.isArray(exp.activities)) {
+            exp.activities.forEach(activity => {
+              if (typeof activity === 'string') {
+                activities.add(activity);
+              }
+            });
+          }
+        });
+        setAllActivities(Array.from(activities).sort());
+
+        // Count experiences per partner
+        const experienceCounts = typedExperiences.reduce((acc, exp) => {
+          acc[exp.partner_id] = (acc[exp.partner_id] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+
+        // Add experience counts to partners
+        const partnersWithCounts = partnersData.map(partner => ({
+          ...partner,
+          experience_count: experienceCounts[partner.id] || 0
+        }));
+        
+        setPartners(partnersWithCounts);
+      } else {
+        setPartners(partnersData || []);
+      }
+
+    } catch (err) {
+      console.error('Error loading partners:', err);
+      setError('Failed to load partners data');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleDestinationChange = (destination: Destination, checked: boolean) => {
+  const handleDestinationChange = (destination: string, checked: boolean) => {
     setSelectedDestinations(prev => 
       checked ? [...prev, destination] : prev.filter(d => d !== destination)
     );
   };
 
-  const handleThemeChange = (theme: Theme, checked: boolean) => {
+  const handleThemeChange = (theme: string, checked: boolean) => {
     setSelectedThemes(prev =>
       checked ? [...prev, theme] : prev.filter(t => t !== theme)
     );
@@ -72,24 +159,33 @@ export default function Partners() {
     );
   };
 
-  const filteredPartners = PARTNERS.filter(partner => {
+  const getPartnerExperiences = (partnerId: string) => {
+    return experiences.filter(exp => exp.partner_id === partnerId);
+  };
+
+  const filteredPartners = partners.filter(partner => {
     const matchesSearch = partner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         partner.description.toLowerCase().includes(searchTerm.toLowerCase());
+                         (partner.short_bio && partner.short_bio.toLowerCase().includes(searchTerm.toLowerCase()));
     
     const matchesDestination = selectedDestinations.length === 0 || 
                               selectedDestinations.some(dest => 
-                                partner.location.toLowerCase().includes(dest.replace("-", " "))
+                                partner.location_text && partner.location_text.toLowerCase().includes(dest.replace("-", " "))
                               );
     
+    // Check themes from partner's experiences
+    const partnerExperiences = getPartnerExperiences(partner.id);
+    const partnerThemes = partnerExperiences.flatMap(exp => 
+      exp.themes && Array.isArray(exp.themes) ? exp.themes : []
+    );
     const matchesTheme = selectedThemes.length === 0 ||
-                        selectedThemes.some(theme =>
-                          partner.themes.includes(theme)
-                        );
+                        selectedThemes.some(theme => partnerThemes.includes(theme));
     
+    // Check activities from partner's experiences
+    const partnerActivities = partnerExperiences.flatMap(exp => 
+      exp.activities && Array.isArray(exp.activities) ? exp.activities : []
+    );
     const matchesActivity = selectedActivities.length === 0 ||
-                           selectedActivities.some(activity =>
-                             partner.activities.includes(activity)
-                           );
+                           selectedActivities.some(activity => partnerActivities.includes(activity));
     
     return matchesSearch && matchesDestination && matchesTheme && matchesActivity;
   });
@@ -99,11 +195,37 @@ export default function Partners() {
       case "az":
         return a.name.localeCompare(b.name);
       case "experiences":
-        return b.experienceCount - a.experienceCount;
+        return (b.experience_count || 0) - (a.experience_count || 0);
       default:
         return 0;
     }
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Loading partners...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-20">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-4">Unable to load partners</h1>
+            <p className="text-muted-foreground mb-6">{error}</p>
+            <Button onClick={loadPartnersData}>Try Again</Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <main id="site-main">
       {/* Use shared Hero component */}
@@ -204,7 +326,7 @@ export default function Partners() {
                 <div>
                   <h3 className="font-medium mb-3">{t("filter_activities")}</h3>
                   <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {ALL_ACTIVITIES.map((activity) => (
+                    {allActivities.map((activity) => (
                       <div key={activity} className="flex items-center space-x-2">
                         <Checkbox
                           id={`activity-${activity}`}
@@ -235,74 +357,89 @@ export default function Partners() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {sortedPartners.map(partner => (
-                <Card key={partner.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-video relative overflow-hidden bg-muted">
-                    <img 
-                      src={partner.logo} 
-                      alt={`${partner.name} conservation work - ${partner.themes.join(', ')} initiatives`}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.src = '/img/ph1.jpg';
-                        target.alt = `${partner.name} - Image not available`;
-                        target.className = "w-full h-full object-contain p-4 bg-muted-foreground/10";
-                      }}
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <div className="flex flex-wrap gap-1">
-                        {partner.themes.slice(0, 2).map((theme) => (
-                          <Badge key={theme} className={`text-xs ${getThemeColor(theme)}`}>
-                            {theme}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {t("partners_established")} {partner.established}
-                      </div>
+            {sortedPartners.length === 0 ? (
+              <div className="text-center py-12">
+                <h3 className="text-lg font-medium text-foreground mb-2">No partners found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search or filter criteria
+                </p>
+                <Button onClick={() => {
+                  setSearchTerm("");
+                  setSelectedDestinations([]);
+                  setSelectedThemes([]);
+                  setSelectedActivities([]);
+                }}>
+                  Clear Filters
+                </Button>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6">
+                {sortedPartners.map(partner => (
+                  <Card key={partner.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <div className="aspect-video relative overflow-hidden bg-muted">
+                      <img 
+                        src={partner.logo_image_url || '/img/ph1.jpg'} 
+                        alt={`${partner.name} conservation work`}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.src = '/img/ph1.jpg';
+                          target.alt = `${partner.name} - Image not available`;
+                          target.className = "w-full h-full object-contain p-4 bg-muted-foreground/10";
+                        }}
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                    <CardTitle className="text-lg leading-tight">{partner.name}</CardTitle>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <MapPin className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate capitalize">{partner.location.replace(/-/g, ' ')}</span>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                      {partner.description}
-                    </p>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">{t("partners_experiences")}</span>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          <span className="font-medium">{partner.experienceCount}</span>
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="text-xs text-muted-foreground">
+                          Conservation Partner
                         </div>
                       </div>
-                      
-                      <div className="flex gap-2">
-                        <Button asChild className="flex-1" size="sm">
-                          <Link to={`/partner/${partner.slug}`}>
-                            {t("view_partner")}
-                          </Link>
-                        </Button>
-                        <Button variant="outline" asChild size="sm">
-                          <Link to={`/experiences?partner=${partner.slug}`}>
-                            {t("view_experiences")}
-                          </Link>
-                        </Button>
+                      <CardTitle className="text-lg leading-tight">{partner.name}</CardTitle>
+                      {partner.tagline && (
+                        <p className="text-sm text-muted-foreground">{partner.tagline}</p>
+                      )}
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <MapPin className="h-3 w-3 flex-shrink-0" />
+                        <span className="truncate">{partner.location_text || 'Kenya'}</span>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      {partner.short_bio && (
+                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                          {partner.short_bio}
+                        </p>
+                      )}
+                      
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{t("partners_experiences")}</span>
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            <span className="font-medium">{partner.experience_count || 0}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex gap-2">
+                          <Button asChild className="flex-1" size="sm">
+                            <Link to={`/partner/${partner.slug}`}>
+                              {t("view_partner")}
+                            </Link>
+                          </Button>
+                          <Button variant="outline" asChild size="sm">
+                            <Link to={`/browse?partner=${partner.slug}`}>
+                              {t("view_experiences")}
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -313,7 +450,9 @@ export default function Partners() {
               <p className="text-muted-foreground mb-6 max-w-md">
                 {t("partners_become_partner_desc")}
               </p>
-              <Button size="lg">{t("nav_partner")}</Button>
+              <Button size="lg" asChild>
+                <Link to="/partner-with-us">{t("nav_partner")}</Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
