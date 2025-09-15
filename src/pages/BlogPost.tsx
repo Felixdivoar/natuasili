@@ -28,6 +28,7 @@ import sambururEducation from "@/assets/samburu-education.jpg";
 import karuraForestPlanting from "@/assets/karura-forest-planting.jpg";
 
 import SimilarBlogs from "@/components/SimilarBlogs";
+import { blogPosts } from "@/data/blogData";
 
 const blogContent = {
   "partner-natuasili-support-conservation-impact": {
@@ -241,15 +242,39 @@ const blogContent = {
 
 const BlogPost = () => {
   const { slug } = useParams();
-  const post = slug ? blogContent[slug as keyof typeof blogContent] : null;
+  
+  // First try to get from detailed blogContent, then fallback to blogPosts data
+  let post = slug ? blogContent[slug as keyof typeof blogContent] : null;
+  
+  // If not found in detailed content, try to find in blogPosts data
+  if (!post && slug) {
+    const fallbackPost = blogPosts.find(p => p.slug === slug);
+    if (fallbackPost) {
+      post = {
+        title: fallbackPost.title,
+        excerpt: fallbackPost.excerpt,
+        content: fallbackPost.content || `
+          <p>${fallbackPost.excerpt}</p>
+          <p>This story demonstrates the real impact of conservation tourism and community-driven initiatives. Through partnerships with local organizations and communities, every experience contributes to meaningful environmental and social change.</p>
+          <p>Join us in creating positive change through purposeful travel that benefits wildlife, communities, and conservation efforts across Kenya.</p>
+        `,
+        category: fallbackPost.category,
+        author: fallbackPost.author,
+        date: fallbackPost.date,
+        readTime: fallbackPost.readTime || "5 min read",
+        image: fallbackPost.image
+      };
+    }
+  }
 
   if (!post) {
     return (
-      <div className="bg-black min-h-screen">
-        <div className="container mx-auto px-4 section-padding-lg text-center">
-          <h1 className="text-2xl font-bold mb-4 text-white">Blog post not found</h1>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-3xl font-bold mb-4 text-foreground">Blog post not found</h1>
+          <p className="text-muted-foreground mb-6">The blog post you're looking for doesn't exist or has been removed.</p>
           <Link to="/blog">
-            <Button className="bg-white text-black hover:bg-gray-200">Return to Blog</Button>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Return to Blog</Button>
           </Link>
         </div>
       </div>
