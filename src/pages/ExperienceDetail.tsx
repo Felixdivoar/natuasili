@@ -16,6 +16,7 @@ import ReviewSection from "@/components/ReviewSection";
 import StickyReserveButton from "@/components/StickyReserveButton";
 import NewAuthModal from "@/components/NewAuthModal";
 import BookingWizardNew from "@/components/BookingWizardNew";
+import ImageSlideshow from "@/components/ImageSlideshow";
 import { useAuth } from "@/contexts/AuthContext";
 import { getExperienceCoordinates } from "@/utils/locationUtils";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -31,6 +32,8 @@ export default function ExperienceDetail() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [bookingStarted, setBookingStarted] = useState(false);
   const [reviewStats, setReviewStats] = useState({ averageRating: 0, totalReviews: 0 });
+  const [isSlideshowOpen, setIsSlideshowOpen] = useState(false);
+  const [slideshowIndex, setSlideshowIndex] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const { t } = useI18n();
@@ -141,6 +144,16 @@ export default function ExperienceDetail() {
     setSelectedImageIndex((prev) => 
       prev === 0 ? experience.images.length - 1 : prev - 1
     );
+  };
+
+  // Slideshow functions
+  const openSlideshow = (index: number) => {
+    setSlideshowIndex(index);
+    setIsSlideshowOpen(true);
+  };
+
+  const closeSlideshowModal = () => {
+    setIsSlideshowOpen(false);
   };
 
   // Booking and navigation functions
@@ -262,7 +275,7 @@ export default function ExperienceDetail() {
             <div className="mb-8">
               <div className="grid grid-cols-4 gap-2 h-[400px]">
                 {/* Main large image */}
-                <div className="col-span-2 row-span-2 rounded-xl overflow-hidden cursor-pointer" onClick={() => setSelectedImageIndex(0)}>
+                <div className="col-span-2 row-span-2 rounded-xl overflow-hidden cursor-pointer" onClick={() => openSlideshow(0)}>
                   <img 
                     src={experience.images[0]}
                     alt={experience.title}
@@ -275,7 +288,7 @@ export default function ExperienceDetail() {
                   <div 
                     key={index + 1} 
                     className="relative rounded-lg overflow-hidden cursor-pointer"
-                    onClick={() => setSelectedImageIndex(index + 1)}
+                    onClick={() => openSlideshow(index + 1)}
                   >
                     <img 
                       src={image}
@@ -534,6 +547,15 @@ export default function ExperienceDetail() {
             experience={experience}
           />
         )}
+
+        {/* Image Slideshow */}
+        <ImageSlideshow
+          images={experience.images}
+          isOpen={isSlideshowOpen}
+          onClose={closeSlideshowModal}
+          initialIndex={slideshowIndex}
+          altText={experience.title}
+        />
       </div>
     </CartProvider>
   );
