@@ -60,6 +60,7 @@ import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
 import CartCheckout from "./pages/CartCheckout";
 import ConservationChatbotPage from "./pages/ConservationChatbot";
+import AsiliChatWidget from "./components/AsiliChatWidget";
 import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
@@ -209,6 +210,9 @@ const App = () => (
       </CurrencyProvider>
     </I18nProvider>
   </QueryClientProvider>
+  
+  {/* Global AsiliChat Widget */}
+  <AsiliChatWidget />
 </ErrorBoundary>
 );
 

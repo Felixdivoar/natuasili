@@ -1,0 +1,246 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+);
+
+const SYSTEM_PROMPT = `You are AsiliChat, a conservation assistant focused on Kenya.
+Always prioritize: Kenyan species facts, habitats, protected areas, seasons, ethics, community conservation, and low-impact travel guidance.
+Be concise, practical, and cite source types (e.g., "KWS factsheet", "partner page data").
+If the user asks about bookings or partners, propose nearby community projects and conservation etiquette.
+Offer up to 3 short follow-up suggestions tailored to the last user message.
+Default language: English; accept Swahili phrases. Keep tone warm, factual, and non-political.
+If unsure, ask one clarifying question before proceeding.`;
+
+type ToolResult = { name: string; data: any };
+
+async function tool_speciesLookup(q: string): Promise<ToolResult> {
+  try {
+    const { data, error } = await supabase.rpc("fts_species_lookup", { q });
+    if (error) throw error;
+    return { name: "speciesLookup", data: data || [] };
+  } catch (error) {
+    console.error("Species lookup error:", error);
+    return { name: "speciesLookup", data: [] };
+  }
+}
+
+async function tool_partnerFacts(q: string): Promise<ToolResult> {
+  try {
+    const { data, error } = await supabase
+      .from("partner_profiles")
+      .select("org_name, bio, location")
+      .or(`org_name.ilike.%${q}%, bio.ilike.%${q}%, location.ilike.%${q}%`)
+      .eq("kyc_status", "approved")
+      .limit(5);
+    
+    if (error) throw error;
+    return { name: "partnerFacts", data: data || [] };
+  } catch (error) {
+    console.error("Partner facts error:", error);
+    return { name: "partnerFacts", data: [] };
+  }
+}
+
+async function tool_tripCarbon(q: string): Promise<ToolResult> {
+  // Simple heuristic for carbon estimation
+  const domesticFlight = q.toLowerCase().includes("flight") || q.toLowerCase().includes("fly");
+  const roadTrip = q.toLowerCase().includes("drive") || q.toLowerCase().includes("road");
+  
+  let estimate = 0.01; // default low impact
+  if (domesticFlight) estimate = 0.15; // tCO2e per 100km
+  else if (roadTrip) estimate = 0.03;
+  
+  return { 
+    name: "tripCarbon", 
+    data: { 
+      hint: "rough_estimate", 
+      factor: estimate,
+      advice: domesticFlight ? "Consider overland alternatives or carbon offsets" : 
+              roadTrip ? "Shared transport reduces per-person impact" :
+              "Walking safaris and local guides minimize footprint"
+    } 
+  };
+}
+
+async function generateResponse(userMessage: string, tools: ToolResult[]): Promise<{ answer: string, suggestions: string[] }> {
+  const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+  
+  if (!openAIApiKey) {
+    // Fallback response when OpenAI is not configured
+    let answer = "I'm AsiliChat, your conservation assistant for Kenya! ";
+    
+    // Use tool data for fallback responses
+    const speciesData = tools.find(t => t.name === "speciesLookup")?.data;
+    const partnerData = tools.find(t => t.name === "partnerFacts")?.data;
+    const carbonData = tools.find(t => t.name === "tripCarbon")?.data;
+    
+    if (speciesData && speciesData.length > 0) {
+      const species = speciesData[0];
+      answer += `I found information about ${species.common_name} (${species.scientific_name}). ${species.notes} They're found in: ${species.regions.join(", ")}.`;
+    } else if (partnerData && partnerData.length > 0) {
+      const partner = partnerData[0];
+      answer += `I found ${partner.org_name} in ${partner.location}. ${partner.bio}`;
+    } else if (carbonData) {
+      answer += `For carbon impact: ${carbonData.advice}. Estimated factor: ${carbonData.factor} tCO2e per 100km.`;
+    } else {
+      answer += "I can help you learn about Kenyan wildlife, conservation areas, sustainable travel tips, and community conservation projects. What would you like to know?";
+    }
+    
+    const suggestions = [
+      speciesData?.length > 0 ? "Threats & protection status" : "Find nearby conservancies",
+      carbonData ? "Lower-impact alternatives" : "Best season to visit",
+      "Community benefits & how to support"
+    ];
+    
+    return { answer, suggestions };
+  }
+  
+  try {
+    // Prepare context from tools
+    let toolContext = "";
+    if (tools.length > 0) {
+      toolContext = "\n\nContext from tools:\n" + 
+        tools.map(tool => `${tool.name}: ${JSON.stringify(tool.data, null, 2)}`).join("\n");
+    }
+    
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userMessage + toolContext }
+        ],
+        max_tokens: 300,
+        temperature: 0.7,
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    const answer = data.choices[0].message.content;
+    
+    // Generate contextual suggestions
+    const suggestions = [];
+    if (userMessage.toLowerCase().includes('elephant') || userMessage.toLowerCase().includes('wildlife')) {
+      suggestions.push("Threats & protection status", "Best viewing seasons", "Community conservation projects");
+    } else if (userMessage.toLowerCase().includes('travel') || userMessage.toLowerCase().includes('visit')) {
+      suggestions.push("Lower-impact alternatives", "Best season to visit", "Local community benefits");
+    } else {
+      suggestions.push("Find nearby conservancies", "Wildlife in this region", "Community benefits & how to support");
+    }
+    
+    return { answer, suggestions: suggestions.slice(0, 3) };
+    
+  } catch (error) {
+    console.error('OpenAI API error:', error);
+    return { 
+      answer: "I'm experiencing some technical difficulties, but I'm still here to help with Kenya conservation questions!",
+      suggestions: ["Ask about elephants", "Learn about conservancies", "Travel season advice"]
+    };
+  }
+}
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+  
+  try {
+    const body = await req.json();
+    const userMessage: string = body?.message ?? "";
+    const userId: string = body?.userId ?? null;
+    
+    if (!userMessage.trim()) {
+      return new Response(JSON.stringify({ 
+        error: "No message provided" 
+      }), { 
+        status: 400, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+    
+    console.log(`Processing message: "${userMessage}" for user: ${userId}`);
+    
+    // Analyze user intent and call appropriate tools
+    const messageLower = userMessage.toLowerCase();
+    const wantsSpecies = /elephant|lion|cheetah|zebra|rhino|giraffe|bird|wildlife|animal|species/i.test(userMessage);
+    const wantsPartner = /partner|community|project|conservancy|organization/i.test(userMessage);
+    const wantsCarbon = /carbon|emission|footprint|impact|travel|flight|drive/i.test(userMessage);
+    
+    console.log(`Intent analysis - Species: ${wantsSpecies}, Partner: ${wantsPartner}, Carbon: ${wantsCarbon}`);
+    
+    // Call relevant tools
+    const tools: ToolResult[] = [];
+    if (wantsSpecies) {
+      const speciesResult = await tool_speciesLookup(userMessage);
+      tools.push(speciesResult);
+      console.log(`Species lookup returned ${speciesResult.data.length} results`);
+    }
+    if (wantsPartner) {
+      const partnerResult = await tool_partnerFacts(userMessage);
+      tools.push(partnerResult);
+      console.log(`Partner lookup returned ${partnerResult.data.length} results`);
+    }
+    if (wantsCarbon) {
+      const carbonResult = await tool_tripCarbon(userMessage);
+      tools.push(carbonResult);
+      console.log(`Carbon estimation: ${JSON.stringify(carbonResult.data)}`);
+    }
+    
+    // Generate AI response
+    const { answer, suggestions } = await generateResponse(userMessage, tools);
+    
+    // Log conversation (if user is provided)
+    if (userId) {
+      try {
+        await supabase.from('chat_logs').insert({
+          user_id: userId,
+          query: userMessage,
+          response: answer
+        });
+      } catch (logError) {
+        console.error('Failed to log conversation:', logError);
+        // Don't fail the request if logging fails
+      }
+    }
+    
+    console.log(`Generated response with ${suggestions.length} suggestions`);
+    
+    return new Response(JSON.stringify({
+      answer,
+      tools,
+      suggestions
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+    
+  } catch (error) {
+    console.error('AsiliChat error:', error);
+    return new Response(JSON.stringify({ 
+      error: 'Internal server error',
+      answer: "I'm experiencing some technical difficulties. Please try again!",
+      suggestions: ["Ask about elephants", "Learn about conservancies", "Travel season advice"]
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+});
