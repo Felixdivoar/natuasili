@@ -200,6 +200,59 @@ export type Database = {
           },
         ]
       }
+      chat_messages: {
+        Row: {
+          content: Json
+          created_at: string | null
+          id: string
+          role: string
+          session_id: string | null
+        }
+        Insert: {
+          content: Json
+          created_at?: string | null
+          id?: string
+          role: string
+          session_id?: string | null
+        }
+        Update: {
+          content?: Json
+          created_at?: string | null
+          id?: string
+          role?: string
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "chat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_sessions: {
+        Row: {
+          created_at: string | null
+          id: string
+          title: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          title?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          title?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       experiences: {
         Row: {
           activities: Json | null
@@ -959,6 +1012,33 @@ export type Database = {
         }
         Relationships: []
       }
+      species_kenya: {
+        Row: {
+          common_name: string | null
+          id: number
+          notes: string | null
+          regions: string[] | null
+          scientific_name: string | null
+          theme: string | null
+        }
+        Insert: {
+          common_name?: string | null
+          id?: number
+          notes?: string | null
+          regions?: string[] | null
+          scientific_name?: string | null
+          theme?: string | null
+        }
+        Update: {
+          common_name?: string | null
+          id?: number
+          notes?: string | null
+          regions?: string[] | null
+          scientific_name?: string | null
+          theme?: string | null
+        }
+        Relationships: []
+      }
       user_preferences: {
         Row: {
           adventure_level: string | null
@@ -1168,6 +1248,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      fts_species_lookup: {
+        Args: { q: string }
+        Returns: {
+          common_name: string
+          id: number
+          notes: string
+          regions: string[]
+          scientific_name: string
+          theme: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
