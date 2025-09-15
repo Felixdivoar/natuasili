@@ -142,14 +142,14 @@ const AdminExperiences = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Experience Management</CardTitle>
+              <CardTitle>Curated by Natuasili</CardTitle>
               <CardDescription>
-                Manage all experiences, pricing, and visibility
+                Manage official Natuasili curated conservation experiences that support wildlife conservation and local communities across Kenya
               </CardDescription>
             </div>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
-              Add Experience
+              Add Curated Experience
             </Button>
           </div>
         </CardHeader>
@@ -158,7 +158,7 @@ const AdminExperiences = () => {
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search experiences..."
+                placeholder="Search curated experiences..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -276,7 +276,7 @@ const AdminExperiences = () => {
 
           {filteredExperiences.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-muted-foreground">No experiences found matching your search.</p>
+              <p className="text-muted-foreground">No curated experiences found. Create your first official Natuasili experience to get started.</p>
             </div>
           )}
         </CardContent>
