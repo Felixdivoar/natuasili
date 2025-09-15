@@ -54,7 +54,6 @@ import PartnerEntry from "./pages/PartnerEntry";
 import ContentStub from "./pages/ContentStub";
 import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
-import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
@@ -149,10 +148,15 @@ const App = () => (
                 <Route path="/refer-partner" element={<AppLayout><ReferPartner /></AppLayout>} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
-                    <AppLayout><UserDashboard /></AppLayout>
+                    <AppLayout><TravelerDashboard /></AppLayout>
                   </ProtectedRoute>
                 } />
                 <Route path="/dashboard/admin" element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AppLayout><AdminDashboard /></AppLayout>
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin" element={
                   <ProtectedRoute allowedRoles={['admin']}>
                     <AppLayout><AdminDashboard /></AppLayout>
                   </ProtectedRoute>

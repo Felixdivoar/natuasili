@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { I18nProvider } from "@/contexts/I18nContext";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { SimpleAuthProvider } from "@/contexts/SimpleAuthContext";
+import AdminLink from "@/components/AdminLink";
 
 export default function RootLayout() {
   return (
@@ -16,6 +17,7 @@ export default function RootLayout() {
               <Outlet />
             </main>
             <Footer />
+            <AdminLink />
           </div>
         </CurrencyProvider>
       </I18nProvider>
