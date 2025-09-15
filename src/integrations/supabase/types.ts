@@ -142,7 +142,9 @@ export type Database = {
         Row: {
           created_at: string
           currency: string
+          expires_at: string
           id: string
+          session_id: string | null
           status: string
           updated_at: string
           user_id: string
@@ -150,7 +152,9 @@ export type Database = {
         Insert: {
           created_at?: string
           currency?: string
+          expires_at?: string
           id?: string
+          session_id?: string | null
           status?: string
           updated_at?: string
           user_id: string
@@ -158,7 +162,9 @@ export type Database = {
         Update: {
           created_at?: string
           currency?: string
+          expires_at?: string
           id?: string
+          session_id?: string | null
           status?: string
           updated_at?: string
           user_id?: string
@@ -1257,6 +1263,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_expired_carts: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       fts_species_lookup: {
         Args: { q: string }
         Returns: {
