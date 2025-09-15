@@ -36,6 +36,12 @@ import mangroveRestoration from "@/assets/mangrove-restoration.jpg";
 import nightGameDrive from "@/assets/night-game-drive.jpg";
 import beadworkWorkshop from "@/assets/beadwork-workshop.jpg";
 
+// New night game drive images
+import nightGameDriveHero from "@/assets/night-game-drive-hero.jpg";
+import nightGameDrive2 from "@/assets/night-game-drive-2.jpg";
+import nightGameDrive3 from "@/assets/night-game-drive-3.jpg";
+import nightGameDrive4 from "@/assets/night-game-drive-4.jpg";
+
 // New Ol Pejeta northern white rhinos images
 import olPejetaRhinoHero from "@/assets/ol-pejeta-rhino-hero.jpg";
 import olPejetaRhino2 from "@/assets/ol-pejeta-rhino-2.jpg";
@@ -155,7 +161,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return [maraElephantTracking, retetiSanctuaryImg, "/images/placeholder-2.jpg"];
   }
   if (titleLower.includes("night game drive")) {
-    return [nightGameDrive, bigFiveTracking, olPejetaImg];
+    return [nightGameDriveHero, nightGameDrive2, nightGameDrive3, nightGameDrive4];
   }
   if (titleLower.includes("northern white rhinos")) {
     return [northernWhiteRhinos, olPejeteRhino, olPejetaImg];
@@ -948,9 +954,9 @@ Ol Pejeta Conservancy, Laikipia County`,
     destination: "laikipia",
     themes: ["Wildlife conservation"],
     activities: ["night safari", "wildlife", "nocturnal"],
-    images: [nightGameDrive, bigFiveTracking, olPejetaImg],
-    heroImage: nightGameDrive,
-    gallery: [nightGameDrive, bigFiveTracking, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    images: [nightGameDriveHero, nightGameDrive2, nightGameDrive3, nightGameDrive4],
+    heroImage: nightGameDriveHero,
+    gallery: [nightGameDriveHero, nightGameDrive2, nightGameDrive3, nightGameDrive4],
     description: `Overview
 Experience the African wilderness after dark on this thrilling night game drive at Ol Pejeta Conservancy. As the sun sets over the Laikipia plateau, a different world awakens. Nocturnal animals emerge from their daytime hiding places, offering visitors a unique perspective on wildlife behavior and ecosystem dynamics.
 

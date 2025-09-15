@@ -16,8 +16,11 @@ import {
   CreditCard,
   FileText,
   Globe,
-  Shield
+  Shield,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
@@ -287,7 +290,9 @@ const PartnerWithUs: React.FC = () => {
               Everything you need to grow your conservation tourism business
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid grid-cols-4 gap-8">
             {valueProps.map((prop, index) => (
               <Card key={index} className="text-center">
                 <CardHeader>
@@ -299,6 +304,29 @@ const PartnerWithUs: React.FC = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Mobile/Tablet Carousel */}
+          <div className="lg:hidden">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {valueProps.map((prop, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
+                    <Card className="text-center h-full">
+                      <CardHeader>
+                        <div className="mx-auto mb-4">{prop.icon}</div>
+                        <CardTitle className="text-xl">{prop.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription>{prop.description}</CardDescription>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="-left-4" />
+              <CarouselNext className="-right-4" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -312,7 +340,9 @@ const PartnerWithUs: React.FC = () => {
               Get started in four simple steps
             </p>
           </div>
-          <div className="grid md:grid-cols-4 gap-8">
+          
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid grid-cols-4 gap-8">
             {howItWorksSteps.map((step, index) => (
               <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
@@ -322,6 +352,27 @@ const PartnerWithUs: React.FC = () => {
                 <p className="text-muted-foreground">{step.description}</p>
               </div>
             ))}
+          </div>
+
+          {/* Mobile/Tablet Carousel */}
+          <div className="lg:hidden">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {howItWorksSteps.map((step, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
+                    <div className="text-center p-6 bg-background rounded-lg shadow-sm h-full">
+                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        {step.step}
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                      <p className="text-muted-foreground">{step.description}</p>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="-left-4" />
+              <CarouselNext className="-right-4" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -335,7 +386,9 @@ const PartnerWithUs: React.FC = () => {
               Comprehensive tools for managing your conservation experiences
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <Card key={index}>
                 <CardHeader>
@@ -350,6 +403,31 @@ const PartnerWithUs: React.FC = () => {
               </Card>
             ))}
           </div>
+
+          {/* Mobile/Tablet Carousel */}
+          <div className="lg:hidden">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {features.map((feature, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full">
+                    <Card className="h-full">
+                      <CardHeader>
+                        <div className="flex items-center gap-4">
+                          {feature.icon}
+                          <CardTitle className="text-xl">{feature.title}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription>{feature.description}</CardDescription>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="-left-4" />
+              <CarouselNext className="-right-4" />
+            </Carousel>
+          </div>
         </div>
       </section>
 
@@ -362,7 +440,9 @@ const PartnerWithUs: React.FC = () => {
               Only pay when you earn. No setup fees or monthly charges.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          
+          {/* Desktop Grid */}
+          <div className="hidden lg:grid grid-cols-3 gap-8">
             {pricingPlans.map((plan, index) => (
               <Card key={index} className={plan.highlight ? 'border-primary shadow-lg' : ''}>
                 <CardHeader>
@@ -385,6 +465,40 @@ const PartnerWithUs: React.FC = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Mobile/Tablet Carousel */}
+          <div className="lg:hidden">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {pricingPlans.map((plan, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full">
+                    <Card className={`h-full ${plan.highlight ? 'border-primary shadow-lg' : ''}`}>
+                      <CardHeader>
+                        {plan.highlight && (
+                          <Badge className="w-fit mb-2">Most Popular</Badge>
+                        )}
+                        <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                        <div className="text-3xl font-bold text-primary">{plan.fee}</div>
+                        <CardDescription>{plan.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-2">
+                          {plan.features.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center gap-2">
+                              <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="-left-4" />
+              <CarouselNext className="-right-4" />
+            </Carousel>
           </div>
         </div>
       </section>
