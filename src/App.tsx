@@ -28,6 +28,7 @@ import BookingSuccess from "./pages/BookingSuccess";
 import ImpactLedger from "./pages/ImpactLedger";
 import NotFound from "./pages/NotFound";
 import TravelerDashboard from "./pages/TravelerDashboard";
+import UserDashboard from "./pages/UserDashboard";
 import ProjectDetail from "./pages/ProjectDetail";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import About from "./pages/About";
