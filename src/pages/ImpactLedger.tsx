@@ -38,6 +38,7 @@ import {
   Wifi,
   WifiOff
 } from "lucide-react";
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line } from 'recharts';
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
@@ -134,7 +135,150 @@ const SafeChartContainer = ({ children, title, className }: { children: React.Re
   return <div className={className}>{children}</div>;
 };
 
-// Real data function using Supabase
+// Custom hooks for real-time chart data
+const useRealTimeThemeData = () => {
+  const [themeData, setThemeData] = useState<Array<{name: string, value: number, fill: string}>>([]);
+  const [loading, setLoading] = useState(true);
+  const { convert } = useCurrency();
+
+  const fetchThemeData = async () => {
+    try {
+      const { data: bookingsData, error } = await supabase
+        .from('bookings')
+        .select(`
+          total_kes,
+          donation_kes,
+          experiences!inner (
+            themes
+          )
+        `)
+        .in('status', ['confirmed', 'completed']);
+
+      if (error) throw error;
+
+      const themeMap = new Map<string, number>();
+      
+      bookingsData?.forEach((booking: any) => {
+        const conservationAmount = (booking.total_kes - booking.donation_kes) * 0.9 + booking.donation_kes;
+        const themes = booking.experiences?.themes || [];
+        
+        if (Array.isArray(themes)) {
+          themes.forEach((theme: string) => {
+            const currentAmount = themeMap.get(theme) || 0;
+            themeMap.set(theme, currentAmount + conservationAmount);
+          });
+        }
+      });
+
+      const themeColors = {
+        'Wildlife Conservation': '#22c55e',
+        'Conservation Education': '#3b82f6', 
+        'Community & Cultural Exploration': '#f59e0b',
+        'Environmental Protection': '#10b981',
+        'Sustainable Tourism': '#8b5cf6'
+      };
+
+      const chartData = Array.from(themeMap.entries()).map(([name, value]) => ({
+        name,
+        value: Math.round(value),
+        fill: themeColors[name as keyof typeof themeColors] || '#6b7280'
+      })).sort((a, b) => b.value - a.value);
+
+      setThemeData(chartData);
+    } catch (error) {
+      console.error('Error fetching theme data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchThemeData();
+
+    // Set up real-time subscription
+    const channel = supabase
+      .channel('theme-data-updates')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'bookings'
+      }, () => {
+        fetchThemeData();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  return { themeData, loading };
+};
+
+const useRealTimeGeographicData = () => {
+  const [geoData, setGeoData] = useState<Array<{name: string, value: number}>>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchGeographicData = async () => {
+    try {
+      const { data: bookingsData, error } = await supabase
+        .from('bookings')
+        .select(`
+          total_kes,
+          donation_kes,
+          experiences!inner (
+            location_text
+          )
+        `)
+        .in('status', ['confirmed', 'completed']);
+
+      if (error) throw error;
+
+      const locationMap = new Map<string, number>();
+      
+      bookingsData?.forEach((booking: any) => {
+        const conservationAmount = (booking.total_kes - booking.donation_kes) * 0.9 + booking.donation_kes;
+        const location = booking.experiences?.location_text || 'Unknown';
+        
+        const currentAmount = locationMap.get(location) || 0;
+        locationMap.set(location, currentAmount + conservationAmount);
+      });
+
+      const chartData = Array.from(locationMap.entries()).map(([name, value]) => ({
+        name,
+        value: Math.round(value)
+      })).sort((a, b) => b.value - a.value);
+
+      setGeoData(chartData);
+    } catch (error) {
+      console.error('Error fetching geographic data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGeographicData();
+
+    // Set up real-time subscription
+    const channel = supabase
+      .channel('geo-data-updates')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public', 
+        table: 'bookings'
+      }, () => {
+        fetchGeographicData();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  return { geoData, loading };
+};
 const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<ImpactEntry[]> => {
   if (source === 'mock') {
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -242,6 +386,10 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
 const ImpactLedger = () => {
   // Use global impact metrics hook for real-time updates
   const globalMetrics = useGlobalImpactMetrics();
+  
+  // Real-time chart data hooks
+  const { themeData, loading: themeLoading } = useRealTimeThemeData();
+  const { geoData, loading: geoLoading } = useRealTimeGeographicData();
   
   // State variables first
   const [searchTerm, setSearchTerm] = useState("");
@@ -678,33 +826,100 @@ const ImpactLedger = () => {
                 ))}
               </div>
 
-              {/* Charts Section */}
+              {/* Charts Section - Real-time Interactive Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <BarChart3 className="h-5 w-5" />
                       Impact by Theme
+                      {themeLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
+                      <Badge variant="secondary" className="ml-auto">Live</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <SafeChartContainer title="Impact by Theme" className="h-64">
-                      <div className="space-y-4">
-                        {chartData.themes.map((item, index) => (
-                          <div key={index} className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <div 
-                                className="w-4 h-4 rounded-full"
-                                style={{ backgroundColor: item.fill }}
-                              />
-                              <span className="text-sm font-medium">{item.name}</span>
-                            </div>
-                            <span className="text-sm text-muted-foreground">
-                              {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                            </span>
+                    <SafeChartContainer title="Impact by Theme" className="h-80">
+                      {themeLoading ? (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
+                            <p className="text-sm text-muted-foreground">Loading real-time theme data...</p>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ) : themeData.length === 0 ? (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <BarChart3 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                            <p className="text-sm text-muted-foreground">No theme data available</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-6">
+                          {/* Pie Chart */}
+                          <div className="h-48">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <PieChart>
+                                <Pie
+                                  data={themeData}
+                                  cx="50%"
+                                  cy="50%"
+                                  innerRadius={40}
+                                  outerRadius={80}
+                                  paddingAngle={2}
+                                  dataKey="value"
+                                >
+                                  {themeData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                  ))}
+                                </Pie>
+                                <Tooltip 
+                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                />
+                                <Legend />
+                              </PieChart>
+                            </ResponsiveContainer>
+                          </div>
+                          
+                          {/* Bar Chart */}
+                          <div className="h-48">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <BarChart data={themeData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis 
+                                  dataKey="name" 
+                                  angle={-45}
+                                  textAnchor="end"
+                                  height={80}
+                                  fontSize={12}
+                                />
+                                <YAxis fontSize={12} />
+                                <Tooltip 
+                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                />
+                                <Bar dataKey="value" fill="#22c55e" />
+                              </BarChart>
+                            </ResponsiveContainer>
+                          </div>
+
+                          {/* Summary List */}
+                          <div className="space-y-2">
+                            {themeData.slice(0, 3).map((item, index) => (
+                              <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded">
+                                <div className="flex items-center gap-2">
+                                  <div 
+                                    className="w-3 h-3 rounded-full"
+                                    style={{ backgroundColor: item.fill }}
+                                  />
+                                  <span className="text-sm font-medium">{item.name}</span>
+                                </div>
+                                <span className="text-sm font-bold text-primary">
+                                  {currency} {convert(item.value, 'KES', currency).toLocaleString()}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </SafeChartContainer>
                   </CardContent>
                 </Card>
@@ -714,20 +929,97 @@ const ImpactLedger = () => {
                     <CardTitle className="flex items-center gap-2">
                       <MapPin className="h-5 w-5" />
                       Geographic Distribution
+                      {geoLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
+                      <Badge variant="secondary" className="ml-auto">Live</Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <SafeChartContainer title="Geographic Distribution" className="h-64">
-                      <div className="space-y-4">
-                        {chartData.locations.slice(0, 5).map((item, index) => (
-                          <div key={index} className="flex items-center justify-between">
-                            <span className="text-sm font-medium">{item.name}</span>
-                            <span className="text-sm text-muted-foreground">
-                              {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                            </span>
+                    <SafeChartContainer title="Geographic Distribution" className="h-80">
+                      {geoLoading ? (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
+                            <p className="text-sm text-muted-foreground">Loading real-time location data...</p>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ) : geoData.length === 0 ? (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <MapPin className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                            <p className="text-sm text-muted-foreground">No geographic data available</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-6">
+                          {/* Horizontal Bar Chart */}
+                          <div className="h-48">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <BarChart 
+                                layout="horizontal"
+                                data={geoData.slice(0, 8)}
+                                margin={{ top: 5, right: 30, left: 50, bottom: 5 }}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis type="number" fontSize={12} />
+                                <YAxis 
+                                  type="category" 
+                                  dataKey="name" 
+                                  fontSize={11}
+                                  width={80}
+                                />
+                                <Tooltip 
+                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                />
+                                <Bar dataKey="value" fill="#3b82f6" />
+                              </BarChart>
+                            </ResponsiveContainer>
+                          </div>
+                          
+                          {/* Line Chart Trend */}
+                          <div className="h-32">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={geoData.slice(0, 6)}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis 
+                                  dataKey="name" 
+                                  fontSize={10}
+                                  angle={-45}
+                                  textAnchor="end"
+                                  height={60}
+                                />
+                                <YAxis fontSize={10} />
+                                <Tooltip 
+                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                />
+                                <Line 
+                                  type="monotone" 
+                                  dataKey="value" 
+                                  stroke="#f59e0b" 
+                                  strokeWidth={2}
+                                  dot={{ fill: '#f59e0b', strokeWidth: 2, r: 4 }}
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          </div>
+
+                          {/* Top Locations List */}
+                          <div className="space-y-2">
+                            {geoData.slice(0, 5).map((item, index) => (
+                              <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <span className="text-xs font-bold text-primary">#{index + 1}</span>
+                                  </div>
+                                  <span className="text-sm font-medium">{item.name}</span>
+                                </div>
+                                <span className="text-sm font-bold text-primary">
+                                  {currency} {convert(item.value, 'KES', currency).toLocaleString()}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </SafeChartContainer>
                   </CardContent>
                 </Card>
