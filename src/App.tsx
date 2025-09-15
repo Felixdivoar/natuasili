@@ -60,6 +60,7 @@ import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
 import CartCheckout from "./pages/CartCheckout";
 import ConservationChatbotPage from "./pages/ConservationChatbot";
+import ReferPartner from "./pages/ReferPartner";
 import AsiliChatWidget from "./components/AsiliChatWidget";
 import { Navigate } from "react-router-dom";
 
@@ -145,7 +146,7 @@ const App = () => (
                 <Route path="/profile" element={<AppLayout><Profile /></AppLayout>} />
                 <Route path="/auth" element={<AppLayout><Auth /></AppLayout>} />
                 <Route path="/conservation-chatbot" element={<AppLayout><ConservationChatbotPage /></AppLayout>} />
-                <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
+                <Route path="/refer-partner" element={<AppLayout><ReferPartner /></AppLayout>} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <AppLayout><UserDashboard /></AppLayout>

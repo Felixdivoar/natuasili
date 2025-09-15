@@ -216,6 +216,40 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setIsSynced(false);
   };
 
+  // Cart auto-clear after 5 minutes of inactivity
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    const resetTimer = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (items.length > 0) {
+          console.log('Auto-clearing cart after 5 minutes of inactivity');
+          setItems([]);
+          setIsSynced(false);
+        }
+      }, 5 * 60 * 1000); // 5 minutes
+    };
+
+    // Reset timer when items change
+    if (items.length > 0) {
+      resetTimer();
+    }
+
+    // Listen for user activity to reset timer
+    const activity = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+    activity.forEach(event => {
+      document.addEventListener(event, resetTimer, { passive: true });
+    });
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      activity.forEach(event => {
+        document.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [items.length]);
+
   const itemCount = items.length;
   const total = useMemo(() => items.reduce((sum, i) => sum + i.subtotal + i.donation, 0), [items]);
 

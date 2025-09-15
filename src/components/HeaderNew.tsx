@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, X, ChevronDown, Globe, ShoppingCart, LogOut } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown, Globe, ShoppingCart, LogOut, MessageCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
@@ -38,12 +38,16 @@ export default function HeaderNew() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [desktopSearchOpen, setDesktopSearchOpen] = useState(false);
   const [desktopHamburgerOpen, setDesktopHamburgerOpen] = useState(false);
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpenMenu(null);
+      }
+      if (hamburgerRef.current && !hamburgerRef.current.contains(event.target as Node)) {
+        setDesktopHamburgerOpen(false);
       }
     };
 
@@ -178,12 +182,67 @@ export default function HeaderNew() {
                 <CurrencySelector />
               </div>
 
+              {/* Desktop Hamburger Menu */}
+              <div className="hidden md:block relative" ref={hamburgerRef}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setDesktopHamburgerOpen(!desktopHamburgerOpen)}
+                  className="p-2"
+                  aria-label="Menu"
+                >
+                  <Menu className="w-5 h-5" />
+                </Button>
+                
+                {desktopHamburgerOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
+                    <div className="space-y-1">
+                      {!user ? (
+                        <>
+                          <Link to="/auth" onClick={() => setDesktopHamburgerOpen(false)}>
+                            <Button variant="ghost" size="sm" className="w-full justify-start">
+                              <User className="w-4 h-4 mr-2" />
+                              Sign In / Sign Up
+                            </Button>
+                          </Link>
+                        </>
+                      ) : null}
+                      
+                      <Link to="/partners" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          Partners
+                        </Button>
+                      </Link>
+                      
+                      <Link to="/refer-partner" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          Refer a Partner
+                        </Button>
+                      </Link>
+                      
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setDesktopHamburgerOpen(false);
+                          document.dispatchEvent(new CustomEvent('asili-chat:toggle'));
+                        }}
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        AsiliChat
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* Sign In/Up or Avatar */}
               {!loading && (
                 user && profile ? (
                   <AvatarMenu profile={profile} />
                 ) : (
-                  <Link to="/auth">
+                  <Link to="/auth" className="hidden">
                     <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
                       <User className="w-4 h-4" />
                       <span>{t("nav_signin")}</span>
@@ -283,51 +342,72 @@ export default function HeaderNew() {
                    ))}
                  </div>
 
-                 {/* Mobile Auth Actions */}
-                 <div className="pt-4 border-t border-border">
-                   {!loading && (
-                     user && profile ? (
-                       <div className="space-y-2">
-                         <Link 
-                           to="/dashboard" 
-                           className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
-                           onClick={() => setIsMobileMenuOpen(false)}
-                         >
-                           <User className="w-4 h-4" />
-                           Dashboard
-                         </Link>
-                         <button
-                           onClick={() => {
-                             signOut();
-                             setIsMobileMenuOpen(false);
-                           }}
-                           className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left text-destructive"
-                         >
-                           Sign Out
-                         </button>
-                       </div>
-                     ) : (
-                       <div className="space-y-2">
-                         <Link 
-                           to="/auth" 
-                           className="flex items-center gap-2 px-3 py-2 text-sm bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
-                           onClick={() => setIsMobileMenuOpen(false)}
-                         >
-                           <User className="w-4 h-4" />
-                           Sign In
-                         </Link>
-                         <Link 
-                           to="/auth" 
-                           className="flex items-center gap-2 px-3 py-2 text-sm border border-border hover:bg-muted rounded-md"
-                           onClick={() => setIsMobileMenuOpen(false)}
-                         >
-                           <User className="w-4 h-4" />
-                           Sign Up
-                         </Link>
-                       </div>
-                     )
-                   )}
-                 </div>
+                  {/* Mobile Auth Actions */}
+                  <div className="pt-4 border-t border-border">
+                    {!loading && (
+                      user && profile ? (
+                        <div className="space-y-2">
+                          <Link 
+                            to="/dashboard" 
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <User className="w-4 h-4" />
+                            Dashboard
+                          </Link>
+                          <button
+                            onClick={() => {
+                              signOut();
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left text-destructive"
+                          >
+                            Sign Out
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <Link 
+                            to="/auth" 
+                            className="flex items-center gap-2 px-3 py-2 text-sm bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <User className="w-4 h-4" />
+                            Sign In / Sign Up
+                          </Link>
+                        </div>
+                      )
+                    )}
+                    
+                    <div className="pt-2 space-y-1">
+                      <Link 
+                        to="/partners" 
+                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Partners
+                      </Link>
+                      
+                      <Link 
+                        to="/refer-partner" 
+                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Refer a Partner
+                      </Link>
+                      
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          document.dispatchEvent(new CustomEvent('asili-chat:toggle'));
+                        }}
+                        className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        AsiliChat
+                      </button>
+                    </div>
+                  </div>
 
                  {/* Mobile Currency & Search */}
                  <div className="pt-4 border-t border-border md:hidden">
