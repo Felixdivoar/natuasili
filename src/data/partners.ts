@@ -1772,7 +1772,7 @@ function generatePartners(): Partner[] {
     return {
       id: (index + 1).toString(),
       name: partnerName,
-      slug: partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      slug: partnerExps[0].partnerSlug || partnerName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
       destination: partnerExps[0].destination,
       themes: allThemes,
       description: `Conservation partner working on ${allThemes.join(', ')} initiatives in Kenya.`,
