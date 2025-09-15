@@ -521,7 +521,8 @@ const AvailabilityAndOptions = ({
                     size="lg"
                     style={{ touchAction: 'manipulation' }}
                   >
-                    Next
+                    <span className="block md:hidden">Next</span>
+                    <span className="hidden md:block">Book now</span>
                   </Button>
                   <Button
                     type="button"
