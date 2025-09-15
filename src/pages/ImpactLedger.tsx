@@ -836,16 +836,27 @@ const ImpactLedger = () => {
               </div>
 
               {/* Impact by Theme Section - Full Width */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5" />
-                    Impact by Theme
-                    {themeLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
-                    <Badge variant="secondary" className="ml-auto">Live</Badge>
-                  </CardTitle>
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-card via-card to-muted/20">
+                <CardHeader className="pb-6">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-2xl font-bold flex items-center gap-3">
+                      <div className="p-2 rounded-xl bg-primary/10">
+                        <BarChart3 className="h-6 w-6 text-primary" />
+                      </div>
+                      Impact by Theme
+                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      {themeLoading && <RefreshCw className="h-4 w-4 animate-spin text-primary" />}
+                      <Badge variant="secondary" className="font-medium">
+                        {themeLoading ? "Loading..." : `${themeData.length} Themes`}
+                      </Badge>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground">
+                    Conservation impact distribution across different focus areas
+                  </p>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0">
                   <SafeChartContainer title="Impact by Theme" className="min-h-96">
                     {themeLoading ? (
                       <div className="flex items-center justify-center h-full min-h-96">
@@ -862,97 +873,168 @@ const ImpactLedger = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-8">
-                        {/* Main Charts Grid - Responsive */}
-                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                          {/* Pie Chart */}
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-semibold">Theme Distribution</h3>
-                            <div className="h-80">
+                      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                        {/* Chart - Takes 2/3 width on large screens */}
+                        <div className="xl:col-span-2 space-y-4">
+                          <div className="bg-background/50 rounded-lg p-6">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                              <TrendingUp className="h-5 w-5 text-primary" />
+                              Theme Impact Distribution
+                            </h3>
+                            <div className="h-96">
                               <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                  <Pie
-                                    data={themeData}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={50}
-                                    outerRadius={120}
-                                    paddingAngle={2}
-                                    dataKey="value"
-                                  >
-                                    {themeData.map((entry, index) => (
-                                      <Cell key={`cell-${index}`} fill={entry.fill} />
-                                    ))}
-                                  </Pie>
-                                  <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                <BarChart 
+                                  data={themeData} 
+                                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
+                                  barCategoryGap="20%"
+                                >
+                                  <defs>
+                                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
+                                    </linearGradient>
+                                  </defs>
+                                  <CartesianGrid 
+                                    strokeDasharray="3 3" 
+                                    stroke="hsl(var(--border))" 
+                                    opacity={0.3}
                                   />
-                                  <Legend />
-                                </PieChart>
-                              </ResponsiveContainer>
-                            </div>
-                          </div>
-                          
-                          {/* Bar Chart */}
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-semibold">Impact Allocation</h3>
-                            <div className="h-80">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={themeData} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                   <XAxis 
+                                  <XAxis 
                                     dataKey="name" 
                                     angle={-45}
                                     textAnchor="end"
-                                    height={80}
-                                    fontSize={12}
+                                    height={100}
                                     interval={0}
-                                    label={{ value: 'Conservation Themes', position: 'insideBottom', offset: -5 }}
+                                    tick={{ 
+                                      fontSize: 12, 
+                                      fill: 'hsl(var(--muted-foreground))',
+                                      fontWeight: 500
+                                    }}
+                                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                                    tickLine={{ stroke: 'hsl(var(--border))' }}
+                                    label={{ 
+                                      value: 'Conservation Themes', 
+                                      position: 'insideBottom', 
+                                      offset: -10,
+                                      style: { textAnchor: 'middle', fill: 'hsl(var(--muted-foreground))' }
+                                    }}
                                   />
                                   <YAxis 
-                                    fontSize={12}
-                                    label={{ value: `Amount (${currency})`, angle: -90, position: 'insideLeft' }}
+                                    tick={{ 
+                                      fontSize: 12, 
+                                      fill: 'hsl(var(--muted-foreground))',
+                                      fontWeight: 500
+                                    }}
+                                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                                    tickLine={{ stroke: 'hsl(var(--border))' }}
+                                    tickFormatter={(value) => `${currency} ${convert(value, 'KES', currency).toLocaleString()}`}
+                                    label={{ 
+                                      value: `Conservation Impact (${currency})`, 
+                                      angle: -90, 
+                                      position: 'insideLeft',
+                                      style: { textAnchor: 'middle', fill: 'hsl(var(--muted-foreground))' }
+                                    }}
                                   />
                                   <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Funding']}
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Impact']}
+                                    labelStyle={{ 
+                                      color: 'hsl(var(--foreground))',
+                                      fontWeight: 600,
+                                      marginBottom: '4px'
+                                    }}
+                                    contentStyle={{ 
+                                      backgroundColor: 'hsl(var(--background))', 
+                                      border: '1px solid hsl(var(--border))',
+                                      borderRadius: '8px',
+                                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                      padding: '12px'
+                                    }}
+                                    cursor={{ fill: 'hsl(var(--muted))', opacity: 0.1 }}
                                   />
                                   <Legend />
-                                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                                    {themeData.map((entry, index) => (
-                                      <Cell key={`cell-${index}`} fill={entry.fill} />
-                                    ))}
-                                  </Bar>
+                                  <Bar 
+                                    dataKey="value" 
+                                    name="Conservation Impact"
+                                    radius={[4, 4, 0, 0]}
+                                    fill="url(#barGradient)"
+                                  />
                                 </BarChart>
                               </ResponsiveContainer>
                             </div>
                           </div>
                         </div>
-
-                        {/* Summary Section - Full Width */}
-                        <div className="space-y-4">
-                          <h3 className="text-lg font-semibold">Top Themes by Impact</h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {themeData.slice(0, 6).map((item, index) => (
-                              <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border">
-                                <div className="flex items-center gap-3">
-                                  <div className="flex items-center gap-2">
-                                    <div 
-                                      className="w-4 h-4 rounded-full"
-                                      style={{ backgroundColor: item.fill }}
-                                    />
-                                    <span className="text-sm font-medium">{item.name}</span>
+                        
+                        {/* Summary Statistics - Takes 1/3 width */}
+                        <div className="space-y-6">
+                          <div>
+                            <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                              <BarChart3 className="h-5 w-5 text-primary" />
+                              Theme Breakdown
+                            </h3>
+                            <div className="space-y-3">
+                              {themeData.slice(0, 6).map((theme, index) => {
+                                const total = themeData.reduce((sum, t) => sum + t.value, 0);
+                                const percentage = total > 0 ? (theme.value / total) * 100 : 0;
+                                
+                                return (
+                                  <div key={theme.name} className="group hover:bg-muted/50 p-3 rounded-lg transition-colors">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <div className="flex items-center gap-3">
+                                        <div 
+                                          className="w-3 h-3 rounded-full shadow-sm"
+                                          style={{ backgroundColor: theme.fill }}
+                                        />
+                                        <span className="font-medium text-sm truncate max-w-[120px]" title={theme.name}>
+                                          {theme.name}
+                                        </span>
+                                      </div>
+                                      <span className="text-xs font-semibold text-muted-foreground">
+                                        {percentage.toFixed(1)}%
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex-1 bg-muted rounded-full h-2 mr-3">
+                                        <div 
+                                          className="h-2 rounded-full transition-all duration-500"
+                                          style={{ 
+                                            width: `${percentage}%`,
+                                            backgroundColor: theme.fill
+                                          }}
+                                        />
+                                      </div>
+                                      <span className="text-sm font-bold">
+                                        {currency} {convert(theme.value, 'KES', currency).toLocaleString()}
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="text-right">
-                                  <div className="text-sm font-bold text-primary">
-                                    {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                                  </div>
-                                  <div className="text-xs text-muted-foreground">
-                                    {((item.value / themeData.reduce((sum, d) => sum + d.value, 0)) * 100).toFixed(1)}%
-                                  </div>
-                                </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                          
+                          {/* Quick Stats */}
+                          <div className="bg-muted/30 rounded-xl p-4 space-y-3">
+                            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                              Quick Stats
+                            </h4>
+                            <div className="space-y-2">
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm">Total Themes</span>
+                                <span className="font-semibold">{themeData.length}</span>
                               </div>
-                            ))}
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm">Highest Impact</span>
+                                <span className="font-semibold">
+                                  {themeData[0] ? `${currency} ${convert(themeData[0].value, 'KES', currency).toLocaleString()}` : 'N/A'}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm">Leading Theme</span>
+                                <span className="font-semibold text-xs truncate max-w-[100px]" title={themeData[0]?.name}>
+                                  {themeData[0]?.name || 'N/A'}
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -962,16 +1044,27 @@ const ImpactLedger = () => {
               </Card>
 
               {/* Geographic Distribution Section - Full Width */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5" />
-                    Geographic Distribution
-                    {geoLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
-                    <Badge variant="secondary" className="ml-auto">Live</Badge>
-                  </CardTitle>
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-card via-card to-muted/20">
+                <CardHeader className="pb-6">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-2xl font-bold flex items-center gap-3">
+                      <div className="p-2 rounded-xl bg-primary/10">
+                        <MapPin className="h-6 w-6 text-primary" />
+                      </div>
+                      Geographic Distribution
+                    </CardTitle>
+                    <div className="flex items-center gap-2">
+                      {geoLoading && <RefreshCw className="h-4 w-4 animate-spin text-primary" />}
+                      <Badge variant="secondary" className="font-medium">
+                        {geoLoading ? "Loading..." : `${geoData.length} Locations`}
+                      </Badge>
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground">
+                    Conservation impact across different geographic regions
+                  </p>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0">
                   <SafeChartContainer title="Geographic Distribution" className="min-h-96">
                     {geoLoading ? (
                       <div className="flex items-center justify-center h-full min-h-96">
@@ -988,107 +1081,134 @@ const ImpactLedger = () => {
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-8">
-                        {/* Main Charts Grid - Responsive */}
-                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                          {/* Horizontal Bar Chart */}
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-semibold">Regional Impact Distribution</h3>
-                            <div className="h-80">
+                      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                        {/* Chart - Takes 2/3 width on large screens */}
+                        <div className="xl:col-span-2 space-y-4">
+                          <div className="bg-background/50 rounded-lg p-6">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                              <MapPin className="h-5 w-5 text-primary" />
+                              Regional Impact Map
+                            </h3>
+                            <div className="h-96">
                               <ResponsiveContainer width="100%" height="100%">
-                                <BarChart 
-                                  layout="horizontal"
-                                  data={geoData.slice(0, 8)}
-                                  margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
-                                >
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis 
-                                    type="number" 
-                                    fontSize={12}
-                                    label={{ value: `Conservation Funding (${currency})`, position: 'insideBottom', offset: -5 }}
-                                  />
-                                  <YAxis 
-                                    type="category" 
-                                    dataKey="name" 
-                                    fontSize={11}
-                                    width={100}
-                                    label={{ value: 'Locations', angle: -90, position: 'insideLeft' }}
-                                  />
-                                  <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Funding']}
-                                  />
-                                  <Legend />
-                                  <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                                    {geoData.slice(0, 8).map((entry, index) => (
-                                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                                <PieChart>
+                                  <defs>
+                                    {geoData.map((entry, index) => (
+                                      <linearGradient key={`gradient-${index}`} id={`pieGradient-${index}`} x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stopColor={entry.fill} stopOpacity={0.9}/>
+                                        <stop offset="100%" stopColor={entry.fill} stopOpacity={0.6}/>
+                                      </linearGradient>
                                     ))}
-                                  </Bar>
-                                </BarChart>
-                              </ResponsiveContainer>
-                            </div>
-                          </div>
-                          
-                          {/* Line Chart Trend */}
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-semibold">Location Performance Trend</h3>
-                            <div className="h-80">
-                              <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={geoData.slice(0, 8)} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
-                                  <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis 
-                                    dataKey="name" 
-                                    fontSize={10}
-                                    angle={-45}
-                                    textAnchor="end"
-                                    height={80}
-                                    interval={0}
-                                    label={{ value: 'Conservation Locations', position: 'insideBottom', offset: -5 }}
-                                  />
-                                  <YAxis 
-                                    fontSize={10}
-                                    label={{ value: `Funding Trend (${currency})`, angle: -90, position: 'insideLeft' }}
-                                  />
+                                  </defs>
+                                  <Pie
+                                    data={geoData}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={60}
+                                    outerRadius={120}
+                                    paddingAngle={2}
+                                    dataKey="value"
+                                    label={({ name, percent }) => percent > 0.05 ? `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%` : ''}
+                                    labelLine={false}
+                                    fill="url(#pieGradient-0)"
+                                  >
+                                    {geoData.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={`url(#pieGradient-${index})`} />
+                                    ))}
+                                  </Pie>
                                   <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Funding']}
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Impact']}
+                                    labelStyle={{ 
+                                      color: 'hsl(var(--foreground))',
+                                      fontWeight: 600,
+                                      marginBottom: '4px'
+                                    }}
+                                    contentStyle={{ 
+                                      backgroundColor: 'hsl(var(--background))', 
+                                      border: '1px solid hsl(var(--border))',
+                                      borderRadius: '8px',
+                                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                      padding: '12px'
+                                    }}
                                   />
                                   <Legend />
-                                  <Line 
-                                    type="monotone" 
-                                    dataKey="value" 
-                                    stroke="#f59e0b" 
-                                    strokeWidth={3}
-                                    dot={{ fill: '#f59e0b', strokeWidth: 2, r: 6 }}
-                                    activeDot={{ r: 8 }}
-                                    name="Conservation Funding"
-                                  />
-                                </LineChart>
+                                </PieChart>
                               </ResponsiveContainer>
                             </div>
                           </div>
                         </div>
-
-                        {/* Top Locations Grid - Responsive */}
-                        <div className="space-y-4">
-                          <h3 className="text-lg font-semibold">Top Conservation Locations</h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {geoData.slice(0, 9).map((item, index) => (
-                              <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border">
-                                <div className="flex items-center gap-3">
-                                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <span className="text-sm font-bold text-primary">#{index + 1}</span>
+                        
+                        {/* Summary Statistics - Takes 1/3 width */}
+                        <div className="space-y-6">
+                          <div>
+                            <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                              <MapPin className="h-5 w-5 text-primary" />
+                              Location Breakdown
+                            </h3>
+                            <div className="space-y-3 max-h-72 overflow-y-auto">
+                              {geoData.map((location, index) => {
+                                const total = geoData.reduce((sum, l) => sum + l.value, 0);
+                                const percentage = total > 0 ? (location.value / total) * 100 : 0;
+                                
+                                return (
+                                  <div key={location.name} className="group hover:bg-muted/50 p-3 rounded-lg transition-colors">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <div className="flex items-center gap-3">
+                                        <div 
+                                          className="w-3 h-3 rounded-full shadow-sm"
+                                          style={{ backgroundColor: location.fill }}
+                                        />
+                                        <span className="font-medium text-sm truncate max-w-[120px]" title={location.name}>
+                                          {location.name}
+                                        </span>
+                                      </div>
+                                      <span className="text-xs font-semibold text-muted-foreground">
+                                        {percentage.toFixed(1)}%
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex-1 bg-muted rounded-full h-2 mr-3">
+                                        <div 
+                                          className="h-2 rounded-full transition-all duration-500"
+                                          style={{ 
+                                            width: `${percentage}%`,
+                                            backgroundColor: location.fill
+                                          }}
+                                        />
+                                      </div>
+                                      <span className="text-sm font-bold">
+                                        {currency} {convert(location.value, 'KES', currency).toLocaleString()}
+                                      </span>
+                                    </div>
                                   </div>
-                                  <span className="text-sm font-medium truncate">{item.name}</span>
-                                </div>
-                                <div className="text-right">
-                                  <div className="text-sm font-bold text-primary">
-                                    {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                                  </div>
-                                  <div className="text-xs text-muted-foreground">
-                                    {((item.value / geoData.reduce((sum, d) => sum + d.value, 0)) * 100).toFixed(1)}%
-                                  </div>
-                                </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                          
+                          {/* Quick Stats */}
+                          <div className="bg-muted/30 rounded-xl p-4 space-y-3">
+                            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                              Quick Stats
+                            </h4>
+                            <div className="space-y-2">
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm">Total Locations</span>
+                                <span className="font-semibold">{geoData.length}</span>
                               </div>
-                            ))}
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm">Highest Impact</span>
+                                <span className="font-semibold">
+                                  {geoData[0] ? `${currency} ${convert(geoData[0].value, 'KES', currency).toLocaleString()}` : 'N/A'}
+                                </span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-sm">Top Location</span>
+                                <span className="font-semibold text-xs truncate max-w-[100px]" title={geoData[0]?.name}>
+                                  {geoData[0]?.name || 'N/A'}
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
