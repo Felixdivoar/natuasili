@@ -35,8 +35,8 @@ export default function ImageSlideshow({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 bg-black/95 border-0">
-        <div className="relative w-full h-full flex items-center justify-center">
+      <DialogContent className="max-w-4xl w-full p-0 bg-black/95 border-0" onClick={onClose}>
+        <div className="relative w-full aspect-[4/3] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
           {/* Close button */}
           <Button
             variant="ghost"
@@ -73,7 +73,7 @@ export default function ImageSlideshow({
           <img
             src={images[currentIndex]}
             alt={`${altText} - ${currentIndex + 1}`}
-            className="max-w-full max-h-full object-contain"
+            className="max-w-full max-h-full object-contain rounded-lg"
           />
 
           {/* Image counter */}
