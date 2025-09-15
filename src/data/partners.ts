@@ -42,6 +42,15 @@ import nightGameDrive2 from "@/assets/night-game-drive-2.jpg";
 import nightGameDrive3 from "@/assets/night-game-drive-3.jpg";
 import nightGameDrive4 from "@/assets/night-game-drive-4.jpg";
 
+// New bush and bird walks images
+import bushBirdWalksHero from "@/assets/bush-bird-walks-hero.jpg";
+import bushBirdWalks2 from "@/assets/bush-bird-walks-2.jpeg";
+import bushBirdWalks3 from "@/assets/bush-bird-walks-3.jpg";
+import bushBirdWalks4 from "@/assets/bush-bird-walks-4.jpeg";
+import bushBirdWalks5 from "@/assets/bush-bird-walks-5.jpeg";
+import bushBirdWalks6 from "@/assets/bush-bird-walks-6.jpeg";
+import bushBirdWalks7 from "@/assets/bush-bird-walks-7.jpeg";
+
 // New Ol Pejeta northern white rhinos images
 import olPejetaRhinoHero from "@/assets/ol-pejeta-rhino-hero.jpg";
 import olPejetaRhino2 from "@/assets/ol-pejeta-rhino-2.jpg";
@@ -159,6 +168,9 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
   }
   if (titleLower.includes("elephant") && titleLower.includes("reteti")) {
     return [maraElephantTracking, retetiSanctuaryImg, "/images/placeholder-2.jpg"];
+  }
+  if (titleLower.includes("guided bush and bird") || titleLower.includes("bush and bird walks")) {
+    return [bushBirdWalksHero, bushBirdWalks2, bushBirdWalks3, bushBirdWalks4, bushBirdWalks5, bushBirdWalks6, bushBirdWalks7];
   }
   if (titleLower.includes("night game drive")) {
     return [nightGameDriveHero, nightGameDrive2, nightGameDrive3, nightGameDrive4];
@@ -1025,9 +1037,9 @@ Ol Pejeta Conservancy, Laikipia County`,
     destination: "laikipia",
     themes: ["Conservation education"],
     activities: ["walking", "birds", "nature"],
-    images: ["/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png", natureKenyaBirdwatching, olPejetaImg],
-    heroImage: "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png",
-    gallery: ["/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png", natureKenyaBirdwatching, olPejetaImg],
+    images: [bushBirdWalksHero, bushBirdWalks2, bushBirdWalks3, bushBirdWalks4, bushBirdWalks5, bushBirdWalks6, bushBirdWalks7],
+    heroImage: bushBirdWalksHero,
+    gallery: [bushBirdWalksHero, bushBirdWalks2, bushBirdWalks3, bushBirdWalks4, bushBirdWalks5, bushBirdWalks6, bushBirdWalks7],
     description: `Overview
 Explore Ol Pejeta Conservancy on foot with expert guides who will introduce you to the intricate ecosystems of the Laikipia plateau. These walking safaris offer an intimate connection with nature, allowing you to experience wildlife and landscapes from a completely different perspective than traditional game drives.
 

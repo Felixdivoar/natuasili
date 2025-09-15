@@ -96,28 +96,64 @@ const PartnerDynamic = () => {
 
       setPartner(partnerData);
 
-      // Load partner experiences
+      // Load partner experiences with gallery images
       if (partnerData?.id) {
         const { data: experiencesData, error: experiencesError } = await supabase
           .from('experiences')
-          .select('id, title, slug, hero_image, description, location_text, themes, activities, price_kes_adult, visible_on_marketplace')
+          .select('id, title, slug, hero_image, gallery, description, location_text, themes, activities, price_kes_adult, visible_on_marketplace')
           .eq('partner_id', partnerData.id)
           .eq('visible_on_marketplace', true)
           .order('title');
 
         if (!experiencesError && experiencesData) {
           setExperiences(experiencesData);
+          
+          // Collect all images from experiences for the gallery
+          const allImages: PartnerMedia[] = [];
+          let imageId = 1;
+          
+          experiencesData.forEach((exp) => {
+            // Add hero image
+            if (exp.hero_image) {
+              allImages.push({
+                id: imageId++,
+                url: exp.hero_image,
+                alt: `${exp.title} - Hero image`,
+                sort: allImages.length
+              });
+            }
+            
+            // Add gallery images
+            if (exp.gallery && Array.isArray(exp.gallery)) {
+              exp.gallery.forEach((imageUrl: string) => {
+                if (imageUrl && imageUrl !== exp.hero_image) { // Avoid duplicates
+                  allImages.push({
+                    id: imageId++,
+                    url: imageUrl,
+                    alt: `${exp.title} - Gallery image`,
+                    sort: allImages.length
+                  });
+                }
+              });
+            }
+          });
+          
+          setMedia(allImages);
         }
 
-        // Load partner media
+        // Still load partner_media as backup, but merge with experience images
         const { data: mediaData, error: mediaError } = await supabase
           .from('partner_media')
           .select('id, url, alt, sort')
           .eq('partner_id', partnerData.id)
           .order('sort');
 
-        if (!mediaError && mediaData) {
-          setMedia(mediaData);
+        if (!mediaError && mediaData && mediaData.length > 0) {
+          // If we have partner media, append it to experience images
+          setMedia(prevMedia => [...prevMedia, ...mediaData.map(item => ({
+            ...item,
+            sort: prevMedia.length + item.sort
+          }))]);
         }
       }
 
@@ -157,6 +193,14 @@ const PartnerDynamic = () => {
 
   const formatStatKey = (key: string) => {
     return key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  // Get the first experience hero image for partner hero, fallback to partner's own hero image
+  const getPartnerHeroImage = () => {
+    if (experiences.length > 0 && experiences[0].hero_image) {
+      return experiences[0].hero_image;
+    }
+    return partner?.hero_image_url || '/img/ph1.jpg';
   };
 
   if (loading) {
@@ -199,7 +243,7 @@ const PartnerDynamic = () => {
       <section 
         className="relative h-[70vh] min-h-[500px] bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url(${partner.hero_image_url || '/img/ph1.jpg'})`
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url(${getPartnerHeroImage()})`
         }}
       >
         <div className="absolute inset-0 flex items-center">
