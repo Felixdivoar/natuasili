@@ -187,44 +187,39 @@ export default function ExperienceDetail() {
               </div>
             </div>
 
-            {/* Image Carousel */}
-            <div className="relative mb-8">
-              <div className="aspect-[16/10] rounded-xl overflow-hidden">
-                <img 
-                  src={experience.images[selectedImageIndex]}
-                  alt={experience.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Navigation buttons */}
-              {experience.images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </button>
-                </>
-              )}
-
-              {/* Image dots */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {experience.images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      selectedImageIndex === index ? 'bg-white' : 'bg-white/50'
-                    }`}
+            {/* Image Grid */}
+            <div className="mb-8">
+              <div className="grid grid-cols-4 gap-2 h-[400px]">
+                {/* Main large image */}
+                <div className="col-span-2 row-span-2 rounded-xl overflow-hidden cursor-pointer" onClick={() => setSelectedImageIndex(0)}>
+                  <img 
+                    src={experience.images[0]}
+                    alt={experience.title}
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                   />
+                </div>
+                
+                {/* Smaller images grid */}
+                {experience.images.slice(1, 5).map((image, index) => (
+                  <div 
+                    key={index + 1} 
+                    className="relative rounded-lg overflow-hidden cursor-pointer"
+                    onClick={() => setSelectedImageIndex(index + 1)}
+                  >
+                    <img 
+                      src={image}
+                      alt={`${experience.title} - Image ${index + 2}`}
+                      className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    />
+                    {/* Show +X more indicator on last visible image if there are more images */}
+                    {index === 3 && experience.images.length > 5 && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <span className="text-white font-semibold text-lg">
+                          +{experience.images.length - 5} more
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
