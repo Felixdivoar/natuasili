@@ -8,6 +8,8 @@ import { PARTNERS } from "@/data/partners";
 import { useI18n } from "@/i18n/I18nProvider";
 import T from "@/i18n/T";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 const CarouselControls = () => {
   const {
     scrollPrev,
@@ -27,6 +29,63 @@ const CarouselControls = () => {
 const ConservationPartnersCarousel = () => {
   const { t } = useI18n();
   const displayPartners = PARTNERS.slice(0, 6);
+  const [partnerBookings, setPartnerBookings] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const fetchPartnerBookings = async () => {
+      try {
+        // Get booking counts for each partner by querying experiences and bookings
+        const { data: bookingCounts, error } = await supabase
+          .from('bookings')
+          .select(`
+            id,
+            experiences!inner(
+              partner_profiles!inner(
+                org_name
+              )
+            )
+          `)
+          .in('status', ['confirmed', 'completed']);
+
+        if (!error && bookingCounts) {
+          const counts: Record<string, number> = {};
+          
+          bookingCounts.forEach((booking: any) => {
+            const partnerName = booking.experiences?.partner_profiles?.org_name;
+            if (partnerName) {
+              counts[partnerName] = (counts[partnerName] || 0) + 1;
+            }
+          });
+          
+          setPartnerBookings(counts);
+        }
+      } catch (error) {
+        console.error('Error fetching partner bookings:', error);
+      }
+    };
+
+    fetchPartnerBookings();
+
+    // Set up real-time subscription for booking updates
+    const subscription = supabase
+      .channel('partner-bookings-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'bookings'
+        },
+        () => {
+          fetchPartnerBookings();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  }, []);
   
   return (
     <section id="projects" className="bg-muted/30 py-[10px]">
@@ -90,8 +149,8 @@ const ConservationPartnersCarousel = () => {
                         <div className="text-xs text-muted-foreground"><T k="partners_bookings" /></div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-bold text-conservation">{partner.established}</div>
-                        <div className="text-xs text-muted-foreground">Est.</div>
+                        <div className="text-lg font-bold text-black">{partnerBookings[partner.name] || 0}</div>
+                        <div className="text-xs text-muted-foreground">Successful Bookings</div>
                       </div>
                     </div>
                     
