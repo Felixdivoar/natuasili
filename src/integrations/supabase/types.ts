@@ -1266,6 +1266,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      is_admin_or_has_role: {
+        Args: { _role?: Database["public"]["Enums"]["app_role"] }
+        Returns: boolean
+      }
       mark_message_read: {
         Args: { message_id: string }
         Returns: undefined
