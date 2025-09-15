@@ -88,10 +88,10 @@ export default function HeaderNew() {
                 </Link>
                 
                 <Link 
-                  to="/partners" 
+                  to="/conservation-chatbot" 
                   className="text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
                 >
-                  {t("nav_partners")}
+                  Conservation Chat
                 </Link>
                 
                 {/* Marketplace Mega Menu */}
@@ -248,13 +248,13 @@ export default function HeaderNew() {
                  >
                    {t("nav_impact")}
                  </Link>
-                 <Link 
-                   to="/partners" 
-                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                   onClick={() => setIsMobileMenuOpen(false)}
-                 >
-                   {t("nav_partners")}
-                 </Link>
+                  <Link 
+                    to="/conservation-chatbot" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Conservation Chat
+                  </Link>
                  <Link 
                    to="/marketplace" 
                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"

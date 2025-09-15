@@ -59,6 +59,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PartnerDynamic from "./pages/PartnerDynamic";
 import Profile from "./pages/Profile";
 import CartCheckout from "./pages/CartCheckout";
+import ConservationChatbotPage from "./pages/ConservationChatbot";
 import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
@@ -142,6 +143,7 @@ const App = () => (
                 <Route path="/impact-ledger" element={<AppLayout><ImpactLedger /></AppLayout>} />
                 <Route path="/profile" element={<AppLayout><Profile /></AppLayout>} />
                 <Route path="/auth" element={<AppLayout><Auth /></AppLayout>} />
+                <Route path="/conservation-chatbot" element={<AppLayout><ConservationChatbotPage /></AppLayout>} />
                 <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
