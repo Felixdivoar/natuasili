@@ -175,7 +175,10 @@ const useRealTimeThemeData = () => {
         'Conservation Education': '#3b82f6', 
         'Community & Cultural Exploration': '#f59e0b',
         'Environmental Protection': '#10b981',
-        'Sustainable Tourism': '#8b5cf6'
+        'Sustainable Tourism': '#8b5cf6',
+        'Habitat Protection': '#ef4444',
+        'Research & Monitoring': '#a855f7',
+        'Community Development': '#06b6d4'
       };
 
       const chartData = Array.from(themeMap.entries()).map(([name, value]) => ({
@@ -216,7 +219,7 @@ const useRealTimeThemeData = () => {
 };
 
 const useRealTimeGeographicData = () => {
-  const [geoData, setGeoData] = useState<Array<{name: string, value: number}>>([]);
+  const [geoData, setGeoData] = useState<Array<{name: string, value: number, fill: string}>>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchGeographicData = async () => {
@@ -244,9 +247,15 @@ const useRealTimeGeographicData = () => {
         locationMap.set(location, currentAmount + conservationAmount);
       });
 
-      const chartData = Array.from(locationMap.entries()).map(([name, value]) => ({
+      const locationColors = [
+        '#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', 
+        '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#10b981'
+      ];
+
+      const chartData = Array.from(locationMap.entries()).map(([name, value], index) => ({
         name,
-        value: Math.round(value)
+        value: Math.round(value),
+        fill: locationColors[index % locationColors.length]
       })).sort((a, b) => b.value - a.value);
 
       setGeoData(chartData);
@@ -891,19 +900,28 @@ const ImpactLedger = () => {
                               <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={themeData} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
                                   <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis 
+                                   <XAxis 
                                     dataKey="name" 
                                     angle={-45}
                                     textAnchor="end"
                                     height={80}
                                     fontSize={12}
                                     interval={0}
+                                    label={{ value: 'Conservation Themes', position: 'insideBottom', offset: -5 }}
                                   />
-                                  <YAxis fontSize={12} />
+                                  <YAxis 
+                                    fontSize={12}
+                                    label={{ value: `Amount (${currency})`, angle: -90, position: 'insideLeft' }}
+                                  />
                                   <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Funding']}
                                   />
-                                  <Bar dataKey="value" fill="#22c55e" radius={[4, 4, 0, 0]} />
+                                  <Legend />
+                                  <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                                    {themeData.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                                    ))}
+                                  </Bar>
                                 </BarChart>
                               </ResponsiveContainer>
                             </div>
@@ -984,17 +1002,27 @@ const ImpactLedger = () => {
                                   margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
                                 >
                                   <CartesianGrid strokeDasharray="3 3" />
-                                  <XAxis type="number" fontSize={12} />
+                                  <XAxis 
+                                    type="number" 
+                                    fontSize={12}
+                                    label={{ value: `Conservation Funding (${currency})`, position: 'insideBottom', offset: -5 }}
+                                  />
                                   <YAxis 
                                     type="category" 
                                     dataKey="name" 
                                     fontSize={11}
                                     width={100}
+                                    label={{ value: 'Locations', angle: -90, position: 'insideLeft' }}
                                   />
                                   <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Funding']}
                                   />
-                                  <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                                  <Legend />
+                                  <Bar dataKey="value" radius={[0, 4, 4, 0]}>
+                                    {geoData.slice(0, 8).map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                                    ))}
+                                  </Bar>
                                 </BarChart>
                               </ResponsiveContainer>
                             </div>
@@ -1014,11 +1042,16 @@ const ImpactLedger = () => {
                                     textAnchor="end"
                                     height={80}
                                     interval={0}
+                                    label={{ value: 'Conservation Locations', position: 'insideBottom', offset: -5 }}
                                   />
-                                  <YAxis fontSize={10} />
+                                  <YAxis 
+                                    fontSize={10}
+                                    label={{ value: `Funding Trend (${currency})`, angle: -90, position: 'insideLeft' }}
+                                  />
                                   <Tooltip 
-                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Funding']}
                                   />
+                                  <Legend />
                                   <Line 
                                     type="monotone" 
                                     dataKey="value" 
@@ -1026,6 +1059,7 @@ const ImpactLedger = () => {
                                     strokeWidth={3}
                                     dot={{ fill: '#f59e0b', strokeWidth: 2, r: 6 }}
                                     activeDot={{ r: 8 }}
+                                    name="Conservation Funding"
                                   />
                                 </LineChart>
                               </ResponsiveContainer>
