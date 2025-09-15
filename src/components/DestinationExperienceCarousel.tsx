@@ -9,6 +9,8 @@ import { mockExperiences } from "@/data/newMockData";
 import { Destination } from "@/data/partners";
 import ExperienceRatingDisplay from "./ExperienceRatingDisplay";
 import { filterExperiencesByDestination, formatDestinationName, getDestinationPath } from "@/utils/destinationUtils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 interface DestinationExperienceCarouselProps {
   destination: Destination;
 }
@@ -30,6 +32,7 @@ export default function DestinationExperienceCarousel({
 }: DestinationExperienceCarouselProps) {
   const { formatPrice } = useCurrency();
   const { t } = useI18n();
+  const isMobile = useIsMobile();
 
   // Filter experiences by destination using the new utility function
   const destinationExperiences = filterExperiencesByDestination(mockExperiences, destination);
@@ -51,12 +54,14 @@ export default function DestinationExperienceCarousel({
               {t("dest_experiences_in")} {destinationName}
             </Link>
           </h2>
-          <Link 
-            to={`/destinations/${destinationPath}`} 
-            className="text-primary hover:underline"
-          >
-            {t("dest_view_all")}
-          </Link>
+          {!isMobile && (
+            <Link 
+              to={`/destinations/${destinationPath}`} 
+              className="text-primary hover:underline"
+            >
+              {t("dest_view_all")}
+            </Link>
+          )}
         </div>
 
         <Carousel className="w-full">
@@ -117,6 +122,16 @@ export default function DestinationExperienceCarousel({
           <CarouselPrevious className="-left-4" />
           <CarouselNext className="-right-4" />
         </Carousel>
+
+        {isMobile && (
+          <div className="flex justify-center mt-6">
+            <Button asChild variant="outline">
+              <Link to={`/destinations/${destinationPath}`}>
+                {t("dest_view_all")}
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
