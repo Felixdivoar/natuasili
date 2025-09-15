@@ -266,9 +266,9 @@ export default function HeaderNew() {
                         </Button>
                       </Link>
                       
-                      <Link to="/refer-partner" onClick={() => setDesktopHamburgerOpen(false)}>
+                      <Link to="/partner-with-us" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start">
-                          Refer a Partner
+                          Partner with Us
                         </Button>
                       </Link>
                       
@@ -302,13 +302,13 @@ export default function HeaderNew() {
                  >
                    {t("nav_impact")}
                  </Link>
-                 <Link 
-                   to="/marketplace" 
-                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                   onClick={() => setIsMobileMenuOpen(false)}
-                 >
-                   {t("nav_marketplace")}
-                 </Link>
+                  <Link 
+                    to="/browse" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t("nav_marketplace")}
+                  </Link>
                  
                  <div className="space-y-1">
                    <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -348,7 +348,7 @@ export default function HeaderNew() {
                       user && profile ? (
                         <div className="space-y-2">
                           <Link 
-                            to="/dashboard" 
+                            to={profile ? getDashboardPath(profile.role) : "/user-dashboard"} 
                             className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
@@ -389,11 +389,11 @@ export default function HeaderNew() {
                       </Link>
                       
                       <Link 
-                        to="/refer-partner" 
+                        to="/partner-with-us" 
                         className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        Refer a Partner
+                        Partner with Us
                       </Link>
                       
                       <button
