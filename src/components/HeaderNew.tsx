@@ -161,7 +161,7 @@ export default function HeaderNew() {
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
-                    className="min-w-[280px]"
+                    className="min-w-[320px]"
                     onClose={() => setDesktopSearchOpen(false)}
                   />
                 ) : (
@@ -169,7 +169,7 @@ export default function HeaderNew() {
                     variant="ghost"
                     size="sm"
                     onClick={() => setDesktopSearchOpen(true)}
-                    className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg min-w-[160px] justify-start"
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg min-w-[240px] justify-start"
                   >
                     <Search className="h-4 w-4" />
                     <span>Search...</span>
@@ -181,6 +181,48 @@ export default function HeaderNew() {
               <div className="hidden md:block">
                 <CurrencySelector />
               </div>
+
+              {/* Sign In/Up or Avatar */}
+              {!loading && (
+                user && profile ? (
+                  <AvatarMenu profile={profile} />
+                ) : (
+                  <Link to="/auth" className="hidden">
+                    <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      <span>{t("nav_signin")}</span>
+                    </Button>
+                  </Link>
+                )
+              )}
+
+              {/* Notifications Bell - Only show for authenticated users */}
+              {!loading && user && (
+                <NotificationBell />
+              )}
+
+              {/* Cart Button */}
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border hover:bg-muted"
+                aria-label="Open cart"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 inline-flex items-center justify-center text-[10px] font-medium rounded-full px-1.5 py-0.5 bg-primary text-primary-foreground">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Partner CTA */}
+              <Link to="/partner-with-us">
+                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
+                  <span className="hidden sm:inline">{t("nav_partner")}</span>
+                  <span className="sm:hidden">Partner</span>
+                </Button>
+              </Link>
 
               {/* Desktop Hamburger Menu */}
               <div className="hidden md:block relative" ref={hamburgerRef}>
@@ -237,48 +279,6 @@ export default function HeaderNew() {
                 )}
               </div>
 
-              {/* Sign In/Up or Avatar */}
-              {!loading && (
-                user && profile ? (
-                  <AvatarMenu profile={profile} />
-                ) : (
-                  <Link to="/auth" className="hidden">
-                    <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      <span>{t("nav_signin")}</span>
-                    </Button>
-                  </Link>
-                )
-              )}
-
-              {/* Notifications Bell - Only show for authenticated users */}
-              {!loading && user && (
-                <NotificationBell />
-              )}
-
-              {/* Cart Button */}
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border hover:bg-muted"
-                aria-label="Open cart"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 inline-flex items-center justify-center text-[10px] font-medium rounded-full px-1.5 py-0.5 bg-primary text-primary-foreground">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Partner CTA */}
-              <Link to="/partner-with-us">
-                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
-                  <span className="hidden sm:inline">{t("nav_partner")}</span>
-                  <span className="sm:hidden">Partner</span>
-                </Button>
-              </Link>
-
               {/* Mobile Menu Toggle */}
               <Button 
                 variant="ghost" 
@@ -288,6 +288,61 @@ export default function HeaderNew() {
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
+
+              {/* Desktop Hamburger Menu - Far Right */}
+              <div className="hidden md:block relative" ref={hamburgerRef}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setDesktopHamburgerOpen(!desktopHamburgerOpen)}
+                  className="p-2"
+                  aria-label="Menu"
+                >
+                  <Menu className="w-5 h-5" />
+                </Button>
+                
+                {desktopHamburgerOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
+                    <div className="space-y-1">
+                      {!user ? (
+                        <>
+                          <Link to="/auth" onClick={() => setDesktopHamburgerOpen(false)}>
+                            <Button variant="ghost" size="sm" className="w-full justify-start">
+                              <User className="w-4 h-4 mr-2" />
+                              Sign In / Sign Up
+                            </Button>
+                          </Link>
+                        </>
+                      ) : null}
+                      
+                      <Link to="/partners" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          Partners
+                        </Button>
+                      </Link>
+                      
+                      <Link to="/refer-partner" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          Refer a Partner
+                        </Button>
+                      </Link>
+                      
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          setDesktopHamburgerOpen(false);
+                          document.dispatchEvent(new CustomEvent('asili-chat:toggle'));
+                        }}
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        AsiliChat
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
