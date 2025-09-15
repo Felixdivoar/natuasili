@@ -38,7 +38,6 @@ const PartnerSuccessStory = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       
       <article className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
@@ -49,75 +48,40 @@ const PartnerSuccessStory = () => {
             </Button>
           </Link>
           
-          <div className="mb-6">
-            <Badge className={getCategoryColor(story.category)}>
-              {story.category}
-            </Badge>
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              {story.title}
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              {story.partnerName}
+            </p>
+          </div>
+        </div>
+        
+        <div className="space-y-8">
+          <div className="aspect-[16/9] bg-muted relative overflow-hidden rounded-lg">
+            <img 
+              src={story.image} 
+              alt={story.title}
+              className="w-full h-full object-cover"
+            />
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {story.title}
-          </h1>
-          
-          <p className="text-xl text-muted-foreground mb-6">
-            {story.teaser}
-          </p>
-          
-          <div className="flex items-center gap-6 text-sm text-muted-foreground mb-8">
-            <div className="flex items-center gap-1">
-              <User className="h-4 w-4" />
-              {story.author}
-            </div>
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              {new Date(story.publishDate).toLocaleDateString()}
-            </div>
-            <div className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              {story.readTime}
-            </div>
+          <div className="prose prose-lg max-w-none">
+            <div 
+              dangerouslySetInnerHTML={{ __html: story.fullStory }}
+              className="text-foreground"
+            />
           </div>
 
-          <div className="mb-6">
-            <Link 
-              to={`/projects/${story.partnerId}`}
-              className="text-primary hover:text-primary/80 transition-colors font-medium"
-            >
-              Read more about {story.partnerName} →
-            </Link>
-          </div>
-        </div>
-        
-        <div className="mb-8">
-          <img
-            src={story.image}
-            alt={story.title}
-            className="w-full h-[400px] object-cover rounded-lg"
-          />
-        </div>
-        
-        <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground">
-          {story.fullStory.split('\n\n').map((paragraph, index) => (
-            <p key={index} className="mb-6 leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-        
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="text-center">
-            <h3 className="text-xl font-bold mb-4">Support {story.partnerName}</h3>
-            <p className="text-muted-foreground mb-6">
-              Book an experience and contribute directly to their conservation work.
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Link to={`/projects/${story.partnerId}`}>
-                <Button size="lg" className="bg-accent hover:bg-accent/90">
-                  View Partner Profile
-                </Button>
-              </Link>
+          <div className="bg-accent/10 rounded-lg p-8 text-center">
+            <div className="text-center">
+              <h3 className="text-xl font-bold mb-4">Experience {story.partnerName} Yourself</h3>
+              <p className="text-muted-foreground mb-6">
+                Ready to create your own conservation impact? Explore experiences with {story.partnerName}.
+              </p>
               <Link to="/browse">
-                <Button size="lg" variant="outline">
+                <Button size="lg" className="bg-accent hover:bg-accent/90">
                   Browse Experiences
                 </Button>
               </Link>
@@ -125,8 +89,6 @@ const PartnerSuccessStory = () => {
           </div>
         </div>
       </article>
-      
-      <Footer />
     </div>
   );
 };

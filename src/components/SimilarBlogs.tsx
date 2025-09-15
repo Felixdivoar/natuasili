@@ -1,10 +1,7 @@
-import { useParams, Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { Badge } from "@/components/ui/badge";
+import Carousel from "@/components/Carousel";
 
 import partnerConservationImpact from "@/assets/blog/partner-conservation-impact.jpg";
 import communityResilienceTourism from "@/assets/blog/community-resilience-tourism.webp";
@@ -18,12 +15,22 @@ import conservationTechBlog from "@/assets/blog/conservation-tech-blog.jpg";
 import travelForGood from "@/assets/blog/travel-for-good.webp";
 import hostConservationExpand from "@/assets/blog/host-conservation-expand.jpg";
 import conservationCollaboration from "@/assets/blog/conservation-collaboration.webp";
-import authenticKenyaExperiences from "@/assets/blog/authentic-kenya-experiences.webp";
 import travelGivesBack from "@/assets/blog/travel-gives-back.jpg";
 import tailoredConservationItineraries from "@/assets/blog/tailored-conservation-itineraries.webp";
 import purposefulTravelExperiences from "@/assets/blog/purposeful-travel-experiences.jpg";
 
-const blogPosts = [
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+}
+
+const allBlogPosts: BlogPost[] = [
   {
     slug: "partner-natuasili-support-conservation-impact",
     title: "Partner with Natuasili and support conservation impact",
@@ -37,7 +44,7 @@ const blogPosts = [
   {
     slug: "community-resilience-conservation-tourism",
     title: "Community resilience through conservation tourism",
-    excerpt: "Eco-tourism is a powerful tool for conservation, providing communities with sustainable livelihoods while protecting wildlife. This blog explores how tourism can reduce reliance on compensation payouts and build community resilience.",
+    excerpt: "Eco-tourism is a powerful tool for conservation, providing communities with sustainable livelihoods while protecting wildlife.",
     category: "Purposeful Travel",
     author: "Sarah Kimani",
     date: "2024-01-12",
@@ -67,7 +74,7 @@ const blogPosts = [
   {
     slug: "digital-conservation-solutions-future-wildlife-tech",
     title: "Digital conservation solutions; the future wildlife tech",
-    excerpt: "Technology is revolutionizing the way we protect wildlife and manage human-wildlife conflict. The rollout of a new digital claims system is a game-changer for communities affected by wildlife damage.",
+    excerpt: "Technology is revolutionizing the way we protect wildlife and manage human-wildlife conflict.",
     category: "Conservation and Community Engagement",
     author: "James Mwangi",
     date: "2024-01-10",
@@ -87,7 +94,7 @@ const blogPosts = [
   {
     slug: "reducing-human-wildlife-conflict-path-coexistence",
     title: "Reducing human–wildlife conflict: path to coexistence",
-    excerpt: "Human-wildlife conflict is one of the most pressing challenges facing conservation efforts today. It not only threatens wildlife populations but also impacts the livelihoods of communities living near conservation areas.",
+    excerpt: "Human-wildlife conflict is one of the most pressing challenges facing conservation efforts today.",
     category: "Conservation and Community Engagement",
     author: "Dr. Grace Wanjiru",
     date: "2024-01-05",
@@ -105,16 +112,6 @@ const blogPosts = [
     image: hostConservationExpand,
   },
   {
-    slug: "partner-natuasili-grow-your-impact",
-    title: "Partner with Natuasili and grow your impact",
-    excerpt: "As a host, lodge owner, conservancy leader, or community initiative, your work is at the heart of Kenya's future. Whether you are protecting endangered wildlife, preserving cultural heritage, or uplifting local communities, your efforts are shaping the landscapes and lives that define this region.",
-    category: "Host Resources",
-    author: "Dr. John Muriuki",
-    date: "2024-01-03",
-    readTime: "9 min read",
-    image: partnerGrowImpact,
-  },
-  {
     slug: "beyond-safari-adding-purpose-itinerary",
     title: "Beyond the safari: adding purpose to your itinerary",
     excerpt: "Kenya's sweeping savannas, dramatic landscapes, and legendary safaris have long drawn travelers seeking encounters with the big five. But beyond the game drives and golden sunsets lies a deeper, more profound story.",
@@ -125,88 +122,9 @@ const blogPosts = [
     image: beyondSafariPurpose,
   },
   {
-    slug: "conservation-through-collaboration-natuasili",
-    title: "Conservation through collaboration with Natuasili",
-    excerpt: "At Natuasili, we value the amazing effort conservationists and communities living around protected areas undertake to preserve the natural wonders of our earth.",
-    category: "Conservation and Community Engagement",
-    author: "Dr. James Olaka",
-    date: "2023-12-30",
-    readTime: "6 min read",
-    image: conservationCollaboration,
-  },
-  {
-    slug: "kenyan-coast-conservation-meets-culture",
-    title: "Kenyan Coast where conservation meets culture",
-    excerpt: "The Kenyan Coast is more than just a picturesque destination of white sandy beaches and turquoise waters. It is a place where history, heritage, and conservation intertwine.",
-    category: "Conservation and Community Engagement",
-    author: "Dr. John Muriuki",
-    date: "2023-12-28",
-    readTime: "6 min read",
-    image: sustainableTourismBlog,
-  },
-  {
-    slug: "hosted-conservation-cultural-experiences",
-    title: "Hosted conservation and cultural experiences",
-    excerpt: "Are you a community-based or conservation organization looking to enhance the hosting of the experiences you provide? Joining Natuasili means joining a dynamic community of driven travelers.",
-    category: "Conservation and Community Engagement",
-    author: "Peter Mwangi",
-    date: "2023-12-27",
-    readTime: "5 min read",
-    image: partnerConservationImpact,
-  },
-  {
-    slug: "embracing-sustainability-travel-experience",
-    title: "Embracing sustainability in every travel experience",
-    excerpt: "The concept of sustainability is central to our work at Natuasili; it is more than simply a slogan; it is a fundamental commitment.",
-    category: "Conservation and Community Engagement",
-    author: "Grace Wanjiru",
-    date: "2023-12-26",
-    readTime: "6 min read",
-    image: sustainableTourismBlog,
-  },
-  {
-    slug: "host-natuasili-share-your-impact",
-    title: "Host with Natuasili and share your impact",
-    excerpt: "Are you a community-based enterprise or conservation organization that is committed to positively making the world a better place through your activities?",
-    category: "Host Resources",
-    author: "Samuel Kiprotich",
-    date: "2023-12-25",
-    readTime: "7 min read",
-    image: partnerGrowImpact,
-  },
-  {
-    slug: "join-natuasili-make-travels-count",
-    title: "Join Natuasili and make your travels count",
-    excerpt: "One great approach to seeing the world, learning about other cultures, and making lifelong memories is travel. But suppose your travels could serve purposes beyond mere personal experience?",
-    category: "Conservation and Community Engagement",
-    author: "Mary Chepkemoi",
-    date: "2023-12-24",
-    readTime: "6 min read",
-    image: beyondSafariPurpose,
-  },
-  {
-    slug: "transforming-tourism-natuasili-approach",
-    title: "Transforming tourism: The Natuasili approach",
-    excerpt: "For decades, tourism has been a gateway to experiencing the wonders of the world, from breathtaking landscapes to diverse cultures and wildlife. But at Natuasili, we believe that travel should be more than just exploration.",
-    category: "Purposeful Travel",
-    author: "Alice Nyong'o",
-    date: "2023-12-23",
-    readTime: "5 min read",
-    image: conservationTechBlog,
-  },
-  {
-    slug: "authentic-kenya-experiences-natuasili",
-    title: "Authentic Kenya experiences with Natuasili",
-    excerpt: "Natuasili is working to redefine what authenticity means in the travel industry in a world where the word is sometimes overused and under-delivered.",
-    category: "Conservation and Community Engagement",
-    author: "Dr. Sarah Kimani",
-    date: "2023-12-22",
-    readTime: "6 min read",
-  },
-  {
     slug: "travel-gives-back-natuasili",
     title: "Travel that gives back with Natuasili",
-    excerpt: "Travel has an amazing ability to change our lives as well as the environment around us. We are eager to share with you the intangible potential of your travels since we believe your adventures should positively affect the places you visit.",
+    excerpt: "Travel has an amazing ability to change our lives as well as the environment around us.",
     category: "Purposeful Travel",
     author: "Dr. Sarah Kimani",
     date: "2024-01-16",
@@ -226,7 +144,7 @@ const blogPosts = [
   {
     slug: "purposeful-travel-experiences-natuasili",
     title: "Purposeful travel experiences with Natuasili",
-    excerpt: "Are you looking for travel experiences that leave a lasting impact, not just on your memories but on the world around you? If yes, you're in the right place.",
+    excerpt: "Are you looking for travel experiences that leave a lasting impact, not just on your memories but on the world around you?",
     category: "Purposeful Travel",
     author: "Alice Nyong'o",
     date: "2024-01-18",
@@ -235,16 +153,12 @@ const blogPosts = [
   }
 ];
 
-const BlogCategory = () => {
-  const { category } = useParams();
-  const categoryTitle = category?.split('-').map(word => 
-    word.charAt(0).toUpperCase() + word.slice(1)
-  ).join(' ') || '';
+interface SimilarBlogsProps {
+  currentSlug: string;
+  currentCategory?: string;
+}
 
-  const filteredPosts = blogPosts.filter(post => 
-    post.category.toLowerCase().replace(/\s+/g, '-') === category
-  );
-
+const SimilarBlogs = ({ currentSlug, currentCategory }: SimilarBlogsProps) => {
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Host Resources': return 'bg-conservation/10 text-conservation border-conservation/20';
@@ -255,48 +169,34 @@ const BlogCategory = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Breadcrumb */}
-        <nav className="mb-8">
-          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-            <Link to="/blog" className="hover:text-primary transition-colors">Blog</Link>
-            <span>/</span>
-            <span className="text-foreground">{categoryTitle}</span>
-          </div>
-        </nav>
+  // Filter out current post and prioritize same category
+  const filteredPosts = allBlogPosts
+    .filter(post => post.slug !== currentSlug)
+    .sort((a, b) => {
+      // If we have a category, prioritize posts from same category
+      if (currentCategory) {
+        if (a.category === currentCategory && b.category !== currentCategory) return -1;
+        if (b.category === currentCategory && a.category !== currentCategory) return 1;
+      }
+      // Then sort by date (newest first)
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })
+    .slice(0, 6); // Get top 6 for carousel
 
-        <div className="mb-8">
-          <Link to="/blog">
-            <Button variant="ghost" className="mb-6">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Blog
-            </Button>
-          </Link>
-          
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              {categoryTitle}
-            </h1>
-            <p className="text-xl text-muted-foreground mb-6">
-              {filteredPosts.length} article{filteredPosts.length !== 1 ? 's' : ''} in this category
-            </p>
-          </div>
-        </div>
+  if (filteredPosts.length === 0) return null;
+
+  return (
+    <section className="py-12 bg-muted/20">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+          Similar Articles
+        </h2>
         
-        {filteredPosts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-muted-foreground mb-4">No articles found in this category.</p>
-            <Link to="/blog">
-              <Button>Browse All Articles</Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
-              <Link key={post.slug} to={`/blog/${post.slug}`}>
-                <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+        <Carousel showArrows className="mx-auto">
+          {filteredPosts.map((post) => (
+            <div key={post.slug} className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pr-4">
+              <Link to={`/blog/${post.slug}`}>
+                <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full">
                   <div className="aspect-[16/10] bg-muted relative overflow-hidden">
                     <img 
                       src={post.image} 
@@ -311,7 +211,7 @@ const BlogCategory = () => {
                         {post.category}
                       </Badge>
                     </div>
-                    <CardTitle className="text-lg font-semibold line-clamp-2 mb-2">
+                    <CardTitle className="text-lg font-semibold line-clamp-2 mb-2 hover:text-primary transition-colors">
                       {post.title}
                     </CardTitle>
                     <p className="text-sm text-muted-foreground line-clamp-3">
@@ -327,12 +227,12 @@ const BlogCategory = () => {
                   </CardContent>
                 </Card>
               </Link>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </Carousel>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default BlogCategory;
+export default SimilarBlogs;

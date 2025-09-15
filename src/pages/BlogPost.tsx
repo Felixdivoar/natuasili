@@ -27,6 +27,8 @@ import maasaiMaraProject from "@/assets/maasai-mara-project.jpg";
 import sambururEducation from "@/assets/samburu-education.jpg";
 import karuraForestPlanting from "@/assets/karura-forest-planting.jpg";
 
+import SimilarBlogs from "@/components/SimilarBlogs";
+
 const blogContent = {
   "partner-natuasili-support-conservation-impact": {
     title: "Partner with Natuasili and support conservation impact",
@@ -328,6 +330,11 @@ const BlogPost = () => {
           </div>
         </div>
       </article>
+      
+      <SimilarBlogs 
+        currentSlug={slug || ""} 
+        currentCategory={post?.category}
+      />
     </div>
   );
 };

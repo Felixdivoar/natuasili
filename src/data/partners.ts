@@ -30,7 +30,12 @@ import maraElephantTracking from "@/assets/mara-elephant-tracking.jpg";
 import bigFiveTracking from "@/assets/big-five-tracking.jpg";
 import northernWhiteRhinos from "@/assets/northern-white-rhinos.jpg";
 import chimpanzeeSanctuary from "@/assets/chimpanzee-sanctuary.jpg";
-import lionTracking from "@/assets/lion-tracking.jpg";
+import lionTrackingHero from "@/assets/lion-tracking-hero.jpeg";
+import lionTracking2 from "@/assets/lion-tracking-2.jpeg";
+import lionTracking3 from "@/assets/lion-tracking-3.jpeg";
+import lionTracking4 from "@/assets/lion-tracking-4.jpeg";
+import lionTracking5 from "@/assets/lion-tracking-5.jpeg";
+import lionTracking6 from "@/assets/lion-tracking-6.jpeg";
 import k9HandlerTraining from "@/assets/k9-handler-training.jpg";
 import mangroveRestoration from "@/assets/mangrove-restoration.jpg";
 import nightGameDrive from "@/assets/night-game-drive.jpg";
@@ -192,7 +197,7 @@ const getExperienceImages = (title: string, activities: string[]): string[] => {
     return [chimpanzeeSanctuary, olPejetaImg, "/images/placeholder-3.jpg"];
   }
   if (titleLower.includes("lion tracking")) {
-    return [lionTracking, bigFiveTracking, olPejetaImg];
+    return [lionTrackingHero, bigFiveTracking, olPejetaImg];
   }
   if (titleLower.includes("k9") || titleLower.includes("handler")) {
     return [k9HandlerTraining, olPejetaImg, "/images/placeholder-4.jpg"];
@@ -1195,9 +1200,9 @@ Sweetwaters Chimpanzee Sanctuary, Ol Pejeta Conservancy`,
     destination: "laikipia",
     themes: ["Wildlife conservation"],
     activities: ["lions", "tracking", "research"],
-    images: [lionTracking, bigFiveTracking, olPejetaImg],
-    heroImage: lionTracking,
-    gallery: [lionTracking, bigFiveTracking, olPejetaImg, "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"],
+    images: [lionTrackingHero, lionTracking2, lionTracking3, lionTracking4, lionTracking5, lionTracking6],
+    heroImage: lionTrackingHero,
+    gallery: [lionTrackingHero, lionTracking2, lionTracking3, lionTracking4, lionTracking5, lionTracking6],
     description: `Overview
 Join Ol Pejeta's lion research team in active conservation work by participating in lion tracking and monitoring activities. This hands-on experience puts you at the forefront of predator conservation, using radio telemetry and field observation techniques to collect vital data about the conservancy's lion population.
 
