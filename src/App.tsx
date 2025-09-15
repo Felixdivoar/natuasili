@@ -198,6 +198,7 @@ const App = () => (
                 <Route path="/privacy-policy" element={<AppLayout><PrivacyPolicy /></AppLayout>} />
                 <Route path="/cookie-policy" element={<AppLayout><CookiePolicy /></AppLayout>} />
                 <Route path="/search" element={<AppLayout><Search /></AppLayout>} />
+                <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
                 <Route path="/partner-entry" element={<AppLayout><PartnerEntry /></AppLayout>} />
                 <Route path="/listings" element={<AppLayout><Listings /></AppLayout>} />
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
