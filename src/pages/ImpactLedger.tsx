@@ -826,204 +826,242 @@ const ImpactLedger = () => {
                 ))}
               </div>
 
-              {/* Charts Section - Real-time Interactive Charts */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <BarChart3 className="h-5 w-5" />
-                      Impact by Theme
-                      {themeLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
-                      <Badge variant="secondary" className="ml-auto">Live</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <SafeChartContainer title="Impact by Theme" className="h-80">
-                      {themeLoading ? (
-                        <div className="flex items-center justify-center h-full">
-                          <div className="text-center">
-                            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
-                            <p className="text-sm text-muted-foreground">Loading real-time theme data...</p>
-                          </div>
+              {/* Impact by Theme Section - Full Width */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5" />
+                    Impact by Theme
+                    {themeLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
+                    <Badge variant="secondary" className="ml-auto">Live</Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <SafeChartContainer title="Impact by Theme" className="min-h-96">
+                    {themeLoading ? (
+                      <div className="flex items-center justify-center h-full min-h-96">
+                        <div className="text-center">
+                          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
+                          <p className="text-sm text-muted-foreground">Loading real-time theme data...</p>
                         </div>
-                      ) : themeData.length === 0 ? (
-                        <div className="flex items-center justify-center h-full">
-                          <div className="text-center">
-                            <BarChart3 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                            <p className="text-sm text-muted-foreground">No theme data available</p>
-                          </div>
+                      </div>
+                    ) : themeData.length === 0 ? (
+                      <div className="flex items-center justify-center h-full min-h-96">
+                        <div className="text-center">
+                          <BarChart3 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground">No theme data available</p>
                         </div>
-                      ) : (
-                        <div className="space-y-6">
+                      </div>
+                    ) : (
+                      <div className="space-y-8">
+                        {/* Main Charts Grid - Responsive */}
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                           {/* Pie Chart */}
-                          <div className="h-48">
-                            <ResponsiveContainer width="100%" height="100%">
-                              <PieChart>
-                                <Pie
-                                  data={themeData}
-                                  cx="50%"
-                                  cy="50%"
-                                  innerRadius={40}
-                                  outerRadius={80}
-                                  paddingAngle={2}
-                                  dataKey="value"
-                                >
-                                  {themeData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                                  ))}
-                                </Pie>
-                                <Tooltip 
-                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
-                                />
-                                <Legend />
-                              </PieChart>
-                            </ResponsiveContainer>
+                          <div className="space-y-4">
+                            <h3 className="text-lg font-semibold">Theme Distribution</h3>
+                            <div className="h-80">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <PieChart>
+                                  <Pie
+                                    data={themeData}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={50}
+                                    outerRadius={120}
+                                    paddingAngle={2}
+                                    dataKey="value"
+                                  >
+                                    {themeData.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                                    ))}
+                                  </Pie>
+                                  <Tooltip 
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                  />
+                                  <Legend />
+                                </PieChart>
+                              </ResponsiveContainer>
+                            </div>
                           </div>
                           
                           {/* Bar Chart */}
-                          <div className="h-48">
-                            <ResponsiveContainer width="100%" height="100%">
-                              <BarChart data={themeData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis 
-                                  dataKey="name" 
-                                  angle={-45}
-                                  textAnchor="end"
-                                  height={80}
-                                  fontSize={12}
-                                />
-                                <YAxis fontSize={12} />
-                                <Tooltip 
-                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
-                                />
-                                <Bar dataKey="value" fill="#22c55e" />
-                              </BarChart>
-                            </ResponsiveContainer>
-                          </div>
-
-                          {/* Summary List */}
-                          <div className="space-y-2">
-                            {themeData.slice(0, 3).map((item, index) => (
-                              <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded">
-                                <div className="flex items-center gap-2">
-                                  <div 
-                                    className="w-3 h-3 rounded-full"
-                                    style={{ backgroundColor: item.fill }}
+                          <div className="space-y-4">
+                            <h3 className="text-lg font-semibold">Impact Allocation</h3>
+                            <div className="h-80">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={themeData} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
+                                  <CartesianGrid strokeDasharray="3 3" />
+                                  <XAxis 
+                                    dataKey="name" 
+                                    angle={-45}
+                                    textAnchor="end"
+                                    height={80}
+                                    fontSize={12}
+                                    interval={0}
                                   />
-                                  <span className="text-sm font-medium">{item.name}</span>
+                                  <YAxis fontSize={12} />
+                                  <Tooltip 
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                  />
+                                  <Bar dataKey="value" fill="#22c55e" radius={[4, 4, 0, 0]} />
+                                </BarChart>
+                              </ResponsiveContainer>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Summary Section - Full Width */}
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-semibold">Top Themes by Impact</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {themeData.slice(0, 6).map((item, index) => (
+                              <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center gap-2">
+                                    <div 
+                                      className="w-4 h-4 rounded-full"
+                                      style={{ backgroundColor: item.fill }}
+                                    />
+                                    <span className="text-sm font-medium">{item.name}</span>
+                                  </div>
                                 </div>
-                                <span className="text-sm font-bold text-primary">
-                                  {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                                </span>
+                                <div className="text-right">
+                                  <div className="text-sm font-bold text-primary">
+                                    {currency} {convert(item.value, 'KES', currency).toLocaleString()}
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    {((item.value / themeData.reduce((sum, d) => sum + d.value, 0)) * 100).toFixed(1)}%
+                                  </div>
+                                </div>
                               </div>
                             ))}
                           </div>
                         </div>
-                      )}
-                    </SafeChartContainer>
-                  </CardContent>
-                </Card>
+                      </div>
+                    )}
+                  </SafeChartContainer>
+                </CardContent>
+              </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5" />
-                      Geographic Distribution
-                      {geoLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
-                      <Badge variant="secondary" className="ml-auto">Live</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <SafeChartContainer title="Geographic Distribution" className="h-80">
-                      {geoLoading ? (
-                        <div className="flex items-center justify-center h-full">
-                          <div className="text-center">
-                            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
-                            <p className="text-sm text-muted-foreground">Loading real-time location data...</p>
-                          </div>
+              {/* Geographic Distribution Section - Full Width */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5" />
+                    Geographic Distribution
+                    {geoLoading && <RefreshCw className="h-4 w-4 animate-spin ml-2" />}
+                    <Badge variant="secondary" className="ml-auto">Live</Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <SafeChartContainer title="Geographic Distribution" className="min-h-96">
+                    {geoLoading ? (
+                      <div className="flex items-center justify-center h-full min-h-96">
+                        <div className="text-center">
+                          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
+                          <p className="text-sm text-muted-foreground">Loading real-time location data...</p>
                         </div>
-                      ) : geoData.length === 0 ? (
-                        <div className="flex items-center justify-center h-full">
-                          <div className="text-center">
-                            <MapPin className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                            <p className="text-sm text-muted-foreground">No geographic data available</p>
-                          </div>
+                      </div>
+                    ) : geoData.length === 0 ? (
+                      <div className="flex items-center justify-center h-full min-h-96">
+                        <div className="text-center">
+                          <MapPin className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground">No geographic data available</p>
                         </div>
-                      ) : (
-                        <div className="space-y-6">
+                      </div>
+                    ) : (
+                      <div className="space-y-8">
+                        {/* Main Charts Grid - Responsive */}
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                           {/* Horizontal Bar Chart */}
-                          <div className="h-48">
-                            <ResponsiveContainer width="100%" height="100%">
-                              <BarChart 
-                                layout="horizontal"
-                                data={geoData.slice(0, 8)}
-                                margin={{ top: 5, right: 30, left: 50, bottom: 5 }}
-                              >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis type="number" fontSize={12} />
-                                <YAxis 
-                                  type="category" 
-                                  dataKey="name" 
-                                  fontSize={11}
-                                  width={80}
-                                />
-                                <Tooltip 
-                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
-                                />
-                                <Bar dataKey="value" fill="#3b82f6" />
-                              </BarChart>
-                            </ResponsiveContainer>
+                          <div className="space-y-4">
+                            <h3 className="text-lg font-semibold">Regional Impact Distribution</h3>
+                            <div className="h-80">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <BarChart 
+                                  layout="horizontal"
+                                  data={geoData.slice(0, 8)}
+                                  margin={{ top: 5, right: 30, left: 80, bottom: 5 }}
+                                >
+                                  <CartesianGrid strokeDasharray="3 3" />
+                                  <XAxis type="number" fontSize={12} />
+                                  <YAxis 
+                                    type="category" 
+                                    dataKey="name" 
+                                    fontSize={11}
+                                    width={100}
+                                  />
+                                  <Tooltip 
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                  />
+                                  <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                                </BarChart>
+                              </ResponsiveContainer>
+                            </div>
                           </div>
                           
                           {/* Line Chart Trend */}
-                          <div className="h-32">
-                            <ResponsiveContainer width="100%" height="100%">
-                              <LineChart data={geoData.slice(0, 6)}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis 
-                                  dataKey="name" 
-                                  fontSize={10}
-                                  angle={-45}
-                                  textAnchor="end"
-                                  height={60}
-                                />
-                                <YAxis fontSize={10} />
-                                <Tooltip 
-                                  formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
-                                />
-                                <Line 
-                                  type="monotone" 
-                                  dataKey="value" 
-                                  stroke="#f59e0b" 
-                                  strokeWidth={2}
-                                  dot={{ fill: '#f59e0b', strokeWidth: 2, r: 4 }}
-                                />
-                              </LineChart>
-                            </ResponsiveContainer>
+                          <div className="space-y-4">
+                            <h3 className="text-lg font-semibold">Location Performance Trend</h3>
+                            <div className="h-80">
+                              <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={geoData.slice(0, 8)} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
+                                  <CartesianGrid strokeDasharray="3 3" />
+                                  <XAxis 
+                                    dataKey="name" 
+                                    fontSize={10}
+                                    angle={-45}
+                                    textAnchor="end"
+                                    height={80}
+                                    interval={0}
+                                  />
+                                  <YAxis fontSize={10} />
+                                  <Tooltip 
+                                    formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Amount']}
+                                  />
+                                  <Line 
+                                    type="monotone" 
+                                    dataKey="value" 
+                                    stroke="#f59e0b" 
+                                    strokeWidth={3}
+                                    dot={{ fill: '#f59e0b', strokeWidth: 2, r: 6 }}
+                                    activeDot={{ r: 8 }}
+                                  />
+                                </LineChart>
+                              </ResponsiveContainer>
+                            </div>
                           </div>
+                        </div>
 
-                          {/* Top Locations List */}
-                          <div className="space-y-2">
-                            {geoData.slice(0, 5).map((item, index) => (
-                              <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded">
-                                <div className="flex items-center gap-2">
-                                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <span className="text-xs font-bold text-primary">#{index + 1}</span>
+                        {/* Top Locations Grid - Responsive */}
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-semibold">Top Conservation Locations</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {geoData.slice(0, 9).map((item, index) => (
+                              <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <span className="text-sm font-bold text-primary">#{index + 1}</span>
                                   </div>
-                                  <span className="text-sm font-medium">{item.name}</span>
+                                  <span className="text-sm font-medium truncate">{item.name}</span>
                                 </div>
-                                <span className="text-sm font-bold text-primary">
-                                  {currency} {convert(item.value, 'KES', currency).toLocaleString()}
-                                </span>
+                                <div className="text-right">
+                                  <div className="text-sm font-bold text-primary">
+                                    {currency} {convert(item.value, 'KES', currency).toLocaleString()}
+                                  </div>
+                                  <div className="text-xs text-muted-foreground">
+                                    {((item.value / geoData.reduce((sum, d) => sum + d.value, 0)) * 100).toFixed(1)}%
+                                  </div>
+                                </div>
                               </div>
                             ))}
                           </div>
                         </div>
-                      )}
-                    </SafeChartContainer>
-                  </CardContent>
-                </Card>
-              </div>
+                      </div>
+                    )}
+                  </SafeChartContainer>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {/* Entries Tab */}
