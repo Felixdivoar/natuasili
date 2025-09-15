@@ -586,7 +586,7 @@ const AvailabilityAndOptions = ({
                     size="lg"
                     style={{ touchAction: 'manipulation' }}
                   >
-                    Start Booking
+                    Book now
                   </Button>
                   <Button 
                     variant="outline"
