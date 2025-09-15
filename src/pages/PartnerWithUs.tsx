@@ -145,7 +145,7 @@ const PartnerWithUs: React.FC = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative hero-padding px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="max-w-[1150px] mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Partner with Conservation Leaders
@@ -180,7 +180,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* Trusted Partners Carousel */}
       <section className="section-padding-lg bg-muted/30">
-        <div className="max-w-[1150px] mx-auto px-6">
+        <div className="max-w-[1200px] mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Trusted by leading conservation organizations</h2>
             <p className="text-muted-foreground">
@@ -287,7 +287,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* Value Props */}
       <section className="hero-padding px-4">
-        <div className="max-w-[1150px] mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Partner With Natuasili?</h2>
             <p className="text-xl text-muted-foreground">
@@ -337,7 +337,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* How It Works */}
       <section className="hero-padding px-4 bg-muted/30">
-        <div className="max-w-[1150px] mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
             <p className="text-xl text-muted-foreground">
@@ -383,7 +383,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* Features */}
       <section className="hero-padding px-4">
-        <div className="max-w-[1150px] mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Platform Features</h2>
             <p className="text-xl text-muted-foreground">
@@ -437,7 +437,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* Pricing */}
       <section className="hero-padding px-4 bg-muted/30">
-        <div className="max-w-[1150px] mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
             <p className="text-xl text-muted-foreground">
@@ -509,7 +509,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* FAQ */}
       <section className="hero-padding px-4">
-        <div className="max-w-[1150px] mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
           </div>
@@ -528,7 +528,7 @@ const PartnerWithUs: React.FC = () => {
 
       {/* CTA Banner */}
       <section className="hero-padding px-4 bg-primary text-primary-foreground">
-        <div className="max-w-[1150px] mx-auto text-center">
+        <div className="max-w-[1200px] mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Partner with Us?</h2>
           <p className="text-xl mb-8 opacity-90">
             Join the leading platform for conservation tourism in Kenya and start making a greater impact today.

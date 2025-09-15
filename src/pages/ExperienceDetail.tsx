@@ -236,7 +236,7 @@ export default function ExperienceDetail() {
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative" ref={heroRef}>
-          <div className="max-w-[1150px] mx-auto px-4">
+          <div className="max-w-[1200px] mx-auto px-4">
             {/* Header Info */}
             <div className="py-6 space-y-4">
               {/* Theme chip */}
@@ -313,7 +313,7 @@ export default function ExperienceDetail() {
         {/* Availability and Options */}
         <section className="bg-card border-t border-b">
           <div 
-            className="max-w-[1150px] mx-auto px-4 py-6"
+            className="max-w-[1200px] mx-auto px-4 py-6"
             id="availability-section"
           >
             <AvailabilityAndOptions
@@ -340,7 +340,7 @@ export default function ExperienceDetail() {
         </section>
 
         {/* Main Content */}
-        <div className="max-w-[1150px] mx-auto px-4 py-8">
+        <div className="max-w-[1200px] mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto space-y-12">
             
             {/* Overview */}
@@ -501,7 +501,7 @@ export default function ExperienceDetail() {
           <>
             {/* Desktop sticky bar */}
             <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b shadow-sm">
-              <div className="max-w-[1150px] mx-auto px-4 py-3 flex items-center justify-between">
+              <div className="max-w-[1200px] mx-auto px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <h3 className="font-semibold text-foreground">{experience.title}</h3>
                   <div className="flex items-center gap-1">

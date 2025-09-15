@@ -155,6 +155,13 @@
     scroll-margin-top: 0;
   }
 
+  /* Site-wide content width constraint */
+  .content-max-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
 /* Force black color for descriptions instead of grey */
 .text-muted-foreground {
   color: hsl(var(--foreground)) !important;
@@ -344,7 +351,7 @@ button, .btn, .button, [role="button"],
 }
 
 .hero-inner {   
-  max-width: 1150px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 4rem 1.5rem; /* More consistent padding */
   position: relative;
@@ -410,7 +417,7 @@ button, .btn, .button, [role="button"],
   height: 56px;            /* ~ short, clean */
 }
 .header-compact .nav-inner {
-  max-width: 1150px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px;         /* slimmer side padding */
 }

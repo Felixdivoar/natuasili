@@ -41,7 +41,7 @@ export default function DestinationExperienceCarousel({
 
   return (
     <section className="bg-background py-[10px]">
-      <div className="max-w-[1150px] mx-auto px-[15px]">
+      <div className="max-w-[1200px] mx-auto px-[15px]">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
             <Link 
