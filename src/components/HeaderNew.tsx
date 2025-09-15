@@ -224,61 +224,6 @@ export default function HeaderNew() {
                 </Button>
               </Link>
 
-              {/* Desktop Hamburger Menu */}
-              <div className="hidden md:block relative" ref={hamburgerRef}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setDesktopHamburgerOpen(!desktopHamburgerOpen)}
-                  className="p-2"
-                  aria-label="Menu"
-                >
-                  <Menu className="w-5 h-5" />
-                </Button>
-                
-                {desktopHamburgerOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
-                    <div className="space-y-1">
-                      {!user ? (
-                        <>
-                          <Link to="/auth" onClick={() => setDesktopHamburgerOpen(false)}>
-                            <Button variant="ghost" size="sm" className="w-full justify-start">
-                              <User className="w-4 h-4 mr-2" />
-                              Sign In / Sign Up
-                            </Button>
-                          </Link>
-                        </>
-                      ) : null}
-                      
-                      <Link to="/partners" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          Partners
-                        </Button>
-                      </Link>
-                      
-                      <Link to="/refer-partner" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          Refer a Partner
-                        </Button>
-                      </Link>
-                      
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="w-full justify-start"
-                        onClick={() => {
-                          setDesktopHamburgerOpen(false);
-                          document.dispatchEvent(new CustomEvent('asili-chat:toggle'));
-                        }}
-                      >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        AsiliChat
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
               {/* Mobile Menu Toggle */}
               <Button 
                 variant="ghost" 
