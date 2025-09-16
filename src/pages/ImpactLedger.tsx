@@ -864,31 +864,31 @@ const ImpactLedger = () => {
                   </p>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <SafeChartContainer title="Impact by Theme" className="min-h-96">
+                  <SafeChartContainer title="Impact by Theme" className="min-h-[300px] sm:min-h-[400px]">
                     {themeLoading ? (
-                      <div className="flex items-center justify-center h-full min-h-96">
+                      <div className="flex items-center justify-center h-full min-h-[300px] sm:min-h-[400px]">
                         <div className="text-center">
                           <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
                           <p className="text-sm text-muted-foreground">Loading real-time theme data...</p>
                         </div>
                       </div>
                     ) : themeData.length === 0 ? (
-                      <div className="flex items-center justify-center h-full min-h-96">
+                      <div className="flex items-center justify-center h-full min-h-[300px] sm:min-h-[400px]">
                         <div className="text-center">
                           <BarChart3 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                           <p className="text-sm text-muted-foreground">No theme data available</p>
                         </div>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                        {/* Chart - Takes 2/3 width on large screens */}
-                        <div className="xl:col-span-2 space-y-4">
-                          <div className="bg-background/50 rounded-lg p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                              <TrendingUp className="h-5 w-5 text-primary" />
+                      <div className="flex flex-col xl:grid xl:grid-cols-3 gap-6 xl:gap-8">
+                        {/* Chart - Full width on mobile, 2/3 width on large screens */}
+                        <div className="order-1 xl:order-1 xl:col-span-2 space-y-4">
+                          <div className="bg-background/50 rounded-lg p-3 sm:p-6">
+                            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
+                              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                               Theme Impact Distribution
                             </h3>
-                            <div className="h-96">
+                            <div className="h-[280px] sm:h-[350px] xl:h-96 w-full">
                               <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                   <defs>
@@ -903,11 +903,15 @@ const ImpactLedger = () => {
                                     data={themeData}
                                     cx="50%"
                                     cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={120}
+                                    innerRadius="25%"
+                                    outerRadius="75%"
                                     paddingAngle={2}
                                     dataKey="value"
-                                    label={({ name, percent }) => percent > 0.05 ? `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%` : ''}
+                                    label={({ name, percent }) => {
+                                      // Only show labels on larger screens and for significant segments
+                                      if (typeof window !== 'undefined' && window.innerWidth < 640) return '';
+                                      return percent > 0.05 ? `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%` : '';
+                                    }}
                                     labelLine={false}
                                     fill="url(#themeGradient-0)"
                                   >
@@ -927,24 +931,28 @@ const ImpactLedger = () => {
                                       border: '1px solid hsl(var(--border))',
                                       borderRadius: '8px',
                                       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                                      padding: '12px'
+                                      padding: '8px 12px',
+                                      fontSize: '14px'
                                     }}
                                   />
-                                  <Legend />
+                                  <Legend 
+                                    wrapperStyle={{ fontSize: '12px' }}
+                                    iconType="circle"
+                                  />
                                 </PieChart>
                               </ResponsiveContainer>
                             </div>
                           </div>
                         </div>
                         
-                        {/* Summary Statistics - Takes 1/3 width */}
-                        <div className="space-y-6">
+                        {/* Summary Statistics - Takes 1/3 width on desktop, full width on mobile */}
+                        <div className="order-2 xl:order-2 space-y-4 xl:space-y-6">
                           <div>
-                            <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                              <BarChart3 className="h-5 w-5 text-primary" />
+                            <h3 className="font-semibold text-base sm:text-lg mb-4 flex items-center gap-2">
+                              <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                               Theme Breakdown
                             </h3>
-                            <div className="space-y-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3">
                               {themeData.slice(0, 6).map((theme, index) => {
                                 const total = themeData.reduce((sum, t) => sum + t.value, 0);
                                 const percentage = total > 0 ? (theme.value / total) * 100 : 0;
@@ -952,16 +960,16 @@ const ImpactLedger = () => {
                                 return (
                                   <div key={theme.name} className="group hover:bg-muted/50 p-3 rounded-lg transition-colors">
                                     <div className="flex items-center justify-between mb-2">
-                                      <div className="flex items-center gap-3">
+                                      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                                         <div 
-                                          className="w-3 h-3 rounded-full shadow-sm"
+                                          className="w-3 h-3 rounded-full shadow-sm flex-shrink-0"
                                           style={{ backgroundColor: theme.fill }}
                                         />
-                                        <span className="font-medium text-sm truncate max-w-[120px]" title={theme.name}>
+                                        <span className="font-medium text-xs sm:text-sm truncate" title={theme.name}>
                                           {theme.name}
                                         </span>
                                       </div>
-                                      <span className="text-xs font-semibold text-muted-foreground">
+                                      <span className="text-xs font-semibold text-muted-foreground flex-shrink-0">
                                         {percentage.toFixed(1)}%
                                       </span>
                                     </div>
@@ -975,7 +983,7 @@ const ImpactLedger = () => {
                                           }}
                                         />
                                       </div>
-                                      <span className="text-sm font-bold">
+                                      <span className="text-xs sm:text-sm font-bold flex-shrink-0">
                                         {currency} {convert(theme.value, 'KES', currency).toLocaleString()}
                                       </span>
                                     </div>
@@ -986,24 +994,24 @@ const ImpactLedger = () => {
                           </div>
                           
                           {/* Quick Stats */}
-                          <div className="bg-muted/30 rounded-xl p-4 space-y-3">
-                            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                          <div className="bg-muted/30 rounded-xl p-3 sm:p-4 space-y-3">
+                            <h4 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
                               Quick Stats
                             </h4>
                             <div className="space-y-2">
                               <div className="flex justify-between items-center">
-                                <span className="text-sm">Total Themes</span>
-                                <span className="font-semibold">{themeData.length}</span>
+                                <span className="text-xs sm:text-sm">Total Themes</span>
+                                <span className="font-semibold text-sm">{themeData.length}</span>
                               </div>
                               <div className="flex justify-between items-center">
-                                <span className="text-sm">Highest Impact</span>
-                                <span className="font-semibold">
+                                <span className="text-xs sm:text-sm">Highest Impact</span>
+                                <span className="font-semibold text-xs sm:text-sm">
                                   {themeData[0] ? `${currency} ${convert(themeData[0].value, 'KES', currency).toLocaleString()}` : 'N/A'}
                                 </span>
                               </div>
                               <div className="flex justify-between items-center">
-                                <span className="text-sm">Leading Theme</span>
-                                <span className="font-semibold text-xs truncate max-w-[100px]" title={themeData[0]?.name}>
+                                <span className="text-xs sm:text-sm">Leading Theme</span>
+                                <span className="font-semibold text-xs truncate max-w-[120px] sm:max-w-[140px]" title={themeData[0]?.name}>
                                   {themeData[0]?.name || 'N/A'}
                                 </span>
                               </div>
@@ -1038,31 +1046,31 @@ const ImpactLedger = () => {
                   </p>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <SafeChartContainer title="Geographic Distribution" className="min-h-96">
+                  <SafeChartContainer title="Geographic Distribution" className="min-h-[300px] sm:min-h-[400px]">
                     {geoLoading ? (
-                      <div className="flex items-center justify-center h-full min-h-96">
+                      <div className="flex items-center justify-center h-full min-h-[300px] sm:min-h-[400px]">
                         <div className="text-center">
                           <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-2 text-primary" />
                           <p className="text-sm text-muted-foreground">Loading real-time location data...</p>
                         </div>
                       </div>
                     ) : geoData.length === 0 ? (
-                      <div className="flex items-center justify-center h-full min-h-96">
+                      <div className="flex items-center justify-center h-full min-h-[300px] sm:min-h-[400px]">
                         <div className="text-center">
                           <MapPin className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                           <p className="text-sm text-muted-foreground">No geographic data available</p>
                         </div>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                        {/* Chart - Takes 2/3 width on large screens */}
-                        <div className="xl:col-span-2 space-y-4">
-                          <div className="bg-background/50 rounded-lg p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                              <MapPin className="h-5 w-5 text-primary" />
+                      <div className="flex flex-col xl:grid xl:grid-cols-3 gap-6 xl:gap-8">
+                        {/* Chart - Full width on mobile, 2/3 width on large screens */}
+                        <div className="order-1 xl:order-1 xl:col-span-2 space-y-4">
+                          <div className="bg-background/50 rounded-lg p-3 sm:p-6">
+                            <h3 className="text-base sm:text-lg font-semibold mb-4 flex items-center gap-2">
+                              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                               Regional Impact Map
                             </h3>
-                            <div className="h-96">
+                            <div className="h-[280px] sm:h-[350px] xl:h-96 w-full">
                               <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
                                   <defs>
@@ -1077,11 +1085,15 @@ const ImpactLedger = () => {
                                     data={geoData}
                                     cx="50%"
                                     cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={120}
+                                    innerRadius="25%"
+                                    outerRadius="75%"
                                     paddingAngle={2}
                                     dataKey="value"
-                                    label={({ name, percent }) => percent > 0.05 ? `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%` : ''}
+                                    label={({ name, percent }) => {
+                                      // Only show labels on larger screens and for significant segments
+                                      if (typeof window !== 'undefined' && window.innerWidth < 640) return '';
+                                      return percent > 0.05 ? `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%` : '';
+                                    }}
                                     labelLine={false}
                                     fill="url(#pieGradient-0)"
                                   >
@@ -1101,24 +1113,28 @@ const ImpactLedger = () => {
                                       border: '1px solid hsl(var(--border))',
                                       borderRadius: '8px',
                                       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                                      padding: '12px'
+                                      padding: '8px 12px',
+                                      fontSize: '14px'
                                     }}
                                   />
-                                  <Legend />
+                                  <Legend 
+                                    wrapperStyle={{ fontSize: '12px' }}
+                                    iconType="circle"
+                                  />
                                 </PieChart>
                               </ResponsiveContainer>
                             </div>
                           </div>
                         </div>
                         
-                        {/* Summary Statistics - Takes 1/3 width */}
-                        <div className="space-y-6">
+                        {/* Summary Statistics - Full width on mobile, 1/3 width on desktop */}
+                        <div className="order-2 xl:order-2 space-y-4 xl:space-y-6">
                           <div>
-                            <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
-                              <MapPin className="h-5 w-5 text-primary" />
+                            <h3 className="font-semibold text-base sm:text-lg mb-4 flex items-center gap-2">
+                              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                               Location Breakdown
                             </h3>
-                            <div className="space-y-3 max-h-72 overflow-y-auto">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3 max-h-72 overflow-y-auto">
                               {geoData.map((location, index) => {
                                 const total = geoData.reduce((sum, l) => sum + l.value, 0);
                                 const percentage = total > 0 ? (location.value / total) * 100 : 0;
@@ -1126,16 +1142,16 @@ const ImpactLedger = () => {
                                 return (
                                   <div key={location.name} className="group hover:bg-muted/50 p-3 rounded-lg transition-colors">
                                     <div className="flex items-center justify-between mb-2">
-                                      <div className="flex items-center gap-3">
+                                      <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                                         <div 
-                                          className="w-3 h-3 rounded-full shadow-sm"
+                                          className="w-3 h-3 rounded-full shadow-sm flex-shrink-0"
                                           style={{ backgroundColor: location.fill }}
                                         />
-                                        <span className="font-medium text-sm truncate max-w-[120px]" title={location.name}>
+                                        <span className="font-medium text-xs sm:text-sm truncate" title={location.name}>
                                           {location.name}
                                         </span>
                                       </div>
-                                      <span className="text-xs font-semibold text-muted-foreground">
+                                      <span className="text-xs font-semibold text-muted-foreground flex-shrink-0">
                                         {percentage.toFixed(1)}%
                                       </span>
                                     </div>
@@ -1149,7 +1165,7 @@ const ImpactLedger = () => {
                                           }}
                                         />
                                       </div>
-                                      <span className="text-sm font-bold">
+                                      <span className="text-xs sm:text-sm font-bold flex-shrink-0">
                                         {currency} {convert(location.value, 'KES', currency).toLocaleString()}
                                       </span>
                                     </div>
@@ -1160,24 +1176,24 @@ const ImpactLedger = () => {
                           </div>
                           
                           {/* Quick Stats */}
-                          <div className="bg-muted/30 rounded-xl p-4 space-y-3">
-                            <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+                          <div className="bg-muted/30 rounded-xl p-3 sm:p-4 space-y-3">
+                            <h4 className="font-semibold text-xs sm:text-sm text-muted-foreground uppercase tracking-wide">
                               Quick Stats
                             </h4>
                             <div className="space-y-2">
                               <div className="flex justify-between items-center">
-                                <span className="text-sm">Total Locations</span>
-                                <span className="font-semibold">{geoData.length}</span>
+                                <span className="text-xs sm:text-sm">Total Locations</span>
+                                <span className="font-semibold text-sm">{geoData.length}</span>
                               </div>
                               <div className="flex justify-between items-center">
-                                <span className="text-sm">Highest Impact</span>
-                                <span className="font-semibold">
+                                <span className="text-xs sm:text-sm">Highest Impact</span>
+                                <span className="font-semibold text-xs sm:text-sm">
                                   {geoData[0] ? `${currency} ${convert(geoData[0].value, 'KES', currency).toLocaleString()}` : 'N/A'}
                                 </span>
                               </div>
                               <div className="flex justify-between items-center">
-                                <span className="text-sm">Top Location</span>
-                                <span className="font-semibold text-xs truncate max-w-[100px]" title={geoData[0]?.name}>
+                                <span className="text-xs sm:text-sm">Top Location</span>
+                                <span className="font-semibold text-xs truncate max-w-[120px] sm:max-w-[140px]" title={geoData[0]?.name}>
                                   {geoData[0]?.name || 'N/A'}
                                 </span>
                               </div>
