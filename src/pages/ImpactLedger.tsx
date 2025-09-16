@@ -89,10 +89,10 @@ interface DataState {
 // Helper functions - hoisted function declarations
 function getThemeColor(theme: Theme): string {
   switch (theme) {
-    case "Conservation education": return "hsl(var(--foreground))";
-    case "Wildlife conservation": return "hsl(var(--muted-foreground))";
-    case "Community and Cultural exploration": return "hsl(var(--border))";
-    default: return "hsl(var(--foreground))";
+    case "Conservation education": return "hsl(210 100% 60%)";
+    case "Wildlife conservation": return "hsl(142 71% 45%)";
+    case "Community and Cultural exploration": return "hsl(30 100% 55%)";
+    default: return "hsl(260 100% 65%)";
   }
 }
 
@@ -883,58 +883,31 @@ const ImpactLedger = () => {
                             </h3>
                             <div className="h-96">
                               <ResponsiveContainer width="100%" height="100%">
-                                <BarChart 
-                                  data={themeData} 
-                                  margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-                                  barCategoryGap="20%"
-                                >
+                                <PieChart>
                                   <defs>
-                                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
-                                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
-                                    </linearGradient>
+                                    {themeData.map((entry, index) => (
+                                      <linearGradient key={`themeGradient-${index}`} id={`themeGradient-${index}`} x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stopColor={entry.fill} stopOpacity={0.9}/>
+                                        <stop offset="100%" stopColor={entry.fill} stopOpacity={0.6}/>
+                                      </linearGradient>
+                                    ))}
                                   </defs>
-                                  <CartesianGrid 
-                                    strokeDasharray="3 3" 
-                                    stroke="hsl(var(--border))" 
-                                    opacity={0.3}
-                                  />
-                                  <XAxis 
-                                    dataKey="name" 
-                                    angle={-45}
-                                    textAnchor="end"
-                                    height={100}
-                                    interval={0}
-                                    tick={{ 
-                                      fontSize: 12, 
-                                      fill: 'hsl(var(--muted-foreground))',
-                                      fontWeight: 500
-                                    }}
-                                    axisLine={{ stroke: 'hsl(var(--border))' }}
-                                    tickLine={{ stroke: 'hsl(var(--border))' }}
-                                    label={{ 
-                                      value: 'Conservation Themes', 
-                                      position: 'insideBottom', 
-                                      offset: -10,
-                                      style: { textAnchor: 'middle', fill: 'hsl(var(--muted-foreground))' }
-                                    }}
-                                  />
-                                  <YAxis 
-                                    tick={{ 
-                                      fontSize: 12, 
-                                      fill: 'hsl(var(--muted-foreground))',
-                                      fontWeight: 500
-                                    }}
-                                    axisLine={{ stroke: 'hsl(var(--border))' }}
-                                    tickLine={{ stroke: 'hsl(var(--border))' }}
-                                    tickFormatter={(value) => `${currency} ${convert(value, 'KES', currency).toLocaleString()}`}
-                                    label={{ 
-                                      value: `Conservation Impact (${currency})`, 
-                                      angle: -90, 
-                                      position: 'insideLeft',
-                                      style: { textAnchor: 'middle', fill: 'hsl(var(--muted-foreground))' }
-                                    }}
-                                  />
+                                  <Pie
+                                    data={themeData}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={60}
+                                    outerRadius={120}
+                                    paddingAngle={2}
+                                    dataKey="value"
+                                    label={({ name, percent }) => percent > 0.05 ? `${name.split(' ')[0]} ${(percent * 100).toFixed(0)}%` : ''}
+                                    labelLine={false}
+                                    fill="url(#themeGradient-0)"
+                                  >
+                                    {themeData.map((entry, index) => (
+                                      <Cell key={`cell-${index}`} fill={`url(#themeGradient-${index})`} />
+                                    ))}
+                                  </Pie>
                                   <Tooltip 
                                     formatter={(value: number) => [`${currency} ${convert(value, 'KES', currency).toLocaleString()}`, 'Conservation Impact']}
                                     labelStyle={{ 
@@ -949,16 +922,9 @@ const ImpactLedger = () => {
                                       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                                       padding: '12px'
                                     }}
-                                    cursor={{ fill: 'hsl(var(--muted))', opacity: 0.1 }}
                                   />
                                   <Legend />
-                                  <Bar 
-                                    dataKey="value" 
-                                    name="Conservation Impact"
-                                    radius={[4, 4, 0, 0]}
-                                    fill="url(#barGradient)"
-                                  />
-                                </BarChart>
+                                </PieChart>
                               </ResponsiveContainer>
                             </div>
                           </div>
