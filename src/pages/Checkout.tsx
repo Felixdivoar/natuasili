@@ -295,6 +295,18 @@ const Checkout = () => {
                   <Button size="lg" className="w-full" disabled={!canPay} aria-disabled={!canPay} onClick={handlePlaceOrder}>
                     Place order
                   </Button>
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full" 
+                    onClick={() => {
+                      clearCart();
+                      navigate('/browse');
+                    }}
+                    disabled={!date && !people}
+                  >
+                    Clear & Browse More
+                  </Button>
                   {!canPay && (
                     <div className="text-sm text-muted-foreground">
                       {cutoffHit ? cutoffMessage : "Select a valid date and participants within the capacity to proceed."}

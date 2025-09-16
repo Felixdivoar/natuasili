@@ -89,10 +89,10 @@ interface DataState {
 // Helper functions - hoisted function declarations
 function getThemeColor(theme: Theme): string {
   switch (theme) {
-    case "Conservation education": return "hsl(210 100% 60%)";
-    case "Wildlife conservation": return "hsl(142 71% 45%)";
-    case "Community and Cultural exploration": return "hsl(30 100% 55%)";
-    default: return "hsl(260 100% 65%)";
+    case "Conservation education": return "hsl(217 91% 60%)";     // Rich blue
+    case "Wildlife conservation": return "hsl(142 76% 36%)";     // Forest green  
+    case "Community and Cultural exploration": return "hsl(346 87% 43%)"; // Vibrant red
+    default: return "hsl(262 83% 58%)";                          // Electric purple
   }
 }
 
@@ -171,14 +171,21 @@ const useRealTimeThemeData = () => {
       });
 
       const themeColors = {
-        'Wildlife Conservation': '#22c55e',
-        'Conservation Education': '#3b82f6', 
-        'Community & Cultural Exploration': '#f59e0b',
-        'Environmental Protection': '#10b981',
-        'Sustainable Tourism': '#8b5cf6',
-        'Habitat Protection': '#ef4444',
-        'Research & Monitoring': '#a855f7',
-        'Community Development': '#06b6d4'
+        'Wildlife Conservation': '#16a34a',     // Vibrant green
+        'Conservation Education': '#2563eb',    // Rich blue  
+        'Community & Cultural Exploration': '#dc2626', // Bold red
+        'Environmental Protection': '#059669',  // Emerald
+        'Sustainable Tourism': '#7c3aed',      // Purple
+        'Habitat Protection': '#ea580c',       // Orange
+        'Research & Monitoring': '#c026d3',    // Magenta
+        'Community Development': '#0891b2',    // Cyan
+        'Wildlife Protection': '#15803d',      // Forest green
+        'Cultural Heritage': '#be123c',        // Rose
+        'Marine Conservation': '#0e7490',      // Sky blue
+        'Forest Conservation': '#166534',      // Dark green
+        'Community Empowerment': '#b45309',    // Amber
+        'Education & Awareness': '#1d4ed8',    // Indigo
+        'Climate Action': '#7c2d12'            // Brown
       };
 
       const chartData = Array.from(themeMap.entries()).map(([name, value]) => ({

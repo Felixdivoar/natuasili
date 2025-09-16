@@ -256,11 +256,11 @@ const CartCheckout = () => {
                 </CardContent>
               </Card>
 
-              <Card>
+                <Card>
                 <CardHeader>
                   <CardTitle>Payment</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                   <Button 
                     size="lg" 
                     className="w-full" 
@@ -268,6 +268,15 @@ const CartCheckout = () => {
                     onClick={handlePlaceOrder}
                   >
                     {loading ? "Processing..." : `Book ${items.length} Experiences`}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full" 
+                    onClick={clear}
+                    disabled={loading || items.length === 0}
+                  >
+                    Clear Cart
                   </Button>
                   {!canProceed && (
                     <div className="text-sm text-muted-foreground mt-2">
