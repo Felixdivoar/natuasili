@@ -62,24 +62,22 @@ export function validateBookingDate(dateString: string): { isValid: boolean; err
     return { isValid: false, error: "Please select a valid booking date." };
   }
   
-  // Check if it's in the past (excluding today)
-  const today = new Date();
-  const eatMs = today.getTime() + 3 * 60 * 60 * 1000; // Convert to EAT
-  const eatToday = new Date(eatMs);
-  const todayString = eatToday.toISOString().split('T')[0];
+  // Calculate current time in EAT (UTC+3)
+  const now = new Date();
+  const eatMs = now.getTime() + 3 * 60 * 60 * 1000; // Convert to EAT
+  const eatNow = new Date(eatMs);
+  
+  // Calculate minimum booking date (48 hours from now in EAT)
+  const minimumBookingTime = new Date(eatNow.getTime() + (48 * 60 * 60 * 1000)); // Add 48 hours
+  const minimumDateString = minimumBookingTime.toISOString().split('T')[0];
   
   const selectedDate = new Date(dateString);
-  const todayDate = new Date(todayString);
+  const minimumDate = new Date(minimumDateString);
   
-  if (selectedDate < todayDate) {
-    return { isValid: false, error: "Booking date cannot be in the past." };
-  }
-  
-  // Check same-day cutoff (11:00 AM EAT)
-  if (isTodayInLocal(dateString) && isSameDayBookingCutoffPassed()) {
+  if (selectedDate < minimumDate) {
     return { 
       isValid: false, 
-      error: "Same-day bookings must be made before 11:00 AM EAT. Please select a later date." 
+      error: "Bookings require a minimum 48-hour advance notice. Please select a date at least 2 days from now." 
     };
   }
   
