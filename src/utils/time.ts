@@ -62,22 +62,24 @@ export function validateBookingDate(dateString: string): { isValid: boolean; err
     return { isValid: false, error: "Please select a valid booking date." };
   }
   
-  // Calculate current time in EAT (UTC+3)
-  const now = new Date();
-  const eatMs = now.getTime() + 3 * 60 * 60 * 1000; // Convert to EAT
-  const eatNow = new Date(eatMs);
+  // Get current time in East African Time (EAT = UTC+3)
+  const nowUtc = new Date();
+  const eatOffsetMs = 3 * 60 * 60 * 1000; // EAT is UTC+3
+  const nowInEAT = new Date(nowUtc.getTime() + eatOffsetMs);
   
-  // Calculate minimum booking date (48 hours from now in EAT)
-  const minimumBookingTime = new Date(eatNow.getTime() + (48 * 60 * 60 * 1000)); // Add 48 hours
-  const minimumDateString = minimumBookingTime.toISOString().split('T')[0];
+  // Calculate minimum booking date (48 hours from current EAT time)
+  const minimumBookingTimeEAT = new Date(nowInEAT.getTime() + (48 * 60 * 60 * 1000));
   
-  const selectedDate = new Date(dateString);
-  const minimumDate = new Date(minimumDateString);
+  // Convert selected date to comparable format (start of day in EAT)
+  const selectedDate = new Date(dateString + 'T00:00:00.000Z');
+  const selectedDateEAT = new Date(selectedDate.getTime() + eatOffsetMs);
   
-  if (selectedDate < minimumDate) {
+  // Compare dates (we need the selected date to be at least 48 hours from now in EAT)
+  if (selectedDateEAT < minimumBookingTimeEAT) {
+    const daysFromNow = Math.ceil((minimumBookingTimeEAT.getTime() - nowInEAT.getTime()) / (24 * 60 * 60 * 1000));
     return { 
       isValid: false, 
-      error: "Bookings require a minimum 48-hour advance notice. Please select a date at least 2 days from now." 
+      error: `Bookings require a minimum 48-hour advance notice in East African Time. Please select a date at least ${daysFromNow} days from now.` 
     };
   }
   
