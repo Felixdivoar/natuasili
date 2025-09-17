@@ -86,7 +86,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       return { isValid: false, error: "Please select a booking date before continuing." };
     }
     
-    const dateValidation = validateBookingDate(cart.date);
+    const dateValidation = validateBookingDate(cart.date, experience?.slug, experience?.project?.name);
     if (!dateValidation.isValid) {
       return { isValid: false, error: dateValidation.error };
     }

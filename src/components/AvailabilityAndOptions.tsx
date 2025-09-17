@@ -273,8 +273,8 @@ const AvailabilityAndOptions = ({
   const selectedOptionData = options.find(opt => opt.id === selectedOption) || options[0];
   const totals = computeTotals(selectedOption, selectedAdults, selectedChildren);
 
-  // Date validation with comprehensive checks
-  const dateValidation = selectedDate ? validateBookingDate(selectedDate) : { isValid: false };
+  // Comprehensive date validation with experience-specific rules
+  const dateValidation = selectedDate ? validateBookingDate(selectedDate, experience.slug) : { isValid: false };
   const isDateValid = !selectedDate || dateValidation.isValid;
   const dateError = selectedDate && !dateValidation.isValid ? dateValidation.error : null;
 

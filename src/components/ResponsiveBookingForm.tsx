@@ -13,6 +13,7 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import { useSimpleAuth } from "@/contexts/SimpleAuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { validateBookingDate } from "@/utils/time";
 
 interface ResponsiveBookingFormProps {
   experience: any;
@@ -69,7 +70,10 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   const validateStep = (step: number) => {
     switch (step) {
       case 1:
-        return formData.date && formData.people >= 1;
+        if (!formData.date || !formData.people) return false;
+        // Add experience-specific date validation
+        const dateValidation = validateBookingDate(formData.date, experience?.slug, project?.name);
+        return dateValidation.isValid && formData.people >= 1;
       case 2:
         return formData.name && formData.email && formData.phone;
       case 3:

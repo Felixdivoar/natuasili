@@ -94,7 +94,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
       if (updates.date !== undefined) {
         const formattedDate = formatDateForBooking(updates.date);
         if (formattedDate) {
-          const validation = validateBookingDate(formattedDate);
+          const validation = validateBookingDate(formattedDate, experienceSlug);
           // Only store the date if it's valid, otherwise keep the previous date
           updated.date = validation.isValid ? formattedDate : prev.date;
         } else {
@@ -124,7 +124,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({
   const isValid = Boolean(
     cart?.date && 
     isValidBookingDate(cart.date) && 
-    validateBookingDate(cart.date).isValid &&
+    validateBookingDate(cart.date, experienceSlug).isValid &&
     ((isGroupPricing ? ((cart?.adults || 0) + (cart?.children || 0)) >= (minCapacity || 1) : (cart?.adults || 0) > 0))
   );
 
