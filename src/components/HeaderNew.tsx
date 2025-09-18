@@ -15,14 +15,11 @@ import T from "@/i18n/T";
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
 const DESTINATIONS = [
-  { label: "Nairobi National Park", slug: "nairobi", image: "/src/assets/destinations/nairobi-destination.jpg", desc: "Urban wildlife sanctuary with rhinos and lions" },
-  { label: "Maasai Mara Reserve", slug: "masai-mara", image: "/src/assets/destinations/masai-mara-destination.jpg", desc: "Great Migration and Big Five experiences" },
-  { label: "Amboseli National Park", slug: "amboseli", image: "/src/assets/destinations/amboseli-destination.jpg", desc: "Elephant herds with Mount Kilimanjaro views" },
-  { label: "Samburu National Reserve", slug: "samburu", image: "/src/assets/destinations/samburu-destination.jpg", desc: "Unique species and cultural encounters" },
-  { label: "Tsavo East & West", slug: "tsavo", image: "/src/assets/destinations/tsavo-destination.jpg", desc: "Kenya's largest parks with red elephants" },
-  { label: "Laikipia Conservancies", slug: "laikipia", image: "/src/assets/destinations/laikipia-destination.jpg", desc: "Community-owned conservation ranches" },
-  { label: "Coastal Marine Parks", slug: "coast", image: "/src/assets/destinations/coast-destination.jpg", desc: "Coral reefs and marine conservation" },
-  { label: "Mount Kenya Region", slug: "mount-kenya", image: "/src/assets/destinations/mount-kenya-destination.jpg", desc: "High-altitude ecosystems and endemic species" },
+  { label: "Nairobi", slug: "nairobi", image: "/src/assets/destinations/nairobi-destination.jpg", desc: "Urban wildlife sanctuary" },
+  { label: "Samburu", slug: "samburu", image: "/src/assets/destinations/samburu-destination.jpg", desc: "Unique species and cultural encounters" },
+  { label: "Laikipia", slug: "laikipia", image: "/src/assets/destinations/laikipia-destination.jpg", desc: "Community-owned conservation ranches" },
+  { label: "Masai Mara", slug: "masai-mara", image: "/src/assets/destinations/masai-mara-destination.jpg", desc: "Great Migration and Big Five experiences" },
+  { label: "Coastal Kenya", slug: "coast", image: "/src/assets/destinations/coast-destination.jpg", desc: "Coral reefs and marine conservation" },
 ];
 
 const THEMES = [
@@ -183,25 +180,9 @@ export default function HeaderNew() {
                               </div>
                               <div className="text-xs text-muted-foreground mt-1">{theme.desc}</div>
                             </Link>
-                          ))}
-                          <div className="pt-2 border-t space-y-1">
-                            <Link
-                              to="/impact-calculator"
-                              className="block p-2 text-center text-sm text-secondary hover:bg-secondary/10 rounded-lg transition-colors"
-                              onClick={() => setOpenMenu(null)}
-                            >
-                              🌍 Impact Calculator
-                            </Link>
-                            <Link
-                              to="/conservation-projects"
-                              className="block p-2 text-center text-sm text-secondary hover:bg-secondary/10 rounded-lg transition-colors"
-                              onClick={() => setOpenMenu(null)}
-                            >
-                              🌱 Active Projects
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
+                           ))}
+                         </div>
+                       </div>
                     </div>
                   </div>
                 )}
@@ -254,46 +235,22 @@ export default function HeaderNew() {
                         </Button>
                       </Link>
                       
-                      <Link to="/conservation-dashboard" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          🌿 Conservation Hub
-                        </Button>
-                      </Link>
-                      
-                      <Link to="/community" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          👥 Community
-                        </Button>
-                      </Link>
-                      
-                      <Link to="/blog" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          📝 Stories & Insights
-                        </Button>
-                      </Link>
-                      
-                      <hr className="my-2" />
-                      
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="w-full justify-start"
-                        onClick={() => {
-                          console.log('Desktop AsiliChat button clicked');
-                          const event = new CustomEvent('asili-chat:toggle');
-                          document.dispatchEvent(event);
-                          console.log('Desktop AsiliChat event dispatched');
-                          setDesktopHamburgerOpen(false);
-                        }}
-                      >
-                        🤖 AsiliChat AI
-                      </Button>
-                      
-                      <Link to="/help" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          ❓ Help & Support
-                        </Button>
-                      </Link>
+                       <hr className="my-2" />
+                       
+                       <Button 
+                         variant="ghost" 
+                         size="sm" 
+                         className="w-full justify-start"
+                         onClick={() => {
+                           console.log('Desktop AsiliChat button clicked');
+                           const event = new CustomEvent('asili-chat:toggle');
+                           document.dispatchEvent(event);
+                           console.log('Desktop AsiliChat event dispatched');
+                           setDesktopHamburgerOpen(false);
+                         }}
+                       >
+                         🤖 AsiliChat AI
+                       </Button>
                     </div>
                   </div>
                 )}
