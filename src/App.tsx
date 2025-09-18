@@ -84,7 +84,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
       <HeaderNew />
-      <main className="flex-1 main-content">
+      <main className="flex-1 w-full">
         {children}
       </main>
       <Footer />
