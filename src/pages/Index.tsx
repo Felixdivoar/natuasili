@@ -4,8 +4,11 @@ import ImpactStats from "@/components/ImpactStats";
 import ImpactStories from "@/components/ImpactStories";
 import DestinationExperienceCarousel from "@/components/DestinationExperienceCarousel";
 import SmartRecommendations from "@/components/SmartRecommendations";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
+  const { user } = useAuth();
+  
   return (
     <div className="bg-background">
       {/* Apple-style Hero Section */}
@@ -21,12 +24,14 @@ const Index = () => {
       <DestinationExperienceCarousel destination="masai-mara" />
       <DestinationExperienceCarousel destination="laikipia" />
       
-      {/* Smart Recommendations Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto flex justify-center">
-          <SmartRecommendations />
-        </div>
-      </section>
+      {/* Smart Recommendations Section - Only for logged in users */}
+      {user && (
+        <section className="py-16 px-4">
+          <div className="max-w-7xl mx-auto flex justify-center">
+            <SmartRecommendations />
+          </div>
+        </section>
+      )}
       
       {/* Conservation Partners section is now hidden by default */}
       <ImpactStats />
