@@ -60,8 +60,8 @@ export default function HeaderMega() {
   };
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact">
-      <div className="nav-inner">
+    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact force-refresh">
+      <div className="nav-inner">{/* Force refresh */}
         <div className="flex items-center justify-between h-14">
           {/* Left cluster */}
           <div className="flex items-center gap-6">
