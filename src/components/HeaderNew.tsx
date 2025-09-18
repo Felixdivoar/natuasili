@@ -135,10 +135,10 @@ export default function HeaderNew() {
             </div>
 
             {/* Right cluster - Search + Auth + Mobile Menu */}
-            <div className="flex items-center gap-4 flex-1 min-w-0">
+            <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 md:flex-1 md:min-w-0">
               
               {/* Desktop Search */}
-              <div className="hidden md:block flex-1 min-w-0 max-w-none">
+              <div className="hidden md:block md:flex-1 md:min-w-0 md:max-w-[600px] lg:max-w-[640px] xl:max-w-[720px]">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
@@ -313,11 +313,16 @@ export default function HeaderNew() {
 
                 {/* Search */}
                 <div className="border-b border-border p-4">
-                  <AISearchComponent 
-                    variant="mobile" 
-                    className="w-full"
-                    onClose={() => {}}
-                  />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg"
+                    onClick={() => { setIsMobileMenuOpen(false); setMobileSearchOpen(true); }}
+                    aria-label="Open search"
+                  >
+                    <Search className="h-4 w-4 mr-2" />
+                    <span>Search...</span>
+                  </Button>
                 </div>
 
                 {/* Main navigation */}
@@ -339,7 +344,7 @@ export default function HeaderNew() {
                             key={dest.slug}
                             to={`/destinations/${dest.slug}`}
                             className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
-                            onClick={() => setIsMobileMenuOpen(false)}
+                             onClick={() => { setIsMobileMenuOpen(false); setOpenMenu(null); }}
                           >
                             {dest.label}
                           </Link>
@@ -350,7 +355,7 @@ export default function HeaderNew() {
                             key={theme.slug}
                             to={`/listings?theme=${encodeURIComponent(theme.label)}`}
                             className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            onClick={() => { setIsMobileMenuOpen(false); setOpenMenu(null); }}
                           >
                             {theme.label}
                           </Link>
@@ -439,7 +444,7 @@ export default function HeaderNew() {
       </header>
 
       {mobileSearchOpen && (
-        <div className="fixed inset-0 z-[60] bg-background">
+        <div className="fixed inset-0 z-[100] bg-background">
           <div className="border-b border-border p-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex-1">
