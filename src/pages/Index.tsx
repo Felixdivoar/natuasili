@@ -10,9 +10,7 @@ const Index = () => {
     <div className="bg-background">
       {/* Apple-style Hero Section */}
       <AppleStyleHero 
-        enableCrossFade={true}
         primaryImage="/lovable-uploads/dff689cd-8df1-4136-b9be-292db031f572.png"
-        secondaryImage="/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"
         enableMobileScrim={true}
       />
       
