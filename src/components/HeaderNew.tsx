@@ -89,7 +89,7 @@ export default function HeaderNew() {
                 </Button>
               </div>
               {/* Desktop Search (centered and smaller) */}
-              <div className="hidden md:block w-full max-w-[400px] lg:max-w-[480px] xl:max-w-[520px] mx-auto">
+              <div className="hidden md:block w-full max-w-[200px] lg:max-w-[240px] xl:max-w-[260px] mx-auto">
                 {desktopSearchOpen ? (
                   <AISearchComponent
                     variant="desktop"
