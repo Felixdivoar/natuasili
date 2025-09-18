@@ -75,7 +75,7 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
                   fontWeight: 800,
                   letterSpacing: '-0.02em',
                   lineHeight: '1.1',
-                  paddingTop: '10px'
+                  paddingTop: '24px'
                 }}
               >
                 Travel that funds conservation
