@@ -73,14 +73,14 @@ const ImpactStories = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
-                  <CardHeader className="text-lg">
-                    <CardTitle className="text-xl group-hover:text-foreground transition-colors line-clamp-2">
+                  <CardHeader className="text-base">
+                    <CardTitle className="text-lg group-hover:text-foreground transition-colors">
                       <DynamicTranslated text={story.title} />
                     </CardTitle>
                   </CardHeader>
                   
-                  <CardContent className="text-sm">
-                    <p className="text-muted-foreground mb-6 line-clamp-3">
+                  <CardContent className="text-xs">
+                    <p className="text-muted-foreground mb-6">
                       <DynamicTranslated text={story.excerpt} />
                     </p>
                     
