@@ -107,19 +107,31 @@ const PartnerEntry = () => {
   const faqs = [
     {
       question: t("How much does it cost to join?", "How much does it cost to join?"),
-      answer: t("Joining NatuAsili is completely free. We only take a 10% platform fee from successful bookings, meaning you keep 90% of all revenue.", "Joining NatuAsili is completely free. We only take a 10% platform fee from successful bookings, meaning you keep 90% of all revenue.")
+      answer: t("Joining NatuAsili is free. We charge a 10% service fee on successful bookings, so you keep 90% of your revenue. Donations are different: 100% of every donation goes directly to the partner.", "Joining NatuAsili is free. We charge a 10% service fee on successful bookings, so you keep 90% of your revenue. Donations are different: 100% of every donation goes directly to the partner.")
+    },
+    {
+      question: t("What type of business can register?", "What type of business can register?"),
+      answer: t("We welcome conservancies, NGOs, community groups, social enterprises, and organizations offering experiences that support conservation, culture, or community engagement.", "We welcome conservancies, NGOs, community groups, social enterprises, and organizations offering experiences that support conservation, culture, or community engagement.")
     },
     {
       question: t("How long does verification take?", "How long does verification take?"),
-      answer: t("The verification process typically takes 3-5 business days once you submit all required documentation.", "The verification process typically takes 3-5 business days once you submit all required documentation.")
+      answer: t("Verification usually takes 30 minutes once all required documents are submitted.", "Verification usually takes 30 minutes once all required documents are submitted.")
+    },
+    {
+      question: t("Why do you require legal documents?", "Why do you require legal documents?"),
+      answer: t("To comply with financial regulations and ensure secure payouts, we collect company details, legal representative information, and proof of address. This follows KYC (Know Your Customer) standards used by our payment partners.", "To comply with financial regulations and ensure secure payouts, we collect company details, legal representative information, and proof of address. This follows KYC (Know Your Customer) standards used by our payment partners.")
     },
     {
       question: t("What support do you provide?", "What support do you provide?"),
-      answer: t("We provide onboarding support, marketing guidance, analytics tools, and ongoing customer service to help maximize your success.", "We provide onboarding support, marketing guidance, analytics tools, and ongoing customer service to help maximize your success.")
+      answer: t("We offer onboarding support, marketing guidance, analytics tools, and ongoing customer service to help you succeed.", "We offer onboarding support, marketing guidance, analytics tools, and ongoing customer service to help you succeed.")
     },
     {
       question: t("How do payments work?", "How do payments work?"),
-      answer: t("Payments are processed securely and transferred to your account within 7 days of completed experiences, minus the 10% platform fee.", "Payments are processed securely and transferred to your account within 7 days of completed experiences, minus the 10% platform fee.")
+      answer: t("Payouts are transferred to your bank account by the 5th of each month, minus the 10% service fee. You'll also receive a statement for your records.", "Payouts are transferred to your bank account by the 5th of each month, minus the 10% service fee. You'll also receive a statement for your records.")
+    },
+    {
+      question: t("How do I register?", "How do I register?"),
+      answer: t("Click 'Add Your Experience', create an account, fill out the short onboarding form, upload your documents, and set up your first experience. Once verified, you'll get access to your host dashboard.", "Click 'Add Your Experience', create an account, fill out the short onboarding form, upload your documents, and set up your first experience. Once verified, you'll get access to your host dashboard.")
     }
   ];
 
