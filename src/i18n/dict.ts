@@ -42,7 +42,7 @@ export const DICT = {
     // Impact Stats
     impact_title: "Conservation impact",
     impact_subtitle: "Together with our partners and travelers, we're creating measurable impact across Kenya's conservation landscape.",
-    stat_hectares: "Hectares Protected",
+    stat_hectares: "Acres Protected",
     stat_communities: "Communities Supported", 
     stat_students: "Students Educated",
     stat_species: "Species Monitored",
@@ -347,7 +347,7 @@ export const DICT = {
     // Impact Stats
     impact_title: "Impact de conservation",
     impact_subtitle: "Avec nos partenaires et voyageurs, nous créons un impact mesurable dans le paysage de conservation du Kenya.",
-    stat_hectares: "Hectares Protégés",
+    stat_hectares: "Acres Protégés",
     stat_communities: "Communautés Soutenues",
     stat_students: "Étudiants Éduqués",
     stat_species: "Espèces Surveillées",
@@ -652,7 +652,7 @@ export const DICT = {
     // Impact Stats
     impact_title: "Naturschutz-Impact",
     impact_subtitle: "Gemeinsam mit unseren Partnern und Reisenden schaffen wir messbare Wirkung in Kenias Naturschutzlandschaft.",
-    stat_hectares: "Geschützte Hektar",
+    stat_hectares: "Geschützte Acres",
     stat_communities: "Unterstützte Gemeinden",
     stat_students: "Ausgebildete Schüler",
     stat_species: "Überwachte Arten",
@@ -957,7 +957,7 @@ export const DICT = {
     // Impact Stats
     impact_title: "Impacto de conservación",
     impact_subtitle: "Junto con nuestros socios y viajeros, estamos creando un impacto medible en el paisaje de conservación de Kenia.",
-    stat_hectares: "Hectáreas Protegidas",
+    stat_hectares: "Acres Protegidas",
     stat_communities: "Comunidades Apoyadas",
     stat_students: "Estudiantes Educados",
     stat_species: "Especies Monitoreadas",

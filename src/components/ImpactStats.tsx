@@ -16,7 +16,7 @@ const ImpactStats = () => {
   const stats = [
     {
       icon: Leaf,
-      value: "45,000", // Keep static for now as it represents hectares protected
+      value: "0", // Placeholder until updated
       label: t("stat_hectares"),
       color: "bg-habitat",
       description: t("stat_hectares_desc")
@@ -44,7 +44,7 @@ const ImpactStats = () => {
     },
     {
       icon: TrendingUp,
-      value: loading ? formatPrice(0) : formatPrice(totalConservationFunding), // Real data: conservation funding
+      value: formatPrice(totalConservationFunding || 0), // Real data: conservation funding
       label: t("stat_funds"),
       color: "bg-accent",
       description: t("stat_funds_desc")
@@ -60,8 +60,8 @@ const ImpactStats = () => {
   return <section id="impact" className="bg-background py-[20px]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{t("impact_title")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">{t("impact_title")}</h2>
+          <p className="text-lg text-black/70 max-w-2xl mx-auto">
             {t("impact_subtitle")}
           </p>
         </div>
@@ -72,13 +72,13 @@ const ImpactStats = () => {
                 <div className={`w-16 h-16 ${stat.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
                   <stat.icon className="w-8 h-8 text-white" />
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-2">
+                <div className="text-3xl font-bold text-black mb-2">
                   {stat.value}
                 </div>
-                <div className="text-lg font-semibold text-foreground mb-2">
+                <div className="text-lg font-semibold text-black mb-2">
                   {stat.label}
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-black/70">
                   {stat.description}
                 </p>
               </CardContent>
