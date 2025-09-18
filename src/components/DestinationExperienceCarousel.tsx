@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Clock, Users, Star } from "lucide-react";
+import { MapPin, Clock, Users, Star, ChevronRight } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -46,7 +46,7 @@ export default function DestinationExperienceCarousel({
     <section className="bg-background py-[10px]">
       <div className="max-w-[1300px] mx-auto px-[15px]">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground flex-1 pr-4">
             <Link 
               to={`/destinations/${destinationPath}`} 
               className="hover:text-primary transition-colors"
@@ -54,14 +54,13 @@ export default function DestinationExperienceCarousel({
               {t("dest_experiences_in")} {destinationName}
             </Link>
           </h2>
-          {!isMobile && (
-            <Link 
-              to={`/destinations/${destinationPath}`} 
-              className="text-primary hover:underline"
-            >
-              {t("dest_view_all")}
-            </Link>
-          )}
+          <Link 
+            to={`/destinations/${destinationPath}`} 
+            className="text-primary hover:text-primary/80 transition-colors flex items-center gap-1 shrink-0"
+          >
+            <span className="hidden sm:inline">{t("dest_view_all")}</span>
+            <ChevronRight className="h-5 w-5" />
+          </Link>
         </div>
 
         <Carousel className="w-full">
@@ -123,15 +122,6 @@ export default function DestinationExperienceCarousel({
           <CarouselNext className="-right-4" />
         </Carousel>
 
-        {isMobile && (
-          <div className="flex justify-center mt-6">
-            <Button asChild variant="outline">
-              <Link to={`/destinations/${destinationPath}`}>
-                {t("dest_view_all")}
-              </Link>
-            </Button>
-          </div>
-        )}
       </div>
     </section>
   );
