@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Mountain, Users, Lightbulb } from "lucide-react";
+import { DollarSign, Users, Building2 } from "lucide-react";
 import { useGlobalImpactMetrics } from "@/hooks/useGlobalImpactMetrics";
 
 interface AppleStyleHeroProps {
@@ -99,11 +99,15 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <Mountain className="w-6 h-6 text-white" />
+                <DollarSign className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-medium">
-                  {loading ? "•••" : `KES ${getTotalConservationFunding().toLocaleString()}`}
+                <div className="text-white font-medium min-w-[80px] h-6 flex items-center">
+                  {loading ? (
+                    <div className="w-16 h-4 bg-white/30 rounded animate-pulse" />
+                  ) : (
+                    `KES ${getTotalConservationFunding().toLocaleString()}`
+                  )}
                 </div>
                 <div className="text-white/80 text-sm">Conservation funding</div>
               </div>
@@ -114,8 +118,12 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-medium">
-                  {loading ? "•••" : getTotalParticipants().toLocaleString()}
+                <div className="text-white font-medium min-w-[60px] h-6 flex items-center">
+                  {loading ? (
+                    <div className="w-12 h-4 bg-white/30 rounded animate-pulse" />
+                  ) : (
+                    getTotalParticipants().toLocaleString()
+                  )}
                 </div>
                 <div className="text-white/80 text-sm">Travelers connected</div>
               </div>
@@ -123,11 +131,15 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
             
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <Lightbulb className="w-6 h-6 text-white" />
+                <Building2 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-medium">
-                  {loading ? "•••" : `${getActivePartners()}+`}
+                <div className="text-white font-medium min-w-[40px] h-6 flex items-center">
+                  {loading ? (
+                    <div className="w-8 h-4 bg-white/30 rounded animate-pulse" />
+                  ) : (
+                    `${getActivePartners()}+`
+                  )}
                 </div>
                 <div className="text-white/80 text-sm">Conservation partners</div>
               </div>

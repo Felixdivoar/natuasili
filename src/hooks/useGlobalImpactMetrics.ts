@@ -55,6 +55,37 @@ export function useGlobalImpactMetrics() {
           fetchImpactMetrics(); // Refetch when metrics are updated
         }
       )
+      .on(
+        'postgres_changes', 
+        {
+          event: '*',
+          schema: 'public',
+          table: 'bookings'
+        },
+        (payload) => {
+          console.log('Booking change detected:', payload);
+          // Only refetch if booking status changed to confirmed/completed
+          if (payload.eventType === 'UPDATE' && 
+              (payload.new?.status === 'confirmed' || payload.new?.status === 'completed')) {
+            setTimeout(() => fetchImpactMetrics(), 1000); // Small delay to allow DB triggers to complete
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*', 
+          schema: 'public',
+          table: 'partner_profiles'
+        },
+        (payload) => {
+          console.log('Partner profile change detected:', payload);
+          // Refetch when partner is approved (onboarded)
+          if (payload.eventType === 'UPDATE' && payload.new?.kyc_status === 'approved') {
+            setTimeout(() => fetchImpactMetrics(), 1000); // Small delay to allow DB triggers to complete
+          }
+        }
+      )
       .subscribe();
 
     return () => {
