@@ -38,7 +38,7 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
         
         {/* Mobile scrim for text legibility */}
         {enableMobileScrim && (
-          <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
+          <div className="absolute inset-0 bg-black/60 md:bg-black/50" />
         )}
       </div>
 
