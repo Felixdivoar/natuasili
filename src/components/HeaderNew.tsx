@@ -59,7 +59,7 @@ export default function HeaderNew() {
       {/* Full-width header container */}
       <header className="w-full bg-background border-b border-border sticky top-0 z-50" style={{ height: '60px' }}>
         {/* Constrained inner content */}
-        <div className="max-w-[1300px] mx-auto px-4 h-full">
+        <div className="w-full px-4 h-full">
           <div className="flex items-center justify-between h-full">
             
             {/* Left cluster - Logo + Navigation */}
@@ -171,30 +171,29 @@ export default function HeaderNew() {
               </div>
             </div>
 
-            {/* Right cluster - Auth + Mobile Menu */}
+            {/* Right cluster - Currency, Auth, Hamburger (hamburger on far right) */}
             <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 shrink-0 md:shrink md:flex-1 md:min-w-0">
               
-
-              {/* Currency Selector - desktop only */}
-              <div className="hidden xl:block">
+              {/* Currency Selector - desktop/laptop only */}
+              <div className="hidden lg:block">
                 <CurrencySelector />
               </div>
 
-              {/* Sign In/Up or Avatar - desktop only */}
+              {/* Sign In/Up or Avatar - desktop/laptop only */}
               {!loading && (
                 user && profile ? (
-                  <div className="hidden xl:block">
+                  <div className="hidden lg:block">
                     <AvatarMenu profile={profile} />
                   </div>
                 ) : (
-                  <Link to="/auth" className="hidden xl:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors">
+                  <Link to="/auth" className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors">
                     <User className="w-4 h-4" />
                     <span>Log in</span>
                   </Link>
                 )
               )}
 
-              {/* Desktop Hamburger Menu */}
+              {/* Desktop Hamburger Menu - far right */}
               <div className="hidden lg:block relative" ref={hamburgerRef}>
                 <Button
                   variant="ghost"
@@ -209,30 +208,6 @@ export default function HeaderNew() {
                 {desktopHamburgerOpen && (
                   <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
                     <div className="space-y-1">
-                      <div className="xl:hidden">
-                        <CurrencySelector />
-                      </div>
-                      
-                      {!loading && user && profile && (
-                        <div className="xl:hidden">
-                          <Link to={profile ? getDashboardPath(profile.role) : "/user-dashboard"} onClick={() => setDesktopHamburgerOpen(false)}>
-                            <Button variant="ghost" size="sm" className="w-full justify-start">
-                              Dashboard
-                            </Button>
-                          </Link>
-                        </div>
-                      )}
-                      
-                      {!loading && !user && (
-                        <div className="xl:hidden">
-                          <Link to="/auth" onClick={() => setDesktopHamburgerOpen(false)}>
-                            <Button variant="ghost" size="sm" className="w-full justify-start">
-                              <User className="w-4 h-4 mr-2" />
-                              Log in
-                            </Button>
-                          </Link>
-                        </div>
-                      )}
                       
                       <Link to="/impact-ledger" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start">
@@ -260,28 +235,12 @@ export default function HeaderNew() {
                       >
                         AsiliChat
                       </Button>
-                      
-                      {!loading && user && profile && (
-                        <div className="xl:hidden">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => {
-                              signOut();
-                              setDesktopHamburgerOpen(false);
-                            }}
-                            className="w-full justify-start"
-                          >
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Sign Out
-                          </Button>
-                        </div>
-                      )}
                     </div>
                   </div>
                 )}
               </div>
 
+              {/* Mobile Hamburger Menu - far right on mobile */}
               <Button 
                 variant="ghost" 
                 size="sm" 
