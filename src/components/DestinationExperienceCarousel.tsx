@@ -76,8 +76,8 @@ export default function DestinationExperienceCarousel({
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                       />
                     </div>
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
+                    <CardContent className="p-4 h-[180px] flex flex-col">
+                      <div className="space-y-3 flex-1 flex flex-col">
                         <div className="flex items-start justify-between gap-2">
                           <Badge className={`text-xs ${getThemeColor(experience.theme)}`}>
                             {experience.theme}
@@ -97,7 +97,7 @@ export default function DestinationExperienceCarousel({
                         </div>
 
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mt-auto">
                           <div className="flex items-center gap-1">
                             <span className="text-xs text-muted-foreground">{t("dest_from")}</span>
                             <span className="text-foreground text-base font-extrabold">
