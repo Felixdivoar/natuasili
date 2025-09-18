@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, X, ChevronDown, Globe, ShoppingCart, LogOut, MessageCircle } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import CurrencySelector from "@/components/CurrencySelector";
@@ -10,7 +10,7 @@ import { AvatarMenu } from "@/components/auth/AvatarMenu";
 import { getDashboardPath } from "@/lib/auth";
 import { useMultiCart } from "@/contexts/MultiCartContext";
 import CartDrawer from "@/components/CartDrawer";
-import NotificationBell from "@/components/NotificationBell";
+import T from "@/i18n/T";
 
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
@@ -31,11 +31,9 @@ const THEMES = [
 export default function HeaderNew() {
   const { t } = useI18n();
   const { user, profile, loading, signOut } = useAuth();
-  const { itemCount, setOpen } = useMultiCart();
   const navigate = useNavigate();
-  const [openMenu, setOpenMenu] = useState<null | "marketplace">(null);
+  const [openMenu, setOpenMenu] = useState<null | "marketplace" | "mobile-marketplace">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [desktopSearchOpen, setDesktopSearchOpen] = useState(false);
   const [desktopHamburgerOpen, setDesktopHamburgerOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -54,16 +52,6 @@ export default function HeaderNew() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  useEffect(() => {
-    // Analytics: track search opens
-    if (mobileSearchOpen) {
-      console.log("Analytics: search_opened", { platform: "mobile" });
-    }
-    if (desktopSearchOpen) {
-      console.log("Analytics: search_opened", { platform: "desktop" });
-    }
-  }, [mobileSearchOpen, desktopSearchOpen]);
 
   return (
     <>
@@ -85,14 +73,6 @@ export default function HeaderNew() {
 
               {/* Desktop Navigation */}
               <nav className="hidden lg:flex items-center gap-8" ref={menuRef}>
-                <Link 
-                  to="/impact-ledger" 
-                  className="text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
-                >
-                  {t("nav_impact")}
-                </Link>
-                
-                
                 {/* Marketplace Mega Menu */}
                 <div className="relative">
                   <button
@@ -153,10 +133,10 @@ export default function HeaderNew() {
               </nav>
             </div>
 
-            {/* Right cluster - AI Search + Currency + Language + Auth + CTA */}
+            {/* Right cluster - Search + Auth + Mobile Menu */}
             <div className="flex items-center gap-4">
               
-              {/* Desktop AI Search */}
+              {/* Desktop Search */}
               <div className="hidden md:block">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
@@ -177,65 +157,27 @@ export default function HeaderNew() {
                 )}
               </div>
 
-              {/* Currency Selector */}
-              <div className="hidden md:block">
+              {/* Currency Selector - desktop only */}
+              <div className="hidden lg:block">
                 <CurrencySelector />
               </div>
 
-              {/* Sign In/Up or Avatar */}
+              {/* Sign In/Up or Avatar - desktop only */}
               {!loading && (
                 user && profile ? (
-                  <AvatarMenu profile={profile} />
+                  <div className="hidden lg:block">
+                    <AvatarMenu profile={profile} />
+                  </div>
                 ) : (
-                  <Link to="/auth" className="hidden">
-                    <Button variant="outline" size="sm" className="hidden md:flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      <span>{t("nav_signin")}</span>
-                    </Button>
+                  <Link to="/auth" className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors">
+                    <User className="w-4 h-4" />
+                    <span>Log in</span>
                   </Link>
                 )
               )}
 
-              {/* Notifications Bell - Only show for authenticated users */}
-              {!loading && user && (
-                <NotificationBell />
-              )}
-
-              {/* Cart Button */}
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border hover:bg-muted"
-                aria-label="Open cart"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 inline-flex items-center justify-center text-[10px] font-medium rounded-full px-1.5 py-0.5 bg-primary text-primary-foreground">
-                    {itemCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Partner CTA */}
-              <Link to="/partner-with-us">
-                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium">
-                  <span className="hidden sm:inline">{t("nav_partner")}</span>
-                  <span className="sm:hidden">Partner</span>
-                </Button>
-              </Link>
-
-              {/* Mobile Menu Toggle */}
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2"
-              >
-                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </Button>
-
-              {/* Desktop Hamburger Menu - Far Right */}
-              <div className="hidden md:block relative" ref={hamburgerRef}>
+              {/* Desktop Hamburger Menu */}
+              <div className="hidden lg:block relative" ref={hamburgerRef}>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -249,183 +191,179 @@ export default function HeaderNew() {
                 {desktopHamburgerOpen && (
                   <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
                     <div className="space-y-1">
-                      {!user ? (
-                        <>
-                          <Link to="/auth" onClick={() => setDesktopHamburgerOpen(false)}>
-                            <Button variant="ghost" size="sm" className="w-full justify-start">
-                              <User className="w-4 h-4 mr-2" />
-                              Sign In / Sign Up
-                            </Button>
-                          </Link>
-                        </>
-                      ) : null}
-                      
-                      <Link to="/partners" onClick={() => setDesktopHamburgerOpen(false)}>
+                      <Link to="/impact-ledger" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start">
-                          Partners
+                          {t("nav_impact")}
                         </Button>
                       </Link>
                       
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="w-full justify-start"
-                        onClick={() => {
-                          setDesktopHamburgerOpen(false);
-                          document.dispatchEvent(new CustomEvent('asili-chat:toggle'));
-                        }}
-                      >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        AsiliChat
-                      </Button>
+                      <Link to="/partner-entry" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          Add your experience
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 )}
               </div>
+
+              {/* Mobile Menu Toggle */}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="lg:hidden p-2"
+              >
+                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </Button>
             </div>
           </div>
 
-              {/* Mobile Menu */}
-           {isMobileMenuOpen && (
-             <div className="lg:hidden border-t border-border bg-background">
-               <nav className="p-4 space-y-2">
-                 <Link 
-                   to="/impact-ledger" 
-                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                   onClick={() => setIsMobileMenuOpen(false)}
-                 >
-                   {t("nav_impact")}
-                 </Link>
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="lg:hidden fixed inset-0 z-50 bg-background">
+              <div className="flex flex-col h-full">
+                {/* Top: search */}
+                <div className="border-b border-border p-4">
+                  <AISearchComponent 
+                    variant="mobile" 
+                    className="w-full"
+                    onClose={() => {}}
+                  />
+                </div>
+
+                {/* Main navigation */}
+                <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                   <Link 
-                    to="/browse" 
+                    to="/" 
                     className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {t("nav_marketplace")}
+                    Home
                   </Link>
-                 
-                 <div className="space-y-1">
-                   <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                     {t("nav_destinations")}
-                   </div>
-                   {DESTINATIONS.map((dest) => (
-                     <Link
-                       key={dest.slug}
-                       to={`/destinations/${dest.slug}`}
-                       className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                       onClick={() => setIsMobileMenuOpen(false)}
-                     >
-                       {dest.label}
-                     </Link>
-                   ))}
-                 </div>
-
-                 <div className="space-y-1">
-                   <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                     {t("nav_themes")}
-                   </div>
-                   {THEMES.map((theme) => (
-                     <Link
-                       key={theme.slug}
-                       to={`/listings?theme=${encodeURIComponent(theme.label)}`}
-                       className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                       onClick={() => setIsMobileMenuOpen(false)}
-                     >
-                       {theme.label}
-                     </Link>
-                   ))}
-                 </div>
-
-                  {/* Mobile Auth Actions */}
-                  <div className="pt-4 border-t border-border">
-                    {!loading && (
-                      user && profile ? (
-                        <div className="space-y-2">
-                          <Link 
-                            to={profile ? getDashboardPath(profile.role) : "/user-dashboard"} 
-                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  
+                  {/* Marketplace with dropdown */}
+                  <div className="space-y-2">
+                    <button
+                      className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                      onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}
+                    >
+                      {t("nav_marketplace")}
+                    </button>
+                    {openMenu === "mobile-marketplace" && (
+                      <div className="ml-4 space-y-1">
+                        <div className="text-xs font-medium text-muted-foreground px-3 py-1">Destinations</div>
+                        {DESTINATIONS.map((dest) => (
+                          <Link
+                            key={dest.slug}
+                            to={`/destinations/${dest.slug}`}
+                            className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
-                            <User className="w-4 h-4" />
-                            Dashboard
+                            {dest.label}
                           </Link>
-                          <button
-                            onClick={() => {
-                              signOut();
-                              setIsMobileMenuOpen(false);
-                            }}
-                            className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left text-destructive"
-                          >
-                            Sign Out
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          <Link 
-                            to="/auth" 
-                            className="flex items-center gap-2 px-3 py-2 text-sm bg-primary text-primary-foreground hover:bg-primary/90 rounded-md"
+                        ))}
+                        <div className="text-xs font-medium text-muted-foreground px-3 py-1 mt-2">Themes</div>
+                        {THEMES.map((theme) => (
+                          <Link
+                            key={theme.slug}
+                            to={`/listings?theme=${encodeURIComponent(theme.label)}`}
+                            className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
-                            <User className="w-4 h-4" />
-                            Sign In / Sign Up
+                            {theme.label}
                           </Link>
-                        </div>
-                      )
+                        ))}
+                      </div>
                     )}
-                    
-                    <div className="pt-2 space-y-1">
-                      <Link 
-                        to="/partners" 
-                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Partners
-                      </Link>
-                      
-                      <button
-                        onClick={() => {
-                          setIsMobileMenuOpen(false);
-                          document.dispatchEvent(new CustomEvent('asili-chat:toggle'));
-                        }}
-                        className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                        AsiliChat
-                      </button>
+                  </div>
+                  
+                  <Link 
+                    to="/impact-ledger" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {t("nav_impact")}
+                  </Link>
+                  <Link 
+                    to="/partner-entry" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Add your experience
+                  </Link>
+                  <Link 
+                    to="/about" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link 
+                    to="/privacy" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Privacy
+                  </Link>
+                  <Link 
+                    to="/terms" 
+                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Terms
+                  </Link>
+
+                  {/* Currency converter */}
+                  <div className="pt-4 border-t border-border mt-4">
+                    <div className="px-3 py-2">
+                      <CurrencySelector />
                     </div>
                   </div>
+                </nav>
 
-                 {/* Mobile Currency & Search */}
-                 <div className="pt-4 border-t border-border md:hidden">
-                   <div className="space-y-2">
-                     <button
-                       onClick={() => {
-                         setMobileSearchOpen(true);
-                         setIsMobileMenuOpen(false);
-                       }}
-                       className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md w-full text-left"
-                     >
-                       <Search className="w-4 h-4" />
-                       Search
-                     </button>
-                     <div className="px-3 py-2">
-                       <CurrencySelector />
-                     </div>
-                   </div>
-                 </div>
-
-               </nav>
-             </div>
-           )}
+                {/* Bottom: Auth CTAs */}
+                <div className="border-t border-border p-4 space-y-3">
+                  {!loading && (
+                    user && profile ? (
+                      <div className="space-y-2">
+                        <Link 
+                          to={profile ? getDashboardPath(profile.role) : "/user-dashboard"} 
+                          className="block w-full text-center px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          Dashboard
+                        </Link>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => {
+                            signOut();
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="w-full"
+                        >
+                          <LogOut className="w-4 h-4 mr-2" />
+                          Sign Out
+                        </Button>
+                      </div>
+                    ) : (
+                      <Link 
+                        to="/auth"
+                        className="block w-full text-center px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Log in
+                      </Link>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Mobile AI Search Overlay */}
-      <AISearchComponent 
-        variant="mobile" 
-        isOpen={mobileSearchOpen}
-        onClose={() => setMobileSearchOpen(false)}
-      />
       <CartDrawer />
     </>
   );
