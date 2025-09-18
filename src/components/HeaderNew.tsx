@@ -63,7 +63,7 @@ export default function HeaderNew() {
           <div className="flex items-center justify-between h-full">
             
             {/* Left cluster - Logo + Navigation */}
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-3 md:gap-8 flex-shrink-0">
               <Link to="/" className="flex items-center">
                 <img 
                   src={logoImage} 
@@ -138,7 +138,7 @@ export default function HeaderNew() {
             <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 md:flex-1 md:min-w-0">
               
               {/* Desktop Search */}
-              <div className="hidden md:block md:flex-1 md:min-w-0 md:max-w-[600px] lg:max-w-[640px] xl:max-w-[720px]">
+              <div className="hidden md:block md:flex-1 md:min-w-0 md:max-w-[560px] lg:max-w-[640px] xl:max-w-[720px]">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
@@ -269,7 +269,7 @@ export default function HeaderNew() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setMobileSearchOpen(true)}
+                onClick={() => { setIsMobileMenuOpen(false); setMobileSearchOpen(true); }}
                 className="md:hidden p-2"
                 aria-label="Search"
               >
@@ -343,7 +343,7 @@ export default function HeaderNew() {
                           <Link
                             key={dest.slug}
                             to={`/destinations/${dest.slug}`}
-                            className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
+                             className="block px-3 py-1 text-sm hover:bg-muted rounded-md pointer-events-auto"
                              onClick={() => { setIsMobileMenuOpen(false); setOpenMenu(null); }}
                           >
                             {dest.label}
@@ -354,8 +354,8 @@ export default function HeaderNew() {
                           <Link
                             key={theme.slug}
                             to={`/listings?theme=${encodeURIComponent(theme.label)}`}
-                            className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
-                            onClick={() => { setIsMobileMenuOpen(false); setOpenMenu(null); }}
+                             className="block px-3 py-1 text-sm hover:bg-muted rounded-md pointer-events-auto"
+                             onClick={() => { setIsMobileMenuOpen(false); setOpenMenu(null); }}
                           >
                             {theme.label}
                           </Link>
