@@ -36,6 +36,7 @@ export default function HeaderNew() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [desktopSearchOpen, setDesktopSearchOpen] = useState(false);
   const [desktopHamburgerOpen, setDesktopHamburgerOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLDivElement>(null);
 
@@ -137,7 +138,7 @@ export default function HeaderNew() {
             <div className="flex items-center gap-4">
               
               {/* Desktop Search */}
-              <div className="hidden md:block flex-1 max-w-[480px]">
+              <div className="hidden md:block flex-1 md:max-w-[600px] lg:max-w-[720px] xl:max-w-[840px]">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
@@ -233,7 +234,7 @@ export default function HeaderNew() {
                         size="sm" 
                         className="w-full justify-start"
                         onClick={() => {
-                          const event = new CustomEvent('toggle-asili-chat');
+                          const event = new CustomEvent('asili-chat:toggle');
                           window.dispatchEvent(event);
                           setDesktopHamburgerOpen(false);
                         }}
@@ -262,12 +263,22 @@ export default function HeaderNew() {
                 )}
               </div>
 
-              {/* Mobile Menu Toggle */}
+              {/* Mobile Search + Menu Toggle */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMobileSearchOpen(true)}
+                className="md:hidden p-2"
+                aria-label="Search"
+              >
+                <Search className="w-5 h-5" />
+              </Button>
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="lg:hidden p-2"
+                aria-label="Menu"
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
@@ -353,7 +364,7 @@ export default function HeaderNew() {
                   <button
                     className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
                     onClick={() => {
-                      const event = new CustomEvent('toggle-asili-chat');
+                      const event = new CustomEvent('asili-chat:toggle');
                       window.dispatchEvent(event);
                       setIsMobileMenuOpen(false);
                     }}
@@ -411,6 +422,30 @@ export default function HeaderNew() {
         </div>
       </header>
 
+      {mobileSearchOpen && (
+        <div className="fixed inset-0 z-50 bg-background">
+          <div className="border-b border-border p-4">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex-1">
+                <AISearchComponent
+                  variant="mobile"
+                  className="w-full"
+                  onClose={() => setMobileSearchOpen(false)}
+                />
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setMobileSearchOpen(false)}
+                aria-label="Close search"
+                className="md:hidden p-2"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       <CartDrawer />
     </>
   );
