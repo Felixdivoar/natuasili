@@ -138,7 +138,7 @@ export default function HeaderNew() {
             <div className="flex items-center gap-4">
               
               {/* Desktop Search */}
-              <div className="hidden md:block flex-1 md:max-w-[600px] lg:max-w-[720px] xl:max-w-[840px]">
+              <div className="hidden md:block flex-1 max-w-none">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
@@ -235,7 +235,7 @@ export default function HeaderNew() {
                         className="w-full justify-start"
                         onClick={() => {
                           const event = new CustomEvent('asili-chat:toggle');
-                          window.dispatchEvent(event);
+                          document.dispatchEvent(event);
                           setDesktopHamburgerOpen(false);
                         }}
                       >
@@ -365,7 +365,7 @@ export default function HeaderNew() {
                     className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
                     onClick={() => {
                       const event = new CustomEvent('asili-chat:toggle');
-                      window.dispatchEvent(event);
+                      document.dispatchEvent(event);
                       setIsMobileMenuOpen(false);
                     }}
                   >
