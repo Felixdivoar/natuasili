@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Mountain, Users, Lightbulb } from "lucide-react";
 
 interface AppleStyleHeroProps {
   primaryImage?: string;
@@ -37,63 +38,85 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
         
         {/* Mobile scrim for text legibility */}
         {enableMobileScrim && (
-          <div className="absolute inset-0 bg-black/15 md:bg-transparent" />
+          <div className="absolute inset-0 bg-black/40 md:bg-black/30" />
         )}
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 flex items-center justify-center min-h-full px-6 md:px-7 lg:px-12">
-        <div className="text-center max-w-[830px] mx-auto">
-          {/* Main Content with Load Animation */}
+      <div className="relative z-10 flex flex-col justify-between min-h-full px-6 md:px-7 lg:px-12">
+        {/* Main Content */}
+        <div className="flex-1 flex items-center">
+          <div className="text-left max-w-[830px]">
+            <div 
+              className={`transition-all duration-700 ease-out ${
+                isLoaded 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-4 scale-95'
+              }`}
+            >
+              {/* Headline */}
+              <h1 
+                className="font-black tracking-tight mb-6 text-white"
+                style={{
+                  fontSize: 'clamp(36px, 6vw, 72px)',
+                  fontWeight: 800,
+                  letterSpacing: '-0.02em',
+                  lineHeight: '1.1'
+                }}
+              >
+                Travel that funds conservation
+              </h1>
+
+              {/* Subhead */}
+              <p 
+                className="mb-8 md:mb-10 lg:mb-12 text-white/90 max-w-[780px] leading-relaxed"
+                style={{
+                  fontSize: 'clamp(16px, 2.2vw, 22px)',
+                  maxWidth: '780px'
+                }}
+              >
+                Go beyond the safari. Book conservation-driven experiences that support wildlife and local communities across Kenya. Add them to any itinerary, and make every trip meaningful. Book now.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Stats */}
+        <div className="pb-8 md:pb-12">
           <div 
-            className={`transition-all duration-700 ease-out ${
+            className={`flex flex-wrap justify-start gap-8 md:gap-12 transition-all duration-700 delay-300 ease-out ${
               isLoaded 
-                ? 'opacity-100 translate-y-0 scale-100' 
-                : 'opacity-0 translate-y-4 scale-95'
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-4'
             }`}
           >
-            {/* Headline */}
-            <h1 
-              className="font-black tracking-tight mb-6 text-black"
-              style={{
-                fontSize: 'clamp(36px, 6vw, 72px)',
-                fontWeight: 800,
-                letterSpacing: '-0.02em',
-                lineHeight: '1.1'
-              }}
-            >
-              Go beyond the safari
-            </h1>
-
-            {/* Subhead */}
-            <p 
-              className="mb-8 md:mb-10 lg:mb-12 text-black/70 max-w-[780px] mx-auto leading-relaxed"
-              style={{
-                fontSize: 'clamp(16px, 2.2vw, 22px)',
-                maxWidth: '780px'
-              }}
-            >
-              Support wildlife and communities in Kenya through conservation-driven experiences. 
-              Add them to your itinerary and make your travel more meaningful.
-            </p>
-
-            {/* Real-time Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-lg md:text-xl font-bold text-black">150+</div>
-                <div className="text-xs md:text-sm text-black/70">Experiences</div>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <Mountain className="w-6 h-6 text-white" />
               </div>
-              <div className="text-center">
-                <div className="text-lg md:text-xl font-bold text-black">25K+</div>
-                <div className="text-xs md:text-sm text-black/70">Travelers</div>
+              <div>
+                <div className="text-white font-medium">•••</div>
+                <div className="text-white/80 text-sm">Conservation projects</div>
               </div>
-              <div className="text-center">
-                <div className="text-lg md:text-xl font-bold text-black">$2M+</div>
-                <div className="text-xs md:text-sm text-black/70">Funding</div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
               </div>
-              <div className="text-center">
-                <div className="text-lg md:text-xl font-bold text-black">50+</div>
-                <div className="text-xs md:text-sm text-black/70">Partners</div>
+              <div>
+                <div className="text-white font-medium">•••</div>
+                <div className="text-white/80 text-sm">Travelers connected</div>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <Lightbulb className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="text-white font-medium">•••</div>
+                <div className="text-white/80 text-sm">Impact generated</div>
               </div>
             </div>
           </div>
