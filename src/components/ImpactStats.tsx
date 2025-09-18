@@ -3,51 +3,55 @@ import { TreePine, Users, GraduationCap, Heart, DollarSign, Globe } from "lucide
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useImpactMetrics } from "@/hooks/useImpactMetrics";
+import { DESTINATIONS_INFO } from "@/data/destinationData";
 
 const ImpactStats = () => {
   const { formatPrice } = useCurrency();
   const { t } = useI18n();
   const { totalConservationFunding, totalExperiences, totalPartners, totalTravelers, transparencyRate, loading } = useImpactMetrics();
   
+  // Get realtime destinations count
+  const destinationsCount = Object.keys(DESTINATIONS_INFO).length;
+  
   const stats = [
     {
       icon: TreePine,
-      value: loading ? "..." : "45,000", // Keep static for now as it represents hectares protected
+      value: "45,000", // Keep static for now as it represents hectares protected
       label: t("stat_hectares"),
       color: "bg-habitat",
       description: t("stat_hectares_desc")
     },
     {
       icon: Users,
-      value: loading ? "..." : totalTravelers.toLocaleString(), // Real data: total travelers/participants
+      value: "0", // Placeholder for communities supported
       label: t("stat_communities"),
       color: "bg-livelihoods",
       description: t("stat_communities_desc")
     },
     {
       icon: GraduationCap,
-      value: loading ? "..." : totalExperiences.toString(), // Real data: total experiences as educational opportunities
+      value: "0", // Placeholder for students educated
       label: t("stat_students"),
       color: "bg-education",
       description: t("stat_education_desc")
     },
     {
       icon: Heart,
-      value: loading ? "..." : totalPartners.toString(), // Real data: total partner organizations
+      value: "0", // Placeholder for species monitored
       label: t("stat_species"),
       color: "bg-wildlife",
       description: t("stat_species_desc")
     },
     {
       icon: DollarSign,
-      value: loading ? "..." : formatPrice(totalConservationFunding), // Real data: conservation funding
+      value: loading ? "0" : formatPrice(totalConservationFunding), // Real data: conservation funding
       label: t("stat_funds"),
       color: "bg-accent",
       description: t("stat_funds_desc")
     },
     {
       icon: Globe,
-      value: loading ? "..." : "15", // Keep static for now as it represents counties covered
+      value: destinationsCount.toString(), // Real data: count of destinations/counties
       label: t("stat_counties"),
       color: "bg-primary",
       description: t("stat_counties_desc")
