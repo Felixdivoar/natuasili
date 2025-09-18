@@ -68,7 +68,7 @@ const Hero: React.FC<HeroProps> = ({
 
   return (
     <section className={`py-12 lg:py-20 px-4 bg-background ${compact ? 'py-8 lg:py-12' : ''}`}>
-      <div className="w-full mx-auto">
+      <div className="w-full px-4 lg:px-8 xl:px-12">
         {/* Mobile: Stack image on top, text below */}
         <div className="flex flex-col lg:hidden gap-8">
           {/* Image Carousel - Mobile */}

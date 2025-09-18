@@ -60,7 +60,7 @@ export default function HeaderMega() {
   };
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact hidden xl:block">
+    <header className="bg-background border-b border-border sticky top-0 z-50 header-compact">
       <div className="nav-inner">
         <div className="flex items-center justify-between h-14">
           {/* Left cluster */}
@@ -78,9 +78,6 @@ export default function HeaderMega() {
             <nav className="hidden lg:flex items-center gap-6" ref={menuRef}>
               <Link to="/impact-ledger" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
                 {t("nav_impact")}
-              </Link>
-              <Link to="/partners" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
-                {t("nav_partners")}
               </Link>
               <Link to="/experiences" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
                 {t("nav_marketplace")}
@@ -173,8 +170,8 @@ export default function HeaderMega() {
               <CurrencySelector />
             </div>
 
-            {/* Search - desktop only */}
-            <div className="relative hidden lg:block" ref={searchRef}>
+            {/* Search - all screen sizes */}
+            <div className="relative" ref={searchRef}>
               <Button
                 variant="ghost"
                 size="sm"
@@ -202,7 +199,7 @@ export default function HeaderMega() {
               )}
             </div>
 
-            {/* Profile or Sign In - all screen sizes */}
+            {/* Profile or Sign In - desktop only */}
             {!loading && (
               user && profile ? (
                 <div className="hidden lg:block">
@@ -219,14 +216,7 @@ export default function HeaderMega() {
               )
             )}
 
-            {/* Partner CTA - always visible */}
-            <Link to="/partner-entry">
-              <Button size="sm" className="bg-primary hover:bg-primary-hover hidden lg:block">
-                {t("nav_partner")}
-              </Button>
-            </Link>
-
-            {/* Mobile Menu Toggle - only for nav menu, not bottom nav items */}
+            {/* Mobile Menu Toggle */}
             <Button 
               variant="ghost" 
               size="sm" 
@@ -238,75 +228,122 @@ export default function HeaderMega() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Drawer */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background">
-            <nav className="p-4 space-y-2">
-              <Link 
-                to="/impact-ledger" 
-                className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t("nav_impact")}
-              </Link>
-              <Link 
-                to="/partners" 
-                className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t("nav_partners")}
-              </Link>
-              <Link 
-                to="/experiences" 
-                className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {t("nav_marketplace")}
-              </Link>
-              <a 
-                href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Headphones className="w-4 h-4" />
-                Conservation Voices
-              </a>
-              
-              <div className="space-y-1">
-                <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  {t("nav_destinations")}
-                </div>
-                {DESTINATIONS.map((dest) => (
-                  <Link
-                    key={dest.slug}
-                    to={`/destinations/${dest.slug}`}
-                    className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {dest.label}
-                  </Link>
-                ))}
+          <div className="lg:hidden fixed inset-0 z-50 bg-background">
+            <div className="flex flex-col h-full">
+              {/* Top: Search */}
+              <div className="border-b border-border p-4">
+                <form onSubmit={handleSearch} className="space-y-3">
+                  <input
+                    name="search"
+                    type="text"
+                    placeholder={t("search_placeholder")}
+                    className="w-full px-3 py-2 text-sm border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  />
+                  <Button type="submit" size="sm" className="w-full">
+                    <T k="search_button" />
+                  </Button>
+                </form>
               </div>
 
-              <div className="space-y-1">
-                <div className="px-3 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  {t("nav_themes")}
-                </div>
-                {THEMES.map((theme) => (
-                  <Link
-                    key={theme.slug}
-                    to={`/themes/${theme.slug}`}
-                    className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {theme.label}
-                  </Link>
-                ))}
-              </div>
+              {/* Main navigation */}
+              <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                <Link 
+                  to="/" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Home
+                </Link>
+                <Link 
+                  to="/experiences" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {t("nav_marketplace")}
+                </Link>
+                <Link 
+                  to="/impact-ledger" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Impact Ledger
+                </Link>
+                <Link 
+                  to="/partner-entry" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Add your experience
+                </Link>
+                <Link 
+                  to="/about" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link 
+                  to="/privacy" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Privacy
+                </Link>
+                <Link 
+                  to="/terms" 
+                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Terms
+                </Link>
 
-            </nav>
+                {/* Currency converter */}
+                <div className="pt-4 border-t border-border mt-4">
+                  <div className="px-3 py-2">
+                    <CurrencySelector />
+                  </div>
+                </div>
+              </nav>
+
+              {/* Bottom: Auth CTAs */}
+              <div className="border-t border-border p-4 space-y-3">
+                {!loading && (
+                  user && profile ? (
+                    <div className="space-y-2">
+                      <Link 
+                        to={getDashboardPath(profile.role)} 
+                        className="block w-full text-center px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => {
+                          signOut();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <Link 
+                      to="/auth"
+                      className="block w-full text-center px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Sign In / Sign Up
+                    </Link>
+                  )
+                )}
+              </div>
+            </div>
           </div>
         )}
       </div>
