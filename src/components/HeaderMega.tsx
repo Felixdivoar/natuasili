@@ -28,7 +28,7 @@ const THEMES = [
 export default function HeaderMega() {
   const { t } = useI18n();
   const { user, profile, signOut, loading } = useAuth();
-  const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
+  const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile" | "mobile-marketplace">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -76,9 +76,6 @@ export default function HeaderMega() {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-6" ref={menuRef}>
-              <Link to="/impact-ledger" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
-                {t("nav_impact")}
-              </Link>
               <Link to="/experiences" className="nav-link text-foreground hover:text-primary transition-colors text-sm">
                 {t("nav_marketplace")}
               </Link>
@@ -160,6 +157,40 @@ export default function HeaderMega() {
                   </div>
                 )}
               </div>
+
+              {/* Desktop Hamburger Menu for additional items */}
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setOpenMenu(openMenu === "profile" ? null : "profile")}
+                  className="p-2"
+                >
+                  <Menu className="h-4 w-4" />
+                </Button>
+                {openMenu === "profile" && (
+                  <div 
+                    className="absolute right-0 mt-2 w-48 rounded-xl border bg-background p-4 shadow-xl z-50"
+                  >
+                    <div className="space-y-2">
+                      <Link
+                        to="/impact-ledger"
+                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setOpenMenu(null)}
+                      >
+                        {t("nav_impact")}
+                      </Link>
+                      <Link
+                        to="/partner-entry"
+                        className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setOpenMenu(null)}
+                      >
+                        Add your experience
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </nav>
           </div>
 
@@ -211,7 +242,7 @@ export default function HeaderMega() {
                   className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors btn-auth"
                 >
                   <User className="w-4 h-4" />
-                  {t("nav_signin")}
+                  Log in
                 </Link>
               )
             )}
@@ -256,13 +287,43 @@ export default function HeaderMega() {
                 >
                   Home
                 </Link>
-                <Link 
-                  to="/experiences" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("nav_marketplace")}
-                </Link>
+                
+                {/* Marketplace with dropdown */}
+                <div className="space-y-2">
+                  <button
+                    className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}
+                  >
+                    {t("nav_marketplace")}
+                  </button>
+                  {openMenu === "mobile-marketplace" && (
+                    <div className="ml-4 space-y-1">
+                      <div className="text-xs font-medium text-muted-foreground px-3 py-1">Destinations</div>
+                      {DESTINATIONS.map((dest) => (
+                        <Link
+                          key={dest.slug}
+                          to={`/destinations/${dest.slug}`}
+                          className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {dest.label}
+                        </Link>
+                      ))}
+                      <div className="text-xs font-medium text-muted-foreground px-3 py-1 mt-2">Themes</div>
+                      {THEMES.map((theme) => (
+                        <Link
+                          key={theme.slug}
+                          to={`/themes/${theme.slug}`}
+                          className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {theme.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
                 <Link 
                   to="/impact-ledger" 
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
@@ -333,13 +394,13 @@ export default function HeaderMega() {
                       </Button>
                     </div>
                   ) : (
-                    <Link 
-                      to="/auth"
-                      className="block w-full text-center px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      Sign In / Sign Up
-                    </Link>
+                      <Link 
+                        to="/auth"
+                        className="block w-full text-center px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Log in
+                      </Link>
                   )
                 )}
               </div>
