@@ -96,12 +96,6 @@ export default function DestinationExperienceCarousel({
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Users className="h-3 w-3" />
-                            <span>{t("exp_up_to")} {experience.capacity}</span>
-                          </div>
-                        </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
