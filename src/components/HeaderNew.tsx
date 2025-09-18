@@ -57,7 +57,7 @@ export default function HeaderNew() {
   return (
     <>
       {/* Full-width header container */}
-      <header className="w-full bg-background md:bg-background/80 md:backdrop-blur-md border-b border-border md:border-border/20 sticky top-0 z-50" style={{ height: '60px' }}>
+      <header className="w-full bg-background border-b border-border sticky top-0 z-50" style={{ height: '60px' }}>
         {/* Constrained inner content */}
         <div className="max-w-[1200px] mx-auto px-4 h-full">
           <div className="flex items-center justify-between h-full">
@@ -68,7 +68,7 @@ export default function HeaderNew() {
                 <img 
                   src={logoImage} 
                   alt="NatuAsili" 
-                  className="h-8 w-auto object-contain" 
+                  className="h-8 w-auto object-contain !filter-none !brightness-100 !invert-0" 
                 />
               </Link>
 
