@@ -134,14 +134,26 @@ export default function HeaderNew() {
               </nav>
             </div>
 
-            {/* Right cluster - Search + Auth + Mobile Menu */}
-            <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 shrink-0 md:shrink md:flex-1 md:min-w-0">
-              
-              {/* Desktop Search */}
-              <div className="hidden md:block md:flex-none md:min-w-0 md:max-w-[420px] lg:max-w-[480px] xl:max-w-[560px]">
+            {/* Center cluster - Search (always centered) */}
+            <div className="flex-1 flex justify-center px-2">
+              {/* Mobile Search button (centered) */}
+              <div className="md:hidden">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setMobileSearchOpen(true)}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg"
+                  aria-label="Open search"
+                >
+                  <Search className="h-4 w-4" />
+                  <span>Search</span>
+                </Button>
+              </div>
+              {/* Desktop Search (centered) */}
+              <div className="hidden md:block w-full max-w-[560px] lg:max-w-[640px] xl:max-w-[720px] mx-auto">
                 {desktopSearchOpen ? (
-                  <AISearchComponent 
-                    variant="desktop" 
+                  <AISearchComponent
+                    variant="desktop"
                     className="w-full"
                     onClose={() => setDesktopSearchOpen(false)}
                   />
@@ -157,6 +169,11 @@ export default function HeaderNew() {
                   </Button>
                 )}
               </div>
+            </div>
+
+            {/* Right cluster - Auth + Mobile Menu */}
+            <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 shrink-0 md:shrink md:flex-1 md:min-w-0">
+              
 
               {/* Currency Selector - desktop only */}
               <div className="hidden xl:block">
@@ -265,16 +282,6 @@ export default function HeaderNew() {
                 )}
               </div>
 
-              {/* Mobile Search + Menu Toggle */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => { setIsMobileMenuOpen(false); setMobileSearchOpen(true); }}
-                className="md:hidden p-2"
-                aria-label="Search"
-              >
-                <Search className="w-5 h-5" />
-              </Button>
               <Button 
                 variant="ghost" 
                 size="sm" 
