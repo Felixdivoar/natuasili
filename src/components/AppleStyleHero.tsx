@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Mountain, Users, Lightbulb } from "lucide-react";
+import { useGlobalImpactMetrics } from "@/hooks/useGlobalImpactMetrics";
 
 interface AppleStyleHeroProps {
   primaryImage?: string;
@@ -11,6 +12,12 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
   enableMobileScrim = true
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { 
+    getTotalConservationFunding, 
+    getTotalParticipants, 
+    getActivePartners,
+    loading 
+  } = useGlobalImpactMetrics();
 
   // Load animation on mount
   useEffect(() => {
@@ -95,8 +102,10 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
                 <Mountain className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-medium">•••</div>
-                <div className="text-white/80 text-sm">Conservation projects</div>
+                <div className="text-white font-medium">
+                  {loading ? "•••" : `KES ${getTotalConservationFunding().toLocaleString()}`}
+                </div>
+                <div className="text-white/80 text-sm">Conservation funding</div>
               </div>
             </div>
             
@@ -105,7 +114,9 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-medium">•••</div>
+                <div className="text-white font-medium">
+                  {loading ? "•••" : getTotalParticipants().toLocaleString()}
+                </div>
                 <div className="text-white/80 text-sm">Travelers connected</div>
               </div>
             </div>
@@ -115,8 +126,10 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
                 <Lightbulb className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="text-white font-medium">•••</div>
-                <div className="text-white/80 text-sm">Impact generated</div>
+                <div className="text-white font-medium">
+                  {loading ? "•••" : `${getActivePartners()}+`}
+                </div>
+                <div className="text-white/80 text-sm">Conservation partners</div>
               </div>
             </div>
           </div>
