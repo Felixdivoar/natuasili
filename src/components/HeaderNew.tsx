@@ -68,7 +68,7 @@ export default function HeaderNew() {
                 <img 
                   src={logoImage} 
                   alt="NatuAsili" 
-                  className="h-8 w-auto object-contain md:filter-none filter brightness-0 invert" 
+                  className="h-8 w-auto object-contain" 
                 />
               </Link>
 
