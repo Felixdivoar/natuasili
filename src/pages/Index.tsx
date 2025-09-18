@@ -1,4 +1,4 @@
-import Hero from "@/components/Hero";
+import AppleStyleHero from "@/components/AppleStyleHero";
 import ConservationPartnersCarousel from "@/components/ConservationPartnersCarousel";
 import ImpactStats from "@/components/ImpactStats";
 import ImpactStories from "@/components/ImpactStories";
@@ -8,10 +8,12 @@ import SmartRecommendations from "@/components/SmartRecommendations";
 const Index = () => {
   return (
     <div className="bg-background">
-      {/* Use shared Hero component */}
-      <Hero 
-        backgroundImage="/lovable-uploads/dff689cd-8df1-4136-b9be-292db031f572.png"
-        showStats={true}
+      {/* Apple-style Hero Section */}
+      <AppleStyleHero 
+        enableCrossFade={true}
+        primaryImage="/lovable-uploads/dff689cd-8df1-4136-b9be-292db031f572.png"
+        secondaryImage="/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png"
+        enableMobileScrim={true}
       />
       
       {/* Per-destination experience carousels */}
