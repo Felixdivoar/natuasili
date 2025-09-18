@@ -4,6 +4,56 @@
 
 @import './styles/cta-guards.css';
 
+/* ===== Mobile sticky fixes ===== */
+@media (max-width: 768px) {
+  /* Remove unwanted sticky elements on mobile */
+  .pre-menu-sticky,
+  .top-announcement-bar,
+  .pre-header-sticky,
+  .post-footer-sticky,
+  .bottom-floating-menu {
+    position: static !important;
+    inset: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    z-index: 1 !important;
+  }
+
+  /* Ensure footer area does not reserve space for sticky bars */
+  .site-footer,
+  .footer-wrapper {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* ===== AI Search overlay fixes ===== */
+.ai-search-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: hsl(var(--background));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ai-search-mobile .ai-search-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  font-size: 16px; /* Prevent zoom on iOS */
+}
+
+/* Prevent hidden input under safe areas (iOS) */
+@supports (padding: max(0px)) {
+  .ai-search-mobile {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+}
+
 /* Safe area padding for mobile devices */
 .safe-area-padding {
   padding-bottom: calc(1rem + env(safe-area-inset-bottom));

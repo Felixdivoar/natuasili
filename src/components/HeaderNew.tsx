@@ -79,14 +79,14 @@ export default function HeaderNew() {
             </div>
 
             {/* Center cluster - Search (perfectly centered) */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="flex-1 flex justify-center px-4 md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:px-0">
               {/* Mobile Search button (centered) */}
               <div className="md:hidden">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setMobileSearchOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg mx-auto"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg"
                   aria-label="Open search"
                 >
                   <Search className="h-4 w-4" />
@@ -294,7 +294,7 @@ export default function HeaderNew() {
                 </div>
 
                 {/* Search */}
-                <div className="border-b border-border p-4">
+                <div className="p-4 border-b border-border">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -376,7 +376,7 @@ export default function HeaderNew() {
                   </button>
 
                   {/* Currency converter */}
-                  <div className="pt-2 border-t border-border mt-2">
+                  <div className="border-t border-border pt-2 mt-2">
                     <div className="px-3 py-2">
                       <CurrencySelector />
                     </div>
@@ -384,7 +384,7 @@ export default function HeaderNew() {
                 </nav>
 
                 {/* Bottom: Auth CTAs */}
-                <div className="border-t border-border p-4 space-y-3">
+                <div className="border-t border-border p-4 space-y-3 mt-auto">
                   {!loading && (
                     user && profile ? (
                       <div className="space-y-2">

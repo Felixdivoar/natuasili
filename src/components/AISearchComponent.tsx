@@ -202,25 +202,25 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
     inputRef.current?.focus();
   };
 
-  if (variant === "mobile" && !isOpen) return null;
+  if (variant === "mobile") {
+    // Mobile variant should always render when called
+  }
 
   return (
     <div 
       ref={containerRef}
-      className={`relative ${variant === "mobile" ? "fixed inset-0 bg-background z-50" : ""} ${className}`}
+      className={`${variant === "mobile" ? "ai-search-mobile" : "relative"} ${className}`}
     >
       {variant === "mobile" && (
-        <div className="p-4 border-b">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-medium">AI Search</h2>
-            <Button variant="ghost" size="sm" onClick={handleClose}>
-              <X className="h-5 w-5" />
-            </Button>
-          </div>
+        <div className="flex items-center justify-between p-4 border-b border-border bg-background sticky top-0 z-10">
+          <h2 className="text-lg font-medium">Search</h2>
+          <Button variant="ghost" size="sm" onClick={handleClose}>
+            <X className="h-5 w-5" />
+          </Button>
         </div>
       )}
 
-      <div className={variant === "mobile" ? "p-4" : "relative"}>
+      <div className={variant === "mobile" ? "p-4 flex-1 overflow-y-auto" : "relative"}>
         <div className="relative">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -249,7 +249,7 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
                 }, 150);
               }}
               placeholder="Search experiences, partners, destinations…"
-              className={`w-full pl-10 pr-4 py-2.5 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+              className={`w-full pl-10 pr-4 py-2.5 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 ai-search-input ${
                 variant === "desktop" ? "min-w-[280px]" : ""
               }`}
               autoComplete="off"
