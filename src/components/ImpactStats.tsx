@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TreePine, Users, GraduationCap, Heart, DollarSign, Globe } from "lucide-react";
+import { Leaf, Users2, BookOpen, Sparkles, TrendingUp, MapPin } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useImpactMetrics } from "@/hooks/useImpactMetrics";
@@ -15,42 +15,42 @@ const ImpactStats = () => {
   
   const stats = [
     {
-      icon: TreePine,
+      icon: Leaf,
       value: "45,000", // Keep static for now as it represents hectares protected
       label: t("stat_hectares"),
       color: "bg-habitat",
       description: t("stat_hectares_desc")
     },
     {
-      icon: Users,
+      icon: Users2,
       value: "0", // Placeholder for communities supported
       label: t("stat_communities"),
       color: "bg-livelihoods",
       description: t("stat_communities_desc")
     },
     {
-      icon: GraduationCap,
+      icon: BookOpen,
       value: "0", // Placeholder for students educated
       label: t("stat_students"),
       color: "bg-education",
       description: t("stat_education_desc")
     },
     {
-      icon: Heart,
+      icon: Sparkles,
       value: "0", // Placeholder for species monitored
       label: t("stat_species"),
       color: "bg-wildlife",
       description: t("stat_species_desc")
     },
     {
-      icon: DollarSign,
-      value: loading ? "0" : formatPrice(totalConservationFunding), // Real data: conservation funding
+      icon: TrendingUp,
+      value: loading ? formatPrice(0) : formatPrice(totalConservationFunding), // Real data: conservation funding
       label: t("stat_funds"),
       color: "bg-accent",
       description: t("stat_funds_desc")
     },
     {
-      icon: Globe,
+      icon: MapPin,
       value: destinationsCount.toString(), // Real data: count of destinations/counties
       label: t("stat_counties"),
       color: "bg-primary",
