@@ -137,11 +137,11 @@ export default function HeaderNew() {
             <div className="flex items-center gap-4">
               
               {/* Desktop Search */}
-              <div className="hidden md:block">
+              <div className="hidden md:block flex-1 max-w-[480px]">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
-                    className="min-w-[320px]"
+                    className="w-full"
                     onClose={() => setDesktopSearchOpen(false)}
                   />
                 ) : (
@@ -149,7 +149,7 @@ export default function HeaderNew() {
                     variant="ghost"
                     size="sm"
                     onClick={() => setDesktopSearchOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg min-w-[240px] justify-start"
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg w-full justify-start"
                   >
                     <Search className="h-4 w-4" />
                     <span>Search...</span>
@@ -158,18 +158,18 @@ export default function HeaderNew() {
               </div>
 
               {/* Currency Selector - desktop only */}
-              <div className="hidden lg:block">
+              <div className="hidden xl:block">
                 <CurrencySelector />
               </div>
 
               {/* Sign In/Up or Avatar - desktop only */}
               {!loading && (
                 user && profile ? (
-                  <div className="hidden lg:block">
+                  <div className="hidden xl:block">
                     <AvatarMenu profile={profile} />
                   </div>
                 ) : (
-                  <Link to="/auth" className="hidden lg:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors">
+                  <Link to="/auth" className="hidden xl:flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-lg hover:bg-muted transition-colors">
                     <User className="w-4 h-4" />
                     <span>Log in</span>
                   </Link>
@@ -191,6 +191,31 @@ export default function HeaderNew() {
                 {desktopHamburgerOpen && (
                   <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
                     <div className="space-y-1">
+                      <div className="xl:hidden">
+                        <CurrencySelector />
+                      </div>
+                      
+                      {!loading && user && profile && (
+                        <div className="xl:hidden">
+                          <Link to={profile ? getDashboardPath(profile.role) : "/user-dashboard"} onClick={() => setDesktopHamburgerOpen(false)}>
+                            <Button variant="ghost" size="sm" className="w-full justify-start">
+                              Dashboard
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                      
+                      {!loading && !user && (
+                        <div className="xl:hidden">
+                          <Link to="/auth" onClick={() => setDesktopHamburgerOpen(false)}>
+                            <Button variant="ghost" size="sm" className="w-full justify-start">
+                              <User className="w-4 h-4 mr-2" />
+                              Log in
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                      
                       <Link to="/impact-ledger" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start">
                           {t("nav_impact")}
@@ -202,6 +227,36 @@ export default function HeaderNew() {
                           Add your experience
                         </Button>
                       </Link>
+                      
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          const event = new CustomEvent('toggle-asili-chat');
+                          window.dispatchEvent(event);
+                          setDesktopHamburgerOpen(false);
+                        }}
+                      >
+                        AsiliChat
+                      </Button>
+                      
+                      {!loading && user && profile && (
+                        <div className="xl:hidden">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => {
+                              signOut();
+                              setDesktopHamburgerOpen(false);
+                            }}
+                            className="w-full justify-start"
+                          >
+                            <LogOut className="w-4 h-4 mr-2" />
+                            Sign Out
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -245,10 +300,11 @@ export default function HeaderNew() {
                   {/* Marketplace with dropdown */}
                   <div className="space-y-2">
                     <button
-                      className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                      className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md flex items-center justify-between"
                       onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}
                     >
                       {t("nav_marketplace")}
+                      <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "mobile-marketplace" ? "rotate-180" : ""}`} />
                     </button>
                     {openMenu === "mobile-marketplace" && (
                       <div className="ml-4 space-y-1">
@@ -285,6 +341,7 @@ export default function HeaderNew() {
                   >
                     {t("nav_impact")}
                   </Link>
+                  
                   <Link 
                     to="/partner-entry" 
                     className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
@@ -292,27 +349,17 @@ export default function HeaderNew() {
                   >
                     Add your experience
                   </Link>
-                  <Link 
-                    to="/about" 
-                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  
+                  <button
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => {
+                      const event = new CustomEvent('toggle-asili-chat');
+                      window.dispatchEvent(event);
+                      setIsMobileMenuOpen(false);
+                    }}
                   >
-                    About
-                  </Link>
-                  <Link 
-                    to="/privacy" 
-                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Privacy
-                  </Link>
-                  <Link 
-                    to="/terms" 
-                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Terms
-                  </Link>
+                    AsiliChat
+                  </button>
 
                   {/* Currency converter */}
                   <div className="pt-4 border-t border-border mt-4">
