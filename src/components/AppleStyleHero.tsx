@@ -33,7 +33,7 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
   return (
     <section 
       id="hero" 
-      className="relative overflow-hidden w-full min-h-[70vh] md:min-h-[78vh] xl:min-h-[92vh] xl:min-h-[max(92vh,720px)]"
+      className="relative overflow-hidden w-full min-h-[66.5vh] md:min-h-[66.3vh] xl:min-h-[78.2vh] xl:min-h-[max(78.2vh,612px)]"
     >
 
       {/* Background Image */}
@@ -50,6 +50,9 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
         {enableMobileScrim && (
           <div className="absolute inset-0 bg-black/60 md:bg-black/50" />
         )}
+        
+        {/* Header overlay for contrast */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/40 to-transparent" />
       </div>
 
       {/* Content Layer */}
@@ -68,10 +71,11 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
               <h1 
                 className="font-black tracking-tight mb-6 text-white"
                 style={{
-                  fontSize: 'clamp(36px, 6vw, 72px)',
+                  fontSize: 'clamp(30px, 5vw, 60px)',
                   fontWeight: 800,
                   letterSpacing: '-0.02em',
-                  lineHeight: '1.1'
+                  lineHeight: '1.1',
+                  paddingTop: '10px'
                 }}
               >
                 Travel that funds conservation
@@ -81,7 +85,7 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
               <p 
                 className="mb-8 md:mb-10 lg:mb-12 text-white/90 max-w-[780px] leading-relaxed"
                 style={{
-                  fontSize: 'clamp(16px, 2.2vw, 22px)',
+                  fontSize: 'clamp(14px, 1.8vw, 18px)',
                   maxWidth: '780px'
                 }}
               >
