@@ -15,17 +15,25 @@ import T from "@/i18n/T";
 const logoImage = "/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png";
 
 const DESTINATIONS = [
-  { label: "Nairobi", slug: "nairobi", image: "/src/assets/destinations/nairobi-destination.jpg" },
-  { label: "Coastal Kenya", slug: "coast", image: "/src/assets/destinations/coast-destination.jpg" },
-  { label: "Samburu", slug: "samburu", image: "/src/assets/destinations/samburu-destination.jpg" },
-  { label: "Masai Mara", slug: "masai-mara", image: "/src/assets/destinations/masai-mara-destination.jpg" },
-  { label: "Laikipia", slug: "laikipia", image: "/src/assets/destinations/laikipia-destination.jpg" },
+  { label: "Nairobi National Park", slug: "nairobi", image: "/src/assets/destinations/nairobi-destination.jpg", desc: "Urban wildlife sanctuary with rhinos and lions" },
+  { label: "Maasai Mara Reserve", slug: "masai-mara", image: "/src/assets/destinations/masai-mara-destination.jpg", desc: "Great Migration and Big Five experiences" },
+  { label: "Amboseli National Park", slug: "amboseli", image: "/src/assets/destinations/amboseli-destination.jpg", desc: "Elephant herds with Mount Kilimanjaro views" },
+  { label: "Samburu National Reserve", slug: "samburu", image: "/src/assets/destinations/samburu-destination.jpg", desc: "Unique species and cultural encounters" },
+  { label: "Tsavo East & West", slug: "tsavo", image: "/src/assets/destinations/tsavo-destination.jpg", desc: "Kenya's largest parks with red elephants" },
+  { label: "Laikipia Conservancies", slug: "laikipia", image: "/src/assets/destinations/laikipia-destination.jpg", desc: "Community-owned conservation ranches" },
+  { label: "Coastal Marine Parks", slug: "coast", image: "/src/assets/destinations/coast-destination.jpg", desc: "Coral reefs and marine conservation" },
+  { label: "Mount Kenya Region", slug: "mount-kenya", image: "/src/assets/destinations/mount-kenya-destination.jpg", desc: "High-altitude ecosystems and endemic species" },
 ];
 
 const THEMES = [
-  { label: "Wildlife Conservation", slug: "wildlife-conservation", desc: "Protect endangered species and habitats" },
-  { label: "Conservation Education", slug: "conservation-education", desc: "Learn about conservation through hands-on experiences" },
-  { label: "Community & Cultural Exploration", slug: "community-cultural-exploration", desc: "Support local communities and preserve cultural heritage" },
+  { label: "Wildlife Conservation", slug: "wildlife-conservation", desc: "Protect endangered species and habitats", icon: "🦏" },
+  { label: "Marine Conservation", slug: "marine-conservation", desc: "Ocean and coral reef protection programs", icon: "🐢" },
+  { label: "Community Tourism", slug: "community-tourism", desc: "Support local communities and cultural heritage", icon: "🏘️" },
+  { label: "Conservation Education", slug: "conservation-education", desc: "Learn through hands-on research experiences", icon: "🎓" },
+  { label: "Sustainable Safari", slug: "sustainable-safari", desc: "Low-impact wildlife viewing experiences", icon: "🦓" },
+  { label: "Photography Tours", slug: "photography-tours", desc: "Capture conservation stories through lens", icon: "📸" },
+  { label: "Volunteer Programs", slug: "volunteer-programs", desc: "Hands-on conservation project participation", icon: "🤝" },
+  { label: "Research Expeditions", slug: "research-expeditions", desc: "Citizen science and wildlife monitoring", icon: "🔬" },
 ];
 
 export default function HeaderNew() {
@@ -73,8 +81,8 @@ export default function HeaderNew() {
               </Link>
             </div>
 
-            {/* Center cluster - Search (always centered) */}
-            <div className="flex-1 flex justify-center px-2">
+            {/* Center cluster - Search (perfectly centered) */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               {/* Mobile Search button (centered) */}
               <div className="md:hidden">
                 <Button
@@ -88,8 +96,8 @@ export default function HeaderNew() {
                   <span>Search</span>
                 </Button>
               </div>
-              {/* Desktop Search (centered and smaller) */}
-              <div className="hidden md:block w-full max-w-[200px] lg:max-w-[240px] xl:max-w-[260px] mx-auto">
+              {/* Desktop Search (perfectly centered) */}
+              <div className="hidden md:block w-[200px] lg:w-[240px] xl:w-[260px]">
                 {desktopSearchOpen ? (
                   <AISearchComponent
                     variant="desktop"
@@ -134,36 +142,64 @@ export default function HeaderNew() {
                       {/* Destinations */}
                       <div>
                         <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_destinations")}</h3>
-                        <div className="space-y-2">
+                        <div className="space-y-2 max-h-80 overflow-y-auto">
                           {DESTINATIONS.map((dest) => (
                             <Link
                               key={dest.slug}
                               to={`/destinations/${dest.slug}`}
-                              className="block p-2 hover:bg-muted rounded-lg transition-colors"
+                              className="block p-3 hover:bg-muted rounded-lg transition-colors border-l-2 border-transparent hover:border-primary"
                               onClick={() => setOpenMenu(null)}
                             >
                               <div className="font-medium text-sm">{dest.label}</div>
-                              <div className="text-xs text-muted-foreground">Kenya</div>
+                              <div className="text-xs text-muted-foreground mt-1">{dest.desc}</div>
                             </Link>
                           ))}
+                          <div className="pt-2 border-t">
+                            <Link
+                              to="/destinations"
+                              className="block p-2 text-center text-sm text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              View All Destinations →
+                            </Link>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Themes */}
+                      {/* Conservation Themes */}
                       <div>
                         <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_themes")}</h3>
-                        <div className="space-y-2">
+                        <div className="space-y-2 max-h-80 overflow-y-auto">
                           {THEMES.map((theme) => (
                           <Link
                               key={theme.slug}
                               to={`/listings?theme=${encodeURIComponent(theme.label)}`}
-                              className="block p-2 hover:bg-muted rounded-lg transition-colors"
+                              className="block p-3 hover:bg-muted rounded-lg transition-colors border-l-2 border-transparent hover:border-secondary"
                               onClick={() => setOpenMenu(null)}
                             >
-                              <div className="font-medium text-sm">{theme.label}</div>
-                              <div className="text-xs text-muted-foreground">{theme.desc}</div>
+                              <div className="flex items-center gap-2 font-medium text-sm">
+                                <span className="text-base">{theme.icon}</span>
+                                {theme.label}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1">{theme.desc}</div>
                             </Link>
                           ))}
+                          <div className="pt-2 border-t space-y-1">
+                            <Link
+                              to="/impact-calculator"
+                              className="block p-2 text-center text-sm text-secondary hover:bg-secondary/10 rounded-lg transition-colors"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              🌍 Impact Calculator
+                            </Link>
+                            <Link
+                              to="/conservation-projects"
+                              className="block p-2 text-center text-sm text-secondary hover:bg-secondary/10 rounded-lg transition-colors"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              🌱 Active Projects
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -208,15 +244,35 @@ export default function HeaderNew() {
                       
                       <Link to="/impact-ledger" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start">
-                          {t("nav_impact")}
+                          📊 {t("nav_impact")}
                         </Button>
                       </Link>
                       
                       <Link to="/partner-entry" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start">
-                          Add your experience
+                          🏕️ List Your Experience
                         </Button>
                       </Link>
+                      
+                      <Link to="/conservation-dashboard" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          🌿 Conservation Hub
+                        </Button>
+                      </Link>
+                      
+                      <Link to="/community" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          👥 Community
+                        </Button>
+                      </Link>
+                      
+                      <Link to="/blog" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          📝 Stories & Insights
+                        </Button>
+                      </Link>
+                      
+                      <hr className="my-2" />
                       
                       <Button 
                         variant="ghost" 
@@ -230,8 +286,14 @@ export default function HeaderNew() {
                           setDesktopHamburgerOpen(false);
                         }}
                       >
-                        AsiliChat
+                        🤖 AsiliChat AI
                       </Button>
+                      
+                      <Link to="/help" onClick={() => setDesktopHamburgerOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full justify-start">
+                          ❓ Help & Support
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 )}
