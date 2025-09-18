@@ -86,7 +86,7 @@ export default function HeaderNew() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setMobileSearchOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg mx-auto"
                   aria-label="Open search"
                 >
                   <Search className="h-4 w-4" />
@@ -376,7 +376,7 @@ export default function HeaderNew() {
                   </button>
 
                   {/* Currency converter */}
-                  <div className="pt-4 border-t border-border mt-4">
+                  <div className="pt-2 border-t border-border mt-2">
                     <div className="px-3 py-2">
                       <CurrencySelector />
                     </div>
@@ -427,7 +427,7 @@ export default function HeaderNew() {
 
       {mobileSearchOpen && (
         <div className="fixed inset-0 z-[100] bg-background">
-          <div className="border-b border-border p-4">
+          <div className="p-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex-1">
                 <AISearchComponent
