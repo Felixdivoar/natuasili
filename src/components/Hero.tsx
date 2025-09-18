@@ -68,7 +68,7 @@ const Hero: React.FC<HeroProps> = ({
 
   return (
     <section className={`py-12 lg:py-20 px-4 bg-background ${compact ? 'py-8 lg:py-12' : ''}`}>
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         {/* Mobile: Stack image on top, text below */}
         <div className="flex flex-col lg:hidden gap-8">
           {/* Image Carousel - Mobile */}
@@ -147,9 +147,9 @@ const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Desktop & Tablet: Side by side layout */}
-        <div className="hidden lg:grid lg:grid-cols-5 xl:grid-cols-3 gap-8 lg:gap-12 items-center">
+        <div className="hidden lg:grid lg:grid-cols-5 xl:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text Content - Desktop/Tablet */}
-          <div className="lg:col-span-3 xl:col-span-2">
+          <div className="lg:col-span-2 xl:col-span-1">
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight text-foreground">
               {heroTitle}
             </h1>
@@ -200,7 +200,7 @@ const Hero: React.FC<HeroProps> = ({
           </div>
           
           {/* Image Carousel - Desktop/Tablet */}
-          <div className="lg:col-span-2 xl:col-span-1">
+          <div className="lg:col-span-3 xl:col-span-1">
             <Card className="overflow-hidden shadow-xl">
               <Carousel className="w-full">
                 <CarouselContent>
