@@ -74,7 +74,7 @@ const ImpactStories = () => {
                   </div>
                   
                   <CardHeader className="text-lg">
-                    <CardTitle className="text-xl group-hover:text-conservation transition-colors line-clamp-2">
+                    <CardTitle className="text-xl group-hover:text-foreground transition-colors line-clamp-2">
                       <DynamicTranslated text={story.title} />
                     </CardTitle>
                   </CardHeader>
@@ -87,7 +87,7 @@ const ImpactStories = () => {
                     
                     
                     <Link to={`/blog/${story.slug}`}>
-                      <Button variant="outline" className="w-full group-hover:bg-conservation group-hover:text-white group-hover:border-conservation transition-colors">
+                      <Button variant="outline" className="w-full group-hover:bg-foreground group-hover:text-background group-hover:border-foreground transition-colors">
                         <T k="btn_read_full_story" />
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
@@ -104,7 +104,7 @@ const ImpactStories = () => {
         {/* Mobile View All Button */}
         <div className="text-center mt-8 md:hidden">
           <Link to="/blog">
-            <Button className="bg-conservation hover:bg-conservation/90 text-white">
+            <Button className="bg-foreground hover:bg-foreground/90 text-background">
               <T k="btn_view_all_impact_stories" />
             </Button>
           </Link>
