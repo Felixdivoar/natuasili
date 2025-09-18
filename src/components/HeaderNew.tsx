@@ -62,8 +62,8 @@ export default function HeaderNew() {
         <div className="w-full px-4 h-full">
           <div className="flex items-center justify-between h-full">
             
-            {/* Left cluster - Logo + Navigation */}
-            <div className="flex items-center gap-3 md:gap-8 flex-shrink-0">
+            {/* Left cluster - Logo only */}
+            <div className="flex items-center flex-shrink-0">
               <Link to="/" className="flex items-center">
                 <img 
                   src={logoImage} 
@@ -71,67 +71,6 @@ export default function HeaderNew() {
                   className="h-8 w-auto object-contain !filter-none !brightness-100 !invert-0" 
                 />
               </Link>
-
-              {/* Desktop Navigation */}
-              <nav className="hidden lg:flex items-center gap-8" ref={menuRef}>
-                {/* Marketplace Mega Menu */}
-                <div className="relative">
-                  <button
-                    className="flex items-center gap-1 text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
-                    onMouseEnter={() => setOpenMenu("marketplace")}
-                    onFocus={() => setOpenMenu("marketplace")}
-                  >
-                    {t("nav_marketplace")}
-                    <ChevronDown className="h-3 w-3" />
-                  </button>
-                  
-                  {openMenu === "marketplace" && (
-                    <div 
-                      className="absolute left-0 mt-2 w-[720px] rounded-xl border bg-background p-6 shadow-xl z-50"
-                      onMouseEnter={() => setOpenMenu("marketplace")}
-                      onMouseLeave={() => setOpenMenu(null)}
-                    >
-                      <div className="grid grid-cols-2 gap-8">
-                        {/* Destinations */}
-                        <div>
-                          <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_destinations")}</h3>
-                          <div className="space-y-2">
-                            {DESTINATIONS.map((dest) => (
-                              <Link
-                                key={dest.slug}
-                                to={`/destinations/${dest.slug}`}
-                                className="block p-2 hover:bg-muted rounded-lg transition-colors"
-                                onClick={() => setOpenMenu(null)}
-                              >
-                                <div className="font-medium text-sm">{dest.label}</div>
-                                <div className="text-xs text-muted-foreground">Kenya</div>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Themes */}
-                        <div>
-                          <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_themes")}</h3>
-                          <div className="space-y-2">
-                            {THEMES.map((theme) => (
-                            <Link
-                                key={theme.slug}
-                                to={`/listings?theme=${encodeURIComponent(theme.label)}`}
-                                className="block p-2 hover:bg-muted rounded-lg transition-colors"
-                                onClick={() => setOpenMenu(null)}
-                              >
-                                <div className="font-medium text-sm">{theme.label}</div>
-                                <div className="text-xs text-muted-foreground">{theme.desc}</div>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </nav>
             </div>
 
             {/* Center cluster - Search (always centered) */}
@@ -171,9 +110,67 @@ export default function HeaderNew() {
               </div>
             </div>
 
-            {/* Right cluster - Currency, Auth, Hamburger (hamburger on far right) */}
-            <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 shrink-0 md:shrink md:flex-1 md:min-w-0">
+            {/* Right cluster - Marketplace, Currency, Auth, Hamburger (in that order) */}
+            <div className="flex items-center gap-2 md:gap-4 ml-auto md:ml-0 shrink-0" ref={menuRef}>
               
+              {/* Marketplace Mega Menu - desktop/laptop only */}
+              <div className="hidden lg:block relative">
+                <button
+                  className="flex items-center gap-1 text-foreground hover:text-primary transition-colors text-sm font-medium py-2"
+                  onMouseEnter={() => setOpenMenu("marketplace")}
+                  onFocus={() => setOpenMenu("marketplace")}
+                >
+                  {t("nav_marketplace")}
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+                
+                {openMenu === "marketplace" && (
+                  <div 
+                    className="absolute right-0 mt-2 w-[720px] rounded-xl border bg-background p-6 shadow-xl z-50"
+                    onMouseEnter={() => setOpenMenu("marketplace")}
+                    onMouseLeave={() => setOpenMenu(null)}
+                  >
+                    <div className="grid grid-cols-2 gap-8">
+                      {/* Destinations */}
+                      <div>
+                        <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_destinations")}</h3>
+                        <div className="space-y-2">
+                          {DESTINATIONS.map((dest) => (
+                            <Link
+                              key={dest.slug}
+                              to={`/destinations/${dest.slug}`}
+                              className="block p-2 hover:bg-muted rounded-lg transition-colors"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              <div className="font-medium text-sm">{dest.label}</div>
+                              <div className="text-xs text-muted-foreground">Kenya</div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Themes */}
+                      <div>
+                        <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_themes")}</h3>
+                        <div className="space-y-2">
+                          {THEMES.map((theme) => (
+                          <Link
+                              key={theme.slug}
+                              to={`/listings?theme=${encodeURIComponent(theme.label)}`}
+                              className="block p-2 hover:bg-muted rounded-lg transition-colors"
+                              onClick={() => setOpenMenu(null)}
+                            >
+                              <div className="font-medium text-sm">{theme.label}</div>
+                              <div className="text-xs text-muted-foreground">{theme.desc}</div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* Currency Selector - desktop/laptop only */}
               <div className="hidden lg:block">
                 <CurrencySelector />
