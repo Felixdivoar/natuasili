@@ -291,7 +291,27 @@ export default function HeaderNew() {
           {isMobileMenuOpen && (
             <div className="lg:hidden fixed inset-0 z-50 bg-background">
               <div className="flex flex-col h-full">
-                {/* Top: search */}
+                {/* Header with close button */}
+                <div className="flex items-center justify-between p-4 border-b border-border">
+                  <div className="flex items-center">
+                    <img 
+                      src={logoImage} 
+                      alt="NatuAsili" 
+                      className="h-8 w-auto object-contain" 
+                    />
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2"
+                    aria-label="Close menu"
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
+
+                {/* Search */}
                 <div className="border-b border-border p-4">
                   <AISearchComponent 
                     variant="mobile" 
@@ -302,14 +322,6 @@ export default function HeaderNew() {
 
                 {/* Main navigation */}
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-                  <Link 
-                    to="/" 
-                    className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Home
-                  </Link>
-                  
                   {/* Marketplace with dropdown */}
                   <div className="space-y-2">
                     <button
