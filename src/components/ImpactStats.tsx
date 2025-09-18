@@ -1,9 +1,20 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Leaf, Users2, BookOpen, Sparkles, TrendingUp, MapPin } from "lucide-react";
+import { Leaf, Users2, BookOpen, TrendingUp, MapPin } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
 import { useImpactMetrics } from "@/hooks/useImpactMetrics";
 import { DESTINATIONS_INFO } from "@/data/destinationData";
+
+// Create elephant icon component
+const ElephantIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2C6.5 2 2 6.5 2 12c0 2.8 1.2 5.3 3.1 7.1"/>
+    <path d="M21.9 12c0-5.5-4.4-10-9.9-10"/>
+    <circle cx="8" cy="14" r="2"/>
+    <path d="M10.5 17.5L12 19l1.5-1.5"/>
+    <path d="M15 11c.6.6 1.4 1 2.2 1 1.7 0 3.1-1.4 3.1-3.1s-1.4-3.1-3.1-3.1"/>
+  </svg>
+);
 
 const ImpactStats = () => {
   const { formatPrice } = useCurrency();
@@ -36,7 +47,7 @@ const ImpactStats = () => {
       description: t("stat_education_desc")
     },
     {
-      icon: Sparkles,
+      icon: ElephantIcon,
       value: "0", // Placeholder for species monitored
       label: t("stat_species"),
       color: "bg-wildlife",
