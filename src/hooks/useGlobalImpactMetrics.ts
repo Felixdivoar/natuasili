@@ -15,10 +15,11 @@ export function useGlobalImpactMetrics() {
   const [metrics, setMetrics] = useState<ImpactMetric[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
 
-  const fetchImpactMetrics = async () => {
+  const fetchImpactMetrics = async (silent: boolean = false) => {
     try {
-      setLoading(true);
+      if (!silent) setLoading(true);
       setError(null);
 
       const { data, error } = await supabase
@@ -28,17 +29,18 @@ export function useGlobalImpactMetrics() {
 
       if (error) throw error;
       setMetrics(data || []);
+      if (!hasLoaded) setHasLoaded(true);
 
     } catch (err) {
       console.error('Error fetching impact metrics:', err);
       setError(err instanceof Error ? err.message : 'Failed to load impact metrics');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchImpactMetrics();
+    fetchImpactMetrics(false);
 
     // Set up real-time subscription for impact metrics
     const channel = supabase
@@ -52,7 +54,7 @@ export function useGlobalImpactMetrics() {
         },
         (payload) => {
           console.log('Impact metrics change detected:', payload);
-          fetchImpactMetrics(); // Refetch when metrics are updated
+          fetchImpactMetrics(true); // Refetch when metrics are updated (silent to avoid UI flicker)
         }
       )
       .on(
@@ -67,7 +69,7 @@ export function useGlobalImpactMetrics() {
           // Only refetch if booking status changed to confirmed/completed
           if (payload.eventType === 'UPDATE' && 
               (payload.new?.status === 'confirmed' || payload.new?.status === 'completed')) {
-            setTimeout(() => fetchImpactMetrics(), 1000); // Small delay to allow DB triggers to complete
+            setTimeout(() => fetchImpactMetrics(true), 1000); // Small delay to allow DB triggers to complete
           }
         }
       )
@@ -82,7 +84,7 @@ export function useGlobalImpactMetrics() {
           console.log('Partner profile change detected:', payload);
           // Refetch when partner is approved (onboarded)
           if (payload.eventType === 'UPDATE' && payload.new?.kyc_status === 'approved') {
-            setTimeout(() => fetchImpactMetrics(), 1000); // Small delay to allow DB triggers to complete
+            setTimeout(() => fetchImpactMetrics(true), 1000); // Small delay to allow DB triggers to complete
           }
         }
       )

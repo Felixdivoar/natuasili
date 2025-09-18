@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { DollarSign, Users, Building2 } from "lucide-react";
+import { DollarSign, Euro, PoundSterling, Banknote, Users, Building2 } from "lucide-react";
 import { useGlobalImpactMetrics } from "@/hooks/useGlobalImpactMetrics";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface AppleStyleHeroProps {
   primaryImage?: string;
@@ -18,6 +19,8 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
     getActivePartners,
     loading 
   } = useGlobalImpactMetrics();
+  const { currency, formatPrice } = useCurrency();
+  const CurrencyIcon = currency === 'USD' ? DollarSign : currency === 'EUR' ? Euro : currency === 'GBP' ? PoundSterling : Banknote;
 
   // Load animation on mount
   useEffect(() => {
@@ -99,14 +102,14 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
           >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-white" />
+                <CurrencyIcon className="w-6 h-6 text-white" />
               </div>
               <div>
                 <div className="text-white font-medium min-w-[80px] h-6 flex items-center">
                   {loading ? (
                     <div className="w-16 h-4 bg-white/30 rounded animate-pulse" />
                   ) : (
-                    `KES ${getTotalConservationFunding().toLocaleString()}`
+                    formatPrice(getTotalConservationFunding())
                   )}
                 </div>
                 <div className="text-white/80 text-sm">Conservation funding</div>
