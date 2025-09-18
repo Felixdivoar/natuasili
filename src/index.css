@@ -157,7 +157,7 @@
 
   /* Site-wide content width constraint */
   .content-max-width {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 1rem;
   }
@@ -351,7 +351,7 @@ button, .btn, .button, [role="button"],
 }
 
 .hero-inner {   
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 4rem 1.5rem; /* More consistent padding */
   position: relative;
@@ -417,7 +417,7 @@ button, .btn, .button, [role="button"],
   height: 56px;            /* ~ short, clean */
 }
 .header-compact .nav-inner {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 16px;         /* slimmer side padding */
 }
@@ -2115,7 +2115,7 @@ section:not(:first-child) {
 .section,
 .main-content,
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 20px; /* safe spacing for mobile */
   box-sizing: border-box;
@@ -2286,7 +2286,7 @@ html, body {
 
   /* Global container width override */
   .container, .section-inner, .content-wrap, .page-wrap, .site-container {
-    max-width: 1200px !important;
+    max-width: 1300px !important;
   }
 
   /* Bold red booking limit message */

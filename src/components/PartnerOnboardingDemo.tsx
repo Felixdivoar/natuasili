@@ -832,7 +832,7 @@ const PartnerOnboardingDemo: React.FC = () => {
 
   return (
     <section className="hero-padding px-4 bg-muted/30">
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1300px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Try the Partner Onboarding Demo</h2>
