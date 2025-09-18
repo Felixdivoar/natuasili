@@ -81,15 +81,15 @@ export default function HeaderNew() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setMobileSearchOpen(true)}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg"
                   aria-label="Open search"
                 >
                   <Search className="h-4 w-4" />
                   <span>Search</span>
                 </Button>
               </div>
-              {/* Desktop Search (centered) */}
-              <div className="hidden md:block w-full max-w-[560px] lg:max-w-[640px] xl:max-w-[720px] mx-auto">
+              {/* Desktop Search (centered and smaller) */}
+              <div className="hidden md:block w-full max-w-[400px] lg:max-w-[480px] xl:max-w-[520px] mx-auto">
                 {desktopSearchOpen ? (
                   <AISearchComponent
                     variant="desktop"
@@ -101,7 +101,7 @@ export default function HeaderNew() {
                     variant="ghost"
                     size="sm"
                     onClick={() => setDesktopSearchOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg w-full justify-start"
+                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg w-full justify-start"
                   >
                     <Search className="h-4 w-4" />
                     <span>Search...</span>
