@@ -7,6 +7,7 @@ import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { useEffect } from "react";
+import { initMobileStickyRemover } from "@/utils/mobileStickyRemover";
 import CookieBanner from "@/components/CookieBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
@@ -80,6 +81,11 @@ function ScrollToTop() {
 // Layout with new header
 function AppLayout({ children }: { children: React.ReactNode }) {
   useHtmlLang();
+  
+  // Initialize mobile sticky element remover on app start
+  useEffect(() => {
+    initMobileStickyRemover();
+  }, []);
   
   return (
     <div className="min-h-screen bg-background">

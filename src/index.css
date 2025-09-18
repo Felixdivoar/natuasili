@@ -6,22 +6,52 @@
 
 /* ===== Mobile sticky fixes ===== */
 @media (max-width: 768px) {
-  /* Remove unwanted sticky elements on mobile */
-  .pre-menu-sticky,
+  /* Kill accidental bottom-fixed bars on mobile */
+  .bottom-bar,
+  .bottom_nav,
+  .mobile-bottom-nav,
+  .post-footer-sticky,
+  .floating-bottom-menu,
+  .bottom-floating-menu,
+  [data-bottom-nav],
+  [data-sticky="bottom"] {
+    display: none !important;
+    position: static !important;
+    bottom: auto !important;
+    z-index: 0 !important;
+  }
+
+  .__kill-bottom-bar {
+    display: none !important;
+  }
+
+  /* Kill accidental TOP fixed bars on mobile, keep the real header */
   .top-announcement-bar,
   .pre-header-sticky,
-  .post-footer-sticky,
-  .bottom-floating-menu {
+  .utility-topbar,
+  .promo-topbar,
+  [data-sticky="top"],
+  .floating-top-menu {
     position: static !important;
-    inset: auto !important;
+    display: none !important;
     top: auto !important;
-    bottom: auto !important;
-    z-index: 1 !important;
+    z-index: 0 !important;
+  }
+
+  /* Ensure page isn't pushed down by ghost padding */
+  body, .page, .page-wrapper, .site {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* Keep your real header visible and normal */
+  #mainHeader, .site-header, .main-header, .primary-nav {
+    position: relative !important;
+    z-index: 10 !important;
   }
 
   /* Ensure footer area does not reserve space for sticky bars */
-  .site-footer,
-  .footer-wrapper {
+  .site-footer, .footer, .footer-wrapper {
     padding-bottom: 0 !important;
   }
 }
