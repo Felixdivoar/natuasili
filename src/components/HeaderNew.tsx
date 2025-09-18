@@ -135,10 +135,10 @@ export default function HeaderNew() {
             </div>
 
             {/* Right cluster - Search + Auth + Mobile Menu */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
               
               {/* Desktop Search */}
-              <div className="hidden md:block flex-1 max-w-none">
+              <div className="hidden md:block flex-1 min-w-0 max-w-none">
                 {desktopSearchOpen ? (
                   <AISearchComponent 
                     variant="desktop" 
@@ -427,7 +427,7 @@ export default function HeaderNew() {
       </header>
 
       {mobileSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-background">
+        <div className="fixed inset-0 z-[60] bg-background">
           <div className="border-b border-border p-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex-1">
