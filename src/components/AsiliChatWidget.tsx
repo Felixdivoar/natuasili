@@ -41,9 +41,19 @@ const AsiliChatWidget: React.FC = () => {
 
   // External open/hide events
   useEffect(() => {
-    const openHandler = () => setIsOpen(true);
-    const toggleHandler = () => setIsOpen(prev => !prev);
-    const hideHandler = () => setIsOpen(false);
+    const openHandler = () => {
+      console.log('AsiliChat: Received open event');
+      setIsOpen(true);
+    };
+    const toggleHandler = () => {
+      console.log('AsiliChat: Received toggle event, current state:', isOpen);
+      setIsOpen(prev => !prev);
+    };
+    const hideHandler = () => {
+      console.log('AsiliChat: Received hide event');
+      setIsOpen(false);
+    };
+    console.log('AsiliChat: Setting up event listeners');
     document.addEventListener('asili-chat:open', openHandler as EventListener);
     document.addEventListener('asili-chat:toggle', toggleHandler as EventListener);
     document.addEventListener('asili-chat:hide', hideHandler as EventListener);

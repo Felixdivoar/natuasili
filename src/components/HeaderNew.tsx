@@ -234,8 +234,10 @@ export default function HeaderNew() {
                         size="sm" 
                         className="w-full justify-start"
                         onClick={() => {
+                          console.log('Desktop AsiliChat button clicked');
                           const event = new CustomEvent('asili-chat:toggle');
                           document.dispatchEvent(event);
+                          console.log('Desktop AsiliChat event dispatched');
                           setDesktopHamburgerOpen(false);
                         }}
                       >
@@ -364,8 +366,10 @@ export default function HeaderNew() {
                   <button
                     className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
                     onClick={() => {
+                      console.log('Mobile AsiliChat button clicked');
                       const event = new CustomEvent('asili-chat:toggle');
                       document.dispatchEvent(event);
+                      console.log('Mobile AsiliChat event dispatched');
                       setIsMobileMenuOpen(false);
                     }}
                   >
