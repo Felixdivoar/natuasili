@@ -4,18 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Users } from "lucide-react";
+import { MapPin, Users, Clock, Shield } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { useI18n } from "@/contexts/I18nContext";
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import MoreFiltersDialog, { MoreFiltersState } from "@/components/MoreFiltersDialog";
+import AvailabilityFilterBar from "@/components/AvailabilityFilterBar";
 const Browse = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const {
-    formatPrice
-  } = useCurrency();
+  const { formatPrice } = useCurrency();
+  const { t } = useI18n();
+
+  // Availability filter state
+  const [availabilityFilters, setAvailabilityFilters] = useState<{
+    date: Date | null;
+    adults: number;
+    children: number;
+  }>({ date: null, adults: 1, children: 0 });
+
+  const hasAvailabilityFilters = availabilityFilters.date !== null;
 
   // Get price bounds from data
   const prices = mockExperiences.map(exp => exp.base_price);
