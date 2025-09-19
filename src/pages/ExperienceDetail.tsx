@@ -424,7 +424,7 @@ export default function ExperienceDetail() {
                   <AccordionTrigger>Itinerary</AccordionTrigger>
                   <AccordionContent>
                     <div className="prose prose-lg max-w-none">
-                      <p className="text-muted-foreground font-light leading-relaxed">
+                      <p className="text-base text-muted-foreground !font-light leading-relaxed">
                         {itinerary.map((item, index) => {
                         const description = item.description;
                         const isLast = index === itinerary.length - 1;
