@@ -29,7 +29,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { formatPrice } = useCurrency();
-  const [holdTimer, setHoldTimer] = useState(29 * 60 + 59); // 29:59
+  const [holdTimer, setHoldTimer] = useState(10 * 60); // 10:00 minutes
 
   // --- hydrate selection from URL / session ---
   const url = new URL(window.location.href);
@@ -69,13 +69,20 @@ const Checkout = () => {
     }
   }, [people, experience?.capacity]);
 
-  // Hold timer countdown
+  // Hold timer countdown with expiry handling
   useEffect(() => {
     if (holdTimer > 0) {
       const timer = setTimeout(() => setHoldTimer(holdTimer - 1), 1000);
       return () => clearTimeout(timer);
+    } else if (holdTimer === 0) {
+      // Timer expired - clear booking and redirect
+      clearCart();
+      navigate('/browse', { 
+        replace: true,
+        state: { message: 'Booking session expired. Please select your experience again.' }
+      });
     }
-  }, [holdTimer]);
+  }, [holdTimer, navigate]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -191,9 +198,11 @@ const Checkout = () => {
               Back to experience
             </Link>
             {holdTimer > 0 && (
-              <div className="flex items-center gap-2 text-orange-600 font-medium">
+              <div className={`flex items-center gap-2 font-medium ${
+                holdTimer <= 120 ? 'text-destructive' : holdTimer <= 300 ? 'text-warning' : 'text-orange-600'
+              }`}>
                 <Clock className="h-4 w-4" />
-                <span>Hold expires in {formatTime(holdTimer)}</span>
+                <span>Your booking will be held for {formatTime(holdTimer)}</span>
               </div>
             )}
           </div>

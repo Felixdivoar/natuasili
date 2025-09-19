@@ -11,6 +11,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useBookingTimer } from "@/hooks/useBookingTimer";
+import BookingTimer from "./BookingTimer";
 
 interface UnifiedBookingFlowProps {
   experience: any;
@@ -32,6 +34,23 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
   const { user, profile } = useAuth();
   const { formatPrice } = useCurrency();
   const { items, addItem, removeItem } = useMultiCart();
+  
+  // Booking timer
+  const bookingTimer = useBookingTimer(() => {
+    // Clear booking data on timer expire
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      specialRequests: '',
+      donation: 0,
+      agreeTerms: false
+    });
+    setBookingStarted(false);
+    toast.error("Booking session expired. Please restart your booking.");
+  });
+
+  const [bookingStarted, setBookingStarted] = useState(false);
   
   // Check if experience is already in cart
   const isInCart = items.some(item => 
@@ -78,6 +97,12 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
     const basePrice = experience.priceKESAdult || experience.base_price || 350;
     const isGroupPricing = experience.isGroupPricing || false;
     
+    // Start booking timer when adding to cart
+    if (!bookingTimer.isActive) {
+      bookingTimer.startTimer();
+      setBookingStarted(true);
+    }
+    
     addItem({
       experienceSlug: experience.slug,
       title: experience.title,
@@ -94,7 +119,13 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
   };
 
   const handleDirectBooking = async () => {
-    if (!validateForm() || !initialItem || !user) return;
+    if (!validateForm() || !initialItem) return;
+    
+    // Start booking timer if not already started
+    if (!bookingTimer.isActive && !bookingStarted) {
+      bookingTimer.startTimer();
+      setBookingStarted(true);
+    }
 
     setLoading(true);
     try {
@@ -114,12 +145,12 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
       const subtotal = isGroupPricing ? basePrice : (basePrice * initialItem.adults + basePrice * initialItem.children);
       const totalAmount = subtotal + formData.donation;
 
-      // Create booking
+      // Create booking (support guest bookings)
       const { data: booking, error: bookingError } = await supabase
         .from('bookings')
         .insert({
           experience_id: dbExperience.id,
-          user_id: user.id,
+          user_id: user?.id || null, // Allow null for guest bookings
           booking_date: initialItem.date,
           adults: initialItem.adults,
           children: initialItem.children,
@@ -167,6 +198,9 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
         throw new Error('Failed to create payment session');
       }
 
+      // Stop timer on successful payment redirect
+      bookingTimer.stopTimer();
+      
       // Redirect to payment
       window.location.href = paymentResponse.redirect_url;
 
@@ -192,6 +226,15 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* Booking Timer */}
+      {bookingStarted && (
+        <BookingTimer 
+          timeRemaining={bookingTimer.timeRemaining}
+          formatTime={bookingTimer.formatTime}
+          isActive={bookingTimer.isActive}
+        />
+      )}
+      
       {/* Booking Summary */}
       <Card>
         <CardHeader>
@@ -344,10 +387,10 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
             </Button>
             <Button
               onClick={handleDirectBooking}
-              disabled={!validateForm() || loading}
+              disabled={!validateForm() || loading || bookingTimer.isExpired}
               className="flex-1"
             >
-              {loading ? "Processing..." : "Book Now"}
+              {loading ? "Processing..." : bookingTimer.isExpired ? "Session Expired" : "Book Now"}
             </Button>
           </div>
         </>
