@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, MapPin, Users, Calendar, Mail, Phone, User, ArrowLeft } from "lucide-react";
@@ -267,159 +267,203 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full mx-4 max-h-[95vh] overflow-hidden flex flex-col">
-        <DialogHeader className="flex-shrink-0 pb-4">
-          <DialogTitle className="text-xl font-bold">
-            {t('bookYourExperience', 'Book Your Experience')}
+      <DialogContent className="max-w-5xl w-full mx-4 max-h-[96vh] overflow-hidden p-0 gap-0 bg-gradient-to-br from-background via-background to-muted/10">
+        {/* Modern Header */}
+        <div className="border-b bg-card/50 backdrop-blur-sm px-8 py-6">
+          <DialogTitle className="text-2xl font-semibold tracking-tight text-center">
+            {t('bookYourExperience', 'Complete Your Booking')}
           </DialogTitle>
-        </DialogHeader>
-        
-        <div className="flex-1 overflow-y-auto">
-          <div className="grid lg:grid-cols-3 gap-6">
-            {/* Left side - Steps */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Progress Steps */}
-              <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
-                {steps.map((step, index) => (
-                  <React.Fragment key={step.number}>
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0 ${
-                        step.completed || currentStep === step.number
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted text-muted-foreground'
-                      }`}>
-                        {step.completed ? <CheckCircle className="h-4 w-4" /> : step.number}
-                      </div>
-                      <span className={`text-sm font-medium truncate ${
-                        step.completed || currentStep === step.number 
-                          ? 'text-foreground' 
-                          : 'text-muted-foreground'
-                      }`}>
-                        {step.title}
-                      </span>
+          
+          {/* Modern Progress Steps */}
+          <div className="flex items-center justify-center mt-6">
+            <div className="flex items-center gap-1 bg-muted/30 rounded-full p-1.5 backdrop-blur-sm border">
+              {steps.map((step, index) => (
+                <React.Fragment key={step.number}>
+                  <div className={`flex items-center gap-3 px-4 py-2.5 rounded-full transition-all duration-200 ${
+                    step.completed || currentStep === step.number
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}>
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                      step.completed || currentStep === step.number
+                        ? 'bg-primary-foreground/20'
+                        : 'bg-muted'
+                    }`}>
+                      {step.completed ? <CheckCircle className="h-3.5 w-3.5" /> : step.number}
                     </div>
-                    {index < steps.length - 1 && (
-                      <div className={`h-px w-4 sm:w-8 flex-shrink-0 ${
-                        step.completed ? 'bg-primary' : 'bg-muted'
-                      }`} />
-                    )}
-                  </React.Fragment>
-                ))}
-              </div>
+                    <span className="text-sm font-medium whitespace-nowrap">
+                      {step.title}
+                    </span>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto px-8 py-6">
+          <div className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+            {/* Left side - Steps */}
+            <div className="lg:col-span-3 space-y-8">
 
               {/* Step 2: Contact */}
               {currentStep === 2 && (
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold">{t('contactInformation', 'Contact Information')}</h3>
-                    <p className="text-sm text-muted-foreground">We'll use this to send your booking confirmation and updates.</p>
+                <div className="space-y-8">
+                  {/* Section Header */}
+                  <div className="text-center space-y-2">
+                    <h3 className="text-xl font-semibold tracking-tight">{t('contactInformation', 'Your Details')}</h3>
+                    <p className="text-muted-foreground">We'll send your confirmation and updates here</p>
                   </div>
                   
-                  {/* Selected details summary with edit option */}
-                  <Card className="bg-muted/50">
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-medium">Selected details</h4>
-                        <Button variant="outline" size="sm" onClick={handleEditDetails}>
-                          <ArrowLeft className="h-4 w-4 mr-1" />
-                          Edit
+                  {/* Selected details summary with modern design */}
+                  <Card className="bg-gradient-to-br from-primary/5 via-primary/5 to-primary/10 border-primary/10 shadow-sm">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="font-medium text-primary">Your Selection</h4>
+                        <Button variant="ghost" size="sm" onClick={handleEditDetails} className="text-primary hover:bg-primary/10">
+                          <ArrowLeft className="h-4 w-4 mr-2" />
+                          Edit Details
                         </Button>
                       </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-muted-foreground" />
-                          <span>{cart.date}</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="flex items-center gap-3 bg-background/50 rounded-lg p-3">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Calendar className="h-4 w-4 text-primary" />
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">Date</div>
+                            <div className="font-medium">{cart.date}</div>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-muted-foreground" />
-                          <span>{cart.adults + cart.children} people</span>
+                        <div className="flex items-center gap-3 bg-background/50 rounded-lg p-3">
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Users className="h-4 w-4 text-primary" />
+                          </div>
+                          <div>
+                            <div className="text-xs text-muted-foreground">Guests</div>
+                            <div className="font-medium">{cart.adults + cart.children} people</div>
+                          </div>
                         </div>
-                        <div className="col-span-2">
-                          <Badge variant="secondary">Standard Experience</Badge>
-                        </div>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-primary/10">
+                        <Badge variant="secondary" className="bg-primary/5 text-primary border-primary/20">
+                          Standard Experience
+                        </Badge>
                       </div>
                     </CardContent>
                   </Card>
                   
-                  <div className="grid grid-cols-1 gap-4">
-                    <div>
-                      <Label htmlFor="name">{t('fullName', 'Full Name')} *</Label>
-                      <Input 
-                        id="name"
-                        value={formData.name}
-                        onChange={(e) => updateFormData('name', e.target.value)}
-                        required
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="email">{t('email', 'Email')} *</Label>
-                      <Input 
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => updateFormData('email', e.target.value)}
-                        required
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="phone">{t('phone', 'Phone Number')} *</Label>
-                      <Input 
-                        id="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => updateFormData('phone', e.target.value)}
-                        required
-                        className="mt-1"
-                        placeholder="+254 700 000 000"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="mobility">{t('mobilityAssistance', 'Mobility Assistance')}</Label>
-                      <Select value={formData.mobility} onValueChange={(value) => updateFormData('mobility', value)}>
-                        <SelectTrigger className="mt-1">
-                          <SelectValue placeholder={t('selectOption', 'Select option')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="none">{t('noAssistance', 'No assistance needed')}</SelectItem>
-                          <SelectItem value="walking">{t('walkingAid', 'Walking aid')}</SelectItem>
-                          <SelectItem value="wheelchair">{t('wheelchair', 'Wheelchair')}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="requests">{t('specialRequests', 'Special Requests')}</Label>
-                    <Textarea 
-                      id="requests"
-                      value={formData.specialRequests}
-                      onChange={(e) => updateFormData('specialRequests', e.target.value)}
-                      placeholder={t('specialRequestsPlaceholder', 'Any special requirements or requests...')}
-                      rows={3}
-                      className="mt-1"
-                    />
-                  </div>
-
-                  {/* Optional Donation Section */}
-                  <Card className="bg-gradient-to-r from-green-50/50 to-emerald-50/50 border-green-200/50">
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs font-bold">+</span>
-                          </div>
-                          <h4 className="font-medium text-green-800">{t('addDonation', 'Add a donation (optional)')}</h4>
+                  {/* Modern Form Layout */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-sm">
+                      <CardContent className="p-6 space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
+                            <User className="h-4 w-4 text-primary" />
+                            {t('fullName', 'Full Name')} *
+                          </Label>
+                          <Input 
+                            id="name"
+                            value={formData.name}
+                            onChange={(e) => updateFormData('name', e.target.value)}
+                            required
+                            className="h-11 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
+                            placeholder="Enter your full name"
+                          />
                         </div>
-                        <p className="text-xs text-green-700">
-                          {t('donationDescription', '100% of your donation goes directly to conservation initiatives (minus transfer charges).')}
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <Label htmlFor="donation" className="text-sm font-medium text-green-800">KES</Label>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                            <Mail className="h-4 w-4 text-primary" />
+                            {t('email', 'Email Address')} *
+                          </Label>
+                          <Input 
+                            id="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={(e) => updateFormData('email', e.target.value)}
+                            required
+                            className="h-11 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
+                            placeholder="your@email.com"
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-sm">
+                      <CardContent className="p-6 space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-2">
+                            <Phone className="h-4 w-4 text-primary" />
+                            {t('phone', 'Phone Number')} *
+                          </Label>
+                          <Input 
+                            id="phone"
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => updateFormData('phone', e.target.value)}
+                            required
+                            className="h-11 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
+                            placeholder="+254 700 000 000"
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="mobility" className="text-sm font-medium">
+                            {t('mobilityAssistance', 'Accessibility Needs')}
+                          </Label>
+                          <Select value={formData.mobility} onValueChange={(value) => updateFormData('mobility', value)}>
+                            <SelectTrigger className="h-11 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow">
+                              <SelectValue placeholder={t('selectOption', 'None required')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">{t('noAssistance', 'No assistance needed')}</SelectItem>
+                              <SelectItem value="walking">{t('walkingAid', 'Walking assistance')}</SelectItem>
+                              <SelectItem value="wheelchair">{t('wheelchair', 'Wheelchair accessible')}</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Special Requests */}
+                  <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-sm">
+                    <CardContent className="p-6">
+                      <Label htmlFor="requests" className="text-sm font-medium mb-3 block">
+                        {t('specialRequests', 'Special Requests')} 
+                        <span className="text-xs text-muted-foreground ml-1">(Optional)</span>
+                      </Label>
+                      <Textarea 
+                        id="requests"
+                        value={formData.specialRequests}
+                        onChange={(e) => updateFormData('specialRequests', e.target.value)}
+                        placeholder={t('specialRequestsPlaceholder', 'Any dietary restrictions, special occasions, or other requests...')}
+                        rows={3}
+                        className="border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow resize-none"
+                      />
+                    </CardContent>
+                  </Card>
+
+                  {/* Optional Donation Section - Modern Design */}
+                  <Card className="bg-gradient-to-br from-emerald-50/50 via-green-50/30 to-emerald-50/20 border-emerald-200/30 shadow-sm">
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-sm">
+                            <span className="text-white text-sm font-bold">🌱</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-emerald-800">{t('addDonation', 'Support Conservation')}</h4>
+                            <p className="text-xs text-emerald-700/80">
+                              {t('donationDescription', '100% goes directly to conservation initiatives')}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 bg-background/40 rounded-lg p-3">
+                          <Label htmlFor="donation" className="text-sm font-medium text-emerald-800 whitespace-nowrap">
+                            Add KES
+                          </Label>
                           <Input
                             id="donation"
                             type="number"
@@ -428,17 +472,29 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                             value={formData.donation || ''}
                             onChange={(e) => updateFormData('donation', parseInt(e.target.value) || 0)}
                             placeholder="0"
-                            className="w-24 border-green-200 focus:border-green-400"
+                            className="border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
                           />
-                          <span className="text-xs text-green-600">Optional</span>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <div className="flex justify-end">
-                    <Button onClick={handleNextStep} disabled={!validateStep2()}>
-                      {t('continue', 'Continue')}
+                  {/* Modern Action Buttons */}
+                  <div className="flex gap-3 pt-4">
+                    <Button
+                      variant="outline"
+                      onClick={() => setCurrentStep(1)}
+                      className="flex-1 h-11 border-0 bg-background/50 hover:bg-background shadow-sm hover:shadow-md transition-all"
+                      disabled={isProcessingPayment}
+                    >
+                      ← Previous
+                    </Button>
+                    <Button
+                      onClick={handleNextStep}
+                      disabled={!validateStep2() || isProcessingPayment}
+                      className="flex-1 h-11 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-sm hover:shadow-md transition-all"
+                    >
+                      Continue to Review →
                     </Button>
                   </div>
                 </div>
@@ -521,46 +577,99 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
               )}
             </div>
 
-            {/* Right side - Summary */}
-            <Card className="lg:col-span-1 h-fit sticky top-0">
-              <CardContent className="p-4 space-y-4">
-                <h4 className="font-medium text-lg">{t('pricingSummary', 'Your booking')}</h4>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span>{cart.adults + cart.children} people × {cart.date}</span>
+            {/* Right side - Modern Summary */}
+            <div className="lg:col-span-2">
+              <Card className="sticky top-6 border-0 bg-gradient-to-br from-card via-card to-muted/5 backdrop-blur-sm shadow-lg">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <CheckCircle className="h-4 w-4 text-primary" />
+                    </div>
+                    Booking Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Experience Info - Enhanced */}
+                  <div className="space-y-4">
+                    <div className="flex gap-4 p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl border border-primary/10">
+                      <div className="relative">
+                        <img 
+                          src={experience.heroImage || experience.images?.[0]}
+                          alt={experience.title}
+                          className="w-20 h-20 rounded-xl object-cover shadow-md"
+                        />
+                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                          <CheckCircle className="h-3 w-3 text-primary-foreground" />
+                        </div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-base line-clamp-2">{experience.title}</h4>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+                          <MapPin className="h-4 w-4 text-primary" />
+                          <span className="truncate">{experience.locationText}</span>
+                        </div>
+                        <Badge variant="secondary" className="mt-2 bg-primary/10 text-primary border-primary/20">
+                          Conservation Experience
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div className="flex justify-between">
-                    <span>Experience fee</span>
-                    <span>{formatPrice(cart.subtotal)}</span>
+
+                  {/* Booking Details - Modern Layout */}
+                  <div className="space-y-4">
+                    <h5 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Trip Details</h5>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-3 bg-background/30 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-primary" />
+                          <span className="text-sm text-muted-foreground">Date</span>
+                        </div>
+                        <span className="font-medium">{cart.date}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-background/30 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-primary" />
+                          <span className="text-sm text-muted-foreground">Guests</span>
+                        </div>
+                        <span className="font-medium">{cart.adults + cart.children} people</span>
+                      </div>
+                    </div>
                   </div>
-                  
-                  {(formData.donation && formData.donation > 0) && (
-                    <div className="flex justify-between text-green-600">
-                      <span>Optional donation</span>
-                      <span>{formatPrice(formData.donation)}</span>
+
+                  {/* Pricing - Enhanced Design */}
+                  {impactSummary && (
+                    <div className="space-y-4">
+                      <h5 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Price Breakdown</h5>
+                      <div className="space-y-3 p-4 bg-gradient-to-br from-background/50 to-background/30 rounded-xl border">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">Experience cost × {cart.adults + cart.children}</span>
+                          <span className="font-medium">{formatPrice(cart.subtotal)}</span>
+                        </div>
+                        {formData.donation > 0 && (
+                          <div className="flex justify-between items-center text-sm">
+                            <div className="flex items-center gap-2">
+                              <span className="text-emerald-700">🌱 Conservation donation</span>
+                            </div>
+                            <span className="font-medium text-emerald-700">+{formatPrice(formData.donation)}</span>
+                          </div>
+                        )}
+                        <div className="border-t pt-3 mt-3">
+                          <div className="flex justify-between items-center">
+                            <span className="font-semibold">Total Amount</span>
+                            <div className="text-right">
+                              <div className="text-xl font-bold text-primary">
+                                {formatPrice(cart.subtotal + (formData.donation || 0))}
+                              </div>
+                              <div className="text-xs text-muted-foreground">Secure payment</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
-                  
-                  <div className="border-t pt-2 space-y-1 text-xs text-muted-foreground">
-                    <div className="flex justify-between">
-                      <span>Partner initiatives (90% + donations)</span>
-                      <span>{formatPrice(cart.split.partner90 + (formData.donation || 0))}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Platform & operations (10%)</span>
-                      <span>{formatPrice(cart.split.platform10)}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between font-semibold pt-2 border-t">
-                    <span>Total</span>
-                    <span>{formatPrice(cart.subtotal + (formData.donation || 0))}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </DialogContent>
