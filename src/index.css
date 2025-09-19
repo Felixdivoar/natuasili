@@ -6,9 +6,23 @@
 
 /* Force experience title styling */
 .experience-title-forced {
-  font-size: 1.5rem !important;
+  font-size: 1.25rem !important; /* Mobile: reduced by 10% from 1.5rem */
   font-weight: normal !important;
-  line-height: 2rem !important;
+  line-height: 1.75rem !important;
+}
+
+@media (min-width: 768px) {
+  .experience-title-forced {
+    font-size: 1.35rem !important; /* Tablet: 10% reduction from 1.5rem */
+    line-height: 2rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .experience-title-forced {
+    font-size: 1.35rem !important; /* Desktop: 10% reduction from 1.5rem */
+    line-height: 2rem !important;
+  }
 }
 
 /* ===== Mobile sticky fixes ===== */
