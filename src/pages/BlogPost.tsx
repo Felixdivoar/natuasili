@@ -298,7 +298,7 @@ const BlogPost = () => {
   return (
     <div className="bg-background">{/* Page content wrapper */}
       
-      <article className="container mx-auto px-4 py-8 max-w-4xl">
+      <article className="container mx-auto px-4 py-8 max-w-4xl text-base font-light">
         <div className="mb-8">
           <Link to="/blog">
             <Button variant="ghost" className="mb-6">
