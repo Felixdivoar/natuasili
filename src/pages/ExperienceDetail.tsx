@@ -209,21 +209,27 @@ export default function ExperienceDetail() {
     try {
       if (isInWishlist) {
         // Remove from wishlist
-        await supabase
+        const { error } = await supabase
           .from('wishlists')
           .delete()
           .eq('user_id', user.id)
           .eq('experience_id', experience.id);
-        setIsInWishlist(false);
+        
+        if (!error) {
+          setIsInWishlist(false);
+        }
       } else {
         // Add to wishlist
-        await supabase
+        const { error } = await supabase
           .from('wishlists')
           .insert({
             user_id: user.id,
             experience_id: experience.id
           });
-        setIsInWishlist(true);
+        
+        if (!error) {
+          setIsInWishlist(true);
+        }
       }
     } catch (error) {
       console.error('Error updating wishlist:', error);

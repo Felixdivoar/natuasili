@@ -320,16 +320,36 @@ const TravelerDashboard = () => {
                     wishlist.map((item) => (
                       <Card key={item.id} className="hover:shadow-md transition-shadow">
                         <CardContent className="p-4">
-                          <div className="aspect-video bg-muted rounded-lg mb-4"></div>
-                          <h3 className="font-semibold mb-2">Conservation Experience</h3>
-                          <p className="text-sm text-muted-foreground mb-4">Location details</p>
+                          <div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
+                            {item.experiences.hero_image ? (
+                              <img 
+                                src={item.experiences.hero_image} 
+                                alt={item.experiences.title}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-muted flex items-center justify-center">
+                                <Heart className="h-8 w-8 text-muted-foreground" />
+                              </div>
+                            )}
+                          </div>
+                          <h3 className="font-semibold mb-2 line-clamp-2">{item.experiences.title}</h3>
+                          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                            {item.experiences.description || "Discover this amazing conservation experience"}
+                          </p>
                           <div className="flex items-center justify-between">
-                            <span className="font-bold">{formatPrice(5000)}/person</span>
+                            <span className="font-bold">
+                              {formatPrice(item.experiences.price_kes_adult)}/person
+                            </span>
                             <div className="flex gap-2">
-                              <Button variant="outline" size="sm">
-                                <Eye className="h-4 w-4" />
+                              <Button variant="outline" size="sm" asChild>
+                                <Link to={`/experiences/${item.experiences.slug}`}>
+                                  <Eye className="h-4 w-4" />
+                                </Link>
                               </Button>
-                              <Button size="sm">Book</Button>
+                              <Button size="sm" asChild>
+                                <Link to={`/experiences/${item.experiences.slug}`}>Book</Link>
+                              </Button>
                             </div>
                           </div>
                         </CardContent>
