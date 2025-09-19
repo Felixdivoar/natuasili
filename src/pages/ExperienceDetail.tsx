@@ -38,6 +38,7 @@ export default function ExperienceDetail() {
   });
   const [isSlideshowOpen, setIsSlideshowOpen] = useState(false);
   const [slideshowIndex, setSlideshowIndex] = useState(0);
+  const [isInWishlist, setIsInWishlist] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const {
     user
@@ -83,12 +84,32 @@ export default function ExperienceDetail() {
     }
   };
 
+  // Check if experience is in wishlist
+  const checkWishlistStatus = async (experienceId: string) => {
+    if (!user || !isValidUUID(experienceId)) return;
+    
+    try {
+      const { data } = await supabase
+        .from('wishlists')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('experience_id', experienceId)
+        .single();
+      
+      setIsInWishlist(!!data);
+    } catch (error) {
+      // Not in wishlist or error occurred
+      setIsInWishlist(false);
+    }
+  };
+
   // Set up real-time subscription for review stats
   useEffect(() => {
     if (!experience?.id) return;
 
     // Initial fetch
     fetchReviewStats(experience.id);
+    checkWishlistStatus(experience.id);
 
     // Skip real-time subscription for non-UUID IDs
     if (!isValidUUID(experience.id)) {
@@ -105,7 +126,7 @@ export default function ExperienceDetail() {
     return () => {
       supabase.removeChannel(statsSubscription);
     };
-  }, [experience?.id]);
+  }, [experience?.id, user]);
   if (!experience) {
     return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -177,6 +198,38 @@ export default function ExperienceDetail() {
     }
   };
 
+  const handleWishlistClick = async () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    if (!isValidUUID(experience.id)) return;
+
+    try {
+      if (isInWishlist) {
+        // Remove from wishlist
+        await supabase
+          .from('wishlists')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('experience_id', experience.id);
+        setIsInWishlist(false);
+      } else {
+        // Add to wishlist
+        await supabase
+          .from('wishlists')
+          .insert({
+            user_id: user.id,
+            experience_id: experience.id
+          });
+        setIsInWishlist(true);
+      }
+    } catch (error) {
+      console.error('Error updating wishlist:', error);
+    }
+  };
+
   // Helper functions
   const getThemeSlug = (theme: string): string => {
     return theme.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -232,12 +285,9 @@ export default function ExperienceDetail() {
                   
                   {/* Action Buttons */}
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={() => {
-                    // TODO: Implement wishlist functionality
-                    console.log('Add to wishlist:', experience.slug);
-                  }}>
-                      <Heart className="h-4 w-4" />
-                      <span className="sr-only">Add to wishlist</span>
+                    <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={handleWishlistClick}>
+                      <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-primary text-primary' : ''}`} />
+                      <span className="sr-only">{isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}</span>
                     </Button>
                     
                     <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={() => {
