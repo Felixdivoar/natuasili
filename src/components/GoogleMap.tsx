@@ -2,14 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MapPin, ExternalLink } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-
 interface GoogleMapProps {
   location: string;
   coordinates?: [number, number]; // [lat, lng] - note: Google Maps uses lat,lng order
   height?: string;
   googleMapsUrl?: string;
 }
-
 declare global {
   interface Window {
     google: any;
@@ -17,10 +15,10 @@ declare global {
     initGoogleMapCallback: () => void;
   }
 }
-
-const GoogleMap: React.FC<GoogleMapProps> = ({ 
-  location, 
-  coordinates = [-1.2921, 36.7378], // Default to Nairobi coordinates [lat, lng]
+const GoogleMap: React.FC<GoogleMapProps> = ({
+  location,
+  coordinates = [-1.2921, 36.7378],
+  // Default to Nairobi coordinates [lat, lng]
   height = "h-64",
   googleMapsUrl
 }) => {
@@ -35,12 +33,9 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   const openDirections = () => {
     const [lat, lng] = coordinates;
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
+
     // Always use directions URL to get route from current location to destination
-    const url = isMobile 
-      ? `maps://maps.google.com/maps?daddr=${lat},${lng}&dirflg=d`
-      : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
-    
+    const url = isMobile ? `maps://maps.google.com/maps?daddr=${lat},${lng}&dirflg=d` : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
     window.open(url, '_blank');
   };
 
@@ -49,15 +44,16 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     const fetchApiKey = async () => {
       try {
         console.log('Fetching Google Maps API key...');
-        const { data, error } = await supabase.functions.invoke('get-maps-config');
-        
+        const {
+          data,
+          error
+        } = await supabase.functions.invoke('get-maps-config');
         if (error) {
           console.error('Error fetching maps config:', error);
           setError('Failed to load map configuration');
           setIsLoading(false);
           return;
         }
-
         if (data?.apiKey) {
           console.log('Google Maps API key received successfully');
           setApiKey(data.apiKey);
@@ -72,39 +68,40 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
         setIsLoading(false);
       }
     };
-
     fetchApiKey();
   }, []);
 
   // Initialize Google Maps when API key is available
   useEffect(() => {
     if (!apiKey || !mapContainer.current) return;
-
     const initMap = () => {
       try {
         console.log('Initializing Google Maps...');
         if (window.google && window.google.maps) {
           const [lat, lng] = coordinates;
-          
           const map = new window.google.maps.Map(mapContainer.current, {
-            center: { lat, lng },
+            center: {
+              lat,
+              lng
+            },
             zoom: 15,
-            styles: [
-              {
-                featureType: 'all',
-                elementType: 'geometry.fill',
-                stylers: [{ color: '#f8f9fa' }]
-              },
-              {
-                featureType: 'water',
-                elementType: 'geometry',
-                stylers: [{ color: '#e0f2fe' }]
-              }
-            ],
+            styles: [{
+              featureType: 'all',
+              elementType: 'geometry.fill',
+              stylers: [{
+                color: '#f8f9fa'
+              }]
+            }, {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{
+                color: '#e0f2fe'
+              }]
+            }],
             mapTypeControl: false,
             streetViewControl: true,
             fullscreenControl: true,
-            zoomControl: true,
+            zoomControl: true
           });
 
           // Add info window
@@ -117,7 +114,10 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 
           // Add single marker with click listener
           const marker = new window.google.maps.Marker({
-            position: { lat, lng },
+            position: {
+              lat,
+              lng
+            },
             map: map,
             title: location,
             icon: {
@@ -126,14 +126,12 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
               fillColor: '#059669',
               fillOpacity: 1,
               strokeColor: '#ffffff',
-              strokeWeight: 3,
+              strokeWeight: 3
             }
           });
-
           marker.addListener('click', () => {
             infoWindow.open(map, marker);
           });
-
           mapInstance.current = map;
           setMapReady(true);
           setIsLoading(false);
@@ -158,26 +156,22 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initGoogleMapCallback`;
       script.async = true;
       script.defer = true;
-      
+
       // Set up global callback
       window.initGoogleMapCallback = initMap;
-      
       script.onload = () => {
         console.log('Google Maps script loaded');
       };
-      
-      script.onerror = (err) => {
+      script.onerror = err => {
         console.error('Failed to load Google Maps script:', err);
         setError('Failed to load Google Maps');
         setIsLoading(false);
       };
-      
       document.head.appendChild(script);
     } else {
       console.log('Google Maps already loaded, initializing...');
       initMap();
     }
-
     return () => {
       // Cleanup callback
       if (window.initGoogleMapCallback) {
@@ -185,45 +179,26 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       }
     };
   }, [apiKey, coordinates, location]);
-
   if (error) {
-    return (
-      <div className={`${height} bg-muted rounded-lg flex items-center justify-center p-6`}>
+    return <div className={`${height} bg-muted rounded-lg flex items-center justify-center p-6`}>
         <div className="text-center space-y-2">
           <MapPin className="h-8 w-8 mx-auto text-foreground mb-2" />
           <p className="text-sm text-muted-foreground">{error}</p>
           <p className="text-xs text-muted-foreground">Please check your Google Maps API configuration</p>
         </div>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className={`${height} rounded-lg overflow-hidden border relative`}>
+  return <div className={`${height} rounded-lg overflow-hidden border relative`}>
       <div ref={mapContainer} className="w-full h-full" />
-      {(isLoading || !mapReady) && (
-        <div className="absolute inset-0 bg-muted/80 flex items-center justify-center">
+      {(isLoading || !mapReady) && <div className="absolute inset-0 bg-muted/80 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto mb-2"></div>
             <p className="text-sm text-muted-foreground">Loading Google Map...</p>
           </div>
-        </div>
-      )}
-      {mapReady && (
-        <div className="absolute bottom-4 right-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={openDirections}
-            className="bg-background/90 backdrop-blur-sm shadow-lg hover:bg-background"
-          >
-            <ExternalLink className="h-3 w-3 mr-1" />
-            Directions
-          </Button>
-        </div>
-      )}
-    </div>
-  );
+        </div>}
+      {mapReady && <div className="absolute bottom-4 right-4">
+          
+        </div>}
+    </div>;
 };
-
 export default GoogleMap;
