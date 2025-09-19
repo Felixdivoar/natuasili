@@ -94,7 +94,7 @@ export default function ExperienceDetail() {
         .select('id')
         .eq('user_id', user.id)
         .eq('experience_id', experienceId)
-        .single();
+        .maybeSingle();
       
       setIsInWishlist(!!data);
     } catch (error) {
@@ -286,7 +286,7 @@ export default function ExperienceDetail() {
                   {/* Action Buttons */}
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={handleWishlistClick}>
-                      <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-primary text-primary' : ''}`} />
+                      <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-black text-black' : ''}`} />
                       <span className="sr-only">{isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}</span>
                     </Button>
                     
