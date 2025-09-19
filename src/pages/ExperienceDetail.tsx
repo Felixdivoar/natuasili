@@ -423,31 +423,34 @@ export default function ExperienceDetail() {
                 <AccordionItem value="itinerary">
                   <AccordionTrigger>Itinerary</AccordionTrigger>
                   <AccordionContent>
-                     <div className="space-y-4">
-                       <div className="prose prose-lg max-w-none">
-                         <p className="text-muted-foreground leading-relaxed">
-                           {itinerary.map((item, index) => {
-                             const description = item.description;
-                             const isLast = index === itinerary.length - 1;
-                             const isFirst = index === 0;
-                             
-                             if (isFirst) {
-                               return description;
-                             } else if (isLast) {
-                               return ` Following this, ${description.toLowerCase()}`;
-                             } else {
-                               return ` Next, ${description.toLowerCase()}`;
-                             }
-                           }).join('')}
-                         </p>
-                       </div>
-                      {contentSections.cancellation && <div className="mt-6 p-4 bg-muted rounded-lg">
-                          <h4 className="font-semibold text-foreground mb-2">Cancellation policy</h4>
-                          <p className="text-muted-foreground">{contentSections.cancellation}</p>
-                        </div>}
+                    <div className="prose prose-lg max-w-none">
+                      <p className="text-muted-foreground leading-relaxed">
+                        {itinerary.map((item, index) => {
+                          const description = item.description;
+                          const isLast = index === itinerary.length - 1;
+                          const isFirst = index === 0;
+                          
+                          if (isFirst) {
+                            return description;
+                          } else if (isLast) {
+                            return ` Following this, ${description.toLowerCase()}`;
+                          } else {
+                            return ` Next, ${description.toLowerCase()}`;
+                          }
+                        }).join('')}
+                      </p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
+                
+                {contentSections.cancellation && (
+                  <AccordionItem value="cancellation">
+                    <AccordionTrigger>Cancellation policy</AccordionTrigger>
+                    <AccordionContent>
+                      <p className="text-muted-foreground">{contentSections.cancellation}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                )}
               </Accordion>
             </section>
 
