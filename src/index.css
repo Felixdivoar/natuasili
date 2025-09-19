@@ -4,6 +4,13 @@
 
 @import './styles/cta-guards.css';
 
+/* Force experience title styling */
+.experience-title-forced {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  line-height: 2rem !important;
+}
+
 /* ===== Mobile sticky fixes ===== */
 @media (max-width: 768px) {
   /* Kill accidental bottom-fixed bars on mobile */
