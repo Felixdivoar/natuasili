@@ -457,7 +457,7 @@ export default function ExperienceDetail() {
                 <h2 className="text-base font-normal text-foreground mb-6">Frequently asked questions</h2>
                 <Accordion type="single" collapsible defaultValue="faq-0" className="w-full">
                   {contentSections.faqs.map((faq, index) => <AccordionItem key={index} value={`faq-${index}`}>
-                      <AccordionTrigger>{faq.question}</AccordionTrigger>
+                      <AccordionTrigger className="text-base !font-light">{faq.question}</AccordionTrigger>
                       <AccordionContent>
                         <p className="text-muted-foreground font-light">{faq.answer}</p>
                       </AccordionContent>
