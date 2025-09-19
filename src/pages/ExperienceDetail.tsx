@@ -269,7 +269,7 @@ export default function ExperienceDetail() {
               <div>
                 {/* Title with Action Buttons */}
                 <div className="flex items-start justify-between gap-4 mb-2">
-                  <h1 className="text-3xl font-bold text-foreground flex-1 md:text-xl">
+                  <h1 className="text-lg font-semibold text-foreground flex-1">
                     {experience.title}
                   </h1>
                   
@@ -368,7 +368,7 @@ export default function ExperienceDetail() {
             
             {/* Overview */}
             <section>
-              <h2 className="text-foreground mb-6 text-lg font-semibold">Overview</h2>
+              <h2 className="text-base font-normal text-foreground mb-6">Overview</h2>
               <div className="prose prose-lg max-w-none text-muted-foreground">
                 <p className="text-base font-light">{contentSections.overview}</p>
               </div>
@@ -376,7 +376,7 @@ export default function ExperienceDetail() {
 
             {/* Highlights */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Highlights</h2>
+              <h2 className="text-base font-normal text-foreground mb-6">Highlights</h2>
               <ul className="space-y-3">
                 {contentSections.highlights.map((highlight, index) => <li key={index} className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
@@ -387,7 +387,7 @@ export default function ExperienceDetail() {
 
             {/* What's Included/Not Included */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">What's Included</h2>
+              <h2 className="text-base font-normal text-foreground mb-6">What's Included</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -418,13 +418,13 @@ export default function ExperienceDetail() {
 
             {/* What to Expect */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">What to expect</h2>
+              <h2 className="text-base font-normal text-foreground mb-6">What to expect</h2>
               <Accordion type="single" collapsible defaultValue="itinerary" className="w-full">
                 <AccordionItem value="itinerary">
                   <AccordionTrigger>Itinerary</AccordionTrigger>
                   <AccordionContent>
                     <div className="prose prose-lg max-w-none">
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-muted-foreground font-light leading-relaxed">
                         {itinerary.map((item, index) => {
                         const description = item.description;
                         const isLast = index === itinerary.length - 1;
@@ -445,7 +445,7 @@ export default function ExperienceDetail() {
                 {contentSections.cancellation && <AccordionItem value="cancellation">
                     <AccordionTrigger>Cancellation policy</AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-muted-foreground">{contentSections.cancellation}</p>
+                      <p className="text-muted-foreground font-light">{contentSections.cancellation}</p>
                     </AccordionContent>
                   </AccordionItem>}
               </Accordion>
@@ -454,12 +454,12 @@ export default function ExperienceDetail() {
 
             {/* Frequently Asked Questions */}
             {contentSections.faqs.length > 0 && <section>
-                <h2 className="text-2xl font-bold text-foreground mb-6">Frequently asked questions</h2>
+                <h2 className="text-base font-normal text-foreground mb-6">Frequently asked questions</h2>
                 <Accordion type="single" collapsible defaultValue="faq-0" className="w-full">
                   {contentSections.faqs.map((faq, index) => <AccordionItem key={index} value={`faq-${index}`}>
                       <AccordionTrigger>{faq.question}</AccordionTrigger>
                       <AccordionContent>
-                        <p className="text-muted-foreground">{faq.answer}</p>
+                        <p className="text-muted-foreground font-light">{faq.answer}</p>
                       </AccordionContent>
                     </AccordionItem>)}
                 </Accordion>
@@ -467,13 +467,13 @@ export default function ExperienceDetail() {
 
             {/* Important Information */}
             {contentSections.importantInfo && contentSections.importantInfo.length > 0 && <section>
-                <h2 className="text-2xl font-bold text-foreground mb-6">Important Information</h2>
+                <h2 className="text-base font-normal text-foreground mb-6">Important Information</h2>
                 <Card>
                   <CardContent className="p-6">
                     <ul className="space-y-2">
                       {contentSections.importantInfo.map((info, index) => <li key={index} className="flex items-start gap-2">
                           <Info className="h-4 w-4 text-info mt-0.5 flex-shrink-0" />
-                          <span className="text-muted-foreground">{info}</span>
+                          <span className="text-muted-foreground font-light">{info}</span>
                         </li>)}
                     </ul>
                   </CardContent>
@@ -482,7 +482,7 @@ export default function ExperienceDetail() {
 
             {/* Where You'll Be */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Where you'll be</h2>
+              <h2 className="text-base font-normal text-foreground mb-6">Where you'll be</h2>
               <div className="bg-gradient-to-br from-card via-card to-card/80 border rounded-2xl overflow-hidden shadow-sm">
                 {/* Location Header */}
                 <div className="p-6 pb-4 border-b border-border/50">
