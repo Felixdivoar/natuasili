@@ -370,7 +370,7 @@ export default function ExperienceDetail() {
             <section>
               <h2 className="text-base font-normal text-foreground mb-6">Overview</h2>
               <div className="prose prose-lg max-w-none text-muted-foreground">
-                <p className="text-base font-light">{contentSections.overview}</p>
+                <p className="text-base !font-light">{contentSections.overview}</p>
               </div>
             </section>
 
