@@ -87,15 +87,10 @@ export default function ExperienceDetail() {
   // Check if experience is in wishlist
   const checkWishlistStatus = async (experienceId: string) => {
     if (!user || !isValidUUID(experienceId)) return;
-    
     try {
-      const { data } = await supabase
-        .from('wishlists')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('experience_id', experienceId)
-        .maybeSingle();
-      
+      const {
+        data
+      } = await supabase.from('wishlists').select('id').eq('user_id', user.id).eq('experience_id', experienceId).maybeSingle();
       setIsInWishlist(!!data);
     } catch (error) {
       // Not in wishlist or error occurred
@@ -193,36 +188,29 @@ export default function ExperienceDetail() {
     scrollToAvailability();
     openBookingModal();
   };
-
   const handleWishlistClick = async () => {
     if (!user) {
       setIsAuthModalOpen(true);
       return;
     }
-
     if (!isValidUUID(experience.id)) return;
-
     try {
       if (isInWishlist) {
         // Remove from wishlist
-        const { error } = await supabase
-          .from('wishlists')
-          .delete()
-          .eq('user_id', user.id)
-          .eq('experience_id', experience.id);
-        
+        const {
+          error
+        } = await supabase.from('wishlists').delete().eq('user_id', user.id).eq('experience_id', experience.id);
         if (!error) {
           setIsInWishlist(false);
         }
       } else {
         // Add to wishlist
-        const { error } = await supabase
-          .from('wishlists')
-          .insert({
-            user_id: user.id,
-            experience_id: experience.id
-          });
-        
+        const {
+          error
+        } = await supabase.from('wishlists').insert({
+          user_id: user.id,
+          experience_id: experience.id
+        });
         if (!error) {
           setIsInWishlist(true);
         }
@@ -430,10 +418,10 @@ export default function ExperienceDetail() {
 
             {/* What to Expect */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">What to Expect</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-6">What to expect</h2>
               <Accordion type="single" collapsible defaultValue="itinerary" className="w-full">
                 <AccordionItem value="itinerary">
-                  <AccordionTrigger>Itinerary & Cancellation</AccordionTrigger>
+                  <AccordionTrigger>Itinerary</AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-4">
                       {itinerary.map((item, index) => <div key={index}>
@@ -441,7 +429,7 @@ export default function ExperienceDetail() {
                           <p className="text-muted-foreground">{item.description}</p>
                         </div>)}
                       {contentSections.cancellation && <div className="mt-6 p-4 bg-muted rounded-lg">
-                          <h4 className="font-semibold text-foreground mb-2">Cancellation Policy</h4>
+                          <h4 className="font-semibold text-foreground mb-2">Cancellation policy</h4>
                           <p className="text-muted-foreground">{contentSections.cancellation}</p>
                         </div>}
                     </div>
@@ -453,7 +441,7 @@ export default function ExperienceDetail() {
 
             {/* Frequently Asked Questions */}
             {contentSections.faqs.length > 0 && <section>
-                <h2 className="text-2xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">Frequently asked questions</h2>
                 <Accordion type="single" collapsible defaultValue="faq-0" className="w-full">
                   {contentSections.faqs.map((faq, index) => <AccordionItem key={index} value={`faq-${index}`}>
                       <AccordionTrigger>{faq.question}</AccordionTrigger>
@@ -481,7 +469,7 @@ export default function ExperienceDetail() {
 
             {/* Where You'll Be */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Where You'll Be</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-6">Where you'll be</h2>
               <div className="bg-card border rounded-lg p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <MapPin className="h-5 w-5 text-primary" />

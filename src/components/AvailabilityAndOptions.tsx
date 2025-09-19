@@ -452,7 +452,7 @@ const AvailabilityAndOptions = ({
                       {/* Total */}
                       <div className="border-t pt-3 mt-3">
                         <div className="flex justify-between items-center">
-                          <span className="font-semibold">Total Amount</span>
+                          <span className="font-semibold">Total amount</span>
                           <div className="text-right">
                             <div className="text-2xl font-bold text-primary">{formatPrice(totals.subtotal)}</div>
                             <div className="text-xs text-muted-foreground">All taxes included</div>
