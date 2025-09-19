@@ -488,11 +488,12 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                            {!user && (
                              <div className="space-y-2 pt-2 border-t border-muted/30">
                                <div className="flex items-start space-x-3">
-                                 <Checkbox
-                                   id="createAccount"
-                                   checked={formData.createAccount}
-                                   onCheckedChange={(checked) => updateFormData('createAccount', checked)}
-                                 />
+                                  <Checkbox
+                                    id="createAccount"
+                                    checked={formData.createAccount}
+                                    onCheckedChange={(checked) => updateFormData('createAccount', checked)}
+                                    className="h-4 w-4"
+                                  />
                                  <Label htmlFor="createAccount" className="text-sm leading-relaxed cursor-pointer">
                                    <span className="font-medium text-primary">Create an account to manage all my bookings</span>
                                    <br />
