@@ -2,7 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, User, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
 import impactMetricsBlog from "@/assets/blog/impact-metrics-blog.jpg";
 import partnerSpotlightBlog from "@/assets/blog/partner-spotlight-blog.jpg";
 import whyPartnerBlog from "@/assets/blog/why-partner-blog.jpg";
@@ -26,10 +25,8 @@ import purposefulTravelExperiences from "@/assets/blog/purposeful-travel-experie
 import maasaiMaraProject from "@/assets/maasai-mara-project.jpg";
 import sambururEducation from "@/assets/samburu-education.jpg";
 import karuraForestPlanting from "@/assets/karura-forest-planting.jpg";
-
 import SimilarBlogs from "@/components/SimilarBlogs";
 import { blogPosts } from "@/data/blogData";
-
 const blogContent = {
   "partner-natuasili-support-conservation-impact": {
     title: "Partner with Natuasili and support conservation impact",
@@ -239,13 +236,14 @@ const blogContent = {
     `
   }
 };
-
 const BlogPost = () => {
-  const { slug } = useParams();
-  
+  const {
+    slug
+  } = useParams();
+
   // First try to get from detailed blogContent, then fallback to blogPosts data
   let post = slug ? blogContent[slug as keyof typeof blogContent] : null;
-  
+
   // If not found in detailed content, try to find in blogPosts data
   if (!post && slug) {
     const fallbackPost = blogPosts.find(p => p.slug === slug);
@@ -266,10 +264,8 @@ const BlogPost = () => {
       };
     }
   }
-
   if (!post) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+    return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl font-bold mb-4 text-foreground">Blog post not found</h1>
           <p className="text-muted-foreground mb-6">The blog post you're looking for doesn't exist or has been removed.</p>
@@ -277,26 +273,31 @@ const BlogPost = () => {
             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Return to Blog</Button>
           </Link>
         </div>
-      </div>
-    );
+      </div>;
   }
-
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Impact Stories': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Partner Spotlight': return 'bg-primary/10 text-primary border-primary/20';
-      case 'Partnership Guide': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Community Impact': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Wildlife Protection': return 'bg-conservation/10 text-conservation border-conservation/20';
-      case 'Education': return 'bg-primary/10 text-primary border-primary/20';
-      case 'Restoration': return 'bg-accent/10 text-accent border-accent/20';
-      case 'Innovation': return 'bg-accent/10 text-accent border-accent/20';
-      default: return 'bg-muted text-muted-foreground';
+      case 'Impact Stories':
+        return 'bg-accent/10 text-accent border-accent/20';
+      case 'Partner Spotlight':
+        return 'bg-primary/10 text-primary border-primary/20';
+      case 'Partnership Guide':
+        return 'bg-accent/10 text-accent border-accent/20';
+      case 'Community Impact':
+        return 'bg-accent/10 text-accent border-accent/20';
+      case 'Wildlife Protection':
+        return 'bg-conservation/10 text-conservation border-conservation/20';
+      case 'Education':
+        return 'bg-primary/10 text-primary border-primary/20';
+      case 'Restoration':
+        return 'bg-accent/10 text-accent border-accent/20';
+      case 'Innovation':
+        return 'bg-accent/10 text-accent border-accent/20';
+      default:
+        return 'bg-muted text-muted-foreground';
     }
   };
-
-  return (
-    <div className="bg-background">{/* Page content wrapper */}
+  return <div className="bg-background">{/* Page content wrapper */}
       
       <article className="container mx-auto px-4 py-8 max-w-4xl text-base font-light">
         <div className="mb-8">
@@ -308,10 +309,7 @@ const BlogPost = () => {
           </Link>
           
           <div className="mb-6">
-            <Link 
-              to={`/blog/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`}
-              className="inline-block"
-            >
+            <Link to={`/blog/category/${post.category.toLowerCase().replace(/\s+/g, '-')}`} className="inline-block">
               <Badge className="bg-black text-white border-black cursor-pointer">
                 {post.category}
               </Badge>
@@ -329,21 +327,16 @@ const BlogPost = () => {
         </div>
         
         <div className="mb-8">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full h-[400px] object-cover rounded-lg"
-          />
+          <img src={post.image} alt={post.title} className="w-full h-[400px] object-cover rounded-lg" />
         </div>
         
-        <div 
-          className="prose prose-base max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground font-light"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <div className="prose prose-base max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground font-light" dangerouslySetInnerHTML={{
+        __html: post.content
+      }} />
         
         <div className="mt-12 pt-8 border-t border-border">
           <div className="text-center">
-            <h3 className="text-xl font-bold mb-4">Ready to Make an Impact?</h3>
+            <h3 className="text-xl font-bold mb-4">Ready to make an impact?</h3>
             <p className="text-muted-foreground mb-6">
               Explore conservation experiences and start your journey with us.
             </p>
@@ -356,12 +349,7 @@ const BlogPost = () => {
         </div>
       </article>
       
-      <SimilarBlogs 
-        currentSlug={slug || ""} 
-        currentCategory={post?.category}
-      />
-    </div>
-  );
+      <SimilarBlogs currentSlug={slug || ""} currentCategory={post?.category} />
+    </div>;
 };
-
 export default BlogPost;
