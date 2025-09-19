@@ -388,7 +388,7 @@ export default function ExperienceDetail() {
             {/* What's Included/Not Included */}
             <section>
               <h2 className="text-base font-normal text-foreground mb-6">What's Included</h2>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-6 font-light">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-success" />
