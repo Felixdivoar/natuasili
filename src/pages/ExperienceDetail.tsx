@@ -190,12 +190,8 @@ export default function ExperienceDetail() {
     setIsBookingModalOpen(true);
   };
   const handleBookNowClick = () => {
-    if (!user) {
-      setIsAuthModalOpen(true);
-    } else {
-      scrollToAvailability();
-      openBookingModal();
-    }
+    scrollToAvailability();
+    openBookingModal();
   };
 
   const handleWishlistClick = async () => {
@@ -538,8 +534,8 @@ export default function ExperienceDetail() {
         {/* Auth Modal */}
         {isAuthModalOpen && <NewAuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />}
 
-        {/* Booking Modal */}
-        {isBookingModalOpen && user && <BookingWizardNew isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} experience={experience} />}
+        {/* Booking Modal - Available for both guests and logged-in users */}
+        {isBookingModalOpen && <BookingWizardNew isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} experience={experience} />}
 
         {/* Image Slideshow */}
         <ImageSlideshow images={experience.images} isOpen={isSlideshowOpen} onClose={closeSlideshowModal} initialIndex={slideshowIndex} altText={experience.title} />
