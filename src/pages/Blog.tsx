@@ -136,7 +136,7 @@ Through stories from communities, conservation organizations, and travelers, we 
                         </CardHeader>
                         
                         <CardContent>
-                          <p className="text-base text-muted-foreground font-light mb-6 line-clamp-3">
+                          <p className="text-base text-muted-foreground !font-light mb-6 line-clamp-3">
                             {post.excerpt}
                           </p>
                           
