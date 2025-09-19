@@ -86,7 +86,7 @@ export default function ExperienceDetail() {
 
   // Check if experience is in wishlist
   const checkWishlistStatus = async (experienceId: string) => {
-    if (!user || !isValidUUID(experienceId)) return;
+    if (!user || !experienceId) return;
     try {
       const {
         data
@@ -193,7 +193,7 @@ export default function ExperienceDetail() {
       setIsAuthModalOpen(true);
       return;
     }
-    if (!isValidUUID(experience.id)) return;
+    if (!experience?.id) return;
     try {
       if (isInWishlist) {
         // Remove from wishlist
