@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckCircle, XCircle, Info, MapPin, Star, Users, Clock, ChevronLeft, ChevronRight, Heart, Share } from "lucide-react";
+import { CheckCircle, XCircle, Info, MapPin, Star, Users, Clock, ChevronLeft, ChevronRight, Heart, Share, ExternalLink } from "lucide-react";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
 import { parseExperienceContent } from "@/components/ExperienceDetailParsing";
 import { CartProvider } from "@/contexts/CartContext";
@@ -486,12 +486,59 @@ export default function ExperienceDetail() {
             {/* Where You'll Be */}
             <section>
               <h2 className="text-2xl font-bold text-foreground mb-6">Where you'll be</h2>
-              <div className="bg-card border rounded-lg p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  <span className="font-medium">{experience.locationText}</span>
+              <div className="bg-gradient-to-br from-card via-card to-card/80 border rounded-2xl overflow-hidden shadow-sm">
+                {/* Location Header */}
+                <div className="p-6 pb-4 border-b border-border/50">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 bg-primary/10 rounded-lg">
+                          <MapPin className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-lg text-foreground">{experience.locationText}</h3>
+                          <p className="text-sm text-muted-foreground">Experience location</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2" onClick={() => {
+                      const [lat, lng] = getExperienceCoordinates(experience.description) || [-1.2921, 36.7378];
+                      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                      const url = isMobile 
+                        ? `maps://maps.google.com/maps?daddr=${lat},${lng}&dirflg=d`
+                        : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+                      window.open(url, '_blank');
+                    }}>
+                      <ExternalLink className="h-4 w-4" />
+                      Get directions
+                    </Button>
+                  </div>
                 </div>
-                <GoogleMap location={experience.locationText || "Experience Location"} coordinates={getExperienceCoordinates(experience.description)} height="h-64" googleMapsUrl={experience.googleMapsUrl} />
+                
+                {/* Map Container */}
+                <div className="relative">
+                  <GoogleMap 
+                    location={experience.locationText || "Experience Location"} 
+                    coordinates={getExperienceCoordinates(experience.description)} 
+                    height="h-72" 
+                    googleMapsUrl={experience.googleMapsUrl} 
+                  />
+                  
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/5 via-transparent to-transparent" />
+                </div>
+                
+                {/* Location Details */}
+                <div className="p-6 pt-4 bg-muted/20">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      📍 Exact location provided after booking
+                    </span>
+                    <span className="text-muted-foreground">
+                      🕒 Activity duration varies
+                    </span>
+                  </div>
+                </div>
               </div>
             </section>
 
