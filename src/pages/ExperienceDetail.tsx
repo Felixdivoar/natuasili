@@ -22,22 +22,29 @@ import { getExperienceCoordinates } from "@/utils/locationUtils";
 import { useI18n } from "@/i18n/I18nProvider";
 import T from "@/i18n/T";
 import { supabase } from "@/integrations/supabase/client";
-
 export default function ExperienceDetail() {
-  const { slug } = useParams();
+  const {
+    slug
+  } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [stickyVisible, setStickyVisible] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [bookingStarted, setBookingStarted] = useState(false);
-  const [reviewStats, setReviewStats] = useState({ averageRating: 0, totalReviews: 0 });
+  const [reviewStats, setReviewStats] = useState({
+    averageRating: 0,
+    totalReviews: 0
+  });
   const [isSlideshowOpen, setIsSlideshowOpen] = useState(false);
   const [slideshowIndex, setSlideshowIndex] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
-  const { user } = useAuth();
-  const { t } = useI18n();
-
+  const {
+    user
+  } = useAuth();
+  const {
+    t
+  } = useI18n();
   const experience = EXPERIENCES.find(exp => exp.slug === slug);
 
   // Helper function to validate UUID format
@@ -50,26 +57,29 @@ export default function ExperienceDetail() {
   const fetchReviewStats = async (experienceId: string) => {
     try {
       if (!isValidUUID(experienceId)) {
-        setReviewStats({ averageRating: 0, totalReviews: 0 });
+        setReviewStats({
+          averageRating: 0,
+          totalReviews: 0
+        });
         return;
       }
-
-      const { data, error } = await supabase
-        .from('reviews')
-        .select('rating')
-        .eq('experience_id', experienceId);
-
+      const {
+        data,
+        error
+      } = await supabase.from('reviews').select('rating').eq('experience_id', experienceId);
       if (error) throw error;
-      
       const totalReviews = data?.length || 0;
-      const averageRating = totalReviews > 0 
-        ? data.reduce((sum, review) => sum + review.rating, 0) / totalReviews 
-        : 0;
-
-      setReviewStats({ averageRating, totalReviews });
+      const averageRating = totalReviews > 0 ? data.reduce((sum, review) => sum + review.rating, 0) / totalReviews : 0;
+      setReviewStats({
+        averageRating,
+        totalReviews
+      });
     } catch (err) {
       console.error('Error fetching review stats:', err);
-      setReviewStats({ averageRating: 0, totalReviews: 0 });
+      setReviewStats({
+        averageRating: 0,
+        totalReviews: 0
+      });
     }
   };
 
@@ -86,28 +96,18 @@ export default function ExperienceDetail() {
     }
 
     // Set up real-time subscription
-    const statsSubscription = supabase
-      .channel('review-stats-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'reviews',
-          filter: `experience_id=eq.${experience.id}`,
-        },
-        () => fetchReviewStats(experience.id)
-      )
-      .subscribe();
-
+    const statsSubscription = supabase.channel('review-stats-changes').on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'reviews',
+      filter: `experience_id=eq.${experience.id}`
+    }, () => fetchReviewStats(experience.id)).subscribe();
     return () => {
       supabase.removeChannel(statsSubscription);
     };
   }, [experience?.id]);
-
   if (!experience) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+    return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Experience Not Found</h1>
           <p className="text-muted-foreground mb-6">The experience you're looking for doesn't exist.</p>
@@ -115,35 +115,26 @@ export default function ExperienceDetail() {
             <Button>Browse All Experiences</Button>
           </Link>
         </div>
-      </div>
-    );
+      </div>;
   }
 
   // Set up intersection observer for sticky header
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setStickyVisible(!entry.isIntersecting),
-      { threshold: 0 }
-    );
-    
+    const observer = new IntersectionObserver(([entry]) => setStickyVisible(!entry.isIntersecting), {
+      threshold: 0
+    });
     if (heroRef.current) {
       observer.observe(heroRef.current);
     }
-    
     return () => observer.disconnect();
   }, []);
 
   // Navigation functions for image carousel
   const nextImage = () => {
-    setSelectedImageIndex((prev) => 
-      prev === experience.images.length - 1 ? 0 : prev + 1
-    );
+    setSelectedImageIndex(prev => prev === experience.images.length - 1 ? 0 : prev + 1);
   };
-
   const prevImage = () => {
-    setSelectedImageIndex((prev) => 
-      prev === 0 ? experience.images.length - 1 : prev - 1
-    );
+    setSelectedImageIndex(prev => prev === 0 ? experience.images.length - 1 : prev - 1);
   };
 
   // Slideshow functions
@@ -151,7 +142,6 @@ export default function ExperienceDetail() {
     setSlideshowIndex(index);
     setIsSlideshowOpen(true);
   };
-
   const closeSlideshowModal = () => {
     setIsSlideshowOpen(false);
   };
@@ -168,16 +158,16 @@ export default function ExperienceDetail() {
     });
     setSearchParams(newParams);
   };
-
   const scrollToAvailability = () => {
     const element = document.getElementById('availability-section');
-    element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
-
   const openBookingModal = () => {
     setIsBookingModalOpen(true);
   };
-
   const handleBookNowClick = () => {
     if (!user) {
       setIsAuthModalOpen(true);
@@ -191,7 +181,6 @@ export default function ExperienceDetail() {
   const getThemeSlug = (theme: string): string => {
     return theme.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   };
-
   const getThemeColor = (theme: string) => {
     const lowerTheme = theme.toLowerCase();
     if (lowerTheme.includes('wildlife')) {
@@ -205,34 +194,19 @@ export default function ExperienceDetail() {
     }
     return 'bg-muted text-muted-foreground';
   };
-
   const contentSections = parseExperienceContent(experience.description);
-
-  const defaultItinerary = [
-    {
-      title: "Early Morning Departure",
-      description: "Pick up from your accommodation and journey to the location with expert briefing."
-    },
-    {
-      title: "Experience Begins",
-      description: "Begin your conservation experience with local guides and community members."
-    },
-    {
-      title: "Hands-On Activities",
-      description: "Participate in conservation activities and learn traditional techniques."
-    }
-  ];
-
+  const defaultItinerary = [{
+    title: "Early Morning Departure",
+    description: "Pick up from your accommodation and journey to the location with expert briefing."
+  }, {
+    title: "Experience Begins",
+    description: "Begin your conservation experience with local guides and community members."
+  }, {
+    title: "Hands-On Activities",
+    description: "Participate in conservation activities and learn traditional techniques."
+  }];
   const itinerary = contentSections.itinerary.length > 0 ? contentSections.itinerary : defaultItinerary;
-
-  return (
-    <CartProvider 
-      experienceSlug={experience.slug} 
-      basePrice={experience.priceKESAdult || 350}
-      childHalfPriceRule={experience.childHalfPriceRule || false}
-      isGroupPricing={false}
-      minCapacity={1}
-    >
+  return <CartProvider experienceSlug={experience.slug} basePrice={experience.priceKESAdult || 350} childHalfPriceRule={experience.childHalfPriceRule || false} isGroupPricing={false} minCapacity={1}>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
         <section className="relative" ref={heroRef}>
@@ -258,39 +232,29 @@ export default function ExperienceDetail() {
                   
                   {/* Action Buttons */}
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
-                      onClick={() => {
-                        // TODO: Implement wishlist functionality
-                        console.log('Add to wishlist:', experience.slug);
-                      }}
-                    >
+                    <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={() => {
+                    // TODO: Implement wishlist functionality
+                    console.log('Add to wishlist:', experience.slug);
+                  }}>
                       <Heart className="h-4 w-4" />
                       <span className="sr-only">Add to wishlist</span>
                     </Button>
                     
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
-                      onClick={() => {
-                        // Share functionality
-                        if (navigator.share) {
-                          navigator.share({
-                            title: experience.title,
-                            text: `Check out this amazing experience: ${experience.title}`,
-                            url: window.location.href,
-                          });
-                        } else {
-                          // Fallback: Copy to clipboard
-                          navigator.clipboard.writeText(window.location.href);
-                          // TODO: Show toast notification
-                          console.log('Link copied to clipboard');
-                        }
-                      }}
-                    >
+                    <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={() => {
+                    // Share functionality
+                    if (navigator.share) {
+                      navigator.share({
+                        title: experience.title,
+                        text: `Check out this amazing experience: ${experience.title}`,
+                        url: window.location.href
+                      });
+                    } else {
+                      // Fallback: Copy to clipboard
+                      navigator.clipboard.writeText(window.location.href);
+                      // TODO: Show toast notification
+                      console.log('Link copied to clipboard');
+                    }
+                  }}>
                       <Share className="h-4 w-4" />
                       <span className="sr-only">Share experience</span>
                     </Button>
@@ -320,35 +284,19 @@ export default function ExperienceDetail() {
               <div className="grid grid-cols-4 gap-2 h-[400px]">
                 {/* Main large image */}
                 <div className="col-span-2 row-span-2 rounded-xl overflow-hidden cursor-pointer" onClick={() => openSlideshow(0)}>
-                  <img 
-                    src={experience.images[0]}
-                    alt={experience.title}
-                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
-                  />
+                  <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
                 </div>
                 
                 {/* Smaller images grid */}
-                {experience.images.slice(1, 5).map((image, index) => (
-                  <div 
-                    key={index + 1} 
-                    className="relative rounded-lg overflow-hidden cursor-pointer"
-                    onClick={() => openSlideshow(index + 1)}
-                  >
-                    <img 
-                      src={image}
-                      alt={`${experience.title} - Image ${index + 2}`}
-                      className="w-full h-full object-cover hover:opacity-90 transition-opacity"
-                    />
+                {experience.images.slice(1, 5).map((image, index) => <div key={index + 1} className="relative rounded-lg overflow-hidden cursor-pointer" onClick={() => openSlideshow(index + 1)}>
+                    <img src={image} alt={`${experience.title} - Image ${index + 2}`} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
                     {/* Show +X more indicator on last visible image if there are more images */}
-                    {index === 3 && experience.images.length > 5 && (
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                    {index === 3 && experience.images.length > 5 && <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                         <span className="text-white font-semibold text-lg">
                           +{experience.images.length - 5} more
                         </span>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      </div>}
+                  </div>)}
               </div>
             </div>
           </div>
@@ -356,30 +304,21 @@ export default function ExperienceDetail() {
 
         {/* Availability and Options */}
         <section className="bg-card border-t border-b">
-          <div 
-            className="max-w-[1300px] mx-auto px-4 py-6"
-            id="availability-section"
-          >
-            <AvailabilityAndOptions
-              experience={{
-                ...experience,
-                base_price: experience.priceKESAdult,
-                capacity: 15,
-                childHalfPriceRule: experience.childHalfPriceRule || false
-              }} 
-              onBookingStart={() => {
-                setBookingStarted(true);
-                openBookingModal();
-              }}
-              onBookingModalOpen={openBookingModal}
-              onUpdateParams={updateBookingParams}
-              initialParams={{
-                date: searchParams.get('date') || '',
-                adults: parseInt(searchParams.get('adults') || '1'),
-                children: parseInt(searchParams.get('children') || '0'),
-                option: (searchParams.get('option') as 'standard') || 'standard'
-              }}
-            />
+          <div className="max-w-[1300px] mx-auto px-4 py-6" id="availability-section">
+            <AvailabilityAndOptions experience={{
+            ...experience,
+            base_price: experience.priceKESAdult,
+            capacity: 15,
+            childHalfPriceRule: experience.childHalfPriceRule || false
+          }} onBookingStart={() => {
+            setBookingStarted(true);
+            openBookingModal();
+          }} onBookingModalOpen={openBookingModal} onUpdateParams={updateBookingParams} initialParams={{
+            date: searchParams.get('date') || '',
+            adults: parseInt(searchParams.get('adults') || '1'),
+            children: parseInt(searchParams.get('children') || '0'),
+            option: searchParams.get('option') as 'standard' || 'standard'
+          }} />
           </div>
         </section>
 
@@ -389,9 +328,9 @@ export default function ExperienceDetail() {
             
             {/* Overview */}
             <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">Overview</h2>
+              <h2 className="text-foreground mb-6 text-lg font-semibold">Overview</h2>
               <div className="prose prose-lg max-w-none text-muted-foreground">
-                <p>{contentSections.overview}</p>
+                <p className="text-base font-light">{contentSections.overview}</p>
               </div>
             </section>
 
@@ -399,12 +338,10 @@ export default function ExperienceDetail() {
             <section>
               <h2 className="text-2xl font-bold text-foreground mb-6">Highlights</h2>
               <ul className="space-y-3">
-                {contentSections.highlights.map((highlight, index) => (
-                  <li key={index} className="flex items-start gap-3">
+                {contentSections.highlights.map((highlight, index) => <li key={index} className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground">{highlight}</span>
-                  </li>
-                ))}
+                    <span className="text-muted-foreground font-light">{highlight}</span>
+                  </li>)}
               </ul>
             </section>
 
@@ -418,12 +355,10 @@ export default function ExperienceDetail() {
                     Included
                   </h3>
                   <ul className="space-y-2">
-                    {contentSections.included.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
+                    {contentSections.included.map((item, index) => <li key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
+                        <span className="text-muted-foreground font-light">{item}</span>
+                      </li>)}
                   </ul>
                 </div>
                 <div>
@@ -432,12 +367,10 @@ export default function ExperienceDetail() {
                     Not Included
                   </h3>
                   <ul className="space-y-2">
-                    {contentSections.notIncluded.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
+                    {contentSections.notIncluded.map((item, index) => <li key={index} className="flex items-start gap-3">
                         <XCircle className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
+                        <span className="text-muted-foreground font-light">{item}</span>
+                      </li>)}
                   </ul>
                 </div>
               </div>
@@ -451,18 +384,14 @@ export default function ExperienceDetail() {
                   <AccordionTrigger>Itinerary & Cancellation</AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-4">
-                      {itinerary.map((item, index) => (
-                        <div key={index}>
+                      {itinerary.map((item, index) => <div key={index}>
                           <h4 className="font-semibold text-foreground mb-2">{item.title}</h4>
                           <p className="text-muted-foreground">{item.description}</p>
-                        </div>
-                      ))}
-                      {contentSections.cancellation && (
-                        <div className="mt-6 p-4 bg-muted rounded-lg">
+                        </div>)}
+                      {contentSections.cancellation && <div className="mt-6 p-4 bg-muted rounded-lg">
                           <h4 className="font-semibold text-foreground mb-2">Cancellation Policy</h4>
                           <p className="text-muted-foreground">{contentSections.cancellation}</p>
-                        </div>
-                      )}
+                        </div>}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -471,40 +400,32 @@ export default function ExperienceDetail() {
 
 
             {/* Frequently Asked Questions */}
-            {contentSections.faqs.length > 0 && (
-              <section>
+            {contentSections.faqs.length > 0 && <section>
                 <h2 className="text-2xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
                 <Accordion type="single" collapsible defaultValue="faq-0" className="w-full">
-                  {contentSections.faqs.map((faq, index) => (
-                    <AccordionItem key={index} value={`faq-${index}`}>
+                  {contentSections.faqs.map((faq, index) => <AccordionItem key={index} value={`faq-${index}`}>
                       <AccordionTrigger>{faq.question}</AccordionTrigger>
                       <AccordionContent>
                         <p className="text-muted-foreground">{faq.answer}</p>
                       </AccordionContent>
-                    </AccordionItem>
-                  ))}
+                    </AccordionItem>)}
                 </Accordion>
-              </section>
-            )}
+              </section>}
 
             {/* Important Information */}
-            {contentSections.importantInfo && contentSections.importantInfo.length > 0 && (
-              <section>
+            {contentSections.importantInfo && contentSections.importantInfo.length > 0 && <section>
                 <h2 className="text-2xl font-bold text-foreground mb-6">Important Information</h2>
                 <Card>
                   <CardContent className="p-6">
                     <ul className="space-y-2">
-                      {contentSections.importantInfo.map((info, index) => (
-                        <li key={index} className="flex items-start gap-2">
+                      {contentSections.importantInfo.map((info, index) => <li key={index} className="flex items-start gap-2">
                           <Info className="h-4 w-4 text-info mt-0.5 flex-shrink-0" />
                           <span className="text-muted-foreground">{info}</span>
-                        </li>
-                      ))}
+                        </li>)}
                     </ul>
                   </CardContent>
                 </Card>
-              </section>
-            )}
+              </section>}
 
             {/* Where You'll Be */}
             <section>
@@ -514,23 +435,13 @@ export default function ExperienceDetail() {
                   <MapPin className="h-5 w-5 text-primary" />
                   <span className="font-medium">{experience.locationText}</span>
                 </div>
-                <GoogleMap
-                  location={experience.locationText || "Experience Location"}
-                  coordinates={getExperienceCoordinates(experience.description)}
-                  height="h-64"
-                  googleMapsUrl={experience.googleMapsUrl}
-                />
+                <GoogleMap location={experience.locationText || "Experience Location"} coordinates={getExperienceCoordinates(experience.description)} height="h-64" googleMapsUrl={experience.googleMapsUrl} />
               </div>
             </section>
 
             {/* Related Experiences */}
             <section>
-              <RelatedExperiences
-                currentExperienceId={parseInt(experience.id.replace('exp-', ''))} 
-                theme={experience.themes[0]} 
-                destination={experience.destination} 
-                maxResults={5} 
-              />
+              <RelatedExperiences currentExperienceId={parseInt(experience.id.replace('exp-', ''))} theme={experience.themes[0]} destination={experience.destination} maxResults={5} />
             </section>
 
             {/* Reviews & Ratings */}
@@ -541,8 +452,7 @@ export default function ExperienceDetail() {
         </div>
 
         {/* Sticky Reserve Button */}
-        {stickyVisible && !isBookingModalOpen && (
-          <>
+        {stickyVisible && !isBookingModalOpen && <>
             {/* Desktop sticky bar */}
             <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b shadow-sm">
               <div className="max-w-[1300px] mx-auto px-4 py-3 flex items-center justify-between">
@@ -566,41 +476,17 @@ export default function ExperienceDetail() {
             </div>
 
             {/* Mobile sticky button */}
-            <StickyReserveButton 
-              experienceSlug={experience.slug}
-              experienceName={experience.title}
-              basePrice={experience.priceKESAdult}
-              onReserveClick={handleBookNowClick}
-            />
-          </>
-        )}
+            <StickyReserveButton experienceSlug={experience.slug} experienceName={experience.title} basePrice={experience.priceKESAdult} onReserveClick={handleBookNowClick} />
+          </>}
 
         {/* Auth Modal */}
-        {isAuthModalOpen && (
-          <NewAuthModal
-            isOpen={isAuthModalOpen}
-            onClose={() => setIsAuthModalOpen(false)}
-          />
-        )}
+        {isAuthModalOpen && <NewAuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />}
 
         {/* Booking Modal */}
-        {isBookingModalOpen && user && (
-          <BookingWizardNew
-            isOpen={isBookingModalOpen}
-            onClose={() => setIsBookingModalOpen(false)}
-            experience={experience}
-          />
-        )}
+        {isBookingModalOpen && user && <BookingWizardNew isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} experience={experience} />}
 
         {/* Image Slideshow */}
-        <ImageSlideshow
-          images={experience.images}
-          isOpen={isSlideshowOpen}
-          onClose={closeSlideshowModal}
-          initialIndex={slideshowIndex}
-          altText={experience.title}
-        />
+        <ImageSlideshow images={experience.images} isOpen={isSlideshowOpen} onClose={closeSlideshowModal} initialIndex={slideshowIndex} altText={experience.title} />
       </div>
-    </CartProvider>
-  );
+    </CartProvider>;
 }
