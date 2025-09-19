@@ -269,7 +269,7 @@ export default function ExperienceDetail() {
               <div>
                 {/* Title with Action Buttons */}
                 <div className="flex items-start justify-between gap-4 mb-2">
-                  <h1 className="experience-title-forced text-foreground flex-1">
+                  <h1 className="experience-title-forced-v2 text-foreground flex-1" style={{ fontSize: '1.25rem', fontWeight: '400', lineHeight: '1.75rem' }}>
                     {experience.title}
                   </h1>
                   

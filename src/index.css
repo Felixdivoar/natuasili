@@ -4,6 +4,28 @@
 
 @import './styles/cta-guards.css';
 
+/* Force experience title styling - v2 */
+.experience-title-forced-v2 {
+  font-size: 1.25rem !important; /* Mobile: reduced by 10% from 1.5rem */
+  font-weight: 400 !important;
+  font-weight: normal !important;
+  line-height: 1.75rem !important;
+}
+
+@media (min-width: 768px) {
+  .experience-title-forced-v2 {
+    font-size: 1.35rem !important; /* Tablet: 10% reduction from 1.5rem */
+    line-height: 2rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .experience-title-forced-v2 {
+    font-size: 1.35rem !important; /* Desktop: 10% reduction from 1.5rem */
+    line-height: 2rem !important;
+  }
+}
+
 /* Force experience title styling */
 .experience-title-forced {
   font-size: 1.25rem !important; /* Mobile: reduced by 10% from 1.5rem */
