@@ -423,11 +423,12 @@ export default function ExperienceDetail() {
                 <AccordionItem value="itinerary">
                   <AccordionTrigger>Itinerary</AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4">
-                      {itinerary.map((item, index) => <div key={index}>
-                          <h4 className="font-semibold text-foreground mb-2">{item.title}</h4>
-                          <p className="text-muted-foreground">{item.description}</p>
-                        </div>)}
+                     <div className="space-y-4">
+                       <div className="prose prose-lg max-w-none">
+                         <p className="text-muted-foreground leading-relaxed">
+                           {itinerary.map((item, index) => item.description).join(' ')}
+                         </p>
+                       </div>
                       {contentSections.cancellation && <div className="mt-6 p-4 bg-muted rounded-lg">
                           <h4 className="font-semibold text-foreground mb-2">Cancellation policy</h4>
                           <p className="text-muted-foreground">{contentSections.cancellation}</p>
