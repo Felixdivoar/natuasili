@@ -337,7 +337,7 @@ const BlogPost = () => {
         </div>
         
         <div 
-          className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground"
+          className="prose prose-base max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground font-light"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         
