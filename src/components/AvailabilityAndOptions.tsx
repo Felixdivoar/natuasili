@@ -475,119 +475,177 @@ const AvailabilityAndOptions = ({
 
           {/* Order Summary (Desktop) */}
           <div className="hidden lg:block">
-            <Card className="sticky top-24">
-              <CardHeader>
-                <CardTitle>Order summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Date:</span>
-                    <span>{selectedDate || "Select date"}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Adults:</span>
-                    <span>{selectedAdults}</span>
-                  </div>
-                  {selectedChildren > 0 && (
-                    <div className="flex justify-between text-sm">
-                      <span>Children:</span>
-                      <span>{selectedChildren}</span>
+            <div className="sticky top-24 space-y-4">
+              {/* Main Summary Card */}
+              <Card className="border-0 bg-gradient-to-br from-card via-card to-card/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <span className="text-primary font-bold text-sm">📋</span>
                     </div>
-                  )}
-                  <div className="flex justify-between text-sm">
-                    <span>Option:</span>
-                    <span>{selectedOptionData.name}</span>
-                  </div>
-                </div>
-
-                {/* Pricing */}
-                <div className="border-t pt-4 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>{isGroupPricing ? 'Group price' : `${formatPrice(selectedOptionData.adultPrice)} × ${selectedAdults} adults`}</span>
-                    <span>{formatPrice(totals.adultSubtotal)}</span>
-                  </div>
-                  {(!isGroupPricing && selectedChildren > 0) && (
-                    <div className="flex justify-between text-sm">
-                      <span>{formatPrice(selectedOptionData.childPrice)} × {selectedChildren} children</span>
-                      <span>{formatPrice(totals.childSubtotal)}</span>
-                    </div>
-                  )}
-
-                  {/* 90/10 split once valid */}
-                  {selectedDate && !participantsError && (
-                    <div className="space-y-1 text-xs text-muted-foreground">
-                      <div className="flex justify-between">
-                        <span>Partner initiatives (90%)</span>
-                        <span>{formatPrice(totals.partner)}</span>
+                    Booking Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Selection Details */}
+                  <div className="space-y-3">
+                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Your Selection</h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span className="text-primary text-xs">📅</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">Date</span>
+                        </div>
+                        <span className="font-medium">{selectedDate || "Select date"}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Platform & operations (10%)</span>
-                        <span>{formatPrice(totals.platform)}</span>
+                      
+                      <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span className="text-primary text-xs">👥</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">Adults</span>
+                        </div>
+                        <span className="font-medium">{selectedAdults}</span>
+                      </div>
+                      
+                      {selectedChildren > 0 && (
+                        <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
+                          <div className="flex items-center gap-2">
+                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                              <span className="text-primary text-xs">👶</span>
+                            </div>
+                            <span className="text-sm text-muted-foreground">Children</span>
+                          </div>
+                          <span className="font-medium">{selectedChildren}</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                            <span className="text-primary text-xs">⭐</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">Option</span>
+                        </div>
+                        <span className="font-medium">{selectedOptionData.name}</span>
                       </div>
                     </div>
-                  )}
-
-                  <div className="flex justify-between font-semibold pt-2">
-                    <span>Total:</span>
-                    <span>{formatPrice(totals.subtotal)}</span>
                   </div>
-                </div>
 
-                <div className="flex gap-2">
-                  <Button 
-                    id="btn-continue" 
-                    data-action="proceed" 
-                    onClick={handleContinue} 
-                    disabled={proceedDisabled} 
-                    aria-disabled={proceedDisabled} 
-                    className="w-full min-h-[48px] touch-manipulation pointer-events-auto z-20 relative" 
-                    size="lg"
-                    style={{ touchAction: 'manipulation' }}
-                  >
-                    {isInCart ? (
-                      <>Go to Cart</>
-                    ) : (
-                      <>
-                        <span className="block md:hidden">Book now</span>
-                        <span className="hidden md:block">Book now</span>
-                      </>
-                    )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={isInCart || !!participantsError || !selectedDate || !dateValidation.isValid}
-                     onClick={() => {
-                       if (participantsError || !selectedDate || !dateValidation.isValid) return;
-                       addCartItem({
-                         experienceSlug: (experience as any).slug || '',
-                         title: (experience as any).title || 'Experience',
-                         image: (experience as any).heroImage,
-                         date: selectedDate,
-                         adults: selectedAdults,
-                         children: selectedChildren,
-                         optionId: selectedOption,
-                         unitPrice: basePrice,
-                         donation: 0,
-                         isGroupPricing,
-                       });
-                       openCart(true);
-                     }}
-                  >
-                    {isInCart ? "In Cart" : "Add to cart"}
-                  </Button>
-                </div>
+                  {/* Pricing Breakdown */}
+                  <div className="space-y-4">
+                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Price Breakdown</h4>
+                    <div className="space-y-3 p-4 bg-gradient-to-br from-background/50 to-background/30 rounded-xl border">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-muted-foreground">
+                          {isGroupPricing ? 'Group price' : `${formatPrice(selectedOptionData.adultPrice)} × ${selectedAdults} adults`}
+                        </span>
+                        <span className="font-medium">{formatPrice(totals.adultSubtotal)}</span>
+                      </div>
+                      
+                      {(!isGroupPricing && selectedChildren > 0) && (
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">{formatPrice(selectedOptionData.childPrice)} × {selectedChildren} children</span>
+                          <span className="font-medium">{formatPrice(totals.childSubtotal)}</span>
+                        </div>
+                      )}
 
-                <div className="text-xs text-muted-foreground text-center">
-                  <div className="flex items-center justify-center gap-1 mb-1">
-                     <Star className="h-3 w-3 fill-foreground text-foreground" />
-                    <span>Free cancellation</span>
+                      {/* Impact Split - Only show when valid */}
+                      {selectedDate && !participantsError && (
+                        <div className="space-y-2 pt-3 mt-3 border-t border-border/50">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-emerald-700 flex items-center gap-1">
+                              🌱 Partner initiatives (90%)
+                            </span>
+                            <span className="font-medium text-emerald-700">{formatPrice(totals.partner)}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-muted-foreground">Platform & operations (10%)</span>
+                            <span className="font-medium text-muted-foreground">{formatPrice(totals.platform)}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Total */}
+                      <div className="border-t pt-3 mt-3">
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold">Total Amount</span>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-primary">{formatPrice(totals.subtotal)}</div>
+                            <div className="text-xs text-muted-foreground">All taxes included</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>You won't be charged yet</div>
-                </div>
-              </CardContent>
-            </Card>
+
+                  {/* Action Buttons */}
+                  <div className="space-y-3">
+                    <Button 
+                      id="btn-continue" 
+                      data-action="proceed" 
+                      onClick={handleContinue} 
+                      disabled={proceedDisabled} 
+                      aria-disabled={proceedDisabled} 
+                      className="w-full h-12 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-200 font-medium" 
+                      size="lg"
+                      style={{ touchAction: 'manipulation' }}
+                    >
+                      {isInCart ? (
+                        <>🛒 Go to Cart</>
+                      ) : (
+                        <>🎯 Book Now</>
+                      )}
+                    </Button>
+                    
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={isInCart || !!participantsError || !selectedDate || !dateValidation.isValid}
+                      onClick={() => {
+                        if (participantsError || !selectedDate || !dateValidation.isValid) return;
+                        addCartItem({
+                          experienceSlug: (experience as any).slug || '',
+                          title: (experience as any).title || 'Experience',
+                          image: (experience as any).heroImage,
+                          date: selectedDate,
+                          adults: selectedAdults,
+                          children: selectedChildren,
+                          optionId: selectedOption,
+                          unitPrice: basePrice,
+                          donation: 0,
+                          isGroupPricing,
+                        });
+                        openCart(true);
+                      }}
+                      className="w-full h-10 border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+                    >
+                      {isInCart ? "✅ In Cart" : "🛒 Add to Cart"}
+                    </Button>
+                  </div>
+
+                  {/* Trust Signals */}
+                  <div className="pt-4 border-t border-border/30">
+                    <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <span className="text-green-600">✓</span>
+                        <span>Free cancellation</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-blue-600">🔒</span>
+                        <span>Secure payment</span>
+                      </div>
+                    </div>
+                    <div className="text-center mt-2 text-xs text-muted-foreground/80">
+                      You won't be charged until confirmation
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
           {/* Mobile Sticky Order Summary */}
