@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Clock, Users, Star, ChevronRight } from "lucide-react";
+import { MapPin, Clock, Users, Star, ChevronRight, Heart } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useI18n } from "@/i18n/I18nProvider";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
@@ -11,6 +11,10 @@ import ExperienceRatingDisplay from "./ExperienceRatingDisplay";
 import { filterExperiencesByDestination, formatDestinationName, getDestinationPath } from "@/utils/destinationUtils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect, MouseEvent } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 interface DestinationExperienceCarouselProps {
   destination: Destination;
 }
@@ -33,6 +37,73 @@ export default function DestinationExperienceCarousel({
   const { formatPrice } = useCurrency();
   const { t } = useI18n();
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+  const [wishlistSlugs, setWishlistSlugs] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (!user) {
+      setWishlistSlugs(new Set());
+      return;
+    }
+    const fetchWishlist = async () => {
+      const { data, error } = await supabase
+        .from('wishlists')
+        .select('experiences!inner(slug)')
+        .eq('user_id', user.id);
+      if (!error) {
+        const slugs = new Set((data || []).map((w: any) => w.experiences?.slug).filter(Boolean));
+        setWishlistSlugs(slugs);
+      }
+    };
+    fetchWishlist();
+  }, [user]);
+
+  const toggleWishlist = async (e: MouseEvent, slug: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      toast.info('Please sign in to save to wishlist');
+      return;
+    }
+    try {
+      const { data: exp, error: expErr } = await supabase
+        .from('experiences')
+        .select('id')
+        .eq('slug', slug)
+        .maybeSingle();
+      if (expErr) throw expErr;
+      if (!exp?.id) {
+        toast.error('Experience not available yet');
+        return;
+      }
+      if (wishlistSlugs.has(slug)) {
+        const { error } = await supabase
+          .from('wishlists')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('experience_id', exp.id);
+        if (!error) {
+          setWishlistSlugs(prev => {
+            const next = new Set(prev);
+            next.delete(slug);
+            return next;
+          });
+          toast.success('Removed from wishlist');
+        }
+      } else {
+        const { error } = await supabase
+          .from('wishlists')
+          .insert({ user_id: user.id, experience_id: exp.id });
+        if (!error) {
+          setWishlistSlugs(prev => new Set(prev).add(slug));
+          toast.success('Added to wishlist');
+        }
+      }
+    } catch (err) {
+      console.error('Wishlist toggle failed', err);
+      toast.error('Could not update wishlist');
+    }
+  };
 
   // Filter experiences by destination using the new utility function
   const destinationExperiences = filterExperiencesByDestination(mockExperiences, destination);
@@ -69,12 +140,21 @@ export default function DestinationExperienceCarousel({
               <CarouselItem key={experience.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                 <Link to={`/experience/${experience.slug}`} className="group block">
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="aspect-[4/3] overflow-hidden bg-muted">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                       <img 
                         src={experience.images[0]} 
                         alt={experience.title} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                       />
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute top-2 right-2 h-9 w-9 rounded-full bg-background/70 backdrop-blur border-border hover:bg-background/90"
+                        onClick={(e) => toggleWishlist(e, experience.slug)}
+                        aria-label={wishlistSlugs.has(experience.slug) ? 'Remove from wishlist' : 'Add to wishlist'}
+                      >
+                        <Heart className={`h-4 w-4 ${wishlistSlugs.has(experience.slug) ? 'fill-foreground text-foreground' : ''}`} />
+                      </Button>
                     </div>
                     <CardContent className="p-4 h-[180px] flex flex-col">
                       <div className="space-y-3 flex-1 flex flex-col">
