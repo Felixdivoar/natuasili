@@ -35,7 +35,7 @@ export type Database = {
           total_kes: number
           unit_price_kes: number | null
           updated_at: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           adults?: number
@@ -57,7 +57,7 @@ export type Database = {
           total_kes: number
           unit_price_kes?: number | null
           updated_at?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           adults?: number
@@ -79,7 +79,7 @@ export type Database = {
           total_kes?: number
           unit_price_kes?: number | null
           updated_at?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
