@@ -380,7 +380,7 @@ export default function ExperienceDetail() {
               <ul className="space-y-3">
                 {contentSections.highlights.map((highlight, index) => <li key={index} className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-success mt-0.5 flex-shrink-0" />
-                    <span className="text-muted-foreground font-light">{highlight}</span>
+                    <span className="text-muted-foreground !font-light">{highlight}</span>
                   </li>)}
               </ul>
             </section>
