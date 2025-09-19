@@ -18,6 +18,8 @@ import { isValidBookingDate, validateBookingDate } from "@/utils/time";
 import { saveReceipt } from "@/lib/receipt";
 import { makeImpactSummary } from "@/lib/impactSummary";
 import { supabase } from "@/integrations/supabase/client";
+import { useBookingTimer } from "@/hooks/useBookingTimer";
+import BookingTimer from "./BookingTimer";
 
 interface BookingWizardNewProps {
   isOpen: boolean;
@@ -43,6 +45,34 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     agreeTerms: false,
     marketingOptIn: false
   });
+
+  // Booking timer
+  const bookingTimer = useBookingTimer(() => {
+    // Clear booking data on timer expire
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      mobility: '',
+      specialRequests: '',
+      donation: 0,
+      agreeTerms: false,
+      marketingOptIn: false
+    });
+    onClose();
+    toast({
+      title: "Booking Session Expired",
+      description: "Please start your booking again.",
+      variant: "destructive",
+    });
+  });
+
+  // Start timer when modal opens
+  useEffect(() => {
+    if (isOpen && !bookingTimer.isActive) {
+      bookingTimer.startTimer();
+    }
+  }, [isOpen]);
 
   // Auto-fill user profile data on modal open
   useEffect(() => {
@@ -231,6 +261,9 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       };
       saveReceipt(receipt);
 
+      // Stop timer on successful payment redirect
+      bookingTimer.stopTimer();
+      
       // Redirect to Pesapal payment page
       window.location.href = paymentResponse.redirect_url;
 
@@ -302,6 +335,14 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         </div>
         
         <div className="flex-1 overflow-y-auto px-8 py-6">
+          {/* Booking Timer */}
+          <BookingTimer 
+            timeRemaining={bookingTimer.timeRemaining}
+            formatTime={bookingTimer.formatTime}
+            isActive={bookingTimer.isActive}
+            className="mb-6"
+          />
+          
           <div className="grid lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
             {/* Left side - Steps */}
             <div className="lg:col-span-3 space-y-8">
@@ -565,12 +606,17 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                     >
                       {t('back', 'Back')}
                     </Button>
-                    <Button 
-                      onClick={handleConfirmBooking} 
-                      disabled={!validateStep3() || isProcessingPayment}
-                      className="min-w-[120px]"
+                    <Button
+                      onClick={handleConfirmBooking}
+                      disabled={!validateStep3() || isProcessingPayment || bookingTimer.isExpired}
+                      className="flex-1 h-11 bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-sm hover:shadow-md transition-all"
                     >
-                      {isProcessingPayment ? t('processing', 'Processing...') : t('confirmAndPay', 'Confirm & Pay')}
+                      {isProcessingPayment 
+                        ? t('processing', 'Processing...') 
+                        : bookingTimer.isExpired 
+                        ? 'Session Expired'
+                        : t('confirmAndPay', 'Confirm & Pay')
+                      }
                     </Button>
                   </div>
                 </div>

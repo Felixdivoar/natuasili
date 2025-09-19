@@ -286,113 +286,177 @@ const UnifiedBookingFlow: React.FC<UnifiedBookingFlowProps> = ({
           </CardContent>
         </Card>
       ) : (
-        /* Experience not in cart - show booking form and options */
+        /* Experience not in cart - show booking options based on user state */
         <>
-          <Card>
-            <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 gap-4">
-                <div>
-                  <Label htmlFor="name">Full Name *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    placeholder="+254 700 000 000"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="requests">Special Requests</Label>
-                  <Input
-                    id="requests"
-                    value={formData.specialRequests}
-                    onChange={(e) => setFormData(prev => ({ ...prev, specialRequests: e.target.value }))}
-                    placeholder="Any special requirements..."
-                  />
-                </div>
-              </div>
-
-              {/* Optional Donation */}
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="space-y-3">
-                  <h4 className="font-medium text-green-800">Add donation (optional)</h4>
-                  <p className="text-xs text-green-700">
-                    100% goes directly to conservation initiatives.
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="donation" className="text-sm font-medium text-green-800">KES</Label>
-                    <Input
-                      id="donation"
-                      type="number"
-                      min="0"
-                      step="50"
-                      value={formData.donation || ''}
-                      onChange={(e) => setFormData(prev => ({ 
-                        ...prev, 
-                        donation: parseInt(e.target.value) || 0 
-                      }))}
-                      placeholder="0"
-                      className="w-24 border-green-200"
-                    />
+          {/* Authentication Options for Guest Users */}
+          {!user && !bookingStarted && (
+            <Card className="bg-gradient-to-br from-primary/5 via-primary/5 to-primary/10 border-primary/20">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                    <CheckCircle className="h-4 w-4 text-primary" />
+                  </div>
+                  Choose Your Booking Method
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Login Option */}
+                  <div className="p-4 bg-background/50 rounded-lg border border-primary/10">
+                    <h4 className="font-semibold mb-2">Login & Add to Cart</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Save multiple experiences, manage bookings, and track your conservation impact.
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => navigate('/auth')}
+                      className="w-full"
+                    >
+                      Login / Sign Up
+                    </Button>
+                  </div>
+                  
+                  {/* Guest Option */}
+                  <div className="p-4 bg-background/50 rounded-lg border border-muted">
+                    <h4 className="font-semibold mb-2">Continue as Guest</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Book this experience directly without creating an account.
+                    </p>
+                    <Button 
+                      onClick={() => {
+                        if (!bookingTimer.isActive) {
+                          bookingTimer.startTimer();
+                          setBookingStarted(true);
+                        }
+                      }}
+                      className="w-full"
+                    >
+                      Continue as Guest
+                    </Button>
                   </div>
                 </div>
-              </div>
+              </CardContent>
+            </Card>
+          )}
 
-              {/* Terms Agreement */}
-              <div className="flex items-start gap-2">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  checked={formData.agreeTerms}
-                  onChange={(e) => setFormData(prev => ({ ...prev, agreeTerms: e.target.checked }))}
-                  className="mt-1"
-                />
-                <Label htmlFor="terms" className="text-sm">
-                  I agree to the terms and conditions *
-                </Label>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Contact Form - Show for guests who chose to continue OR logged-in users */}
+          {(bookingStarted || user) && (
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Contact Information</CardTitle>
+                  {user && (
+                    <p className="text-sm text-muted-foreground">
+                      Welcome back! Your booking will be saved to your account.
+                    </p>
+                  )}
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <Label htmlFor="name">Full Name *</Label>
+                      <Input
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="email">Email *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                        placeholder="+254 700 000 000"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="requests">Special Requests</Label>
+                      <Input
+                        id="requests"
+                        value={formData.specialRequests}
+                        onChange={(e) => setFormData(prev => ({ ...prev, specialRequests: e.target.value }))}
+                        placeholder="Any special requirements..."
+                      />
+                    </div>
+                  </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-2">
-            <Button
-              onClick={handleAddToCart}
-              variant="outline"
-              className="flex-1"
-            >
-              Add to Cart
-            </Button>
-            <Button
-              onClick={handleDirectBooking}
-              disabled={!validateForm() || loading || bookingTimer.isExpired}
-              className="flex-1"
-            >
-              {loading ? "Processing..." : bookingTimer.isExpired ? "Session Expired" : "Book Now"}
-            </Button>
-          </div>
+                  {/* Optional Donation */}
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-green-800">Add donation (optional)</h4>
+                      <p className="text-xs text-green-700">
+                        100% goes directly to conservation initiatives.
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Label htmlFor="donation" className="text-sm font-medium text-green-800">KES</Label>
+                        <Input
+                          id="donation"
+                          type="number"
+                          min="0"
+                          step="50"
+                          value={formData.donation || ''}
+                          onChange={(e) => setFormData(prev => ({ 
+                            ...prev, 
+                            donation: parseInt(e.target.value) || 0 
+                          }))}
+                          placeholder="0"
+                          className="w-24 border-green-200"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Terms Agreement */}
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="terms"
+                      checked={formData.agreeTerms}
+                      onChange={(e) => setFormData(prev => ({ ...prev, agreeTerms: e.target.checked }))}
+                      className="mt-1"
+                    />
+                    <Label htmlFor="terms" className="text-sm">
+                      I agree to the terms and conditions *
+                    </Label>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                {user && (
+                  <Button
+                    onClick={handleAddToCart}
+                    variant="outline"
+                    className="flex-1"
+                    disabled={bookingTimer.isExpired}
+                  >
+                    Add to Cart
+                  </Button>
+                )}
+                <Button
+                  onClick={handleDirectBooking}
+                  disabled={!validateForm() || loading || bookingTimer.isExpired}
+                  className="flex-1"
+                >
+                  {loading ? "Processing..." : bookingTimer.isExpired ? "Session Expired" : user ? "Book Now" : "Book as Guest"}
+                </Button>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
