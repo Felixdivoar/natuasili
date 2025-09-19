@@ -130,7 +130,7 @@ Through stories from communities, conservation organizations, and travelers, we 
                         </div>
                         
                         <CardHeader className="pb-4">
-                          <CardTitle className="text-base font-light line-clamp-2 group-hover:text-primary transition-colors">
+                          <CardTitle className="text-lg font-normal line-clamp-2 group-hover:text-primary transition-colors">
                             {post.title}
                           </CardTitle>
                         </CardHeader>
