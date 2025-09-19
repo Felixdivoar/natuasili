@@ -220,37 +220,34 @@ export default function HeaderNew() {
                 </Button>
                 
                 {desktopHamburgerOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border bg-background p-2 shadow-xl z-50">
-                    <div className="space-y-1">
-                      
+                  <div className="absolute right-0 top-full mt-2 w-40 rounded-lg border bg-background/95 backdrop-blur-sm p-1 shadow-lg z-50">
+                    <div className="space-y-0.5">
                       <Link to="/impact-ledger" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          📊 {t("nav_impact")}
+                        <Button variant="ghost" size="sm" className="w-full justify-start text-sm h-8">
+                          {t("nav_impact")}
                         </Button>
                       </Link>
                       
                       <Link to="/partner-entry" onClick={() => setDesktopHamburgerOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full justify-start">
-                          🏕️ List Your Experience
+                        <Button variant="ghost" size="sm" className="w-full justify-start text-sm h-8">
+                          List Experience
                         </Button>
                       </Link>
                       
-                       <hr className="my-2" />
-                       
-                       <Button 
-                         variant="ghost" 
-                         size="sm" 
-                         className="w-full justify-start"
-                         onClick={() => {
-                           console.log('Desktop AsiliChat button clicked');
-                           const event = new CustomEvent('asili-chat:toggle');
-                           document.dispatchEvent(event);
-                           console.log('Desktop AsiliChat event dispatched');
-                           setDesktopHamburgerOpen(false);
-                         }}
-                       >
-                         🤖 AsiliChat AI
-                       </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="w-full justify-start text-sm h-8"
+                        onClick={() => {
+                          console.log('Desktop AsiliChat button clicked');
+                          const event = new CustomEvent('asili-chat:toggle');
+                          document.dispatchEvent(event);
+                          console.log('Desktop AsiliChat event dispatched');
+                          setDesktopHamburgerOpen(false);
+                        }}
+                      >
+                        AsiliChat AI
+                      </Button>
                     </div>
                   </div>
                 )}
