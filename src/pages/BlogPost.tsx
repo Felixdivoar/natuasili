@@ -318,7 +318,7 @@ const BlogPost = () => {
             </Link>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h1 className="text-base font-bold text-foreground mb-4">
             {post.title}
           </h1>
           
