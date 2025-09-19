@@ -74,7 +74,7 @@ const ReviewSection = ({ experienceId }: ReviewSectionProps) => {
               <BookOpen className="h-5 w-5 text-muted-foreground" />
               <div>
                 <p className="font-medium">Want to leave a review?</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-base text-muted-foreground font-light">
                   Book this experience to share your thoughts and help other travelers make informed decisions.
                 </p>
               </div>
