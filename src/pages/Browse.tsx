@@ -4,28 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Users, Clock, Shield } from "lucide-react";
+import { MapPin, Users } from "lucide-react";
 import { mockExperiences, mockProjects } from "@/data/mockData";
 import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import { useI18n } from "@/contexts/I18nContext";
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import MoreFiltersDialog, { MoreFiltersState } from "@/components/MoreFiltersDialog";
-import AvailabilityFilterBar from "@/components/AvailabilityFilterBar";
 const Browse = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { formatPrice } = useCurrency();
-  const { t } = useI18n();
-
-  // Availability filter state
-  const [availabilityFilters, setAvailabilityFilters] = useState<{
-    date: Date | null;
-    adults: number;
-    children: number;
-  }>({ date: null, adults: 1, children: 0 });
-
-  const hasAvailabilityFilters = availabilityFilters.date !== null;
+  const {
+    formatPrice
+  } = useCurrency();
 
   // Get price bounds from data
   const prices = mockExperiences.map(exp => exp.base_price);
@@ -155,12 +145,6 @@ const Browse = () => {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            {/* Availability Filter Bar */}
-            <AvailabilityFilterBar 
-              onFiltersApply={setAvailabilityFilters}
-              className="mb-6"
-            />
-            
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               {/* Price Range Filter */}
               <PriceRangeFilter min={minPrice} max={maxPrice} value={priceRange} onChange={setPriceRange} className="price-range" />
@@ -226,34 +210,19 @@ const Browse = () => {
             return <Card key={experience.id} className="overflow-hidden hover:shadow-lg transition-shadow experience-card" data-destination={getDestination()} data-theme={experience.theme.toLowerCase().replace(' ', '-')} data-activity-impact={experience.activity_type.toLowerCase().replace(' ', '-')}>
                   <div className="aspect-[3/2] relative bg-muted">
                     {experience.images[0] && <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover" />}
-                    
-                    {/* Availability Overlay */}
-                    {!hasAvailabilityFilters && (
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                        <div className="text-center text-white p-4">
-                          <p className="text-sm font-medium mb-2">
-                            {t("select_date_guests", "Select a date & guests to see availability & prices")}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                    
                     <div className="absolute top-3 left-3 flex gap-2">
                       <Link to={`/marketplace?theme=${encodeURIComponent(experience.theme.toLowerCase().replace(/\s+/g, '-'))}`} className="theme-chip bg-black text-white px-3 py-1 rounded-full text-xs font-medium hover:opacity-90 transition-opacity">
                         {experience.theme}
                       </Link>
                     </div>
-                    
-                    {hasAvailabilityFilters && (
-                      <div className="absolute bottom-3 right-3">
-                        <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price-wrap">
-                          <div className="marketplace-price">
-                            {formatPrice(experience.base_price)}
-                          </div>
-                          <div className="text-xs opacity-90">per person</div>
+                    <div className="absolute bottom-3 right-3">
+                      <div className="bg-primary text-primary-foreground rounded-lg px-2 py-1 shadow-lg price-wrap">
+                        <div className="marketplace-price">
+                          {formatPrice(experience.base_price)}
                         </div>
+                        <div className="text-xs opacity-90">per person</div>
                       </div>
-                    )}
+                    </div>
                   </div>
                   
                   <CardContent className="p-6">
@@ -274,32 +243,6 @@ const Browse = () => {
                       {experience.description}
                     </p>
 
-                    {/* Experience Chips */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {/* Duration */}
-                      <Badge variant="secondary" className="text-xs">
-                        <Clock className="h-3 w-3 mr-1" />
-                        {experience.duration_hours}h
-                      </Badge>
-                      
-                      {/* Group Size */}
-                      <Badge variant="secondary" className="text-xs">
-                        <Users className="h-3 w-3 mr-1" />
-                        2-{experience.capacity}
-                      </Badge>
-                      
-                      {/* Languages - assuming English + Swahili */}
-                      <Badge variant="secondary" className="text-xs">
-                        EN, SW
-                      </Badge>
-                      
-                      {/* Free Cancellation */}
-                      <Badge variant="secondary" className="text-xs text-green-700 bg-green-50">
-                        <Shield className="h-3 w-3 mr-1" />
-                        {t("free_cancellation", "Free cancellation")}
-                      </Badge>
-                    </div>
-
                     <div className="flex items-center justify-between mb-4">
                       <div className="text-sm text-foreground">
                         By <Link to={`/projects/${project?.id}`} className="hover:text-primary underline">
@@ -318,9 +261,6 @@ const Browse = () => {
                           View details
                         </Button>
                       </Link>
-                      <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                        Book
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>;

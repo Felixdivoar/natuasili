@@ -15,7 +15,7 @@ import RelatedExperiences from "@/components/RelatedExperiences";
 import ReviewSection from "@/components/ReviewSection";
 import StickyReserveButton from "@/components/StickyReserveButton";
 import NewAuthModal from "@/components/NewAuthModal";
-import WinalistBookingStepper from "@/components/WinalistBookingStepper";
+import BookingWizardNew from "@/components/BookingWizardNew";
 import ImageSlideshow from "@/components/ImageSlideshow";
 import { useAuth } from "@/contexts/AuthContext";
 import { getExperienceCoordinates } from "@/utils/locationUtils";
@@ -541,7 +541,7 @@ export default function ExperienceDetail() {
 
         {/* Booking Modal */}
         {isBookingModalOpen && user && (
-          <WinalistBookingStepper
+          <BookingWizardNew
             isOpen={isBookingModalOpen}
             onClose={() => setIsBookingModalOpen(false)}
             experience={experience}
