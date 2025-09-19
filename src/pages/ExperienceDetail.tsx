@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckCircle, XCircle, Info, MapPin, Star, Users, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckCircle, XCircle, Info, MapPin, Star, Users, Clock, ChevronLeft, ChevronRight, Heart, Share } from "lucide-react";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
 import { parseExperienceContent } from "@/components/ExperienceDetailParsing";
 import { CartProvider } from "@/contexts/CartContext";
@@ -250,9 +250,53 @@ export default function ExperienceDetail() {
 
               {/* Title and location */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-                  {experience.title}
-                </h1>
+                {/* Title with Action Buttons */}
+                <div className="flex items-start justify-between gap-4 mb-2">
+                  <h1 className="text-3xl md:text-4xl font-bold text-foreground flex-1">
+                    {experience.title}
+                  </h1>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+                      onClick={() => {
+                        // TODO: Implement wishlist functionality
+                        console.log('Add to wishlist:', experience.slug);
+                      }}
+                    >
+                      <Heart className="h-4 w-4" />
+                      <span className="sr-only">Add to wishlist</span>
+                    </Button>
+                    
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
+                      onClick={() => {
+                        // Share functionality
+                        if (navigator.share) {
+                          navigator.share({
+                            title: experience.title,
+                            text: `Check out this amazing experience: ${experience.title}`,
+                            url: window.location.href,
+                          });
+                        } else {
+                          // Fallback: Copy to clipboard
+                          navigator.clipboard.writeText(window.location.href);
+                          // TODO: Show toast notification
+                          console.log('Link copied to clipboard');
+                        }
+                      }}
+                    >
+                      <Share className="h-4 w-4" />
+                      <span className="sr-only">Share experience</span>
+                    </Button>
+                  </div>
+                </div>
+                
                 <div className="flex items-center gap-4 text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
