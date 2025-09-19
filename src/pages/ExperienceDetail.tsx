@@ -426,7 +426,19 @@ export default function ExperienceDetail() {
                      <div className="space-y-4">
                        <div className="prose prose-lg max-w-none">
                          <p className="text-muted-foreground leading-relaxed">
-                           {itinerary.map((item, index) => item.description).join(' ')}
+                           {itinerary.map((item, index) => {
+                             const description = item.description;
+                             const isLast = index === itinerary.length - 1;
+                             const isFirst = index === 0;
+                             
+                             if (isFirst) {
+                               return description;
+                             } else if (isLast) {
+                               return ` Following this, ${description.toLowerCase()}`;
+                             } else {
+                               return ` Next, ${description.toLowerCase()}`;
+                             }
+                           }).join('')}
                          </p>
                        </div>
                       {contentSections.cancellation && <div className="mt-6 p-4 bg-muted rounded-lg">
