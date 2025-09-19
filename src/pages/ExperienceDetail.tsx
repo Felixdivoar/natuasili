@@ -445,7 +445,7 @@ export default function ExperienceDetail() {
                 {contentSections.cancellation && <AccordionItem value="cancellation">
                     <AccordionTrigger>Cancellation policy</AccordionTrigger>
                     <AccordionContent>
-                      <p className="text-muted-foreground font-light">{contentSections.cancellation}</p>
+                      <p className="text-base text-muted-foreground !font-light">{contentSections.cancellation}</p>
                     </AccordionContent>
                   </AccordionItem>}
               </Accordion>
