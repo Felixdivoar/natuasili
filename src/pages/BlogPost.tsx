@@ -320,7 +320,7 @@ const BlogPost = () => {
             {post.title}
           </h1>
           
-          <p className="text-base text-muted-foreground font-light mb-6">
+          <p className="text-base text-muted-foreground font-extralight mb-6">
             {post.excerpt}
           </p>
           
