@@ -17,6 +17,7 @@ export type MultiCartItem = {
   donation: number;  // optional donation amount
   currency: string;
   isGroupPricing?: boolean;
+  addedAt: number; // timestamp when item was added
 };
 
 interface MultiCartContextType {
@@ -25,7 +26,7 @@ interface MultiCartContextType {
   total: number;
   open: boolean;
   setOpen: (v: boolean) => void;
-  addItem: (item: Omit<MultiCartItem, "id" | "subtotal" | "donation" | "currency"> & { currency?: string, donation?: number }) => void;
+  addItem: (item: Omit<MultiCartItem, "id" | "subtotal" | "donation" | "currency" | "addedAt"> & { currency?: string, donation?: number }) => void;
   removeItem: (id: string) => void;
   clear: () => void;
   sync: () => Promise<void>;
@@ -150,7 +151,8 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         subtotal: Number(item.subtotal_kes),
         donation: 0,
         currency: currency,
-        isGroupPricing: false
+        isGroupPricing: false,
+        addedAt: Date.now() // Use current time for existing items
       }));
 
       console.log('Loading cart from database:', dbItems.length, 'items');
@@ -180,6 +182,7 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const unitPrice = item.unitPrice;
     const subtotal = item.isGroupPricing ? unitPrice : (unitPrice * item.adults) + (unitPrice * (item.children));
     const id = `${item.experienceSlug}_${item.date}_${Date.now()}`;
+    const now = Date.now();
     
     console.log('Adding item to cart:', { id, title: item.title, experienceSlug: item.experienceSlug });
     
@@ -197,7 +200,8 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         subtotal,
         donation: item.donation || 0,
         currency: item.currency || currency,
-        isGroupPricing: item.isGroupPricing
+        isGroupPricing: item.isGroupPricing,
+        addedAt: now
       }];
       
       console.log('Cart items after adding:', newItems.length, newItems.map(i => ({ id: i.id, title: i.title })));
@@ -216,39 +220,24 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setIsSynced(false);
   };
 
-  // Cart auto-clear after 5 minutes of inactivity
+  // Auto-clear individual cart items after 10 minutes
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    
-    const resetTimer = () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        if (items.length > 0) {
-          console.log('Auto-clearing cart after 5 minutes of inactivity');
-          setItems([]);
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const tenMinutesAgo = now - (10 * 60 * 1000); // 10 minutes in milliseconds
+      
+      setItems(prev => {
+        const filteredItems = prev.filter(item => item.addedAt > tenMinutesAgo);
+        if (filteredItems.length !== prev.length) {
+          console.log(`Auto-cleared ${prev.length - filteredItems.length} expired cart items`);
           setIsSynced(false);
         }
-      }, 5 * 60 * 1000); // 5 minutes
-    };
-
-    // Reset timer when items change
-    if (items.length > 0) {
-      resetTimer();
-    }
-
-    // Listen for user activity to reset timer
-    const activity = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
-    activity.forEach(event => {
-      document.addEventListener(event, resetTimer, { passive: true });
-    });
-
-    return () => {
-      if (timer) clearTimeout(timer);
-      activity.forEach(event => {
-        document.removeEventListener(event, resetTimer);
+        return filteredItems;
       });
-    };
-  }, [items.length]);
+    }, 60 * 1000); // Check every minute
+
+    return () => clearInterval(interval);
+  }, []);
 
   const itemCount = items.length;
   const total = useMemo(() => items.reduce((sum, i) => sum + i.subtotal + i.donation, 0), [items]);
