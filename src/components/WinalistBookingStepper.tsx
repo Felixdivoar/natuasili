@@ -283,7 +283,7 @@ const WinalistBookingStepper: React.FC<WinalistBookingStepperProps> = ({ isOpen,
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {selectedDate ? 
-                            format(selectedDate, "PPP") : 
+                            format(selectedDate, "PPP") :
                             t("select_date", "Select a date")
                           }
                         </Button>
@@ -293,7 +293,7 @@ const WinalistBookingStepper: React.FC<WinalistBookingStepperProps> = ({ isOpen,
                           mode="single"
                           selected={selectedDate || undefined}
                           onSelect={(date) => setSelectedDate(date || null)}
-                          disabled={(date) => date < new Date() || !isValidBookingDate(date)}
+                          disabled={(date) => date < new Date() || !isValidBookingDate(date.toISOString().split('T')[0])}
                           initialFocus
                           className="pointer-events-auto"
                         />
@@ -470,7 +470,7 @@ const WinalistBookingStepper: React.FC<WinalistBookingStepperProps> = ({ isOpen,
                               </div>
                               <div className="flex items-center gap-2">
                                 <Calendar className="h-4 w-4" />
-                                {selectedDate && format(selectedDate, "PPP")}
+                                {selectedDate ? format(selectedDate, "PPP") : ''}
                                 {selectedTime && ` • ${selectedTime}`}
                               </div>
                               <div className="flex items-center gap-2">
