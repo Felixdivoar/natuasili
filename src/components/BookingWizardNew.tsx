@@ -39,11 +39,11 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     name: '', // Will be auto-filled from auth 
     email: '', // Will be auto-filled from auth
     phone: '',
-    mobility: '',
     specialRequests: '',
     donation: 0, // Optional donation amount
     agreeTerms: false,
-    marketingOptIn: false
+    marketingOptIn: false,
+    createAccount: false // New field for account creation
   });
 
   // Booking timer
@@ -53,11 +53,11 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       name: '',
       email: '',
       phone: '',
-      mobility: '',
       specialRequests: '',
       donation: 0,
       agreeTerms: false,
-      marketingOptIn: false
+      marketingOptIn: false,
+      createAccount: false
     });
     onClose();
     toast({
@@ -165,6 +165,45 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     setIsProcessingPayment(true);
 
     try {
+      let bookingUserId = user?.id;
+
+      // Create account if user opted for it and is not logged in
+      if (!user && formData.createAccount) {
+        try {
+          // Generate a random password for the user
+          const tempPassword = Math.random().toString(36).slice(-12) + 'A1!';
+          
+          const { data: authData, error: authError } = await supabase.auth.signUp({
+            email: formData.email,
+            password: tempPassword,
+            options: {
+              data: {
+                first_name: formData.name.split(' ')[0] || formData.name,
+                last_name: formData.name.split(' ').slice(1).join(' ') || '',
+                role: 'traveler'
+              },
+              emailRedirectTo: `${window.location.origin}/auth/callback`
+            }
+          });
+
+          if (authError) {
+            console.warn('Account creation failed, proceeding as guest:', authError.message);
+            // Continue as guest if account creation fails
+            bookingUserId = null;
+          } else if (authData.user) {
+            bookingUserId = authData.user.id;
+            toast({
+              title: "Account Created!",
+              description: "Check your email to set your password and access your dashboard.",
+              variant: "default",
+            });
+          }
+        } catch (error) {
+          console.warn('Account creation error, proceeding as guest:', error);
+          bookingUserId = null;
+        }
+      }
+
       // Find existing experience in Supabase (don't create new ones)
       let experienceId: string;
       
@@ -188,7 +227,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         .from('bookings')
         .insert({
           experience_id: experienceId,
-          user_id: user?.id,
+          user_id: bookingUserId,
           customer_name: formData.name,
           customer_email: formData.email,
           customer_phone: formData.phone,
@@ -424,44 +463,48 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                               placeholder="your@email.com"
                             />
                           </div>
-                        </CardContent>
-                      </Card>
+                         </CardContent>
+                       </Card>
 
-                      <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-sm">
-                        <CardContent className="p-4 space-y-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-2">
-                              <Phone className="h-4 w-4 text-primary" />
-                              {t('phone', 'Phone Number')} *
-                            </Label>
-                            <Input 
-                              id="phone"
-                              type="tel"
-                              value={formData.phone}
-                              onChange={(e) => updateFormData('phone', e.target.value)}
-                              required
-                              className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
-                              placeholder="+254 700 000 000"
-                            />
-                          </div>
+                       <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-sm">
+                         <CardContent className="p-4 space-y-4">
+                           <div className="space-y-2">
+                             <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-2">
+                               <Phone className="h-4 w-4 text-primary" />
+                               {t('phone', 'Phone Number')} *
+                             </Label>
+                             <Input 
+                               id="phone"
+                               type="tel"
+                               value={formData.phone}
+                               onChange={(e) => updateFormData('phone', e.target.value)}
+                               required
+                               className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
+                               placeholder="+254 700 000 000"
+                             />
+                           </div>
 
-                          <div className="space-y-2">
-                            <Label htmlFor="mobility" className="text-sm font-medium">
-                              {t('mobilityAssistance', 'Accessibility Needs')}
-                            </Label>
-                            <Select value={formData.mobility} onValueChange={(value) => updateFormData('mobility', value)}>
-                              <SelectTrigger className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow">
-                                <SelectValue placeholder={t('selectOption', 'None required')} />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="none">{t('noAssistance', 'No assistance needed')}</SelectItem>
-                                <SelectItem value="walking">{t('walkingAid', 'Walking assistance')}</SelectItem>
-                                <SelectItem value="wheelchair">{t('wheelchair', 'Wheelchair accessible')}</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </CardContent>
-                      </Card>
+                           {/* Account Creation Option */}
+                           {!user && (
+                             <div className="space-y-2 pt-2 border-t border-muted/30">
+                               <div className="flex items-start space-x-3">
+                                 <Checkbox
+                                   id="createAccount"
+                                   checked={formData.createAccount}
+                                   onCheckedChange={(checked) => updateFormData('createAccount', checked)}
+                                 />
+                                 <Label htmlFor="createAccount" className="text-sm leading-relaxed cursor-pointer">
+                                   <span className="font-medium text-primary">Create an account to manage all my bookings</span>
+                                   <br />
+                                   <span className="text-xs text-muted-foreground">
+                                     Access your booking history, reviews, and wishlist
+                                   </span>
+                                 </Label>
+                               </div>
+                             </div>
+                           )}
+                         </CardContent>
+                       </Card>
                     </div>
 
                     {/* Special Requests */}
