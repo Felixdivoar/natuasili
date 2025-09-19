@@ -26,6 +26,11 @@
   }
 }
 
+/* Blog post title increased by 5% */
+.blog-post-title-increased {
+  font-size: 1.575rem !important; /* 5% increase from text-2xl (1.5rem) */
+}
+
 /* Blog title increased by 10% then reduced by 5% then reduced by 2% then reduced by 5% */
 .blog-title-increased {
   font-size: 1.0944rem !important; /* 5% reduction from 1.152rem */
