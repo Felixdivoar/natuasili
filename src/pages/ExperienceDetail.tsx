@@ -269,7 +269,7 @@ export default function ExperienceDetail() {
               <div>
                 {/* Title with Action Buttons */}
                 <div className="flex items-start justify-between gap-4 mb-2">
-                  <h1 className="text-3xl md:text-4xl font-bold text-foreground flex-1">
+                  <h1 className="text-3xl font-bold text-foreground flex-1 md:text-xl">
                     {experience.title}
                   </h1>
                   
@@ -426,31 +426,28 @@ export default function ExperienceDetail() {
                     <div className="prose prose-lg max-w-none">
                       <p className="text-muted-foreground leading-relaxed">
                         {itinerary.map((item, index) => {
-                          const description = item.description;
-                          const isLast = index === itinerary.length - 1;
-                          const isFirst = index === 0;
-                          
-                          if (isFirst) {
-                            return description;
-                          } else if (isLast) {
-                            return ` Following this, ${description.toLowerCase()}`;
-                          } else {
-                            return ` Next, ${description.toLowerCase()}`;
-                          }
-                        }).join('')}
+                        const description = item.description;
+                        const isLast = index === itinerary.length - 1;
+                        const isFirst = index === 0;
+                        if (isFirst) {
+                          return description;
+                        } else if (isLast) {
+                          return ` Following this, ${description.toLowerCase()}`;
+                        } else {
+                          return ` Next, ${description.toLowerCase()}`;
+                        }
+                      }).join('')}
                       </p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
                 
-                {contentSections.cancellation && (
-                  <AccordionItem value="cancellation">
+                {contentSections.cancellation && <AccordionItem value="cancellation">
                     <AccordionTrigger>Cancellation policy</AccordionTrigger>
                     <AccordionContent>
                       <p className="text-muted-foreground">{contentSections.cancellation}</p>
                     </AccordionContent>
-                  </AccordionItem>
-                )}
+                  </AccordionItem>}
               </Accordion>
             </section>
 
@@ -502,13 +499,11 @@ export default function ExperienceDetail() {
                       </div>
                     </div>
                     <Button variant="outline" size="sm" className="flex items-center gap-2" onClick={() => {
-                      const [lat, lng] = getExperienceCoordinates(experience.description) || [-1.2921, 36.7378];
-                      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                      const url = isMobile 
-                        ? `maps://maps.google.com/maps?daddr=${lat},${lng}&dirflg=d`
-                        : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
-                      window.open(url, '_blank');
-                    }}>
+                    const [lat, lng] = getExperienceCoordinates(experience.description) || [-1.2921, 36.7378];
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    const url = isMobile ? `maps://maps.google.com/maps?daddr=${lat},${lng}&dirflg=d` : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+                    window.open(url, '_blank');
+                  }}>
                       <ExternalLink className="h-4 w-4" />
                       Get directions
                     </Button>
@@ -517,12 +512,7 @@ export default function ExperienceDetail() {
                 
                 {/* Map Container */}
                 <div className="relative">
-                  <GoogleMap 
-                    location={experience.locationText || "Experience Location"} 
-                    coordinates={getExperienceCoordinates(experience.description)} 
-                    height="h-72" 
-                    googleMapsUrl={experience.googleMapsUrl} 
-                  />
+                  <GoogleMap location={experience.locationText || "Experience Location"} coordinates={getExperienceCoordinates(experience.description)} height="h-72" googleMapsUrl={experience.googleMapsUrl} />
                   
                   {/* Overlay Gradient */}
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/5 via-transparent to-transparent" />
