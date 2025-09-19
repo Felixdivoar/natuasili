@@ -48,39 +48,27 @@ export function AvatarMenu({ profile }: AvatarMenuProps) {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {displayName}
-            </p>
-            <p className="text-xs leading-none text-muted-foreground capitalize">
-              {roleName}
-            </p>
-          </div>
+      <DropdownMenuContent className="w-48" align="end" forceMount>
+        <DropdownMenuLabel className="p-3">
+          <p className="text-sm font-medium">{displayName}</p>
+          <p className="text-xs text-muted-foreground">{roleName}</p>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
         
         <DropdownMenuItem onClick={handleDashboard} className="cursor-pointer">
           <LayoutDashboard className="mr-2 h-4 w-4" />
-          <span>Dashboard</span>
+          Dashboard
         </DropdownMenuItem>
         
         <DropdownMenuItem asChild>
           <Link to="/profile" className="cursor-pointer">
             <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+            Profile
           </Link>
         </DropdownMenuItem>
         
-        <DropdownMenuSeparator />
-        
-        <DropdownMenuItem 
-          onClick={handleSignOut}
-          className="cursor-pointer hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-        >
+        <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive">
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Sign out</span>
+          Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
