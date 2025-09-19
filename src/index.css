@@ -26,6 +26,11 @@
   }
 }
 
+/* Blog title increased by 10% */
+.blog-title-increased {
+  font-size: 1.2375rem !important; /* 10% increase from text-lg (1.125rem) */
+}
+
 /* Force experience title styling */
 .experience-title-forced {
   font-size: 1.25rem !important; /* Mobile: reduced by 10% from 1.5rem */
