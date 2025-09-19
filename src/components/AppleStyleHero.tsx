@@ -54,7 +54,7 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
               letterSpacing: '-0.02em',
               lineHeight: '1.1',
               paddingTop: '24px'
-            }} className="tracking-tight mb-6 text-white font-semibold text-5xl">
+            }} className="tracking-tight mb-6 text-white font-semibold text-6xl">
                 Travel that funds conservation
               </h1>
 
