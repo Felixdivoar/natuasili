@@ -56,7 +56,7 @@ const Blog = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Moments Inspiring Local Actions
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-base text-muted-foreground font-light mb-8">
               At NatuAsili, we believe that conservation thrives through connection between people, places, wildlife, and the partners working to protect them. MILA (Moments Inspiring Local Actions) is where we share the experiences that inspire local action and global support.
 
 Through stories from communities, conservation organizations, and travelers, we spotlight how nature-based experiences drive awareness, funding, and positive change. From the forests and savannahs to coastlines and cultures, MILA celebrates the collaborations that help protect Africa's wild places.
