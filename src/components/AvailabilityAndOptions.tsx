@@ -480,8 +480,8 @@ const AvailabilityAndOptions = ({
               <Card className="border-0 bg-gradient-to-br from-card via-card to-card/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg font-semibold flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary font-bold text-sm">📋</span>
+                    <div className="w-8 h-8 rounded-lg bg-muted/20 flex items-center justify-center">
+                      <div className="w-4 h-4 rounded bg-foreground/80"></div>
                     </div>
                     Booking Summary
                   </CardTitle>
@@ -492,44 +492,24 @@ const AvailabilityAndOptions = ({
                     <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Your Selection</h4>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span className="text-primary text-xs">📅</span>
-                          </div>
-                          <span className="text-sm text-muted-foreground">Date</span>
-                        </div>
+                        <span className="text-sm text-muted-foreground">Date</span>
                         <span className="font-medium">{selectedDate || "Select date"}</span>
                       </div>
                       
                       <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span className="text-primary text-xs">👥</span>
-                          </div>
-                          <span className="text-sm text-muted-foreground">Adults</span>
-                        </div>
+                        <span className="text-sm text-muted-foreground">Adults</span>
                         <span className="font-medium">{selectedAdults}</span>
                       </div>
                       
                       {selectedChildren > 0 && (
                         <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                              <span className="text-primary text-xs">👶</span>
-                            </div>
-                            <span className="text-sm text-muted-foreground">Children</span>
-                          </div>
+                          <span className="text-sm text-muted-foreground">Children</span>
                           <span className="font-medium">{selectedChildren}</span>
                         </div>
                       )}
                       
                       <div className="flex justify-between items-center p-3 bg-gradient-to-r from-background/50 to-background/30 rounded-xl">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span className="text-primary text-xs">⭐</span>
-                          </div>
-                          <span className="text-sm text-muted-foreground">Option</span>
-                        </div>
+                        <span className="text-sm text-muted-foreground">Option</span>
                         <span className="font-medium">{selectedOptionData.name}</span>
                       </div>
                     </div>
@@ -555,18 +535,21 @@ const AvailabilityAndOptions = ({
 
                       {/* Impact Split - Only show when valid */}
                       {selectedDate && !participantsError && (
-                        <div className="space-y-2 pt-3 mt-3 border-t border-border/50">
-                          <div className="flex justify-between items-center text-xs">
-                            <span className="text-emerald-700 flex items-center gap-1">
-                              🌱 Partner initiatives (90%)
-                            </span>
-                            <span className="font-medium text-emerald-700">{formatPrice(totals.partner)}</span>
+                          <div className="space-y-2 pt-3 mt-3 border-t border-border/50">
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-emerald-700 flex items-center gap-1">
+                                <div className="w-3 h-3 rounded-full bg-emerald-100 flex items-center justify-center">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-600"></div>
+                                </div>
+                                Partner initiatives (90%)
+                              </span>
+                              <span className="font-medium text-emerald-700">{formatPrice(totals.partner)}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-muted-foreground">Platform & operations (10%)</span>
+                              <span className="font-medium text-muted-foreground">{formatPrice(totals.platform)}</span>
+                            </div>
                           </div>
-                          <div className="flex justify-between items-center text-xs">
-                            <span className="text-muted-foreground">Platform & operations (10%)</span>
-                            <span className="font-medium text-muted-foreground">{formatPrice(totals.platform)}</span>
-                          </div>
-                        </div>
                       )}
 
                       {/* Total */}
@@ -595,9 +578,9 @@ const AvailabilityAndOptions = ({
                       style={{ touchAction: 'manipulation' }}
                     >
                       {isInCart ? (
-                        <>🛒 Go to Cart</>
+                        <>Go to Cart</>
                       ) : (
-                        <>🎯 Book Now</>
+                        <>Book Now</>
                       )}
                     </Button>
                     
@@ -623,7 +606,7 @@ const AvailabilityAndOptions = ({
                       }}
                       className="w-full h-10 border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200"
                     >
-                      {isInCart ? "✅ In Cart" : "🛒 Add to Cart"}
+                      {isInCart ? "In Cart" : "Add to Cart"}
                     </Button>
                   </div>
 
@@ -631,11 +614,15 @@ const AvailabilityAndOptions = ({
                   <div className="pt-4 border-t border-border/30">
                     <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        <span className="text-green-600">✓</span>
+                        <div className="w-3 h-3 rounded-full bg-green-100 flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 rounded-full bg-green-600"></div>
+                        </div>
                         <span>Free cancellation</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span className="text-blue-600">🔒</span>
+                        <div className="w-3 h-3 rounded-full bg-gray-100 flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+                        </div>
                         <span>Secure payment</span>
                       </div>
                     </div>
