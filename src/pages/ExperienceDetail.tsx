@@ -44,6 +44,7 @@ export default function ExperienceDetail() {
   const [slideshowIndex, setSlideshowIndex] = useState(0);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const {
     user
   } = useAuth();
@@ -148,6 +149,23 @@ export default function ExperienceDetail() {
     }
     return () => observer.disconnect();
   }, []);
+
+  // Auto-slide mobile carousel every 2 seconds
+  useEffect(() => {
+    if (!isMobile) return;
+    if (!experience?.images?.length) return;
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => {
+        const next = (prev + 1) % experience.images.length;
+        if (carouselRef.current) {
+          const width = carouselRef.current.clientWidth;
+          carouselRef.current.scrollTo({ left: next * width, behavior: 'smooth' });
+        }
+        return next;
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isMobile, experience?.images?.length]);
 
   // Navigation functions for image carousel
   const nextImage = () => {
@@ -329,7 +347,7 @@ export default function ExperienceDetail() {
               {isMobile ? (
                 /* Mobile Carousel - Full Width */
                 <div className="relative -mx-4">
-                  <div 
+                  <div ref={carouselRef} 
                     className="flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     onScroll={(e) => {
@@ -388,31 +406,7 @@ export default function ExperienceDetail() {
                     </Button>
                   </div>
 
-                  {/* Dots Navigation - Inside Slider */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center gap-1 z-10 carousel-dots">
-                    {experience.images.map((_, index) => (
-                      <button
-                        key={index}
-                        className={`w-0.5 h-0.5 rounded-full transition-all duration-200 ${
-                          index === currentImageIndex 
-                            ? 'bg-background w-2' 
-                            : 'bg-background/60 hover:bg-background/80'
-                        }`}
-                        data-active={index === currentImageIndex ? 'true' : 'false'}
-                        onClick={() => {
-                          const carousel = document.querySelector('.flex.overflow-x-scroll');
-                          if (carousel) {
-                            carousel.scrollTo({
-                              left: index * carousel.clientWidth,
-                              behavior: 'smooth'
-                            });
-                          }
-                          setCurrentImageIndex(index);
-                        }}
-                        aria-label={`Go to image ${index + 1}`}
-                      />
-                    ))}
-                  </div>
+                  {/* Dots removed on mobile; auto-sliding enabled */}
                 </div>
               ) : (
                 /* Desktop Grid */
