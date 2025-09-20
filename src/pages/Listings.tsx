@@ -30,7 +30,7 @@ export default function Listings() {
   const getDestinationFromLocation = (locationText: string): Destination => {
     if (locationText.includes('Nairobi')) return 'nairobi';
     if (locationText.includes('Coast') || locationText.includes('Coastal')) return 'coastal-kenya';
-    if (locationText.includes('Samburu')) return 'samburu';
+    if (locationText.includes('Samburu')) return 'northern-kenya';
     if (locationText.includes('Maasai Mara') || locationText.includes('Mara')) return 'masai-mara';
     if (locationText.includes('Laikipia')) return 'laikipia';
     return 'nairobi'; // default
@@ -41,7 +41,7 @@ export default function Listings() {
     switch (param) {
       case 'nairobi': return 'nairobi';
       case 'coast': return 'coastal-kenya';
-      case 'samburu': return 'samburu';
+      case 'samburu': return 'northern-kenya';
       case 'masai-mara': return 'masai-mara';
       case 'laikipia': return 'laikipia';
       default: return null;

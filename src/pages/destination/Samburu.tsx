@@ -18,7 +18,7 @@ const SamburuDestination = () => {
     partner.location.toLowerCase().includes('samburu')
   );
   const samburuExperiences = EXPERIENCES.filter(experience => 
-    experience.destination === 'samburu'
+    experience.destination === 'northern-kenya'
   );
   return <div className="min-h-screen bg-background">
       <Header />

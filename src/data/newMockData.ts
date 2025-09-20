@@ -36,7 +36,7 @@ const getLocationText = (destination: Destination): string => {
   switch (destination) {
     case 'nairobi': return 'Nairobi, Kenya';
     case 'coastal-kenya': return 'Coast Province, Kenya';
-    case 'samburu': return 'Samburu County, Kenya';
+    case 'northern-kenya': return 'Northern Kenya';
     case 'masai-mara': return 'Maasai Mara, Kenya';
     case 'laikipia': return 'Laikipia County, Kenya';
     default: return 'Kenya';

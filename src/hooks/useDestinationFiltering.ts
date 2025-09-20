@@ -20,7 +20,7 @@ const convertThemeToPartnerTheme = (theme: string): Theme => {
 const getDestinationFromLocation = (locationText: string): Destination => {
   if (locationText.includes('Nairobi')) return 'nairobi';
   if (locationText.includes('Coast') || locationText.includes('Coastal')) return 'coastal-kenya';
-  if (locationText.includes('Samburu')) return 'samburu';
+  if (locationText.includes('Northern Kenya')) return 'northern-kenya';
   if (locationText.includes('Maasai Mara') || locationText.includes('Mara')) return 'masai-mara';
   if (locationText.includes('Laikipia')) return 'laikipia';
   return 'nairobi'; // default

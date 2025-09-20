@@ -78,7 +78,7 @@ import maraElephant3 from "@/assets/mara-elephant-3.jpg";
 import maraElephant4 from "@/assets/mara-elephant-4.jpg";
 import maraElephant5 from "@/assets/mara-elephant-5.jpg";
 
-export type Destination = "nairobi" | "coastal-kenya" | "samburu" | "masai-mara" | "laikipia";
+export type Destination = "nairobi" | "coastal-kenya" | "northern-kenya" | "masai-mara" | "laikipia";
 export type Theme = "Wildlife conservation" | "Conservation education" | "Community & cultural exploration";
 
 export type Experience = {
@@ -238,7 +238,7 @@ export const EXPERIENCES: Experience[] = [
     id: "exp-koija-cultural-village",
     slug: P("Koija Cultural Village"),
     partner: "Koija Community",
-    destination: "samburu",
+    destination: "northern-kenya",
     themes: ["Community & cultural exploration"],
     activities: ["village", "culture", "community"],
     images: ["/lovable-uploads/08763604-1a22-4da5-a8a1-4daf65cb4b32.png", "/lovable-uploads/3a4d487a-fe3a-40ce-aa28-18adf4191e69.png", "/lovable-uploads/396bdd72-dc8d-4727-8fd8-e73dba015ec2.png", "/lovable-uploads/cc847573-d3b5-4aa6-8d5c-26b81ce2b693.png", "/lovable-uploads/a4b8d107-90cf-4f50-9401-95350c393f65.png", "/lovable-uploads/c6c43dc7-52c0-4f45-baf7-4093fc59cf98.png"],
@@ -291,7 +291,7 @@ https://maps.app.goo.gl/VzMtfuRWv9rbpWt76`,
     id: "exp-sera-rhino-tracking",
     slug: P("Sera On-Foot Rhino Tracking"),
     partner: "Sera Conservancy",
-    destination: "samburu",
+    destination: "northern-kenya",
     themes: ["Wildlife conservation"],
     activities: ["rhino", "tracking", "walking"],
     images: ["/lovable-uploads/73526904-0f02-4d36-9590-456e0dd5628a.png", "/lovable-uploads/dc2fa3f6-3095-4f03-9f50-d78d7cceba81.png", "/lovable-uploads/ffc54bd4-ba6d-45be-8795-340f600c6ba3.png"],
@@ -344,7 +344,7 @@ https://www.google.com/maps/search/?api=1&query=95W5%2BQGR%2C%20Dol%20Dol%2C%20K
     id: "exp-ruko-giraffe",
     slug: P("Giraffe at Ruko Sanctuary"),
     partner: "Ruko Community Conservancy",
-    destination: "samburu",
+    destination: "northern-kenya",
     themes: ["Wildlife conservation"],
     activities: ["giraffe", "sanctuary"],
     images: ["/lovable-uploads/21799448-fabe-49a5-b8b2-3fd811cc804c.png", "/lovable-uploads/235266ed-14bb-4381-9304-a9f8e2934776.png", "/lovable-uploads/34b44d9c-3c11-44ee-9f21-bbf1e8c51a5c.png", "/lovable-uploads/d41fd5bc-a9e9-44de-a975-dc5ae1f2eb29.png"],
@@ -787,7 +787,7 @@ JPFV+FP Nairobi`,
     id: "exp-reteti-elephant",
     slug: P("Reteti Community Elephant Experience"),
     partner: "Reteti Elephant Sanctuary",
-    destination: "samburu",
+    destination: "northern-kenya",
     themes: ["Wildlife conservation"],
     activities: ["elephant", "rehabilitation"],
     images: [retetiMainImg, retetiFeedingImg, retetiCareOutdoorImg, retetiCareFacilityImg, retetiHerdImg, retetiBottleFeedingImg],

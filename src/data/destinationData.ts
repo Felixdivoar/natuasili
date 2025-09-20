@@ -56,7 +56,7 @@ export const DESTINATION_EXPERIENCES: Record<Destination, string[]> = {
     "Behind the scenes – Ol Pejeta Sweetwaters Chimpanzee",
     "Track lions and aid conservation at Ol Pejeta Conservancy"
   ],
-  "samburu": [
+  "northern-kenya": [
     "On-foot rhino experience at Sera Conservancy",
     "A community-led elephant experience at Reteti Elephant Sanctuary",
     "Koija Cultural Village – join the people, traditions and festivals of Northern Kenya"
@@ -84,7 +84,7 @@ export const DESTINATION_PARTNERS: Record<Destination, string[]> = {
   "laikipia": [
     "Ol Pejeta Conservancy"
   ],
-  "samburu": [
+  "northern-kenya": [
     "Sera Conservancy",
     "Reteti Elephant Sanctuary", 
     "Koija Community",
@@ -133,8 +133,8 @@ export const DESTINATIONS_INFO: Record<Destination, DestinationInfo> = {
     heroImage: "/assets/destinations/laikipia-destination.jpg", 
     coordinates: [0.0755, 36.9070]
   },
-  "samburu": {
-    id: "samburu",
+  "northern-kenya": {
+    id: "northern-kenya",
     name: "Samburu / Northern Kenya",
     description: "Experience authentic Samburu culture while supporting community-led conservation initiatives.",
     experienceCount: 3,
