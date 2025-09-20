@@ -212,7 +212,7 @@ export default function ExperienceDetail() {
   };
   const handleWishlistClick = async () => {
     if (!user) {
-      setIsAuthModalOpen(true);
+      toast.info('Please sign in to save to wishlist');
       return;
     }
     if (!experience?.id) return;
