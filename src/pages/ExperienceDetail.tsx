@@ -327,8 +327,8 @@ export default function ExperienceDetail() {
             {/* Image Gallery - Responsive */}
             <div className="mb-8">
               {isMobile ? (
-                /* Mobile Carousel */
-                <div className="relative">
+                /* Mobile Carousel - Full Width */
+                <div className="relative -mx-4">
                   <div 
                     className="flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -388,15 +388,15 @@ export default function ExperienceDetail() {
                     </Button>
                   </div>
 
-                  {/* Dots Navigation */}
-                  <div className="flex justify-center mt-4 gap-2">
+                  {/* Dots Navigation - Inside Slider */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center gap-1.5 z-10">
                     {experience.images.map((_, index) => (
                       <button
                         key={index}
-                        className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
                           index === currentImageIndex 
-                            ? 'bg-primary w-6' 
-                            : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                            ? 'bg-background w-4' 
+                            : 'bg-background/60 hover:bg-background/80'
                         }`}
                         onClick={() => {
                           const carousel = document.querySelector('.flex.overflow-x-scroll');
