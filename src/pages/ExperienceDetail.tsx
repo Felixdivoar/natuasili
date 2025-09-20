@@ -389,13 +389,13 @@ export default function ExperienceDetail() {
                   </div>
 
                   {/* Dots Navigation - Inside Slider */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center gap-1.5 z-10">
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center gap-1 z-10">
                     {experience.images.map((_, index) => (
                       <button
                         key={index}
-                        className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                        className={`w-0.5 h-0.5 rounded-full transition-all duration-200 ${
                           index === currentImageIndex 
-                            ? 'bg-background w-4' 
+                            ? 'bg-background w-2' 
                             : 'bg-background/60 hover:bg-background/80'
                         }`}
                         onClick={() => {
