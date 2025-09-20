@@ -406,6 +406,15 @@ export default function ExperienceDetail() {
                     </Button>
                   </div>
 
+                  {/* Slide Counter - Bottom Right */}
+                  <div className="absolute bottom-3 right-3 z-10">
+                    <div className="bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md">
+                      <span className="text-white/90 text-xs font-light">
+                        {currentImageIndex + 1}/{experience.images.length}
+                      </span>
+                    </div>
+                  </div>
+
                   {/* Dots removed on mobile; auto-sliding enabled */}
                 </div>
               ) : (
