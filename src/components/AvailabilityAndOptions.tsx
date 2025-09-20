@@ -258,7 +258,7 @@ const AvailabilityAndOptions = ({
       <div className="space-y-6">
         <div>
           <h2 className="text-2xl font-bold text-foreground mb-2">Availability and options</h2>
-          <p className="text-muted-foreground font-light">Select your preferred date and experience option</p>
+          <p className="text-muted-foreground font-light text-base">Select your preferred date and experience option</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
