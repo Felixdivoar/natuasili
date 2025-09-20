@@ -534,47 +534,31 @@ const AvailabilityAndOptions = ({
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button onClick={handleContinue} disabled={proceedDisabled} className="w-full min-h-[48px] touch-manipulation pointer-events-auto relative" size="lg" style={{
+                  <Button onClick={handleContinue} disabled={proceedDisabled} className="flex-1 min-h-[48px] touch-manipulation pointer-events-auto relative" size="lg" style={{
                 touchAction: 'manipulation'
               }}>
                     {isInCart ? "Go to Cart" : "Book now"}
                   </Button>
-                  <Button type="button" variant="outline" disabled={isInCart || !!participantsError || !selectedDate || !dateValidation.isValid} onClick={() => {
-                if (participantsError || !selectedDate || !dateValidation.isValid || isInCart) return;
-                addCartItem({
-                  experienceSlug: (experience as any).slug || '',
-                  title: (experience as any).title || 'Experience',
-                  image: (experience as any).heroImage,
-                  date: selectedDate,
-                  adults: selectedAdults,
-                  children: selectedChildren,
-                  optionId: selectedOption,
-                  unitPrice: basePrice,
-                  donation: 0,
-                  isGroupPricing
-                });
-                openCart(true);
-              }}>
-                    {isInCart ? "In Cart" : "Add to Cart"}
-                  </Button>
-                  <Button variant="outline" onClick={() => {
-                if (participantsError || !selectedDate || !dateValidation.isValid) return;
-                addCartItem({
-                  experienceSlug: (experience as any).slug || '',
-                  title: (experience as any).title || 'Experience',
-                  image: (experience as any).heroImage,
-                  date: selectedDate,
-                  adults: selectedAdults,
-                  children: selectedChildren,
-                  optionId: selectedOption,
-                  unitPrice: basePrice,
-                  donation: 0,
-                  isGroupPricing
-                });
-                openCart(true);
-              }}>
-                    Add to cart
-                  </Button>
+                  {!isInCart && (
+                    <Button type="button" variant="outline" disabled={!!participantsError || !selectedDate || !dateValidation.isValid} onClick={() => {
+                  if (participantsError || !selectedDate || !dateValidation.isValid) return;
+                  addCartItem({
+                    experienceSlug: (experience as any).slug || '',
+                    title: (experience as any).title || 'Experience',
+                    image: (experience as any).heroImage,
+                    date: selectedDate,
+                    adults: selectedAdults,
+                    children: selectedChildren,
+                    optionId: selectedOption,
+                    unitPrice: basePrice,
+                    donation: 0,
+                    isGroupPricing
+                  });
+                  openCart(true);
+                }} className="px-3 min-h-[48px]">
+                      Add to Cart
+                    </Button>
+                  )}
                 </div>
 
                 <div className="text-xs text-muted-foreground text-center mt-2">
