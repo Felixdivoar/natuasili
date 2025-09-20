@@ -227,7 +227,7 @@ const AvailabilityAndOptions = ({
       onBookingModalOpen();
       return;
     }
-    
+
     // For direct navigation, allow both authenticated and guest users
     const params = new URLSearchParams({
       date: selectedDate,
@@ -258,7 +258,7 @@ const AvailabilityAndOptions = ({
       <div className="space-y-6">
         <div>
           <h2 className="text-2xl font-bold text-foreground mb-2">Availability and options</h2>
-          <p className="text-muted-foreground">Select your preferred date and experience option</p>
+          <p className="text-muted-foreground font-light">Select your preferred date and experience option</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -534,26 +534,24 @@ const AvailabilityAndOptions = ({
               }}>
                     {isInCart ? "Go to Cart" : "Book now"}
                   </Button>
-                  {!isInCart && (
-                    <Button type="button" variant="outline" disabled={!!participantsError || !selectedDate || !dateValidation.isValid} onClick={() => {
-                  if (participantsError || !selectedDate || !dateValidation.isValid) return;
-                  addCartItem({
-                    experienceSlug: (experience as any).slug || '',
-                    title: (experience as any).title || 'Experience',
-                    image: (experience as any).heroImage,
-                    date: selectedDate,
-                    adults: selectedAdults,
-                    children: selectedChildren,
-                    optionId: selectedOption,
-                    unitPrice: basePrice,
-                    donation: 0,
-                    isGroupPricing
-                  });
-                  openCart(true);
-                }} className="px-3 min-h-[48px]">
+                  {!isInCart && <Button type="button" variant="outline" disabled={!!participantsError || !selectedDate || !dateValidation.isValid} onClick={() => {
+                if (participantsError || !selectedDate || !dateValidation.isValid) return;
+                addCartItem({
+                  experienceSlug: (experience as any).slug || '',
+                  title: (experience as any).title || 'Experience',
+                  image: (experience as any).heroImage,
+                  date: selectedDate,
+                  adults: selectedAdults,
+                  children: selectedChildren,
+                  optionId: selectedOption,
+                  unitPrice: basePrice,
+                  donation: 0,
+                  isGroupPricing
+                });
+                openCart(true);
+              }} className="px-3 min-h-[48px]">
                       Add to Cart
-                    </Button>
-                  )}
+                    </Button>}
                 </div>
 
                 <div className="text-xs text-muted-foreground text-center mt-2">
