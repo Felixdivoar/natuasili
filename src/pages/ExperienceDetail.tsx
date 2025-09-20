@@ -6,6 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle, XCircle, Info, MapPin, Star, Users, Clock, ChevronLeft, ChevronRight, Heart, Share, ExternalLink } from "lucide-react";
+import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
 import { parseExperienceContent } from "@/components/ExperienceDetailParsing";
 import { CartProvider } from "@/contexts/CartContext";
@@ -27,7 +29,9 @@ export default function ExperienceDetail() {
     slug
   } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const isMobile = useIsMobile();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [stickyVisible, setStickyVisible] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -273,32 +277,33 @@ export default function ExperienceDetail() {
                     {experience.title}
                   </h1>
                   
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={handleWishlistClick}>
-                      <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-black text-black' : ''}`} />
-                      <span className="sr-only">{isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}</span>
-                    </Button>
-                    
-                    <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={() => {
-                    // Share functionality
-                    if (navigator.share) {
-                      navigator.share({
-                        title: experience.title,
-                        text: `Check out this amazing experience: ${experience.title}`,
-                        url: window.location.href
-                      });
-                    } else {
-                      // Fallback: Copy to clipboard
-                      navigator.clipboard.writeText(window.location.href);
-                      // TODO: Show toast notification
-                      console.log('Link copied to clipboard');
-                    }
-                  }}>
-                      <Share className="h-4 w-4" />
-                      <span className="sr-only">Share experience</span>
-                    </Button>
-                  </div>
+                  {/* Action Buttons - Desktop Only */}
+                  {!isMobile && (
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={handleWishlistClick}>
+                        <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-black text-black' : ''}`} />
+                        <span className="sr-only">{isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}</span>
+                      </Button>
+                      
+                      <Button variant="outline" size="icon" className="h-10 w-10 rounded-full border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200" onClick={() => {
+                        // Share functionality
+                        if (navigator.share) {
+                          navigator.share({
+                            title: experience.title,
+                            text: `Check out this amazing experience: ${experience.title}`,
+                            url: window.location.href
+                          });
+                        } else {
+                          // Fallback: Copy to clipboard
+                          navigator.clipboard.writeText(window.location.href);
+                          toast("Link copied to clipboard!");
+                        }
+                      }}>
+                        <Share className="h-4 w-4" />
+                        <span className="sr-only">Share experience</span>
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex items-center gap-4 text-muted-foreground">
@@ -319,25 +324,119 @@ export default function ExperienceDetail() {
               </div>
             </div>
 
-            {/* Image Grid */}
+            {/* Image Gallery - Responsive */}
             <div className="mb-8">
-              <div className="grid grid-cols-4 gap-2 h-[400px]">
-                {/* Main large image */}
-                <div className="col-span-2 row-span-2 rounded-xl overflow-hidden cursor-pointer" onClick={() => openSlideshow(0)}>
-                  <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
+              {isMobile ? (
+                /* Mobile Carousel */
+                <div className="relative">
+                  <div 
+                    className="flex overflow-x-scroll snap-x snap-mandatory scrollbar-hide"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    onScroll={(e) => {
+                      const scrollLeft = e.currentTarget.scrollLeft;
+                      const itemWidth = e.currentTarget.clientWidth;
+                      const newIndex = Math.round(scrollLeft / itemWidth);
+                      setCurrentImageIndex(newIndex);
+                    }}
+                  >
+                    {experience.images.map((image, index) => (
+                      <div 
+                        key={index} 
+                        className="w-full flex-shrink-0 snap-center"
+                        onClick={() => openSlideshow(index)}
+                      >
+                        <img 
+                          src={image} 
+                          alt={`${experience.title} - Image ${index + 1}`} 
+                          className="w-full h-[300px] object-cover cursor-pointer" 
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Action Buttons - Top Right */}
+                  <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+                    <Button 
+                      variant="secondary" 
+                      size="icon" 
+                      className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200" 
+                      onClick={handleWishlistClick}
+                    >
+                      <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-foreground text-foreground' : ''}`} />
+                      <span className="sr-only">{isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}</span>
+                    </Button>
+                    
+                    <Button 
+                      variant="secondary" 
+                      size="icon" 
+                      className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200" 
+                      onClick={() => {
+                        if (navigator.share) {
+                          navigator.share({
+                            title: experience.title,
+                            text: `Check out this amazing experience: ${experience.title}`,
+                            url: window.location.href
+                          });
+                        } else {
+                          navigator.clipboard.writeText(window.location.href);
+                          toast("Link copied to clipboard!");
+                        }
+                      }}
+                    >
+                      <Share className="h-4 w-4" />
+                      <span className="sr-only">Share experience</span>
+                    </Button>
+                  </div>
+
+                  {/* Dots Navigation */}
+                  <div className="flex justify-center mt-4 gap-2">
+                    {experience.images.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                          index === currentImageIndex 
+                            ? 'bg-primary w-6' 
+                            : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                        }`}
+                        onClick={() => {
+                          const carousel = document.querySelector('.flex.overflow-x-scroll');
+                          if (carousel) {
+                            carousel.scrollTo({
+                              left: index * carousel.clientWidth,
+                              behavior: 'smooth'
+                            });
+                          }
+                          setCurrentImageIndex(index);
+                        }}
+                        aria-label={`Go to image ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
-                
-                {/* Smaller images grid */}
-                {experience.images.slice(1, 5).map((image, index) => <div key={index + 1} className="relative rounded-lg overflow-hidden cursor-pointer" onClick={() => openSlideshow(index + 1)}>
-                    <img src={image} alt={`${experience.title} - Image ${index + 2}`} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
-                    {/* Show +X more indicator on last visible image if there are more images */}
-                    {index === 3 && experience.images.length > 5 && <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                        <span className="text-white font-semibold text-lg">
-                          +{experience.images.length - 5} more
-                        </span>
-                      </div>}
-                  </div>)}
-              </div>
+              ) : (
+                /* Desktop Grid */
+                <div className="grid grid-cols-4 gap-2 h-[400px]">
+                  {/* Main large image */}
+                  <div className="col-span-2 row-span-2 rounded-xl overflow-hidden cursor-pointer" onClick={() => openSlideshow(0)}>
+                    <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
+                  </div>
+                  
+                  {/* Smaller images grid */}
+                  {experience.images.slice(1, 5).map((image, index) => (
+                    <div key={index + 1} className="relative rounded-lg overflow-hidden cursor-pointer" onClick={() => openSlideshow(index + 1)}>
+                      <img src={image} alt={`${experience.title} - Image ${index + 2}`} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
+                      {/* Show +X more indicator on last visible image if there are more images */}
+                      {index === 3 && experience.images.length > 5 && (
+                        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                          <span className="text-white font-semibold text-lg">
+                            +{experience.images.length - 5} more
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
