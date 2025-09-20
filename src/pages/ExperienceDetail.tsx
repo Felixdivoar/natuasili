@@ -389,7 +389,7 @@ export default function ExperienceDetail() {
                   </div>
 
                   {/* Dots Navigation - Inside Slider */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center gap-1 z-10">
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex justify-center gap-1 z-10 carousel-dots">
                     {experience.images.map((_, index) => (
                       <button
                         key={index}
@@ -398,6 +398,7 @@ export default function ExperienceDetail() {
                             ? 'bg-background w-2' 
                             : 'bg-background/60 hover:bg-background/80'
                         }`}
+                        data-active={index === currentImageIndex ? 'true' : 'false'}
                         onClick={() => {
                           const carousel = document.querySelector('.flex.overflow-x-scroll');
                           if (carousel) {

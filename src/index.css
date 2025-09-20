@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import './styles/cta-guards.css';
+@import './styles/mobile-carousel.css';
 
 /* Force experience title styling - v2 */
 .experience-title-forced-v2 {
