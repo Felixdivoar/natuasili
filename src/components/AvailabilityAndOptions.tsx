@@ -330,42 +330,46 @@ const AvailabilityAndOptions = ({
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Available options</h3>
               {options.map(option => <Card key={option.id} className={`cursor-pointer transition-colors ${selectedOption === option.id ? "ring-2 ring-primary" : ""}`} onClick={() => setSelectedOption(option.id as "standard")}>
-                  <CardContent className="p-6">
-                     <div className="flex items-start justify-between mb-4">
-                       <div className="flex-1">
-
-                         <div className="flex flex-wrap gap-2 mb-3">
+                  <CardContent className="p-4 sm:p-6">
+                     <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                       <div className="flex-1 space-y-3">
+                         <div className="flex flex-wrap gap-2">
                             {option.startTimes.map(time => <Badge key={time} variant="outline" className="text-xs">
                                 {time}
                               </Badge>)}
                          </div>
 
-                         <div className="flex gap-4 text-sm">
+                         <div className="flex flex-col sm:flex-row sm:gap-4 gap-2 text-sm">
                            <div className="flex items-center gap-1 text-success">
-                             <CheckCircle className="h-4 w-4" />
-                             <span>{option.cancellation}</span>
+                             <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                             <span className="text-xs sm:text-sm">{option.cancellation}</span>
                            </div>
                            <div className="flex items-center gap-1 text-info">
-                             <CheckCircle className="h-4 w-4" />
-                             <span>{option.payLater}</span>
+                             <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                             <span className="text-xs sm:text-sm">{option.payLater}</span>
                            </div>
                          </div>
                        </div>
 
-                      <div className="text-right ml-4">
-                        <div className="space-y-1">
-                          <div className="text-sm">
+                      <div className="w-full lg:w-auto lg:text-right lg:ml-4 pt-3 lg:pt-0 border-t lg:border-t-0 border-border/20">
+                        <div className="flex lg:flex-col justify-between lg:justify-start items-center lg:items-end space-y-0 lg:space-y-1">
+                          <div className="text-sm order-2 lg:order-1">
                             {isGroupPricing ? <span className="text-muted-foreground">Group price</span> : <span className="text-muted-foreground">Adults:</span>}
                             {!isGroupPricing && ` ${formatPrice(option.adultPrice)} × ${selectedAdults}`}
+                            {!isGroupPricing && selectedChildren > 0 && <div className="hidden lg:block text-sm">
+                                <span className="text-muted-foreground">Children:</span> {formatPrice(option.childPrice)} × {selectedChildren}
+                              </div>}
                           </div>
-                          {!isGroupPricing && selectedChildren > 0 && <div className="text-sm">
-                              <span className="text-muted-foreground">Children:</span> {formatPrice(option.childPrice)} × {selectedChildren}
-                            </div>}
-                          <div className="text-2xl font-bold">
-                            {formatPrice(option.adultPrice * (isGroupPricing ? 1 : selectedAdults) + (isGroupPricing ? 0 : option.childPrice * selectedChildren))}
+                          <div className="order-1 lg:order-2">
+                            <div className="text-xl lg:text-2xl font-bold">
+                              {formatPrice(option.adultPrice * (isGroupPricing ? 1 : selectedAdults) + (isGroupPricing ? 0 : option.childPrice * selectedChildren))}
+                            </div>
+                            <div className="text-xs lg:text-sm text-muted-foreground text-center lg:text-right">total</div>
                           </div>
-                          <div className="text-sm text-muted-foreground">total</div>
                         </div>
+                        {!isGroupPricing && selectedChildren > 0 && <div className="lg:hidden text-xs text-muted-foreground mt-1">
+                            Includes {selectedChildren} children at {formatPrice(option.childPrice)} each
+                          </div>}
                       </div>
                     </div>
                   </CardContent>
