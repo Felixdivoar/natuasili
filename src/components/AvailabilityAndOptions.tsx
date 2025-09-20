@@ -67,7 +67,6 @@ const AvailabilityAndOptions = ({
     setOpen: openCart,
     items
   } = useMultiCart();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   // Initialize state from props, booking context, or defaults
   const initializeFromBooking = bookingState?.experienceSlug === experience.slug;
@@ -207,13 +206,7 @@ const AvailabilityAndOptions = ({
       return;
     }
 
-    // Check authentication first
-    if (!user) {
-      setAuthModalOpen(true);
-      return;
-    }
-
-    // Trigger booking start callback
+    // Trigger booking start callback (guest booking is allowed)
     if (onBookingStart) {
       onBookingStart();
     }
@@ -234,6 +227,8 @@ const AvailabilityAndOptions = ({
       onBookingModalOpen();
       return;
     }
+    
+    // For direct navigation, allow both authenticated and guest users
     const params = new URLSearchParams({
       date: selectedDate,
       adults: String(selectedAdults),
@@ -574,7 +569,7 @@ const AvailabilityAndOptions = ({
         </div>
       </div>
 
-      <NewAuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+      {/* Authentication Modal - Removed as guest booking is now allowed */}
     </section>;
 };
 export default AvailabilityAndOptions;

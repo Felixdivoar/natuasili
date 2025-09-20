@@ -2,10 +2,8 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar, Users, ChevronUp } from 'lucide-react';
 import { useCurrency } from '@/contexts/CurrencyContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { useBooking } from '@/contexts/BookingContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import NewAuthModal from '@/components/NewAuthModal';
 
 interface StickyReserveButtonProps {
   experienceSlug: string;
@@ -21,11 +19,9 @@ export default function StickyReserveButton({
   onReserveClick
 }: StickyReserveButtonProps) {
   const { formatPrice } = useCurrency();
-  const { user } = useAuth();
   const { bookingState, hasActiveBooking } = useBooking();
   const navigate = useNavigate();
   const location = useLocation();
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -61,12 +57,7 @@ export default function StickyReserveButton({
       return;
     }
 
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
-
-    // Navigate to experience page with availability section
+    // Navigate to experience page with availability section - no auth required
     if (location.pathname !== `/experience/${experienceSlug}`) {
       navigate(`/experience/${experienceSlug}#availability`);
     } else {
@@ -153,11 +144,7 @@ export default function StickyReserveButton({
         </div>
       </div>
 
-      {/* Authentication Modal */}
-      <NewAuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-      />
+      {/* Authentication Modal - Removed as guest booking is allowed */}
     </>
   );
 }
