@@ -20,3 +20,25 @@
     background: hsl(var(--background)) !important;
   }
 }
+
+/* Force tiny mobile action buttons in image slider */
+@media (max-width: 640px) {
+  .carousel-actions { 
+    top: 8px !important; 
+    right: 8px !important; 
+    gap: 6px !important;
+  }
+  .carousel-actions .na-icon-btn {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+    border-radius: 9999px !important;
+    backdrop-filter: blur(6px);
+  }
+  .carousel-actions .na-icon-btn svg { 
+    width: 14px !important; 
+    height: 14px !important; 
+  }
+}

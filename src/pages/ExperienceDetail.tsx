@@ -355,11 +355,11 @@ export default function ExperienceDetail() {
                   </div>
                   
                   {/* Action Buttons - Top Right */}
-                  <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+                  <div className="absolute top-3 right-3 flex items-center gap-2 z-10 carousel-actions">
                     <Button 
                       variant="secondary" 
                       size="icon" 
-                      className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200" 
+                      className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200 na-icon-btn" 
                       onClick={handleWishlistClick}
                     >
                       <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-foreground text-foreground' : ''}`} />
@@ -369,7 +369,7 @@ export default function ExperienceDetail() {
                     <Button 
                       variant="secondary" 
                       size="icon" 
-                      className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200" 
+                      className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background/90 transition-all duration-200 na-icon-btn" 
                       onClick={() => {
                         if (navigator.share) {
                           navigator.share({
