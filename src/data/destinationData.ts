@@ -135,7 +135,7 @@ export const DESTINATIONS_INFO: Record<Destination, DestinationInfo> = {
   },
   "northern-kenya": {
     id: "northern-kenya",
-    name: "Samburu / Northern Kenya",
+    name: "Northern Kenya",
     description: "Experience authentic Samburu culture while supporting community-led conservation initiatives.",
     experienceCount: 3,
     partnerCount: 4,
