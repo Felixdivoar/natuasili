@@ -20,6 +20,7 @@ const Index = () => {
       {/* Per-destination experience carousels */}
       <DestinationExperienceCarousel destination="nairobi" />
       <DestinationExperienceCarousel destination="coastal-kenya" />
+      <DestinationExperienceCarousel destination="samburu" />
       <DestinationExperienceCarousel destination="masai-mara" />
       <DestinationExperienceCarousel destination="laikipia" />
       
