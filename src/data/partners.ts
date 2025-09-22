@@ -919,6 +919,7 @@ Highlights
 • Learn about innovative reproductive technologies being used for species recovery
 • Understand the broader conservation challenges facing rhino populations
 • Support critical research and protection efforts through your visit
+• Available at two convenient times daily
 
 Included/Excluded
 • Conservancy entry fees
@@ -930,9 +931,11 @@ Included/Excluded
 
 What to Expect
 Itinerary
-• Arrive at the Ol Pejeta Conservancy's Morani Information Centre.
-• Join a guided tour (offered daily at specific times) to meet Najin and Fatu.
-• Observe the northern white rhinos in their enclosure and learn about their story from the keepers.
+• Tours are available daily at 08:30am and 3:00pm
+• Arrive at the Ol Pejeta Conservancy's Morani Information Centre 15 minutes before your scheduled time
+• Join a guided tour to meet Najin and Fatu with expert keepers
+• Observe the northern white rhinos in their specialized enclosure and learn about their unique story
+• Learn about the cutting-edge conservation technologies being used to save the species
 
 Cancellation policy
 • You can cancel up to 48 hours before the experience starts for a refund.
@@ -944,8 +947,14 @@ Language
 English
 
 Frequently Asked Questions
+What are the tour times?
+Tours are offered twice daily at 08:30am and 3:00pm. Please arrive 15 minutes early.
+
 How rare are these rhinos?
 The northern white rhino subspecies is classified as critically endangered, with only Najin and Fatu remaining worldwide.
+
+Is there a group size limit?
+No maximum or minimum number of people - we welcome groups of all sizes.
 
 What is included in the experience?
 The experience includes meeting the rhinos, hearing their story from the keepers, and contributing to conservation efforts.
@@ -960,6 +969,8 @@ What will I learn?
 Dedicated keepers will share their knowledge about the northern white rhinos and the fight for their survival.
 
 Important Information
+• Tours run daily at 08:30am and 3:00pm
+• No group size restrictions - suitable for individuals and large groups
 • If you don't have transport to the starting point, we can pick you up within the conservancy for an extra fee.
 
 Where you'll be
