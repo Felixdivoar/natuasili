@@ -223,9 +223,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why partner with Natuasili?</h2>
-            <p className="text-xl text-muted-foreground">
-              Everything you need to grow your conservation tourism business
-            </p>
+            <p className="text-xl text-muted-foreground">EverytFont weight body, font size light and should be mobile responsivehing you need to grow your conservation tourism business</p>
           </div>
           
           {/* Desktop Grid */}
