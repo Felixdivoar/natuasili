@@ -222,7 +222,7 @@ const PartnerWithUs: React.FC = () => {
       <section className="hero-padding px-4">
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Partner With Natuasili?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why partner with Natuasili?</h2>
             <p className="text-xl text-muted-foreground">
               Everything you need to grow your conservation tourism business
             </p>
@@ -243,15 +243,8 @@ const PartnerWithUs: React.FC = () => {
 
           {/* Mobile/Tablet Enhanced Carousel with Autoplay */}
           <div className="lg:hidden">
-            <EnhancedCarousel 
-              className="w-full"
-              autoplay={true}
-              autoplayDelay={4500}
-              showControls={true}
-              showDots={false}
-            >
-              {valueProps.map((prop, index) => (
-                <EnhancedCarouselItem key={index} basis="basis-full md:basis-1/2">
+            <EnhancedCarousel className="w-full" autoplay={true} autoplayDelay={4500} showControls={true} showDots={false}>
+              {valueProps.map((prop, index) => <EnhancedCarouselItem key={index} basis="basis-full md:basis-1/2">
                   <Card className="text-center h-full mr-4">
                     <CardHeader>
                       <div className="mx-auto mb-4">{prop.icon}</div>
@@ -261,8 +254,7 @@ const PartnerWithUs: React.FC = () => {
                       <CardDescription>{prop.description}</CardDescription>
                     </CardContent>
                   </Card>
-                </EnhancedCarouselItem>
-              ))}
+                </EnhancedCarouselItem>)}
             </EnhancedCarousel>
           </div>
         </div>
