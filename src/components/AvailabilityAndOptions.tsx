@@ -6,7 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Users, Clock, MapPin, Star, CheckCircle, Minus, Plus } from "lucide-react";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon, Users, Clock, MapPin, Star, CheckCircle, Minus, Plus } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -15,6 +19,7 @@ import { isSameDayBookingCutoffPassed, isTodayInLocal, isValidBookingDate, valid
 import NewAuthModal from "@/components/NewAuthModal";
 import { useMultiCart } from "@/contexts/MultiCartContext";
 interface Experience {
+  id?: string;
   slug?: string;
   base_price?: number;
   priceKESAdult: number;
@@ -71,6 +76,8 @@ const AvailabilityAndOptions = ({
   // Initialize state from props, booking context, or defaults
   const initializeFromBooking = bookingState?.experienceSlug === experience.slug;
   const [selectedDate, setSelectedDate] = useState(initialParams?.date || (initializeFromBooking ? bookingState.date || "" : ""));
+  const [selectedDateObj, setSelectedDateObj] = useState<Date | undefined>();
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [selectedAdults, setSelectedAdults] = useState(initialParams?.adults || (initializeFromBooking ? bookingState.adults : 1));
   const [selectedChildren, setSelectedChildren] = useState(initialParams?.children || (initializeFromBooking ? bookingState.children : 0));
   const [selectedOption, setSelectedOption] = useState<"standard">(initialParams?.option || "standard");
@@ -296,10 +303,60 @@ const AvailabilityAndOptions = ({
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="date" className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
+                      <CalendarIcon className="h-4 w-4" />
                       Select date
                     </Label>
-                    <Input id="date" type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} min={new Date().toISOString().split("T")[0]} className={`w-full ${dateError ? "border-destructive" : ""}`} />
+                    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal",
+                            !selectedDateObj && "text-muted-foreground",
+                            dateError && "border-destructive"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {selectedDateObj ? format(selectedDateObj, "PPP") : "Select date"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <CalendarComponent
+                          mode="single"
+                          selected={selectedDateObj}
+                          onSelect={(date) => {
+                            setSelectedDateObj(date);
+                            if (date) {
+                              const dateString = date.toISOString().split("T")[0];
+                              setSelectedDate(dateString);
+                            } else {
+                              setSelectedDate("");
+                            }
+                            setIsCalendarOpen(false);
+                          }}
+                          disabled={(date) => {
+                            // Disable past dates
+                            if (date <= new Date()) return true;
+                            
+                            // Disable weekends for specific experiences that don't operate on weekends
+                            const weekendRestrictedExperiences = [
+                              "exp-ocean-day-watamu", // Ocean Wonders: Learn & conserve
+                              "exp-reefolution-coral", // Dive into coral conservation with REEFolution
+                              "exp-colobus-eco-tours" // Colobus monkey eco-tour in Diani, Kenya
+                            ];
+                            
+                            if (weekendRestrictedExperiences.includes(experience.id || "")) {
+                              const dayOfWeek = date.getDay();
+                              return dayOfWeek === 0 || dayOfWeek === 6; // Sunday = 0, Saturday = 6
+                            }
+                            
+                            return false;
+                          }}
+                          initialFocus
+                          className={cn("p-3 pointer-events-auto")}
+                        />
+                      </PopoverContent>
+                    </Popover>
                     {dateError && <div className="text-destructive text-sm mt-1" role="alert">
                         {dateError}
                       </div>}
