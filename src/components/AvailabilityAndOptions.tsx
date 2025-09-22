@@ -400,7 +400,7 @@ const AvailabilityAndOptions = ({
 
                   <div className="text-sm text-muted-foreground">
                     Total: {totalParticipants} participant{totalParticipants !== 1 ? 's' : ''}
-                    {experience.capacity && (
+                    {experience.capacity && experience.capacity > 0 && (
                       <span>
                         {experience.minCapacity && experience.capacity 
                           ? ` (min ${experience.minCapacity}, max ${experience.capacity})`
