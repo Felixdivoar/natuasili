@@ -288,7 +288,15 @@ const PartnerWithUs: React.FC = () => {
           
           {/* Desktop Grid */}
           <div className="hidden lg:grid grid-cols-4 gap-8">
-            {howItWorksSteps.map((step, index) => {})}
+            {howItWorksSteps.map((step, index) => (
+              <div key={index} className="text-center p-6 bg-background rounded-lg shadow-sm h-full">
+                <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                  {step.step}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                <p className="text-base font-light text-muted-foreground">{step.description}</p>
+              </div>
+            ))}
           </div>
 
           {/* Mobile/Tablet Carousel */}
