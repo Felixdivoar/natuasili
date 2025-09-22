@@ -50,6 +50,13 @@ import adventureFarmKaren5 from "@/assets/adventure-farm-karen-5.jpg";
 import adventureFarmKaren6 from "@/assets/adventure-farm-karen-6.jpg";
 import adventureFarmKaren7 from "@/assets/adventure-farm-karen-7.jpg";
 
+// Nature Kenya bird walk images
+import natureKenyaNew1 from "@/assets/nature-kenya-1.jpg";
+import natureKenyaNew2 from "@/assets/nature-kenya-2.jpg";
+import natureKenyaNew3 from "@/assets/nature-kenya-3.jpg";
+import natureKenyaNew4 from "@/assets/nature-kenya-4.jpg";
+import natureKenyaNew5 from "@/assets/nature-kenya-5.jpg";
+
 // New night game drive images
 import nightGameDriveHero from "@/assets/night-game-drive-hero.jpg";
 import nightGameDrive2 from "@/assets/night-game-drive-2.jpg";
@@ -1618,9 +1625,9 @@ PM2P+HR Nairobi`,
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["birds", "walk", "education"],
-    images: [natureKenyaBirdwatching, natureKenyaImg, "/images/placeholder-4.jpg"],
-    heroImage: natureKenyaBirdwatching,
-    gallery: [natureKenyaBirdwatching, natureKenyaImg, "/images/placeholder-4.jpg"],
+    images: [natureKenyaNew1, natureKenyaNew2, natureKenyaNew3, natureKenyaNew4, natureKenyaNew5],
+    heroImage: natureKenyaNew1,
+    gallery: [natureKenyaNew1, natureKenyaNew2, natureKenyaNew3, natureKenyaNew4, natureKenyaNew5],
     description: `Overview
 The East Africa Natural History Society, better known as Nature Kenya, is a non-profit committed to promoting East African environmental research and conservation. It offers weekly guided bird walks across diverse ecosystems in Nairobi, Malindi, and the 3rd Saturday of every month in Mombasa.
 Explore Nairobi's varied birdlife every Wednesday morning and start an adventure of discovery. In Malindi and Mombasa, experience coastal birding, where unique shorebirds and migratory species thrive. With an expert guide leading the way, you'll uncover hidden birding hotspots and spot an incredible variety of feathered friends.
