@@ -114,7 +114,7 @@ const PartnerWithUs: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Partner with Conservation Leaders
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-base font-light text-muted-foreground mb-8">
               Join Kenya's leading platform for conservation tourism. Connect with impact-driven travelers and showcase your conservation work while growing your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
