@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useMultiCart } from "@/contexts/MultiCartContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import { X, ShoppingCart, Clock, Trash2, ExternalLink } from "lucide-react";
+import { X, Leaf, Clock, Trash2, ExternalLink } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function CartDrawer() {
@@ -49,7 +49,7 @@ export default function CartDrawer() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                <ShoppingCart className="w-5 h-5 text-primary" />
+                <Leaf className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <DrawerTitle className="text-lg font-semibold">Your Cart</DrawerTitle>
@@ -71,7 +71,7 @@ export default function CartDrawer() {
           {!hasItems ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="w-16 h-16 bg-muted/30 rounded-full flex items-center justify-center mb-4">
-                <ShoppingCart className="w-8 h-8 text-muted-foreground" />
+                <Leaf className="w-8 h-8 text-muted-foreground" />
               </div>
               <h3 className="font-medium text-muted-foreground mb-2">Your cart is empty</h3>
               <p className="text-sm text-muted-foreground/80">Add some experiences to get started</p>
@@ -94,7 +94,7 @@ export default function CartDrawer() {
                           />
                         ) : (
                           <div className="w-16 h-16 bg-muted/20 rounded-lg flex items-center justify-center">
-                            <ShoppingCart className="w-6 h-6 text-muted-foreground" />
+                            <Leaf className="w-6 h-6 text-muted-foreground" />
                           </div>
                         )}
                       </div>
@@ -186,7 +186,7 @@ export default function CartDrawer() {
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl border border-primary/20">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <ShoppingCart className="w-4 h-4 text-primary" />
+                  <Leaf className="w-4 h-4 text-primary" />
                 </div>
                 <span className="font-semibold">Total Amount</span>
               </div>
