@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { CheckCircle, Shield, TrendingUp, Users, Globe, Award, ArrowRight, DollarSign, BarChart3, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useI18n } from "@/contexts/I18nContext";
@@ -134,8 +135,10 @@ const PartnerEntry = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {benefits.map((benefit, index) => (
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <benefit.icon className="h-6 w-6 text-primary" />
@@ -143,7 +146,31 @@ const PartnerEntry = () => {
                   <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
                   <p className="text-muted-foreground">{benefit.description}</p>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
+          </div>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {benefits.map((benefit, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-4/5">
+                    <Card className="text-center hover:shadow-lg transition-shadow h-full">
+                      <CardContent className="p-6">
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <benefit.icon className="h-6 w-6 text-primary" />
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">{benefit.title}</h3>
+                        <p className="text-muted-foreground">{benefit.description}</p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
           </div>
         </div>
       </section>
