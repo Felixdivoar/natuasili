@@ -233,7 +233,7 @@ const PartnerWithUs: React.FC = () => {
             {valueProps.map((prop, index) => <Card key={index} className="text-center">
                 <CardHeader>
                   <div className="mx-auto mb-4">{prop.icon}</div>
-                  <CardTitle className="text-xl">{prop.title}</CardTitle>
+                  <CardTitle className="text-xl capitalize">{prop.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>{prop.description}</CardDescription>
@@ -248,7 +248,7 @@ const PartnerWithUs: React.FC = () => {
                   <Card className="text-center h-full mr-4">
                     <CardHeader>
                       <div className="mx-auto mb-4">{prop.icon}</div>
-                      <CardTitle className="text-xl">{prop.title}</CardTitle>
+                      <CardTitle className="text-xl capitalize">{prop.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <CardDescription>{prop.description}</CardDescription>
