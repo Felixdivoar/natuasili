@@ -1,6 +1,7 @@
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { EXPERIENCES } from "@/data/partners";
+import { EXPERIENCE_SPECS } from "@/data/destinationData";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -451,7 +452,7 @@ export default function ExperienceDetail() {
             <AvailabilityAndOptions experience={{
             ...experience,
             base_price: experience.priceKESAdult,
-            capacity: 15,
+            capacity: EXPERIENCE_SPECS[(experience.slug as string)]?.capacity,
             childHalfPriceRule: experience.childHalfPriceRule || false
           }} onBookingStart={() => {
             setBookingStarted(true);
