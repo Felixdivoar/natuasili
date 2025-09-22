@@ -187,42 +187,54 @@ const PartnerWithUs: React.FC = () => {
               <div className="flex animate-scroll gap-12 items-center">
                 {/* First set of partners */}
                 <a href="/partners/ol-pejeta-conservancy" className="group flex-shrink-0" aria-label="Ol Pejeta Conservancy">
-                  <img src="/logos/olp.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/olp-new.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/mara-elephant-project" className="group flex-shrink-0" aria-label="Mara Elephant Project">
-                  <img src="/logos/mep.png" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
-                </a>
-                <a href="/partners/reefolution" className="group flex-shrink-0" aria-label="Reefolution">
-                  <img src="/logos/reef.png" alt="Reefolution" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/mep-new.svg" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/colobus-conservation" className="group flex-shrink-0" aria-label="Colobus Conservation">
-                  <img src="/logos/colobus.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/colobus-new.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura">
-                  <img src="/logos/fok.png" alt="Friends of Karura" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <a href="/partners/giraffe-centre" className="group flex-shrink-0" aria-label="Giraffe Centre">
+                  <img src="/logos/giraffe-centre-new.png" alt="Giraffe Centre" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/giraffe-centre-afew" className="group flex-shrink-0" aria-label="Giraffe Centre (AFEW)">
-                  <img src="/logos/afeW.png" alt="Giraffe Centre (AFEW)" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura Forest">
+                  <img src="/logos/fkf-new.png" alt="Friends of Karura Forest" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/big-north" className="group flex-shrink-0" aria-label="The Big North">
+                  <img src="/logos/big-north.jpg" alt="The Big North" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/fonnap" className="group flex-shrink-0" aria-label="FONNAP">
+                  <img src="/logos/fonnap.png" alt="FONNAP" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/local-ocean-conservation" className="group flex-shrink-0" aria-label="Local Ocean Conservation">
+                  <img src="/logos/loc-turtle.png" alt="Local Ocean Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 
                 {/* Duplicate set for seamless loop */}
                 <a href="/partners/ol-pejeta-conservancy" className="group flex-shrink-0" aria-label="Ol Pejeta Conservancy">
-                  <img src="/logos/olp.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/olp-new.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/mara-elephant-project" className="group flex-shrink-0" aria-label="Mara Elephant Project">
-                  <img src="/logos/mep.png" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
-                </a>
-                <a href="/partners/reefolution" className="group flex-shrink-0" aria-label="Reefolution">
-                  <img src="/logos/reef.png" alt="Reefolution" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/mep-new.svg" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/colobus-conservation" className="group flex-shrink-0" aria-label="Colobus Conservation">
-                  <img src="/logos/colobus.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/colobus-new.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura">
-                  <img src="/logos/fok.png" alt="Friends of Karura" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 font-light" />
+                <a href="/partners/giraffe-centre" className="group flex-shrink-0" aria-label="Giraffe Centre">
+                  <img src="/logos/giraffe-centre-new.png" alt="Giraffe Centre" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/giraffe-centre-afew" className="group flex-shrink-0" aria-label="Giraffe Centre (AFEW)">
-                  <img src="/logos/afeW.png" alt="Giraffe Centre (AFEW)" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura Forest">
+                  <img src="/logos/fkf-new.png" alt="Friends of Karura Forest" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/big-north" className="group flex-shrink-0" aria-label="The Big North">
+                  <img src="/logos/big-north.jpg" alt="The Big North" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/fonnap" className="group flex-shrink-0" aria-label="FONNAP">
+                  <img src="/logos/fonnap.png" alt="FONNAP" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/local-ocean-conservation" className="group flex-shrink-0" aria-label="Local Ocean Conservation">
+                  <img src="/logos/loc-turtle.png" alt="Local Ocean Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
               </div>
             </div>
