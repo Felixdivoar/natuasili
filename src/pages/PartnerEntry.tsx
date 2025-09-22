@@ -187,8 +187,10 @@ const PartnerEntry = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((step, index) => <Card key={index} className="text-center">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((step, index) => (
+              <Card key={index} className="text-center">
                 <CardContent className="p-6">
                   <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-lg font-bold">
                     {step.step}
@@ -196,7 +198,31 @@ const PartnerEntry = () => {
                   <h3 className="text-lg font-semibold mb-3">{step.title}</h3>
                   <p className="text-muted-foreground text-sm">{step.description}</p>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
+          </div>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {steps.map((step, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-4/5">
+                    <Card className="text-center h-full">
+                      <CardContent className="p-6">
+                        <div className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4 text-lg font-bold">
+                          {step.step}
+                        </div>
+                        <h3 className="text-lg font-semibold mb-3">{step.title}</h3>
+                        <p className="text-muted-foreground text-sm">{step.description}</p>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
           </div>
         </div>
       </section>
