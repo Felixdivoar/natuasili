@@ -152,7 +152,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Trusted by leading conservation organizations</h2>
-            <p className="text-muted-foreground">
+            <p className="text-sm md:text-base text-muted-foreground font-normal">
               We collaborate with established initiatives across Kenya to ensure bookings create measurable impact.
             </p>
           </div>
