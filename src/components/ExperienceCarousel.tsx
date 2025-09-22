@@ -52,7 +52,7 @@ const ExperienceCarousel = () => {
         <div className="flex justify-between items-center mb-12">
           <div className="text-center md:text-left">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-left">Featured conservation experiences</h2>
-            <p className="text-base font-light text-muted-foreground max-w-2xl">
+            <p className="text-lg text-muted-foreground max-w-2xl">
               Discover authentic experiences that create lasting impact for wildlife, 
               communities, and habitats across Kenya.
             </p>

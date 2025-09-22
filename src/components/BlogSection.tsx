@@ -64,7 +64,7 @@ const BlogSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Conservation Stories & Insights
           </h2>
-          <p className="text-base font-light text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Discover the latest stories, insights, and updates from Kenya's conservation frontlines.
           </p>
         </div>

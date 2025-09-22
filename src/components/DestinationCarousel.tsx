@@ -66,7 +66,7 @@ const DestinationCarousel = () => {
         <div className="flex justify-between items-center mb-12">
           <div className="text-center md:text-left">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-left">Conservation destinations</h2>
-            <p className="text-base font-light text-muted-foreground max-w-2xl">
+            <p className="text-lg text-muted-foreground max-w-2xl">
               Discover Kenya's most important conservation sites where your experiences make a real difference.
             </p>
           </div>

@@ -88,23 +88,23 @@ const PartnerWithUs: React.FC = () => {
     features: ["Custom integration", "Dedicated account manager", "White-label options", "Custom reporting"]
   }];
   const faqs = [{
-    question: "How do I list my first experience?",
-    answer: "After partner verification, use our intuitive listing builder to add photos, descriptions, pricing, and availability. Include conservation impact details to attract eco-conscious travelers."
+    question: "How do I get started as a partner?",
+    answer: "Simply click 'Apply as a Partner' to create your account. After verification, you can start adding your conservation experiences and setting your availability."
   }, {
-    question: "What information do I need to provide for each experience?",
-    answer: "You'll need high-quality photos, detailed descriptions, duration, group size limits, what's included/excluded, meeting points, and any special requirements or restrictions."
+    question: "How and when do I get paid?",
+    answer: "Payouts are processed weekly for completed bookings. Funds are transferred directly to your bank account with detailed statements available in your dashboard."
   }, {
-    question: "How do I set pricing and availability?",
-    answer: "Our flexible pricing system allows you to set different rates for adults/children, seasonal pricing, and group discounts. Update your calendar in real-time to manage availability."
+    question: "Do you support child pricing logic?",
+    answer: "Yes! Our platform automatically applies child half-price rules for designated experiences like Nairobi Giraffe Centre and all Ol Pejeta experiences."
   }, {
-    question: "Can I offer experiences in multiple locations?",
-    answer: "Yes! You can list experiences across different locations in Kenya. Each listing can have unique pricing, availability, and requirements based on the specific location and activity."
+    question: "What kind of support do you provide?",
+    answer: "We offer comprehensive support including onboarding assistance, technical help, and ongoing partnership support with guaranteed response times based on your plan."
   }, {
-    question: "How do bookings and cancellations work?",
-    answer: "Travelers book directly through the platform with instant confirmation. You control your cancellation policy, and we handle payment processing and customer communication."
+    question: "How do impact proofs work?",
+    answer: "Partners can upload photos, documents, and reports showing their conservation impact. This builds trust with travelers and demonstrates real environmental outcomes."
   }, {
-    question: "What makes a successful experience listing?",
-    answer: "High-quality photos, detailed conservation impact stories, clear descriptions, competitive pricing, and excellent customer reviews. We provide guidance to optimize your listings for maximum bookings."
+    question: "Can I customize my experience listings?",
+    answer: "Absolutely! You can add detailed descriptions, photo galleries, pricing rules, availability calendars, and specific booking requirements for each experience."
   }];
   return <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -114,7 +114,7 @@ const PartnerWithUs: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Partner with Conservation Leaders
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-base font-light text-muted-foreground mb-8">
               Join Kenya's leading platform for conservation tourism. Connect with impact-driven travelers and showcase your conservation work while growing your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -187,42 +187,54 @@ const PartnerWithUs: React.FC = () => {
               <div className="flex animate-scroll gap-12 items-center">
                 {/* First set of partners */}
                 <a href="/partners/ol-pejeta-conservancy" className="group flex-shrink-0" aria-label="Ol Pejeta Conservancy">
-                  <img src="/logos/olp.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/olp-new.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/mara-elephant-project" className="group flex-shrink-0" aria-label="Mara Elephant Project">
-                  <img src="/logos/mep.png" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
-                </a>
-                <a href="/partners/reefolution" className="group flex-shrink-0" aria-label="Reefolution">
-                  <img src="/logos/reef.png" alt="Reefolution" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/mep-new.svg" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/colobus-conservation" className="group flex-shrink-0" aria-label="Colobus Conservation">
-                  <img src="/logos/colobus.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/colobus-new.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura">
-                  <img src="/logos/fok.png" alt="Friends of Karura" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <a href="/partners/giraffe-centre" className="group flex-shrink-0" aria-label="Giraffe Centre">
+                  <img src="/logos/giraffe-centre-new.png" alt="Giraffe Centre" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/giraffe-centre-afew" className="group flex-shrink-0" aria-label="Giraffe Centre (AFEW)">
-                  <img src="/logos/afeW.png" alt="Giraffe Centre (AFEW)" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura Forest">
+                  <img src="/logos/fkf-new.png" alt="Friends of Karura Forest" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/big-north" className="group flex-shrink-0" aria-label="The Big North">
+                  <img src="/logos/big-north.jpg" alt="The Big North" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/fonnap" className="group flex-shrink-0" aria-label="FONNAP">
+                  <img src="/logos/fonnap.png" alt="FONNAP" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/local-ocean-conservation" className="group flex-shrink-0" aria-label="Local Ocean Conservation">
+                  <img src="/logos/loc-turtle.png" alt="Local Ocean Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 
                 {/* Duplicate set for seamless loop */}
                 <a href="/partners/ol-pejeta-conservancy" className="group flex-shrink-0" aria-label="Ol Pejeta Conservancy">
-                  <img src="/logos/olp.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/olp-new.png" alt="Ol Pejeta Conservancy" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/mara-elephant-project" className="group flex-shrink-0" aria-label="Mara Elephant Project">
-                  <img src="/logos/mep.png" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
-                </a>
-                <a href="/partners/reefolution" className="group flex-shrink-0" aria-label="Reefolution">
-                  <img src="/logos/reef.png" alt="Reefolution" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/mep-new.svg" alt="Mara Elephant Project" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
                 <a href="/partners/colobus-conservation" className="group flex-shrink-0" aria-label="Colobus Conservation">
-                  <img src="/logos/colobus.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img src="/logos/colobus-new.png" alt="Colobus Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura">
-                  <img src="/logos/fok.png" alt="Friends of Karura" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300 font-light" />
+                <a href="/partners/giraffe-centre" className="group flex-shrink-0" aria-label="Giraffe Centre">
+                  <img src="/logos/giraffe-centre-new.png" alt="Giraffe Centre" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
-                <a href="/partners/giraffe-centre-afew" className="group flex-shrink-0" aria-label="Giraffe Centre (AFEW)">
-                  <img src="/logos/afeW.png" alt="Giraffe Centre (AFEW)" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                <a href="/partners/friends-of-karura" className="group flex-shrink-0" aria-label="Friends of Karura Forest">
+                  <img src="/logos/fkf-new.png" alt="Friends of Karura Forest" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/big-north" className="group flex-shrink-0" aria-label="The Big North">
+                  <img src="/logos/big-north.jpg" alt="The Big North" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/fonnap" className="group flex-shrink-0" aria-label="FONNAP">
+                  <img src="/logos/fonnap.png" alt="FONNAP" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
+                </a>
+                <a href="/partners/local-ocean-conservation" className="group flex-shrink-0" aria-label="Local Ocean Conservation">
+                  <img src="/logos/loc-turtle.png" alt="Local Ocean Conservation" className="h-20 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300" />
                 </a>
               </div>
             </div>
@@ -288,15 +300,13 @@ const PartnerWithUs: React.FC = () => {
           
           {/* Desktop Grid */}
           <div className="hidden lg:grid grid-cols-4 gap-8">
-            {howItWorksSteps.map((step, index) => (
-              <div key={index} className="text-center p-6 bg-background rounded-lg shadow-sm h-full">
+            {howItWorksSteps.map((step, index) => <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   {step.step}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-base font-light text-muted-foreground">{step.description}</p>
-              </div>
-            ))}
+                <p className="text-muted-foreground">{step.description}</p>
+              </div>)}
           </div>
 
           {/* Mobile/Tablet Carousel */}
@@ -431,10 +441,10 @@ const PartnerWithUs: React.FC = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
           </div>
-          <Accordion type="single" collapsible className="space-y-4" key="partner-faqs">
-            {faqs.map((faq, index) => <AccordionItem key={`faq-${index}`} value={`item-${index}`} className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left font-medium">{faq.question}</AccordionTrigger>
-                <AccordionContent className="text-base font-light text-muted-foreground">
+          <Accordion type="single" collapsible className="space-y-4">
+            {faqs.map((faq, index) => <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg px-6">
+                <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>)}

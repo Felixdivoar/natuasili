@@ -23,7 +23,7 @@ const ConservationChatbotPage = () => {
             </div>
           </div>
           <h1 className="text-4xl font-bold mb-4">AsiliChat</h1>
-          <p className="text-base font-light text-muted-foreground mb-2">Conservation Assistant for Kenya</p>
+          <p className="text-xl text-muted-foreground mb-2">Conservation Assistant for Kenya</p>
           <p className="text-lg text-muted-foreground">
             Your AI-powered guide to Kenyan wildlife, conservation areas, and sustainable travel
           </p>

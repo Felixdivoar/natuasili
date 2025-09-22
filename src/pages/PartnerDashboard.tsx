@@ -98,7 +98,7 @@ const PartnerDashboard = () => {
                 Partner
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Dashboard</span>
               </h1>
-              <p className="text-base font-light md:text-lg text-muted-foreground mb-8 max-w-3xl animate-fade-in">
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl animate-fade-in">
                 Manage your conservation experiences, track bookings, and measure your impact on wildlife and communities.
               </p>
             </div>

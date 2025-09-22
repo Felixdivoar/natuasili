@@ -131,7 +131,7 @@ const Browse = () => {
             <h1 className="text-3xl md:text-4xl text-foreground mb-4 font-bold text-left">
               Discover conservation experiences
             </h1>
-            <p className="text-base font-light text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Book authentic experiences that create lasting impact for wildlife, communities, and habitats across Kenya.
             </p>
             {partnerFilter && (
@@ -268,7 +268,7 @@ const Browse = () => {
           </div>
 
           {filteredExperiences.length === 0 && <div className="text-center py-12">
-              <p className="text-muted-foreground text-base font-light">No experiences found matching your criteria.</p>
+              <p className="text-muted-foreground text-lg">No experiences found matching your criteria.</p>
               <Button variant="outline" onClick={handleClearFilters} className="mt-4">
                 Clear filters
               </Button>

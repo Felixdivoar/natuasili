@@ -71,7 +71,7 @@ const About = () => {
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
               About NatuAsili
             </h1>
-            <p className="text-base font-light text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               NatuAsili is Kenya's premier conservation impact platform, connecting conscious travelers 
               with authentic conservation experiences while ensuring complete transparency of environmental impact.
             </p>
@@ -99,7 +99,7 @@ const About = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Our Mission
               </h2>
-              <p className="text-base font-light text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                 To revolutionize conservation tourism by creating transparent, impactful connections 
                 between travelers and conservation organizations across Kenya.
               </p>
@@ -263,7 +263,7 @@ const About = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               Join the Conservation Movement
             </h2>
-            <p className="text-base font-light text-muted-foreground mb-8">
+            <p className="text-lg text-muted-foreground mb-8">
               Whether you're a traveler looking for meaningful experiences or a conservation 
               organization seeking sustainable funding, NatuAsili is your platform.
             </p>
@@ -296,7 +296,7 @@ const About = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Meet Our Team
               </h2>
-              <p className="text-base font-light text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
                 The passionate individuals driving conservation impact across Kenya through innovative partnerships.
               </p>
             </div>
@@ -314,7 +314,7 @@ const About = () => {
                     </Badge>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground text-base font-light mb-4 leading-relaxed">
+                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                       {member.bio}
                     </p>
                     <div className="flex justify-center gap-2">
@@ -346,7 +346,7 @@ const About = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
               Ready to Join Our Conservation Movement?
             </h2>
-            <p className="text-base font-light text-muted-foreground mb-8">
+            <p className="text-lg text-muted-foreground mb-8">
               Whether you're a traveler seeking meaningful experiences or a conservation organization 
               looking for sustainable funding, we're here to help you make a real impact.
             </p>
