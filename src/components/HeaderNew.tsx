@@ -352,7 +352,7 @@ export default function HeaderNew() {
                   </Link>
                   
                   <Link 
-                    to="/partner-entry" 
+                    to="https://preview--natuasili.lovable.app/partner-with-us" 
                     className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
