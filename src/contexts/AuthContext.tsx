@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { sendWelcomeEmail } from '@/lib/email';
 import { Profile, fetchProfile, createProfile } from '@/lib/auth';
 
 interface AuthContextType {
@@ -67,7 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, role: 'traveler' | 'partner' = 'traveler', firstName?: string, lastName?: string) => {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -75,6 +76,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         data: { role, first_name: firstName, last_name: lastName }
       }
     });
+
+    // If signup successful and user was created, send welcome email
+    if (!error && data.user) {
+      try {
+        const userName = firstName && lastName ? `${firstName} ${lastName}` : 'New User';
+        const dashboardUrl = role === 'partner' ? `${window.location.origin}/dashboard` : undefined;
+        
+        console.log('Sending welcome email to:', email);
+        await sendWelcomeEmail(email, {
+          userName,
+          userRole: role,
+          dashboardUrl
+        });
+        console.log('Welcome email sent successfully');
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+        // Don't fail the signup if email fails - just log the error
+      }
+    }
+
     return { error };
   };
 

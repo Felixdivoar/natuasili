@@ -9,6 +9,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import EnhancedCarousel, { EnhancedCarouselItem } from '@/components/EnhancedCarousel';
 import PartnerOnboardingDemo from '@/components/PartnerOnboardingDemo';
 import PartnerApplication from '@/components/PartnerApplication';
+import TestEmailButton from '@/components/TestEmailButton';
 const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
   const [showPartnerModal, setShowPartnerModal] = useState(false);
@@ -130,6 +131,7 @@ const PartnerWithUs: React.FC = () => {
               <Button onClick={handleBookDemo} variant="outline" size="lg" className="text-lg px-8">
                 Book a Demo
               </Button>
+              <TestEmailButton />
             </div>
           </div>
           <div className="relative">

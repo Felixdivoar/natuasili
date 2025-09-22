@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { sendWelcomeEmail } from '@/lib/email';
 
 interface AuthUser {
   id: string;
@@ -116,6 +117,24 @@ export function SimpleAuthProvider({ children }: { children: React.ReactNode }) 
       });
       
       console.log('🔐 Signup result:', { data: !!data, error: !!error });
+
+      // If signup successful and user was created, send welcome email
+      if (!error && data.user) {
+        try {
+          const userName = fullName || 'New User';
+          
+          console.log('Sending welcome email to:', email);
+          await sendWelcomeEmail(email, {
+            userName,
+            userRole: 'traveler' // SimpleAuth defaults to traveler role
+          });
+          console.log('Welcome email sent successfully');
+        } catch (emailError) {
+          console.error('Failed to send welcome email:', emailError);
+          // Don't fail the signup if email fails - just log the error
+        }
+      }
+
       return { error };
     } catch (err) {
       console.error('🔐 Signup error:', err);
