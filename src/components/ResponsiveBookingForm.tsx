@@ -235,7 +235,7 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
                             id="people"
                             type="number"
                             min="1"
-                            max={experience.capacity}
+                            max={experience.capacity || undefined}
                             value={formData.people}
                             onChange={(e) => handleInputChange('people', parseInt(e.target.value) || 1)}
                             className="text-center"
@@ -244,15 +244,21 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
                             type="button"
                             variant="outline"
                             size="icon"
-                            onClick={() => handleInputChange('people', Math.min(experience.capacity, formData.people + 1))}
-                            disabled={formData.people >= experience.capacity}
+                            onClick={() => handleInputChange('people', experience.capacity ? Math.min(experience.capacity, formData.people + 1) : formData.people + 1)}
+                            disabled={experience.capacity && formData.people >= experience.capacity}
                           >
                             +
                           </Button>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Maximum {experience.capacity} people
-                        </p>
+                        {experience.capacity ? (
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Maximum {experience.capacity} people
+                          </p>
+                        ) : (
+                          <p className="text-xs text-muted-foreground mt-1">
+                            No group size limit - all welcome!
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

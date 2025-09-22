@@ -54,7 +54,7 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
 
   const updateAdults = (change: number) => {
     const minParticipants = experience.minCapacity || 1;
-    const maxParticipants = experience.capacity || 50;
+    const maxParticipants = experience.capacity; // Allow null (unlimited)
     const currentTotal = bookingData.adults + bookingData.children;
     
     setBookingData(prev => {
@@ -66,8 +66,8 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
         return prev; // Don't allow reducing below minimum
       }
       
-      // Don't exceed maximum capacity
-      if (newTotal > maxParticipants && change > 0) {
+      // Don't exceed maximum capacity (if capacity exists)
+      if (maxParticipants && newTotal > maxParticipants && change > 0) {
         return prev;
       }
       
@@ -80,7 +80,7 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
 
   const updateChildren = (change: number) => {
     const minParticipants = experience.minCapacity || 1;
-    const maxParticipants = experience.capacity || 50;
+    const maxParticipants = experience.capacity; // Allow null (unlimited)
     
     setBookingData(prev => {
       const newChildren = Math.max(0, prev.children + change);
@@ -91,8 +91,8 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
         return prev; // Don't allow reducing below minimum
       }
       
-      // Don't exceed maximum capacity
-      if (newTotal > maxParticipants && change > 0) {
+      // Don't exceed maximum capacity (if capacity exists)
+      if (maxParticipants && newTotal > maxParticipants && change > 0) {
         return prev;
       }
       
@@ -142,7 +142,10 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
         </div>
         {isGroupPricing && (
           <div className="text-sm text-muted-foreground">
-            Group experience (min {experience.minCapacity || 2}, max {experience.capacity || 8} participants)
+            {experience.capacity 
+              ? `Group experience (min ${experience.minCapacity || 2}, max ${experience.capacity} participants)`
+              : `Group experience (min ${experience.minCapacity || 2} participants, no maximum)`
+            }
           </div>
         )}
         {!isGroupPricing && experience.childHalfPriceRule && (
