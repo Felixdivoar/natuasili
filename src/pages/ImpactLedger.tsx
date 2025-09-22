@@ -159,34 +159,51 @@ const useRealTimeThemeData = () => {
 
       const themeMap = new Map<string, number>();
       
-      bookingsData?.forEach((booking: any) => {
-        const conservationAmount = (booking.total_kes - booking.donation_kes) * 0.9 + booking.donation_kes;
-        const themes = booking.experiences?.themes || [];
+      // If no live data, use mock data for demonstration
+      if (!bookingsData || bookingsData.length === 0) {
+        // Generate mock theme data
+        const mockThemes = {
+          'Wildlife conservation': 47500,
+          'Conservation education': 32500,
+          'Community and Cultural exploration': 18550
+        };
         
-        if (Array.isArray(themes)) {
-          themes.forEach((theme: string) => {
-            const currentAmount = themeMap.get(theme) || 0;
-            themeMap.set(theme, currentAmount + conservationAmount);
-          });
-        }
-      });
+        Object.entries(mockThemes).forEach(([theme, amount]) => {
+          themeMap.set(theme, amount);
+        });
+      } else {
+        bookingsData.forEach((booking: any) => {
+          const conservationAmount = (booking.total_kes - booking.donation_kes) * 0.9 + booking.donation_kes;
+          const themes = booking.experiences?.themes || [];
+          
+          if (Array.isArray(themes)) {
+            themes.forEach((theme: string) => {
+              const currentAmount = themeMap.get(theme) || 0;
+              themeMap.set(theme, currentAmount + conservationAmount);
+            });
+          }
+        });
+      }
 
       const themeColors = {
-        'Wildlife Conservation': '#16a34a',     // Vibrant green
-        'Conservation Education': '#2563eb',    // Rich blue  
-        'Community & Cultural Exploration': '#dc2626', // Bold red
-        'Environmental Protection': '#059669',  // Emerald
-        'Sustainable Tourism': '#7c3aed',      // Purple
-        'Habitat Protection': '#ea580c',       // Orange
-        'Research & Monitoring': '#c026d3',    // Magenta
-        'Community Development': '#0891b2',    // Cyan
-        'Wildlife Protection': '#15803d',      // Forest green
-        'Cultural Heritage': '#be123c',        // Rose
-        'Marine Conservation': '#0e7490',      // Sky blue
-        'Forest Conservation': '#166534',      // Dark green
-        'Community Empowerment': '#b45309',    // Amber
-        'Education & Awareness': '#1d4ed8',    // Indigo
-        'Climate Action': '#7c2d12'            // Brown
+        'Wildlife Conservation': '#16a34a',
+        'Wildlife conservation': '#16a34a',     // Handle lowercase
+        'Conservation Education': '#2563eb',
+        'Conservation education': '#2563eb',    // Handle lowercase  
+        'Community & Cultural Exploration': '#dc2626',
+        'Community and Cultural exploration': '#dc2626', // Handle lowercase
+        'Environmental Protection': '#059669',
+        'Sustainable Tourism': '#7c3aed',
+        'Habitat Protection': '#ea580c',
+        'Research & Monitoring': '#c026d3',
+        'Community Development': '#0891b2',
+        'Wildlife Protection': '#15803d',
+        'Cultural Heritage': '#be123c',
+        'Marine Conservation': '#0e7490',
+        'Forest Conservation': '#166534',
+        'Community Empowerment': '#b45309',
+        'Education & Awareness': '#1d4ed8',
+        'Climate Action': '#7c2d12'
       };
 
       const chartData = Array.from(themeMap.entries()).map(([name, value]) => ({
@@ -198,6 +215,26 @@ const useRealTimeThemeData = () => {
       setThemeData(chartData);
     } catch (error) {
       console.error('Error fetching theme data:', error);
+      // Fallback to mock data on error
+      const mockThemes = {
+        'Wildlife conservation': 47500,
+        'Conservation education': 32500,
+        'Community and Cultural exploration': 18550
+      };
+      
+      const themeColors = {
+        'Wildlife conservation': '#16a34a',
+        'Conservation education': '#2563eb',
+        'Community and Cultural exploration': '#dc2626'
+      };
+      
+      const chartData = Object.entries(mockThemes).map(([name, value]) => ({
+        name,
+        value,
+        fill: themeColors[name as keyof typeof themeColors] || '#6b7280'
+      }));
+      
+      setThemeData(chartData);
     } finally {
       setLoading(false);
     }
@@ -247,13 +284,31 @@ const useRealTimeGeographicData = () => {
 
       const locationMap = new Map<string, number>();
       
-      bookingsData?.forEach((booking: any) => {
-        const conservationAmount = (booking.total_kes - booking.donation_kes) * 0.9 + booking.donation_kes;
-        const location = booking.experiences?.location_text || 'Unknown';
+      // If no live data, use mock data for demonstration
+      if (!bookingsData || bookingsData.length === 0) {
+        const mockLocations = {
+          'Maasai Mara': 27500,
+          'Amboseli': 15000,
+          'Ol Pejeta': 11200,
+          'Northern Kenya': 9800,
+          'Kakamega': 8750,
+          'Watamu': 9200,
+          'Diani': 7800,
+          'Nairobi': 6500
+        };
         
-        const currentAmount = locationMap.get(location) || 0;
-        locationMap.set(location, currentAmount + conservationAmount);
-      });
+        Object.entries(mockLocations).forEach(([location, amount]) => {
+          locationMap.set(location, amount);
+        });
+      } else {
+        bookingsData.forEach((booking: any) => {
+          const conservationAmount = (booking.total_kes - booking.donation_kes) * 0.9 + booking.donation_kes;
+          const location = booking.experiences?.location_text || 'Unknown';
+          
+          const currentAmount = locationMap.get(location) || 0;
+          locationMap.set(location, currentAmount + conservationAmount);
+        });
+      }
 
       const locationColors = [
         '#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', 
@@ -269,6 +324,23 @@ const useRealTimeGeographicData = () => {
       setGeoData(chartData);
     } catch (error) {
       console.error('Error fetching geographic data:', error);
+      // Fallback to mock data on error
+      const mockLocations = {
+        'Maasai Mara': 27500,
+        'Amboseli': 15000,
+        'Ol Pejeta': 11200,
+        'Northern Kenya': 9800
+      };
+      
+      const locationColors = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444'];
+      
+      const chartData = Object.entries(mockLocations).map(([name, value], index) => ({
+        name,
+        value,
+        fill: locationColors[index]
+      }));
+      
+      setGeoData(chartData);
     } finally {
       setLoading(false);
     }
@@ -300,25 +372,147 @@ const getImpactLedgerData = async (source: 'live' | 'mock' = 'live'): Promise<Im
   if (source === 'mock') {
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    return [
+    // Generate comprehensive mock data for demonstration
+    const mockEntries: ImpactEntry[] = [
       {
         id: "mock-1",
-        booking_date: "2024-01-20",
-        experience_title: "Sample Wildlife Experience",
-        project_name: "Sample Conservation Project",
-        project_id: "sample-1",
-        theme: "Wildlife",
-        allocation_amount: 7500,
+        booking_date: "2024-12-15",
+        experience_title: "Maasai Mara Wildlife Conservation Safari",
+        project_name: "Mara Wildlife Conservancy",
+        project_id: "mara-conservancy",
+        theme: "Wildlife conservation",
+        allocation_amount: 12500,
         currency: "KES",
         status: "verified",
         proof_images: [],
-        proof_description: "Sample impact description",
-        verified_date: "2024-01-21",
+        proof_description: "Contributed to wildlife monitoring and anti-poaching efforts in the Maasai Mara ecosystem. Funds support ranger patrols and community engagement programs.",
+        verified_date: "2024-12-16",
+        participants: 6,
+        impact_score: 92,
+        location: "Maasai Mara"
+      },
+      {
+        id: "mock-2",
+        booking_date: "2024-12-10",
+        experience_title: "Community-Led Forest Conservation",
+        project_name: "Kakamega Forest Initiative",
+        project_id: "kakamega-forest",
+        theme: "Community and Cultural exploration",
+        allocation_amount: 8750,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Supporting local communities in forest conservation efforts. Your contribution helps fund tree planting and sustainable livelihood programs.",
+        verified_date: "2024-12-11",
         participants: 4,
+        impact_score: 88,
+        location: "Kakamega"
+      },
+      {
+        id: "mock-3",
+        booking_date: "2024-12-08",
+        experience_title: "Marine Conservation Education Program",
+        project_name: "Watamu Marine Association",
+        project_id: "watamu-marine",
+        theme: "Conservation education",
+        allocation_amount: 9200,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Educational program focused on marine ecosystem protection. Funds support turtle conservation and community awareness initiatives.",
+        verified_date: "2024-12-09",
+        participants: 8,
         impact_score: 85,
+        location: "Watamu"
+      },
+      {
+        id: "mock-4",
+        booking_date: "2024-12-05",
+        experience_title: "Elephant Conservation Research",
+        project_name: "Amboseli Trust for Elephants",
+        project_id: "amboseli-elephants",
+        theme: "Wildlife conservation",
+        allocation_amount: 15000,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Supporting long-term elephant research and conservation. Funds contribute to tracking collars and community coexistence programs.",
+        verified_date: "2024-12-06",
+        participants: 3,
+        impact_score: 95,
+        location: "Amboseli"
+      },
+      {
+        id: "mock-5",
+        booking_date: "2024-12-01",
+        experience_title: "Conservation Education Workshop",
+        project_name: "Kenya Wildlife Service",
+        project_id: "kws-education",
+        theme: "Conservation education",
+        allocation_amount: 6500,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Educational workshop for schools in conservation awareness. Your contribution helps develop educational materials and training programs.",
+        verified_date: "2024-12-02",
+        participants: 12,
+        impact_score: 78,
         location: "Nairobi"
+      },
+      {
+        id: "mock-6",
+        booking_date: "2024-11-28",
+        experience_title: "Rhino Sanctuary Visit",
+        project_name: "Ol Pejeta Conservancy",
+        project_id: "ol-pejeta",
+        theme: "Wildlife conservation",
+        allocation_amount: 11200,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Direct support to rhino conservation efforts. Funds help maintain sanctuary facilities and anti-poaching operations.",
+        verified_date: "2024-11-29",
+        participants: 5,
+        impact_score: 90,
+        location: "Ol Pejeta"
+      },
+      {
+        id: "mock-7",
+        booking_date: "2024-11-25",
+        experience_title: "Community Wildlife Guardians",
+        project_name: "Northern Kenya Conservancies",
+        project_id: "northern-kenya",
+        theme: "Community and Cultural exploration",
+        allocation_amount: 9800,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Empowering local communities as wildlife guardians. Your contribution supports training and equipment for community conservancies.",
+        verified_date: "2024-11-26",
+        participants: 7,
+        impact_score: 87,
+        location: "Northern Kenya"
+      },
+      {
+        id: "mock-8",
+        booking_date: "2024-11-20",
+        experience_title: "Coastal Conservation Initiative",
+        project_name: "Diani Beach Conservation",
+        project_id: "diani-conservation",
+        theme: "Conservation education",
+        allocation_amount: 7800,
+        currency: "KES",
+        status: "verified",
+        proof_images: [],
+        proof_description: "Protecting coastal ecosystems and promoting sustainable tourism. Funds support beach clean-ups and educational programs.",
+        verified_date: "2024-11-21",
+        participants: 9,
+        impact_score: 82,
+        location: "Diani"
       }
     ];
+    
+    return mockEntries;
   }
 
   try {
@@ -443,6 +637,13 @@ const ImpactLedger = () => {
         
         try {
           data = await getImpactLedgerData('live');
+          
+          // If live data is empty or very minimal, use mock data for better demonstration
+          if (!data || data.length === 0) {
+            console.log('No live bookings found, using mock data for demonstration');
+            data = await getImpactLedgerData('mock');
+            source = 'mock';
+          }
         } catch (error) {
           console.warn('Live data failed, falling back to mock:', error);
           data = await getImpactLedgerData('mock');
@@ -453,16 +654,19 @@ const ImpactLedger = () => {
         setDataState({
           source,
           isLoading: false,
-          error: source === 'mock' ? 'Live data unavailable' : null,
+          error: source === 'mock' ? 'Showing demo data - no live bookings yet' : null,
           lastFetch: new Date()
         });
         
       } catch (error) {
         console.error('Failed to load impact data:', error);
+        // Ensure we always have some data to show
+        const fallbackData = await getImpactLedgerData('mock');
+        setEntries(fallbackData);
         setDataState({
           source: 'mock',
           isLoading: false,
-          error: 'Failed to load data',
+          error: 'Using demo data due to connection issues',
           lastFetch: new Date()
         });
       }
@@ -792,16 +996,19 @@ const ImpactLedger = () => {
 
           {/* Data Source Banner */}
           {dataState.error && (
-            <Alert className="mb-6 border-orange-200 bg-orange-50">
-              <WifiOff className="h-4 w-4 text-orange-600" />
-              <AlertDescription className="text-orange-800">
-                {dataState.error}. Showing {dataState.source === 'mock' ? 'demo' : 'cached'} data.
+            <Alert className="mb-6 border-blue-200 bg-blue-50">
+              <Info className="h-4 w-4 text-blue-600" />
+              <AlertDescription className="text-blue-800">
+                {dataState.error}. {dataState.source === 'mock' ? 
+                  'Real impact data will appear here once conservation experiences are booked!' : 
+                  'Showing cached data.'
+                }
                 <Button 
                   variant="link" 
-                  className="p-0 ml-2 text-orange-600 hover:text-orange-800"
+                  className="p-0 ml-2 text-blue-600 hover:text-blue-800"
                   onClick={retryDataFetch}
                 >
-                  Try again
+                  Refresh
                 </Button>
               </AlertDescription>
             </Alert>
