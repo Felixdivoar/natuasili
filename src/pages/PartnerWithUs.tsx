@@ -231,43 +231,70 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Value Props */}
-      <section className="hero-padding px-4">
-        <div className="max-w-[1300px] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Partner With Natuasili?</h2>
-            <p className="text-xl text-muted-foreground">
-              Everything you need to grow your conservation tourism business
+      <section className="section-padding-lg">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="text-center mb-20">
+            <div className="mb-4">
+              <p className="text-sm font-semibold text-muted-foreground tracking-widest uppercase">
+                WHY PARTNER WITH US
+              </p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Everything you need to grow
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Join Kenya's leading conservation tourism platform and unlock powerful tools to expand your reach and impact
             </p>
           </div>
           
           {/* Desktop Grid */}
-          <div className="hidden lg:grid grid-cols-4 gap-8">
-            {valueProps.map((prop, index) => <Card key={index} className="text-center">
-                <CardHeader>
-                  <div className="mx-auto mb-4">{prop.icon}</div>
-                  <CardTitle className="text-xl">{prop.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>{prop.description}</CardDescription>
-                </CardContent>
-              </Card>)}
+          <div className="hidden lg:grid grid-cols-4 gap-6">
+            {valueProps.map((prop, index) => (
+              <div 
+                key={index} 
+                className="group relative p-8 rounded-2xl border border-border/50 bg-background/50 backdrop-blur-sm hover:bg-background hover:border-border hover:shadow-xl transition-all duration-300 animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="flex flex-col items-center text-center space-y-6">
+                  <div className="p-4 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 transition-all duration-300">
+                    {prop.icon}
+                  </div>
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                      {prop.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {prop.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Mobile/Tablet Carousel */}
           <div className="lg:hidden">
             <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
-                {valueProps.map((prop, index) => <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
-                    <Card className="text-center h-full">
-                      <CardHeader>
-                        <div className="mx-auto mb-4">{prop.icon}</div>
-                        <CardTitle className="text-xl">{prop.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription>{prop.description}</CardDescription>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>)}
+                {valueProps.map((prop, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
+                    <div className="group relative p-8 rounded-2xl border border-border/50 bg-background/50 backdrop-blur-sm hover:bg-background hover:border-border hover:shadow-xl transition-all duration-300 h-full">
+                      <div className="flex flex-col items-center text-center space-y-6">
+                        <div className="p-4 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 transition-all duration-300">
+                          {prop.icon}
+                        </div>
+                        <div className="space-y-3">
+                          <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                            {prop.title}
+                          </h3>
+                          <p className="text-muted-foreground leading-relaxed">
+                            {prop.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
               </CarouselContent>
               <CarouselPrevious className="-left-4" />
               <CarouselNext className="-right-4" />
