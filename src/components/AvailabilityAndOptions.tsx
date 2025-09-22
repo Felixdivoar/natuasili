@@ -180,9 +180,16 @@ const AvailabilityAndOptions = ({
     const standardAdultPrice = experienceBasePrice;
     const standardChildPrice = isGroupPricing ? 0 : experience.childHalfPriceRule ? Math.round(experienceBasePrice * 0.5) : experienceBasePrice;
     
-    // Check if this is the northern white rhinos experience
+    // Check experience type for specific timings
     const isRhinoExperience = experience.title?.toLowerCase().includes('northern white rhinos');
-    const experienceStartTimes = isRhinoExperience ? ["8:30 AM", "3:00 PM"] : ["9:00 AM", "2:00 PM"];
+    const isNightDriveExperience = experience.title?.toLowerCase().includes('night game drive');
+    
+    let experienceStartTimes = ["9:00 AM", "2:00 PM"]; // default
+    if (isRhinoExperience) {
+      experienceStartTimes = ["8:30 AM", "3:00 PM"];
+    } else if (isNightDriveExperience) {
+      experienceStartTimes = ["7:00 PM"];
+    }
     
     return [{
       id: "standard",

@@ -1005,6 +1005,7 @@ Highlights
 • Observe the unique behaviors of animals active after dark
 • Experience the sounds and atmosphere of the African night
 • Learn about nocturnal ecosystem dynamics from expert guides
+• Depart at 7:00 PM for optimal wildlife viewing
 
 Included/Excluded
 • Professional night guide with spotlight equipment
@@ -1016,10 +1017,11 @@ Included/Excluded
 
 What to Expect
 Itinerary
-• Arrive at Ol Pejeta Conservancy in the late afternoon (depending on your chosen departure time).
-• Dress warmly in neutral-colored clothing.
-• Meet your expert guide and embark on a night game drive through the conservancy.
-• While sightings are not guaranteed, enjoy the thrill of exploring the African wilderness at night.
+• Meet at Ol Pejeta Conservancy at 7:00 PM
+• Dress warmly in neutral-colored clothing
+• Meet your expert guide and embark on a night game drive through the conservancy
+• While sightings are not guaranteed, enjoy the thrill of exploring the African wilderness at night
+• Return by 9:00 PM after an exciting nocturnal adventure
 
 Cancellation policy
 • You can cancel up to 48 hours before the experience starts for a refund.
@@ -1035,13 +1037,17 @@ What animals can I expect to see?
 You might encounter aardvark, zorillas, bat-eared foxes, leopards, or even lions hunting.
 
 How many people can participate?
-The minimum is two people, and the vehicle can seat up to 6 people (not exclusive use).
+The minimum is 2 people, and maximum is 7 people per vehicle for an intimate experience.
 
 When are the night game drives offered?
-Daily between 7:00 PM - 9:00 PM EAT or 9:00 PM - 11:00 PM EAT.
+Daily departing at 7:00 PM sharp. Please arrive 15 minutes early.
+
+What is the group size?
+Small groups only - minimum 2 people, maximum 7 people for the best experience.
 
 Important Information
-• A minimum of 2 people is required. Single travelers will be charged the price for 2 people.
+• Minimum 2 people required, maximum 7 people for intimate wildlife viewing
+• Departure time: 7:00 PM daily - please arrive 15 minutes early
 • If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
 
 Where you'll be
