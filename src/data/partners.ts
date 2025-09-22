@@ -42,6 +42,7 @@ import nightGameDrive from "@/assets/night-game-drive.jpg";
 import beadworkWorkshop from "@/assets/beadwork-workshop.jpg";
 
 // Adventure Farm Karen images
+import adventureFarmKarenHero from "@/assets/adventure-farm-karen-hero.jpg";
 import adventureFarmKaren1 from "@/assets/adventure-farm-karen-1.jpg";
 import adventureFarmKaren2 from "@/assets/adventure-farm-karen-2.jpg";
 import adventureFarmKaren3 from "@/assets/adventure-farm-karen-3.jpg";
@@ -1559,9 +1560,9 @@ Where you'll be
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["farm", "sustainability", "food"],
-    images: [adventureFarmKaren1, adventureFarmKaren2, adventureFarmKaren3, adventureFarmKaren4, adventureFarmKaren5, adventureFarmKaren6, adventureFarmKaren7],
-    heroImage: adventureFarmKaren1,
-    gallery: [adventureFarmKaren1, adventureFarmKaren2, adventureFarmKaren3, adventureFarmKaren4, adventureFarmKaren5, adventureFarmKaren6, adventureFarmKaren7],
+    images: [adventureFarmKarenHero, adventureFarmKaren1, adventureFarmKaren2, adventureFarmKaren3, adventureFarmKaren4, adventureFarmKaren5, adventureFarmKaren6, adventureFarmKaren7],
+    heroImage: adventureFarmKarenHero,
+    gallery: [adventureFarmKarenHero, adventureFarmKaren1, adventureFarmKaren2, adventureFarmKaren3, adventureFarmKaren4, adventureFarmKaren5, adventureFarmKaren6, adventureFarmKaren7],
     description: `Overview
 Adventure Farm Karen offers a unique opportunity to connect with nature, learn about sustainable practices, and create lasting memories!
 A day at Adventure Farm Karen starts with a tour of their sustainable practices and interacting with farm animals. This is followed by a delicious farm-to-fork meal and homemade gelato. You can then get hands-on with activities like pizza making, cheese making, cow milking, and salad making using the farm's fresh produce. The day concludes with a chance to plant a tree and contribute to a greener future.
