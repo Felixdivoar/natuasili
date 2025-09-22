@@ -57,6 +57,14 @@ import natureKenyaNew3 from "@/assets/nature-kenya-3.jpg";
 import natureKenyaNew4 from "@/assets/nature-kenya-4.jpg";
 import natureKenyaNew5 from "@/assets/nature-kenya-5.jpg";
 
+// FoNNaP citizen scientist images
+import fonnap1 from "@/assets/fonnap-1.jpg";
+import fonnap2 from "@/assets/fonnap-2.jpg";
+import fonnap3 from "@/assets/fonnap-3.jpg";
+import fonnap4 from "@/assets/fonnap-4.jpg";
+import fonnap5 from "@/assets/fonnap-5.jpg";
+import fonnap6 from "@/assets/fonnap-6.jpg";
+
 // New night game drive images
 import nightGameDriveHero from "@/assets/night-game-drive-hero.jpg";
 import nightGameDrive2 from "@/assets/night-game-drive-2.jpg";
@@ -1692,9 +1700,9 @@ PRG7+CQ Nairobi`,
     destination: "nairobi",
     themes: ["Wildlife conservation"],
     activities: ["citizen science", "wildlife", "data"],
-    images: ["/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
-    heroImage: "/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png",
-    gallery: ["/lovable-uploads/ba1c2e8e-98b4-4179-b5ef-87c52a8e2a4b.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    images: [fonnap1, fonnap2, fonnap3, fonnap4, fonnap5, fonnap6],
+    heroImage: fonnap1,
+    gallery: [fonnap1, fonnap2, fonnap3, fonnap4, fonnap5, fonnap6],
     description: `Overview
 Established in 1995, Friends of Nairobi National Park (FoNNaP) has been committed to assisting Kenya Wildlife Service (KWS) in conserving and improving the biodiversity inside Nairobi National Park and its larger surroundings.
 All nature lovers and supporters of conservation should join FoNNaP's special citizen science program. This program allows participants to be citizen scientists and combines social activities with wildlife preservation, so providing unique insights. Through bi-monthly game counts, volunteers assist in tracking wildlife numbers and trend monitoring, so contributing important information for study and conservation.
