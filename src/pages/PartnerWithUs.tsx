@@ -141,37 +141,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* What We Do Best Section */}
-      <section className="section-padding-lg bg-background">
-        <div className="max-w-[1300px] mx-auto px-6 text-center">
-          <div className="mb-4">
-            <p className="text-sm font-semibold text-muted-foreground tracking-widest uppercase">
-              WHAT WE DO BEST
-            </p>
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 max-w-4xl mx-auto leading-tight">
-            The one-stop platform for conservation tourism in Kenya
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed">
-            Natuasili is the ultimate destination for conservation organizations to connect with impact-driven travelers, showcasing authentic experiences that create lasting change for wildlife, communities, and habitats across Kenya.
-          </p>
-          
-          {/* Partner Categories */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Conservancies</h3>
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Community Groups</h3>
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Conservation NGOs</h3>
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Tour Operators</h3>
-            </div>
-          </div>
-        </div>
-      </section>
+      
 
       {/* Partner Onboarding Demo - Hidden, use PartnerApplication instead */}
       {/* <PartnerOnboardingDemo /> */}
@@ -316,15 +286,13 @@ const PartnerWithUs: React.FC = () => {
 
           {/* Mobile/Tablet Grid */}
           <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-8">
-            {howItWorksSteps.map((step, index) => (
-              <div key={index} className="text-center">
+            {howItWorksSteps.map((step, index) => <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                   {step.step}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
                 <p className="text-muted-foreground">{step.description}</p>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -380,59 +348,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Pricing */}
-      <section className="hero-padding px-4 bg-muted/30">
-        <div className="max-w-[1300px] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-            <p className="text-xl text-muted-foreground">
-              Only pay when you earn. No setup fees or monthly charges.
-            </p>
-          </div>
-          
-          {/* Desktop Grid */}
-          <div className="hidden lg:grid grid-cols-3 gap-8">
-            {pricingPlans.map((plan, index) => <Card key={index} className={plan.highlight ? 'border-primary shadow-lg' : ''}>
-                <CardHeader>
-                  {plan.highlight && <Badge className="w-fit mb-2">Most Popular</Badge>}
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <div className="text-3xl font-bold text-primary">{plan.fee}</div>
-                  <CardDescription>{plan.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {plan.features.map((feature, featureIndex) => <li key={featureIndex} className="flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>)}
-                  </ul>
-                </CardContent>
-              </Card>)}
-          </div>
-
-          {/* Mobile/Tablet Carousel */}
-          <div className="lg:hidden">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {pricingPlans.map((plan, index) => <CarouselItem key={index} className="pl-2 md:pl-4 basis-full">
-                    <Card className={`h-full ${plan.highlight ? 'border-primary shadow-lg' : ''}`}>
-                      
-                      <CardContent>
-                        <ul className="space-y-2">
-                          {plan.features.map((feature, featureIndex) => <li key={featureIndex} className="flex items-center gap-2">
-                              <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
-                              <span>{feature}</span>
-                            </li>)}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>)}
-              </CarouselContent>
-              <CarouselPrevious className="-left-4" />
-              <CarouselNext className="-right-4" />
-            </Carousel>
-          </div>
-        </div>
-      </section>
+      
 
       {/* FAQ */}
       <section className="hero-padding px-4">
@@ -465,10 +381,7 @@ const PartnerWithUs: React.FC = () => {
       </section>
       
       {/* Partner Application Modal */}
-      <PartnerApplication 
-        open={showPartnerModal} 
-        onOpenChange={setShowPartnerModal} 
-      />
+      <PartnerApplication open={showPartnerModal} onOpenChange={setShowPartnerModal} />
     </div>;
 };
 export default PartnerWithUs;
