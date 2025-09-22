@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/hooks/useCart";
 import { useCartActivity } from "@/hooks/useCartActivity";
 import { usePayment } from "@/hooks/usePayment";
-import { Leaf, Clock, Trash2, CreditCard } from "lucide-react";
+import { Turtle, Clock, Trash2, CreditCard } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -88,7 +88,7 @@ export function CartDemo() {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Leaf className="h-5 w-5" />
+            <Turtle className="h-5 w-5" />
             Conservation Cart
           </div>
           {itemCount > 0 && (
@@ -107,7 +107,7 @@ export function CartDemo() {
       <CardContent className="space-y-4">
         {!cart || itemCount === 0 ? (
           <div className="text-center py-6">
-            <Leaf className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+            <Turtle className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
             <p className="text-muted-foreground mb-4">Your cart is empty</p>
             <Button onClick={handleAddSampleItem} variant="outline">
               Add Sample Item
