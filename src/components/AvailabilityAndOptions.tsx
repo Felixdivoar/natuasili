@@ -321,7 +321,8 @@ const AvailabilityAndOptions = ({
                   </div>
 
                   <div className="text-sm text-muted-foreground">
-                    Total: {totalParticipants} participant{totalParticipants !== 1 ? 's' : ''} (max {experience.capacity})
+                    Total: {totalParticipants} participant{totalParticipants !== 1 ? 's' : ''}
+                    {experience.capacity && ` (max ${experience.capacity})`}
                   </div>
                   
                   {participantsError && <div id="participants-error" role="alert" aria-live="assertive" className="text-destructive text-sm">
