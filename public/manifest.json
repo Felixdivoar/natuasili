@@ -1,0 +1,55 @@
+{
+  "name": "NatuAsili - Conservation Tourism Platform",
+  "short_name": "NatuAsili",
+  "description": "Discover authentic conservation experiences in Kenya. Book wildlife sanctuaries, community conservancies, and sustainable tourism adventures.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#16a34a",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle", "business"],
+  "shortcuts": [
+    {
+      "name": "Browse Experiences",
+      "short_name": "Experiences",
+      "description": "Browse conservation experiences",
+      "url": "/experiences",
+      "icons": [{ "src": "/favicon.ico", "sizes": "192x192" }]
+    },
+    {
+      "name": "Partner With Us",
+      "short_name": "Partner",
+      "description": "Become a conservation partner",
+      "url": "/partner-with-us",
+      "icons": [{ "src": "/favicon.ico", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "features": [
+    "offline-support",
+    "push-notifications",
+    "location-services"
+  ]
+}

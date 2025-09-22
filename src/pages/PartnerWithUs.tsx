@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { useNavigate } from 'react-router-dom';
 import { Users, DollarSign, Search, BarChart3, CheckCircle, Upload, MessageCircle, Star, CreditCard, FileText, Globe, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import EnhancedCarousel, { EnhancedCarouselItem } from '@/components/EnhancedCarousel';
 import PartnerOnboardingDemo from '@/components/PartnerOnboardingDemo';
 import PartnerApplication from '@/components/PartnerApplication';
 const PartnerWithUs: React.FC = () => {
@@ -240,25 +241,29 @@ const PartnerWithUs: React.FC = () => {
               </Card>)}
           </div>
 
-          {/* Mobile/Tablet Carousel */}
+          {/* Mobile/Tablet Enhanced Carousel with Autoplay */}
           <div className="lg:hidden">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {valueProps.map((prop, index) => <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
-                    <Card className="text-center h-full">
-                      <CardHeader>
-                        <div className="mx-auto mb-4">{prop.icon}</div>
-                        <CardTitle className="text-xl">{prop.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription>{prop.description}</CardDescription>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>)}
-              </CarouselContent>
-              <CarouselPrevious className="-left-4" />
-              <CarouselNext className="-right-4" />
-            </Carousel>
+            <EnhancedCarousel 
+              className="w-full"
+              autoplay={true}
+              autoplayDelay={4500}
+              showControls={true}
+              showDots={true}
+            >
+              {valueProps.map((prop, index) => (
+                <EnhancedCarouselItem key={index} basis="basis-full md:basis-1/2">
+                  <Card className="text-center h-full mr-4">
+                    <CardHeader>
+                      <div className="mx-auto mb-4">{prop.icon}</div>
+                      <CardTitle className="text-xl">{prop.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription>{prop.description}</CardDescription>
+                    </CardContent>
+                  </Card>
+                </EnhancedCarouselItem>
+              ))}
+            </EnhancedCarousel>
           </div>
         </div>
       </section>
