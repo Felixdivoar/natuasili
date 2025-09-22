@@ -248,7 +248,7 @@ const PartnerWithUs: React.FC = () => {
               autoplay={true}
               autoplayDelay={4500}
               showControls={true}
-              showDots={true}
+              showDots={false}
             >
               {valueProps.map((prop, index) => (
                 <EnhancedCarouselItem key={index} basis="basis-full md:basis-1/2">
