@@ -62,6 +62,7 @@ import Profile from "./pages/Profile";
 import CartCheckout from "./pages/CartCheckout";
 import ConservationChatbotPage from "./pages/ConservationChatbot";
 import ReferPartner from "./pages/ReferPartner";
+import PartnerApplicationPage from "./pages/PartnerApplicationPage";
 import AsiliChatWidget from "./components/AsiliChatWidget";
 import { Navigate } from "react-router-dom";
 
@@ -211,6 +212,7 @@ const App = () => (
                 <Route path="/search" element={<AppLayout><Search /></AppLayout>} />
                 <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
                 <Route path="/partner-entry" element={<AppLayout><PartnerEntry /></AppLayout>} />
+                <Route path="/partner-application" element={<AppLayout><PartnerApplicationPage /></AppLayout>} />
                 <Route path="/listings" element={<AppLayout><Listings /></AppLayout>} />
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />
                 <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />

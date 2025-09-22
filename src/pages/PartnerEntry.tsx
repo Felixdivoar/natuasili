@@ -110,9 +110,9 @@ const PartnerEntry = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/partner-dashboard">
+              <Link to="/partner-application">
                 <Button size="lg" className="bg-accent hover:bg-accent/90 text-foreground">
-                  {t("Create Partner Account", "Create Partner Account")}
+                  {t("Apply as Partner", "Apply as Partner")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>

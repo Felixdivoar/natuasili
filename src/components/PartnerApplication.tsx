@@ -52,8 +52,9 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 interface PartnerApplicationProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  asPage?: boolean; // New prop to render as standalone page
 }
 
 interface DocumentUpload {
@@ -65,7 +66,11 @@ interface DocumentUpload {
   description: string;
 }
 
-const PartnerApplication: React.FC<PartnerApplicationProps> = ({ open, onOpenChange }) => {
+const PartnerApplication: React.FC<PartnerApplicationProps> = ({ 
+  open = true, 
+  onOpenChange = () => {}, 
+  asPage = false 
+}) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [documents, setDocuments] = useState<DocumentUpload[]>([
@@ -649,6 +654,96 @@ const PartnerApplication: React.FC<PartnerApplicationProps> = ({ open, onOpenCha
     }
   };
 
+  const formContent = (
+    <div className="space-y-6">
+      {/* Progress Bar */}
+      <div className="space-y-2">
+        <div className="flex justify-between text-sm">
+          <span>Step {currentStep} of {totalSteps}</span>
+          <span>{Math.round(progress)}% Complete</span>
+        </div>
+        <Progress value={progress} className="w-full" />
+      </div>
+
+      {/* Step Indicator */}
+      <div className="flex justify-center">
+        <div className="flex space-x-2 text-sm">
+          {steps.map((step) => (
+            <div
+              key={step.number}
+              className={`px-3 py-1 rounded-full ${
+                step.number === currentStep
+                  ? 'bg-primary text-primary-foreground'
+                  : step.number < currentStep
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-muted text-muted-foreground'
+              }`}
+            >
+              {step.number}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Current Step Info */}
+      <div className="text-center">
+        <h3 className="text-lg font-semibold">{steps[currentStep - 1]?.title}</h3>
+        <p className="text-sm text-muted-foreground">{steps[currentStep - 1]?.description}</p>
+      </div>
+
+      {/* Form */}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {renderStepContent()}
+
+          {/* Navigation */}
+          <div className="flex justify-between pt-6 border-t">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={prevStep}
+              disabled={currentStep === 1}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Button>
+
+            {currentStep === totalSteps ? (
+              <Button type="submit" disabled={isSubmitting || !validateStep(currentStep)}>
+                {isSubmitting ? 'Submitting...' : 'Submit Application'}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={nextStep}
+                disabled={!validateStep(currentStep)}
+              >
+                Next
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            )}
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
+
+  if (asPage) {
+    return (
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Partner Application</CardTitle>
+          <CardDescription>
+            Complete your application to become a conservation partner with NatuAsili
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {formContent}
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -658,78 +753,7 @@ const PartnerApplication: React.FC<PartnerApplicationProps> = ({ open, onOpenCha
             Complete your application to become a conservation partner with NatuAsili
           </DialogDescription>
         </DialogHeader>
-
-        <div className="space-y-6">
-          {/* Progress Bar */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Step {currentStep} of {totalSteps}</span>
-              <span>{Math.round(progress)}% Complete</span>
-            </div>
-            <Progress value={progress} className="w-full" />
-          </div>
-
-          {/* Step Indicator */}
-          <div className="flex justify-center">
-            <div className="flex space-x-2 text-sm">
-              {steps.map((step) => (
-                <div
-                  key={step.number}
-                  className={`px-3 py-1 rounded-full ${
-                    step.number === currentStep
-                      ? 'bg-primary text-primary-foreground'
-                      : step.number < currentStep
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-muted text-muted-foreground'
-                  }`}
-                >
-                  {step.number}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Current Step Info */}
-          <div className="text-center">
-            <h3 className="text-lg font-semibold">{steps[currentStep - 1]?.title}</h3>
-            <p className="text-sm text-muted-foreground">{steps[currentStep - 1]?.description}</p>
-          </div>
-
-          {/* Form */}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {renderStepContent()}
-
-              {/* Navigation */}
-              <div className="flex justify-between pt-6 border-t">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={prevStep}
-                  disabled={currentStep === 1}
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Previous
-                </Button>
-
-                {currentStep === totalSteps ? (
-                  <Button type="submit" disabled={isSubmitting || !validateStep(currentStep)}>
-                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    onClick={nextStep}
-                    disabled={!validateStep(currentStep)}
-                  >
-                    Next
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
-              </div>
-            </form>
-          </Form>
-        </div>
+        {formContent}
       </DialogContent>
     </Dialog>
   );
