@@ -645,7 +645,7 @@ https://www.google.com/maps/search/?api=1&query=PRG7%2BCQ%2C%20Nairobi%2C%20Keny
     priceKESAdult: 500,
     childHalfPriceRule: false,
     durationHours: 2,
-    timings: ["8:00 AM"],
+    timings: ["8:30 AM", "3:00 PM"],
     visibleOnMarketplace: true,
     locationText: "Nairobi and surroundings",
     partnerSlug: "kenya-forest-heritage",
