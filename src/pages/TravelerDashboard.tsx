@@ -70,7 +70,7 @@ const TravelerDashboard = () => {
               <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
                 Your dashboard
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto animate-fade-in">
+              <p className="text-base font-light md:text-lg text-muted-foreground mb-8 max-w-3xl mx-auto animate-fade-in">
                 Track your bookings and see exactly how your travel dollars are creating real conservation impact across Kenya.
               </p>
             </div>

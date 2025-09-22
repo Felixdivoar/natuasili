@@ -76,7 +76,7 @@ const Destinations = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Conservation destinations</h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-base font-light text-muted-foreground mb-8">
               Explore Kenya's most important conservation areas where your travel makes a direct impact. 
               Each destination offers unique experiences while supporting vital conservation work.
             </p>

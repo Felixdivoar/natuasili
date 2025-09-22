@@ -146,7 +146,7 @@ const PartnerWithUs: React.FC = () => {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 max-w-4xl mx-auto leading-tight">
             The one-stop platform for conservation tourism in Kenya
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed">
+          <p className="text-base font-light md:text-lg text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed">
             Natuasili is the ultimate destination for conservation organizations to connect with impact-driven travelers, showcasing authentic experiences that create lasting change for wildlife, communities, and habitats across Kenya.
           </p>
           
@@ -176,7 +176,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Trusted by leading conservation organizations</h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-base font-light">
               We collaborate with established initiatives across Kenya to ensure bookings create measurable impact.
             </p>
           </div>
@@ -247,7 +247,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Partner With Natuasili?</h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base font-light text-muted-foreground">
               Everything you need to grow your conservation tourism business
             </p>
           </div>
@@ -293,7 +293,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base font-light text-muted-foreground">
               Get started in four simple steps
             </p>
           </div>
@@ -335,7 +335,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Platform Features</h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base font-light text-muted-foreground">
               Comprehensive tools for managing your conservation experiences
             </p>
           </div>
@@ -385,7 +385,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base font-light text-muted-foreground">
               Only pay when you earn. No setup fees or monthly charges.
             </p>
           </div>

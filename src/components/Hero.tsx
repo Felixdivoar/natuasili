@@ -100,7 +100,7 @@ const Hero: React.FC<HeroProps> = ({
               {heroTitle}
             </h1>
             
-            <p className="text-lg mb-8 text-muted-foreground leading-relaxed">
+            <p className="text-base font-light mb-8 text-muted-foreground leading-relaxed">
               {heroSubtitle}
             </p>
 
@@ -154,7 +154,7 @@ const Hero: React.FC<HeroProps> = ({
               {heroTitle}
             </h1>
             
-            <p className="text-lg xl:text-xl mb-8 lg:mb-12 text-muted-foreground leading-relaxed">
+            <p className="text-base font-light xl:text-lg mb-8 lg:mb-12 text-muted-foreground leading-relaxed">
               {heroSubtitle}
             </p>
 
