@@ -1,7 +1,7 @@
 import { Destination, Experience, Theme } from './partners';
 
 // Experience duration and capacity mapping for consistency across the site
-export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity?: number }> = {
+export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity?: number; minCapacity?: number }> = {
   // Nairobi experiences
   "morning-bird-walk-with-nature-kenya": { duration_hours: 3 },
   "tree-walk-kenya-forest-heritage": { duration_hours: 2 },
@@ -12,12 +12,12 @@ export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity
   "sustainable-farm-experience-at-adventure-farm-karen": { duration_hours: 6 },
 
   // Laikipia experiences  
-  "meet-the-last-northern-white-rhinos-at-ol-pejeta": { duration_hours: 3, capacity: 12 },
-  "night-game-drive-at-ol-pejeta-conservancy": { duration_hours: 4, capacity: 8 },
-  "become-a-k-9-handler-for-a-day-at-ol-pejeta": { duration_hours: 6, capacity: 6 },
-  "guided-bush-and-bird-walks-at-ol-pejeta": { duration_hours: 3, capacity: 10 },
-  "behind-the-scenes-ol-pejeta-chimpanzee-sanctuary": { duration_hours: 2, capacity: 15 },
-  "track-lions-and-aid-conservation-at-ol-pejeta": { duration_hours: 5, capacity: 8 },
+  "meet-northern-white-rhinos-ol-pejeta": { duration_hours: 1 },
+  "night-game-drive-ol-pejeta": { duration_hours: 2, minCapacity: 2, capacity: 7 },
+  "k9-handler-day-ol-pejeta": { duration_hours: 6, capacity: 6 },
+  "bush-bird-walks-ol-pejeta": { duration_hours: 2, capacity: 6 },
+  "chimpanzee-sanctuary-ol-pejeta": { duration_hours: 1, capacity: 8 },
+  "lion-tracking-conservation-ol-pejeta": { duration_hours: 2, capacity: 7 },
 
   // Samburu/Northern Kenya experiences
   "sera-on-foot-rhino-tracking": { duration_hours: 3 },

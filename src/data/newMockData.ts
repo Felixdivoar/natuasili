@@ -104,6 +104,7 @@ export const mockExperiences: Experience[] = EXPERIENCES.map((partnerExp, index)
     allocation_pct_project: 90,
     allocation_pct_platform: 10,
     capacity: specs.capacity,
+    minCapacity: (specs as any).minCapacity,
     visible_on_marketplace: partnerExp.visibleOnMarketplace,
     search_text: `${partnerExp.title.toLowerCase()} ${partnerExp.activities.join(' ')} ${partnerExp.destination} ${themes.join(' ')}`,
     created_at: '2023-04-01T10:00:00Z'

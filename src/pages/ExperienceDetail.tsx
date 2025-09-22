@@ -453,6 +453,7 @@ export default function ExperienceDetail() {
             ...experience,
             base_price: experience.priceKESAdult,
             capacity: EXPERIENCE_SPECS[(experience.slug as string)]?.capacity,
+            minCapacity: EXPERIENCE_SPECS[(experience.slug as string)]?.minCapacity,
             childHalfPriceRule: experience.childHalfPriceRule || false
           }} onBookingStart={() => {
             setBookingStarted(true);
