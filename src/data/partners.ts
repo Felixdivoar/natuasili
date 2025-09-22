@@ -41,6 +41,15 @@ import mangroveRestoration from "@/assets/mangrove-restoration.jpg";
 import nightGameDrive from "@/assets/night-game-drive.jpg";
 import beadworkWorkshop from "@/assets/beadwork-workshop.jpg";
 
+// Adventure Farm Karen images
+import adventureFarmKaren1 from "@/assets/adventure-farm-karen-1.jpg";
+import adventureFarmKaren2 from "@/assets/adventure-farm-karen-2.jpg";
+import adventureFarmKaren3 from "@/assets/adventure-farm-karen-3.jpg";
+import adventureFarmKaren4 from "@/assets/adventure-farm-karen-4.jpg";
+import adventureFarmKaren5 from "@/assets/adventure-farm-karen-5.jpg";
+import adventureFarmKaren6 from "@/assets/adventure-farm-karen-6.jpg";
+import adventureFarmKaren7 from "@/assets/adventure-farm-karen-7.jpg";
+
 // New night game drive images
 import nightGameDriveHero from "@/assets/night-game-drive-hero.jpg";
 import nightGameDrive2 from "@/assets/night-game-drive-2.jpg";
@@ -1527,9 +1536,9 @@ Where you'll be
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["farm", "sustainability", "food"],
-    images: ["/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
-    heroImage: "/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png",
-    gallery: ["/lovable-uploads/518cb7cf-9bba-4b26-bd79-971ce97b7291.png", "/images/placeholder-2.jpg", "/images/placeholder-3.jpg"],
+    images: [adventureFarmKaren1, adventureFarmKaren2, adventureFarmKaren3, adventureFarmKaren4, adventureFarmKaren5, adventureFarmKaren6, adventureFarmKaren7],
+    heroImage: adventureFarmKaren1,
+    gallery: [adventureFarmKaren1, adventureFarmKaren2, adventureFarmKaren3, adventureFarmKaren4, adventureFarmKaren5, adventureFarmKaren6, adventureFarmKaren7],
     description: `Overview
 Adventure Farm Karen offers a unique opportunity to connect with nature, learn about sustainable practices, and create lasting memories!
 A day at Adventure Farm Karen starts with a tour of their sustainable practices and interacting with farm animals. This is followed by a delicious farm-to-fork meal and homemade gelato. You can then get hands-on with activities like pizza making, cheese making, cow milking, and salad making using the farm's fresh produce. The day concludes with a chance to plant a tree and contribute to a greener future.
