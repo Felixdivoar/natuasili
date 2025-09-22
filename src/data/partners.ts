@@ -1093,7 +1093,7 @@ Included/Excluded
 
 What to Expect
 Itinerary
-• Arrive at Ol Pejeta Conservancy between 6:30 AM - 8:30 AM or 3:30 PM - 5:30 PM depending on your chosen time slot.
+• Arrive at Ol Pejeta Conservancy at 6:30 AM for the morning walk experience.
 • Meet your experienced ranger guide.
 • Embark on a guided walking tour through the African bush.
 • Immerse yourself in the sights, sounds, and smells of the African wilderness.
@@ -1118,7 +1118,9 @@ What should I wear?
 Comfortable clothing and shoes suitable for walking on uneven terrain are recommended. Carry sun cream and a hat.
 
 Important Information
+• Minimum 2 people, maximum 6 people for the best experience.
 • This activity is not suitable for children under the age of 12.
+• Departure time: 6:30 AM daily - please arrive 15 minutes early.
 • If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
 
 Where you'll be
@@ -1165,7 +1167,7 @@ Included/Excluded
 
 What to Expect
 Itinerary
-• Arrive at the Sweetwaters Chimpanzee Sanctuary (transportation not included).
+• Arrive at the Sweetwaters Chimpanzee Sanctuary at 11:45 AM (transportation not included).
 • Check-in and participate in a brief orientation with a sanctuary staff member. Learn about the sanctuary's mission, the chimpanzees' history, and important safety protocols. Pass through a footbath to disinfect your shoes as a biosecurity measure.
 • Enter the designated viewing area for a unique behind-the-scenes look at the chimpanzees in their enclosures. Observe their social interactions, playful behaviors, and feeding time (conducted by caregivers only).
 • Depart from the chimpanzee sanctuary with a newfound appreciation for these remarkable primates.
@@ -1243,7 +1245,7 @@ Included/Excluded
 
 What to Expect
 Itinerary
-• Arrive at Ol Pejeta Conservancy between 6:30 AM - 8:30 AM or 3:30 PM - 5:30 PM (tour times).
+• Arrive at Ol Pejeta Conservancy at 6:30 AM for the early morning tracking session.
 • Meet your experienced guide and receive a briefing on the activity.
 • Participate in lion tracking using radio collars to locate prides.
 • Learn about lion conservation efforts at Ol Pejeta Conservancy.
@@ -1276,7 +1278,9 @@ Can I get out of the vehicle?
 No, guests must remain in the vehicle for safety reasons.
 
 Important Information
-• A minimum of 2 people is required. Single travelers will be charged the price for 2 people.
+• Minimum 2 people, maximum 7 people for intimate wildlife tracking.
+• Departure time: 6:30 AM daily - please arrive 15 minutes early.
+• Single travelers will be charged the price for 2 people.
 • If you don't have transport to the starting point, we can pick you up within the conservancy for an extra fee.
 
 Where you'll be
@@ -1342,15 +1346,11 @@ Can I bring children?
 This activity is not recommended for children under 12 years old.
 
 Important Information
+• Maximum 6 people for the best experience with the K-9 unit.
 • Physical interaction with the dogs will be relatively restricted.
 • This activity is not suitable for children under the age of 12.
+• Departure time: 8:30 AM daily - please arrive 15 minutes early.
 • If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
-This activity is not recommended for children under 12 years old.
-
-Important information
-o Physical interaction with the dogs will be relatively restricted.
-o This activity is not suitable for children under the age of 12.
-o If you don't have transport to the starting point, the conservancy can arrange for you to be picked up (within the conservancy) for an extra fee.
 
 Where you'll be
 2VC5+X9 Nanyuki`,

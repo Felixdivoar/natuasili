@@ -183,12 +183,24 @@ const AvailabilityAndOptions = ({
     // Check experience type for specific timings
     const isRhinoExperience = experience.title?.toLowerCase().includes('northern white rhinos');
     const isNightDriveExperience = experience.title?.toLowerCase().includes('night game drive');
+    const isGuidedWalkExperience = experience.title?.toLowerCase().includes('guided bush and bird walks');
+    const isChimpanzeeExperience = experience.title?.toLowerCase().includes('chimpanzee sanctuary');
+    const isK9HandlerExperience = experience.title?.toLowerCase().includes('k-9 handler');
+    const isLionTrackingExperience = experience.title?.toLowerCase().includes('track lions');
     
     let experienceStartTimes = ["9:00 AM", "2:00 PM"]; // default
     if (isRhinoExperience) {
       experienceStartTimes = ["8:30 AM", "3:00 PM"];
     } else if (isNightDriveExperience) {
       experienceStartTimes = ["7:00 PM"];
+    } else if (isGuidedWalkExperience) {
+      experienceStartTimes = ["6:30 AM"];
+    } else if (isChimpanzeeExperience) {
+      experienceStartTimes = ["11:45 AM"];
+    } else if (isK9HandlerExperience) {
+      experienceStartTimes = ["8:30 AM"];
+    } else if (isLionTrackingExperience) {
+      experienceStartTimes = ["6:30 AM"];
     }
     
     return [{
