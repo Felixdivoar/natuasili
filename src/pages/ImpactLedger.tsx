@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   Search, 
   Filter, 
@@ -407,6 +408,9 @@ const ImpactLedger = () => {
   const { themeData, loading: themeLoading } = useRealTimeThemeData();
   const { geoData, loading: geoLoading } = useRealTimeGeographicData();
   
+  // Mobile detection
+  const isMobile = useIsMobile();
+  
   // State variables first
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPartner, setSelectedPartner] = useState("all");
@@ -804,15 +808,24 @@ const ImpactLedger = () => {
           )}
 
           {/* Main Content */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-              <TabsTrigger value="entries">Entries</TabsTrigger>
-              <TabsTrigger value="stories">Impact Stories</TabsTrigger>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6 sm:space-y-8">
+            <TabsList className={`grid w-full ${isMobile ? 'grid-cols-1 h-auto gap-1' : 'grid-cols-3'}`}>
+              <TabsTrigger value="dashboard" className={isMobile ? 'justify-start' : ''}>
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Dashboard
+              </TabsTrigger>
+              <TabsTrigger value="entries" className={isMobile ? 'justify-start' : ''}>
+                <Filter className="h-4 w-4 mr-2" />
+                Entries
+              </TabsTrigger>
+              <TabsTrigger value="stories" className={isMobile ? 'justify-start' : ''}>
+                <Heart className="h-4 w-4 mr-2" />
+                {isMobile ? 'Stories' : 'Impact Stories'}
+              </TabsTrigger>
             </TabsList>
 
             {/* Dashboard Tab */}
-            <TabsContent value="dashboard" className="space-y-8">
+            <TabsContent value="dashboard" className="space-y-6 sm:space-y-8">
               {/* KPI Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {kpis.map((kpi, index) => (
@@ -1218,13 +1231,13 @@ const ImpactLedger = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`}>
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Search</label>
                       <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                          placeholder="Search experiences, partners..."
+                          placeholder={isMobile ? "Search..." : "Search experiences, partners..."}
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
                           className="pl-10"
@@ -1295,153 +1308,287 @@ const ImpactLedger = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setSearchTerm("");
-                        setSelectedPartner("all");
-                        setSelectedTheme("all");
-                        setSelectedLocation("all");
-                        setDateRange("all");
-                      }}
-                    >
-                      Clear All Filters
-                    </Button>
-                    
-                    <div className="flex items-center gap-4">
-                      <Button
-                        variant="outline"
-                        onClick={exportToCSV}
-                        className="flex items-center gap-2"
-                      >
-                        <Download className="h-4 w-4" />
-                        Export CSV
-                      </Button>
-                      
-                      <div className="text-sm text-muted-foreground">
+                  {isMobile ? (
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setSearchTerm("");
+                            setSelectedPartner("all");
+                            setSelectedTheme("all");
+                            setSelectedLocation("all");
+                            setDateRange("all");
+                          }}
+                          size="sm"
+                        >
+                          Clear All
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={exportToCSV}
+                          className="flex items-center gap-2"
+                          size="sm"
+                        >
+                          <Download className="h-4 w-4" />
+                          Export
+                        </Button>
+                      </div>
+                      <div className="text-sm text-muted-foreground text-center">
                         Showing {filteredEntries.length} of {entries.length} entries
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setSearchTerm("");
+                          setSelectedPartner("all");
+                          setSelectedTheme("all");
+                          setSelectedLocation("all");
+                          setDateRange("all");
+                        }}
+                      >
+                        Clear All Filters
+                      </Button>
+                      
+                      <div className="flex items-center gap-4">
+                        <Button
+                          variant="outline"
+                          onClick={exportToCSV}
+                          className="flex items-center gap-2"
+                        >
+                          <Download className="h-4 w-4" />
+                          Export CSV
+                        </Button>
+                        
+                        <div className="text-sm text-muted-foreground">
+                          Showing {filteredEntries.length} of {entries.length} entries
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
               {/* Entries Table */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Impact Entries</CardTitle>
+                  <CardTitle className="flex items-center gap-2">
+                    <Filter className="h-5 w-5" />
+                    Impact Entries
+                  </CardTitle>
+                  {isMobile && (
+                    <p className="text-sm text-muted-foreground">
+                      Swipe horizontally to see all columns
+                    </p>
+                  )}
                 </CardHeader>
-                <CardContent>
-                  <div className="rounded-md border overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead 
-                            className="cursor-pointer hover:bg-muted/50"
-                            onClick={() => handleSort('booking_date')}
-                          >
-                            <div className="flex items-center gap-2">
-                              Date
-                              {sortField === 'booking_date' && (
-                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
-                              )}
+                <CardContent className={isMobile ? 'p-0' : ''}>
+                  {isMobile ? (
+                    // Mobile card layout
+                    <div className="space-y-4 p-4">
+                      {sortedEntries.map((entry) => (
+                        <Card key={entry.id} className="p-4 space-y-3">
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <h4 className="font-medium text-sm line-clamp-2">{entry.experience_title}</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {new Date(entry.booking_date).toLocaleDateString()}
+                              </p>
                             </div>
-                          </TableHead>
-                          <TableHead>Experience</TableHead>
-                          <TableHead>Partner</TableHead>
-                          <TableHead>Theme</TableHead>
-                          <TableHead>Location</TableHead>
-                          <TableHead 
-                            className="cursor-pointer hover:bg-muted/50"
-                            onClick={() => handleSort('allocation_amount')}
-                          >
-                            <div className="flex items-center gap-2">
-                              Allocation
-                              {sortField === 'allocation_amount' && (
-                                sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
-                              )}
-                            </div>
-                          </TableHead>
-                          <TableHead>Participants</TableHead>
-                          <TableHead>Impact Score</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {sortedEntries.map((entry) => (
-                          <TableRow key={entry.id}>
-                            <TableCell className="font-medium">
-                              {new Date(entry.booking_date).toLocaleDateString()}
-                            </TableCell>
-                            <TableCell className="max-w-xs truncate">
-                              {entry.experience_title}
-                            </TableCell>
-                            <TableCell>
+                            <Badge 
+                              variant="outline" 
+                              className={`${getThemeBadgeStyle(entry.theme)} text-xs`}
+                            >
+                              {mapLegacyTheme(entry.theme)}
+                            </Badge>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div>
+                              <p className="text-xs text-muted-foreground">Partner</p>
                               <Link 
                                 to={`/partner/${entry.project_id}`}
-                                className="text-primary hover:underline"
+                                className="text-primary hover:underline text-xs truncate block"
                               >
                                 {entry.project_name}
                               </Link>
-                            </TableCell>
-                            <TableCell>
-                              <Badge 
-                                variant="outline" 
-                                className={getThemeBadgeStyle(entry.theme)}
-                              >
-                                {mapLegacyTheme(entry.theme)}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-sm text-muted-foreground">
-                              {entry.location}
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
-                            </TableCell>
-                            <TableCell>{entry.participants}</TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium">{entry.impact_score}/100</span>
-                                <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Location</p>
+                              <p className="text-xs">{entry.location}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Allocation</p>
+                              <p className="font-medium text-xs">
+                                {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">Impact</p>
+                              <div className="flex items-center gap-1">
+                                <span className="text-xs font-medium">{entry.impact_score}/100</span>
+                                <div className="w-12 h-1.5 bg-muted rounded-full overflow-hidden">
                                   <div 
                                     className="h-full bg-primary"
                                     style={{ width: `${entry.impact_score}%` }}
                                   />
                                 </div>
                               </div>
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant={entry.status === 'verified' ? 'default' : 'secondary'}>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center justify-between pt-2 border-t">
+                            <div className="flex items-center gap-2">
+                              <Badge variant={entry.status === 'verified' ? 'default' : 'secondary'} className="text-xs">
                                 {entry.status === 'verified' ? (
                                   <>
-                                    <CheckCircle className="h-3 w-3 mr-1" />
+                                    <CheckCircle className="h-2.5 w-2.5 mr-1" />
                                     Verified
                                   </>
                                 ) : (
                                   <>
-                                    <AlertTriangle className="h-3 w-3 mr-1" />
+                                    <AlertTriangle className="h-2.5 w-2.5 mr-1" />
                                     Pending
                                   </>
                                 )}
                               </Badge>
-                            </TableCell>
-                            <TableCell>
+                              <span className="text-xs text-muted-foreground">
+                                {entry.participants} participants
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                                <Eye className="h-3 w-3" />
+                              </Button>
+                              <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                                <ExternalLink className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    // Desktop table layout
+                    <div className="rounded-md border overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead 
+                              className="cursor-pointer hover:bg-muted/50 min-w-[100px]"
+                              onClick={() => handleSort('booking_date')}
+                            >
                               <div className="flex items-center gap-2">
-                                <Button variant="ghost" size="sm">
-                                  <Eye className="h-4 w-4" />
-                                </Button>
-                                <Button variant="ghost" size="sm">
-                                  <ExternalLink className="h-4 w-4" />
-                                </Button>
+                                Date
+                                {sortField === 'booking_date' && (
+                                  sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                                )}
                               </div>
-                            </TableCell>
+                            </TableHead>
+                            <TableHead className="min-w-[200px]">Experience</TableHead>
+                            <TableHead className="min-w-[150px]">Partner</TableHead>
+                            <TableHead className="min-w-[120px]">Theme</TableHead>
+                            <TableHead className="min-w-[100px]">Location</TableHead>
+                            <TableHead 
+                              className="cursor-pointer hover:bg-muted/50 min-w-[120px]"
+                              onClick={() => handleSort('allocation_amount')}
+                            >
+                              <div className="flex items-center gap-2">
+                                Allocation
+                                {sortField === 'allocation_amount' && (
+                                  sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />
+                                )}
+                              </div>
+                            </TableHead>
+                            <TableHead className="min-w-[100px]">Participants</TableHead>
+                            <TableHead className="min-w-[120px]">Impact Score</TableHead>
+                            <TableHead className="min-w-[100px]">Status</TableHead>
+                            <TableHead className="min-w-[100px]">Actions</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
+                        </TableHeader>
+                        <TableBody>
+                          {sortedEntries.map((entry) => (
+                            <TableRow key={entry.id}>
+                              <TableCell className="font-medium">
+                                {new Date(entry.booking_date).toLocaleDateString()}
+                              </TableCell>
+                              <TableCell className="max-w-xs">
+                                <div className="truncate" title={entry.experience_title}>
+                                  {entry.experience_title}
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                <Link 
+                                  to={`/partner/${entry.project_id}`}
+                                  className="text-primary hover:underline"
+                                >
+                                  <div className="truncate" title={entry.project_name}>
+                                    {entry.project_name}
+                                  </div>
+                                </Link>
+                              </TableCell>
+                              <TableCell>
+                                <Badge 
+                                  variant="outline" 
+                                  className={getThemeBadgeStyle(entry.theme)}
+                                >
+                                  {mapLegacyTheme(entry.theme)}
+                                </Badge>
+                              </TableCell>
+                              <TableCell className="text-sm text-muted-foreground">
+                                <div className="truncate" title={entry.location}>
+                                  {entry.location}
+                                </div>
+                              </TableCell>
+                              <TableCell className="font-medium">
+                                {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
+                              </TableCell>
+                              <TableCell>{entry.participants}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-medium">{entry.impact_score}/100</span>
+                                  <div className="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                                    <div 
+                                      className="h-full bg-primary"
+                                      style={{ width: `${entry.impact_score}%` }}
+                                    />
+                                  </div>
+                                </div>
+                              </TableCell>
+                              <TableCell>
+                                <Badge variant={entry.status === 'verified' ? 'default' : 'secondary'}>
+                                  {entry.status === 'verified' ? (
+                                    <>
+                                      <CheckCircle className="h-3 w-3 mr-1" />
+                                      Verified
+                                    </>
+                                  ) : (
+                                    <>
+                                      <AlertTriangle className="h-3 w-3 mr-1" />
+                                      Pending
+                                    </>
+                                  )}
+                                </Badge>
+                              </TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  <Button variant="ghost" size="sm">
+                                    <Eye className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="sm">
+                                    <ExternalLink className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  )}
                   
                   {filteredEntries.length === 0 && (
                     <div className="text-center py-8">
@@ -1457,7 +1604,7 @@ const ImpactLedger = () => {
             </TabsContent>
 
             {/* Impact Stories Tab */}
-            <TabsContent value="stories" className="space-y-6">
+            <TabsContent value="stories" className="space-y-4 sm:space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -1466,47 +1613,47 @@ const ImpactLedger = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-6">
+                  <div className={`space-y-4 ${isMobile ? 'sm:space-y-6' : 'space-y-6'}`}>
                     {filteredEntries.slice(0, 5).map((entry) => (
-                      <div key={entry.id} className="border-l-4 border-primary pl-6 py-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold text-lg">{entry.experience_title}</h4>
+                      <div key={entry.id} className={`border-l-4 border-primary ${isMobile ? 'pl-3 py-3' : 'pl-6 py-4'}`}>
+                        <div className={`${isMobile ? 'space-y-3' : 'flex items-start justify-between mb-3'}`}>
+                          <div className={isMobile ? '' : 'flex-1 mr-4'}>
+                            <h4 className={`font-semibold ${isMobile ? 'text-base' : 'text-lg'} line-clamp-2`}>{entry.experience_title}</h4>
                             <p className="text-sm text-muted-foreground">
                               by {entry.project_name} • {new Date(entry.booking_date).toLocaleDateString()}
                             </p>
                           </div>
                           <Badge 
                             variant="outline" 
-                            className={getThemeBadgeStyle(entry.theme)}
+                            className={`${getThemeBadgeStyle(entry.theme)} ${isMobile ? 'w-fit' : ''}`}
                           >
                             {mapLegacyTheme(entry.theme)}
                           </Badge>
                         </div>
                         
-                        <p className="text-muted-foreground mb-4">
+                        <p className={`text-muted-foreground ${isMobile ? 'mb-3 text-sm' : 'mb-4'}`}>
                           {entry.proof_description}
                         </p>
                         
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className={`${isMobile ? 'space-y-3' : 'flex items-center justify-between'}`}>
+                          <div className={`${isMobile ? 'grid grid-cols-1 gap-2' : 'flex items-center gap-4'} text-sm text-muted-foreground`}>
                             <div className="flex items-center gap-1">
-                              <DollarSign className="h-4 w-4" />
-                              {currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}
+                              <DollarSign className="h-4 w-4 flex-shrink-0" />
+                              <span>{currency} {convert(entry.allocation_amount, 'KES', currency).toLocaleString()}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Users className="h-4 w-4" />
-                              {entry.participants} participants
+                              <Users className="h-4 w-4 flex-shrink-0" />
+                              <span>{entry.participants} participants</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <TrendingUp className="h-4 w-4" />
-                              {entry.impact_score}/100 impact
+                              <TrendingUp className="h-4 w-4 flex-shrink-0" />
+                              <span>{entry.impact_score}/100 impact</span>
                             </div>
                           </div>
                           
                           <Link 
                             to={`/partner/${entry.project_id}`}
-                            className="text-primary hover:underline text-sm"
+                            className={`text-primary hover:underline text-sm ${isMobile ? 'block text-center' : ''}`}
                           >
                             View Partner →
                           </Link>
