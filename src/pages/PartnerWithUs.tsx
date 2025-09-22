@@ -314,23 +314,17 @@ const PartnerWithUs: React.FC = () => {
               </div>)}
           </div>
 
-          {/* Mobile/Tablet Carousel */}
-          <div className="lg:hidden">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {howItWorksSteps.map((step, index) => <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
-                    <div className="text-center p-6 bg-background rounded-lg shadow-sm h-full">
-                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                        {step.step}
-                      </div>
-                      <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                      <p className="text-muted-foreground">{step.description}</p>
-                    </div>
-                  </CarouselItem>)}
-              </CarouselContent>
-              <CarouselPrevious className="-left-4" />
-              <CarouselNext className="-right-4" />
-            </Carousel>
+          {/* Mobile/Tablet Grid */}
+          <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-8">
+            {howItWorksSteps.map((step, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                  {step.step}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                <p className="text-muted-foreground">{step.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
