@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { Users, DollarSign, Search, BarChart3, CheckCircle, Upload, MessageCircle, Star, CreditCard, FileText, Globe, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import PartnerOnboardingDemo from '@/components/PartnerOnboardingDemo';
+import PartnerApplication from '@/components/PartnerApplication';
 const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
+  const [showPartnerModal, setShowPartnerModal] = useState(false);
   const handleApplyAsPartner = () => {
     window.open('https://2o7bym7r45m.typeform.com/to/OhaBfRVk?utm_source=xxxxx&typeform-source=natuasili.com', '_blank');
   };
@@ -462,11 +464,17 @@ const PartnerWithUs: React.FC = () => {
           <p className="text-xl mb-8 opacity-90">
             Join the leading platform for conservation tourism in Kenya and start making a greater impact today.
           </p>
-          <Button onClick={() => window.open('https://2o7bym7r45m.typeform.com/to/OhaBfRVk?utm_source=xxxxx&typeform-source=natuasili.com', '_blank')} size="lg" variant="secondary" className="text-lg px-8">
-            Create Partner Account
+          <Button onClick={() => setShowPartnerModal(true)} size="lg" variant="secondary" className="text-lg px-8">
+            Apply as a partner
           </Button>
         </div>
       </section>
+      
+      {/* Partner Application Modal */}
+      <PartnerApplication 
+        open={showPartnerModal} 
+        onOpenChange={setShowPartnerModal} 
+      />
     </div>;
 };
 export default PartnerWithUs;
