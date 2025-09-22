@@ -130,7 +130,9 @@ const AvailabilityAndOptions = ({
     const total = adults + children;
     const minCap = (experience as any).minCapacity || 1;
     const maxCap = experience.capacity;
-    if (total > maxCap) {
+    
+    // Only check max capacity if it exists
+    if (maxCap && total > maxCap) {
       setParticipantsError(`Maximum group size is ${maxCap}. Please reduce the number of people.`);
       return false;
     }
@@ -294,8 +296,8 @@ const AvailabilityAndOptions = ({
                         <Button type="button" variant="ghost" size="icon" onClick={() => handleAdultsChange(selectedAdults - 1)} disabled={selectedAdults <= 1} className="h-10 w-10 rounded-r-none">
                           <Minus className="h-4 w-4" />
                         </Button>
-                        <Input id="adults" type="number" min={1} max={experience.capacity} value={selectedAdults} onChange={e => handleAdultsChange(parseInt(e.target.value) || 1)} className="border-0 text-center rounded-none focus-visible:ring-0" inputMode="numeric" />
-                        <Button type="button" variant="ghost" size="icon" onClick={() => handleAdultsChange(selectedAdults + 1)} disabled={totalParticipants >= experience.capacity} className="h-10 w-10 rounded-l-none">
+                        <Input id="adults" type="number" min={1} max={experience.capacity || undefined} value={selectedAdults} onChange={e => handleAdultsChange(parseInt(e.target.value) || 1)} className="border-0 text-center rounded-none focus-visible:ring-0" inputMode="numeric" />
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleAdultsChange(selectedAdults + 1)} disabled={experience.capacity ? totalParticipants >= experience.capacity : false} className="h-10 w-10 rounded-l-none">
                           <Plus className="h-4 w-4" />
                         </Button>
                       </div>
@@ -311,8 +313,8 @@ const AvailabilityAndOptions = ({
                         <Button type="button" variant="ghost" size="icon" onClick={() => handleChildrenChange(selectedChildren - 1)} disabled={selectedChildren <= 0} className="h-10 w-10 rounded-r-none">
                           <Minus className="h-4 w-4" />
                         </Button>
-                        <Input id="children" type="number" min={0} max={experience.capacity} value={selectedChildren} onChange={e => handleChildrenChange(parseInt(e.target.value) || 0)} className="border-0 text-center rounded-none focus-visible:ring-0" inputMode="numeric" />
-                        <Button type="button" variant="ghost" size="icon" onClick={() => handleChildrenChange(selectedChildren + 1)} disabled={totalParticipants >= experience.capacity} className="h-10 w-10 rounded-l-none">
+                        <Input id="children" type="number" min={0} max={experience.capacity || undefined} value={selectedChildren} onChange={e => handleChildrenChange(parseInt(e.target.value) || 0)} className="border-0 text-center rounded-none focus-visible:ring-0" inputMode="numeric" />
+                        <Button type="button" variant="ghost" size="icon" onClick={() => handleChildrenChange(selectedChildren + 1)} disabled={experience.capacity ? totalParticipants >= experience.capacity : false} className="h-10 w-10 rounded-l-none">
                           <Plus className="h-4 w-4" />
                         </Button>
                       </div>
