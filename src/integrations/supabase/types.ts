@@ -624,43 +624,73 @@ export type Database = {
       }
       partner_profiles: {
         Row: {
+          application_notes: string | null
+          bank_details: Json | null
           bio: string | null
+          business_license_url: string | null
+          business_registration_number: string | null
+          conservation_permits_url: string | null
           contacts: Json | null
           created_at: string | null
+          documents: Json | null
           id: string
+          insurance_certificate_url: string | null
           kyc_status: string | null
           location: string | null
           logo: string | null
           org_name: string
+          reviewed_at: string | null
+          reviewed_by: string | null
           slug: string
+          tax_certificate_url: string | null
           team: Json | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
+          application_notes?: string | null
+          bank_details?: Json | null
           bio?: string | null
+          business_license_url?: string | null
+          business_registration_number?: string | null
+          conservation_permits_url?: string | null
           contacts?: Json | null
           created_at?: string | null
+          documents?: Json | null
           id?: string
+          insurance_certificate_url?: string | null
           kyc_status?: string | null
           location?: string | null
           logo?: string | null
           org_name: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug: string
+          tax_certificate_url?: string | null
           team?: Json | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
+          application_notes?: string | null
+          bank_details?: Json | null
           bio?: string | null
+          business_license_url?: string | null
+          business_registration_number?: string | null
+          conservation_permits_url?: string | null
           contacts?: Json | null
           created_at?: string | null
+          documents?: Json | null
           id?: string
+          insurance_certificate_url?: string | null
           kyc_status?: string | null
           location?: string | null
           logo?: string | null
           org_name?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
           slug?: string
+          tax_certificate_url?: string | null
           team?: Json | null
           updated_at?: string | null
           user_id?: string
