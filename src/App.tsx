@@ -52,7 +52,7 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Search from "./pages/Search";
-import PartnerEntry from "./pages/PartnerEntry";
+
 import ContentStub from "./pages/ContentStub";
 import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
@@ -211,7 +211,7 @@ const App = () => (
                 <Route path="/cookie-policy" element={<AppLayout><CookiePolicy /></AppLayout>} />
                 <Route path="/search" element={<AppLayout><Search /></AppLayout>} />
                 <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
-                <Route path="/partner-entry" element={<AppLayout><PartnerEntry /></AppLayout>} />
+                
                 <Route path="/partner-application" element={<AppLayout><PartnerApplicationPage /></AppLayout>} />
                 <Route path="/listings" element={<AppLayout><Listings /></AppLayout>} />
                 <Route path="/listings/:slug" element={<AppLayout><ListingDetail /></AppLayout>} />

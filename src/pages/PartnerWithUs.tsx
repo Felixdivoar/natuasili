@@ -27,33 +27,43 @@ const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
 
   const handleApplyAsPartner = () => {
-    window.open('https://2o7bym7r45m.typeform.com/to/OhaBfRVk?utm_source=xxxxx&typeform-source=natuasili.com', '_blank');
+    navigate('/partner-application');
   };
 
   const handleBookDemo = () => {
     window.open('mailto:partners@natuasili.com?subject=Partnership Demo Request', '_blank');
   };
 
-  const valueProps = [
+  const benefits = [
     {
-      icon: <Users className="h-8 w-8 text-primary" />,
-      title: "Reach Impact-Driven Travelers",
-      description: "Connect with travelers who care about conservation and sustainable tourism"
+      icon: <Globe className="h-8 w-8 text-primary" />,
+      title: "Global Visibility",
+      description: "Reach impact-minded travelers from around the world"
     },
     {
       icon: <DollarSign className="h-8 w-8 text-primary" />,
-      title: "Easy Payouts",
-      description: "Automated payouts with transparent fee structure and detailed reporting"
-    },
-    {
-      icon: <Search className="h-8 w-8 text-primary" />,
-      title: "AI Search Exposure",
-      description: "Get discovered through our intelligent search and recommendation engine"
+      title: "90% Revenue Share",
+      description: "Keep 90% of booking revenue - industry-leading split"
     },
     {
       icon: <BarChart3 className="h-8 w-8 text-primary" />,
-      title: "Impact Ledger & Proof Uploads",
-      description: "Showcase your conservation impact with verified proof uploads and tracking"
+      title: "Analytics Dashboard",
+      description: "Track bookings, revenue, and impact metrics in real-time"
+    },
+    {
+      icon: <Shield className="h-8 w-8 text-primary" />,
+      title: "Verified Partner Status",
+      description: "Build trust with verified conservation credentials"
+    },
+    {
+      icon: <Users className="h-8 w-8 text-primary" />,
+      title: "Community Support",
+      description: "Join a network of conservation partners across Kenya"
+    },
+    {
+      icon: <Search className="h-8 w-8 text-primary" />,
+      title: "Impact Transparency",
+      description: "Show travelers exactly how their contributions create change"
     }
   ];
 
@@ -114,30 +124,63 @@ const PartnerWithUs: React.FC = () => {
     }
   ];
 
+  const requirements = [
+    "Registered conservation organization or certified guide",
+    "Valid permits and insurance for tourism activities", 
+    "Commitment to safety and conservation standards",
+    "Ability to provide authentic cultural and wildlife experiences",
+    "Located in Kenya with local community partnerships"
+  ];
+
+  const testimonials = [
+    {
+      name: "Sarah Kipkoech",
+      organization: "Maasai Mara Conservancy",
+      quote: "NatuAsili has connected us with travelers who truly care about conservation. The 90/10 split means more funds go directly to our wildlife protection programs.",
+      impact: "Funded 12 rangers"
+    },
+    {
+      name: "Dr. James Muturi", 
+      organization: "Laikipia Wildlife Forum",
+      quote: "The platform's transparency builds real trust with travelers. They can see exactly how their contributions support our elephant research program.",
+      impact: "Protected 500 elephants"
+    },
+    {
+      name: "Grace Wanjiku",
+      organization: "Coastal Forest Conservation", 
+      quote: "Working with NatuAsili has diversified our funding and introduced us to passionate conservation travelers who become long-term supporters.",
+      impact: "Restored 200 hectares"
+    }
+  ];
+
   const faqs = [
     {
-      question: "How do I get started as a partner?",
-      answer: "Simply click 'Apply as a Partner' to create your account. After verification, you can start adding your conservation experiences and setting your availability."
+      question: "How much does it cost to join?",
+      answer: "Joining NatuAsili is free. We charge a 10% service fee on successful bookings, so you keep 90% of your revenue. Donations are different: 100% of every donation goes directly to the partner."
     },
     {
-      question: "How and when do I get paid?",
-      answer: "Payouts are processed weekly for completed bookings. Funds are transferred directly to your bank account with detailed statements available in your dashboard."
+      question: "What type of business can register?",
+      answer: "We welcome conservancies, NGOs, community groups, social enterprises, and organizations offering experiences that support conservation, culture, or community engagement."
     },
     {
-      question: "Do you support child pricing logic?",
-      answer: "Yes! Our platform automatically applies child half-price rules for designated experiences like Nairobi Giraffe Centre and all Ol Pejeta experiences."
+      question: "How long does verification take?",
+      answer: "Verification usually takes 30 minutes once all required documents are submitted."
     },
     {
-      question: "What kind of support do you provide?",
-      answer: "We offer comprehensive support including onboarding assistance, technical help, and ongoing partnership support with guaranteed response times based on your plan."
+      question: "Why do you require legal documents?",
+      answer: "To comply with financial regulations and ensure secure payouts, we collect company details, legal representative information, and proof of address. This follows KYC (Know Your Customer) standards used by our payment partners."
     },
     {
-      question: "How do impact proofs work?",
-      answer: "Partners can upload photos, documents, and reports showing their conservation impact. This builds trust with travelers and demonstrates real environmental outcomes."
+      question: "What support do you provide?",
+      answer: "We offer onboarding support, marketing guidance, analytics tools, and ongoing customer service to help you succeed."
     },
     {
-      question: "Can I customize my experience listings?",
-      answer: "Absolutely! You can add detailed descriptions, photo galleries, pricing rules, availability calendars, and specific booking requirements for each experience."
+      question: "How do payments work?",
+      answer: "Payouts are transferred to your bank account by the 5th of each month, minus the 10% service fee. You'll also receive a statement for your records."
+    },
+    {
+      question: "How do I register?",
+      answer: "Click 'Apply as Partner', create an account, fill out the short onboarding form, upload your documents, and set up your first experience. Once verified, you'll get access to your host dashboard."
     }
   ];
 
@@ -330,14 +373,14 @@ const PartnerWithUs: React.FC = () => {
           
           {/* Desktop Grid */}
           <div className="hidden lg:grid grid-cols-4 gap-8">
-            {valueProps.map((prop, index) => (
+            {benefits.map((benefit, index) => (
               <Card key={index} className="text-center">
                 <CardHeader>
-                  <div className="mx-auto mb-4">{prop.icon}</div>
-                  <CardTitle className="text-xl">{prop.title}</CardTitle>
+                  <div className="mx-auto mb-4">{benefit.icon}</div>
+                  <CardTitle className="text-xl">{benefit.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>{prop.description}</CardDescription>
+                  <CardDescription>{benefit.description}</CardDescription>
                 </CardContent>
               </Card>
             ))}
@@ -347,15 +390,15 @@ const PartnerWithUs: React.FC = () => {
           <div className="lg:hidden">
             <Carousel className="w-full">
               <CarouselContent className="-ml-2 md:-ml-4">
-                {valueProps.map((prop, index) => (
+                {benefits.map((benefit, index) => (
                   <CarouselItem key={index} className="pl-2 md:pl-4 basis-full md:basis-1/2">
                     <Card className="text-center h-full">
                       <CardHeader>
-                        <div className="mx-auto mb-4">{prop.icon}</div>
-                        <CardTitle className="text-xl">{prop.title}</CardTitle>
+                        <div className="mx-auto mb-4">{benefit.icon}</div>
+                        <CardTitle className="text-xl">{benefit.title}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <CardDescription>{prop.description}</CardDescription>
+                        <CardDescription>{benefit.description}</CardDescription>
                       </CardContent>
                     </Card>
                   </CarouselItem>
@@ -540,6 +583,65 @@ const PartnerWithUs: React.FC = () => {
         </div>
       </section>
 
+      {/* Requirements */}
+      <section className="hero-padding px-4">
+        <div className="max-w-[1300px] mx-auto">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Partner Requirements</h2>
+              <p className="text-xl text-muted-foreground">
+                We maintain high standards to ensure quality experiences for travelers
+              </p>
+            </div>
+
+            <Card>
+              <CardContent className="p-8">
+                <ul className="space-y-4">
+                  {requirements.map((requirement, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-muted-foreground">{requirement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Success Stories */}
+      <section className="hero-padding px-4 bg-muted/30">
+        <div className="max-w-[1300px] mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Partner Success Stories</h2>
+            <p className="text-xl text-muted-foreground">
+              Hear from conservation partners who are making a difference
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index}>
+                <CardContent className="p-6">
+                  <blockquote className="text-muted-foreground mb-4 italic">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <div className="border-t pt-4">
+                    <div className="font-semibold">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground mb-2">{testimonial.organization}</div>
+                    <Badge variant="outline" className="text-xs">
+                      <Star className="h-3 w-3 mr-1" />
+                      {testimonial.impact}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="hero-padding px-4">
         <div className="max-w-[1300px] mx-auto">
@@ -567,12 +669,12 @@ const PartnerWithUs: React.FC = () => {
             Join the leading platform for conservation tourism in Kenya and start making a greater impact today.
           </p>
           <Button 
-            onClick={() => window.open('https://2o7bym7r45m.typeform.com/to/OhaBfRVk?utm_source=xxxxx&typeform-source=natuasili.com', '_blank')}
+            onClick={handleApplyAsPartner}
             size="lg" 
             variant="secondary" 
             className="text-lg px-8"
           >
-            Create Partner Account
+            Apply as Partner
           </Button>
         </div>
       </section>
