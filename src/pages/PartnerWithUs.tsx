@@ -319,51 +319,44 @@ const PartnerWithUs: React.FC = () => {
       </section>
 
       {/* Features */}
-      <section className="hero-padding px-4">
-        <div className="max-w-[1300px] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Platform Features</h2>
-            <p className="text-xl text-muted-foreground">
-              Comprehensive tools for managing your conservation experiences
+      <section className="section-padding-lg">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <div className="text-center mb-20">
+            <div className="mb-4">
+              <p className="text-sm font-semibold text-muted-foreground tracking-widest uppercase">
+                PLATFORM FEATURES
+              </p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Everything you need to succeed
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive tools designed for conservation organizations to manage experiences and maximize impact
             </p>
           </div>
           
-          {/* Desktop Grid */}
-          <div className="hidden lg:grid grid-cols-3 gap-8">
-            {features.map((feature, index) => <Card key={index}>
-                <CardHeader>
-                  <div className="flex items-center gap-4">
+          {/* Modern Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className="group relative p-8 rounded-2xl border border-border/50 bg-background/50 backdrop-blur-sm hover:bg-background hover:border-border hover:shadow-lg transition-all duration-300"
+              >
+                <div className="flex flex-col items-start space-y-4">
+                  <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                     {feature.icon}
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>{feature.description}</CardDescription>
-                </CardContent>
-              </Card>)}
-          </div>
-
-          {/* Mobile/Tablet Carousel */}
-          <div className="lg:hidden">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {features.map((feature, index) => <CarouselItem key={index} className="pl-2 md:pl-4 basis-full">
-                    <Card className="h-full">
-                      <CardHeader>
-                        <div className="flex items-center gap-4">
-                          {feature.icon}
-                          <CardTitle className="text-xl">{feature.title}</CardTitle>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <CardDescription>{feature.description}</CardDescription>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>)}
-              </CarouselContent>
-              <CarouselPrevious className="-left-4" />
-              <CarouselNext className="-right-4" />
-            </Carousel>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
