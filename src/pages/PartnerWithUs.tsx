@@ -68,11 +68,9 @@ const PartnerWithUs: React.FC = () => {
   ];
 
   const howItWorksSteps = [
-    { step: 1, title: "Organization Details", description: "Basic information about your organization" },
-    { step: 2, title: "Contact Information", description: "Key contact details" },
-    { step: 3, title: "Business & Banking", description: "Registration and financial details" },
-    { step: 4, title: "Conservation Experience", description: "Your experience and policies" },
-    { step: 5, title: "Document Upload", description: "Required documents and certificates" }
+    { step: 1, title: "Apply & Submit Details", description: "Fill out your organization details, contact information, and business registration" },
+    { step: 2, title: "Upload Documents", description: "Submit required documents for verification and compliance" },
+    { step: 3, title: "Go Live & Start Earning", description: "Once approved, list your experiences and start receiving bookings" }
   ];
 
   const features = [
@@ -418,12 +416,12 @@ const PartnerWithUs: React.FC = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
             <p className="text-xl text-muted-foreground">
-              Get started in five simple steps
+              Easy as 1-2-3
             </p>
           </div>
           
           {/* Desktop Grid */}
-          <div className="hidden lg:grid grid-cols-5 gap-6">
+          <div className="hidden lg:grid grid-cols-3 gap-8">
             {howItWorksSteps.map((step, index) => (
               <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
