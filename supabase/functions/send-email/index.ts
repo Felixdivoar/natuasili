@@ -1,14 +1,12 @@
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts'
 import { Resend } from 'npm:resend@2.0.0'
-import { renderAsync } from 'npm:@react-email/components@0.0.22'
-import React from 'npm:react@18.3.1'
 
 // Import email templates
-import { PartnerApplicationEmail } from './_templates/partner-application.tsx'
-import { PartnerApprovalEmail } from './_templates/partner-approval.tsx'
-import { BookingConfirmationEmail } from './_templates/booking-confirmation.tsx'
-import { WelcomeEmail } from './_templates/welcome.tsx'
-import { WithdrawalNotificationEmail } from './_templates/withdrawal-notification.tsx'
+import { partnerApplicationTemplate } from './_templates/partner-application.ts'
+import { partnerApprovalTemplate } from './_templates/partner-approval.ts'
+import { bookingConfirmationTemplate } from './_templates/booking-confirmation.ts'
+import { welcomeTemplate } from './_templates/welcome.ts'
+import { withdrawalNotificationTemplate } from './_templates/withdrawal-notification.ts'
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 
@@ -41,68 +39,58 @@ const handler = async (req: Request): Promise<Response> => {
 
     switch (type) {
       case 'partner-application':
-        emailHtml = await renderAsync(
-          React.createElement(PartnerApplicationEmail, {
-            partnerName: data.partnerName,
-            organizationName: data.organizationName,
-            applicationId: data.applicationId,
-          })
-        )
+        emailHtml = partnerApplicationTemplate({
+          partnerName: data.partnerName,
+          organizationName: data.organizationName,
+          applicationId: data.applicationId,
+        })
         subject = `New Partner Application - ${data.organizationName}`
         break
 
       case 'partner-approval':
-        emailHtml = await renderAsync(
-          React.createElement(PartnerApprovalEmail, {
-            partnerName: data.partnerName,
-            organizationName: data.organizationName,
-            status: data.status,
-            dashboardUrl: data.dashboardUrl,
-            message: data.message,
-          })
-        )
+        emailHtml = partnerApprovalTemplate({
+          partnerName: data.partnerName,
+          organizationName: data.organizationName,
+          status: data.status,
+          dashboardUrl: data.dashboardUrl,
+          message: data.message,
+        })
         subject = data.status === 'approved' 
           ? 'Welcome to NatuAsili - Application Approved!'
           : 'NatuAsili Application Update'
         break
 
       case 'booking-confirmation':
-        emailHtml = await renderAsync(
-          React.createElement(BookingConfirmationEmail, {
-            customerName: data.customerName,
-            experienceTitle: data.experienceTitle,
-            partnerName: data.partnerName,
-            bookingDate: data.bookingDate,
-            participants: data.participants,
-            totalAmount: data.totalAmount,
-            bookingId: data.bookingId,
-            location: data.location,
-          })
-        )
+        emailHtml = bookingConfirmationTemplate({
+          customerName: data.customerName,
+          experienceTitle: data.experienceTitle,
+          partnerName: data.partnerName,
+          bookingDate: data.bookingDate,
+          participants: data.participants,
+          totalAmount: data.totalAmount,
+          bookingId: data.bookingId,
+          location: data.location,
+        })
         subject = `Booking Confirmed - ${data.experienceTitle}`
         break
 
       case 'welcome':
-        emailHtml = await renderAsync(
-          React.createElement(WelcomeEmail, {
-            userName: data.userName,
-            userRole: data.userRole,
-            dashboardUrl: data.dashboardUrl,
-          })
-        )
+        emailHtml = welcomeTemplate({
+          userName: data.userName,
+          userRole: data.userRole,
+          dashboardUrl: data.dashboardUrl,
+        })
         subject = 'Welcome to NatuAsili - Conservation Tourism Platform'
         break
 
       case 'withdrawal-notification':
-        emailHtml = await renderAsync(
-          React.createElement(WithdrawalNotificationEmail, {
-            partnerName: data.partnerName,
-            amount: data.amount,
-            status: data.status,
-            requestId: data.requestId,
-            message: data.message,
-          })
-        )
+        emailHtml = withdrawalNotificationTemplate({
+          partnerName: data.partnerName,
+          amount: data.amount,
+          status: data.status,
+          requestId: data.requestId,
+          message: data.message,
+        })
         subject = data.status === 'pending'
           ? 'New Withdrawal Request - Admin Review Required'
           : `Withdrawal Request ${data.status.charAt(0).toUpperCase() + data.status.slice(1)}`
