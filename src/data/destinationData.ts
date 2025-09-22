@@ -1,15 +1,15 @@
 import { Destination, Experience, Theme } from './partners';
 
 // Experience duration and capacity mapping for consistency across the site
-export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity: number }> = {
+export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity?: number }> = {
   // Nairobi experiences
-  "morning-bird-walk-with-nature-kenya": { duration_hours: 3, capacity: 12 },
-  "tree-walk-kenya-forest-heritage": { duration_hours: 2, capacity: 15 },
-  "dudu-walk-explore-the-world-of-insects": { duration_hours: 2, capacity: 10 },
-  "specialized-eco-tours-at-karura-forest": { duration_hours: 4, capacity: 20 },
-  "citizen-scientist-experience-at-nairobi-national-park": { duration_hours: 5, capacity: 8 },
-  "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew": { duration_hours: 2, capacity: 25 },
-  "sustainable-farm-experience-at-adventure-farm-karen": { duration_hours: 6, capacity: 15 },
+  "morning-bird-walk-with-nature-kenya": { duration_hours: 3 },
+  "tree-walk-kenya-forest-heritage": { duration_hours: 2 },
+  "dudu-walk-explore-the-world-of-insects": { duration_hours: 2 },
+  "specialized-eco-tours-at-karura-forest": { duration_hours: 4 },
+  "citizen-scientist-experience-at-nairobi-national-park": { duration_hours: 5 },
+  "meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew": { duration_hours: 2 },
+  "sustainable-farm-experience-at-adventure-farm-karen": { duration_hours: 6 },
 
   // Laikipia experiences  
   "meet-the-last-northern-white-rhinos-at-ol-pejeta": { duration_hours: 3, capacity: 12 },
@@ -20,21 +20,21 @@ export const EXPERIENCE_SPECS: Record<string, { duration_hours: number; capacity
   "track-lions-and-aid-conservation-at-ol-pejeta": { duration_hours: 5, capacity: 8 },
 
   // Samburu/Northern Kenya experiences
-  "sera-on-foot-rhino-tracking": { duration_hours: 3, capacity: 8 },
-  "community-led-elephant-experience-at-reteti": { duration_hours: 4, capacity: 12 },
-  "koija-cultural-village": { duration_hours: 3, capacity: 20 },
+  "sera-on-foot-rhino-tracking": { duration_hours: 3 },
+  "community-led-elephant-experience-at-reteti": { duration_hours: 4 },
+  "koija-cultural-village": { duration_hours: 3 },
 
   // Maasai Mara experiences
   "drones-for-conservation-with-mara-elephant-project": { duration_hours: 4, capacity: 6 },
   "elephant-researcher-experience-with-mara-elephant-project": { duration_hours: 6, capacity: 8 },
 
   // Baringo experiences
-  "giraffe-at-ruko-sanctuary": { duration_hours: 2, capacity: 15 },
+  "giraffe-at-ruko-sanctuary": { duration_hours: 2 },
 
   // Kenyan Coast experiences
-  "dive-into-coral-conservation-with-reefolution": { duration_hours: 4, capacity: 10 },
-  "colobus-conservation-guided-primate-eco-tours": { duration_hours: 3, capacity: 12 },
-  "ocean-wonders-learn-conserve-with-local-ocean-conservation-kenya": { duration_hours: 5, capacity: 15 },
+  "dive-into-coral-conservation-with-reefolution": { duration_hours: 4 },
+  "colobus-conservation-guided-primate-eco-tours": { duration_hours: 3 },
+  "ocean-wonders-learn-conserve-with-local-ocean-conservation-kenya": { duration_hours: 5 },
 };
 
 // Destination-based experience groupings

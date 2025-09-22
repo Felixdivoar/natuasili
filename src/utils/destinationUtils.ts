@@ -59,7 +59,7 @@ export const getAllDestinations = () => {
 };
 
 // Get duration and capacity for an experience by slug
-export const getExperienceSpecs = (slug: string): { duration_hours: number; capacity: number } => {
+export const getExperienceSpecs = (slug: string): { duration_hours: number; capacity?: number } => {
   const specs = EXPERIENCE_SPECS[slug];
   if (specs) {
     return specs;

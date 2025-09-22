@@ -144,7 +144,7 @@ export default function BookingForm({ experience, onBookingSubmit }: BookingForm
           <div className="text-sm text-muted-foreground">
             {experience.capacity 
               ? `Group experience (min ${experience.minCapacity || 2}, max ${experience.capacity} participants)`
-              : `Group experience (min ${experience.minCapacity || 2} participants, no maximum)`
+              : `Group experience (min ${experience.minCapacity || 2} participants)`
             }
           </div>
         )}
