@@ -41,7 +41,7 @@ const Footer = () => {
                 Conservation Voices
               </a></li>
               <li><Link to="/impact-ledger" className="text-white/80 hover:text-accent transition-colors">Impact Tracker</Link></li>
-              <li><Link to="/partner-with-us" className="text-white/80 hover:text-accent transition-colors">Partner With Us</Link></li>
+              <li><Link to="/partner-with-us" className="text-white/80 hover:text-accent transition-colors">Add your experience</Link></li>
               <li><a href="mailto:support@natuasili.com" className="text-white/80 hover:text-accent transition-colors">Support Center</a></li>
             </ul>
           </div>
