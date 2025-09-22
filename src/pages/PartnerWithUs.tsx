@@ -431,10 +431,10 @@ const PartnerWithUs: React.FC = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
           </div>
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg px-6">
-                <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
+          <Accordion type="single" collapsible className="space-y-4" key="partner-faqs">
+            {faqs.map((faq, index) => <AccordionItem key={`faq-${index}`} value={`item-${index}`} className="border rounded-lg px-6">
+                <AccordionTrigger className="text-left font-medium">{faq.question}</AccordionTrigger>
+                <AccordionContent className="text-base font-light text-muted-foreground">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>)}
