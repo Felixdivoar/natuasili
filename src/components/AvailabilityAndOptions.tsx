@@ -343,7 +343,16 @@ const AvailabilityAndOptions = ({
 
                   <div className="text-sm text-muted-foreground">
                     Total: {totalParticipants} participant{totalParticipants !== 1 ? 's' : ''}
-                    {experience.capacity && ` (max ${experience.capacity})`}
+                    {(experience.minCapacity || experience.capacity) && (
+                      <span>
+                        {experience.minCapacity && experience.capacity 
+                          ? ` (min ${experience.minCapacity}, max ${experience.capacity})`
+                          : experience.minCapacity 
+                            ? ` (min ${experience.minCapacity})`
+                            : ` (max ${experience.capacity})`
+                        }
+                      </span>
+                    )}
                   </div>
                   
                   {participantsError && <div id="participants-error" role="alert" aria-live="assertive" className="text-destructive text-sm">
