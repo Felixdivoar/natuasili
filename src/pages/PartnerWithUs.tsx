@@ -263,9 +263,7 @@ const PartnerWithUs: React.FC = () => {
         <div className="max-w-[1300px] mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-muted-foreground">
-              Get started in four simple steps
-            </p>
+            <p className="text-sm md:text-base font-normal text-muted-foreground">Get started in four simple steps</p>
           </div>
           
           {/* Desktop Grid */}
