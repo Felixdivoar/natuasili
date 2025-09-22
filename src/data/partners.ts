@@ -59,6 +59,7 @@ import natureKenyaNew4 from "@/assets/nature-kenya-4.jpg";
 import natureKenyaNew5 from "@/assets/nature-kenya-5.jpg";
 
 // FoNNaP citizen scientist images
+import fonnapHero from "@/assets/fonnap-hero.jpg";
 import fonnap1 from "@/assets/fonnap-1.jpg";
 import fonnap2 from "@/assets/fonnap-2.jpg";
 import fonnap3 from "@/assets/fonnap-3.jpg";
@@ -1709,9 +1710,9 @@ PRG7+CQ Nairobi`,
     destination: "nairobi",
     themes: ["Wildlife conservation"],
     activities: ["citizen science", "wildlife", "data"],
-    images: [fonnap1, fonnap2, fonnap3, fonnap4, fonnap5, fonnap6],
-    heroImage: fonnap1,
-    gallery: [fonnap1, fonnap2, fonnap3, fonnap4, fonnap5, fonnap6],
+    images: [fonnapHero, fonnap1, fonnap2, fonnap3, fonnap4, fonnap5, fonnap6],
+    heroImage: fonnapHero,
+    gallery: [fonnapHero, fonnap1, fonnap2, fonnap3, fonnap4, fonnap5, fonnap6],
     description: `Overview
 Established in 1995, Friends of Nairobi National Park (FoNNaP) has been committed to assisting Kenya Wildlife Service (KWS) in conserving and improving the biodiversity inside Nairobi National Park and its larger surroundings.
 All nature lovers and supporters of conservation should join FoNNaP's special citizen science program. This program allows participants to be citizen scientists and combines social activities with wildlife preservation, so providing unique insights. Through bi-monthly game counts, volunteers assist in tracking wildlife numbers and trend monitoring, so contributing important information for study and conservation.
