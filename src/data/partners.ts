@@ -65,6 +65,14 @@ import fonnap4 from "@/assets/fonnap-4.jpg";
 import fonnap5 from "@/assets/fonnap-5.jpg";
 import fonnap6 from "@/assets/fonnap-6.jpg";
 
+// Karura Forest eco-tours images
+import karura1 from "@/assets/karura-1.jpg";
+import karura2 from "@/assets/karura-2.jpg";
+import karura3 from "@/assets/karura-3.jpg";
+import karura4 from "@/assets/karura-4.jpg";
+import karura5 from "@/assets/karura-5.jpg";
+import karura6 from "@/assets/karura-6.jpg";
+
 // New night game drive images
 import nightGameDriveHero from "@/assets/night-game-drive-hero.jpg";
 import nightGameDrive2 from "@/assets/night-game-drive-2.jpg";
@@ -1763,9 +1771,9 @@ JV96+2C Nairobi`,
     destination: "nairobi",
     themes: ["Conservation education"],
     activities: ["forest", "eco-tour", "nature"],
-    images: [karuraForestPlanting, "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/images/placeholder-3.jpg"],
-    heroImage: karuraForestPlanting,
-    gallery: [karuraForestPlanting, "/lovable-uploads/f0dcab56-c695-41ac-bf57-3a9e350158f0.png", "/images/placeholder-3.jpg"],
+    images: [karura1, karura2, karura3, karura4, karura5, karura6],
+    heroImage: karura1,
+    gallery: [karura1, karura2, karura3, karura4, karura5, karura6],
     description: `Overview
 Friends of Karura Forest is a non-profit dedicated to the preservation and administration of Karura Forest Reserve, a crucial green area in Nairobi. Friends of Karura Forest caters to your particular interests by providing a range of guided tours headed by enthusiastic and informed guides. Whether your interests are in the rich history and ecology of the forest, you are a budding botanist, a passionate birder, or just curious about Karura Forest. There is a tour meant to inspire you.
 
