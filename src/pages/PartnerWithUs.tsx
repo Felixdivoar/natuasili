@@ -88,23 +88,26 @@ const PartnerWithUs: React.FC = () => {
     features: ["Custom integration", "Dedicated account manager", "White-label options", "Custom reporting"]
   }];
   const faqs = [{
-    question: "How do I get started as a partner?",
-    answer: "Simply click 'Apply as a Partner' to create your account. After verification, you can start adding your conservation experiences and setting your availability."
+    question: "How much does it cost to join?",
+    answer: "Joining NatuAsili is free. We charge a 10% service fee on successful bookings, so you keep 90% of your revenue. Donations are different: 100% of every donation goes directly to the partner."
   }, {
-    question: "How and when do I get paid?",
-    answer: "Payouts are processed weekly for completed bookings. Funds are transferred directly to your bank account with detailed statements available in your dashboard."
+    question: "What type of business can register?",
+    answer: "We welcome conservancies, NGOs, community groups, social enterprises, and organizations offering experiences that support conservation, culture, or community engagement."
   }, {
-    question: "Do you support child pricing logic?",
-    answer: "Yes! Our platform automatically applies child half-price rules for designated experiences like Nairobi Giraffe Centre and all Ol Pejeta experiences."
+    question: "How long does verification take?",
+    answer: "Verification usually takes 30 minutes once all required documents are submitted."
   }, {
-    question: "What kind of support do you provide?",
-    answer: "We offer comprehensive support including onboarding assistance, technical help, and ongoing partnership support with guaranteed response times based on your plan."
+    question: "Why do you require legal documents?",
+    answer: "To comply with financial regulations and ensure secure payouts, we collect company details, legal representative information, and proof of address. This follows KYC (Know Your Customer) standards used by our payment partners."
   }, {
-    question: "How do impact proofs work?",
-    answer: "Partners can upload photos, documents, and reports showing their conservation impact. This builds trust with travelers and demonstrates real environmental outcomes."
+    question: "What support do you provide?",
+    answer: "We offer onboarding support, marketing guidance, analytics tools, and ongoing customer service to help you succeed."
   }, {
-    question: "Can I customize my experience listings?",
-    answer: "Absolutely! You can add detailed descriptions, photo galleries, pricing rules, availability calendars, and specific booking requirements for each experience."
+    question: "How do payments work?",
+    answer: "Payouts are transferred to your bank account by the 5th of each month, minus the 10% service fee. You'll also receive a statement for your records."
+  }, {
+    question: "How do I register?",
+    answer: "Click 'Add Your Experience', create an account, fill out the short onboarding form, upload your documents, and set up your first experience. Once verified, you'll get access to your host dashboard."
   }];
   return <div className="min-h-screen bg-background">
       {/* Hero Section */}
