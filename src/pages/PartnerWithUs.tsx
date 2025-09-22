@@ -88,23 +88,23 @@ const PartnerWithUs: React.FC = () => {
     features: ["Custom integration", "Dedicated account manager", "White-label options", "Custom reporting"]
   }];
   const faqs = [{
-    question: "How do I get started as a partner?",
-    answer: "Simply click 'Apply as a Partner' to create your account. After verification, you can start adding your conservation experiences and setting your availability."
+    question: "How do I list my first experience?",
+    answer: "After partner verification, use our intuitive listing builder to add photos, descriptions, pricing, and availability. Include conservation impact details to attract eco-conscious travelers."
   }, {
-    question: "How and when do I get paid?",
-    answer: "Payouts are processed weekly for completed bookings. Funds are transferred directly to your bank account with detailed statements available in your dashboard."
+    question: "What information do I need to provide for each experience?",
+    answer: "You'll need high-quality photos, detailed descriptions, duration, group size limits, what's included/excluded, meeting points, and any special requirements or restrictions."
   }, {
-    question: "Do you support child pricing logic?",
-    answer: "Yes! Our platform automatically applies child half-price rules for designated experiences like Nairobi Giraffe Centre and all Ol Pejeta experiences."
+    question: "How do I set pricing and availability?",
+    answer: "Our flexible pricing system allows you to set different rates for adults/children, seasonal pricing, and group discounts. Update your calendar in real-time to manage availability."
   }, {
-    question: "What kind of support do you provide?",
-    answer: "We offer comprehensive support including onboarding assistance, technical help, and ongoing partnership support with guaranteed response times based on your plan."
+    question: "Can I offer experiences in multiple locations?",
+    answer: "Yes! You can list experiences across different locations in Kenya. Each listing can have unique pricing, availability, and requirements based on the specific location and activity."
   }, {
-    question: "How do impact proofs work?",
-    answer: "Partners can upload photos, documents, and reports showing their conservation impact. This builds trust with travelers and demonstrates real environmental outcomes."
+    question: "How do bookings and cancellations work?",
+    answer: "Travelers book directly through the platform with instant confirmation. You control your cancellation policy, and we handle payment processing and customer communication."
   }, {
-    question: "Can I customize my experience listings?",
-    answer: "Absolutely! You can add detailed descriptions, photo galleries, pricing rules, availability calendars, and specific booking requirements for each experience."
+    question: "What makes a successful experience listing?",
+    answer: "High-quality photos, detailed conservation impact stories, clear descriptions, competitive pricing, and excellent customer reviews. We provide guidance to optimize your listings for maximum bookings."
   }];
   return <div className="min-h-screen bg-background">
       {/* Hero Section */}
