@@ -177,6 +177,11 @@ const AvailabilityAndOptions = ({
     const experienceBasePrice = experience.priceKESAdult || experience.base_price || 350;
     const standardAdultPrice = experienceBasePrice;
     const standardChildPrice = isGroupPricing ? 0 : experience.childHalfPriceRule ? Math.round(experienceBasePrice * 0.5) : experienceBasePrice;
+    
+    // Check if this is the northern white rhinos experience
+    const isRhinoExperience = experience.title?.toLowerCase().includes('northern white rhinos');
+    const experienceStartTimes = isRhinoExperience ? ["8:30 AM", "3:00 PM"] : ["9:00 AM", "2:00 PM"];
+    
     return [{
       id: "standard",
       name: "Standard Experience",
@@ -184,7 +189,7 @@ const AvailabilityAndOptions = ({
       duration: experience.duration_hours || 3,
       language: "English",
       pickup: "Available on request",
-      startTimes: ["9:00 AM", "2:00 PM"],
+      startTimes: experienceStartTimes,
       adultPrice: standardAdultPrice,
       childPrice: standardChildPrice,
       cancellation: "Free cancellation up to 24 hours",
