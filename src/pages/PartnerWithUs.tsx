@@ -68,10 +68,11 @@ const PartnerWithUs: React.FC = () => {
   ];
 
   const howItWorksSteps = [
-    { step: 1, title: "Sign Up", description: "Create your partner account and complete verification" },
-    { step: 2, title: "Add Experiences", description: "List your conservation experiences with photos and details" },
-    { step: 3, title: "Set Pricing & Availability", description: "Configure your pricing, availability, and booking rules" },
-    { step: 4, title: "Go Live & Track Impact", description: "Start receiving bookings and upload impact proofs" }
+    { step: 1, title: "Organization Details", description: "Basic information about your organization" },
+    { step: 2, title: "Contact Information", description: "Key contact details" },
+    { step: 3, title: "Business & Banking", description: "Registration and financial details" },
+    { step: 4, title: "Conservation Experience", description: "Your experience and policies" },
+    { step: 5, title: "Document Upload", description: "Required documents and certificates" }
   ];
 
   const features = [
@@ -417,12 +418,12 @@ const PartnerWithUs: React.FC = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
             <p className="text-xl text-muted-foreground">
-              Get started in four simple steps
+              Get started in five simple steps
             </p>
           </div>
           
           {/* Desktop Grid */}
-          <div className="hidden lg:grid grid-cols-4 gap-8">
+          <div className="hidden lg:grid grid-cols-5 gap-6">
             {howItWorksSteps.map((step, index) => (
               <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
