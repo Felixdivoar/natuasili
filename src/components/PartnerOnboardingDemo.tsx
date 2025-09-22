@@ -831,13 +831,13 @@ const PartnerOnboardingDemo: React.FC = () => {
   };
 
   return (
-    <section className="hero-padding px-4 bg-muted/30">
+    <section className="hero-padding px-4 bg-muted/30" style={{ display: 'none' }}>
       <div className="max-w-[1300px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Try the Partner Onboarding Demo</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Partner Onboarding (Hidden - Use PartnerApplication instead)</h2>
           <p className="text-xl text-muted-foreground">
-            See how listing with NatuAsili works—no data is saved in this demo.
+            This demo component is now hidden. Real applications use the PartnerApplication component.
           </p>
         </div>
 
@@ -845,7 +845,7 @@ const PartnerOnboardingDemo: React.FC = () => {
         <Alert className="mb-8">
           <Info className="h-4 w-4" />
           <AlertDescription>
-            <strong>Demo only</strong>—entries aren't saved.
+            <strong>Component Hidden</strong>—Use PartnerApplication component for real applications.
           </AlertDescription>
         </Alert>
 

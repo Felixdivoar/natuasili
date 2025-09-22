@@ -3,8 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
-import { Eye, Edit, Trash2, Search, Plus } from 'lucide-react';
+import { Eye, Edit, Trash2, Search, Plus, FileText, Download, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface PartnerProfile {
@@ -51,11 +53,16 @@ const AdminPartners = () => {
     }
   };
 
-  const updatePartnerStatus = async (partnerId: string, newStatus: string) => {
+  const updatePartnerStatus = async (partnerId: string, newStatus: string, notes?: string) => {
     try {
       const { error } = await supabase
         .from('partner_profiles')
-        .update({ kyc_status: newStatus })
+        .update({ 
+          kyc_status: newStatus,
+          application_notes: notes,
+          reviewed_by: (await supabase.auth.getUser()).data.user?.id,
+          reviewed_at: new Date().toISOString()
+        })
         .eq('id', partnerId);
 
       if (error) throw error;
@@ -82,7 +89,11 @@ const AdminPartners = () => {
       case 'rejected':
         return <Badge className="bg-red-100 text-red-800">Rejected</Badge>;
       case 'pending':
-        return <Badge className="bg-yellow-100 text-yellow-800">Pending</Badge>;
+        return <Badge className="bg-yellow-100 text-yellow-800">Pending Review</Badge>;
+      case 'under_review':
+        return <Badge className="bg-blue-100 text-blue-800">Under Review</Badge>;
+      case 'requires_documents':
+        return <Badge className="bg-orange-100 text-orange-800">Documents Required</Badge>;
       default:
         return <Badge variant="secondary">{status}</Badge>;
     }

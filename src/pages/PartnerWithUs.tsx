@@ -208,8 +208,8 @@ const PartnerWithUs: React.FC = () => {
         </div>
       </section>
 
-      {/* Partner Onboarding Demo */}
-      <PartnerOnboardingDemo />
+      {/* Partner Onboarding Demo - Hidden, use PartnerApplication instead */}
+      {/* <PartnerOnboardingDemo /> */}
 
       {/* Trusted Partners Carousel */}
       <section className="section-padding-lg bg-muted/30">

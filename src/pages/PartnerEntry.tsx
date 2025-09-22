@@ -6,10 +6,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { CheckCircle, Shield, TrendingUp, Users, Globe, Award, ArrowRight, DollarSign, BarChart3, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useI18n } from "@/contexts/I18nContext";
+import { useState } from 'react';
+import PartnerApplication from '@/components/PartnerApplication';
 const PartnerEntry = () => {
-  const {
-    t
-  } = useI18n();
+  const { t } = useI18n();
+  const [applicationOpen, setApplicationOpen] = useState(false);
   const benefits = [{
     icon: Globe,
     title: t("Global Visibility", "Global Visibility"),
@@ -320,18 +321,26 @@ const PartnerEntry = () => {
             {t("Join Kenya's leading conservation tourism platform and start generating sustainable funding for your projects.", "Join Kenya's leading conservation tourism platform and start generating sustainable funding for your projects.")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/partner-dashboard">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-foreground">
-                {t("Create Partner Account", "Create Partner Account")}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              className="bg-accent hover:bg-accent/90 text-foreground"
+              onClick={() => setApplicationOpen(true)}
+            >
+              {t("Apply as Partner", "Apply as Partner")}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
             <Button size="lg" variant="outline" className="border-white hover:bg-white text-black">
               {t("Contact Us", "Contact Us")}
             </Button>
           </div>
         </div>
       </section>
+
+      {/* Partner Application Modal */}
+      <PartnerApplication 
+        open={applicationOpen} 
+        onOpenChange={setApplicationOpen} 
+      />
     </div>;
 };
 export default PartnerEntry;
