@@ -42,7 +42,7 @@ const AppleStyleHero: React.FC<AppleStyleHeroProps> = ({
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 flex flex-col justify-between min-h-full px-6 md:px-7 lg:px-12">
+      <div className="relative z-10 flex flex-col justify-between min-h-full px-6 md:px-7 lg:px-12 pt-16 md:pt-20 lg:pt-24">
         {/* Main Content */}
         <div className="flex-1 flex items-center">
           <div className="text-left max-w-[830px]">
