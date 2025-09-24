@@ -27,14 +27,6 @@ const TestEmailButton: React.FC = () => {
       });
     }
   };
-  return (
-    <Button 
-      onClick={handleTestEmail}
-      variant="outline"
-      className="mt-4"
-    >
-      Test Welcome Email
-    </Button>
-  );
+  return;
 };
 export default TestEmailButton;
