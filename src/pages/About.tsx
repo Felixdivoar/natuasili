@@ -5,6 +5,7 @@ import { Shield, Target, Users, Leaf, Heart, Globe, Linkedin, Mail } from "lucid
 import { Link } from "react-router-dom";
 import { useImpactMetrics } from "@/hooks/useImpactMetrics";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import MetaTags from "@/components/MetaTags";
 
 const teamMembers = [
   {
@@ -63,6 +64,11 @@ const About = () => {
 
   return (
     <div className="bg-background">{/* Page content wrapper */}
+      <MetaTags 
+        title="title_about"
+        description="meta_about"
+        keywords="about NatuAsili, Kenya conservation platform, sustainable tourism, wildlife protection, conservation impact, eco-tourism organization"
+      />
       
       {/* Hero Section */}
       <section className="hero-padding bg-primary/5">

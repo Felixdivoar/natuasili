@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bot, MessageCircle, Leaf, CheckCircle, Globe, Users } from "lucide-react";
+import MetaTags from "@/components/MetaTags";
 
 const ConservationChatbotPage = () => {
   const scrollToWidget = () => {
@@ -14,6 +15,11 @@ const ConservationChatbotPage = () => {
 
   return (
     <div className="min-h-screen bg-background py-12">
+      <MetaTags 
+        title="title_chatbot"
+        description="meta_chatbot"
+        keywords="AsiliChat, Kenya conservation AI, wildlife travel assistant, conservation chatbot, Kenya travel help, AI conservation guide"
+      />
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

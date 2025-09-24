@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import PriceRangeFilter from "@/components/PriceRangeFilter";
 import MoreFiltersDialog, { MoreFiltersState } from "@/components/MoreFiltersDialog";
+import MetaTags from "@/components/MetaTags";
 const Browse = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();

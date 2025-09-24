@@ -25,6 +25,7 @@ import { getExperienceCoordinates } from "@/utils/locationUtils";
 import { useI18n } from "@/i18n/I18nProvider";
 import T from "@/i18n/T";
 import { supabase } from "@/integrations/supabase/client";
+import MetaTags from "@/components/MetaTags";
 export default function ExperienceDetail() {
   const {
     slug

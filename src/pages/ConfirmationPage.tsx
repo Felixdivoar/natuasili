@@ -5,6 +5,7 @@ import { useCurrency } from "@/contexts/CurrencyContext";
 import { getReceipt /*, clearReceipt*/ } from "@/lib/receipt";
 import { useI18n } from "@/i18n/I18nProvider";
 import T from "@/i18n/T";
+import MetaTags from "@/components/MetaTags";
 
 export default function ConfirmationPage() {
   const { slug } = useParams();
@@ -37,6 +38,11 @@ export default function ConfirmationPage() {
 
   return (
     <div className="max-w-3xl mx-auto my-12">
+      <MetaTags 
+        title="title_confirmation"
+        description="meta_confirmation"
+        keywords="booking confirmed, conservation experience booked, Kenya wildlife booking, travel confirmation, impact tourism"
+      />
       <Card>
         <CardHeader>
           <CardTitle><T k="confirm_booking_success" /></CardTitle>

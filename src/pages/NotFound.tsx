@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import T from "@/i18n/T";
 import { usePageTitle } from "@/hooks/usePageTitle";
+import MetaTags from "@/components/MetaTags";
 
 const NotFound = () => {
   const location = useLocation();
@@ -17,6 +18,11 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
+      <MetaTags 
+        title="title_not_found"
+        description="Page not found on NatuAsili conservation platform. Return to explore Kenya's wildlife experiences and sustainable tourism opportunities."
+        keywords="404 error, page not found, NatuAsili, Kenya conservation, wildlife tourism"
+      />
       <div className="text-center max-w-md mx-auto px-4">
         <h1 className="text-6xl font-bold mb-6 text-white">404</h1>
         <p className="text-xl text-white mb-8"><T k="not_found_title" /></p>

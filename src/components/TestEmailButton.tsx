@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { sendWelcomeEmail } from '@/lib/email';
 import { toast } from '@/hooks/use-toast';
+
 const TestEmailButton: React.FC = () => {
   const handleTestEmail = async () => {
     try {
@@ -27,6 +28,17 @@ const TestEmailButton: React.FC = () => {
       });
     }
   };
-  return;
+
+  return (
+    <Button 
+      onClick={handleTestEmail} 
+      variant="outline" 
+      size="sm"
+      className="mt-4"
+    >
+      Test Welcome Email
+    </Button>
+  );
 };
+
 export default TestEmailButton;
