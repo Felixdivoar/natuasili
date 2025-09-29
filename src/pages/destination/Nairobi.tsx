@@ -13,6 +13,7 @@ import { useHtmlLang } from "@/hooks/useHtmlLang";
 import T from "@/i18n/T";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
 import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
+import { usePartners } from "@/hooks/usePartners";
 const NairobiDestination = () => {
   const {
     formatPrice
@@ -23,7 +24,7 @@ const NairobiDestination = () => {
   usePageTitle("title_destinations");
   useHtmlLang();
 
-  
+  const { partners: nairobiPartners, loading: partnersLoading } = usePartners('nairobi');
   const nairobiExperiences = EXPERIENCES.filter(experience => experience.destination === 'nairobi');
   return <div className="min-h-screen bg-background">
       <Header />
@@ -60,7 +61,11 @@ const NairobiDestination = () => {
       <section className="py-[15px]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-conservation mb-2">{nairobiPartners.length}</div>
+                <div className="text-sm text-muted-foreground"><T k="dest_urban_partners" /></div>
+              </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">12</div>
                 <div className="text-sm text-muted-foreground"><T k="dest_active_projects" /></div>
@@ -105,6 +110,78 @@ const NairobiDestination = () => {
         </div>
       </section>
 
+      {/* Conservation Partners */}
+      {nairobiPartners.length > 0 && (
+        <section className="bg-muted/30 py-[15px]">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                <T k="dest_urban_conservation_partners" />
+              </h2>
+              <DynamicTranslated text="Meet the organizations pioneering urban conservation in Kenya's capital city." className="text-lg text-muted-foreground max-w-2xl mx-auto" />
+            </div>
+
+            {partnersLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(3)].map((_, i) => (
+                  <Card key={i} className="animate-pulse">
+                    <div className="aspect-[16/10] bg-muted rounded-t-lg" />
+                    <CardHeader>
+                      <div className="h-6 bg-muted rounded w-3/4" />
+                      <div className="h-4 bg-muted rounded w-1/2" />
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2 mb-4">
+                        <div className="h-4 bg-muted rounded" />
+                        <div className="h-4 bg-muted rounded w-2/3" />
+                      </div>
+                      <div className="h-9 bg-muted rounded" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {nairobiPartners.map(partner => (
+                  <Card key={partner.id} className="hover:shadow-lg transition-shadow">
+                    <div className="aspect-[16/10] relative">
+                      <img 
+                        src={partner.logo_image_url || '/img/ph1.jpg'} 
+                        alt={partner.name} 
+                        className="w-full h-full object-cover rounded-t-lg" 
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.src = '/img/ph1.jpg';
+                        }}
+                      />
+                      <div className="absolute top-3 left-3">
+                        <Badge className="bg-foreground text-background">
+                          Partner
+                        </Badge>
+                      </div>
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{partner.name}</CardTitle>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        {partner.location_text || 'Nairobi'}
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <DynamicTranslated text={partner.short_bio || partner.tagline || 'Conservation partner pioneering urban conservation in Kenya\'s capital city.'} className="text-sm text-muted-foreground mb-4 line-clamp-3" />
+                      <Button size="sm" asChild className="w-full">
+                        <Link to={`/partner/${partner.slug}`}>
+                          <T k="dest_view_partner" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Featured Experiences */}
       <section className="py-[20px]">
