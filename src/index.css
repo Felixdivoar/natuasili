@@ -296,9 +296,9 @@
     padding: 0 1rem;
   }
 
-/* Force black color for descriptions instead of grey */
+/* Better contrast for descriptions */
 .text-muted-foreground {
-  color: hsl(var(--foreground)) !important;
+  color: hsl(var(--muted-foreground)) !important;
 }
 
 /* Status color utilities */
