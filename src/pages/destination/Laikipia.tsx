@@ -24,32 +24,43 @@ const LaikipiaDestination = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section - Modern & Responsive */}
-      <section className="relative h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-full overflow-hidden">
-        <img
-          src={laikipiaDestination}
-          alt="Laikipia Plateau"
-          className="w-full h-full object-cover"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
-        <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="text-center text-white max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+      {/* Hero Section - Redesigned */}
+      <section className="relative h-[85vh] w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={laikipiaDestination}
+            alt="Laikipia Plateau"
+            className="w-full h-full object-cover scale-105 animate-subtle-zoom"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        </div>
+        
+        <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-16 md:pb-24">
+          <div className="max-w-3xl space-y-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 mb-4">
+              <MapPin className="h-4 w-4 text-white" />
+              <span className="text-white text-sm font-medium">Central Highlands, Kenya</span>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               Laikipia Plateau
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
-              Private and community conservancies working together to protect wildlife on Kenya's central highlands.
+            
+            <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl">
+              Private and community conservancies protecting wildlife on Kenya's central highlands
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
-              <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
+            
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all hover:scale-105">
                 <Link to="/listings?destination=laikipia">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white/80 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all" asChild>
+              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-foreground backdrop-blur-sm transition-all hover:scale-105" asChild>
                 <Link to="/impact-ledger">
-                  View Highland Impact
+                  View Impact
                 </Link>
               </Button>
             </div>

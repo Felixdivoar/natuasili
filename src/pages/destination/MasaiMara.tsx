@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, TreePine, Camera, Heart } from "lucide-react";
@@ -24,30 +24,41 @@ const MasaiMaraDestination = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section - Modern & Responsive */}
-      <section className="relative h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-full overflow-hidden">
-        <img
-          src={masaiMaraDestination}
-          alt="Maasai Mara Ecosystem"
-          className="w-full h-full object-cover"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
-        <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="text-center text-white max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+      {/* Hero Section - Redesigned */}
+      <section className="relative h-[85vh] w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={masaiMaraDestination}
+            alt="Maasai Mara Ecosystem"
+            className="w-full h-full object-cover scale-105 animate-subtle-zoom"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        </div>
+        
+        <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-16 md:pb-24">
+          <div className="max-w-3xl space-y-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 mb-4">
+              <MapPin className="h-4 w-4 text-white" />
+              <span className="text-white text-sm font-medium">Narok County, Kenya</span>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               Maasai Mara Ecosystem
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
-              Protecting the world-famous migration route and supporting Maasai communities through conservation tourism.
+            
+            <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl">
+              Protecting the world-famous migration route and supporting Maasai communities through conservation tourism
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
-              <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
+            
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all hover:scale-105">
                 <Link to="/listings?destination=masai-mara">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white/80 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all" asChild>
+              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-foreground backdrop-blur-sm transition-all hover:scale-105" asChild>
                 <Link to="/impact-ledger">
                   View Impact
                 </Link>
@@ -57,58 +68,101 @@ const MasaiMaraDestination = () => {
         </div>
       </section>
 
-      {/* Overview Section - Modern Stats */}
-      <section className="py-16 lg:py-20">
+      {/* Overview Section - Redesigned */}
+      <section className="py-20 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16">
-              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">{maraPartners.length}</div>
-                <div className="text-sm sm:text-base text-muted-foreground font-medium">Conservation Partners</div>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
+              <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">{maraPartners.length}</div>
+                <div className="text-sm text-muted-foreground">Partners</div>
               </div>
-              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-secondary/5 to-secondary/10 border border-secondary/10">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary mb-2">{maraExperiences.length}</div>
-                <div className="text-sm sm:text-base text-muted-foreground font-medium">Active Projects</div>
+              <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                  <Heart className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">{maraExperiences.length}</div>
+                <div className="text-sm text-muted-foreground">Experiences</div>
               </div>
-              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/10">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">15,000</div>
-                <div className="text-sm sm:text-base text-muted-foreground font-medium">Hectares Protected</div>
+              <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                  <MapPin className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">15,000</div>
+                <div className="text-sm text-muted-foreground">Hectares Protected</div>
               </div>
-              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">30</div>
-                <div className="text-sm sm:text-base text-muted-foreground font-medium">Communities Involved</div>
+              <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
+                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                  <TreePine className="h-6 w-6 text-primary" />
+                </div>
+                <div className="text-4xl font-bold text-foreground mb-2">30</div>
+                <div className="text-sm text-muted-foreground">Communities</div>
               </div>
             </div>
 
-            <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">About Maasai Mara</h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                The Maasai Mara is perhaps Kenya's most famous conservation area, home to the spectacular Great Migration where over two million wildebeest, zebra, and gazelle traverse the landscape annually. This UNESCO World Heritage site represents one of Africa's last great wildlife strongholds.
-              </p>
-              
-              <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
-                The ecosystem extends far beyond the national reserve boundaries, encompassing community conservancies that are owned and managed by local Maasai communities. These conservancies play a crucial role in wildlife conservation while providing sustainable livelihoods for traditional pastoralist communities.
-              </p>
-            </div>
+            {/* About Section */}
+            <div className="space-y-8">
+              <div className="text-center max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  About Maasai Mara
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  The Maasai Mara is perhaps Kenya's most famous conservation area, home to the spectacular Great Migration where over two million wildebeest, zebra, and gazelle traverse the landscape annually. This UNESCO World Heritage site represents one of Africa's last great wildlife strongholds.
+                </p>
+              </div>
 
-            <div className="max-w-5xl mx-auto">
-              <h3 className="text-2xl font-bold mb-8 text-center">Conservation Highlights</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
-                  <h4 className="font-bold text-lg mb-3 text-primary">Great Migration</h4>
-                  <p className="text-muted-foreground leading-relaxed">Supporting the annual migration of over 2 million animals across the Mara-Serengeti ecosystem.</p>
+              {/* Conservation Highlights */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                <div className="bg-gradient-to-br from-card to-muted/30 rounded-2xl p-8 border border-border shadow-sm hover:shadow-lg transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Camera className="h-5 w-5 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-semibold text-foreground">Great Migration</h4>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Supporting the annual migration of over 2 million animals across the Mara-Serengeti ecosystem.
+                  </p>
                 </div>
-                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
-                  <h4 className="font-bold text-lg mb-3 text-primary">Community Conservancies</h4>
-                  <p className="text-muted-foreground leading-relaxed">Over 300,000 acres of community-owned land dedicated to wildlife conservation.</p>
+                
+                <div className="bg-gradient-to-br from-card to-muted/30 rounded-2xl p-8 border border-border shadow-sm hover:shadow-lg transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Users className="h-5 w-5 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-semibold text-foreground">Community Conservancies</h4>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Over 300,000 acres of community-owned land dedicated to wildlife conservation.
+                  </p>
                 </div>
-                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
-                  <h4 className="font-bold text-lg mb-3 text-primary">Anti-Poaching</h4>
-                  <p className="text-muted-foreground leading-relaxed">24/7 ranger patrols protecting rhinos, elephants, and other endangered species.</p>
+                
+                <div className="bg-gradient-to-br from-card to-muted/30 rounded-2xl p-8 border border-border shadow-sm hover:shadow-lg transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <TreePine className="h-5 w-5 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-semibold text-foreground">Anti-Poaching</h4>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    24/7 ranger patrols protecting rhinos, elephants, and other endangered species.
+                  </p>
                 </div>
-                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
-                  <h4 className="font-bold text-lg mb-3 text-primary">Research & Monitoring</h4>
-                  <p className="text-muted-foreground leading-relaxed">Scientific research on predator-prey dynamics and ecosystem health monitoring.</p>
+                
+                <div className="bg-gradient-to-br from-card to-muted/30 rounded-2xl p-8 border border-border shadow-sm hover:shadow-lg transition-all">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Heart className="h-5 w-5 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-semibold text-foreground">Research & Monitoring</h4>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Scientific research on predator-prey dynamics and ecosystem health monitoring.
+                  </p>
                 </div>
               </div>
             </div>
@@ -116,33 +170,31 @@ const MasaiMaraDestination = () => {
         </div>
       </section>
 
-      {/* Conservation Partners - Modern Design */}
+      {/* Conservation Partners - Redesigned */}
       {maraPartners.length > 0 && (
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-muted/20 to-muted/40">
+        <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                Conservation Partners in Maasai Mara
+            <div className="text-center mb-16 space-y-4">
+              <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-2 mb-2">
+                <Users className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium text-primary">Our Partners</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                Conservation Partners
               </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Meet the organizations working to protect one of the world's most important wildlife ecosystems.
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Meet the organizations working to protect one of the world's most important wildlife ecosystems
               </p>
             </div>
 
             {partnersLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[...Array(3)].map((_, i) => (
-                  <Card key={i} className="animate-pulse">
-                    <div className="aspect-[16/10] bg-muted rounded-t-lg" />
-                    <CardHeader>
-                      <div className="h-6 bg-muted rounded w-3/4" />
-                      <div className="h-4 bg-muted rounded w-1/2" />
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2 mb-4">
-                        <div className="h-4 bg-muted rounded" />
-                        <div className="h-4 bg-muted rounded w-2/3" />
-                      </div>
+                  <Card key={i} className="animate-pulse overflow-hidden">
+                    <div className="aspect-[4/3] bg-muted" />
+                    <CardContent className="p-6">
+                      <div className="h-6 bg-muted rounded w-3/4 mb-4" />
+                      <div className="h-4 bg-muted rounded mb-4" />
                       <div className="h-9 bg-muted rounded" />
                     </CardContent>
                   </Card>
@@ -151,38 +203,40 @@ const MasaiMaraDestination = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {maraPartners.map((partner) => (
-                  <Card key={partner.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card/80 backdrop-blur-sm overflow-hidden">
-                    <div className="aspect-[4/3] relative overflow-hidden">
+                  <Card key={partner.id} className="group overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <div className="aspect-[4/3] relative overflow-hidden bg-muted">
                       <img
                         src={partner.logo_image_url || '/img/ph1.jpg'}
                         alt={partner.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         onError={(e) => {
                           const target = e.currentTarget;
                           target.src = '/img/ph1.jpg';
                         }}
                       />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute top-4 right-4">
+                        <Badge className="bg-primary text-primary-foreground border-0 shadow-lg">
                           Partner
                         </Badge>
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-xl group-hover:text-primary transition-colors">{partner.name}</CardTitle>
-                      <div className="flex items-center text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-2 text-primary" />
-                        <span className="text-sm">{partner.location_text || 'Maasai Mara'}</span>
+                    <CardContent className="p-6 space-y-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                          {partner.name}
+                        </h3>
+                        <div className="flex items-center text-sm text-muted-foreground mb-3">
+                          <MapPin className="h-4 w-4 mr-1 text-primary" />
+                          {partner.location_text || 'Maasai Mara'}
+                        </div>
                       </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
+                      <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                         {partner.short_bio || partner.tagline || 'Conservation partner working to protect wildlife and ecosystems in the Maasai Mara region.'}
                       </p>
-                      <Button asChild className="w-full group-hover:bg-primary/90 transition-colors">
+                      <Button size="sm" asChild className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all">
                         <Link to={`/partner/${partner.slug}`}>
-                          View Partner
+                          Learn More
                         </Link>
                       </Button>
                     </CardContent>
@@ -194,51 +248,55 @@ const MasaiMaraDestination = () => {
         </section>
       )}
 
-      {/* Featured Experiences - Modern Design */}
-      <section className="py-16 lg:py-20">
+      {/* Featured Experiences - Redesigned */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-              Featured Maasai Mara Experiences
+          <div className="text-center mb-16 space-y-4">
+            <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-2 mb-2">
+              <Camera className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-primary">Experiences</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Featured Experiences
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Experience the wonder of the Great Migration while supporting critical conservation efforts.
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Experience the wonder of the Great Migration while supporting critical conservation efforts
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {maraExperiences.slice(0, 6).map((experience) => (
-              <Card key={experience.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card overflow-hidden">
-                <div className="aspect-[4/3] relative overflow-hidden">
+              <Card key={experience.id} className="group overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                <div className="aspect-[4/3] relative overflow-hidden bg-muted">
                   {experience.images[0] && (
                     <img
                       src={experience.images[0]}
                       alt={experience.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   )}
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <Badge className="bg-primary text-primary-foreground border-0 shadow-lg text-base px-3 py-1">
                       {formatPrice(experience.priceKESAdult)}
                     </Badge>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                <CardContent className="p-6 space-y-4">
+                  <h3 className="text-xl font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-tight">
                     {experience.title}
                   </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
+                  <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
                     {experience.description}
                   </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-muted-foreground">
-                      <Users className="h-4 w-4 mr-2 text-primary" />
-                      <span className="text-sm">8 max</span>
+                  <div className="flex items-center justify-between pt-2 border-t border-border">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Users className="h-4 w-4 text-primary" />
+                      <span>Up to 8 guests</span>
                     </div>
                     <BookNowButton 
                       href={`/experience/${experience.slug}`}
-                      label="Book Now"
+                      label="Book"
                     />
                   </div>
                 </CardContent>
@@ -247,9 +305,10 @@ const MasaiMaraDestination = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" variant="outline" asChild className="hover:bg-primary hover:text-primary-foreground transition-colors">
-              <Link to="/listings?destination=masai-mara">
-                View All Maasai Mara Experiences
+            <Button size="lg" variant="outline" asChild className="group">
+              <Link to="/listings?destination=masai-mara" className="flex items-center gap-2">
+                View All Experiences
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </Button>
           </div>
