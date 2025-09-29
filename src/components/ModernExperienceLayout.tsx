@@ -60,7 +60,7 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
     <>
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
-        <section className="relative">
+        <section className="relative mb-8">
           <div className="max-w-7xl mx-auto">
             {/* Mobile Image Carousel */}
             {isMobile ? (
@@ -105,24 +105,26 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
               </div>
             ) : (
               /* Desktop Grid */
-              <div className="grid grid-cols-3 gap-2 h-80 px-4">
-                <div className="col-span-2 rounded-lg overflow-hidden cursor-pointer" onClick={() => openSlideshow(0)}>
-                  <img 
-                    src={experience.images?.[0]} 
-                    alt={experience.title} 
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                  />
-                </div>
-                <div className="grid grid-rows-2 gap-2">
-                  {experience.images?.slice(1, 3).map((image: string, index: number) => (
-                    <div key={index} className="rounded-lg overflow-hidden cursor-pointer" onClick={() => openSlideshow(index + 1)}>
-                      <img 
-                        src={image} 
-                        alt={`${experience.title} - ${index + 2}`} 
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                      />
-                    </div>
-                  ))}
+              <div className="px-4">
+                <div className="grid grid-cols-3 gap-2 h-80 rounded-xl overflow-hidden">
+                  <div className="col-span-2 cursor-pointer" onClick={() => openSlideshow(0)}>
+                    <img 
+                      src={experience.images?.[0]} 
+                      alt={experience.title} 
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                    />
+                  </div>
+                  <div className="grid grid-rows-2 gap-2">
+                    {experience.images?.slice(1, 3).map((image: string, index: number) => (
+                      <div key={index} className="cursor-pointer" onClick={() => openSlideshow(index + 1)}>
+                        <img 
+                          src={image} 
+                          alt={`${experience.title} - ${index + 2}`} 
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -130,22 +132,22 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
         </section>
 
         {/* Content Section */}
-        <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="max-w-7xl mx-auto px-4 py-0">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
               {/* Header Info */}
-              <div className="space-y-4">
+              <div className="space-y-4 mb-8">
                 <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 w-fit">
                   {experience.themes?.[0]}
                 </Badge>
                 
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                    <h1 className="text-2xl md:text-3xl font-bold text-foreground leading-tight mb-4">
                       {experience.title}
                     </h1>
-                    <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
                         <span>{experience.locationText}</span>
@@ -157,15 +159,21 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                         </span>
                         <span>({reviewStats.totalReviews} reviews)</span>
                       </div>
+                      {experience.duration && (
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          <span>{experience.duration}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
                   {!isMobile && (
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" size="icon" onClick={onWishlistClick}>
+                    <div className="flex items-center gap-2 mt-2">
+                      <Button variant="outline" size="icon" className="h-10 w-10" onClick={onWishlistClick}>
                         <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-current' : ''}`} />
                       </Button>
-                      <Button variant="outline" size="icon" onClick={handleShare}>
+                      <Button variant="outline" size="icon" className="h-10 w-10" onClick={handleShare}>
                         <Share className="h-4 w-4" />
                       </Button>
                     </div>
@@ -360,9 +368,9 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
               </Card>
             </div>
 
-            {/* Booking Sidebar */}
+            {/* Booking Sidebar - Fixed positioning */}
             <div className="lg:col-span-1">
-              <div className="sticky top-6">
+              <div className="sticky top-6 z-10">
                 <InlineBookingCard 
                   experience={experience}
                   onBookingClick={onBookingClick}
@@ -371,8 +379,8 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
             </div>
           </div>
 
-          {/* Related Experiences */}
-          <div className="mt-12">
+          {/* Related Experiences - Proper spacing */}
+          <div className="mt-16 pt-8 border-t border-border">
             <RelatedExperiences 
               currentExperienceId={experience.id}
               theme={experience.themes?.[0] || 'wildlife'}
