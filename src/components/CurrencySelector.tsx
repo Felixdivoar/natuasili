@@ -5,6 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Globe } from "lucide-react";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { SUPPORTED, SYMBOL, type Currency } from "@/lib/currency";
 
@@ -15,7 +16,7 @@ const CurrencySelector = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
-          <span className="text-sm font-medium">{SYMBOL[currency]}</span>
+          <Globe className="w-4 h-4" />
           {currency}
         </Button>
       </DropdownMenuTrigger>
