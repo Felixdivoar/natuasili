@@ -59,7 +59,7 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
   return (
     <>
       <div className="min-h-screen bg-background">
-        {/* Hero Section */}
+        {/* Hero Section - Full Height Gallery */}
         <section className="relative mb-8">
           <div className="max-w-7xl mx-auto">
             {/* Mobile Image Carousel */}
@@ -78,7 +78,7 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                       <img 
                         src={image} 
                         alt={`${experience.title} - Image ${index + 1}`} 
-                        className="w-full h-64 object-cover cursor-pointer" 
+                        className="w-full h-80 object-cover cursor-pointer" 
                       />
                     </div>
                   ))}
@@ -104,27 +104,65 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                 </div>
               </div>
             ) : (
-              /* Desktop Grid */
+              /* Desktop Grid - Full Width & Proper Height */
               <div className="px-4">
-                <div className="grid grid-cols-3 gap-2 h-80 rounded-xl overflow-hidden">
-                  <div className="col-span-2 cursor-pointer" onClick={() => openSlideshow(0)}>
+                <div className="grid grid-cols-4 gap-3 h-[500px] rounded-lg overflow-hidden">
+                  {/* Main large image - spans 2 columns and 2 rows */}
+                  <div className="col-span-2 row-span-2 cursor-pointer group" onClick={() => openSlideshow(0)}>
                     <img 
                       src={experience.images?.[0]} 
                       alt={experience.title} 
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                     />
                   </div>
-                  <div className="grid grid-rows-2 gap-2">
-                    {experience.images?.slice(1, 3).map((image: string, index: number) => (
-                      <div key={index} className="cursor-pointer" onClick={() => openSlideshow(index + 1)}>
-                        <img 
-                          src={image} 
-                          alt={`${experience.title} - ${index + 2}`} 
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                        />
-                      </div>
-                    ))}
+                  
+                  {/* Top right image */}
+                  <div className="col-span-2 cursor-pointer group" onClick={() => openSlideshow(1)}>
+                    <img 
+                      src={experience.images?.[1]} 
+                      alt={`${experience.title} - Image 2`} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                    />
                   </div>
+                  
+                  {/* Bottom right - split into 2 smaller images */}
+                  <div className="cursor-pointer group relative" onClick={() => openSlideshow(2)}>
+                    <img 
+                      src={experience.images?.[2]} 
+                      alt={`${experience.title} - Image 3`} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                    />
+                  </div>
+                  
+                  <div className="cursor-pointer group relative" onClick={() => openSlideshow(3)}>
+                    <img 
+                      src={experience.images?.[3] || experience.images?.[2]} 
+                      alt={`${experience.title} - Image 4`} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                    />
+                    {/* Show more images overlay if there are more than 4 */}
+                    {experience.images && experience.images.length > 4 && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-medium hover:bg-black/70 transition-colors">
+                        <span className="text-lg">+{experience.images.length - 4} more</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Desktop Action Buttons - Outside the gallery */}
+                <div className="flex items-center justify-end gap-2 mt-4">
+                  <Button variant="outline" size="sm" onClick={onWishlistClick}>
+                    <Heart className={`h-4 w-4 mr-2 ${isInWishlist ? 'fill-current' : ''}`} />
+                    {isInWishlist ? 'Saved' : 'Save'}
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={handleShare}>
+                    <Share className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => openSlideshow(0)}>
+                    <span className="mr-2">📷</span>
+                    View all {experience.images?.length || 0} photos
+                  </Button>
                 </div>
               </div>
             )}
@@ -136,8 +174,8 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Header Info */}
-              <div className="space-y-4 mb-8">
+              {/* Header Info - Better spacing from gallery */}
+              <div className="space-y-4 mb-8 mt-4">
                 <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 w-fit">
                   {experience.themes?.[0]}
                 </Badge>
@@ -170,12 +208,14 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                   
                   {!isMobile && (
                     <div className="flex items-center gap-2 mt-2">
-                      <Button variant="outline" size="icon" className="h-10 w-10" onClick={onWishlistClick}>
-                        <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-current' : ''}`} />
-                      </Button>
-                      <Button variant="outline" size="icon" className="h-10 w-10" onClick={handleShare}>
-                        <Share className="h-4 w-4" />
-                      </Button>
+                      <Badge variant="secondary" className="px-3 py-1">
+                        {experience.duration || '2-3 hours'}
+                      </Badge>
+                      {experience.capacity && (
+                        <Badge variant="outline" className="px-3 py-1">
+                          Max {experience.capacity} people
+                        </Badge>
+                      )}
                     </div>
                   )}
                 </div>
