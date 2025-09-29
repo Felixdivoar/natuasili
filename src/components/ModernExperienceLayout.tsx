@@ -185,9 +185,158 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                 <TabsContent value="overview" className="mt-6">
                   <Card>
                     <CardContent className="p-6">
-                      <p className="text-muted-foreground leading-relaxed">
-                        {experience.description}
-                      </p>
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-muted-foreground leading-relaxed">
+                            {contentSections.overview || experience.description}
+                          </p>
+                        </div>
+                        
+                        {contentSections.highlights && contentSections.highlights.length > 0 && (
+                          <div className="mt-6">
+                            <h3 className="font-semibold mb-3">Highlights</h3>
+                            <ul className="space-y-2">
+                              {contentSections.highlights.map((highlight, index) => (
+                                <li key={index} className="flex items-start gap-2">
+                                  <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                                  <span className="text-muted-foreground">{highlight}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="itinerary" className="mt-6">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        {contentSections.itinerary && contentSections.itinerary.length > 0 ? (
+                          contentSections.itinerary.map((item, index) => (
+                            <div key={index} className="flex gap-4">
+                              <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                <span className="text-sm font-medium text-primary">{index + 1}</span>
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-medium">{item.title}</h4>
+                                <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          // Default itinerary
+                          [
+                            {
+                              title: "Early Morning Departure",
+                              description: "Pick up from your accommodation and journey to the location with expert briefing."
+                            },
+                            {
+                              title: "Experience Begins", 
+                              description: "Begin your conservation experience with local guides and community members."
+                            },
+                            {
+                              title: "Hands-On Activities",
+                              description: "Participate in conservation activities and learn traditional techniques."
+                            }
+                          ].map((item, index) => (
+                            <div key={index} className="flex gap-4">
+                              <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                <span className="text-sm font-medium text-primary">{index + 1}</span>
+                              </div>
+                              <div className="flex-1">
+                                <h4 className="font-medium">{item.title}</h4>
+                                <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                
+                <TabsContent value="included" className="mt-6">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <h3 className="font-semibold mb-3 text-emerald-700">What's Included</h3>
+                          <ul className="space-y-2">
+                            {contentSections.included && contentSections.included.length > 0 ? (
+                              contentSections.included.map((item, index) => (
+                                <li key={index} className="flex items-start gap-2">
+                                  <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5" />
+                                  <span className="text-sm">{item}</span>
+                                </li>
+                              ))
+                            ) : (
+                              ['Expert local guide', 'All activities mentioned', 'Transportation', 'Refreshments'].map((item, index) => (
+                                <li key={index} className="flex items-start gap-2">
+                                  <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5" />
+                                  <span className="text-sm">{item}</span>
+                                </li>
+                              ))
+                            )}
+                          </ul>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold mb-3 text-red-700">Not Included</h3>
+                          <ul className="space-y-2">
+                            {contentSections.notIncluded && contentSections.notIncluded.length > 0 ? (
+                              contentSections.notIncluded.map((item, index) => (
+                                <li key={index} className="flex items-start gap-2">
+                                  <XCircle className="h-4 w-4 text-red-500 mt-0.5" />
+                                  <span className="text-sm">{item}</span>
+                                </li>
+                              ))
+                            ) : (
+                              ['Personal expenses', 'Travel insurance', 'Accommodation'].map((item, index) => (
+                                <li key={index} className="flex items-start gap-2">
+                                  <XCircle className="h-4 w-4 text-red-500 mt-0.5" />
+                                  <span className="text-sm">{item}</span>
+                                </li>
+                              ))
+                            )}
+                          </ul>
+                        </div>
+                      </div>
+                      
+                      {/* Important Information & FAQs */}
+                      {((contentSections.importantInfo && contentSections.importantInfo.length > 0) || 
+                        (contentSections.faqs && contentSections.faqs.length > 0)) && (
+                        <div className="mt-8 space-y-6">
+                          {contentSections.importantInfo && contentSections.importantInfo.length > 0 && (
+                            <div>
+                              <h3 className="font-semibold mb-3 text-orange-700">Important Information</h3>
+                              <div className="space-y-2">
+                                {contentSections.importantInfo.map((info, index) => (
+                                  <div key={index} className="flex gap-2">
+                                    <CheckCircle className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                                    <span className="text-sm">{info}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {contentSections.faqs && contentSections.faqs.length > 0 && (
+                            <div>
+                              <h3 className="font-semibold mb-3">Frequently Asked Questions</h3>
+                              <div className="space-y-4">
+                                {contentSections.faqs.map((faq, index) => (
+                                  <div key={index}>
+                                    <h4 className="font-medium text-sm mb-1">{faq.question}</h4>
+                                    <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </TabsContent>
