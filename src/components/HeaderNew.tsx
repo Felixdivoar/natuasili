@@ -295,7 +295,9 @@ export default function HeaderNew() {
                     {t("nav_impact")}
                   </Link>
                   
-                  
+                  <Link to="/partner-entry" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
+                    List Experience
+                  </Link>
                   
                   <button className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md" onClick={() => {
                 console.log('Mobile AsiliChat button clicked');
