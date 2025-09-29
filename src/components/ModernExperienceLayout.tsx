@@ -36,6 +36,24 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const coordinates = getExperienceCoordinates(experience.locationText);
 
+  // Auto-slide mobile carousel
+  useEffect(() => {
+    if (!isMobile || !experience?.images?.length) return;
+    
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => {
+        const next = (prev + 1) % experience.images.length;
+        if (carouselRef.current) {
+          const width = carouselRef.current.clientWidth;
+          carouselRef.current.scrollTo({ left: next * width, behavior: 'smooth' });
+        }
+        return next;
+      });
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, [isMobile, experience?.images?.length]);
+
   const openSlideshow = (index: number) => {
     setSlideshowIndex(index);
     setIsSlideshowOpen(true);
@@ -59,7 +77,7 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
   return (
     <>
       <div className="min-h-screen bg-background">
-        {/* Hero Section - Full Height Gallery */}
+        {/* Hero Gallery - Option A: Collage Layout */}
         <section className="relative mb-8">
           <div className="max-w-7xl mx-auto">
             {/* Mobile Image Carousel */}
@@ -84,11 +102,12 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                   ))}
                 </div>
                 
-                <div className="absolute top-3 right-3 flex gap-2">
+                {/* Mobile Action Buttons */}
+                <div className="absolute top-4 right-4 flex gap-2">
                   <Button 
                     variant="secondary" 
                     size="icon" 
-                    className="h-8 w-8 rounded-full bg-black/20 backdrop-blur-sm"
+                    className="h-10 w-10 rounded-full bg-black/20 backdrop-blur-sm border-0"
                     onClick={onWishlistClick}
                   >
                     <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-white text-white' : 'text-white'}`} />
@@ -96,73 +115,134 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                   <Button 
                     variant="secondary" 
                     size="icon" 
-                    className="h-8 w-8 rounded-full bg-black/20 backdrop-blur-sm"
+                    className="h-10 w-10 rounded-full bg-black/20 backdrop-blur-sm border-0"
                     onClick={handleShare}
                   >
                     <Share className="h-4 w-4 text-white" />
                   </Button>
                 </div>
+                
+                {/* Mobile Image Counter */}
+                <div className="absolute bottom-4 right-4">
+                  <div className="bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm font-medium">
+                    {currentImageIndex + 1} / {experience.images?.length || 0}
+                  </div>
+                </div>
               </div>
             ) : (
-              /* Desktop Grid - Full Width & Proper Height */
+              /* Desktop Collage Layout */
               <div className="px-4">
-                <div className="grid grid-cols-4 gap-3 h-[500px] rounded-lg overflow-hidden">
-                  {/* Main large image - spans 2 columns and 2 rows */}
-                  <div className="col-span-2 row-span-2 cursor-pointer group" onClick={() => openSlideshow(0)}>
+                <div className="grid grid-cols-2 gap-4 h-[560px]">
+                  {/* Large Main Image - Left Side */}
+                  <div 
+                    className="relative rounded-xl overflow-hidden cursor-pointer group"
+                    onClick={() => openSlideshow(0)}
+                  >
                     <img 
                       src={experience.images?.[0]} 
                       alt={experience.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
-                  {/* Top right image */}
-                  <div className="col-span-2 cursor-pointer group" onClick={() => openSlideshow(1)}>
-                    <img 
-                      src={experience.images?.[1]} 
-                      alt={`${experience.title} - Image 2`} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                    />
-                  </div>
-                  
-                  {/* Bottom right - split into 2 smaller images */}
-                  <div className="cursor-pointer group relative" onClick={() => openSlideshow(2)}>
-                    <img 
-                      src={experience.images?.[2]} 
-                      alt={`${experience.title} - Image 3`} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                    />
-                  </div>
-                  
-                  <div className="cursor-pointer group relative" onClick={() => openSlideshow(3)}>
-                    <img 
-                      src={experience.images?.[3] || experience.images?.[2]} 
-                      alt={`${experience.title} - Image 4`} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                    />
-                    {/* Show more images overlay if there are more than 4 */}
-                    {experience.images && experience.images.length > 4 && (
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-medium hover:bg-black/70 transition-colors">
-                        <span className="text-lg">+{experience.images.length - 4} more</span>
+                  {/* Right Side - 2x2 Grid */}
+                  <div className="grid grid-rows-2 gap-4">
+                    {/* Top Right - 2 images side by side */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div 
+                        className="relative rounded-xl overflow-hidden cursor-pointer group"
+                        onClick={() => openSlideshow(1)}
+                      >
+                        <img 
+                          src={experience.images?.[1]} 
+                          alt={`${experience.title} - Image 2`} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                        />
                       </div>
-                    )}
+                      
+                      <div 
+                        className="relative rounded-xl overflow-hidden cursor-pointer group"
+                        onClick={() => openSlideshow(2)}
+                      >
+                        <img 
+                          src={experience.images?.[2]} 
+                          alt={`${experience.title} - Image 3`} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Bottom Right - 2 images side by side */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div 
+                        className="relative rounded-xl overflow-hidden cursor-pointer group"
+                        onClick={() => openSlideshow(3)}
+                      >
+                        <img 
+                          src={experience.images?.[3]} 
+                          alt={`${experience.title} - Image 4`} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                        />
+                      </div>
+                      
+                      <div 
+                        className="relative rounded-xl overflow-hidden cursor-pointer group"
+                        onClick={() => openSlideshow(4)}
+                      >
+                        <img 
+                          src={experience.images?.[4] || experience.images?.[0]} 
+                          alt={`${experience.title} - Image 5`} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
+                        />
+                        
+                        {/* View All Photos Overlay */}
+                        {experience.images && experience.images.length > 5 && (
+                          <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-white group-hover:bg-black/80 transition-colors duration-300">
+                            <span className="text-2xl mb-1">📷</span>
+                            <span className="font-semibold text-lg">View all photos</span>
+                            <span className="text-sm opacity-90">+{experience.images.length - 4} more</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
-                {/* Desktop Action Buttons - Outside the gallery */}
-                <div className="flex items-center justify-end gap-2 mt-4">
-                  <Button variant="outline" size="sm" onClick={onWishlistClick}>
-                    <Heart className={`h-4 w-4 mr-2 ${isInWishlist ? 'fill-current' : ''}`} />
-                    {isInWishlist ? 'Saved' : 'Save'}
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={handleShare}>
-                    <Share className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => openSlideshow(0)}>
-                    <span className="mr-2">📷</span>
-                    View all {experience.images?.length || 0} photos
-                  </Button>
+                {/* Desktop Action Bar */}
+                <div className="flex items-center justify-between mt-6">
+                  <div className="flex items-center gap-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-2 hover:bg-gray-50"
+                      onClick={() => openSlideshow(0)}
+                    >
+                      <span>📸</span>
+                      Show all {experience.images?.length || 0} photos
+                    </Button>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-2"
+                      onClick={onWishlistClick}
+                    >
+                      <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-current text-red-500' : ''}`} />
+                      {isInWishlist ? 'Saved' : 'Save'}
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="gap-2"
+                      onClick={handleShare}
+                    >
+                      <Share className="h-4 w-4" />
+                      Share
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}
@@ -260,48 +340,51 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                 
                 <TabsContent value="itinerary" className="mt-6">
                   <Card>
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
-                        {contentSections.itinerary && contentSections.itinerary.length > 0 ? (
-                          contentSections.itinerary.map((item, index) => (
-                            <div key={index} className="flex gap-4">
-                              <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                <span className="text-sm font-medium text-primary">{index + 1}</span>
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-medium">{item.title}</h4>
-                                <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          // Default itinerary
-                          [
-                            {
-                              title: "Early Morning Departure",
-                              description: "Pick up from your accommodation and journey to the location with expert briefing."
-                            },
-                            {
-                              title: "Experience Begins", 
-                              description: "Begin your conservation experience with local guides and community members."
-                            },
-                            {
-                              title: "Hands-On Activities",
-                              description: "Participate in conservation activities and learn traditional techniques."
-                            }
-                          ].map((item, index) => (
-                            <div key={index} className="flex gap-4">
-                              <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                <span className="text-sm font-medium text-primary">{index + 1}</span>
-                              </div>
-                              <div className="flex-1">
-                                <h4 className="font-medium">{item.title}</h4>
-                                <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
-                              </div>
-                            </div>
-                          ))
-                        )}
+                    <CardContent className="p-6 space-y-6">
+                      {/* Itinerary as flowing paragraph */}
+                      <div>
+                        <h3 className="font-semibold text-lg mb-4">Your Experience Journey</h3>
+                        <div className="prose prose-gray max-w-none">
+                          {contentSections.itinerary && contentSections.itinerary.length > 0 ? (
+                            <p className="text-muted-foreground leading-relaxed">
+                              {contentSections.itinerary.map((item, index) => (
+                                `${item.title}: ${item.description}`
+                              )).join(' Following this, you\'ll move on to the next phase where ')}
+                            </p>
+                          ) : (
+                            <p className="text-muted-foreground leading-relaxed">
+                              Your conservation experience begins with an early morning departure from your accommodation, where you'll journey to the location with expert briefing from our local guides. 
+                              Upon arrival, you'll be introduced to the conservation site and begin your hands-on experience with local community members who will share their traditional knowledge and techniques. 
+                              Throughout the day, you'll participate in meaningful conservation activities while learning about the local ecosystem and wildlife protection efforts. 
+                              The experience concludes with reflection time and an opportunity to understand the long-term impact of your contribution to conservation efforts in the region.
+                            </p>
+                          )}
+                        </div>
                       </div>
+                      
+                      {/* FAQs Section - Moved from What's Included */}
+                      {contentSections.faqs && contentSections.faqs.length > 0 && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-4">Frequently Asked Questions</h3>
+                          <div className="space-y-3">
+                            {contentSections.faqs.map((faq, index) => (
+                              <details key={index} className={`group border border-border rounded-lg ${index === 0 ? 'open' : ''}`} open={index === 0}>
+                                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 rounded-lg transition-colors">
+                                  <span className="font-medium text-sm">{faq.question}</span>
+                                  <div className="ml-4 flex-shrink-0 transform group-open:rotate-180 transition-transform duration-200">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                  </div>
+                                </summary>
+                                <div className="px-4 pb-4">
+                                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                                </div>
+                              </details>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </TabsContent>
@@ -352,37 +435,18 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                         </div>
                       </div>
                       
-                      {/* Important Information & FAQs */}
-                      {((contentSections.importantInfo && contentSections.importantInfo.length > 0) || 
-                        (contentSections.faqs && contentSections.faqs.length > 0)) && (
-                        <div className="mt-8 space-y-6">
-                          {contentSections.importantInfo && contentSections.importantInfo.length > 0 && (
-                            <div>
-                              <h3 className="font-semibold mb-3 text-orange-700">Important Information</h3>
-                              <div className="space-y-2">
-                                {contentSections.importantInfo.map((info, index) => (
-                                  <div key={index} className="flex gap-2">
-                                    <CheckCircle className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
-                                    <span className="text-sm">{info}</span>
-                                  </div>
-                                ))}
+                      {/* Important Information - Kept in this tab */}
+                      {contentSections.importantInfo && contentSections.importantInfo.length > 0 && (
+                        <div className="mt-8">
+                          <h3 className="font-semibold mb-3 text-orange-700">Important Information</h3>
+                          <div className="space-y-2">
+                            {contentSections.importantInfo.map((info, index) => (
+                              <div key={index} className="flex gap-2">
+                                <CheckCircle className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-sm">{info}</span>
                               </div>
-                            </div>
-                          )}
-                          
-                          {contentSections.faqs && contentSections.faqs.length > 0 && (
-                            <div>
-                              <h3 className="font-semibold mb-3">Frequently Asked Questions</h3>
-                              <div className="space-y-4">
-                                {contentSections.faqs.map((faq, index) => (
-                                  <div key={index}>
-                                    <h4 className="font-medium text-sm mb-1">{faq.question}</h4>
-                                    <p className="text-sm text-muted-foreground">{faq.answer}</p>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
+                            ))}
+                          </div>
                         </div>
                       )}
                     </CardContent>
