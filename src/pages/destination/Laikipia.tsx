@@ -24,29 +24,30 @@ const LaikipiaDestination = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section - Full Width & Responsive */}
-      <section className="relative min-h-[100vh] lg:min-h-[80vh] xl:min-h-[60vh] w-full bg-gray-900">
+      {/* Hero Section - Modern & Responsive */}
+      <section className="relative h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-full overflow-hidden">
         <img
           src={laikipiaDestination}
           alt="Laikipia Plateau"
           className="w-full h-full object-cover"
+          loading="eager"
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="text-center text-white max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               Laikipia Plateau
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 sm:mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
               Private and community conservancies working together to protect wildlife on Kenya's central highlands.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" asChild className="bg-foreground text-background">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+              <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
                 <Link to="/listings?destination=laikipia">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white hover:text-black active:text-black focus:text-black" asChild>
+              <Button variant="outline" size="lg" className="border-white/80 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all" asChild>
                 <Link to="/impact-ledger">
                   View Highland Impact
                 </Link>

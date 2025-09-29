@@ -24,29 +24,30 @@ const CoastDestination = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section - Full Width & Responsive */}
-      <section className="relative min-h-[100vh] lg:min-h-[80vh] xl:min-h-[60vh] w-full bg-gray-900">
+      {/* Hero Section - Modern & Responsive */}
+      <section className="relative h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-full overflow-hidden">
         <img
           src={coastDestination}
           alt="Coastal Conservation Zone"
           className="w-full h-full object-cover"
+          loading="eager"
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="text-center text-white max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               Coastal Conservation Zone
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 sm:mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
               Marine and coastal ecosystem protection including mangrove restoration and community-based fisheries management.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" asChild className="bg-foreground text-background">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+              <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
                 <Link to="/listings?destination=coast">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white hover:text-black active:text-black focus:text-black" asChild>
+              <Button variant="outline" size="lg" className="border-white/80 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all" asChild>
                 <Link to="/impact-ledger">
                   View Marine Impact
                 </Link>
@@ -56,56 +57,58 @@ const CoastDestination = () => {
         </div>
       </section>
 
-      {/* Overview Section */}
-      <section className="py-16">
+      {/* Overview Section - Modern Stats */}
+      <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">{coastPartners.length}</div>
-                <div className="text-sm text-muted-foreground">Marine Partners</div>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16">
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">{coastPartners.length}</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Marine Partners</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">{coastExperiences.length}</div>
-                <div className="text-sm text-muted-foreground">Active Projects</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-secondary/5 to-secondary/10 border border-secondary/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary mb-2">{coastExperiences.length}</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Active Projects</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">6,500</div>
-                <div className="text-sm text-muted-foreground">Hectares Protected</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">6,500</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Hectares Protected</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">22</div>
-                <div className="text-sm text-muted-foreground">Coastal Communities</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">22</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Coastal Communities</div>
               </div>
             </div>
 
-            <div className="prose prose-lg max-w-none">
-              <h2 className="text-2xl font-bold mb-4">About Kenya's Coast</h2>
-              <p className="text-muted-foreground mb-6">
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">About Kenya's Coast</h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 Kenya's coastline stretches for over 400 kilometers along the Indian Ocean, encompassing some of the most biodiverse marine ecosystems in the Western Indian Ocean. This region is home to pristine coral reefs, extensive mangrove forests, and critical breeding grounds for marine species.
               </p>
               
-              <p className="text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
                 The coastal conservation zone includes multiple marine protected areas, community conservancies, and collaborative fisheries management programs. Local communities, including the Mijikenda peoples, are at the forefront of conservation efforts, combining traditional knowledge with modern science to protect marine resources.
               </p>
+            </div>
 
-              <h3 className="text-xl font-semibold mb-4">Conservation Highlights</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Mangrove Restoration</h4>
-                  <p className="text-sm text-muted-foreground">Community-led restoration of critical mangrove habitats that protect coastlines and support fisheries.</p>
+            <div className="max-w-5xl mx-auto">
+              <h3 className="text-2xl font-bold mb-8 text-center">Conservation Highlights</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Mangrove Restoration</h4>
+                  <p className="text-muted-foreground leading-relaxed">Community-led restoration of critical mangrove habitats that protect coastlines and support fisheries.</p>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Marine Conservation</h4>
-                  <p className="text-sm text-muted-foreground">Protection of coral reefs and marine life through community conservancies and marine protected areas.</p>
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Marine Conservation</h4>
+                  <p className="text-muted-foreground leading-relaxed">Protection of coral reefs and marine life through community conservancies and marine protected areas.</p>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Sustainable Fisheries</h4>
-                  <p className="text-sm text-muted-foreground">Community-based fisheries management ensuring long-term sustainability of marine resources.</p>
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Sustainable Fisheries</h4>
+                  <p className="text-muted-foreground leading-relaxed">Community-based fisheries management ensuring long-term sustainability of marine resources.</p>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Turtle Conservation</h4>
-                  <p className="text-sm text-muted-foreground">Protection of critical nesting sites for endangered sea turtle species along Kenya's beaches.</p>
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Turtle Conservation</h4>
+                  <p className="text-muted-foreground leading-relaxed">Protection of critical nesting sites for endangered sea turtle species along Kenya's beaches.</p>
                 </div>
               </div>
             </div>
@@ -113,15 +116,15 @@ const CoastDestination = () => {
         </div>
       </section>
 
-      {/* Conservation Partners */}
+      {/* Conservation Partners - Modern Design */}
       {coastPartners.length > 0 && (
-        <section className="py-16 bg-muted/30">
+        <section className="py-16 lg:py-20 bg-gradient-to-br from-muted/20 to-muted/40">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
                 Marine Conservation Partners
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                 Meet the organizations protecting Kenya's precious marine ecosystems and supporting coastal communities.
               </p>
             </div>
@@ -146,37 +149,38 @@ const CoastDestination = () => {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {coastPartners.map((partner) => (
-                  <Card key={partner.id} className="hover:shadow-lg transition-shadow">
-                    <div className="aspect-[16/10] relative">
+                  <Card key={partner.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card/80 backdrop-blur-sm overflow-hidden">
+                    <div className="aspect-[4/3] relative overflow-hidden">
                       <img
                         src={partner.logo_image_url || '/img/ph1.jpg'}
                         alt={partner.name}
-                        className="w-full h-full object-cover rounded-t-lg"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={(e) => {
                           const target = e.currentTarget;
                           target.src = '/img/ph1.jpg';
                         }}
                       />
-                      <div className="absolute top-3 left-3">
-                        <Badge className="bg-foreground text-background">
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
                           Partner
                         </Badge>
                       </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{partner.name}</CardTitle>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        {partner.location_text || 'Coastal Kenya'}
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-xl group-hover:text-primary transition-colors">{partner.name}</CardTitle>
+                      <div className="flex items-center text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-2 text-primary" />
+                        <span className="text-sm">{partner.location_text || 'Coastal Kenya'}</span>
                       </div>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                    <CardContent className="pt-0">
+                      <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
                         {partner.short_bio || partner.tagline || 'Conservation partner protecting Kenya\'s precious marine ecosystems and supporting coastal communities.'}
                       </p>
-                      <Button size="sm" asChild className="w-full">
+                      <Button asChild className="w-full group-hover:bg-primary/90 transition-colors">
                         <Link to={`/partner/${partner.slug}`}>
                           View Partner
                         </Link>
@@ -190,46 +194,47 @@ const CoastDestination = () => {
         </section>
       )}
 
-      {/* Featured Experiences */}
-      <section className="py-16">
+      {/* Featured Experiences - Modern Design */}
+      <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
               Featured Coastal Experiences
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Dive into marine conservation while experiencing the beauty of Kenya's coastal waters.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {coastExperiences.slice(0, 6).map((experience) => (
-              <Card key={experience.id} className="hover:shadow-lg transition-shadow">
-                <div className="aspect-[16/10] relative">
+              <Card key={experience.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card overflow-hidden">
+                <div className="aspect-[4/3] relative overflow-hidden">
                   {experience.images[0] && (
                     <img
                       src={experience.images[0]}
                       alt={experience.title}
-                      className="w-full h-full object-cover rounded-t-lg"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   )}
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    <Badge className="bg-white/90 text-foreground">
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
                       {formatPrice(experience.priceKESAdult)}
                     </Badge>
                   </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">
+                <CardContent className="p-6">
+                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     {experience.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                  <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
                     {experience.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <Users className="h-4 w-4 mr-1" />
-                      8 max
+                    <div className="flex items-center text-muted-foreground">
+                      <Users className="h-4 w-4 mr-2 text-primary" />
+                      <span className="text-sm">8 max</span>
                     </div>
                     <BookNowButton 
                       href={`/experience/${experience.slug}`}
@@ -241,8 +246,8 @@ const CoastDestination = () => {
             ))}
           </div>
 
-          <div className="text-center mt-8">
-            <Button size="lg" variant="outline" asChild>
+          <div className="text-center mt-12">
+            <Button size="lg" variant="outline" asChild className="hover:bg-primary hover:text-primary-foreground transition-colors">
               <Link to="/listings?destination=coast">
                 View All Coastal Experiences
               </Link>

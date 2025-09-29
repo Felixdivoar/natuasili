@@ -22,27 +22,32 @@ const SamburuDestination = () => {
   return <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section - Full Width & Responsive */}
-      <section className="relative min-h-[100vh] lg:min-h-[80vh] xl:min-h-[60vh] w-full bg-gray-900">
-        <img src={samburuDestination} alt="Samburu Ecosystem" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6">
+      {/* Hero Section - Modern & Responsive */}
+      <section className="relative h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-full overflow-hidden">
+        <img 
+          src={samburuDestination} 
+          alt="Samburu Ecosystem" 
+          className="w-full h-full object-cover"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/30" />
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="text-center text-white max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
               Samburu Ecosystem
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 sm:mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
               Community conservancies protecting unique northern Kenya wildlife and supporting traditional pastoralist communities.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" asChild className="bg-foreground text-background">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+              <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all">
                 <Link to="/listings?destination=samburu">
                   Explore Experiences
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-black bg-white hover:bg-white hover:text-black active:text-black focus:text-black" asChild>
+              <Button variant="outline" size="lg" className="border-white/80 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all" asChild>
                 <Link to="/impact-ledger">
-                  View Conservation Impact
+                  View Impact
                 </Link>
               </Button>
             </div>
@@ -50,56 +55,58 @@ const SamburuDestination = () => {
         </div>
       </section>
 
-      {/* Overview Section */}
-      <section className="py-[20px]">
+      {/* Overview Section - Modern Stats */}
+      <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">{samburuPartners.length}</div>
-                <div className="text-sm text-muted-foreground">Conservation Partners</div>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16">
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">{samburuPartners.length}</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Conservation Partners</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">{samburuExperiences.length}</div>
-                <div className="text-sm text-muted-foreground">Active Projects</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-secondary/5 to-secondary/10 border border-secondary/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary mb-2">{samburuExperiences.length}</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Active Projects</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">8,500</div>
-                <div className="text-sm text-muted-foreground">Hectares Protected</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-accent/5 to-accent/10 border border-accent/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">8,500</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Hectares Protected</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">18</div>
-                <div className="text-sm text-muted-foreground">Communities Involved</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">18</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Communities Involved</div>
               </div>
             </div>
 
-            <div className="prose prose-lg max-w-none">
-              <h2 className="text-2xl font-bold mb-4">About Samburu</h2>
-              <p className="text-muted-foreground mb-6">
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">About Samburu</h2>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 The Samburu ecosystem represents one of Kenya's most unique and biodiverse regions, home to species found nowhere else in the world. The iconic "Samburu Special Five" - Grevy's zebra, reticulated giraffe, Beisa oryx, Somali ostrich, and gerenuk - thrive in this arid landscape alongside the "Big Five."
               </p>
               
-              <p className="text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
                 Community conservancies have become the backbone of conservation in this region, with local Samburu communities leading efforts to protect wildlife while maintaining their traditional pastoralist lifestyle. These conservancies cover vast areas outside the national reserve, creating crucial wildlife corridors and breeding grounds.
               </p>
+            </div>
 
-              <h3 className="text-xl font-semibold mb-4">Conservation Highlights</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Wildlife Research</h4>
-                  <p className="text-sm text-muted-foreground">Ongoing studies of elephant behavior and migration patterns provide crucial data for conservation planning.</p>
+            <div className="max-w-5xl mx-auto">
+              <h3 className="text-2xl font-bold mb-8 text-center">Conservation Highlights</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Wildlife Research</h4>
+                  <p className="text-muted-foreground leading-relaxed">Ongoing studies of elephant behavior and migration patterns provide crucial data for conservation planning.</p>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Community Conservancies</h4>
-                  <p className="text-sm text-muted-foreground">Local communities receive direct benefits from tourism while protecting critical wildlife habitat.</p>
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Community Conservancies</h4>
+                  <p className="text-muted-foreground leading-relaxed">Local communities receive direct benefits from tourism while protecting critical wildlife habitat.</p>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Cultural Tourism</h4>
-                  <p className="text-sm text-muted-foreground">Authentic cultural experiences help preserve Samburu traditions while generating community income.</p>
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Cultural Tourism</h4>
+                  <p className="text-muted-foreground leading-relaxed">Authentic cultural experiences help preserve Samburu traditions while generating community income.</p>
                 </div>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h4 className="font-semibold mb-2">Anti-Poaching</h4>
-                  <p className="text-sm text-muted-foreground">Community rangers patrol vast areas, providing real-time intelligence on wildlife movements and threats.</p>
+                <div className="group p-6 rounded-2xl bg-card border border-border hover:shadow-lg transition-all duration-300">
+                  <h4 className="font-bold text-lg mb-3 text-primary">Anti-Poaching</h4>
+                  <p className="text-muted-foreground leading-relaxed">Community rangers patrol vast areas, providing real-time intelligence on wildlife movements and threats.</p>
                 </div>
               </div>
             </div>
@@ -107,15 +114,15 @@ const SamburuDestination = () => {
         </div>
       </section>
 
-      {/* Conservation Partners */}
+      {/* Conservation Partners - Modern Design */}
       {samburuPartners.length > 0 && (
-        <section className="bg-muted/30 py-[15px]">
+        <section className="py-16 lg:py-20 bg-gradient-to-br from-muted/20 to-muted/40">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
                 Conservation Partners in Samburu
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
                 Meet the organizations working tirelessly to protect Samburu's unique ecosystem and support local communities.
               </p>
             </div>
@@ -140,43 +147,42 @@ const SamburuDestination = () => {
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {samburuPartners.map(partner => (
-                  <Card key={partner.id} className="hover:shadow-lg transition-shadow">
-                    <div className="aspect-[16/10] relative">
+                  <Card key={partner.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card/80 backdrop-blur-sm overflow-hidden">
+                    <div className="aspect-[4/3] relative overflow-hidden">
                       <img 
                         src={partner.logo_image_url || '/img/ph1.jpg'} 
                         alt={partner.name} 
-                        className="w-full h-full object-cover rounded-t-lg" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                         onError={(e) => {
                           const target = e.currentTarget;
                           target.src = '/img/ph1.jpg';
                         }}
                       />
-                      <div className="absolute top-3 left-3">
-                        <Badge className="bg-foreground text-background">
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
                           Partner
                         </Badge>
                       </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{partner.name}</CardTitle>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        {partner.location_text || 'Samburu'}
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-xl group-hover:text-primary transition-colors">{partner.name}</CardTitle>
+                      <div className="flex items-center text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-2 text-primary" />
+                        <span className="text-sm">{partner.location_text || 'Samburu'}</span>
                       </div>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                    <CardContent className="pt-0">
+                      <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
                         {partner.short_bio || partner.tagline || 'Conservation partner dedicated to protecting Samburu\'s unique ecosystem and supporting local communities.'}
                       </p>
-                      <div className="flex gap-2">
-                        <Button size="sm" asChild className="flex-1">
-                          <Link to={`/partner/${partner.slug}`}>
-                            View Partner
-                          </Link>
-                        </Button>
-                      </div>
+                      <Button asChild className="w-full group-hover:bg-primary/90 transition-colors">
+                        <Link to={`/partner/${partner.slug}`}>
+                          View Partner
+                        </Link>
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
@@ -186,39 +192,47 @@ const SamburuDestination = () => {
         </section>
       )}
 
-      {/* Featured Experiences */}
-      <section className="py-16">
+      {/* Featured Experiences - Modern Design */}
+      <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
               Featured Samburu Experiences
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Immerse yourself in authentic conservation experiences while supporting local communities and wildlife protection.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {samburuExperiences.slice(0, 6).map(experience => <Card key={experience.id} className="hover:shadow-lg transition-shadow">
-                <div className="aspect-[16/10] relative">
-                  {experience.images[0] && <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover rounded-t-lg" />}
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    <Badge className="bg-white/90 text-foreground">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {samburuExperiences.slice(0, 6).map(experience => (
+              <Card key={experience.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card overflow-hidden">
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  {experience.images[0] && (
+                    <img 
+                      src={experience.images[0]} 
+                      alt={experience.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                    />
+                  )}
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
                       {formatPrice(experience.priceKESAdult)}
                     </Badge>
                   </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">
+                <CardContent className="p-6">
+                  <h3 className="font-bold text-xl mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                     {experience.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                  <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
                     {experience.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <Users className="h-4 w-4 mr-1" />
-                      8 max
+                    <div className="flex items-center text-muted-foreground">
+                      <Users className="h-4 w-4 mr-2 text-primary" />
+                      <span className="text-sm">8 max</span>
                     </div>
                     <BookNowButton 
                       href={`/experience/${experience.slug}`}
@@ -226,11 +240,12 @@ const SamburuDestination = () => {
                     />
                   </div>
                 </CardContent>
-              </Card>)}
+              </Card>
+            ))}
           </div>
 
-          <div className="text-center mt-8">
-            <Button size="lg" variant="outline" asChild>
+          <div className="text-center mt-12">
+            <Button size="lg" variant="outline" asChild className="hover:bg-primary hover:text-primary-foreground transition-colors">
               <Link to="/listings?destination=samburu">
                 View All Samburu Experiences
               </Link>
