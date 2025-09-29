@@ -25,7 +25,7 @@ const CoastDestination = () => {
       <Header />
       
       {/* Hero Section - Modern & Responsive */}
-      <section className="relative h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-full overflow-hidden">
+      <section className="relative h-[65vh] w-full overflow-hidden">
         <img
           src={coastDestination}
           alt="Coastal Conservation Zone"

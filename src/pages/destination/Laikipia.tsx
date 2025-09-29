@@ -25,7 +25,7 @@ const LaikipiaDestination = () => {
       <Header />
       
       {/* Hero Section - Redesigned */}
-      <section className="relative h-[85vh] w-full overflow-hidden">
+      <section className="relative h-[65vh] w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={laikipiaDestination}
