@@ -41,6 +41,9 @@ const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBoo
   const partnerAmount = Math.round(subtotal * 0.90);
   const platformAmount = subtotal - partnerAmount;
 
+  const isBookingValid = selectedDate && adults >= 1;
+  const totalPeople = adults + children;
+
   // Update URL params when values change
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams);
@@ -49,6 +52,7 @@ const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBoo
       newParams.set('date', format(selectedDate, 'yyyy-MM-dd'));
     }
     newParams.set('adults', adults.toString());
+    newParams.set('people', totalPeople.toString()); // Add total people for booking form
     if (children > 0) {
       newParams.set('children', children.toString());
     } else {
@@ -56,7 +60,7 @@ const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBoo
     }
     
     setSearchParams(newParams, { replace: true });
-  }, [selectedDate, adults, children, searchParams, setSearchParams]);
+  }, [selectedDate, adults, children, totalPeople, searchParams, setSearchParams]);
 
   const incrementAdults = () => {
     const maxCapacity = experience.capacity || 20;
@@ -83,9 +87,6 @@ const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBoo
       setChildren(prev => prev - 1);
     }
   };
-
-  const isBookingValid = selectedDate && adults >= 1;
-  const totalPeople = adults + children;
 
   // Date constraints
   const minDate = new Date();
