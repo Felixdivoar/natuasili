@@ -256,13 +256,7 @@ export default function HeaderNew() {
 
                 {/* Search */}
                 <div className="p-4 border-b border-border">
-                  <Button variant="ghost" size="sm" className="w-full justify-start px-4 py-2 text-sm text-muted-foreground hover:text-foreground border border-border rounded-lg" onClick={() => {
-                setIsMobileMenuOpen(false);
-                setMobileSearchOpen(true);
-              }} aria-label="Open search">
-                    <Search className="h-4 w-4 mr-2" />
-                    <span>Search...</span>
-                  </Button>
+                  
                 </div>
 
                 {/* Main navigation */}
