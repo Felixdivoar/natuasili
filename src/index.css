@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Scrollbar hide utility */
+@layer utilities {
+  .scrollbar-hide {
+    /* Firefox */
+    scrollbar-width: none;
+    /* IE and Edge */
+    -ms-overflow-style: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    /* Chrome, Safari and Opera */
+    display: none;
+  }
+}
+
 @keyframes subtle-zoom {
   0%, 100% {
     transform: scale(1);
@@ -17,6 +32,7 @@
 
 @import './styles/cta-guards.css';
 @import './styles/mobile-carousel.css';
+@import './styles/responsive.css';
 
 /* Force experience title styling - v2 */
 .experience-title-forced-v2 {

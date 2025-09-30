@@ -36,15 +36,15 @@ const ThemeTabs = () => {
         </div>
 
         <Tabs defaultValue="Wildlife Conservation" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-8">
+          <TabsList className="flex flex-wrap justify-center gap-2 h-auto p-2 bg-muted">
             {themes.map((theme) => (
               <TabsTrigger 
                 key={theme.id} 
                 value={theme.name}
-                className="flex items-center gap-2 text-xs sm:text-sm"
+                className="flex items-center gap-2 px-4 py-2 text-sm data-[state=active]:bg-background whitespace-nowrap"
               >
-                <theme.icon className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">{theme.name}</span>
+                <theme.icon className="h-4 w-4" />
+                <span>{theme.name}</span>
               </TabsTrigger>
             ))}
           </TabsList>

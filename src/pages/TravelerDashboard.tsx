@@ -133,12 +133,14 @@ const TravelerDashboard = () => {
                   <h2 className="text-2xl font-bold text-foreground mb-2">Dashboard Overview</h2>
                   <p className="text-muted-foreground">Manage your conservation journey and track your impact</p>
                 </div>
-                <TabsList className="flex w-full overflow-x-auto scrollbar-hide bg-muted/50 p-1 rounded-xl gap-1 sm:grid sm:grid-cols-4">
-                  <TabsTrigger value="overview" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Overview</TabsTrigger>
-                  <TabsTrigger value="bookings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Bookings</TabsTrigger>
-                  <TabsTrigger value="wishlist" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Wishlist</TabsTrigger>
-                  <TabsTrigger value="impact" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-xs sm:text-sm px-3 py-2 whitespace-nowrap">Impact</TabsTrigger>
-                </TabsList>
+                <div className="overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+                  <TabsList className="inline-flex min-w-full sm:min-w-0 bg-muted/50 p-1 rounded-xl gap-1">
+                    <TabsTrigger value="overview" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-sm px-4 py-2 whitespace-nowrap">Overview</TabsTrigger>
+                    <TabsTrigger value="bookings" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-sm px-4 py-2 whitespace-nowrap">Bookings</TabsTrigger>
+                    <TabsTrigger value="wishlist" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-sm px-4 py-2 whitespace-nowrap">Wishlist</TabsTrigger>
+                    <TabsTrigger value="impact" className="flex-shrink-0 rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm text-sm px-4 py-2 whitespace-nowrap">Impact</TabsTrigger>
+                  </TabsList>
+                </div>
               </div>
 
               <TabsContent value="overview" className="space-y-8 animate-fade-in">

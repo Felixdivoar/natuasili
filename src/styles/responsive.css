@@ -1,0 +1,129 @@
+/* Responsive Utilities */
+
+/* Mobile-first responsive containers */
+.responsive-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Button responsive sizing */
+.btn-responsive {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .btn-responsive {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Table responsive wrapper */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-left: -1rem;
+  padding-left: 1rem;
+  margin-right: -1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .table-responsive {
+    margin-left: 0;
+    padding-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+  }
+}
+
+/* Fix common overflow issues */
+@media (max-width: 640px) {
+  /* Ensure no horizontal scroll on mobile */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Make all images responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Ensure buttons don't overflow */
+  button {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  /* Make tables scrollable */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Ensure all text containers wrap properly */
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Optimize for tablet layouts */
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Fix tab overflow on all devices */
+[role="tablist"] {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[role="tablist"]::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure dialogs are mobile-friendly */
+[role="dialog"] {
+  max-width: 100%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  [role="dialog"] {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Mobile menu improvements */
+@media (max-width: 1023px) {
+  /* Ensure dropdowns are full-width on mobile */
+  [role="menu"] {
+    width: 100%;
+  }
+}

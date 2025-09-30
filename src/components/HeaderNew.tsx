@@ -153,15 +153,15 @@ export default function HeaderNew() {
                   <ChevronDown className="h-3 w-3" />
                 </button>
                 
-                {openMenu === "marketplace" && <div className="absolute right-0 mt-2 w-[720px] rounded-xl border bg-background p-6 shadow-xl z-50" onMouseEnter={() => setOpenMenu("marketplace")} onMouseLeave={() => setOpenMenu(null)}>
-                    <div className="grid grid-cols-2 gap-8">
+              {openMenu === "marketplace" && <div className="absolute right-0 mt-2 w-[min(720px,calc(100vw-2rem))] rounded-xl border bg-background p-6 shadow-xl z-50" onMouseEnter={() => setOpenMenu("marketplace")} onMouseLeave={() => setOpenMenu(null)}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       {/* Destinations */}
                       <div>
                         <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_destinations")}</h3>
-                        <div className="space-y-2 max-h-80 overflow-y-auto">
+                        <div className="space-y-2 max-h-80 overflow-y-auto scrollbar-hide">
                           {DESTINATIONS.map(dest => <Link key={dest.slug} to={`/destinations/${dest.slug}`} className="block p-3 hover:bg-muted rounded-lg transition-colors border-l-2 border-transparent hover:border-primary" onClick={() => setOpenMenu(null)}>
                               <div className="font-medium text-sm">{dest.label}</div>
-                              <div className="text-xs text-muted-foreground mt-1">{dest.desc}</div>
+                              <div className="text-xs text-muted-foreground mt-1 line-clamp-2">{dest.desc}</div>
                             </Link>)}
                           <div className="pt-2 border-t">
                             <Link to="/destinations" className="block p-2 text-center text-sm text-primary hover:bg-primary/10 rounded-lg transition-colors" onClick={() => setOpenMenu(null)}>
@@ -174,13 +174,13 @@ export default function HeaderNew() {
                       {/* Conservation Themes */}
                       <div>
                         <h3 className="font-medium mb-4 text-muted-foreground">{t("nav_themes")}</h3>
-                        <div className="space-y-2 max-h-80 overflow-y-auto">
+                        <div className="space-y-2 max-h-80 overflow-y-auto scrollbar-hide">
                           {THEMES.map(theme => <Link key={theme.slug} to={`/listings?theme=${encodeURIComponent(theme.label)}`} className="block p-3 hover:bg-muted rounded-lg transition-colors border-l-2 border-transparent hover:border-secondary" onClick={() => setOpenMenu(null)}>
                               <div className="flex items-center gap-2 font-medium text-sm">
                                 <span className="text-base">{theme.icon}</span>
-                                {theme.label}
+                                <span className="line-clamp-1">{theme.label}</span>
                               </div>
-                              <div className="text-xs text-muted-foreground mt-1">{theme.desc}</div>
+                              <div className="text-xs text-muted-foreground mt-1 line-clamp-2">{theme.desc}</div>
                             </Link>)}
                          </div>
                        </div>

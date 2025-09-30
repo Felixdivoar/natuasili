@@ -176,20 +176,22 @@ const ImpactProofAdmin: React.FC = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="pending">
-                Pending ({proofs.filter(p => p.status === 'pending').length})
-              </TabsTrigger>
-              <TabsTrigger value="approved">
-                Approved ({proofs.filter(p => p.status === 'approved').length})
-              </TabsTrigger>
-              <TabsTrigger value="rejected">
-                Rejected ({proofs.filter(p => p.status === 'rejected').length})
-              </TabsTrigger>
-              <TabsTrigger value="all">
-                All ({proofs.length})
-              </TabsTrigger>
-            </TabsList>
+            <div className="overflow-x-auto pb-2 -mx-2 px-2 sm:mx-0 sm:px-0 scrollbar-hide">
+              <TabsList className="inline-flex min-w-full sm:min-w-0 gap-1">
+                <TabsTrigger value="pending" className="flex-shrink-0 whitespace-nowrap px-4 py-2">
+                  Pending ({proofs.filter(p => p.status === 'pending').length})
+                </TabsTrigger>
+                <TabsTrigger value="approved" className="flex-shrink-0 whitespace-nowrap px-4 py-2">
+                  Approved ({proofs.filter(p => p.status === 'approved').length})
+                </TabsTrigger>
+                <TabsTrigger value="rejected" className="flex-shrink-0 whitespace-nowrap px-4 py-2">
+                  Rejected ({proofs.filter(p => p.status === 'rejected').length})
+                </TabsTrigger>
+                <TabsTrigger value="all" className="flex-shrink-0 whitespace-nowrap px-4 py-2">
+                  All ({proofs.length})
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             <TabsContent value={activeTab} className="mt-6">
               {filteredProofs.length === 0 ? (
