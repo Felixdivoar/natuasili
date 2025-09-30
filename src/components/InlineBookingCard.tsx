@@ -12,6 +12,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format, addDays, isAfter, isBefore } from "date-fns";
+import { useCart } from "@/contexts/CartContext";
 
 interface InlineBookingCardProps {
   experience: any;
@@ -21,6 +22,7 @@ interface InlineBookingCardProps {
 const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBookingClick }) => {
   const { formatPrice } = useCurrency();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { updateCart } = useCart();
   
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     searchParams.get('date') ? new Date(searchParams.get('date')!) : undefined
@@ -44,7 +46,7 @@ const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBoo
   const isBookingValid = selectedDate && adults >= 1;
   const totalPeople = adults + children;
 
-  // Update URL params when values change
+  // Update URL params when values change and sync CartContext
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams);
     
@@ -60,6 +62,13 @@ const InlineBookingCard: React.FC<InlineBookingCardProps> = ({ experience, onBoo
     }
     
     setSearchParams(newParams, { replace: true });
+
+    // Also hydrate the Cart so Booking modal picks it instantly
+    updateCart({
+      date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',
+      adults,
+      children,
+    });
   }, [selectedDate, adults, children, totalPeople, searchParams, setSearchParams]);
 
   const incrementAdults = () => {
