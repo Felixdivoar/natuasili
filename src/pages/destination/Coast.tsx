@@ -8,15 +8,13 @@ import Footer from "@/components/Footer";
 import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import BookNowButton from "@/components/BookNowButton";
-import { usePartners } from "@/hooks/usePartners";
 
 const coastDestination = "/lovable-uploads/c850b659-fc68-43f0-9bab-ac31a0ed1bc8.png";
 
 const CoastDestination = () => {
   const { formatPrice } = useCurrency();
-  const { partners: coastPartners, loading: partnersLoading } = usePartners('coastal-kenya');
   
-  const coastExperiences = EXPERIENCES.filter(experience => 
+  const coastExperiences = EXPERIENCES.filter(experience =>
     experience.destination === 'coastal-kenya'
   );
 
@@ -63,8 +61,8 @@ const CoastDestination = () => {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-16">
               <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/10">
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">{coastPartners.length}</div>
-                <div className="text-sm sm:text-base text-muted-foreground font-medium">Marine Partners</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary mb-2">8</div>
+                <div className="text-sm sm:text-base text-muted-foreground font-medium">Conservation Projects</div>
               </div>
               <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-secondary/5 to-secondary/10 border border-secondary/10">
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary mb-2">{coastExperiences.length}</div>
@@ -116,83 +114,6 @@ const CoastDestination = () => {
         </div>
       </section>
 
-      {/* Conservation Partners - Modern Design */}
-      {coastPartners.length > 0 && (
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-muted/20 to-muted/40">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                Marine Conservation Partners
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Meet the organizations protecting Kenya's precious marine ecosystems and supporting coastal communities.
-              </p>
-            </div>
-
-            {partnersLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(3)].map((_, i) => (
-                  <Card key={i} className="animate-pulse">
-                    <div className="aspect-[16/10] bg-muted rounded-t-lg" />
-                    <CardHeader>
-                      <div className="h-6 bg-muted rounded w-3/4" />
-                      <div className="h-4 bg-muted rounded w-1/2" />
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2 mb-4">
-                        <div className="h-4 bg-muted rounded" />
-                        <div className="h-4 bg-muted rounded w-2/3" />
-                      </div>
-                      <div className="h-9 bg-muted rounded" />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {coastPartners.map((partner) => (
-                  <Card key={partner.id} className="group hover:shadow-2xl transition-all duration-300 border-0 bg-card/80 backdrop-blur-sm overflow-hidden">
-                    <div className="aspect-[4/3] relative overflow-hidden">
-                      <img
-                        src={partner.logo_image_url || '/img/ph1.jpg'}
-                        alt={partner.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.src = '/img/ph1.jpg';
-                        }}
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
-                          Partner
-                        </Badge>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-xl group-hover:text-primary transition-colors">{partner.name}</CardTitle>
-                      <div className="flex items-center text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-2 text-primary" />
-                        <span className="text-sm">{partner.location_text || 'Coastal Kenya'}</span>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
-                        {partner.short_bio || partner.tagline || 'Conservation partner protecting Kenya\'s precious marine ecosystems and supporting coastal communities.'}
-                      </p>
-                      <Button asChild className="w-full group-hover:bg-primary/90 transition-colors">
-                        <Link to={`/partner/${partner.slug}`}>
-                          View Partner
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Featured Experiences - Modern Design */}
       <section className="py-16 lg:py-20">

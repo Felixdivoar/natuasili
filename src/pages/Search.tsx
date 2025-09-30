@@ -160,7 +160,7 @@ export default function Search() {
                         </p>
                         <div className="flex gap-2">
                           <Button asChild size="sm" className="flex-1">
-                            <Link to={`/partner/${partner.slug}`}>View Partner</Link>
+                            {/* Partner link removed */}
                           </Button>
                         </div>
                       </CardContent>
@@ -332,7 +332,7 @@ export default function Search() {
                     </p>
                     <div className="flex gap-2">
                       <Button asChild size="sm" className="flex-1">
-                        <Link to={`/partner/${partner.slug}`}>View Partner</Link>
+                        {/* Partner link removed */}
                       </Button>
                     </div>
                   </CardContent>

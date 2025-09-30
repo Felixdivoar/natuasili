@@ -1617,7 +1617,7 @@ const ImpactLedger = () => {
                             <div>
                               <p className="text-xs text-muted-foreground">Partner</p>
                               <Link 
-                                to={`/partner/${entry.project_id}`}
+                                to="/browse"
                                 className="text-primary hover:underline text-xs truncate block"
                               >
                                 {entry.project_name}
@@ -1729,7 +1729,7 @@ const ImpactLedger = () => {
                               </TableCell>
                               <TableCell>
                                 <Link 
-                                  to={`/partner/${entry.project_id}`}
+                                  to="/browse"
                                   className="text-primary hover:underline"
                                 >
                                   <div className="truncate" title={entry.project_name}>
@@ -1859,7 +1859,7 @@ const ImpactLedger = () => {
                           </div>
                           
                           <Link 
-                            to={`/partner/${entry.project_id}`}
+                            to="/browse"
                             className={`text-primary hover:underline text-sm ${isMobile ? 'block text-center' : ''}`}
                           >
                             View Partner →

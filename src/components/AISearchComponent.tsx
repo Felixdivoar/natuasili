@@ -133,7 +133,7 @@ export default function AISearchComponent({ variant = "desktop", isOpen = false,
           title: partner.name,
           type: "partner",
           snippet: `${partner.location} • ${partner.description.slice(0, 50)}...`,
-          url: `/partner/${partner.slug}`,
+          url: `/browse`,
           score: 0.8,
           metadata: { location: partner.location, description: partner.description }
         });

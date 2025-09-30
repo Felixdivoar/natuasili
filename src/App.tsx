@@ -33,11 +33,6 @@ import UserDashboard from "./pages/UserDashboard";
 import ProjectDetail from "./pages/ProjectDetail";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import About from "./pages/About";
-import Partners from "./pages/Partners";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import BlogCategory from "./pages/BlogCategory";
-import PartnerSuccessStory from "./pages/PartnerSuccessStory";
 import SamburuDestination from "./pages/destination/Samburu";
 import MasaiMaraDestination from "./pages/destination/MasaiMara";
 import CoastDestination from "./pages/destination/Coast";
@@ -57,7 +52,7 @@ import ContentStub from "./pages/ContentStub";
 import Auth from "./pages/Auth";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import AdminDashboard from "./pages/AdminDashboard";
-import PartnerDynamic from "./pages/PartnerDynamic";
+
 import Profile from "./pages/Profile";
 import CartCheckout from "./pages/CartCheckout";
 import ConservationChatbotPage from "./pages/ConservationChatbot";
@@ -187,13 +182,7 @@ const App = () => (
                 <Route path="/projects/:projectId" element={<AppLayout><ProjectDetail /></AppLayout>} />
                 <Route path="/partner-dashboard" element={<AppLayout><PartnerDashboard /></AppLayout>} />
                 <Route path="/about" element={<AppLayout><About /></AppLayout>} />
-                <Route path="/partners" element={<AppLayout><Partners /></AppLayout>} />
-                <Route path="/partners/:slug" element={<Navigate to="/partner/:slug" replace />} />
-                <Route path="/partner/:slug" element={<AppLayout><PartnerDynamic /></AppLayout>} />
-                <Route path="/blog" element={<AppLayout><Blog /></AppLayout>} />
-                <Route path="/blog/:slug" element={<AppLayout><BlogPost /></AppLayout>} />
-                <Route path="/blog/category/:category" element={<AppLayout><BlogCategory /></AppLayout>} />
-                <Route path="/partners/success-stories/:slug" element={<AppLayout><PartnerSuccessStory /></AppLayout>} />
+                <Route path="/about" element={<AppLayout><About /></AppLayout>} />
                 <Route path="/destinations" element={<AppLayout><Destinations /></AppLayout>} />
                 <Route path="/destinations/samburu" element={<AppLayout><SamburuDestination /></AppLayout>} />
                 <Route path="/destinations/masai-mara" element={<AppLayout><MasaiMaraDestination /></AppLayout>} />

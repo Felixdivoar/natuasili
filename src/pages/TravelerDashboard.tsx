@@ -274,14 +274,11 @@ const TravelerDashboard = () => {
                               <div className="flex flex-col sm:flex-row gap-3">
                                 {booking.experience?.partner_profiles?.slug ? (
                                   <Button variant="outline" size="sm" asChild>
-                                    <Link to={`/partner/${booking.experience.partner_profiles.slug}`}>
-                                      <User className="h-4 w-4 mr-2" />
-                                      View Partner
-                                    </Link>
+                                    <Link to="/browse">View Experiences</Link>
                                   </Button>
                                 ) : (
                                   <Button variant="outline" size="sm" disabled>
-                                    Partner details unavailable
+                                    Details unavailable
                                   </Button>
                                 )}
                                 <Button variant="outline" size="sm" asChild>

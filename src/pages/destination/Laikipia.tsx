@@ -8,15 +8,13 @@ import Footer from "@/components/Footer";
 import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import BookNowButton from "@/components/BookNowButton";
-import { usePartners } from "@/hooks/usePartners";
 
 const laikipiaDestination = "/lovable-uploads/6f27540c-f10d-45f9-ab14-bf5b08197366.png";
 
 const LaikipiaDestination = () => {
   const { formatPrice } = useCurrency();
-  const { partners: laikipiaPartners, loading: partnersLoading } = usePartners('laikipia');
   
-  const laikipiaExperiences = EXPERIENCES.filter(experience => 
+  const laikipiaExperiences = EXPERIENCES.filter(experience =>
     experience.destination === 'laikipia'
   );
 
@@ -74,8 +72,8 @@ const LaikipiaDestination = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
               <div className="text-center">
-                <div className="text-3xl font-bold text-conservation mb-2">{laikipiaPartners.length}</div>
-                <div className="text-sm text-muted-foreground">Conservation Partners</div>
+                <div className="text-3xl font-bold text-conservation mb-2">8</div>
+                <div className="text-sm text-muted-foreground">Conservation Areas</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-conservation mb-2">{laikipiaExperiences.length}</div>
@@ -125,82 +123,6 @@ const LaikipiaDestination = () => {
         </div>
       </section>
 
-      {/* Conservation Partners */}
-      {laikipiaPartners.length > 0 && (
-        <section className="py-16 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Laikipia Conservation Partners
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Meet the organizations protecting Kenya's highland ecosystems through innovative conservation partnerships.
-              </p>
-            </div>
-
-            {partnersLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(3)].map((_, i) => (
-                  <Card key={i} className="animate-pulse">
-                    <div className="aspect-[16/10] bg-muted rounded-t-lg" />
-                    <CardHeader>
-                      <div className="h-6 bg-muted rounded w-3/4" />
-                      <div className="h-4 bg-muted rounded w-1/2" />
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2 mb-4">
-                        <div className="h-4 bg-muted rounded" />
-                        <div className="h-4 bg-muted rounded w-2/3" />
-                      </div>
-                      <div className="h-9 bg-muted rounded" />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {laikipiaPartners.map((partner) => (
-                  <Card key={partner.id} className="hover:shadow-lg transition-shadow">
-                    <div className="aspect-[16/10] relative">
-                      <img
-                        src={partner.logo_image_url || '/img/ph1.jpg'}
-                        alt={partner.name}
-                        className="w-full h-full object-cover rounded-t-lg"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.src = '/img/ph1.jpg';
-                        }}
-                      />
-                      <div className="absolute top-3 left-3">
-                        <Badge className="bg-foreground text-background">
-                          Partner
-                        </Badge>
-                      </div>
-                    </div>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{partner.name}</CardTitle>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        {partner.location_text || 'Laikipia'}
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                        {partner.short_bio || partner.tagline || 'Conservation partner protecting Kenya\'s highland ecosystems through innovative partnerships.'}
-                      </p>
-                      <Button size="sm" asChild className="w-full">
-                        <Link to={`/partner/${partner.slug}`}>
-                          View Partner
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Featured Experiences */}
       <section className="py-16">
