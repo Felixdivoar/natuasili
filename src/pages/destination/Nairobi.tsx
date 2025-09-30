@@ -291,7 +291,7 @@ const NairobiDestination = () => {
                       <span>8 <T k="max_guests" /></span>
                     </div>
                     <BookNowButton 
-                      href={`/listings/${experience.slug}`}
+                      href={`/experience/${experience.slug}`}
                       label={t("book_now_button")}
                     />
                   </div>
