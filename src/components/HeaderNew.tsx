@@ -215,7 +215,7 @@ export default function HeaderNew() {
                         </Button>
                       </Link>
                       
-                      <Link to="/partner-entry" onClick={() => setDesktopHamburgerOpen(false)}>
+                      <Link to="/partner-with-us" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start text-sm h-8">Add your experience</Button>
                       </Link>
                       
@@ -312,7 +312,7 @@ export default function HeaderNew() {
                 display: 'flex',
                 alignItems: 'center'
               }} onClick={() => {
-                navigate('/partner-entry');
+                navigate('/partner-with-us');
                 setIsMobileMenuOpen(false);
               }}>
                     Add your experience
