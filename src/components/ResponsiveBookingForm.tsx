@@ -27,18 +27,28 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   const [searchParams] = useSearchParams();
   const { user } = useSimpleAuth();
   
-  // Form state with auth autofill
-  const [formData, setFormData] = useState({
-    date: searchParams.get('date') || '',
-    people: parseInt(searchParams.get('people') || '1'),
-    name: '', // Will be filled from auth in useEffect
-    email: '', // Will be filled from auth in useEffect  
-    phone: '',
-    dietary: '',
-    mobility: '',
-    requests: '',
-    terms: false,
-    marketing: false
+  // Form state with auth autofill - Initialize from URL params
+  const [formData, setFormData] = useState(() => {
+    const dateParam = searchParams.get('date') || '';
+    const adultsParam = parseInt(searchParams.get('adults') || '0');
+    const childrenParam = parseInt(searchParams.get('children') || '0');
+    const peopleParam = parseInt(searchParams.get('people') || '1');
+    
+    // Use adults + children if available, otherwise use people
+    const totalPeople = (adultsParam + childrenParam) > 0 ? (adultsParam + childrenParam) : peopleParam;
+    
+    return {
+      date: dateParam,
+      people: totalPeople,
+      name: '',
+      email: '',
+      phone: '',
+      dietary: '',
+      mobility: '',
+      requests: '',
+      terms: false,
+      marketing: false
+    };
   });
   
   const [currentStep, setCurrentStep] = useState(1);
@@ -59,13 +69,18 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
   // Sync with URL changes (e.g., from listing card before opening modal)
   useEffect(() => {
     const dateParam = searchParams.get('date') || '';
+    const adultsParam = parseInt(searchParams.get('adults') || '0');
+    const childrenParam = parseInt(searchParams.get('children') || '0');
     const peopleParamRaw = searchParams.get('people');
-    const peopleParam = peopleParamRaw ? parseInt(peopleParamRaw) : NaN;
+    const peopleParam = peopleParamRaw ? parseInt(peopleParamRaw) : 0;
+    
+    // Use adults + children if available, otherwise use people
+    const totalPeople = (adultsParam + childrenParam) > 0 ? (adultsParam + childrenParam) : (peopleParam || 1);
 
     setFormData(prev => ({
       ...prev,
       date: dateParam || prev.date,
-      people: !Number.isNaN(peopleParam) ? peopleParam : prev.people,
+      people: totalPeople,
     }));
   }, [searchParams]);
 
