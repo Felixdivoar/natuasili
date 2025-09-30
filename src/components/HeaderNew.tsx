@@ -207,7 +207,7 @@ export default function HeaderNew() {
                   <Menu className="w-5 h-5" />
                 </Button>
                 
-                {desktopHamburgerOpen && <div className="absolute right-0 top-full mt-2 w-40 rounded-lg border bg-background/95 backdrop-blur-sm p-1 shadow-lg z-50">
+                {desktopHamburgerOpen && <div className="absolute right-0 top-full mt-2 w-56 rounded-lg border bg-background/95 backdrop-blur-sm p-1 shadow-lg z-50">
                     <div className="space-y-0.5">
                       <Link to="/impact-ledger" onClick={() => setDesktopHamburgerOpen(false)}>
                         <Button variant="ghost" size="sm" className="w-full justify-start text-sm h-8">
