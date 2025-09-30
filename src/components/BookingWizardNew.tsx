@@ -18,20 +18,33 @@ import { makeImpactSummary } from "@/lib/impactSummary";
 import { supabase } from "@/integrations/supabase/client";
 import { useBookingTimer } from "@/hooks/useBookingTimer";
 import BookingTimer from "./BookingTimer";
-
 interface BookingWizardNewProps {
   isOpen: boolean;
   onClose: () => void;
   experience: any;
 }
-
-const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, experience }) => {
-  const { formatPrice } = useCurrency();
-  const { cart, updateCart } = useCart();
-  const { t } = useI18n();
-  const { toast } = useToast();
-  const { user, profile } = useAuth();
-  
+const BookingWizardNew: React.FC<BookingWizardNewProps> = ({
+  isOpen,
+  onClose,
+  experience
+}) => {
+  const {
+    formatPrice
+  } = useCurrency();
+  const {
+    cart,
+    updateCart
+  } = useCart();
+  const {
+    t
+  } = useI18n();
+  const {
+    toast
+  } = useToast();
+  const {
+    user,
+    profile
+  } = useAuth();
   const [currentStep, setCurrentStep] = useState(2); // Start at Step 2 (Contact)
   const [formData, setFormData] = useState({
     name: '',
@@ -60,7 +73,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     toast({
       title: "Booking Session Expired",
       description: "Please start your booking again.",
-      variant: "destructive",
+      variant: "destructive"
     });
   });
 
@@ -74,81 +87,80 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
   // Auto-fill user profile data on modal open
   useEffect(() => {
     if (isOpen && user && profile) {
-      const fullName = profile.first_name && profile.last_name 
-        ? `${profile.first_name} ${profile.last_name}`.trim()
-        : profile.first_name || profile.last_name || '';
-      
+      const fullName = profile.first_name && profile.last_name ? `${profile.first_name} ${profile.last_name}`.trim() : profile.first_name || profile.last_name || '';
       setFormData(prev => ({
         ...prev,
         name: fullName || prev.name,
         email: profile.email || prev.email,
-        phone: profile.phone || prev.phone,
+        phone: profile.phone || prev.phone
       }));
     }
   }, [isOpen, user, profile]);
-
   const updateFormData = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
   const validateStep2 = () => {
     return formData.name && formData.email && formData.phone;
   };
-
   const validateStep3 = () => {
     return formData.agreeTerms;
   };
-
   const validateBookingData = () => {
     if (!cart?.date) {
-      return { isValid: false, error: "Please select a booking date before continuing." };
+      return {
+        isValid: false,
+        error: "Please select a booking date before continuing."
+      };
     }
-    
     const dateValidation = validateBookingDate(cart.date, experience?.slug, experience?.project?.name);
     if (!dateValidation.isValid) {
-      return { isValid: false, error: dateValidation.error };
+      return {
+        isValid: false,
+        error: dateValidation.error
+      };
     }
-    
     if (!cart.adults || cart.adults < 1) {
-      return { isValid: false, error: "Please select at least one adult participant." };
+      return {
+        isValid: false,
+        error: "Please select at least one adult participant."
+      };
     }
-    
-    return { isValid: true };
+    return {
+      isValid: true
+    };
   };
-
   const handleNextStep = () => {
     if (currentStep === 2 && validateStep2()) {
       setCurrentStep(3);
     }
   };
-
   const handleEditDetails = () => {
     onClose();
     setTimeout(() => {
-      document.getElementById('availability')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('availability')?.scrollIntoView({
+        behavior: 'smooth'
+      });
     }, 100);
   };
-
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-
   const handleConfirmBooking = async () => {
     if (!validateStep3() || !cart || isProcessingPayment) return;
-
     const validation = validateBookingData();
     if (!validation.isValid) {
       toast({
         title: "Booking Error",
         description: validation.error,
-        variant: "destructive",
+        variant: "destructive"
       });
       if (validation.error?.includes("date") || validation.error?.includes("11:00")) {
         handleEditDetails();
       }
       return;
     }
-
     setIsProcessingPayment(true);
-
     try {
       let bookingUserId = user?.id;
 
@@ -156,8 +168,10 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
       if (!user && formData.createAccount) {
         try {
           const tempPassword = Math.random().toString(36).slice(-12) + 'A1!';
-          
-          const { data: authData, error: authError } = await supabase.auth.signUp({
+          const {
+            data: authData,
+            error: authError
+          } = await supabase.auth.signUp({
             email: formData.email,
             password: tempPassword,
             options: {
@@ -169,7 +183,6 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
               emailRedirectTo: `${window.location.origin}/auth/callback`
             }
           });
-
           if (authError) {
             console.warn('Account creation failed, proceeding as guest:', authError.message);
             bookingUserId = null;
@@ -178,7 +191,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
             toast({
               title: "Account Created!",
               description: "Check your email to set your password and access your dashboard.",
-              variant: "default",
+              variant: "default"
             });
           }
         } catch (error) {
@@ -189,13 +202,9 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
       // Find existing experience in Supabase
       let experienceId: string;
-      
-      const { data: existingExperience } = await supabase
-        .from('experiences')
-        .select('id')
-        .eq('slug', experience.slug)
-        .single();
-        
+      const {
+        data: existingExperience
+      } = await supabase.from('experiences').select('id').eq('slug', experience.slug).single();
       if (existingExperience?.id) {
         experienceId = existingExperience.id;
       } else {
@@ -204,29 +213,27 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
       // Create the booking in the database
       const totalAmount = cart.subtotal + (formData.donation || 0);
-      const { data: booking, error: bookingError } = await supabase
-        .from('bookings')
-        .insert({
-          experience_id: experienceId,
-          user_id: bookingUserId,
-          customer_name: formData.name,
-          customer_email: formData.email,
-          customer_phone: formData.phone,
-          booking_date: cart.date,
-          adults: cart.adults,
-          children: cart.children,
-          total_kes: totalAmount,
-          donation_kes: formData.donation || 0,
-          option_id: cart.optionId || 'standard',
-          unit_price_kes: cart.unitPrice,
-          subtotal_kes: cart.subtotal,
-          status: 'pending',
-          payment_status: 'pending',
-          special_requests: formData.specialRequests,
-        })
-        .select()
-        .single();
-
+      const {
+        data: booking,
+        error: bookingError
+      } = await supabase.from('bookings').insert({
+        experience_id: experienceId,
+        user_id: bookingUserId,
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        booking_date: cart.date,
+        adults: cart.adults,
+        children: cart.children,
+        total_kes: totalAmount,
+        donation_kes: formData.donation || 0,
+        option_id: cart.optionId || 'standard',
+        unit_price_kes: cart.unitPrice,
+        subtotal_kes: cart.subtotal,
+        status: 'pending',
+        payment_status: 'pending',
+        special_requests: formData.specialRequests
+      }).select().single();
       if (bookingError) {
         console.error('Booking error:', bookingError);
         throw new Error(`Failed to create booking: ${bookingError.message}`);
@@ -234,7 +241,10 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
       // Create Pesapal payment order
       const callbackUrl = `${window.location.origin}/pesapal-callback`;
-      const { data: paymentResponse, error: paymentError } = await supabase.functions.invoke('pesapal-create-order', {
+      const {
+        data: paymentResponse,
+        error: paymentError
+      } = await supabase.functions.invoke('pesapal-create-order', {
         body: {
           booking_id: booking.id,
           amount: totalAmount,
@@ -246,21 +256,18 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
             email: formData.email,
             first_name: formData.name.split(' ')[0] || formData.name,
             last_name: formData.name.split(' ').slice(1).join(' ') || '',
-            phone_number: formData.phone || '',
-          },
-        },
+            phone_number: formData.phone || ''
+          }
+        }
       });
-
       if (paymentError) {
         console.error('Payment error:', paymentError);
         throw new Error(`Payment setup failed. Edge Function returned: ${paymentError.message}`);
       }
-
       if (!paymentResponse || !paymentResponse.success) {
         const errorMsg = paymentResponse?.error || 'Unknown error occurred';
         throw new Error(`Payment initialization failed: ${errorMsg}`);
       }
-
       if (!paymentResponse.redirect_url) {
         throw new Error('No payment redirect URL received from Pesapal');
       }
@@ -277,25 +284,22 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         donation: donationAmount,
         partner: cart.split.partner90 + donationAmount,
         platform: cart.split.platform10,
-        currency: cart.currency,
+        currency: cart.currency
       };
       saveReceipt(receipt);
-
       bookingTimer.stopTimer();
       window.location.href = paymentResponse.redirect_url;
-
     } catch (error) {
       console.error('Error processing booking:', error);
       toast({
         title: 'Booking Failed',
         description: error instanceof Error ? error.message : 'There was an error processing your booking. Please try again.',
-        variant: 'destructive',
+        variant: 'destructive'
       });
     } finally {
       setIsProcessingPayment(false);
     }
   };
-
   const impactSummary = cart ? makeImpactSummary({
     title: experience.title,
     location: experience.locationText,
@@ -305,18 +309,25 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
     donationKES: formData.donation || 0,
     currency: cart.currency
   }) : null;
-
-  const steps = [
-    { number: 1, title: t('details', 'Details'), completed: true },
-    { number: 2, title: t('contact', 'Contact'), completed: currentStep > 2 },
-    { number: 3, title: t('confirm', 'Confirm'), completed: currentStep > 3 },
-    { number: 4, title: t('success', 'Success'), completed: currentStep === 4 }
-  ];
-
+  const steps = [{
+    number: 1,
+    title: t('details', 'Details'),
+    completed: true
+  }, {
+    number: 2,
+    title: t('contact', 'Contact'),
+    completed: currentStep > 2
+  }, {
+    number: 3,
+    title: t('confirm', 'Confirm'),
+    completed: currentStep > 3
+  }, {
+    number: 4,
+    title: t('success', 'Success'),
+    completed: currentStep === 4
+  }];
   if (!cart) return null;
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl w-full mx-2 sm:mx-4 max-h-[95vh] sm:max-h-[90vh] flex flex-col p-0 gap-0 bg-gradient-to-br from-background via-background to-muted/10 overflow-hidden">
         {/* Compact Header */}
         <div className="border-b bg-card/50 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex-shrink-0">
@@ -327,26 +338,16 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           {/* Compact Progress Steps */}
           <div className="flex items-center justify-center mt-3 sm:mt-4">
             <div className="flex items-center gap-1 bg-muted/30 rounded-full p-1 backdrop-blur-sm border">
-              {steps.map((step, index) => (
-                <React.Fragment key={step.number}>
-                  <div className={`flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full transition-all duration-200 ${
-                    step.completed || currentStep === step.number
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}>
-                    <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-xs font-medium ${
-                      step.completed || currentStep === step.number
-                        ? 'bg-primary-foreground/20'
-                        : 'bg-muted'
-                    }`}>
+              {steps.map((step, index) => <React.Fragment key={step.number}>
+                  <div className={`flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-full transition-all duration-200 ${step.completed || currentStep === step.number ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
+                    <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-xs font-medium ${step.completed || currentStep === step.number ? 'bg-primary-foreground/20' : 'bg-muted'}`}>
                       {step.completed ? <CheckCircle className="h-2.5 w-2.5 sm:h-3 sm:w-3" /> : step.number}
                     </div>
                     <span className="text-xs sm:text-sm font-medium whitespace-nowrap hidden sm:inline">
                       {step.title}
                     </span>
                   </div>
-                </React.Fragment>
-              ))}
+                </React.Fragment>)}
             </div>
           </div>
         </div>
@@ -354,20 +355,14 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
         <div className="flex-1 overflow-y-auto min-h-0">
           <div className="px-3 sm:px-4 md:px-6 py-3 sm:py-4">
             {/* Booking Timer */}
-            <BookingTimer 
-              timeRemaining={bookingTimer.timeRemaining}
-              formatTime={bookingTimer.formatTime}
-              isActive={bookingTimer.isActive}
-              className="mb-3 sm:mb-4"
-            />
+            <BookingTimer timeRemaining={bookingTimer.timeRemaining} formatTime={bookingTimer.formatTime} isActive={bookingTimer.isActive} className="mb-3 sm:mb-4" />
             
             <div className="grid lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
               {/* Left side - Steps */}
               <div className="lg:col-span-2 space-y-4 sm:space-y-6">
 
                 {/* Step 2: Contact */}
-                {currentStep === 2 && (
-                  <div className="space-y-4 sm:space-y-6">
+                {currentStep === 2 && <div className="space-y-4 sm:space-y-6">
                     {/* Section Header */}
                     <div className="text-center space-y-2">
                       <h3 className="text-lg sm:text-xl font-semibold tracking-tight">{t('contactInformation', 'Your Details')}</h3>
@@ -416,14 +411,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                               <User className="h-4 w-4 text-primary" />
                               {t('fullName', 'Full Name')} *
                             </Label>
-                            <Input 
-                              id="name"
-                              value={formData.name}
-                              onChange={(e) => updateFormData('name', e.target.value)}
-                              required
-                              className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
-                              placeholder="Enter your full name"
-                            />
+                            <Input id="name" value={formData.name} onChange={e => updateFormData('name', e.target.value)} required className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow" placeholder="Enter your full name" />
                           </div>
 
                           <div className="space-y-2">
@@ -431,15 +419,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                               <Mail className="h-4 w-4 text-primary" />
                               {t('email', 'Email Address')} *
                             </Label>
-                            <Input 
-                              id="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={(e) => updateFormData('email', e.target.value)}
-                              required
-                              className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
-                              placeholder="your@email.com"
-                            />
+                            <Input id="email" type="email" value={formData.email} onChange={e => updateFormData('email', e.target.value)} required className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow" placeholder="your@email.com" />
                           </div>
 
                           <div className="space-y-2">
@@ -447,35 +427,20 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                               <Phone className="h-4 w-4 text-primary" />
                               {t('phone', 'Phone Number')} *
                             </Label>
-                            <Input 
-                              id="phone"
-                              type="tel"
-                              value={formData.phone}
-                              onChange={(e) => updateFormData('phone', e.target.value)}
-                              required
-                              className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow"
-                              placeholder="+254 700 000 000"
-                            />
+                            <Input id="phone" type="tel" value={formData.phone} onChange={e => updateFormData('phone', e.target.value)} required className="h-10 border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow" placeholder="+254 700 000 000" />
                           </div>
 
                           {/* Account Creation Option for guests */}
-                          {!user && (
-                            <div className="space-y-2 pt-2 border-t border-muted/30 block">
+                          {!user && <div className="space-y-2 pt-2 border-t border-muted/30 block">
                               <div className="flex items-start space-x-2 w-full">
-                                 <Checkbox
-                                   id="createAccount"
-                                   checked={formData.createAccount}
-                                   onCheckedChange={(checked) => updateFormData('createAccount', checked)}
-                                   className="h-2.5 w-2.5 mt-0.5 flex-shrink-0"
-                                 />
+                                 <Checkbox id="createAccount" checked={formData.createAccount} onCheckedChange={checked => updateFormData('createAccount', checked)} className="h-2.5 w-2.5 mt-0.5 flex-shrink-0 my-[9px]" />
                                 <Label htmlFor="createAccount" className="text-sm leading-relaxed cursor-pointer flex-1">
                                   <span className="font-medium text-primary">Create an account to manage all my bookings</span>
                                   <br />
                                   <span className="text-xs text-muted-foreground">We'll send you a secure link to set your password</span>
                                 </Label>
                               </div>
-                            </div>
-                          )}
+                            </div>}
                          </CardContent>
                        </Card>
                        
@@ -486,14 +451,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                              <Label htmlFor="specialRequests" className="text-sm font-medium">
                                {t('specialRequests', 'Special Requests')} <span className="text-muted-foreground">(Optional)</span>
                              </Label>
-                             <Textarea
-                               id="specialRequests"
-                               value={formData.specialRequests}
-                               onChange={(e) => updateFormData('specialRequests', e.target.value)}
-                               placeholder="Any dietary requirements, accessibility needs, or special requests..."
-                               className="min-h-[80px] border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow resize-none"
-                               maxLength={500}
-                             />
+                             <Textarea id="specialRequests" value={formData.specialRequests} onChange={e => updateFormData('specialRequests', e.target.value)} placeholder="Any dietary requirements, accessibility needs, or special requests..." className="min-h-[80px] border-0 bg-background/70 shadow-sm focus:shadow-md transition-shadow resize-none" maxLength={500} />
                              <div className="text-xs text-muted-foreground text-right">
                                {formData.specialRequests.length}/500
                              </div>
@@ -504,22 +462,14 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
                      {/* Navigation buttons */}
                      <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                       <Button
-                         type="button"
-                         onClick={handleNextStep}
-                         disabled={!validateStep2() || bookingTimer.isExpired}
-                         className="w-full sm:ml-auto sm:w-auto h-11"
-                         size="lg"
-                       >
+                       <Button type="button" onClick={handleNextStep} disabled={!validateStep2() || bookingTimer.isExpired} className="w-full sm:ml-auto sm:w-auto h-11" size="lg">
                          {bookingTimer.isExpired ? "Session Expired" : "Continue to Review"}
                        </Button>
                      </div>
-                   </div>
-                 )}
+                   </div>}
 
                  {/* Step 3: Confirm */}
-                 {currentStep === 3 && (
-                   <div className="space-y-4 sm:space-y-6">
+                 {currentStep === 3 && <div className="space-y-4 sm:space-y-6">
                      {/* Section Header */}
                      <div className="text-center space-y-2">
                        <h3 className="text-lg sm:text-xl font-semibold tracking-tight">{t('reviewAndConfirm', 'Review & Confirm')}</h3>
@@ -546,11 +496,9 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                            <div>
                              <span className="text-muted-foreground">Phone:</span> {formData.phone}
                            </div>
-                           {formData.specialRequests && (
-                             <div>
+                           {formData.specialRequests && <div>
                                <span className="text-muted-foreground">Special Requests:</span> {formData.specialRequests}
-                             </div>
-                           )}
+                             </div>}
                          </div>
                        </CardContent>
                      </Card>
@@ -559,13 +507,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                      <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-sm">
                        <CardContent className="p-4 space-y-4">
                          <div className="flex items-start space-x-3">
-                           <Checkbox
-                             id="agreeTerms"
-                             checked={formData.agreeTerms}
-                             onCheckedChange={(checked) => updateFormData('agreeTerms', checked)}
-                             required
-                             className="h-4 w-4"
-                           />
+                           <Checkbox id="agreeTerms" checked={formData.agreeTerms} onCheckedChange={checked => updateFormData('agreeTerms', checked)} required className="h-4 w-4" />
                            <Label htmlFor="agreeTerms" className="text-sm leading-relaxed cursor-pointer">
                              I agree to the{' '}
                              <button type="button" className="text-primary hover:underline">
@@ -580,12 +522,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                          </div>
                          
                          <div className="flex items-start space-x-3">
-                           <Checkbox
-                             id="marketingOptIn"
-                             checked={formData.marketingOptIn}
-                             onCheckedChange={(checked) => updateFormData('marketingOptIn', checked)}
-                             className="h-4 w-4"
-                           />
+                           <Checkbox id="marketingOptIn" checked={formData.marketingOptIn} onCheckedChange={checked => updateFormData('marketingOptIn', checked)} className="h-4 w-4" />
                            <Label htmlFor="marketingOptIn" className="text-sm leading-relaxed cursor-pointer">
                              I'd like to receive updates about conservation impact and similar experiences
                            </Label>
@@ -595,26 +532,14 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
 
                      {/* Navigation buttons */}
                      <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                       <Button
-                         type="button"
-                         variant="outline"
-                         onClick={() => setCurrentStep(2)}
-                         className="sm:w-auto"
-                       >
+                       <Button type="button" variant="outline" onClick={() => setCurrentStep(2)} className="sm:w-auto">
                          Back
                        </Button>
-                       <Button
-                         type="button"
-                         onClick={handleConfirmBooking}
-                         disabled={!validateStep3() || isProcessingPayment || bookingTimer.isExpired}
-                         className="w-full sm:ml-auto sm:w-auto h-11"
-                         size="lg"
-                       >
+                       <Button type="button" onClick={handleConfirmBooking} disabled={!validateStep3() || isProcessingPayment || bookingTimer.isExpired} className="w-full sm:ml-auto sm:w-auto h-11" size="lg">
                          {isProcessingPayment ? "Processing..." : bookingTimer.isExpired ? "Session Expired" : `Pay ${formatPrice(cart.subtotal + (formData.donation || 0))}`}
                        </Button>
                      </div>
-                   </div>
-                 )}
+                   </div>}
 
               </div>
 
@@ -668,20 +593,17 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                       </div>
 
                       {/* Pricing */}
-                      {impactSummary && (
-                        <div className="space-y-3">
+                      {impactSummary && <div className="space-y-3">
                           <h5 className="font-medium text-xs text-muted-foreground uppercase tracking-wide">Total</h5>
                           <div className="space-y-2 p-3 bg-gradient-to-br from-background/50 to-background/30 rounded-lg border">
                             <div className="flex justify-between items-center text-sm">
                               <span className="text-muted-foreground">Experience × {cart.adults + cart.children}</span>
                               <span className="font-medium">{formatPrice(cart.subtotal)}</span>
                             </div>
-                            {formData.donation > 0 && (
-                              <div className="flex justify-between items-center text-sm">
+                            {formData.donation > 0 && <div className="flex justify-between items-center text-sm">
                                 <span className="text-emerald-700">🌱 Donation</span>
                                 <span className="font-medium text-emerald-700">+{formatPrice(formData.donation)}</span>
-                              </div>
-                            )}
+                              </div>}
                             <div className="border-t pt-2 mt-2">
                               <div className="flex justify-between items-center">
                                 <span className="font-semibold text-sm">Total</span>
@@ -694,8 +616,7 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
                               </div>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        </div>}
                     </CardContent>
                   </Card>
                 </div>
@@ -704,8 +625,6 @@ const BookingWizardNew: React.FC<BookingWizardNewProps> = ({ isOpen, onClose, ex
           </div>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
 export default BookingWizardNew;
