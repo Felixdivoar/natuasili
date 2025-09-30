@@ -303,11 +303,11 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
 
               {/* Tabbed Content */}
               <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-                  <TabsTrigger value="included">What's Included</TabsTrigger>
-                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2">
+                  <TabsTrigger value="overview" className="min-h-[44px] text-xs sm:text-sm">Overview</TabsTrigger>
+                  <TabsTrigger value="itinerary" className="min-h-[44px] text-xs sm:text-sm">Itinerary</TabsTrigger>
+                  <TabsTrigger value="included" className="min-h-[44px] text-xs sm:text-sm">What's Included</TabsTrigger>
+                  <TabsTrigger value="reviews" className="min-h-[44px] text-xs sm:text-sm">Reviews</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview" className="mt-6">
