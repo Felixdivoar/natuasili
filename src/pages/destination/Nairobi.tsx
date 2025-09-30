@@ -14,12 +14,14 @@ import T from "@/i18n/T";
 import DynamicTranslated from "@/i18n/DynamicTranslated";
 import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
 import BookNowButton from "@/components/BookNowButton";
+import { useDestinationStats } from "@/hooks/useDestinationStats";
 
 const NairobiDestination = () => {
   const { formatPrice } = useCurrency();
   const { t } = useI18n();
   usePageTitle("title_destinations");
   useHtmlLang();
+  const { data: stats } = useDestinationStats("nairobi");
 
   const nairobiExperiences = EXPERIENCES.filter(experience => experience.destination === 'nairobi');
 
@@ -81,28 +83,28 @@ const NairobiDestination = () => {
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
                   <TreePine className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-4xl font-bold text-foreground mb-2">5</div>
+                <div className="text-4xl font-bold text-foreground mb-2">{stats?.protectedAreas ?? 0}</div>
                 <div className="text-sm text-muted-foreground">Protected Areas</div>
               </div>
               <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
                   <Heart className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-4xl font-bold text-foreground mb-2">12</div>
+                <div className="text-4xl font-bold text-foreground mb-2">{stats?.activeProjects ?? 0}</div>
                 <div className="text-sm text-muted-foreground"><T k="dest_active_projects" /></div>
               </div>
               <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
                   <MapPin className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-4xl font-bold text-foreground mb-2">12,000</div>
+                <div className="text-4xl font-bold text-foreground mb-2">{stats?.hectaresProtected.toLocaleString() ?? 0}</div>
                 <div className="text-sm text-muted-foreground"><T k="dest_hectares_protected" /></div>
               </div>
               <div className="bg-card rounded-2xl p-6 shadow-sm border border-border hover:shadow-md transition-all hover:-translate-y-1">
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
                   <TreePine className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-4xl font-bold text-foreground mb-2">25</div>
+                <div className="text-4xl font-bold text-foreground mb-2">{stats?.communitiesInvolved ?? 0}</div>
                 <div className="text-sm text-muted-foreground"><T k="dest_communities_involved" /></div>
               </div>
             </div>
