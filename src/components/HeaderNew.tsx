@@ -260,23 +260,23 @@ export default function HeaderNew() {
                 </div>
 
                 {/* Main navigation */}
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+                <nav className="flex-1 p-4 space-y-2 overflow-y-auto" style={{ pointerEvents: 'auto' }}>
                   {/* Marketplace with dropdown */}
-                  <div className="space-y-2">
-                    <button className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md flex items-center justify-between" onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}>
+                  <div className="space-y-2" style={{ pointerEvents: 'auto' }}>
+                    <button className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md flex items-center justify-between" style={{ pointerEvents: 'auto', touchAction: 'manipulation' }} onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}>
                       {t("nav_marketplace")}
                       <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "mobile-marketplace" ? "rotate-180" : ""}`} />
                     </button>
-                    {openMenu === "mobile-marketplace" && <div className="ml-4 space-y-1">
+                    {openMenu === "mobile-marketplace" && <div className="ml-4 space-y-1" style={{ pointerEvents: 'auto' }}>
                         <div className="text-xs font-medium text-muted-foreground px-3 py-1">Destinations</div>
-                        {DESTINATIONS.map(dest => <Link key={dest.slug} to={`/destinations/${dest.slug}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md pointer-events-auto" onClick={() => {
+                        {DESTINATIONS.map(dest => <Link key={dest.slug} to={`/destinations/${dest.slug}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }} onClick={() => {
                     setIsMobileMenuOpen(false);
                     setOpenMenu(null);
                   }}>
                             {dest.label}
                           </Link>)}
                         <div className="text-xs font-medium text-muted-foreground px-3 py-1 mt-2">Themes</div>
-                        {THEMES.map(theme => <Link key={theme.slug} to={`/listings?theme=${encodeURIComponent(theme.label)}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md pointer-events-auto" onClick={() => {
+                        {THEMES.map(theme => <Link key={theme.slug} to={`/listings?theme=${encodeURIComponent(theme.label)}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }} onClick={() => {
                     setIsMobileMenuOpen(false);
                     setOpenMenu(null);
                   }}>
@@ -285,13 +285,13 @@ export default function HeaderNew() {
                       </div>}
                   </div>
                   
-                  <Link to="/impact-ledger" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link to="/impact-ledger" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }} onClick={() => setIsMobileMenuOpen(false)}>
                     {t("nav_impact")}
                   </Link>
                   
-                  <Link to="/partner-entry" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" onClick={() => setIsMobileMenuOpen(false)}>Add your experience</Link>
+                  <Link to="/partner-entry" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }} onClick={() => setIsMobileMenuOpen(false)}>Add your experience</Link>
                   
-                  <button className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md" onClick={() => {
+                  <button className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px' }} onClick={() => {
                 console.log('Mobile AsiliChat button clicked');
                 const event = new CustomEvent('asili-chat:toggle');
                 document.dispatchEvent(event);
