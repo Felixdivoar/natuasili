@@ -346,16 +346,18 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                         <h3 className="font-semibold text-lg mb-4">Your Experience Journey</h3>
                         <div className="prose prose-gray max-w-none">
                           {contentSections.itinerary && contentSections.itinerary.length > 0 ? (
-                            <p className="text-muted-foreground leading-relaxed">
+                            <div className="space-y-4">
                               {contentSections.itinerary.map((item, index) => (
-                                `${item.title}: ${item.description}`
-                              )).join(' Following this, you\'ll move on to the next phase where ')}
-                            </p>
+                                <p key={index} className="text-muted-foreground leading-relaxed">
+                                  <span className="font-medium text-foreground">{item.title}:</span> {item.description}
+                                </p>
+                              ))}
+                            </div>
                           ) : (
                             <p className="text-muted-foreground leading-relaxed">
-                              Your conservation experience begins with an early morning departure from your accommodation, where you'll journey to the location with expert briefing from our local guides. 
-                              Upon arrival, you'll be introduced to the conservation site and begin your hands-on experience with local community members who will share their traditional knowledge and techniques. 
-                              Throughout the day, you'll participate in meaningful conservation activities while learning about the local ecosystem and wildlife protection efforts. 
+                              Your conservation experience begins with an early morning departure from your accommodation, where you will journey to the location with expert briefing from our local guides. 
+                              Upon arrival, you will be introduced to the conservation site and begin your hands-on experience with local community members who will share their traditional knowledge and techniques. 
+                              Throughout the day, you will participate in meaningful conservation activities while learning about the local ecosystem and wildlife protection efforts. 
                               The experience concludes with reflection time and an opportunity to understand the long-term impact of your contribution to conservation efforts in the region.
                             </p>
                           )}
