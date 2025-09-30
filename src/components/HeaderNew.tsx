@@ -263,35 +263,88 @@ export default function HeaderNew() {
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto relative z-[205]" style={{ pointerEvents: 'auto' }}>
                   {/* Marketplace with dropdown */}
                   <div className="space-y-2 relative z-20" style={{ pointerEvents: 'auto' }}>
-                    <button className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md flex items-center justify-between relative z-20" style={{ pointerEvents: 'auto', touchAction: 'manipulation' }} onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}>
+                    <button
+                      className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md flex items-center justify-between relative z-20"
+                      style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
+                      onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}
+                      aria-expanded={openMenu === "mobile-marketplace"}
+                      aria-controls="mobile-marketplace-menu"
+                    >
                       {t("nav_marketplace")}
                       <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "mobile-marketplace" ? "rotate-180" : ""}`} />
                     </button>
-                    {openMenu === "mobile-marketplace" && <div className="ml-4 space-y-1 relative z-[210] bg-background border border-border rounded-md shadow-lg" style={{ pointerEvents: 'auto', isolation: 'isolate' }}>
+                    {openMenu === "mobile-marketplace" && (
+                      <div
+                        id="mobile-marketplace-menu"
+                        className="ml-4 space-y-1 relative z-[210] bg-background border border-border rounded-md shadow-lg"
+                        style={{ pointerEvents: 'auto', isolation: 'isolate' }}
+                        role="menu"
+                      >
                         <div className="text-xs font-medium text-muted-foreground px-3 py-1">Destinations</div>
-                        {DESTINATIONS.map(dest => <Link key={dest.slug} to={`/destinations/${dest.slug}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md relative z-30" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMobileMenuOpen(false);
-                    setOpenMenu(null);
-                  }}>
+                        {DESTINATIONS.map((dest) => (
+                          <button
+                            key={dest.slug}
+                            type="button"
+                            className="block w-full text-left px-3 py-1 text-sm hover:bg-muted rounded-md relative z-[210]"
+                            style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/destinations/${dest.slug}`);
+                              setIsMobileMenuOpen(false);
+                              setOpenMenu(null);
+                            }}
+                            aria-label={`Go to ${dest.label} destination`}
+                            role="menuitem"
+                          >
                             {dest.label}
-                          </Link>)}
+                          </button>
+                        ))}
                         <div className="text-xs font-medium text-muted-foreground px-3 py-1 mt-2">Themes</div>
-                        {THEMES.map(theme => <Link key={theme.slug} to={`/listings?theme=${encodeURIComponent(theme.label)}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md relative z-30" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMobileMenuOpen(false);
-                    setOpenMenu(null);
-                  }}>
+                        {THEMES.map((theme) => (
+                          <button
+                            key={theme.slug}
+                            type="button"
+                            className="block w-full text-left px-3 py-1 text-sm hover:bg-muted rounded-md relative z-[210]"
+                            style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/listings?theme=${encodeURIComponent(theme.label)}`);
+                              setIsMobileMenuOpen(false);
+                              setOpenMenu(null);
+                            }}
+                            aria-label={`Filter by ${theme.label}`}
+                            role="menuitem"
+                          >
                             {theme.label}
-                          </Link>)}
-                      </div>}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   
-                  <Link to="/impact-ledger" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }} onClick={() => setIsMobileMenuOpen(false)}>
+                  <button
+                    type="button"
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }}
+                    onClick={() => {
+                      navigate('/impact-ledger');
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
                     {t("nav_impact")}
-                  </Link>
+                  </button>
                   
-                  <Link to="/partner-entry" className="block px-3 py-2 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }} onClick={() => setIsMobileMenuOpen(false)}>Add your experience</Link>
+                  <button
+                    type="button"
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center' }}
+                    onClick={() => {
+                      navigate('/partner-entry');
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    Add your experience
+                  </button>
                   
                   <button className="block w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px' }} onClick={() => {
                 console.log('Mobile AsiliChat button clicked');
