@@ -56,6 +56,22 @@ const ResponsiveBookingForm: React.FC<ResponsiveBookingFormProps> = ({ experienc
     }
   }, [user]);
 
+  // Sync with URL changes (e.g., from listing card before opening modal)
+  useEffect(() => {
+    const dateParam = searchParams.get('date') || '';
+    const peopleParamRaw = searchParams.get('people');
+    const peopleParam = peopleParamRaw ? parseInt(peopleParamRaw) : NaN;
+
+    setFormData(prev => ({
+      ...prev,
+      date: dateParam || prev.date,
+      people: !Number.isNaN(peopleParam) ? peopleParam : prev.people,
+    }));
+  }, [searchParams]);
+
+
+
+
   // Price calculations
   const adultPrice = experience.priceKESAdult || experience.base_price || 350;
   const isGroupPricing = experience.isGroupPricing || false;
