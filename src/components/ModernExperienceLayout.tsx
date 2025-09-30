@@ -349,7 +349,7 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
                             <div className="space-y-4">
                               {contentSections.itinerary.map((item, index) => (
                                 <p key={index} className="text-muted-foreground leading-relaxed">
-                                  <span className="font-medium text-foreground">{item.title}:</span> {item.description}
+                                  <span className="font-medium text-foreground">{item.title.replace(/Step\s+/i, '')}:</span> {item.description}
                                 </p>
                               ))}
                             </div>
