@@ -303,11 +303,19 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
 
               {/* Tabbed Content */}
               <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="flex flex-col sm:grid sm:grid-cols-4 w-full gap-1 h-auto p-1 bg-muted">
-                  <TabsTrigger value="overview" className="w-full justify-center py-3 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Overview</TabsTrigger>
-                  <TabsTrigger value="itinerary" className="w-full justify-center py-3 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Itinerary</TabsTrigger>
-                  <TabsTrigger value="included" className="w-full justify-center py-3 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">What's Included</TabsTrigger>
-                  <TabsTrigger value="reviews" className="w-full justify-center py-3 text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm">Reviews</TabsTrigger>
+                <TabsList className="!flex !flex-col sm:!grid sm:grid-cols-4 w-full !h-auto gap-1 sm:gap-2 p-1 bg-muted !items-stretch">
+                  <TabsTrigger value="overview" className="w-full justify-center py-3 px-4 text-sm font-medium whitespace-normal data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                    Overview
+                  </TabsTrigger>
+                  <TabsTrigger value="itinerary" className="w-full justify-center py-3 px-4 text-sm font-medium whitespace-normal data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                    Itinerary
+                  </TabsTrigger>
+                  <TabsTrigger value="included" className="w-full justify-center py-3 px-4 text-sm font-medium whitespace-normal data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                    What's Included
+                  </TabsTrigger>
+                  <TabsTrigger value="reviews" className="w-full justify-center py-3 px-4 text-sm font-medium whitespace-normal data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                    Reviews
+                  </TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="overview" className="mt-6">
