@@ -242,7 +242,7 @@ export default function HeaderNew() {
           </div>
 
           {/* Mobile Menu */}
-          {isMobileMenuOpen && <div className="lg:hidden fixed inset-0 z-50 bg-background">
+          {isMobileMenuOpen && <div className="lg:hidden fixed inset-0 z-[200] bg-background" style={{ pointerEvents: 'auto' }}>
               <div className="flex flex-col h-full">
                 {/* Header with close button */}
                 <div className="flex items-center justify-between p-4 border-b border-border">
@@ -260,14 +260,14 @@ export default function HeaderNew() {
                 </div>
 
                 {/* Main navigation */}
-                <nav className="flex-1 p-4 space-y-2 overflow-y-auto relative z-10" style={{ pointerEvents: 'auto' }}>
+                <nav className="flex-1 p-4 space-y-2 overflow-y-auto relative z-[205]" style={{ pointerEvents: 'auto' }}>
                   {/* Marketplace with dropdown */}
                   <div className="space-y-2 relative z-20" style={{ pointerEvents: 'auto' }}>
                     <button className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md flex items-center justify-between relative z-20" style={{ pointerEvents: 'auto', touchAction: 'manipulation' }} onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}>
                       {t("nav_marketplace")}
                       <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "mobile-marketplace" ? "rotate-180" : ""}`} />
                     </button>
-                    {openMenu === "mobile-marketplace" && <div className="ml-4 space-y-1 relative z-30 bg-background" style={{ pointerEvents: 'auto', isolation: 'isolate' }}>
+                    {openMenu === "mobile-marketplace" && <div className="ml-4 space-y-1 relative z-[210] bg-background border border-border rounded-md shadow-lg" style={{ pointerEvents: 'auto', isolation: 'isolate' }}>
                         <div className="text-xs font-medium text-muted-foreground px-3 py-1">Destinations</div>
                         {DESTINATIONS.map(dest => <Link key={dest.slug} to={`/destinations/${dest.slug}`} className="block px-3 py-1 text-sm hover:bg-muted rounded-md relative z-30" style={{ pointerEvents: 'auto', touchAction: 'manipulation', minHeight: '44px', display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={(e) => {
                     e.stopPropagation();
