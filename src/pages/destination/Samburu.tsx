@@ -8,29 +8,19 @@ import Footer from "@/components/Footer";
 import { EXPERIENCES } from "@/data/partners";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import BookNowButton from "@/components/BookNowButton";
-
 const samburuDestination = "/lovable-uploads/01b8fcc6-ad62-462a-aad8-c45697827e2e.png";
-
 const SamburuDestination = () => {
-  const { formatPrice } = useCurrency();
-  
-  const samburuExperiences = EXPERIENCES.filter(experience =>
-    experience.destination === 'northern-kenya'
-  );
-
-  return (
-    <div className="min-h-screen bg-background">
+  const {
+    formatPrice
+  } = useCurrency();
+  const samburuExperiences = EXPERIENCES.filter(experience => experience.destination === 'northern-kenya');
+  return <div className="min-h-screen bg-background">
       <Header />
       
       {/* Hero Section - Redesigned */}
       <section className="relative h-[65vh] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={samburuDestination}
-            alt="Samburu Ecosystem"
-            className="w-full h-full object-cover scale-105 animate-subtle-zoom"
-            loading="eager"
-          />
+          <img src={samburuDestination} alt="Samburu Ecosystem" className="w-full h-full object-cover scale-105 animate-subtle-zoom" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
         </div>
@@ -185,16 +175,9 @@ const SamburuDestination = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {samburuExperiences.slice(0, 6).map((experience) => (
-              <Card key={experience.id} className="group overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+            {samburuExperiences.slice(0, 6).map(experience => <Card key={experience.id} className="group overflow-hidden border-0 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                 <div className="aspect-[4/3] relative overflow-hidden bg-muted">
-                  {experience.images[0] && (
-                    <img
-                      src={experience.images[0]}
-                      alt={experience.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  )}
+                  {experience.images[0] && <img src={experience.images[0]} alt={experience.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <Badge className="bg-primary text-primary-foreground border-0 shadow-lg text-base px-3 py-1">
@@ -203,7 +186,7 @@ const SamburuDestination = () => {
                   </div>
                 </div>
                 <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-tight">
+                  <h3 className="font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-tight text-base">
                     {experience.title}
                   </h3>
                   <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
@@ -214,14 +197,10 @@ const SamburuDestination = () => {
                       <Users className="h-4 w-4 text-primary" />
                       <span>Up to 8 guests</span>
                     </div>
-                    <BookNowButton 
-                      href={`/experience/${experience.slug}`}
-                      label="Book"
-                    />
+                    <BookNowButton href={`/experience/${experience.slug}`} label="Book" />
                   </div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
 
           <div className="text-center mt-12">
@@ -236,8 +215,6 @@ const SamburuDestination = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default SamburuDestination;
