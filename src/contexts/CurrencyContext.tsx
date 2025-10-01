@@ -71,9 +71,9 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const ts = Number(localStorage.getItem(KEY_TS_KES) || 0);
     const stale = !ts || Date.now() - ts > REFRESH_MS;
-    if (stale) fetchRates();
-    const id = setInterval(fetchRates, REFRESH_MS);
-    return () => clearInterval(id);
+    if (stale) void fetchRates();
+    // Removed continuous interval - rates only fetched on mount if stale
+    // This prevents memory leaks and reduces unnecessary API calls
   }, []);
 
   // Convert helper:

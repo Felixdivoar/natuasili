@@ -26,6 +26,7 @@ export const useDestinationStats = (destination: string) => {
         communitiesInvolved: 0,
       };
     },
-    refetchInterval: 30000, // Auto-refresh every 30 seconds
+    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
   });
 };

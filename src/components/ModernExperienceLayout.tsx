@@ -36,11 +36,14 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const coordinates = getExperienceCoordinates(experience.locationText);
 
-  // Auto-slide mobile carousel
+  // Auto-slide mobile carousel - only when component is visible
   useEffect(() => {
-    if (!isMobile || !experience?.images?.length) return;
+    if (!isMobile || !experience?.images?.length || experience.images.length <= 1) return;
     
     const interval = setInterval(() => {
+      // Check if element is still in viewport before scrolling
+      if (!carouselRef.current || document.hidden) return;
+      
       setCurrentImageIndex((prev) => {
         const next = (prev + 1) % experience.images.length;
         if (carouselRef.current) {
@@ -49,7 +52,7 @@ const ModernExperienceLayout: React.FC<ModernExperienceLayoutProps> = ({
         }
         return next;
       });
-    }, 4000);
+    }, 5000); // Increased to 5s to reduce CPU usage
     
     return () => clearInterval(interval);
   }, [isMobile, experience?.images?.length]);

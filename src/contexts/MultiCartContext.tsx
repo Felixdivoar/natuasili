@@ -220,8 +220,10 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setIsSynced(false);
   };
 
-  // Auto-clear individual cart items after 10 minutes
+  // Auto-clear individual cart items after 10 minutes - only check when items exist
   useEffect(() => {
+    if (items.length === 0) return;
+    
     const interval = setInterval(() => {
       const now = Date.now();
       const tenMinutesAgo = now - (10 * 60 * 1000); // 10 minutes in milliseconds
@@ -237,7 +239,7 @@ export const MultiCartProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }, 60 * 1000); // Check every minute
 
     return () => clearInterval(interval);
-  }, []);
+  }, [items.length > 0]);
 
   const itemCount = items.length;
   const total = useMemo(() => items.reduce((sum, i) => sum + i.subtotal + i.donation, 0), [items]);

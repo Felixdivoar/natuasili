@@ -13,14 +13,16 @@ export default function CartDrawer() {
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(Date.now());
 
-  // Update current time every minute to refresh expiry times
+  // Update current time only when drawer is open
   useEffect(() => {
+    if (!open) return;
+    
     const interval = setInterval(() => {
       setCurrentTime(Date.now());
     }, 60000); // Update every minute
 
     return () => clearInterval(interval);
-  }, []);
+  }, [open]);
 
   const hasItems = items.length > 0;
 
