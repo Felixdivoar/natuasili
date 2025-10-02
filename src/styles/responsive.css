@@ -126,4 +126,41 @@
   [role="menu"] {
     width: 100%;
   }
+
+  /* Force mobile menu to display all items consistently */
+  header nav a,
+  header nav button,
+  header nav .space-y-2 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Ensure mobile menu navigation is visible */
+  .lg\\:hidden nav {
+    display: block !important;
+  }
+
+  /* Hide unauthorized submenus that aren't in THEMES or DESTINATIONS arrays */
+  header nav a[href*="sustainable-safari"],
+  header nav a[href*="photography-tours"],
+  header nav button[data-unauthorized] {
+    display: none !important;
+  }
+
+  /* Force consistent menu item styling */
+  header .fixed.inset-0 nav a,
+  header .fixed.inset-0 nav button {
+    font-size: 0.875rem !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 0.375rem !important;
+  }
+
+  /* Ensure mobile menu container is full screen */
+  header .fixed.inset-0.z-50 {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 50 !important;
+    background-color: hsl(var(--background)) !important;
+  }
 }
