@@ -28,7 +28,7 @@ const THEMES = [
 export default function HeaderMega() {
   const { t } = useI18n();
   const { user, profile, signOut, loading } = useAuth();
-  const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile" | "mobile-marketplace">(null);
+  const [openMenu, setOpenMenu] = useState<null | "dest" | "theme" | "profile">(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -281,41 +281,70 @@ export default function HeaderMega() {
               {/* Main navigation */}
               <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                 <Link 
-                  to="/" 
+                  to="/experiences" 
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Home
+                  {t("nav_marketplace")}
                 </Link>
                 
-                {/* Marketplace with dropdown */}
+                <a 
+                  href="https://open.spotify.com/show/7oKIRbsUqrDwiH47E5VZvf?si=qhIVTrJLSSKf3jChj0POyA&nd=1&flow_ctx=3b79f64c-906a-4fa4-b0b7-6e45d375433b%3A1697319493" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted rounded-md"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Headphones className="w-4 h-4" />
+                  Conservation Voices
+                </a>
+
+                {/* Destinations */}
                 <div className="space-y-2">
                   <button
                     className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
-                    onClick={() => setOpenMenu(openMenu === "mobile-marketplace" ? null : "mobile-marketplace")}
+                    onClick={() => setOpenMenu(openMenu === "dest" ? null : "dest")}
                   >
-                    {t("nav_marketplace")}
+                    {t("nav_destinations")}
                   </button>
-                  {openMenu === "mobile-marketplace" && (
+                  {openMenu === "dest" && (
                     <div className="ml-4 space-y-1">
-                      <div className="text-xs font-medium text-muted-foreground px-3 py-1">Destinations</div>
                       {DESTINATIONS.map((dest) => (
                         <Link
                           key={dest.slug}
                           to={`/destinations/${dest.slug}`}
                           className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
-                          onClick={() => setIsMobileMenuOpen(false)}
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            setOpenMenu(null);
+                          }}
                         >
                           {dest.label}
                         </Link>
                       ))}
-                      <div className="text-xs font-medium text-muted-foreground px-3 py-1 mt-2">Themes</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Themes */}
+                <div className="space-y-2">
+                  <button
+                    className="w-full text-left px-3 py-2 text-sm hover:bg-muted rounded-md"
+                    onClick={() => setOpenMenu(openMenu === "theme" ? null : "theme")}
+                  >
+                    {t("nav_themes")}
+                  </button>
+                  {openMenu === "theme" && (
+                    <div className="ml-4 space-y-1">
                       {THEMES.map((theme) => (
                         <Link
                           key={theme.slug}
                           to={`/themes/${theme.slug}`}
                           className="block px-3 py-1 text-sm hover:bg-muted rounded-md"
-                          onClick={() => setIsMobileMenuOpen(false)}
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            setOpenMenu(null);
+                          }}
                         >
                           {theme.label}
                         </Link>
@@ -329,7 +358,7 @@ export default function HeaderMega() {
                   className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Impact Ledger
+                  {t("nav_impact")}
                 </Link>
                 <Link 
                   to="/partner-entry" 
@@ -337,27 +366,6 @@ export default function HeaderMega() {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Add your experience
-                </Link>
-                <Link 
-                  to="/about" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  About
-                </Link>
-                <Link 
-                  to="/privacy" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Privacy
-                </Link>
-                <Link 
-                  to="/terms" 
-                  className="block px-3 py-2 text-sm hover:bg-muted rounded-md"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Terms
                 </Link>
 
                 {/* Currency converter */}
