@@ -193,7 +193,14 @@
   /* Remove Marketplace from mobile menu (mobile only) */
   header .lg\\:hidden .fixed.inset-0 nav a[href="/experiences"],
   header .fixed.inset-0 .lg\\:hidden nav a[href="/experiences"],
-  header .lg\\:hidden nav a[href="/experiences"] {
+  header .lg\\:hidden nav a[href="/experiences"],
+  header .lg\\:hidden .fixed.inset-0 nav a[href="/marketplace"],
+  header .fixed.inset-0 .lg\\:hidden nav a[href="/marketplace"],
+  header .lg\\:hidden nav a[href="/marketplace"],
+  /* Fallback: hide the first top-level link in the mobile drawer nav (Marketplace) */
+  header .lg\\:hidden .fixed.inset-0 nav > a:first-child,
+  header .fixed.inset-0 .lg\\:hidden nav > a:first-child,
+  header .lg\\:hidden nav > a:first-child {
     display: none !important;
     visibility: hidden !important;
   }
