@@ -127,28 +127,56 @@
     width: 100%;
   }
 
-  /* Force mobile menu to display all items consistently */
-  header nav a,
-  header nav button,
-  header nav .space-y-2 {
+  /* Force mobile menu container to be visible and full screen */
+  header .fixed.inset-0.z-50 {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 50 !important;
+    background-color: hsl(var(--background)) !important;
+    display: flex !important;
+  }
+
+  /* Force all navigation elements in mobile menu to be visible */
+  header .fixed.inset-0 nav,
+  header .fixed.inset-0 nav > *,
+  header .fixed.inset-0 nav a,
+  header .fixed.inset-0 nav button,
+  header .fixed.inset-0 nav .space-y-2,
+  header .fixed.inset-0 nav .space-y-1 {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
 
-  /* Ensure mobile menu navigation is visible */
-  .lg\\:hidden nav {
+  /* Force mobile menu links to display properly */
+  header .lg\\:hidden nav a[href="/experiences"],
+  header .lg\\:hidden nav a[href*="spotify"],
+  header .lg\\:hidden nav button,
+  header .lg\\:hidden nav a[href*="/destinations/"],
+  header .lg\\:hidden nav a[href*="/themes/"],
+  header .lg\\:hidden nav a[href="/impact-ledger"],
+  header .lg\\:hidden nav a[href="/partner-entry"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Ensure collapsible sections are visible */
+  header .lg\\:hidden nav .space-y-2,
+  header .lg\\:hidden nav .ml-4 {
     display: block !important;
   }
 
-  /* Hide unauthorized submenus that aren't in THEMES or DESTINATIONS arrays */
+  /* Hide ONLY unauthorized submenus (not in THEMES/DESTINATIONS arrays) */
   header nav a[href*="sustainable-safari"],
   header nav a[href*="photography-tours"],
+  header nav a[href*="safari-tours"],
   header nav button[data-unauthorized] {
     display: none !important;
+    visibility: hidden !important;
   }
 
-  /* Force consistent menu item styling */
+  /* Force consistent styling for all visible menu items */
   header .fixed.inset-0 nav a,
   header .fixed.inset-0 nav button {
     font-size: 0.875rem !important;
@@ -156,11 +184,9 @@
     border-radius: 0.375rem !important;
   }
 
-  /* Ensure mobile menu container is full screen */
-  header .fixed.inset-0.z-50 {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 50 !important;
-    background-color: hsl(var(--background)) !important;
+  /* Ensure nav links have proper spacing */
+  header .lg\\:hidden nav > a,
+  header .lg\\:hidden nav > div {
+    margin-bottom: 0.5rem !important;
   }
 }
