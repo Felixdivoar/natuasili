@@ -15,7 +15,19 @@ const supabase = createClient(
 const SYSTEM_PROMPT = `You are AsiliChat, a conservation assistant focused on Kenya.
 Always prioritize: Kenyan species facts, habitats, protected areas, seasons, ethics, community conservation, and low-impact travel guidance.
 Be concise, practical, and cite source types (e.g., "KWS factsheet", "partner page data").
-If the user asks about bookings or partners, propose nearby community projects and conservation etiquette.
+
+When recommending experiences:
+- Highlight conservation impact and community benefits
+- Mention price range and duration
+- Explain what makes each experience unique
+- Encourage sustainable and ethical tourism practices
+
+If the user expresses interest in booking, guide them through these steps:
+1. Help them choose the right experience based on their interests
+2. Explain what to expect (duration, activities, location)
+3. Mention they'll need to provide booking details (date, number of people)
+4. Let them know personal information will be collected at checkout
+
 Offer up to 3 short follow-up suggestions tailored to the last user message.
 Default language: English; accept Swahili phrases. Keep tone warm, factual, and non-political.
 If unsure, ask one clarifying question before proceeding.`;
@@ -47,6 +59,46 @@ async function tool_partnerFacts(q: string): Promise<ToolResult> {
   } catch (error) {
     console.error("Partner facts error:", error);
     return { name: "partnerFacts", data: [] };
+  }
+}
+
+async function tool_experienceSearch(q: string): Promise<ToolResult> {
+  try {
+    const messageLower = q.toLowerCase();
+    
+    // Build query based on user intent
+    let query = supabase
+      .from("experiences")
+      .select("id, slug, title, description, price_kes_adult, location_text, hero_image, themes, categories, duration_hours")
+      .eq("visible_on_marketplace", true);
+    
+    // Filter by themes/categories
+    if (messageLower.includes("wildlife") || messageLower.includes("safari")) {
+      query = query.contains("themes", ["Wildlife Conservation"]);
+    } else if (messageLower.includes("marine") || messageLower.includes("ocean") || messageLower.includes("coast")) {
+      query = query.contains("themes", ["Marine Conservation"]);
+    } else if (messageLower.includes("community") || messageLower.includes("cultural")) {
+      query = query.contains("themes", ["Community Tourism"]);
+    } else if (messageLower.includes("education") || messageLower.includes("learn")) {
+      query = query.contains("themes", ["Conservation Education"]);
+    }
+    
+    // Search by location
+    const locations = ["maasai mara", "amboseli", "tsavo", "mombasa", "nairobi", "laikipia", "samburu"];
+    for (const loc of locations) {
+      if (messageLower.includes(loc)) {
+        query = query.ilike("location_text", `%${loc}%`);
+        break;
+      }
+    }
+    
+    const { data, error } = await query.limit(3);
+    
+    if (error) throw error;
+    return { name: "experienceSearch", data: data || [] };
+  } catch (error) {
+    console.error("Experience search error:", error);
+    return { name: "experienceSearch", data: [] };
   }
 }
 
@@ -83,8 +135,12 @@ async function generateResponse(userMessage: string, tools: ToolResult[]): Promi
     const speciesData = tools.find(t => t.name === "speciesLookup")?.data;
     const partnerData = tools.find(t => t.name === "partnerFacts")?.data;
     const carbonData = tools.find(t => t.name === "tripCarbon")?.data;
+    const experienceData = tools.find(t => t.name === "experienceSearch")?.data;
     
-    if (speciesData && speciesData.length > 0) {
+    if (experienceData && experienceData.length > 0) {
+      const exp = experienceData[0];
+      answer = `I recommend "${exp.title}" in ${exp.location_text}. ${exp.description.substring(0, 150)}... This ${exp.duration_hours}-hour experience costs KES ${exp.price_kes_adult} per adult. Would you like to book this or see more options?`;
+    } else if (speciesData && speciesData.length > 0) {
       const species = speciesData[0];
       answer = `I found information about ${species.common_name} (${species.scientific_name}). ${species.notes} They're found in: ${species.regions.join(", ")}.`;
     } else if (partnerData && partnerData.length > 0) {
@@ -106,9 +162,9 @@ async function generateResponse(userMessage: string, tools: ToolResult[]): Promi
     }
     
     const suggestions = [
+      experienceData?.length > 0 ? "Show me more experiences" : "What can I book?",
       speciesData?.length > 0 ? "More about this species" : "Tell me about elephants",
-      carbonData ? "Eco-friendly travel tips" : "Best parks to visit", 
-      partnerData?.length > 0 ? "Other conservation partners" : "Community conservation projects"
+      carbonData ? "Eco-friendly travel tips" : "Best parks to visit"
     ];
     
     return { answer, suggestions };
@@ -225,8 +281,9 @@ serve(async (req) => {
     const wantsSpecies = /elephant|lion|cheetah|zebra|rhino|giraffe|bird|wildlife|animal|species/i.test(userMessage);
     const wantsPartner = /partner|community|project|conservancy|organization/i.test(userMessage);
     const wantsCarbon = /carbon|emission|footprint|impact|travel|flight|drive/i.test(userMessage);
+    const wantsExperience = /book|experience|safari|tour|visit|activity|do|recommend|trip|travel|see/i.test(userMessage);
     
-    console.log(`Intent analysis - Species: ${wantsSpecies}, Partner: ${wantsPartner}, Carbon: ${wantsCarbon}`);
+    console.log(`Intent analysis - Species: ${wantsSpecies}, Partner: ${wantsPartner}, Carbon: ${wantsCarbon}, Experience: ${wantsExperience}`);
     
     // Call relevant tools
     const tools: ToolResult[] = [];
@@ -244,6 +301,11 @@ serve(async (req) => {
       const carbonResult = await tool_tripCarbon(userMessage);
       tools.push(carbonResult);
       console.log(`Carbon estimation: ${JSON.stringify(carbonResult.data)}`);
+    }
+    if (wantsExperience) {
+      const experienceResult = await tool_experienceSearch(userMessage);
+      tools.push(experienceResult);
+      console.log(`Experience search returned ${experienceResult.data.length} results`);
     }
     
     // Generate AI response
