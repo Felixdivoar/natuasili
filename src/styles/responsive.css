@@ -189,4 +189,12 @@
   header .lg\\:hidden nav > div {
     margin-bottom: 0.5rem !important;
   }
+
+  /* Remove Marketplace from mobile menu (mobile only) */
+  header .lg\\:hidden .fixed.inset-0 nav a[href="/experiences"],
+  header .fixed.inset-0 .lg\\:hidden nav a[href="/experiences"],
+  header .lg\\:hidden nav a[href="/experiences"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }
