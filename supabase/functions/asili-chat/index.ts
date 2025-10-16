@@ -16,32 +16,94 @@ const supabase = createClient(
 const BASE_URL = Deno.env.get('BASE_URL') || 'https://preview--natuasili.lovable.app';
 const FALLBACK_CATEGORY = '/experiences';
 
-// Experience Index Cache
+// Site Index Cache (comprehensive)
+let siteIndex: any[] = [];
 let experienceIndex: any[] = [];
 let indexLastUpdated = 0;
 const INDEX_REFRESH_INTERVAL = 12 * 60 * 60 * 1000; // 12 hours
 const brokenLinks: any[] = [];
+const linkCache: Map<string, { url: string; valid: boolean; timestamp: number }> = new Map();
+const LINK_CACHE_TTL = 15 * 60 * 1000; // 15 minutes
+
+// Static site pages (canonical URLs)
+const STATIC_PAGES: Record<string, string> = {
+  'about': '/about',
+  'about asili': '/about',
+  'about us': '/about',
+  'who we are': '/about',
+  'contact': '/contact',
+  'contact us': '/contact',
+  'get in touch': '/contact',
+  'whatsapp': '/contact',
+  'impact': '/impact',
+  'how it works': '/impact',
+  'our impact': '/impact',
+  'donate': '/donate',
+  'donation': '/donate',
+  'support': '/donate',
+  'give': '/donate',
+  'partners': '/partners',
+  'partner': '/partners',
+  'organizations': '/partners',
+  'faq': '/faq',
+  'help': '/faq',
+  'questions': '/faq',
+  'privacy': '/privacy',
+  'privacy policy': '/privacy',
+  'terms': '/terms',
+  'terms and conditions': '/terms',
+  'refund': '/terms',
+  'experiences': '/experiences',
+  'all experiences': '/experiences',
+  'themes': '/themes',
+};
+
+// Theme pages
+const THEME_PAGES: Record<string, string> = {
+  'elephants': '/themes/elephants',
+  'elephant': '/themes/elephants',
+  'marine': '/themes/marine',
+  'ocean': '/themes/marine',
+  'sea': '/themes/marine',
+  'coral': '/themes/marine',
+  'community': '/themes/community',
+  'cultural': '/themes/community',
+  'village': '/themes/community',
+  'birds': '/themes/birds',
+  'birding': '/themes/birds',
+  'forest': '/themes/forest',
+  'trees': '/themes/forest',
+  'giraffes': '/themes/giraffes',
+  'giraffe': '/themes/giraffes',
+  'rhinos': '/themes/rhinos',
+  'rhino': '/themes/rhinos',
+};
 
 // Manual overrides for critical experiences (canonical slugs)
 const EXPERIENCE_OVERRIDES: Record<string, string> = {
   'reteti elephant sanctuary': 'reteti-community-elephant-experience',
   'reteti elephant': 'reteti-community-elephant-experience',
   'reteti': 'reteti-community-elephant-experience',
+  'retheti': 'reteti-community-elephant-experience',
   'mara elephant project': 'elephant-researcher-mara-elephant-project',
   'mara elephant': 'elephant-researcher-mara-elephant-project',
+  'mep': 'elephant-researcher-mara-elephant-project',
   'ruko giraffe sanctuary': 'giraffe-at-ruko-sanctuary',
   'ruko giraffe': 'giraffe-at-ruko-sanctuary',
   'ruko': 'giraffe-at-ruko-sanctuary',
   'ol pejeta rhino': 'meet-northern-white-rhinos-ol-pejeta',
   'northern white rhino': 'meet-northern-white-rhinos-ol-pejeta',
   'ol pejeta': 'meet-northern-white-rhinos-ol-pejeta',
+  'olpejeta': 'meet-northern-white-rhinos-ol-pejeta',
   'giraffe centre nairobi': 'meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew',
   'giraffe nairobi': 'meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew',
+  'giraffe center': 'meet-rothschild-giraffes-at-giraffe-nairobi-centre-with-afew',
   'colobus conservation': 'colobus-conservation-guided-eco-tours',
   'colobus monkey': 'colobus-conservation-guided-eco-tours',
   'watamu ocean': 'ocean-conservation-day-watamu',
   'coral conservation': 'dive-into-coral-conservation-with-reefolution',
   'reef diving': 'dive-into-coral-conservation-with-reefolution',
+  'reefolution': 'dive-into-coral-conservation-with-reefolution',
   'karura forest': 'karura-forest-specialized-eco-tours',
   'nairobi park': 'citizen-scientist-nairobi-park',
   'drone conservation': 'drone-conservation-mara-elephant',
@@ -59,57 +121,88 @@ const ENTITY_KEYWORDS: Record<string, string[]> = {
   'conservation': ['conservation', 'protect', 'sanctuary', 'conservancy', 'wildlife'],
 };
 
-const SYSTEM_PROMPT = `You are AsiliChat, a proactive conservation assistant for Kenya. Guide travelers to authentic bookable experiences.
+const SYSTEM_PROMPT = `You are AsiliChat, a smart, fast concierge for NatuAsili—Kenya's conservation marketplace.
 
 Your role:
-- PROACTIVELY suggest 2-4 specific experiences when users show interest
-- Highlight conservation impact in every recommendation
+- Help users navigate ANYWHERE on the site (experiences, themes, about, partners, FAQs, policies, donate, contact)
+- Answer questions about conservation, bookings, impact, volunteering
+- PROACTIVELY suggest 2-4 relevant options with working links
 - Be warm, concise, action-oriented (under 80 words)
-- Let experience cards do the detailed talking
 
-When recommending experiences:
-- Focus on unique value ("Support elephant orphans", "Track wild rhinos")
-- Include clear CTAs: "Book now" or "Learn more"
-- Mention themes for exploration (Elephants, Marine, Community, Forest)
+When users ask:
+- "about" / "who are you" → About page
+- "contact" / "help" → Contact page
+- "privacy" / "terms" → Policy pages
+- "donate" / "support" → Donate page
+- "partners" → Partners page
+- "impact" / "how it works" → Impact page
+- Species/themes → Relevant experiences + theme pages
+- General browsing → Popular experiences and themes
 
-For booking inquiries:
-- Show relevant experience cards immediately
-- Explain: "Pick dates, add to cart, enter details at checkout"
+For bookings:
+- Show experience cards with "Book now" links
+- Explain: "Pick dates, add to cart, checkout"
 - Offer WhatsApp for complex requests
 
-Keep it conversational and conservation-forward!`;
+Keep responses concise, helpful, and conservation-forward!`;
 
 type ToolResult = { name: string; data: any };
 
-// Build experience index from database
-async function buildExperienceIndex(): Promise<void> {
+// Build comprehensive site index
+async function buildSiteIndex(): Promise<void> {
   const now = Date.now();
-  if (experienceIndex.length > 0 && now - indexLastUpdated < INDEX_REFRESH_INTERVAL) {
+  if (siteIndex.length > 0 && experienceIndex.length > 0 && now - indexLastUpdated < INDEX_REFRESH_INTERVAL) {
     return; // Use cached index
   }
 
-  console.log('Building experience index...');
+  console.log('Building site index...');
   
-  const { data, error } = await supabase
+  // Fetch experiences
+  const { data: expData, error: expError } = await supabase
     .from('experiences')
     .select('id, slug, title, description, location_text, themes, categories, price_kes_adult, hero_image, duration_hours')
     .eq('visible_on_marketplace', true);
 
-  if (error) {
-    console.error('Error fetching experiences:', error);
-    return;
+  if (expError) {
+    console.error('Error fetching experiences:', expError);
+  } else {
+    experienceIndex = expData || [];
   }
 
-  experienceIndex = data || [];
+  // Build static pages index
+  const staticPagesIndex = Object.entries(STATIC_PAGES).map(([key, url]) => ({
+    type: 'page',
+    title: key.charAt(0).toUpperCase() + key.slice(1),
+    url,
+    keywords: key.split(' '),
+  }));
+
+  // Build theme pages index
+  const themePagesIndex = Object.entries(THEME_PAGES).map(([key, url]) => ({
+    type: 'theme',
+    title: key.charAt(0).toUpperCase() + key.slice(1),
+    url,
+    keywords: key.split(' '),
+  }));
+
+  // Combine all indexes
+  siteIndex = [...staticPagesIndex, ...themePagesIndex];
   indexLastUpdated = now;
-  console.log(`✓ Index built with ${experienceIndex.length} experiences`);
+  
+  console.log(`✓ Site index built: ${experienceIndex.length} experiences, ${siteIndex.length} pages/themes`);
 }
 
-// Validate URL (lightweight check)
+// Validate URL with caching (lightweight check)
 async function validateUrl(url: string): Promise<boolean> {
+  // Check cache first
+  const cached = linkCache.get(url);
+  if (cached && Date.now() - cached.timestamp < LINK_CACHE_TTL) {
+    return cached.valid;
+  }
+
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 2000); // 2s timeout
     
     const response = await fetch(url, { 
       method: 'HEAD',
@@ -117,44 +210,79 @@ async function validateUrl(url: string): Promise<boolean> {
     });
     
     clearTimeout(timeoutId);
-    return response.status === 200;
+    const isValid = response.status === 200;
+    
+    // Cache result
+    linkCache.set(url, { url, valid: isValid, timestamp: Date.now() });
+    
+    return isValid;
   } catch (error) {
     console.error(`URL validation failed for ${url}:`, error);
+    
+    // Cache as invalid
+    linkCache.set(url, { url, valid: false, timestamp: Date.now() });
+    
     return false;
   }
 }
 
-// Get validated absolute URL
-async function getValidatedUrl(slug: string): Promise<string> {
-  const url = `${BASE_URL}/experiences/${slug}`;
+// Get validated absolute URL (with intelligent fallback)
+async function getValidatedUrl(slug: string, type: 'experience' | 'page' | 'theme' = 'experience'): Promise<string> {
+  let url: string;
   
-  // Skip validation for now to improve performance
-  // In production, you might want to enable this with caching
-  return url;
+  if (type === 'page') {
+    url = `${BASE_URL}${slug}`;
+  } else if (type === 'theme') {
+    url = `${BASE_URL}${slug}`;
+  } else {
+    url = `${BASE_URL}/experiences/${slug}`;
+  }
   
-  /* Uncomment for strict validation:
+  // Validate with caching
   const isValid = await validateUrl(url);
   
   if (!isValid) {
     console.warn(`⚠️ Invalid URL: ${url}, using fallback`);
-    brokenLinks.push({ slug, url, timestamp: new Date().toISOString() });
-    return `${BASE_URL}${FALLBACK_CATEGORY}`;
+    brokenLinks.push({ slug, url, timestamp: new Date().toISOString(), type });
+    
+    // Intelligent fallback based on type
+    if (type === 'theme') {
+      return `${BASE_URL}/themes`;
+    } else if (type === 'page') {
+      return `${BASE_URL}`;
+    } else {
+      return `${BASE_URL}${FALLBACK_CATEGORY}`;
+    }
   }
   
   return url;
-  */
 }
 
-// Detect intent from user message
+// Detect intent from user message (expanded for full-site navigation)
 function detectIntent(message: string): string[] {
   const msg = message.toLowerCase();
   const intents: string[] = [];
   
+  // Navigation intents
+  if (/(about|who are you|who|what is asili)/i.test(msg)) intents.push('about');
+  if (/(contact|reach|talk|whatsapp|phone|email|get in touch)/i.test(msg)) intents.push('contact');
+  if (/(privacy|policy|policies|terms|conditions|refund)/i.test(msg)) intents.push('policy');
+  if (/(faq|help|question|how do)/i.test(msg)) intents.push('help');
+  if (/(partner|partners|organization|who runs)/i.test(msg)) intents.push('partners');
+  if (/(impact|how it works|donation.*work|where.*money)/i.test(msg)) intents.push('impact');
+  
+  // Action intents
   if (/(book|reserve|schedule|plan|trip|visit|go to|take me)/i.test(msg)) intents.push('book');
-  if (/(learn|tell me|what|info|about|explain)/i.test(msg)) intents.push('learn');
-  if (/(price|cost|how much|expensive|cheap)/i.test(msg)) intents.push('pricing');
-  if (/(volunteer|help out|contribute|work)/i.test(msg)) intents.push('volunteer');
-  if (/(donate|donation|support|give)/i.test(msg)) intents.push('donate');
+  if (/(donate|donation|support|give|contribute money)/i.test(msg)) intents.push('donate');
+  if (/(volunteer|help out|work|behind the scenes)/i.test(msg)) intents.push('volunteer');
+  
+  // Information intents
+  if (/(learn|tell me|what|info|explain)/i.test(msg)) intents.push('learn');
+  if (/(price|cost|how much|expensive|cheap|pricing)/i.test(msg)) intents.push('pricing');
+  if (/(compare|difference|versus|vs|which)/i.test(msg)) intents.push('compare');
+  
+  // Theme browsing
+  if (/(theme|category|type|kind)/i.test(msg)) intents.push('browse');
   
   return intents.length > 0 ? intents : ['learn'];
 }
@@ -251,9 +379,48 @@ function searchExperiences(query: string, entities: any, limit = 4): any[] {
   return results;
 }
 
+// Tool: Search site pages (static pages, themes, etc.)
+async function tool_pageSearch(q: string, intents: string[]): Promise<ToolResult> {
+  await buildSiteIndex();
+  
+  const msg = q.toLowerCase();
+  const results: any[] = [];
+  
+  // Check static pages first
+  for (const [key, url] of Object.entries(STATIC_PAGES)) {
+    if (msg.includes(key) || intents.some(intent => key.includes(intent))) {
+      results.push({
+        type: 'page',
+        title: key.charAt(0).toUpperCase() + key.slice(1).replace(/-/g, ' '),
+        url: await getValidatedUrl(url, 'page'),
+        description: `Learn more about ${key}`,
+      });
+      if (results.length >= 3) break;
+    }
+  }
+  
+  // Check theme pages
+  if (results.length < 3) {
+    for (const [key, url] of Object.entries(THEME_PAGES)) {
+      if (msg.includes(key)) {
+        results.push({
+          type: 'theme',
+          title: key.charAt(0).toUpperCase() + key.slice(1) + ' Experiences',
+          url: await getValidatedUrl(url, 'theme'),
+          description: `Explore all ${key} conservation experiences`,
+        });
+        if (results.length >= 3) break;
+      }
+    }
+  }
+  
+  console.log(`✓ Page search: "${q}" → ${results.length} results`);
+  return { name: 'pageSearch', data: results };
+}
+
 // Tool: Proactive experience search with validation
 async function tool_experienceSearch(q: string, entities: any): Promise<ToolResult> {
-  await buildExperienceIndex();
+  await buildSiteIndex();
   
   const results = searchExperiences(q, entities);
   
@@ -261,8 +428,8 @@ async function tool_experienceSearch(q: string, entities: any): Promise<ToolResu
   const enriched = await Promise.all(
     results.map(async (exp) => ({
       ...exp,
-      url: await getValidatedUrl(exp.slug),
-      bookUrl: await getValidatedUrl(exp.slug),
+      url: await getValidatedUrl(exp.slug, 'experience'),
+      bookUrl: await getValidatedUrl(exp.slug, 'experience'),
     }))
   );
   
@@ -436,8 +603,8 @@ serve(async (req) => {
     
     console.log(`\n🔷 Processing: "${userMessage}"`);
     
-    // Build/refresh experience index
-    await buildExperienceIndex();
+    // Build/refresh site index
+    await buildSiteIndex();
 
     // Detect intent and entities
     const intents = detectIntent(userMessage);
@@ -447,7 +614,14 @@ serve(async (req) => {
 
     const tools: ToolResult[] = [];
 
-    // PROACTIVE: Always search experiences if booking intent OR entities detected
+    // NAVIGATION: Check for page/theme navigation intents first
+    const navIntents = ['about', 'contact', 'policy', 'help', 'partners', 'impact', 'donate'];
+    if (intents.some(intent => navIntents.includes(intent))) {
+      const pageRes = await tool_pageSearch(userMessage, intents);
+      tools.push(pageRes);
+    }
+
+    // PROACTIVE: Search experiences if booking intent OR entities detected
     const shouldSearchExperiences = 
       intents.includes('book') || 
       entities.themes.length > 0 || 
@@ -494,6 +668,11 @@ serve(async (req) => {
     }
     
     console.log(`✓ Response generated with ${tools.length} tools, ${suggestions.length} suggestions\n`);
+    
+    // Log cache stats periodically
+    if (linkCache.size > 0) {
+      console.log(`📊 Link cache: ${linkCache.size} entries`);
+    }
     
     return new Response(JSON.stringify({
       answer,

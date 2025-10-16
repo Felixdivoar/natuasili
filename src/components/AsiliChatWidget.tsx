@@ -21,6 +21,13 @@ interface Experience {
   duration_hours?: number;
 }
 
+interface PageResult {
+  type: 'page' | 'theme';
+  title: string;
+  url: string;
+  description: string;
+}
+
 interface Message {
   id: string;
   role: 'user' | 'assistant';
@@ -28,6 +35,7 @@ interface Message {
   timestamp: Date;
   suggestions?: string[];
   experiences?: Experience[];
+  pages?: PageResult[];
 }
 
 interface ToolResult {
@@ -41,9 +49,9 @@ const AsiliChatWidget: React.FC = () => {
     {
       id: '1',
       role: 'assistant',
-      content: 'Jambo! 🌍 I\'m AsiliChat, your guide to Kenya\'s conservation experiences. I can help you discover and book authentic wildlife adventures, marine conservation activities, and community visits. What interests you?',
+      content: 'Jambo! 🌍 I\'m AsiliChat, your smart guide for everything on NatuAsili. I can help you discover experiences, learn about our impact, find partners, answer questions, or navigate to any page. What would you like to explore?',
       timestamp: new Date(),
-      suggestions: ['Book an elephant experience', 'Marine conservation activities', 'Community cultural visits']
+      suggestions: ['Explore conservation experiences', 'Learn about our impact', 'Find partners']
     }
   ]);
   const [input, setInput] = useState('');
@@ -129,8 +137,9 @@ const AsiliChatWidget: React.FC = () => {
 
       if (error) throw error;
 
-      // Extract experience data from tools
+      // Extract experience and page data from tools
       const experienceData = data.tools?.find((t: ToolResult) => t.name === "experienceSearch")?.data || [];
+      const pageData = data.tools?.find((t: ToolResult) => t.name === "pageSearch")?.data || [];
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -138,7 +147,8 @@ const AsiliChatWidget: React.FC = () => {
         content: data.answer || 'I apologize, but I encountered an issue processing your request.',
         timestamp: new Date(),
         suggestions: data.suggestions || [],
-        experiences: experienceData
+        experiences: experienceData,
+        pages: pageData
       };
 
       setMessages(prev => [...prev, assistantMessage]);
@@ -184,6 +194,16 @@ const AsiliChatWidget: React.FC = () => {
   const handleExperienceClick = (slug: string) => {
     setIsOpen(false);
     navigate(`/experiences/${slug}`);
+  };
+
+  const handlePageClick = (url: string) => {
+    setIsOpen(false);
+    // Handle absolute URLs
+    if (url.startsWith('http')) {
+      window.location.href = url;
+    } else {
+      navigate(url);
+    }
   };
 
   return (
@@ -270,6 +290,36 @@ const AsiliChatWidget: React.FC = () => {
                         </div>
                       )}
                     </div>
+
+                    {/* Page Cards */}
+                    {message.role === 'assistant' && message.pages && message.pages.length > 0 && (
+                      <div className="ml-9 space-y-2.5 mt-3">
+                        {message.pages.map((page, idx) => (
+                          <Card 
+                            key={idx}
+                            className="group overflow-hidden hover:shadow-lg hover:border-primary/50 transition-all duration-200 cursor-pointer border border-primary/20 bg-gradient-to-br from-card/90 to-card/70 backdrop-blur-sm"
+                            onClick={() => handlePageClick(page.url)}
+                          >
+                            <div className="flex items-start gap-3 p-3">
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                  {page.title}
+                                </h4>
+                                <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
+                                  {page.description}
+                                </p>
+                                <div className="flex items-center justify-between">
+                                  <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                                    {page.type === 'theme' ? '🎯 Theme' : '📄 Page'}
+                                  </span>
+                                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors flex-shrink-0" />
+                                </div>
+                              </div>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Experience Cards - Enhanced */}
                     {message.role === 'assistant' && message.experiences && message.experiences.length > 0 && (

@@ -1,42 +1,56 @@
-# AsiliChat Upgrade - Proactive Experience Recommendations
+# AsiliChat Upgrade - Full-Site Smart Concierge
 
 ## Overview
-AsiliChat has been upgraded to proactively guide users to bookable conservation experiences with intelligent recommendations and verified links.
+AsiliChat has been upgraded to be a complete site concierge with fast, validated navigation to ANY page (experiences, themes, about, partners, policies, FAQs, donate, contact, etc.), proactive suggestions, and intelligent link validation.
 
 ## Key Features
 
-### 1. **Experience Index System**
-- Runtime experience indexing from database
-- Auto-refresh every 12 hours
+### 1. **Comprehensive Site Index**
+- Runtime indexing of ALL site content:
+  - Experiences (from database)
+  - Static pages (About, Contact, FAQs, Privacy, Terms, Donate, etc.)
+  - Theme pages (Elephants, Marine, Community, Forest, Birds, Giraffes, Rhinos)
 - Manual overrides for critical experiences (Reteti, Mara Elephant Project, Ruko, etc.)
 - Canonical URL mapping to prevent 404s
+- Auto-refresh every 12 hours with in-memory caching
 
-### 2. **Smart Entity & Intent Detection**
-Recognizes:
-- **Intents**: book, learn, pricing, volunteer, donate
+### 2. **Expanded Intent Detection**
+Recognizes multiple intent types:
+- **Navigation**: about, contact, policy, help, partners, impact, donate
+- **Actions**: book, volunteer, donate
+- **Information**: learn, pricing, compare, browse themes
+- **Support**: FAQ, help, contact, WhatsApp
+
+### 3. **Enhanced Entity Recognition**
 - **Themes**: elephants, giraffes, rhinos, marine, community, birds, forest
 - **Locations**: Samburu, Laikipia, Mara, Nairobi, Coast, Watamu, Diani, etc.
+- **Content types**: experiences, themes, pages, posts
+- **Fuzzy matching**: Handles misspellings (Masaai/Maasai, Reteti/Retheti, etc.)
 
-### 3. **Intelligent Search Ranking**
-Experiences scored by:
-- Theme match (+50 points)
-- Location match (+30 points)
-- Keyword relevance (+10 points)
-- Manual overrides (highest priority)
+### 4. **Intelligent Link Validation**
+- Validates URLs before sending with 2s timeout
+- 15-minute link cache (TTL) for performance
+- Intelligent fallbacks:
+  - Theme pages → /themes
+  - Static pages → /
+  - Experiences → /experiences
+- Broken link monitoring and logging
 
-### 4. **Rich Experience Cards**
-Each recommendation includes:
+### 5. **Rich Response Cards**
+Two types of cards:
+
+**Experience Cards:**
 - Hero image with hover effects
 - Title, location, duration
 - Theme pills (visual categorization)
 - Price (KES, localized)
 - "Book Now" CTA with direct links
-- Gradient backgrounds and animations
 
-### 5. **Link Validation** (Optional)
-- Validates URLs before sending (currently disabled for performance)
-- Fallback to `/experiences` category if link fails
-- Broken link monitoring and logging
+**Page Cards:**
+- Title and description
+- Type indicator (Theme/Page)
+- Direct navigation on click
+- Hover effects and animations
 
 ## Environment Configuration
 
@@ -60,23 +74,29 @@ Critical experiences are mapped to canonical slugs:
 ## Test Queries
 
 ### ✅ PASS Criteria
-All these queries should return valid experiences with working links:
+All these queries should return valid pages/experiences with working links:
 
-1. **"book an elephant trip"**
-   - Returns: Reteti + Mara Elephant Project experiences
-   - Themes: Elephants theme link
+**Navigation Queries:**
+1. **"about asili"** → Opens About page (200 OK)
+2. **"contact"** / **"help"** → Opens Contact page (200 OK)
+3. **"privacy policy"** → Opens Privacy page (200 OK)
+4. **"terms"** → Opens Terms page (200 OK)
+5. **"partners"** → Opens Partners page (200 OK)
+6. **"impact"** / **"how it works"** → Opens Impact page (200 OK)
+7. **"donate"** → Opens Donate page (200 OK)
+8. **"faq"** → Opens FAQ page (200 OK)
 
-2. **"reteti"**
-   - Returns: Reteti Elephant Sanctuary card (200 OK)
+**Experience Queries:**
+9. **"book an elephant trip"** → Returns Reteti + Mara Elephant Project + Elephants theme
+10. **"reteti"** → Returns Reteti Elephant Sanctuary card (200 OK)
+11. **"giraffe sanctuary"** → Returns Ruko Giraffe card + Giraffe theme page
+12. **"marine conservation coast"** → Returns Watamu, Diani, REEFolution experiences
+13. **"volunteer behind the scenes"** → Returns conservation volunteering options
 
-3. **"giraffe sanctuary"**
-   - Returns: Ruko Giraffe card + theme page
-
-4. **"marine conservation coast"**
-   - Returns: Watamu, Diani, REEFolution experiences
-
-5. **"volunteer behind the scenes"**
-   - Returns: Conservation volunteering options
+**Fuzzy Matching:**
+14. **"masai mara elephants"** → Correct Maasai Mara experiences
+15. **"retheti"** → Corrects to Reteti
+16. **"olpejeta"** → Corrects to Ol Pejeta
 
 ### Example Responses
 
@@ -107,19 +127,24 @@ Explore more: [Elephants Theme →]
 **File**: `supabase/functions/asili-chat/index.ts`
 
 Key Functions:
-- `buildExperienceIndex()` - Caches experiences from database
-- `detectIntent()` - Analyzes user message for booking intent
-- `detectEntities()` - Extracts themes and locations
-- `searchExperiences()` - Ranks and returns top matches
-- `getValidatedUrl()` - Ensures links work (optional validation)
+- `buildSiteIndex()` - Caches ALL site content (experiences, pages, themes)
+- `detectIntent()` - Analyzes user message for navigation/action intent (9+ intent types)
+- `detectEntities()` - Extracts themes, locations, and content types
+- `searchExperiences()` - Ranks and returns top experience matches
+- `tool_pageSearch()` - Searches static pages and theme pages
+- `tool_experienceSearch()` - Searches experiences with intelligent ranking
+- `validateUrl()` - Ensures links work with 2s timeout and caching
+- `getValidatedUrl()` - Returns validated absolute URLs with intelligent fallbacks
 
 ### Frontend (Widget)
 **File**: `src/components/AsiliChatWidget.tsx`
 
 Features:
+- Two card types: Experience cards and Page cards
 - Rich experience cards with images, themes, pricing
+- Clean page cards with type indicators
 - Hover animations and gradients
-- Direct navigation to experience pages
+- Direct navigation to any site page
 - Fallback messages with helpful suggestions
 
 ## Analytics & Monitoring
@@ -141,10 +166,12 @@ Tracks:
 
 ## Performance Optimizations
 
-1. **Index Caching**: 12-hour refresh interval
-2. **Link Validation**: Disabled by default (3s timeout when enabled)
-3. **Result Limiting**: Max 4 experiences per response
-4. **Parallel Tool Calls**: Species, partners, carbon, experiences called simultaneously
+1. **Link Caching**: 15-minute TTL for validated URLs (prevents redundant checks)
+2. **Index Caching**: 12-hour refresh interval for site index
+3. **Fast Validation**: 2s timeout for URL checks (was 3s)
+4. **Result Limiting**: Max 3 pages, max 4 experiences per response
+5. **Parallel Tool Calls**: Species, partners, carbon, experiences, pages called simultaneously
+6. **Memory Management**: In-memory cache with automatic cleanup
 
 ## Configuration for Production
 
@@ -154,15 +181,10 @@ Tracks:
 const BASE_URL = Deno.env.get('BASE_URL') || 'https://natuasili.com';
 ```
 
-### Enable Link Validation (Optional)
-Uncomment in `getValidatedUrl()` function:
+### Monitor Performance
 ```typescript
-const isValid = await validateUrl(url);
-if (!isValid) {
-  console.warn(`⚠️ Invalid URL: ${url}`);
-  brokenLinks.push({ slug, url, timestamp: new Date() });
-  return `${BASE_URL}${FALLBACK_CATEGORY}`;
-}
+// Cache stats are logged periodically
+console.log(`📊 Link cache: ${linkCache.size} entries`);
 ```
 
 ### Monitor Broken Links
@@ -175,76 +197,24 @@ LIMIT 20;
 
 ## System Prompt
 
-AsiliChat uses a concise, action-oriented prompt:
+AsiliChat uses an enhanced, concise prompt for full-site navigation:
 - Under 80 words for responses
-- Proactive experience suggestions
+- Proactive suggestions for ANY site page
+- Clear navigation guidance
 - Conservation impact highlighting
-- Clear booking CTAs
-- Theme exploration options
-
-## Maintenance
-
-### Adding New Overrides
-Edit `EXPERIENCE_OVERRIDES` map:
-```typescript
-const EXPERIENCE_OVERRIDES: Record<string, string> = {
-  'new keyword': 'experience-slug-in-database',
-  // ...
-};
-```
-
-### Updating Entity Keywords
-Edit `ENTITY_KEYWORDS` map:
-```typescript
-const ENTITY_KEYWORDS: Record<string, string[]> = {
-  'theme_name': ['keyword1', 'keyword2', 'synonym'],
-  // ...
-};
-```
-
-### Refresh Experience Index
-Automatically refreshes every 12 hours. Manual refresh on function restart.
-
-## Future Enhancements
-
-1. **WhatsApp Deep Links**: Prefilled context messages
-2. **Theme Pages**: Direct links to `/themes/elephants`, `/themes/marine`
-3. **Availability Checks**: Real-time booking availability
-4. **Price Comparisons**: "Similar experiences from KES X"
-5. **Multi-experience Itineraries**: "Plan your 3-day trip"
-6. **Image Generation**: Dynamic experience visuals
-7. **Voice Support**: Audio queries and responses
-
-## Troubleshooting
-
-### Experience Not Appearing
-1. Check `visible_on_marketplace = true` in database
-2. Verify slug matches override map
-3. Check theme/location keywords
-4. Review scoring logic (minimum score = 0)
-
-### 404 Errors
-1. Verify slug exists in database
-2. Check BASE_URL configuration
-3. Enable link validation temporarily
-4. Review broken links log
-
-### Slow Responses
-1. Disable link validation
-2. Check OpenAI API key (uses fallback if missing)
-3. Reduce result limit (currently 4)
-4. Monitor Supabase query performance
+- Support for policies, FAQs, and help queries
 
 ## Success Metrics
 
-- **Zero 404s**: All recommended experiences open valid pages
-- **High Conversion**: Users click "Book Now" on suggestions
-- **Proactive Engagement**: 2-4 experiences per response
-- **Fast Response**: <2s from query to display
-- **Smart Ranking**: Relevant experiences appear first
+- **Zero 404s**: All recommended links open valid pages
+- **Fast Response**: <2s from query to display (with caching)
+- **Universal Navigation**: Can reach ANY site page
+- **High Accuracy**: Fuzzy matching handles misspellings
+- **Smart Ranking**: Relevant results appear first
+- **Proactive Engagement**: 2-4 cards per response
 
 ---
 
-**Version**: 1.0  
+**Version**: 2.0 (Full-Site Concierge)  
 **Last Updated**: 2025-10-16  
 **Status**: ✅ Production Ready
