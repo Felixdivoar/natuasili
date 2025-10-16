@@ -188,31 +188,50 @@ const AsiliChatWidget: React.FC = () => {
 
   return (
     <>
+      {/* Floating Chat Button */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 flex items-center justify-center group"
+          aria-label="Open AsiliChat"
+        >
+          <MessageCircle className="h-6 w-6 text-primary-foreground group-hover:scale-110 transition-transform" />
+          <span className="absolute -top-1 -right-1 h-3 w-3 bg-green-500 rounded-full border-2 border-background animate-pulse"></span>
+        </button>
+      )}
+
       {/* Chat Panel */}
       {isOpen && (
         <Card
           id="asili-chat-panel"
-          className="fixed bottom-4 right-4 z-50 w-[92vw] max-w-md shadow-2xl overflow-hidden"
+          className="fixed bottom-4 right-4 z-50 w-[92vw] max-w-md shadow-2xl overflow-hidden border-2 border-primary/20 animate-in slide-in-from-bottom-4 duration-300"
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
           role="dialog"
           aria-label="AsiliChat - Conservation Assistant"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b bg-card">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                <Bot className="h-4 w-4 text-primary-foreground" />
+          <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-primary/10 to-primary/5">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
+                <Bot className="h-5 w-5 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="font-semibold text-sm">AsiliChat</h3>
-                <p className="text-xs text-muted-foreground">Conservation in Kenya</p>
+                <h3 className="font-semibold text-base">AsiliChat</h3>
+                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+                  Conservation Assistant
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={() => setIsOpen(false)} aria-label="Hide AsiliChat">
-                Hide
-              </Button>
-            </div>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => setIsOpen(false)} 
+              aria-label="Close AsiliChat"
+              className="h-8 w-8"
+            >
+              <X className="h-4 w-4" />
+            </Button>
           </div>
 
           {/* Messages Area */}
@@ -227,27 +246,27 @@ const AsiliChatWidget: React.FC = () => {
                   <div key={message.id} className="space-y-2">
                     <div className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       {message.role === 'assistant' && (
-                        <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-1">
-                          <Bot className="h-3 w-3 text-primary-foreground" />
+                        <div className="h-7 w-7 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+                          <Bot className="h-4 w-4 text-primary-foreground" />
                         </div>
                       )}
                       
-                      <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
+                      <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm shadow-sm ${
                         message.role === 'user'
-                          ? 'bg-primary text-primary-foreground'
-                          : 'bg-muted'
+                          ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground'
+                          : 'bg-card border border-border'
                       }`}>
-                        <p className="whitespace-pre-wrap">{message.content}</p>
+                        <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
                         {message.role === 'assistant' && (
-                          <div className="text-xs opacity-70 mt-1">
+                          <div className="text-xs text-muted-foreground mt-1.5">
                             {message.timestamp.toLocaleTimeString()}
                           </div>
                         )}
                       </div>
 
                       {message.role === 'user' && (
-                        <div className="h-6 w-6 rounded-full bg-muted flex items-center justify-center flex-shrink-0 mt-1">
-                          <User className="h-3 w-3" />
+                        <div className="h-7 w-7 rounded-full bg-muted flex items-center justify-center flex-shrink-0 mt-1 border border-border">
+                          <User className="h-4 w-4" />
                         </div>
                       )}
                     </div>
@@ -258,7 +277,7 @@ const AsiliChatWidget: React.FC = () => {
                         {message.experiences.map((exp) => (
                           <Card 
                             key={exp.id} 
-                            className="p-3 hover:shadow-md transition-shadow cursor-pointer border-primary/20"
+                            className="p-3 hover:shadow-lg hover:border-primary/40 transition-all duration-200 cursor-pointer border border-primary/20 bg-card/50 backdrop-blur-sm"
                             onClick={() => handleExperienceClick(exp.slug)}
                           >
                             <div className="flex gap-3">
@@ -303,7 +322,7 @@ const AsiliChatWidget: React.FC = () => {
                             key={index}
                             variant="outline"
                             size="sm"
-                            className="h-7 text-xs rounded-full"
+                            className="h-7 text-xs rounded-full border-primary/30 hover:bg-primary/10 hover:border-primary/50 transition-colors"
                             onClick={() => handleSuggestionClick(suggestion)}
                             disabled={isLoading}
                           >
@@ -318,14 +337,14 @@ const AsiliChatWidget: React.FC = () => {
                 {/* Loading indicator */}
                 {isLoading && (
                   <div className="flex gap-3 justify-start">
-                    <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                      <Bot className="h-3 w-3 text-primary-foreground" />
+                    <div className="h-7 w-7 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <Bot className="h-4 w-4 text-primary-foreground" />
                     </div>
-                    <div className="bg-muted rounded-2xl px-3 py-2">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-current rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="bg-card border border-border rounded-2xl px-4 py-3 shadow-sm">
+                      <div className="flex space-x-1.5">
+                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                       </div>
                     </div>
                   </div>
@@ -348,21 +367,21 @@ const AsiliChatWidget: React.FC = () => {
           </div>
 
           {/* Input Area */}
-          <div className="p-3 border-t bg-card">
+          <div className="p-4 border-t bg-gradient-to-r from-primary/5 to-primary/10">
             <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about species, parks, seasons, community projects…"
+                placeholder="Ask about wildlife, experiences, or conservation…"
                 disabled={isLoading}
-                className="flex-1 text-sm"
+                className="flex-1 text-sm border-primary/20 focus:border-primary/40 bg-background"
               />
               <Button
                 onClick={() => sendMessage()}
                 disabled={!input.trim() || isLoading}
                 size="sm"
-                className="px-3"
+                className="px-4 bg-gradient-to-br from-primary to-primary/90 hover:from-primary/90 hover:to-primary shadow-md"
               >
                 <Send className="h-4 w-4" />
               </Button>
