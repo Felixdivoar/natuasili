@@ -41,9 +41,9 @@ const AsiliChatWidget: React.FC = () => {
     {
       id: '1',
       role: 'assistant',
-      content: 'Jambo! I\'m AsiliChat, your conservation assistant for Kenya. Ask me about wildlife, protected areas, community projects, or sustainable travel tips!',
+      content: 'Jambo! 🌍 I\'m AsiliChat, your guide to Kenya\'s conservation experiences. I can help you discover and book authentic wildlife adventures, marine conservation activities, and community visits. What interests you?',
       timestamp: new Date(),
-      suggestions: ['Tell me about elephants', 'Best parks to visit', 'Community conservation projects']
+      suggestions: ['Book an elephant experience', 'Marine conservation activities', 'Community cultural visits']
     }
   ]);
   const [input, setInput] = useState('');
@@ -150,18 +150,18 @@ const AsiliChatWidget: React.FC = () => {
         variant: 'destructive'
       });
       
-      // Add a single fallback message (avoid duplicates)
+      // Add a helpful fallback message
       setMessages(prev => {
         const last = prev[prev.length - 1];
-        if (last && last.role === 'assistant' && last.content.includes('Please try')) {
-          return prev; // prevent repeating the same technical message
+        if (last && last.role === 'assistant') {
+          return prev; // prevent duplicates
         }
         const fallback: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
-          content: 'I couldn\'t reach our AI right now. You can still ask about parks, seasons, species, or partners — I\'ll try again on your next message.',
+          content: 'I\'m having trouble connecting right now, but I\'m still here! Try asking about elephant experiences, marine conservation, or community visits.',
           timestamp: new Date(),
-          suggestions: ['Best parks to visit', 'Best season for wildlife', 'Tell me about elephants']
+          suggestions: ['Book elephant experience', 'Marine conservation', 'Cultural visits']
         };
         return [...prev, fallback];
       });
@@ -271,39 +271,69 @@ const AsiliChatWidget: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Experience Cards */}
+                    {/* Experience Cards - Enhanced */}
                     {message.role === 'assistant' && message.experiences && message.experiences.length > 0 && (
-                      <div className="ml-9 space-y-2 mt-2">
+                      <div className="ml-9 space-y-3 mt-3">
                         {message.experiences.map((exp) => (
                           <Card 
                             key={exp.id} 
-                            className="p-3 hover:shadow-lg hover:border-primary/40 transition-all duration-200 cursor-pointer border border-primary/20 bg-card/50 backdrop-blur-sm"
+                            className="group overflow-hidden hover:shadow-xl hover:border-primary/50 transition-all duration-300 cursor-pointer border border-primary/30 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm"
                             onClick={() => handleExperienceClick(exp.slug)}
                           >
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 p-3">
                               {exp.hero_image && (
-                                <img 
-                                  src={exp.hero_image} 
-                                  alt={exp.title}
-                                  className="w-20 h-20 object-cover rounded"
-                                />
+                                <div className="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden">
+                                  <img 
+                                    src={exp.hero_image} 
+                                    alt={exp.title}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                                </div>
                               )}
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-semibold text-sm mb-1 line-clamp-1">{exp.title}</h4>
+                                <h4 className="font-bold text-sm mb-1.5 line-clamp-2 group-hover:text-primary transition-colors">
+                                  {exp.title}
+                                </h4>
+                                
                                 <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                                  <MapPin className="h-3 w-3" />
+                                  <MapPin className="h-3 w-3 flex-shrink-0" />
                                   <span className="line-clamp-1">{exp.location_text}</span>
                                 </div>
+                                
                                 {exp.duration_hours && (
-                                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                                    <Clock className="h-3 w-3" />
-                                    <span>{exp.duration_hours} hours</span>
+                                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+                                    <Clock className="h-3 w-3 flex-shrink-0" />
+                                    <span>{exp.duration_hours}h experience</span>
                                   </div>
                                 )}
-                                <div className="flex items-center justify-between mt-2">
-                                  <span className="font-bold text-sm">KES {exp.price_kes_adult.toLocaleString()}</span>
-                                  <Button size="sm" variant="ghost" className="h-6 text-xs">
-                                    View Details
+                                
+                                {/* Themes pills */}
+                                {exp.themes && exp.themes.length > 0 && (
+                                  <div className="flex flex-wrap gap-1 mb-2">
+                                    {exp.themes.slice(0, 2).map((theme: string, idx: number) => (
+                                      <span 
+                                        key={idx}
+                                        className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-primary/10 text-primary border border-primary/20"
+                                      >
+                                        {theme}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                                
+                                <div className="flex items-center justify-between mt-2 pt-2 border-t border-border/50">
+                                  <div>
+                                    <div className="text-[10px] text-muted-foreground">From</div>
+                                    <span className="font-bold text-base text-primary">
+                                      KES {exp.price_kes_adult.toLocaleString()}
+                                    </span>
+                                  </div>
+                                  <Button 
+                                    size="sm" 
+                                    className="h-7 text-xs bg-primary hover:bg-primary/90 group-hover:shadow-md transition-all"
+                                  >
+                                    Book Now
                                     <ExternalLink className="h-3 w-3 ml-1" />
                                   </Button>
                                 </div>
