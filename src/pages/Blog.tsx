@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar, User, Clock, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "@/data/blogData";
+import MetaTags from "@/components/MetaTags";
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,6 +50,11 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <MetaTags 
+        title="title_blog"
+        description="meta_blog"
+        keywords="Kenya conservation blog, wildlife protection articles, sustainable tourism insights, conservation stories, eco-tourism tips, Kenya travel blog"
+      />
       {/* Hero Section */}
       <section className="hero-full section-padding-lg bg-background-alt">
         <div className="hero-inner">

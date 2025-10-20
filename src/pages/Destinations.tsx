@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Users, TreePine } from "lucide-react";
 import { Link } from "react-router-dom";
+import MetaTags from "@/components/MetaTags";
 import nairobiDestination from "@/assets/destinations/nairobi-destination.jpg";
 import samburuDestination from "@/assets/destinations/samburu-destination.jpg";
 import masaiMaraDestination from "@/assets/destinations/masai-mara-destination.jpg";
@@ -71,6 +72,11 @@ const destinations = [{
 }];
 const Destinations = () => {
   return <div className="min-h-screen bg-background">
+      <MetaTags 
+        title="title_destinations"
+        description="meta_destinations"
+        keywords="Kenya conservation destinations, Samburu wildlife, Maasai Mara safaris, Laikipia conservancies, Coast marine conservation, Nairobi National Park"
+      />
       {/* Hero Section */}
       <section className="bg-conservation/5 section py-[30px]">
         <div className="container mx-auto px-4">

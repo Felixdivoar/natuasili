@@ -10,7 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { 
+import MetaTags from "@/components/MetaTags";
+import {
   Search, 
   Filter, 
   Eye, 
@@ -984,6 +985,11 @@ const ImpactLedger = () => {
 
   return (
     <ErrorBoundary>
+      <MetaTags 
+        title="title_impact_ledger"
+        description="meta_impact_ledger"
+        keywords="conservation impact tracking, Kenya wildlife funding, transparent tourism, conservation metrics, impact dashboard, sustainable travel accountability"
+      />
       <div className="min-h-screen bg-background">
         <div className="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}

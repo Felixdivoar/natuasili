@@ -66,11 +66,11 @@ export function WebsiteStructuredData() {
       type="website"
       data={{
         name: "NatuAsili",
-        url: "https://natuasili.com",
+        url: "https://preview--natuasili.lovable.app",
         description: "Kenya's premier conservation tourism platform connecting conscious travelers with authentic wildlife experiences and community conservation projects.",
         potentialAction: {
           "@type": "SearchAction",
-          target: "https://natuasili.com/search?q={search_term_string}",
+          target: "https://preview--natuasili.lovable.app/browse?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       }}
@@ -84,17 +84,21 @@ export function OrganizationStructuredData() {
       type="organization"
       data={{
         name: "NatuAsili",
-        url: "https://natuasili.com",
-        logo: "https://natuasili.com/logo.png",
+        url: "https://preview--natuasili.lovable.app",
+        logo: "https://preview--natuasili.lovable.app/lovable-uploads/5692ae1d-154e-45fd-b4b0-99649fb40c3d.png",
+        image: "https://preview--natuasili.lovable.app/opengraph-natuasili.jpg",
         description: "Kenya's premier conservation tourism platform connecting conscious travelers with authentic wildlife experiences and community conservation projects.",
         foundingDate: "2024",
-        areaServed: "Kenya",
-        serviceType: "Conservation Tourism",
+        areaServed: {
+          "@type": "Country",
+          name: "Kenya"
+        },
+        serviceType: ["Conservation Tourism", "Sustainable Travel", "Wildlife Experiences"],
         contactPoint: {
           "@type": "ContactPoint",
           telephone: "+254-700-000-000",
           contactType: "customer service",
-          availableLanguage: ["English", "Swahili"]
+          availableLanguage: ["English", "Swahili", "French"]
         },
         sameAs: [
           "https://facebook.com/natuasili",

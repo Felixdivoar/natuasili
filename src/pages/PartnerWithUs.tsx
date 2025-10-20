@@ -9,6 +9,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import EnhancedCarousel, { EnhancedCarouselItem } from '@/components/EnhancedCarousel';
 import PartnerOnboardingDemo from '@/components/PartnerOnboardingDemo';
 import PartnerApplication from '@/components/PartnerApplication';
+import MetaTags from '@/components/MetaTags';
 
 const PartnerWithUs: React.FC = () => {
   const navigate = useNavigate();
@@ -114,6 +115,11 @@ const PartnerWithUs: React.FC = () => {
     answer: "Click 'Add Your Experience', create an account, fill out the short onboarding form, upload your documents, and set up your first experience. Once verified, you'll get access to your host dashboard."
   }];
   return <div className="min-h-screen bg-background">
+      <MetaTags 
+        title="title_partner_application"
+        description="meta_partner_application"
+        keywords="become conservation partner Kenya, wildlife tourism partner, eco-tourism partnership, conservation business Kenya, sustainable travel partner"
+      />
       {/* Hero Section */}
       <section className="relative hero-padding px-4 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="max-w-[1250px] mx-auto grid md:grid-cols-2 gap-12 items-center">
