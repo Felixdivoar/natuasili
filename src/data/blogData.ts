@@ -7,6 +7,9 @@ import partnerGrowImpact from "@/assets/blog/partner-grow-impact.jpg";
 import travelForGood from "@/assets/blog/travel-for-good.webp";
 import hostConservationExpand from "@/assets/blog/host-conservation-expand.jpg";
 import travelGivesBack from "@/assets/blog/travel-gives-back.jpg";
+import rhinoConservationSuccess from "@/assets/blog/rhino-conservation-success.jpg";
+import marineConservationKenya from "@/assets/blog/marine-conservation-kenya.webp";
+import transparentImpactReporting from "@/assets/blog/transparent-impact-reporting.png";
 
 export interface BlogPost {
   id: number;
@@ -120,6 +123,99 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 4,
+    title: "Sustainable livelihoods through conservation",
+    excerpt: "Discover how communities are building prosperous futures through conservation-based enterprises while protecting Kenya's natural heritage.",
+    content: `
+      <p>Conservation-based livelihoods represent a win-win solution for both wildlife protection and community prosperity. Across Kenya, innovative programs are demonstrating how environmental stewardship can generate sustainable income for local communities.</p>
+      
+      <p>From beekeeping to eco-tourism guiding, from artisan crafts to sustainable agriculture, communities are discovering diverse income streams that depend on healthy ecosystems. This creates powerful incentives for wildlife protection and habitat conservation.</p>
+      
+      <h3>Livelihood Impact:</h3>
+      <ul>
+        <li>150+ conservation-based businesses established</li>
+        <li>65% increase in average community income</li>
+        <li>25 different conservation livelihood models implemented</li>
+        <li>8,000+ community members directly benefiting</li>
+      </ul>
+      
+      <p>The transformation we're witnessing proves that conservation can be the foundation of thriving local economies, creating lasting prosperity while protecting Kenya's natural treasures.</p>
+    `,
+    category: "Conservation and Community Engagement",
+    author: "Grace Wanjiru",
+    date: "2024-01-18",
+    readTime: "6 min read",
+    image: sustainableLivelihoodsConservation,
+    slug: "sustainable-livelihoods-conservation",
+    impact: {
+      businesses: "150",
+      income: "65%",
+      beneficiaries: "8,000"
+    }
+  },
+  {
+    id: 5,
+    title: "Human-wildlife conflict: innovative solutions for coexistence",
+    excerpt: "Addressing the challenges of human-wildlife conflict through community-led initiatives and innovative mitigation strategies.",
+    content: `
+      <p>Human-wildlife conflict remains one of the most pressing challenges in conservation. As human populations expand and wildlife habitats shrink, finding solutions that work for both communities and wildlife has become critical.</p>
+      
+      <p>Through innovative approaches including community rangers, early warning systems, and protective infrastructure, we're developing models for peaceful coexistence. These solutions not only protect crops and livestock but also save wildlife lives.</p>
+      
+      <h3>Conflict Mitigation Results:</h3>
+      <ul>
+        <li>70% reduction in crop damage incidents</li>
+        <li>85% decrease in retaliatory wildlife killings</li>
+        <li>50 community ranger teams deployed</li>
+        <li>120km of wildlife-friendly fencing installed</li>
+      </ul>
+      
+      <p>Success in managing human-wildlife conflict is essential for the long-term survival of Kenya's wildlife. Our community-led approaches are proving that coexistence is not only possible but beneficial for all.</p>
+    `,
+    category: "Conservation and Community Engagement",
+    author: "Peter Otieno",
+    date: "2024-01-20",
+    readTime: "7 min read",
+    image: humanWildlifeConflict,
+    slug: "human-wildlife-conflict-innovative-solutions",
+    impact: {
+      reduction: "70%",
+      teams: "50",
+      fencing: "120km"
+    }
+  },
+  {
+    id: 6,
+    title: "Partner growth: expanding your conservation impact",
+    excerpt: "Learn how conservation organizations are scaling their impact through strategic partnerships and innovative funding models.",
+    content: `
+      <p>Growing a conservation organization requires more than passion—it demands strategic thinking, sustainable funding, and strong partnerships. Through our platform, conservation partners are discovering new pathways to expand their reach and impact.</p>
+      
+      <p>From capacity building workshops to marketing support, from financial management training to impact measurement tools, we provide partners with comprehensive resources to scale their operations while maintaining their conservation mission.</p>
+      
+      <h3>Partner Growth Metrics:</h3>
+      <ul>
+        <li>45% average increase in partner revenue</li>
+        <li>80+ training sessions delivered to partners</li>
+        <li>16 partners expanded to new conservation areas</li>
+        <li>$1.2M in growth funding distributed</li>
+      </ul>
+      
+      <p>The conservation challenges we face require organizations that can grow sustainably while staying true to their mission. Our partner support programs are designed to enable exactly that kind of growth.</p>
+    `,
+    category: "Host Resources",
+    author: "Catherine Muthoni",
+    date: "2024-01-22",
+    readTime: "5 min read",
+    image: partnerGrowImpact,
+    slug: "partner-growth-expand-conservation-impact",
+    impact: {
+      revenue: "45%",
+      training: "80",
+      funding: "$1.2M"
+    }
+  },
+  {
+    id: 7,
     title: "Travel for good: conservation and community impact",
     excerpt: "In a world where travel has become more accessible than ever, an important question arises: How can we ensure that our adventures leave a positive impact?",
     content: `
@@ -150,7 +246,7 @@ export const blogPosts: BlogPost[] = [
     }
   },
   {
-    id: 5,
+    id: 8,
     title: "Host conservation experiences and expand your mission",
     excerpt: "If you run a community-based business or conservation organization, you are familiar with creating unique experiences that capture your goal for visitors.",
     content: `
@@ -181,7 +277,7 @@ export const blogPosts: BlogPost[] = [
     }
   },
   {
-    id: 6,
+    id: 9,
     title: "Travel that gives back with Natuasili",
     excerpt: "Travel has an amazing ability to change our lives as well as the environment around us. We are eager to share with you the intangible potential of your travels.",
     content: `
@@ -209,6 +305,99 @@ export const blogPosts: BlogPost[] = [
       revenue: "90%",
       experiences: "23",
       transparency: "100%"
+    }
+  },
+  {
+    id: 10,
+    title: "Rhino conservation: A success story in the making",
+    excerpt: "Kenya's rhino populations are making a remarkable comeback thanks to community-led conservation efforts and innovative protection strategies.",
+    content: `
+      <p>Once on the brink of extinction, Kenya's rhino populations are experiencing a remarkable recovery. Through intensive protection efforts, community engagement, and cutting-edge monitoring technology, we're witnessing one of conservation's greatest success stories.</p>
+      
+      <p>The collaboration between conservancies, rangers, local communities, and technology partners has created a robust protection network. This multi-faceted approach addresses poaching, habitat loss, and human-wildlife conflict simultaneously.</p>
+      
+      <h3>Rhino Conservation Achievements:</h3>
+      <ul>
+        <li>35% increase in rhino populations over 5 years</li>
+        <li>95% reduction in poaching incidents</li>
+        <li>24/7 armed ranger patrols across 8 conservancies</li>
+        <li>150+ community members employed as rhino monitors</li>
+      </ul>
+      
+      <p>The success of rhino conservation demonstrates what's possible when communities, technology, and dedicated conservation efforts come together. This model offers hope for other endangered species across Africa.</p>
+    `,
+    category: "Conservation and Community Engagement",
+    author: "Dr. John Kamau",
+    date: "2024-01-25",
+    readTime: "6 min read",
+    image: rhinoConservationSuccess,
+    slug: "rhino-conservation-success-story",
+    impact: {
+      increase: "35%",
+      reduction: "95%",
+      monitors: "150"
+    }
+  },
+  {
+    id: 11,
+    title: "Marine conservation on Kenya's coast",
+    excerpt: "Protecting Kenya's marine ecosystems through community-based conservation, sustainable fishing practices, and coastal restoration projects.",
+    content: `
+      <p>Kenya's coastal waters are home to vibrant coral reefs, endangered sea turtles, and diverse marine life. Community-based marine conservation efforts are proving essential to protecting these underwater treasures while supporting coastal livelihoods.</p>
+      
+      <p>Through marine protected areas, sustainable fishing cooperatives, and coral restoration programs, coastal communities are becoming guardians of ocean health. This approach balances conservation with the needs of fishing communities who depend on marine resources.</p>
+      
+      <h3>Marine Conservation Impact:</h3>
+      <ul>
+        <li>12 community-managed marine protected areas established</li>
+        <li>45% increase in fish populations within protected zones</li>
+        <li>2,000+ coral fragments planted in restoration sites</li>
+        <li>25 fishing cooperatives practicing sustainable methods</li>
+      </ul>
+      
+      <p>The health of Kenya's marine ecosystems is vital not only for biodiversity but also for the coastal communities who depend on these resources. Community-led conservation is proving to be the most effective path forward.</p>
+    `,
+    category: "Conservation and Community Engagement",
+    author: "Amina Hassan",
+    date: "2024-01-28",
+    readTime: "7 min read",
+    image: marineConservationKenya,
+    slug: "marine-conservation-kenya-coast",
+    impact: {
+      areas: "12",
+      increase: "45%",
+      corals: "2,000"
+    }
+  },
+  {
+    id: 12,
+    title: "Transparent impact reporting: building trust through data",
+    excerpt: "How we use technology and rigorous measurement to provide complete transparency in conservation funding and impact outcomes.",
+    content: `
+      <p>Trust is the foundation of effective conservation funding. At NatuAsili, we've built our platform on complete transparency, using real-time data and rigorous impact measurement to show exactly how every dollar contributes to conservation outcomes.</p>
+      
+      <p>Our impact reporting system tracks metrics from wildlife population data to community income changes, from habitat restoration to educational programs. This data-driven approach ensures accountability and enables continuous improvement in conservation effectiveness.</p>
+      
+      <h3>Transparency Metrics:</h3>
+      <ul>
+        <li>100% of conservation funding tracked in real-time</li>
+        <li>Quarterly impact reports for all stakeholders</li>
+        <li>50+ measurable impact indicators monitored</li>
+        <li>Third-party verification of all major conservation claims</li>
+      </ul>
+      
+      <p>Transparent impact reporting is not just about accountability—it's about demonstrating that conservation works, building trust with supporters, and creating models that can be replicated across the conservation sector.</p>
+    `,
+    category: "Host Resources",
+    author: "David Ochieng",
+    date: "2024-02-01",
+    readTime: "5 min read",
+    image: transparentImpactReporting,
+    slug: "transparent-impact-reporting-conservation",
+    impact: {
+      tracking: "100%",
+      indicators: "50",
+      verification: "Third-party"
     }
   }
 ];
