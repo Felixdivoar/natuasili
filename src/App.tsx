@@ -60,6 +60,9 @@ import ReferPartner from "./pages/ReferPartner";
 import PartnerApplicationPage from "./pages/PartnerApplicationPage";
 import AsiliChatWidget from "./components/AsiliChatWidget";
 import { Navigate } from "react-router-dom";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import BlogCategory from "./pages/BlogCategory";
 
 const queryClient = new QueryClient();
 
@@ -200,6 +203,11 @@ const App = () => (
                 <Route path="/cookie-policy" element={<AppLayout><CookiePolicy /></AppLayout>} />
                 <Route path="/search" element={<AppLayout><Search /></AppLayout>} />
                 <Route path="/partner-with-us" element={<AppLayout><PartnerWithUs /></AppLayout>} />
+                
+                {/* Blog Routes */}
+                <Route path="/blog" element={<AppLayout><Blog /></AppLayout>} />
+                <Route path="/blog/category/:category" element={<AppLayout><BlogCategory /></AppLayout>} />
+                <Route path="/blog/:slug" element={<AppLayout><BlogPost /></AppLayout>} />
                 
                 <Route path="/partner-application" element={<AppLayout><PartnerApplicationPage /></AppLayout>} />
                 <Route path="/listings" element={<AppLayout><Listings /></AppLayout>} />
