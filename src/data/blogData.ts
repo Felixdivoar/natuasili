@@ -1289,13 +1289,13 @@ export const blogPosts: BlogPost[] = [
     category: "Conservation and Community Engagement",
     author: "David Kariuki",
     date: "2025-03-12",
-    readTime: 9,
-    image: conservationBlogImage,
+    readTime: "9 min read",
+    image: sustainableLivelihoodsConservation,
     slug: "conservation-through-employment-kenya",
     impact: {
       fundsAllocated: "KES 4.2M",
-      partnersSupported: 12,
-      conservationProjects: 8
+      partnersSupported: "12",
+      conservationProjects: "8"
     }
   },
   {
@@ -1389,13 +1389,13 @@ export const blogPosts: BlogPost[] = [
     category: "Purposeful Travel",
     author: "Dr. Rachel Kibui",
     date: "2025-03-08",
-    readTime: 9,
-    image: climateImage,
+    readTime: "9 min read",
+    image: climateAdaptationImage,
     slug: "carbon-offsetting-kenya-safari",
     impact: {
       fundsAllocated: "KES 3.8M",
-      partnersSupported: 9,
-      conservationProjects: 6
+      partnersSupported: "9",
+      conservationProjects: "6"
     }
   },
   {
@@ -1506,8 +1506,8 @@ export const blogPosts: BlogPost[] = [
     category: "Responsible Tourism",
     author: "James Ndirangu",
     date: "2025-03-05",
-    readTime: 10,
-    image: photographyImage,
+    readTime: "10 min read",
+    image: ecotourismCertificationImage,
     slug: "ethical-wildlife-photography-kenya"
   },
   {
@@ -1622,13 +1622,13 @@ export const blogPosts: BlogPost[] = [
     category: "Conservation and Community Engagement",
     author: "Dr. Peter Wambua",
     date: "2025-03-01",
-    readTime: 11,
-    image: techImage,
+    readTime: "11 min read",
+    image: antiPoachingTechImage,
     slug: "anti-poaching-technology-kenya",
     impact: {
       fundsAllocated: "KES 5.1M",
-      partnersSupported: 8,
-      conservationProjects: 12
+      partnersSupported: "8",
+      conservationProjects: "12"
     }
   }
 ];
