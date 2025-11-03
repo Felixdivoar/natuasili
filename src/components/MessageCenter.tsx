@@ -59,26 +59,61 @@ export default function MessageCenter() {
 
   const fetchData = async () => {
     try {
+      let bookingsData: any[] = [];
+
       // Fetch bookings based on user role
-      let bookingsQuery = supabase.from('bookings').select(`
-        id,
-        customer_name,
-        customer_email,
-        booking_date,
-        status,
-        experiences!inner(title)
-      `);
-
       if (profile?.role === 'partner') {
-        // For partners, get bookings for their experiences
-        bookingsQuery = bookingsQuery
-          .eq('experiences.partner_profiles.user_id', profile.id);
-      } else if (profile?.role !== 'admin') {
-        // For travelers, get their own bookings
-        bookingsQuery = bookingsQuery.eq('user_id', profile?.id);
-      }
+        // For partners, first get their partner profile to find their experiences
+        const { data: partnerProfile } = await supabase
+          .from('partner_profiles')
+          .select('id')
+          .eq('user_id', profile.id)
+          .maybeSingle();
 
-      const { data: bookingsData } = await bookingsQuery;
+        if (partnerProfile) {
+          // Then get bookings for their experiences
+          const { data } = await supabase
+            .from('bookings')
+            .select(`
+              id,
+              customer_name,
+              customer_email,
+              booking_date,
+              status,
+              experiences!inner(title, partner_id)
+            `)
+            .eq('experiences.partner_id', partnerProfile.id);
+          
+          bookingsData = data || [];
+        }
+      } else if (profile?.role === 'admin') {
+        // For admins, get all bookings
+        const { data } = await supabase
+          .from('bookings')
+          .select(`
+            id,
+            customer_name,
+            customer_email,
+            booking_date,
+            status,
+            experiences!inner(title)
+          `);
+        bookingsData = data || [];
+      } else {
+        // For travelers, get their own bookings
+        const { data } = await supabase
+          .from('bookings')
+          .select(`
+            id,
+            customer_name,
+            customer_email,
+            booking_date,
+            status,
+            experiences!inner(title)
+          `)
+          .eq('user_id', profile?.id);
+        bookingsData = data || [];
+      }
       
       // Fetch messages with a simpler query to avoid type issues
       const { data: messagesData } = await supabase
